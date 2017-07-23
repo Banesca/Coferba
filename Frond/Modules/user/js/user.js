@@ -3,37 +3,53 @@
 app.controller('myCtrl', function($scope, $http) {
    
 
- // alert();
 
-           $scope.editTravelInfo = function (travel) {
+
+      $scope.addUser = function () 
+      {
         // LLAMAMOS A EL SERVICIO FILTROS PARA EL FORMULARIO //
-       
-        travel['dateFilter'] = $("#date").val();
-        var objTravel =
+        $http.post('http://127.0.0.1/Coferba/Back/index.php/User', $scope._setuser())
+        .success(function (data) {
+
+             alert("Registrado ");
+
+          }).error(function (data,status) {
+                  if(status == 404){alert("!Informacion "+status+data.error+"info");}
+                  else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+                  else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+                 
+          });
+
+      }
+
+
+     $scope._setuser = function () {
+        var user =
                 {
-                    travel
+                    user:
+                            {
+                                idBox: $routeParams.id,
+                                idIngressTypeAsigned: $scope.idIngressTypeAsigned,
+                                IdUserKf: JSON.parse(localStorage.getItem('session')).idUser,
+                                idClientAsigned: idCliente,
+                                idBoxTypeAsigned: $scope.idBoxTypeAsigned,
+                                idPaymentFormAsigned: $scope.idPaymentFormAsigned,
+                                idConditionTypeIngress: $scope.idConditionTypeIngress,
+                                amountBox: amountBox,
+                                idInvoiceHeaderKf: idInvoiceHeaderKf,
+                                idDriverAsigned : idDriver,
+                                listChecks: $scope.Checks,
+                                idHeaderInvoi:$scope.idHeaderInvoi
+
+                            }
                 };
-
- $scope.testing = "jorge";
-   
-       
-        $http.post(uri + 'travel/getFilterFormAsignDriver', objTravel).success(function (data) {
-
-            $scope.filterFronEdit = data;
-            $scope.idTravel = travel.idTravel;
-            $('#myEdit').modal('toggle');
-        
-
-        }).error(function (data,status) {
-                if(status == 404){notificate("!Informacion "+status,data.error,"info");}
-                else{notificate("Error !"+status," Contacte a Soporte","error");}
-               
-        });
-
-    }
+        return user;
+    };
 
 
-       });
+
+
+     
 
     $scope.get = function() {
        
