@@ -95,7 +95,7 @@ class User_model extends CI_Model
             'addresUser' => $user['addresUser'],
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
-            'rezonSocial' => $user['rezonSocial'],
+            'rezonSocial' => @$user['rezonSocial'],
             'idStatusKf' => 1
                 )
         );
