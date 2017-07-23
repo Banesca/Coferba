@@ -1,0 +1,51 @@
+<!--LINK HEADER -->
+<script src="../../../assets/js/angular.min.js"></script>
+<div  ng-app="myApp" ng-controller="myCtrl">
+<div ng-include="'../../Partial/Header.html'"></div>
+
+<!--MENU-->
+<div ng-include="'../../Partial/Menu.html'"></div>
+
+<!--USER REGISTER-->
+
+<!--USER ENTERPRISE-->
+<span>Razon Social: </span>
+<input type="text"  ng-model="razonsocial" name="razonsocial"><br><br>
+
+<!--USER RESIDENCIAL-->
+<span>Nombres:       </span>
+<input type="text"  ng-model="fname" name="fname"><br><br>
+<span>Apellidos:     </span>
+<input type="text"  ng-model="lname" name="lname"><br><br>
+
+<!--RELATED FIELDS-->
+<span>Correo:        </span>
+<input type="text"  ng-model="emailUser" name="emailUser"><br><br>
+<span>Contrase&#241a:</span>
+<input type="text"  ng-model="passwordUser" name="passwordUser"><br><br>
+<span>Telefono:      </span>
+<input type="text"  ng-model="phoneNumberUser" name="phoneNumberUser"><br><br>
+<span>Direcci&#243n: </span>
+<input type="text"  ng-model="adressUser" name="adressUser"><br><br>
+
+
+
+
+
+
+<input type="button" value="Registrar" ng-click="uRegister()" name="uRegister">
+
+
+
+
+
+
+
+
+
+<!--LINK FOOTER -->
+<div ng-include="'../../Partial/Footer.html'"></div>
+</div>
+<!--***********-->
+<script src="../js/user.js"></script> <!-- CONTROLADOR ANGULAR -->
+
