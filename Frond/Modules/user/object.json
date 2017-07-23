@@ -11,3 +11,12 @@
 "rezonSocial" : "prueba"
   }
 }
+
+
+ <div class="form-group">
+                        <label class="control-label caption-subject font-blue-ebonyclay bold uppercase">Forma de Pago</label>
+                        <samp class="font-red-sunglo font-lg">*</samp>
+                        <select ng-required="true" class="form-control" ng-options="item.idPaymentForm as item.namePaymentForm for item in filterForm.payform" ng-model="idPaymentFormAsigned" name="idVeichleOwnerAsigned" ng-change="putCheck()">
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
