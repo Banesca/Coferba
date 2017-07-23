@@ -1,24 +1,25 @@
 /*
-Navicat MySQL Data Transfer
+SQLyog Ultimate v9.02 
+MySQL - 5.5.24-log : Database - db_coferba
+*********************************************************************
+*/
 
-Source Server         : MyServer
-Source Server Version : 100125
-Source Host           : localhost:3306
-Source Database       : db_coferba
+/*!40101 SET NAMES utf8 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 100125
-File Encoding         : 65001
+/*!40101 SET SQL_MODE=''*/;
 
-Date: 2017-07-18 22:54:56
-*/
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_coferba` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci */;
 
-SET FOREIGN_KEY_CHECKS=0;
+USE `db_coferba`;
 
--- ----------------------------
--- Table structure for tb_department
--- ----------------------------
+/*Table structure for table `tb_department` */
+
 DROP TABLE IF EXISTS `tb_department`;
+
 CREATE TABLE `tb_department` (
   `idDepartment` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `departmentAddress` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -30,28 +31,26 @@ CREATE TABLE `tb_department` (
   PRIMARY KEY (`idDepartment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_department
--- ----------------------------
+/*Data for the table `tb_department` */
 
--- ----------------------------
--- Table structure for tb_profile
--- ----------------------------
+/*Table structure for table `tb_profile` */
+
 DROP TABLE IF EXISTS `tb_profile`;
+
 CREATE TABLE `tb_profile` (
   `idProfile` int(11) NOT NULL,
   `nameProfile` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`idProfile`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_profile
--- ----------------------------
+/*Data for the table `tb_profile` */
 
--- ----------------------------
--- Table structure for tb_request
--- ----------------------------
+insert  into `tb_profile`(`idProfile`,`nameProfile`) values (1,'Admin'),(2,'Company'),(3,'Tenant'),(4,'Admin R');
+
+/*Table structure for table `tb_request` */
+
 DROP TABLE IF EXISTS `tb_request`;
+
 CREATE TABLE `tb_request` (
   `idRequest` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `RequestName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -59,28 +58,26 @@ CREATE TABLE `tb_request` (
   PRIMARY KEY (`idRequest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_request
--- ----------------------------
+/*Data for the table `tb_request` */
 
--- ----------------------------
--- Table structure for tb_status
--- ----------------------------
+/*Table structure for table `tb_status` */
+
 DROP TABLE IF EXISTS `tb_status`;
+
 CREATE TABLE `tb_status` (
   `idStatusTenant` int(255) NOT NULL,
   `statusTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`idStatusTenant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci ROW_FORMAT=COMPACT;
 
--- ----------------------------
--- Records of tb_status
--- ----------------------------
+/*Data for the table `tb_status` */
 
--- ----------------------------
--- Table structure for tb_statusticket
--- ----------------------------
+insert  into `tb_status`(`idStatusTenant`,`statusTenantName`) values (-1,'Eliminado'),(0,'Inactivo'),(1,'Activo');
+
+/*Table structure for table `tb_statusticket` */
+
 DROP TABLE IF EXISTS `tb_statusticket`;
+
 CREATE TABLE `tb_statusticket` (
   `idStatus` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `statusName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -88,14 +85,12 @@ CREATE TABLE `tb_statusticket` (
   PRIMARY KEY (`idStatus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci ROW_FORMAT=COMPACT;
 
--- ----------------------------
--- Records of tb_statusticket
--- ----------------------------
+/*Data for the table `tb_statusticket` */
 
--- ----------------------------
--- Table structure for tb_tenant
--- ----------------------------
+/*Table structure for table `tb_tenant` */
+
 DROP TABLE IF EXISTS `tb_tenant`;
+
 CREATE TABLE `tb_tenant` (
   `idTenant` int(11) NOT NULL AUTO_INCREMENT,
   `fullNameTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -108,14 +103,12 @@ CREATE TABLE `tb_tenant` (
   PRIMARY KEY (`idTenant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_tenant
--- ----------------------------
+/*Data for the table `tb_tenant` */
 
--- ----------------------------
--- Table structure for tb_tickets
--- ----------------------------
+/*Table structure for table `tb_tickets` */
+
 DROP TABLE IF EXISTS `tb_tickets`;
+
 CREATE TABLE `tb_tickets` (
   `idTicket` int(11) NOT NULL AUTO_INCREMENT,
   `dateCreated` datetime DEFAULT NULL,
@@ -133,42 +126,36 @@ CREATE TABLE `tb_tickets` (
   PRIMARY KEY (`idTicket`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_tickets
--- ----------------------------
+/*Data for the table `tb_tickets` */
 
--- ----------------------------
--- Table structure for tb_typetenant
--- ----------------------------
+/*Table structure for table `tb_typetenant` */
+
 DROP TABLE IF EXISTS `tb_typetenant`;
+
 CREATE TABLE `tb_typetenant` (
   `idTypeTenant` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `typeTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`idTypeTenant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_typetenant
--- ----------------------------
+/*Data for the table `tb_typetenant` */
 
--- ----------------------------
--- Table structure for tb_typeticket
--- ----------------------------
+/*Table structure for table `tb_typeticket` */
+
 DROP TABLE IF EXISTS `tb_typeticket`;
+
 CREATE TABLE `tb_typeticket` (
   `idTypeTicket` int(255) NOT NULL,
   `TypeTicketName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`idTypeTicket`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_typeticket
--- ----------------------------
+/*Data for the table `tb_typeticket` */
 
--- ----------------------------
--- Table structure for tb_user
--- ----------------------------
+/*Table structure for table `tb_user` */
+
 DROP TABLE IF EXISTS `tb_user`;
+
 CREATE TABLE `tb_user` (
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `fullNameUser` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -181,9 +168,13 @@ CREATE TABLE `tb_user` (
   `dateCreated` timestamp NULL DEFAULT NULL,
   `rezonSocial` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- ----------------------------
--- Records of tb_user
--- ----------------------------
-SET FOREIGN_KEY_CHECKS=1;
+/*Data for the table `tb_user` */
+
+insert  into `tb_user`(`idUser`,`fullNameUser`,`emailUser`,`phoneNumberUser`,`addresUser`,`passwordUser`,`idProfileKf`,`idStatusKf`,`dateCreated`,`rezonSocial`) values (1,'prueba','prueba','prueba','prueba','ab0ef57f283c0839c6352e673ecef0977e3176a0',1,1,NULL,'prueba');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
