@@ -53,6 +53,18 @@ class User extends REST_Controller {
     }
 
 
+     public function filterForm_get() {
+        $filters = $this->user_model->getFilterForm();
+
+        if (!is_null($filters)) {
+            $this->response($filters, 200);
+        } else {
+            $this->response(array('response' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+
+
     public function find_get($id) {
         if (!$id) {
             $this->response(NULL, 404);

@@ -113,17 +113,17 @@ class User_model extends CI_Model
     /* LISTADO DE FILTROS */
     public function getFilterForm() {
 
-       
+       $query = null;
         $profile = null;
         $status = null;
 
 
-        $this->db->select("*")->from("tb_profile")->get();
+        $query =  $this->db->select("*")->from("tb_profile")->get();
         if ($query->num_rows() > 0) {
             $profile = $query->result_array();
         }
 
-        $this->db->select("*")->from("tb_status")->get();
+        $query =  $this->db->select("*")->from("tb_status")->get();
         if ($query->num_rows() > 0) {
             $status = $query->result_array();
         }
