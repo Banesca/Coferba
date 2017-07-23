@@ -5,9 +5,35 @@ app.controller('myCtrl', function($scope, $http) {
 
  // alert();
 
+           $scope.editTravelInfo = function (travel) {
+        // LLAMAMOS A EL SERVICIO FILTROS PARA EL FORMULARIO //
+       
+        travel['dateFilter'] = $("#date").val();
+        var objTravel =
+                {
+                    travel
+                };
 
  $scope.testing = "jorge";
    
+       
+        $http.post(uri + 'travel/getFilterFormAsignDriver', objTravel).success(function (data) {
+
+            $scope.filterFronEdit = data;
+            $scope.idTravel = travel.idTravel;
+            $('#myEdit').modal('toggle');
+        
+
+        }).error(function (data,status) {
+                if(status == 404){notificate("!Informacion "+status,data.error,"info");}
+                else{notificate("Error !"+status," Contacte a Soporte","error");}
+               
+        });
+
+    }
+
+
+       });
 
     $scope.get = function() {
        
