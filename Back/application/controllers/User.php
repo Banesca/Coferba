@@ -1,0 +1,134 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require APPPATH . '/libraries/REST_Controller.php';
+
+class User extends REST_Controller {
+
+	public  function __construct()
+ 	{
+ 		parent::__construct();
+ 		$this->load->model('user_model');
+ 	}
+
+ 	/* SERVICIO QUE AUTENTIFICA  */
+	public function auth_post()
+	{
+
+		$user = $this->user_model->auth($this->post('user'));        
+        if(!is_null($user))
+        {
+        	$this->response(array('response' => $user),200);
+        }
+        else
+        {
+        	$this->response(array('error' => "Usuario Invalido"),203);
+        }
+               
+	}
+
+	public function index_post() {
+       
+        if (!$this->post('user')) {
+            $this->response(NULL, 404);
+        }
+
+        $user = $this->user_model->add($this->post('user'));
+
+        if (!is_null($user)) {
+            $this->response(array('response' => "USUARIO SISTEMA AGREGADO "), 200);
+        } else {
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+        }
+    }
+
+
+    /* SERVICIO GET QUE OBTIENE TODO LOS USUARIOS REGISTRADOS */
+    public function index_get() {
+
+        $user = $this->user_model->get();
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+
+    public function find_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->get($id);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+    /* SERVICIO GET QUE OBTIENE LOS USUARIOS POR FILTRO */
+    public function search_post() {
+
+        $searchFilter = $this->post('filter');
+
+        $user = $this->user_model->get(null, $searchFilter);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+     /* SERVICIO EDITA UN USUARIOS  */
+    public function update_post() {
+
+        if (!$this->post('user')) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = $this->user_model->update($this->post('user'));
+
+        if (!is_null($rs)) {
+            $this->response(array('response' => "USUARIO SISTEMA EDITADO"), 200);
+        } else {
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+        }
+    }
+
+    /* SERVICIO INACTIVA  UN USUARIOS POR ID */
+    public function inactive_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->changueStatus($id, 0);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+    /* SERVICIO INACTIVA  UN USUARIOS POR ID */
+    public function delete_delete($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->changueStatus($id, -1);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+}
+?>
