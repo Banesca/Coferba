@@ -116,6 +116,7 @@ class User_model extends CI_Model
        $query = null;
         $profile = null;
         $status = null;
+        $type = null;
 
 
         $query =  $this->db->select("*")->from("tb_profile")->get();
@@ -128,11 +129,17 @@ class User_model extends CI_Model
             $status = $query->result_array();
         }
 
+         $query =  $this->db->select("*")->from("tb_typetenant")->get();
+        if ($query->num_rows() > 0) {
+            $type = $query->result_array();
+        }
+
 
 
         $filter = array(
             'status'  => $status,
-            'profile' => $profile
+            'profile' => $profile,
+            'type' => $type
         );
 
         return $filter;
