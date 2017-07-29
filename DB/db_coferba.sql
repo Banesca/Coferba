@@ -21,17 +21,20 @@ USE `db_coferba`;
 DROP TABLE IF EXISTS `tb_department`;
 
 CREATE TABLE `tb_department` (
-  `idDepartment` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
+  `idDepartment` int(11) NOT NULL AUTO_INCREMENT,
   `departmentAddress` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `departmentFloor` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `deparmentNumber` int(11) DEFAULT NULL,
   `departmentLat` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `departmentLon` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `deparmentDescription` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `idStatusKf` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDepartment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `tb_department` */
+
+insert  into `tb_department`(`idDepartment`,`departmentAddress`,`departmentFloor`,`deparmentNumber`,`departmentLat`,`departmentLon`,`deparmentDescription`,`idStatusKf`) values (1,' edite AYACUCHO 559 ,  LORIDA ','1-A',900,'11.2222122','-11.212112','NO,BRE DEPARTAMNETO',1),(2,'NO,BRE DEPARTAMNETO','1-A',900,'11.2222122','-11.212112','AYACUCHO 559 ,  LORIDA',1);
 
 /*Table structure for table `tb_profile` */
 
@@ -98,12 +101,14 @@ CREATE TABLE `tb_tenant` (
   `phoneNumberTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `idDepartmentKf` int(11) DEFAULT NULL,
   `emailTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `idStatuKf` int(11) DEFAULT NULL,
+  `idStatusKf` int(11) DEFAULT NULL,
   `dateCrated` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idTenant`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `tb_tenant` */
+
+insert  into `tb_tenant`(`idTenant`,`fullNameTenant`,`idTypeKf`,`phoneNumberTenant`,`idDepartmentKf`,`emailTenant`,`idStatusKf`,`dateCrated`) values (1,'prueba EDITADA',1,'+58 9112237373',1,'nuevavlave',0,NULL),(2,'prueba nombre',1,'21931232182',1,'nuevavlave',1,NULL);
 
 /*Table structure for table `tb_tickets` */
 
@@ -140,6 +145,8 @@ CREATE TABLE `tb_typetenant` (
 
 /*Data for the table `tb_typetenant` */
 
+insert  into `tb_typetenant`(`idTypeTenant`,`typeTenantName`) values ('1','Inqulino'),('2','Dueño Departamento');
+
 /*Table structure for table `tb_typeticket` */
 
 DROP TABLE IF EXISTS `tb_typeticket`;
@@ -172,7 +179,7 @@ CREATE TABLE `tb_user` (
 
 /*Data for the table `tb_user` */
 
-insert  into `tb_user`(`idUser`,`fullNameUser`,`emailUser`,`phoneNumberUser`,`addresUser`,`passwordUser`,`idProfileKf`,`idStatusKf`,`dateCreated`,`rezonSocial`) values (1,'prueba','prueba','prueba','prueba','ab0ef57f283c0839c6352e673ecef0977e3176a0',1,1,NULL,'prueba');
+insert  into `tb_user`(`idUser`,`fullNameUser`,`emailUser`,`phoneNumberUser`,`addresUser`,`passwordUser`,`idProfileKf`,`idStatusKf`,`dateCreated`,`rezonSocial`) values (1,'prueba editada','prueba','prueba','prueba','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,-1,NULL,'prueba');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
