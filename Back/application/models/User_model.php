@@ -153,7 +153,7 @@ class User_model extends CI_Model
         )->where("idUser", $user['idUser'])->update("tb_user");
 
 
-        if ($user['isEditUser']) {
+        if (@$user['isEditUser']) {
 
             $this->db->set(
                     array(

@@ -126,6 +126,22 @@ class User extends REST_Controller {
         }
     }
 
+     /* SERVICIO ACTIVAR  UN USUARIOS POR ID */
+    public function active_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->changueStatus($id, 1);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     /* SERVICIO INACTIVA  UN USUARIOS POR ID */
     public function delete_delete($id) {
         if (!$id) {

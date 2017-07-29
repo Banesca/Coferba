@@ -12,11 +12,70 @@
   }
 }
 
+---------------------- EDITAR USUARIO -------------------
+http://127.0.0.1/Coferba/Back/index.php/User/update
 
- <div class="form-group">
-                        <label class="control-label caption-subject font-blue-ebonyclay bold uppercase">Forma de Pago</label>
-                        <samp class="font-red-sunglo font-lg">*</samp>
-                        <select ng-required="true" class="form-control" ng-options="item.idPaymentForm as item.namePaymentForm for item in filterForm.payform" ng-model="idPaymentFormAsigned" name="idVeichleOwnerAsigned" ng-change="putCheck()">
-                            <option value="">Seleccione</option>
-                        </select>
-                    </div>
+METODO : POST 
+
+{
+  
+  "user":
+  {
+    "fullNameUser" : "prueba editada",
+    "emailUser" : "prueba",
+    "phoneNumberUser" : "prueba",
+    "addresUser" : "prueba",
+    "passwordUser" : "prueba",
+    "idProfileKf" : "1",
+    "rezonSocial" : "prueba",
+    "idUser": 1
+  }
+}
+}
+
+---------------------- EDITAR USUARIO  Y CAMBIAR CLAVE -------------------
+http://127.0.0.1/Coferba/Back/index.php/User/update
+METODO : POST 
+
+{
+  
+  "user":
+  {
+    "fullNameUser" : "prueba editada",
+    "emailUser" : "prueba",
+    "phoneNumberUser" : "prueba",
+    "addresUser" : "prueba",
+    "passwordUser" : "nuevavlave",
+    "idProfileKf" : "1",
+    "rezonSocial" : "prueba",
+    "idUser": 1,
+    "isEditUser": true
+  }
+}
+}
+
+
+
+---------------------- OBTENER UN USUARIO POR ID --------------
+http://127.0.0.1/Coferba/Back/index.php/User/find/1
+"1 es el id"
+METODO : GET 
+
+---------------------- ACTIVAR UN USUARIO POR ID --------------
+http://127.0.0.1/Coferba/Back/index.php/User/active/1
+"1 es el id"
+METODO : GET 
+
+---------------------- INACTIVAR  UN USUARIO POR ID --------------
+http://127.0.0.1/Coferba/Back/index.php/User/inactive/1
+"1 es el id"
+METODO : GET 
+
+---------------------- ELIMINAR UN USUARIO POR ID --------------
+http://127.0.0.1/Coferba/Back/index.php/User/delete/1
+"1 es el id"
+METODO : delete 
+
+
+
+
