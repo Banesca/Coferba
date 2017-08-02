@@ -89,7 +89,7 @@ class User_model extends CI_Model
     /* AGRAGR NUEVO USUARIO EMPRESA */
     public function add($user) {
 
-        /* CREAMOS UN USUARIO PARA ESE CLIENE */
+        /* CREAMOS UN USUARIO */
         $this->db->insert('tb_user', array(
             'fullNameUser' => $user['fullNameUser'],
             'emailUser' => $user['emailUser'],

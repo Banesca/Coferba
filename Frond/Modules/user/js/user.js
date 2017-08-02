@@ -26,7 +26,6 @@ app.controller('coferbaCtrl', function($scope, $http) {
             url : "http://localhost/Coferba/Back/index.php/User"
           }).then(function mySuccess(response) {
               $scope.listUsers = response.data;
-              //alert($scope.listUsers[0].fullNameUser);
             }, function myError(response) {
           });
       }
@@ -59,21 +58,32 @@ app.controller('coferbaCtrl', function($scope, $http) {
           });
 
       }
-     $scope._setuser = function () {
+     $scope._setuser = function ($userType) {
+
         var user =
                 {
-                    user:
-                            {
-                                //idBox: $routeParams.id,
-                                fullNameUser: $scope.fname+$scope.lname,
-                                //IdUserKf: JSON.parse(localStorage.getItem('session')).idUser,
-                                emailUser: $scope.emailUser,
-                                phoneNumberUser: $scope.phoneNumberUser,
-                                addresUser: $scope.addresUser,
-                                passwordUser: $scope.passwordUser,
-                                idProfileKf: $scope.idProfileKf
-                                //razonSocial: $scope.razonSocial
-                            }
+                    if ($userType==1){
+                      user:
+                              {
+                                  fullNameUser: $scope.fname+$scope.lname,
+                                  emailUser: $scope.emailUser,
+                                  phoneNumberUser: $scope.phoneNumberUser,
+                                  addresUser: $scope.addresUser,
+                                  passwordUser: $scope.passwordUser,
+                                  idProfileKf: $scope.idProfileKf,
+                                  razonSocial: $scope.razonSocial
+                              }
+                    }else if($userType==2){
+                      user:
+                              {
+                                  fullNameTenant: $scope.fname+$scope.lname,
+                                  idTypeKf: $scope.idTypeKf,
+                                  phoneNumberTenant: $scope.phoneNumberUser,
+                                  emailTenant: $scope.emailTenant
+
+                              }
+                    }
+                  }
                 };
         return user;
     };
@@ -87,9 +97,9 @@ app.controller('coferbaCtrl', function($scope, $http) {
             }, function myError(response) {
              //alert(response.statusText);
           });
-       
-
-
     }
 
- });
+}); /*Cierre del JS*/
+
+
+ 
