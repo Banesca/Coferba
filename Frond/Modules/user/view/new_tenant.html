@@ -1,13 +1,14 @@
-<form name="fNewUser" ng-init="loadList()">
-	<label>Nombres:</label><input type="text"  ng-model="fname" name="fname" required><br><br>
-	<label>Apellidos:</label><input type="text"  ng-model="lname" name="lname" required><br><br>
-	<label>Correo:</label><input type="text"  ng-model="emailUser" name="emailUser" type="email" required><br><br>
-	<label>Telefono:</label><input type="text"  ng-model="phoneNumberUser" name="phoneNumberUser" required><br><br>
+<form name="fNewTenant" ng-init="CallFilterForm()">
+	<label>Nombres:</label><input type="text"  ng-model="fname" required/><br><br>
+	<label>Apellidos:</label><input type="text"  ng-model="lname" required/><br><br>
+	<label>Correo:</label><input type="text"  ng-model="emailUser" type="email" required/><br><br>
+	<label>Telefono:</label><input type="text"  ng-model="phoneNumberUser" required/><br><br>
 	<label>Tipo: </label>
-    <select class="form-control" ng-options="item.idTypeTenant as item.typeTenantName for item in listType" ng-model="idTypeKf" name="idTypeKf" required>
+    <select class="form-control" ng-options="item.idTypeTenant as item.typeTenantName for item in listType" ng-model="idTypeKf" required />
         <option value=""></option>
     </select><br><br>
-	<label>Direcci&#243n:</label><input type="text"  ng-model="addresUser" name="adresUser" required><br><br>
-<input type="button" value="Registrar" ng-click="addUser()" name="uRegister">
+	<label>Direcci&#243n:</label><input type="text"  ng-model="addresUser" name="adresUser" required /><br><br>
+	<button type="submit" ng-disabled="!fNewTenant.$valid" ng-click="addUser()" name="uRegister">Registrar</button>
+	<button type="reset" class="button radius alert large-5 columns">Cancelar</button>
 </form>
 

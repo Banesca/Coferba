@@ -1,25 +1,9 @@
-<!--LINK HEADER -->
-<script src="../../../assets/js/angular.min.js"></script>
-<div  ng-app="coferbaApp" ng-controller="coferbaCtrl">
-<div ng-include="'../../Partial/Header.html'"></div>
-
-<!--MENU-->
-		<div ng-include="'../../Partial/Menu.html'"></div>
-
-<!--USER REGISTER-->
-
-<!--VALIDATE IF IS A NEW USER OR NEW TENANT-->
-<div>
-	
-</div>
-
-
 <form name="searchUser" ng-init="loadList()">
 <!--SEARCH FIELDS-->
 	<label>Correo:</label><input type="text"  ng-model="emailUser" name="emailUser" type="email" required><br><br>
 	<label>Contrase&#241a:</label><input type="text"  ng-model="passwordUser" name="passwordUser" required><br><br>
 	<label>Telefono:</label><input type="text"  ng-model="phoneNumberUser" name="phoneNumberUser" required><br><br>
-	<!--TYPE: OWNER OR TENANT-->
+
 	<label>Tipo: </label>
     <!--<select class="form-control" ng-options="item.idProfile as item.nameProfile for item in profile" ng-model="idTypeKf" name="idTypeKf" required>
         <option value=""></option>
@@ -42,9 +26,3 @@
 	<label>Telefono:</label><input type="text"  ng-model="phoneNumberUser" name="phoneNumberUser" required><br><br>
 	<label>Direcci&#243n:</label><input type="text"  ng-model="addresUser" name="adresUser" required><br><br>
 	<label>Perfil: </label><input type="text"  ng-model="idProfileKf" name="idProfileKf" required><br><br>
-
-<!--LINK FOOTER -->
-<div ng-include="'../../Partial/Footer.html'"></div>
-</div>
-<!-- CONTROLADOR ANGULAR -->
-<script src="../js/user.js"></script> 

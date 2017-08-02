@@ -24,7 +24,7 @@ class User_model extends CI_Model
 
 			$user = $query->row_array();
 
-		}
+		} 
 
 		return $user;
 	}
@@ -41,6 +41,7 @@ class User_model extends CI_Model
 
             $this->db->select("*")->from("tb_user");
             $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idUser', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
             $quuery = $this->db->where("tb_user.idUser = ", $id)->get();
 
@@ -55,6 +56,7 @@ class User_model extends CI_Model
 
             $this->db->select("*")->from("tb_user");
             $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idUser', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 
             /* Busqueda por filtro */
@@ -72,7 +74,7 @@ class User_model extends CI_Model
                 $this->db->limit($searchFilter['topFilter']);
             } 
 
-            $quuery = $this->db->order_by("tb_user.idUser", "DESC")->get();
+            $quuery = $this->db->order_by("tb_user.idUser", "ASC")->get();
 
 
             if ($quuery->num_rows() > 0) {

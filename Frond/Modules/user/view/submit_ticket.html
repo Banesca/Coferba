@@ -6,48 +6,6 @@
 <!--MENU-->
 <div ng-include="'../../Partial/Menu.html'"></div>
 
-<!--USER REGISTER-->
-
-<!--USER ENTERPRISE-->
-<form ng-init="CallFilterForm()">
-<span>Razon Social: </span>
-<input type="text"  ng-model="razonSocial" name="razonSocial"><br><br>
-
-<!--USER RESIDENCIAL-->
-<span>Nombres:       </span>
-<input type="text"  ng-model="fname" name="fname"><br><br>
-<span>Apellidos:     </span>
-<input type="text"  ng-model="lname" name="lname"><br><br>
-
-<!--RELATED FIELDS-->
-<span>Correo:        </span>
-<input type="text"  ng-model="emailUser" name="emailUser"><br><br>
-<span>Contrase&#241a:</span>
-<input type="text"  ng-model="passwordUser" name="passwordUser"><br><br>
-<span>Telefono:      </span>
-<input type="text"  ng-model="phoneNumberUser" name="phoneNumberUser"><br><br>
-<span>Direcci&#243n: </span>
-<input type="text"  ng-model="addresUser" name="adresUser"><br><br>
-<div class="form-group">
-    <label class="">Perfil: </label>
-    <samp class="">*</samp>
-    <select ng-required="true" class="form-control" ng-options="item.idProfile as item.nameProfile for item in profile" ng-model="idProfileKf" name="idProfileKf" >
-        <option value="">Seleccione</option>
-    </select>
-</div>
-
-
-
-
-
-
-<input type="button" value="Registrar" ng-click="addUser()" name="uRegister">
-
-
-</form>
-
-
-
 
 
 

@@ -1,15 +1,53 @@
- var app = angular.module('myApp', []);
+ var app = angular.module('coferbaApp', []);
 
-app.controller('myCtrl', function($scope, $http) {
-   
+app.controller('coferbaCtrl', function($scope, $http) {
+    $scope.check=false;
+    $buttonAdmCount=0;
+    $buttonTenaCount=0;
+    /*Validate the button click */
+    $scope.Validate = function($idView){
+            if ($idView==1) {
+              $scope.check=true;
+              $scope.idView=$idView;
+              $buttonAdmCount++;
+                if ($buttonAdmCount==2){$scope.check=false; $buttonAdmCount=0;}
+            }else if($idView==2) {
+              $scope.check=true;
+              $scope.idView=$idView;
+              $buttonTenaCount++;
+                if ($buttonTenaCount==2){$scope.check=false; $buttonTenaCount=0;}
+            }
+          
+    }
 
+    $scope.CallListForm = function(){
+         $http({
+            method : "GET",
+            url : "http://localhost/Coferba/Back/index.php/User"
+          }).then(function mySuccess(response) {
+              $scope.listUsers = response.data;
+              //alert($scope.listUsers[0].fullNameUser);
+            }, function myError(response) {
+          });
+      }
+
+      $scope.CallFilterForm = function(){
+         $http({
+            method : "GET",
+            url : "http://localhost/Coferba/Back/index.php/User/filterForm"
+          }).then(function mySuccess(response) {
+              $scope.listProfile = response.data.profile;
+              $scope.listType = response.data.type;
+            }, function myError(response) {
+          });
+      }
 
 
       $scope.addUser = function () 
       {
         // LLAMAMOS A EL SERVICIO FILTROS PARA EL FORMULARIO //
-        $http.post('http://127.0.0.1/Coferba/Back/index.php/User', $scope._setuser())
-        .success(function (data) {
+        $http.post('http://localhost/Coferba/Back/index.php/User', $scope._setuser())
+            .success(function (data) {
 
              alert("Registrado ");
 
@@ -21,36 +59,24 @@ app.controller('myCtrl', function($scope, $http) {
           });
 
       }
-
-
      $scope._setuser = function () {
         var user =
                 {
                     user:
                             {
-                                idBox: $routeParams.id,
-                                idIngressTypeAsigned: $scope.idIngressTypeAsigned,
-                                IdUserKf: JSON.parse(localStorage.getItem('session')).idUser,
-                                idClientAsigned: idCliente,
-                                idBoxTypeAsigned: $scope.idBoxTypeAsigned,
-                                idPaymentFormAsigned: $scope.idPaymentFormAsigned,
-                                idConditionTypeIngress: $scope.idConditionTypeIngress,
-                                amountBox: amountBox,
-                                idInvoiceHeaderKf: idInvoiceHeaderKf,
-                                idDriverAsigned : idDriver,
-                                listChecks: $scope.Checks,
-                                idHeaderInvoi:$scope.idHeaderInvoi
-
+                                //idBox: $routeParams.id,
+                                fullNameUser: $scope.fname+$scope.lname,
+                                //IdUserKf: JSON.parse(localStorage.getItem('session')).idUser,
+                                emailUser: $scope.emailUser,
+                                phoneNumberUser: $scope.phoneNumberUser,
+                                addresUser: $scope.addresUser,
+                                passwordUser: $scope.passwordUser,
+                                idProfileKf: $scope.idProfileKf
+                                //razonSocial: $scope.razonSocial
                             }
                 };
         return user;
     };
-
-
-
-
-     
-
     $scope.get = function() {
        
          $http({
@@ -65,15 +91,5 @@ app.controller('myCtrl', function($scope, $http) {
 
 
     }
-
-
-
-
-    $scope.metodo = function () {
-      // body...
-
-      $scope.testing = $scope.nombre;
-    }
-
 
  });
