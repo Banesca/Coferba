@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+
+<script src="jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="bootstrap.min.css"  >
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="bootstrap.min.js" ></script>
+<head>
+	<title></title>
+</head>
+<body style="background-color: #f1f1f1">
+
+<div style="margin:   20px;">
+  <div class="row">
+    <div class="col-lg-12" style="background-color: #f1f1f1">
+      <div class="row">
+				
+
+				<div class="row" >
+  
+  <div class="col-lg-2">
+
+  <div class="form-group">
+  <label for="sel1">Tipo De Usario:</label>
+  <select class="form-control" id="sel1">
+    <option>Inquilino</option>
+    <option>Propietarios</option>
+    <option>ADMIN CONSORCION</option>
+    <option>ADMIN COFERBA</option>
+    <option>Empresa</option>
+  </select>
+</div>
+
+
+    
+  </div>
+  <div class="col-lg-2">
+
+  <div class="form-group">
+  <label for="sel1">Tipo</label>
+  <select class="form-control" id="sel1">
+    <option>Solicitud</option>
+    <option>Servicio</option>
+  </select>
+</div>
+
+
+    
+  </div>
+  <div class="col-lg-2">
+
+  <div class="form-group">
+  <label for="sel1">Status:</label>
+  <select class="form-control" id="sel1">
+    <option>Activas</option>
+    <option>En Espera</option>
+    <option>Canceladas</option>
+    <option>Eliminadas</option>
+  </select>
+</div>
+
+
+    
+  </div><!-- /.col-lg-6 -->
+
+  <div class="col-lg-2">
+  <br>
+
+    <div class="input-group" style="    margin-top: 5px;
+">
+      <input type="text" class="form-control" placeholder="...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Buscar!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+
+<div class="col-lg-2">
+  <br>
+   <button type="button" class="btn btn-success">Nueva Solicitud</button>
+  </div>
+
+  <div class="col-lg-2">
+  <br>
+   <button type="button" class="btn btn-info">Nuevo Servicio</button>
+  </div>
+
+
+
+
+ 
+
+
+</div><!-- /.row -->
+		
+   
+  
+  </div>
+
+  <div class="row" style="background-color: #f4fbff">
+   
+     <div class="col-lg-3">
+     	<span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+     	<label>Total Ticket Finalizados</label>
+     	<label style="color: #39af24;font-size: 20px;">90</label>
+     </div>
+      <div class="col-lg-3">
+     	<span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
+     	<label>Total Ticket Cancelados</label>
+     	<label style="color: #af2424;font-size: 20px;">70</label>
+     </div>
+     <div class="col-lg-3">
+     	<span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+     	<label>Total Ticket Pendientes</label>
+     	<label  style="color: #af8424;font-size: 20px;">10</label>
+     </div>
+      <div class="col-lg-3">
+     	<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+     	<label>Total</label>
+     	<label style="font-size: 20px;">179</label>
+     </div>
+   
+   
+  </div>
+
+  <div class="row" style="
+    overflow: auto;
+    max-height: 500px;
+">
+
+  <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000001</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-danger">Inactiva</button>
+  <button type="button" class="btn btn-lg btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+    <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000002</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-warning">En Espera</button>
+  <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+     <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000003</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+    <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000002</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-warning">En Espera</button>
+  <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+     <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000003</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+    <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000002</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-warning">En Espera</button>
+  <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+     <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000003</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+    <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000002</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-warning">En Espera</button>
+  <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+     <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000003</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+    <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000002</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-warning">En Espera</button>
+  <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+     <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000003</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>		
+
+    <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000002</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-warning">En Espera</button>
+  <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+     <div class="col-lg-12" style="background-color: #ced3d6;
+    height: 72px;
+    border-radius: 10px;
+    padding: 10px;
+     margin-bottom: 5px;
+}">
+
+
+<div class="col-lg-10">
+	 <label>TK-00000003</label><br>
+      <label>Creado el:02-12-2017 8:00</label> - 
+      <label>Aprobada el:02-13-2017 9:00</label> - 
+      <label>Cliente:Inquilino</label> - 
+	  <label>Jose Martinez</label> 
+</div>
+
+<div class="col-lg-2">
+	 <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Aprobar</a></li>
+    <li><a href="#">Finalizar</a></li>
+    <li><a href="#">Cancelar</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Ver Detalle</a></li>
+  </ul>
+</div>
+</div>
+
+     
+    </div>
+
+
+
+
+  </div>
+
+
+
+</div>
+
+</body>
+</html>
