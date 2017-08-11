@@ -1,0 +1,74 @@
+ 
+@font-face { 
+    font-family: "FontAwesome"; 
+    font-style: normal; 
+    font-weight: normal; 
+    src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg"); 
+} 
+.fa { 
+    display: inline-block; 
+    font-family: FontAwesome; 
+    font-feature-settings: normal; 
+    font-kerning: auto; 
+    font-language-override: normal; 
+    font-size: inherit; 
+    font-size-adjust: none; 
+    font-stretch: normal; 
+    font-style: normal; 
+    font-synthesis: weight style; 
+    font-variant: normal; 
+    font-weight: normal; 
+    line-height: 1; 
+    text-rendering: auto; 
+    transform: translate(0px, 0px); 
+} 
+.fa-lg { 
+    font-size: 1.33333em; 
+    line-height: 0.75em; 
+    vertical-align: -15%; 
+} 
+.fa-2x { 
+    font-size: 2em; 
+} 
+.fa-3x { 
+    font-size: 3em; 
+} 
+.fa-4x { 
+    font-size: 4em; 
+} 
+.fa-5x { 
+    font-size: 5em; 
+} 
+.fa-fw { 
+    text-align: center; 
+    width: 1.28571em; 
+} 
+.fa-ul { 
+    list-style-type: none; 
+    margin-left: 2.14286em; 
+    padding-left: 0; 
+} 
+.fa-ul > li { 
+    position: relative; 
+} 
+.fa-li { 
+    left: -2.14286em; 
+    position: absolute; 
+    text-align: center; 
+    top: 0.142857em; 
+    width: 2.14286em; 
+} 
+.fa-li.fa-lg { 
+    left: -1.85714em; 
+} 
+.fa-border { 
+    border: 0.08em solid #eee; 
+    border-radius: 0.1em; 
+    padding: 0.2em 0.25em 0.15em; 
+} 
+.pull-right { 
+    float: right; 
+} 
+.pull-left { 
+    float: left; 
+} 
