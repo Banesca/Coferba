@@ -1,24 +1,13 @@
  var app = angular.module('coferbaApp', []);
 
 app.controller('coferbaCtrl', function($scope, $http) {
-    $scope.check=false;
-    $buttonAdmCount=0;
-    $buttonTenaCount=0;
-    /*Validate the button click */
-    $scope.Validate = function($idView){
-            if ($idView==1) {
-              $scope.check=true;
-              $scope.idView=$idView;
-              $buttonAdmCount++;
-                if ($buttonAdmCount==2){$scope.check=false; $buttonAdmCount=0;}
-            }else if($idView==2) {
-              $scope.check=true;
-              $scope.idView=$idView;
-              $buttonTenaCount++;
-                if ($buttonTenaCount==2){$scope.check=false; $buttonTenaCount=0;}
-            }
-          
-    }
+     $userType=0;
+     $urlAddT='http://localhost/Coferba/Back/index.php/Tenant';
+     $urlAddU='http://localhost/Coferba/Back/index.php/User';
+     /*Validate if the user is a company */
+     $scope.getSelectedData = function(){$scope.selectedItem=$scope.idProfileKf;
+        if ($scope.selectedItem==2){$scope.cpnyinput=true;}else{$scope.cpnyinput=false;}
+     }
 
     $scope.CallListForm = function(){
          $http({
@@ -42,49 +31,51 @@ app.controller('coferbaCtrl', function($scope, $http) {
       }
 
 
-      $scope.addUser = function () 
-      {
-        // LLAMAMOS A EL SERVICIO FILTROS PARA EL FORMULARIO //
-        $http.post('http://localhost/Coferba/Back/index.php/User', $scope._setuser())
-            .success(function (data) {
+      $scope.addUser = function ($uType){
+        $userType = $uType;
+        var urlAdd= "";
+        if ($userType==1){urlAdd=$urlAddU;}else if ($userType==2){urlAdd=urlAddT;}
+        $http.post(urlAdd, $scope._setuser())
+            .then(function (sucess, data) {
 
              alert("Registrado ");
 
-          }).error(function (data,status) {
+          },function (error, data,status) {
                   if(status == 404){alert("!Informacion "+status+data.error+"info");}
                   else if(status == 203){alert("!Informacion "+status,data.error+"info");}
                   else{alert("Error !"+status+" Contacte a Soporte"+"error");}
                  
           });
-
       }
-     $scope._setuser = function ($userType) {
-
+     $scope._setuser = function () {
+      var itemSelected="";
+       if ($scope.selectedItem==2){itemSelected=$scope.razonSocial;}
+       if ($userType==1){
         var user =
                 {
-                    if ($userType==1){
                       user:
                               {
-                                  fullNameUser: $scope.fname+$scope.lname,
+                                  fullNameUser: $scope.fname+' '+$scope.lname,
                                   emailUser: $scope.emailUser,
                                   phoneNumberUser: $scope.phoneNumberUser,
                                   addresUser: $scope.addresUser,
                                   passwordUser: $scope.passwordUser,
                                   idProfileKf: $scope.idProfileKf,
-                                  razonSocial: $scope.razonSocial
+                                  razonSocial: itemSelected
                               }
-                    }else if($userType==2){
+                };
+        }else if($userType==2){
+           var user =
+                {
                       user:
                               {
                                   fullNameTenant: $scope.fname+$scope.lname,
-                                  idTypeKf: $scope.idTypeKf,
                                   phoneNumberTenant: $scope.phoneNumberUser,
-                                  emailTenant: $scope.emailTenant
+                                  emailTenant: $scope.emailUser
 
                               }
-                    }
-                  }
                 };
+        }
         return user;
     };
     $scope.get = function() {
@@ -99,7 +90,57 @@ app.controller('coferbaCtrl', function($scope, $http) {
           });
     }
 
-}); /*Cierre del JS*/
+}); /*Cierre del JS ANGULAR*/
 
+/*JQUERY SHOW/HIDE */
+$(document).ready(function() {
 
- 
+    $('#registerU').hide();
+    $('#registerT').hide(); 
+    $('#loginType').hide();
+    $('#registerType').hide();
+    $('#loginU').hide();
+    $('#loginT').hide();
+    
+    /*Login Button*/
+    $('#lr1').click(function(){
+        $('#loginType').show();
+        $('#loginRegister').hide();  
+    });
+    /*Login Type*/
+    $('#lt1').click(function(){
+        $('#loginU').show();
+        $('#loginType').hide();  
+    });
+     $('#lt2').click(function(){
+        $('#loginT').show();
+        $('#loginType').hide();  
+    });
+    /*Register Button*/
+    $('#lr2').click(function(){
+        $('#registerType').show();
+        $('#loginRegister').hide();  
+    });
+    /*Register Button*/
+    $('#rt1').click(function(){
+        $('#registerType').hide();
+        $('#registerU').show();  
+    });
+    $('#rt2').click(function(){
+        $('#registerType').hide();
+        $('#registerT').show();  
+    });
+    /*Close Form*/
+    $('.frmclose').click(function(){
+        $('#loginRegister').show();
+        $('#loginU').hide();
+        $('#registerU').hide();
+        $('#registerT').hide();
+        $('#loginT').hide();
+    });
+    /*Button Reset*/
+    $('#breset').click(function(){
+        $('#loginRegister').show();
+        $('#loginU').hide();
+    });
+});

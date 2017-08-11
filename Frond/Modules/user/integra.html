@@ -1,0 +1,456 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Coferba | INTEGRA </title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Custom Theme files -->
+<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all">  
+<link href="css/font-awesome.css" rel="stylesheet">  <!-- font-awesome icons -->
+<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="all">
+<!-- //Custom Theme files --> 
+<!-- js --> 
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js" type="text/javascript"></script>
+<script src="js/bootstrapValidatorform.js" type="text/javascript"></script>-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="../../assets/js/angular.min.js"></script>
+<!-- //js -->
+<style type="text/css">
+  #success_message{ display: none;}
+</style>
+<!-- web-fonts -->  
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet"> 
+<link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
+<!-- //web-fonts -->
+</head>
+<body> 
+<!--ANGULAR APP -->
+<div  ng-app="coferbaApp" ng-controller="coferbaCtrl">
+	<!--Menu-->
+	<div  class="banner-agileinfo">
+		<div class="container">		
+			<div class="w3header"> <!--header--> 
+				<nav class="navbar navbar-default">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<div class="border-logo"><a href="index.html"><img src="images/logo.png" width="300" height="80"></a></div>
+					</div>
+					<!-- navbar-header -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul ng-show=menuLogedUser class="nav navbar-nav navbar-right">
+							<li><a href="index.html" class="active">Inicio</a></li>
+							<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Acceso <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Usuarios</a></li>
+										<li><a href="#">Inquilinos</a></li>
+									</ul>
+							</li> 
+							<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registar <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Usuarios</a></li>
+										<li><a href="#">Inquilinos</a></li>
+									</ul>
+							</li> 
+							<li><a href="#">Administrar usuarios</a></li>
+							<li><a href="#">Reportes</a></li>
+						</ul> 
+						<div class="clearfix"> </div>	
+					</div>
+				</nav>
+			</div> 
+		</div>
+	</div>
+	<!-- Login&Register Button--> 
+	<div class="agileits-w3layouts">
+		<div class="container">
+			<div class="banner-w3text">
+				<div id="loginRegister">
+					<a id="lr1" class="w3btn">Entrar</a>
+				 	<a id="lr2" class="w3btn">Registrar</a>
+				</div>
+				<div id="loginType">
+					<a id="lt1" class="w3btn">Usuarios</a>
+					<a id="lt2" class="w3btn">Inquilinos</a>
+				</div>
+				<div id="registerType">
+					<a id="rt1" class="w3btn">Usuarios</a>
+					<a id="rt2" class="w3btn">Inquilinos</a>
+				</div>		
+			</div>
+		</div>
+	</div>
+	<!-- //Login&Register Button--> 
+	<!-- USER LOGIN FORM -->
+	<div id="loginU" class="agileits-w3layouts"> 
+		<div class="container">
+			<div class="agileits-title">
+				<!-- FORM CONTAINER-->
+		    	<form class="well form-horizontal" id="fLoginUser" >
+					<fieldset>
+					<legend>Login<a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
+					<!-- Text Mail-->
+					<div class="form-group">
+						 <label class="col-md-4 control-label">E-Mail</label>  
+						   <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
+						    </div>
+						  </div>
+					</div>
+					<!-- Text Password-->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Contrase&#241a</label>  
+					    <div class="col-md-4 inputGroupContainer">
+					    <div class="input-group">
+					        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" type="password">
+					    </div>
+						</div>
+					</div>
+					<!-- Actions Button -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label"></label>
+					  <div class="col-md-4">
+					    <button id="uRegister" type="submit" ng-click="" class="btn btn-warning" >Entrar <span class="glyphicon glyphicon-ok"></span></button>
+					    <button id="breset" type="reset" ng-click="loginU=false" class="btn btn-warning">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+					  </div>
+					</div>
+
+					</fieldset>
+				</form>
+			</div>
+		</div>
+				<div class="clearfix"> </div> 
+	</div>
+	<!-- TENANT LOGIN FORM -->
+	<div id="loginT" class="agileits-w3layouts"> 
+		<div class="container">
+			<div class="agileits-title">
+				<!-- FORM CONTAINER-->
+		    	<form class="well form-horizontal" id="fLoginTenant" >
+					<fieldset>
+					<legend>Inquilino<a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
+					<!-- Text Mail-->
+					<div class="form-group">
+						 <label class="col-md-4 control-label">E-Mail</label>  
+						   <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
+						    </div>
+						  </div>
+					</div>
+					<!-- Text Password-->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Contrase&#241a</label>  
+					    <div class="col-md-4 inputGroupContainer">
+					    <div class="input-group">
+					        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" type="password">
+					    </div>
+						</div>
+					</div>
+					<!-- Actions Button -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label"></label>
+					  <div class="col-md-4">
+					    <button id="uRegister" type="submit" ng-click="" class="btn btn-warning" >Entrar <span class="glyphicon glyphicon-ok"></span></button>
+					    <button id="breset" type="reset" ng-click="loginU=false" class="btn btn-warning">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+					  </div>
+					</div>
+
+					</fieldset>
+				</form>
+			</div>
+		</div>
+				<div class="clearfix"> </div> 
+	</div>
+	<!-- USER REGISTER FORM -->
+	<div id="registerU" class="agileits-w3layouts"> 
+		<div class="container">
+			<div class="agileits-title">
+				<!-- FORM CONTAINER-->
+		    	<form class="well form-horizontal" id="fNewUser" ng-init="CallFilterForm(); checkRS=false">
+					<fieldset>
+					<!-- Form First Name -->
+
+					<legend>Registro de Usuario<a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Nombre</label>  
+						  <div class="col-md-4 inputGroupContainer">
+							  <div class="input-group">
+								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required="true">
+							  </div>
+						  </div>
+					</div>
+					<!-- Form Last Name -->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label" >Apellido</label> 
+					  	<div class="col-md-4 inputGroupContainer">
+							<div class="input-group">
+						  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
+							</div>
+					  	</div>
+					</div>
+					<!-- Text Mail-->
+
+					<div class="form-group">
+					 <label class="col-md-4 control-label">E-Mail</label>  
+					   <div class="col-md-4 inputGroupContainer">
+					    <div class="input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+					  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
+					    </div>
+					  </div>
+					</div>
+					<!-- Text Password-->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Contrase&#241a</label>  
+					    <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" type="password">
+						    </div>
+						</div>
+					</div>
+					<!-- Text Phone-->
+					       
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Telefono</label>  
+					    <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+						  		<input name="phone" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberUser" type="text">
+						    </div>
+					  </div>
+					</div>
+					<!-- Text Address-->
+					      
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Direcci&#243n</label>  
+					    <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+						  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
+						    </div>
+					  </div>
+					</div>
+					<!-- Select profile -->
+					   
+					<div class="form-group"> 
+					  <label class="col-md-4 control-label">Perfil</label>
+					    <div class="col-md-4 selectContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								    <select name="idProfileKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="idProfileKf" >
+								    	<option value=""></option>
+							    	</select>
+						  	</div>
+						</div>
+					</div>
+					<!-- Company names-->
+					      
+					<div ng-show="cpnyinput" class="form-group">
+					  <label class="col-md-4 control-label">Razon Social</label>  
+					    <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+						  		<input name="razonSocial" placeholder="Razon Social" class="form-control" ng-disabled="checkRS" ng-model="razonSocial" type="text">
+						    </div>
+					  </div>
+					</div>
+
+					<!-- Success message -->
+					<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>
+
+					<!-- Actions Button -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label"></label>
+					  <div class="col-md-4">
+					    <button id="uRegister" type="submit" ng-click="addUser(1)" class="btn btn-warning" >Registrar <span class="glyphicon glyphicon-ok"></span></button>
+					    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-warning">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+					  </div>
+					</div>
+
+					</fieldset>
+				</form>
+				<div class="clearfix"> </div> 
+			</div>
+		</div>
+	</div>
+		<!-- TENANT REGISTER FORM -->
+	<div id="registerT" class="agileits-w3layouts"> 
+		<div class="container">
+			<div class="agileits-title">
+				<!-- FORM CONTAINER-->
+		    	<form class="well form-horizontal" id="fNewTent" ng-init="CallFilterForm(); checkRS=false">
+					<fieldset>
+					<!-- Form First Name -->
+
+					<legend>Inquilino<a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Nombre</label>  
+						  <div class="col-md-4 inputGroupContainer">
+							  <div class="input-group">
+								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required="true">
+							  </div>
+						  </div>
+					</div>
+					<!-- Form Last Name -->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label" >Apellido</label> 
+					  	<div class="col-md-4 inputGroupContainer">
+							<div class="input-group">
+						  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
+							</div>
+					  	</div>
+					</div>
+					<!-- Text Mail-->
+
+					<div class="form-group">
+					 <label class="col-md-4 control-label">E-Mail</label>  
+					   <div class="col-md-4 inputGroupContainer">
+					    <div class="input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+					  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
+					    </div>
+					  </div>
+					</div>
+					<!-- Text Phone-->
+					       
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Telefono</label>  
+					    <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+						  		<input name="phone" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberUser" type="text">
+						    </div>
+					  </div>
+					</div>
+					<!-- Text Address-->
+					      
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Direcci&#243n</label>  
+					    <div class="col-md-4 inputGroupContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+						  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
+						    </div>
+					  </div>
+					</div>
+
+					<!-- Success message -->
+					<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>
+
+					<!-- Actions Button -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label"></label>
+					  <div class="col-md-4">
+					    <button id="uRegister" type="submit" ng-click="addUser(2)" class="btn btn-warning" >Registrar <span class="glyphicon glyphicon-ok"></span></button>
+					    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-warning">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+					  </div>
+					</div>
+
+					</fieldset>
+				</form>
+				<div class="clearfix"> </div> 
+			</div>
+		</div>
+	</div>
+</div> 
+	<script src="js/SmoothScroll.min.js"></script> 
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>	
+	<!-- start-smooth-scrolling -->	
+	<script type="text/javascript">
+		// Select all links with hashes
+		$('a[href*="#"]')
+		// Remove links that don't actually link to anything
+		.not('[href="#"]')
+		.not('[href="#0"]')
+		.click(function(event) {
+		// On-page links
+		if (
+		  location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+		  && 
+		  location.hostname == this.hostname
+		) {
+		  // Figure out element to scroll to
+		  var target = $(this.hash);
+		  target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+		  // Does a scroll target exist?
+		  if (target.length) {
+		    // Only prevent default if animation is actually gonna happen
+		    event.preventDefault();
+		    $('html, body').animate({
+		      scrollTop: target.offset().top
+		    }, 1000, function() {
+		      // Callback after animation
+		      // Must change focus!
+		      var $target = $(target);
+		      $target.focus();
+		      if ($target.is(":focus")) { // Checking if the target was focused
+		        return false;
+		      } else {
+		        $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+		        $target.focus(); // Set focus again
+		      };
+		    });
+		  }
+		}
+		});	
+	</script>
+	<!-- //end-smooth-scrolling -->	
+	<!-- smooth-scrolling-of-move-up -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+			};
+			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+	<!-- //smooth-scrolling-of-move-up --> 
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bootstrap.js"></script>
+    <!--JS USER FUNCTIONS-->
+	<script src="js/user.js"></script> <!-- CONTROLADOR ANGULAR -->
+</body>
+</html>
