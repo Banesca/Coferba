@@ -5,7 +5,7 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
 body {
-    margin: 0;
+    margin:0;
     font-family: 'Open Sans', sans-serif;
     background: #FFF;
 }
@@ -45,13 +45,17 @@ body a:focus {
 .banner-w3layouts {
     position: relative;
 }
-.banner-img1, .banner-img2 {
+.banner-img1, .banner-img2, .banner-img3 {
     background: url(../images/1.jpg) no-repeat center 0px;
     background-size: cover;
     min-height: 800px;
 }
 .banner-img2 {
     background: url(../images/2.jpg) no-repeat center 0px;
+    background-size: cover;
+}
+.banner-img3{
+    background: url(../images/3.jpg) no-repeat center 0px;
     background-size: cover;
 }
 /*-- banner-agileinfo --*/
@@ -69,7 +73,7 @@ body a:focus {
 color: #FFF;
     text-decoration: none;
     display: inline-block;
-    border: 1px solid #FF7148;
+    border: 1px solid #ADFF00;
     padding: 0em 0em;
 }
 .navbar-header h1 {
@@ -80,7 +84,7 @@ color: #FFF;
 .navbar-header h1 a {
     color: #FFFFFF;
     text-decoration: none;
-    border: 1px solid #FF7148;
+    border: 1px solid #ADFF00;
     padding: 0.2em 0.5em;
     display: inline-block;
     text-transform: uppercase;
@@ -112,13 +116,13 @@ color: #FFF;
     position: relative;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav li a.active {
-    color: #FF7200;
+    color: #ADFF00;
 }
 .navbar-default .navbar-nav > li > a:before {
     content: '';
     position: absolute;
     bottom: -2px;
-    background: #FF7200;
+    background: #ADFF00;
     height: 3px;
     width: 0;
     left: 0;
@@ -133,7 +137,7 @@ color: #FFF;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
     background: none;
-    color: #FF7200;
+    color: #ADFF00;
 }
 .navbar-right .dropdown-menu {
     left: 0;
@@ -145,7 +149,7 @@ color: #FFF;
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: #FFF;
     text-decoration: none;
-    background-color: #00BCD4;
+    background-color: #ADFF00;
 }
 .w3header form {
     margin: 1.1em 0 0;
@@ -174,7 +178,7 @@ color: #FFF;
     height: 39px;
     outline: none;
     box-shadow: none;
-    background: #00BCD4;
+    background: #ADFF00;
     padding: 0;
     border-radius: inherit;
     -webkit-appearance: none;
@@ -186,11 +190,11 @@ color: #FFF;
     border-color: #CA5A00;
 }
 .w3header form:hover .btn.btn-default {
-    background: #FF7200;
+    background: #fff;
 }
 .w3header span.glyphicon {
     font-size: 1em;
-    color: #FFF;
+    color: #ADFF00;
     padding: 3px;
 }
 .w3header ::-webkit-input-placeholder {
@@ -218,14 +222,15 @@ color: #FFF;
     text-align: center;
 }
 .banner-w3text h4 {
-    font-size: 2em;
-    color: #00BCD4;
+    font-size: 1.2em;
+    color: #FFF;
     font-weight: 300;
     letter-spacing: 4px;
+    margin: 10em 0;
 }
 .banner-w3text h2 {
     font-size: 3.8em;
-    color: #FFF;
+    color: #ADFF00;
     text-transform: uppercase;
     font-weight: 800;
     margin: 0.6em 0;
@@ -239,7 +244,7 @@ color: #FFF;
 .w3btn {
     border: none;
     color: #FFF;
-    background: #FF7200;
+    background: #ADFF00;
     padding: 12px 60px 12px 25px;
     display: inline-block;
     margin: 2.5em 0 0;
@@ -328,7 +333,7 @@ p {
 }
 .welcome span.glyphicon {
     font-size: 2em;
-    color: #00BCD4;
+    color: #ADFF00;
     display: inline-block;
     text-decoration: none;
     -webkit-transition: .5s all;
@@ -337,12 +342,12 @@ p {
 }
 .welcome h4 {
     font-size: 1.3em;
-    color: #FF7200;
+    color: #ADFF00;
     margin-bottom: 0.8em;
     text-transform: capitalize;
 }
 .welcome-grid:hover span.glyphicon {
-    color: #FF7200;
+    color: #FFF;
     /* MODIFICAR COLOR */
     -webkit-transform: rotatey(180deg);
     -moz-transform: rotatey(180deg);
@@ -361,7 +366,7 @@ p {
 .agileits-title h4 {
     font-size: 3em;
     text-align: center;
-    color: #FF7200;
+    color: #ADFF00;
     /*font-weight: 900;*/
     margin-top: 1em;
     margin-bottom: 0.8em;
@@ -379,7 +384,7 @@ p {
 }
 .skills h4 {
     font-size: 2.5em;
-    color: #FF7200;
+    color: #ADFF00;
     font-family: 'Open Sans Condensed', sans-serif;
     margin-bottom: 0.8em;
 }
@@ -495,7 +500,7 @@ p {
     letter-spacing: 1px;
 }
 .news-w3lgrids:hover h4 {
-    border-color: #FF7200;
+    border-color: #ADFF00;
     border-style: dotted;
 }
 /*-- //news --*/
@@ -519,7 +524,7 @@ p {
     float: left;
     color: #999;
     outline: none;
-    border: 1px solid #DDD;
+    border: 1px solid #ADFF00;
     border-right: none;
     background: none;
     -webkit-appearance: none;
@@ -533,19 +538,19 @@ p {
     font-size: 1em;
     outline: none;
     padding: 1em 2.5em;
-    border: 1px solid #FF7200;
+    border: 1px solid #ADFF00;
     -webkit-transition: 0.5s all;
     -moz-transition: 0.5s all;
     transition: 0.5s all;
     -webkit-appearance: none;
-    background: #FF7200;
+    background: #ADFF00;
 }
 .subscribe form:hover input[type="email"] {
     border-color: #00BCD4;
 }
 .subscribe form:hover input[type="submit"] {
-    border-color: #00BCD4;
-    background: #00BCD4;
+    border-color: #ADFF00;
+    background: #FFF;
 }
 .subscribe p {
     width: 45%;
@@ -577,7 +582,7 @@ p {
 }
 .footer-wthree-grid h3 {
     font-size: 2.2em;
-    color: #00BCD4;
+    color: #ADFF00;
     margin-bottom: 0.8em;
     letter-spacing: 1px;
     font-family: 'Open Sans Condensed', sans-serif;
@@ -622,7 +627,7 @@ p {
     text-align: center;
 }
 .copyw3-agile p a {
-    color: #FF7200;
+    color: #ADFF00;
 }
 .copyw3-agile p a:hover {
     color: #FFF;
@@ -641,7 +646,7 @@ p {
 }
 .about h4 {
     font-size: 1.4em;
-    color: #FF7200;
+    color: #ADFF00;
     font-weight: 400;
     margin-bottom: 0.8em;
 }
@@ -710,7 +715,7 @@ p {
 .numscroller {
     font-size: 3em;
     font-weight: 700;
-    color: #FF7200;
+    color: #ADFF00;
     margin-bottom: 0;
 }
 .stats-info p {
@@ -803,7 +808,7 @@ p {
 .map iframe {
     width: 100%;
     height: 300px;
-    border: 10px solid #D3F9FA;
+    border: 10px solid #ADFF00;
 }
 .contact-agileinfo {
     margin-top: 3em;
@@ -819,7 +824,7 @@ p {
     color: #999;
 }
 .contact-left ul li a {
-    color: #FF7200;
+    color: #ADFF00;
 }
 .contact-left ul li a:hover {
     color: #999;
@@ -830,7 +835,7 @@ p {
     margin-right: 0.5em;
 }
 .contact-right input[type="text"] {
-    border: 1px solid #999;
+    border: 1px solid #ADFF00;
     width: 32.3%;
     margin: 0 0 1em 0;
     outline: none;
@@ -840,7 +845,7 @@ p {
     -webkit-appearance: none;
 }
 .contact-right input[type="email"] {
-    border: 1px solid #999;
+    border: 1px solid #ADFF00;
     margin: 0 0.5em 1em 0.5em;
     outline: none;
     font-size: 1em;
@@ -850,7 +855,7 @@ p {
     -webkit-appearance: none;
 }
 .contact-right textarea {
-    border: 1px solid #999;
+    border: 1px solid #ADFF00;
     outline: none;
     font-size: 1em;
     color: #777;
@@ -861,24 +866,24 @@ p {
     -webkit-appearance: none;
 }
 .contact-right input[type="submit"] {
-    border: 1px solid #00BCD4;
+    border: 1px solid #ADFF00;
     padding: 0.7em 0;
     width: 22%;
     margin-top: 0.8em;
     font-size: 1.1em;
-    color: #FFF;
+    color: #ADFF00;
     letter-spacing: 1px;
     outline: none;
-    background-color: #00BCD4;
+    background-color: #FFF;
     transition: 0.5s all;
     -webkit-transition: 0.5s all;
     -moz-transition: 0.5s all;
     -webkit-appearance: none;
 }
 .contact-right input[type="submit"]:hover {
-    color: #FF7200;
-    background: #FFF;
-    border-color: #FF7200;
+    color: #FFF;
+    background: #ADFF00;
+    border-color: #ADFF00;
 }
 /*-- //contact --*/
 /*-- portfolio --*/
@@ -912,8 +917,8 @@ ul.simplefilter {
     border: 1px solid #00BCD4;
 }
 .simplefilter li.active {
-    background-color: #FF7200;
-    border-color: #FF7200;
+    background-color: #ADFF00;
+    border-color: #ADFF00;
     color: #FFF;
 }
 .agileits-img a {
@@ -939,7 +944,7 @@ ul.simplefilter {
 /*-- single-page --*/
 .wthree_single_grid h4 {
     font-size: 2em;
-    color: #FF7200;
+    color: #ADFF00;
     text-transform: capitalize;
     margin-bottom: 0.8em;
     font-family: 'Open Sans Condensed', sans-serif;
@@ -994,7 +999,7 @@ h4.w3ls-title {
 .popular-posts-grid1 h4 a {
     text-decoration: none;
     font-size: 1.1em;
-    color: #FF7200;
+    color: #ADFF00;
     display: inline-block;
     margin: 1em 0 0.2em;
     text-transform: capitalize;
@@ -1046,7 +1051,7 @@ h4.w3ls-title {
 }
 .author-grid-right h4 span {
     font-size: 0.5em;
-    color: #FF7200;
+    color: #ADFF00;
     margin-left: 1em;
     text-transform: capitalize;
     letter-spacing: 1px;
@@ -1092,7 +1097,7 @@ h4.w3ls-title {
     -ms-transition: 0.5s all;
 }
 .write-reply input[type="submit"]:hover {
-    background: #FF7200;
+    background: #ADFF00;
 }
 /*-- //single-page --*/
 /*-- pages --*/
@@ -1677,7 +1682,7 @@ h2.typoh2 {
     }
 }
 @media (max-width: 1024px) {
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 750px;
     }
     .about-grids {
@@ -1727,7 +1732,7 @@ h2.typoh2 {
     .banner-w3text {
         padding-top: 22%;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 674px;
     }
     .news-w3lgrids p {
@@ -1864,15 +1869,15 @@ h2.typoh2 {
         margin: 0;
     }
     .w3header .navbar-default .navbar-toggle {
-        border-color: #0FDFE2;
-        background: #0FDFE2;
+        border-color: #ADFF00;
+        background: #ADFF00;
         margin: 8px 0 0;
     }
     .w3header .navbar-default .navbar-toggle .icon-bar {
         background-color: #FFF;
     }
     .w3header .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-        background-color: #0FDFE2;
+        background-color: #ADFF00;
     }
     .w3header .navbar-nav > li {
         margin: 0;
@@ -1920,7 +1925,7 @@ h2.typoh2 {
     }
 }
 @media (max-width: 736px) {
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 645px;
     }
     .agileits-title h3 {
@@ -1976,7 +1981,7 @@ h2.typoh2 {
     }
 }
 @media (max-width: 667px) {
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 600px;
     }
     .banner-w3text {
@@ -2030,7 +2035,7 @@ h2.typoh2 {
     .banner-w3text h2 {
         font-size: 2.3em;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 560px;
     }
     .subscribe input[type="email"] {
@@ -2080,14 +2085,14 @@ h2.typoh2 {
     .banner-w3text h2 {
         font-size: 1.8em;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 535px;
     }
     .w3btn {
         padding: 10px 53px 10px 16px;
         font-size: 0.9em;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 500px;
     }
     .banner-w3text {
@@ -2146,7 +2151,7 @@ h2.typoh2 {
     .footer-wthree-grid h3 {
         font-size: 1.8em;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 475px;
     }
     .about-grids {
@@ -2229,7 +2234,7 @@ h2.typoh2 {
     .banner-w3text h2 {
         font-size: 1.6em;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 409px;
     }
     .agileits-title p {
@@ -2389,7 +2394,7 @@ h2.typoh2 {
     .banner-w3text h4, .banner-w3text h5 {
         font-size: 1em;
     }
-    .banner-img1, .banner-img2 {
+    .banner-img1, .banner-img2, .banner-img3 {
         min-height: 350px;
     }
     .banner-w3text {

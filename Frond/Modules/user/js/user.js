@@ -94,7 +94,7 @@ app.controller('coferbaCtrl', function($scope, $http) {
 
 /*JQUERY SHOW/HIDE */
 $(document).ready(function() {
-
+    $(this).scrollTop(0);
     $('#registerU').hide();
     $('#registerT').hide(); 
     $('#loginType').hide();

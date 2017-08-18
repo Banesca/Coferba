@@ -238,14 +238,14 @@
       },
       directionNav: {
         setup: function() {
-          //var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li><a class="' + namespace + 'prev" href="#">' + vars.prevText + '</a></li><li><a class="' + namespace + 'next" href="#">' + vars.nextText + '</a></li></ul>');
+          var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li><a class="' + namespace + 'prev" href="#">' + vars.prevText + '</a></li><li><a class="' + namespace + 'next" href="#">' + vars.nextText + '</a></li></ul>');
         
           // CONTROLSCONTAINER:
           if (slider.controlsContainer) {
-            //$(slider.controlsContainer).append(directionNavScaffold);
+            $(slider.controlsContainer).append(directionNavScaffold);
             slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.controlsContainer);
           } else {
-            //slider.append(directionNavScaffold);
+            slider.append(directionNavScaffold);
             slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
           }
         
