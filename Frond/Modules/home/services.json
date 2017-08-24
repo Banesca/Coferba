@@ -1,0 +1,127 @@
+ESTE ES EL SERVICIO TE RETORNA UN TRUE 
+http://127.0.0.1/Coferba/Back/index.php/Ticket
+METODO:POST
+
+
+
+
+/*PROPIETARION*/
+/*ALTA LLAVERO*/
+
+{
+  
+  "ticket":
+  {
+      "idTypeTicketKf" : 1,
+    "idTenantKf" : 1,
+    "numberItemes" :3,
+    "idTypeDeliveryKf" : 1,
+    "description" : "aqui escribo algo"
+  }
+}
+/*BAJA	 LLAVERO*/
+
+{
+  
+  "ticket":
+  {
+      "idTypeTicketKf" : 2,
+      "idTenantKf" : 1,
+       "idReasonDisabledItemKf":1, 
+      "numberItemDisabled" : 2,
+    "description" : "aqui escribo algo"
+  }
+}
+/*ADMINISTRADOR*/
+/*ALTA LLAVERO*/
+
+{
+  
+  "ticket":
+  {
+      "idTypeTicketKf" : 1,
+       "idUserEnterpriceKf" : 1,
+       "idOWnerKf" :2,
+       "numberItemes" :3,
+       "idTypeDeliveryKf" : 1,
+       "description" : "aqui escribo algo",
+       "list_id_clients":[2,3,1]//listado de clientes
+       
+  }
+}
+/*BAJA	 LLAVERO*/
+
+{
+  
+  "ticket":
+  {
+      "idTypeTicketKf" : 2,
+       "idUserEnterpriceKf" : 1,
+       "idOWnerKf" :2,
+       "numberItemes" :3,
+       "idTypeDeliveryKf" : 1,
+       "description" : "aqui escribo algo",
+          "idReasonDisabledItemKf":1, 
+      "numberItemDisabled" : 2
+       
+  }
+}
+
+/*SERVICIOS TECNICOS*/
+{
+  
+  "ticket":
+  {
+      "idTypeTicketKf" : 3,
+       "idUserEnterpriceKf" : 1,
+       "numberItemes" :3,
+       "idTypeDeliveryKf" : 1,
+         "descriptionOrder":"DESCRIPCION DEL PEDIDO" ,
+       "description" : "aqui escribo algo",
+       "list_id_clients":[2,3,1],
+         "idTypeServices" :1
+       
+  }
+}
+
+
+
+
+
+/*OTRAS SOLICITUDES O CONSULTAS (tipo formulario)*/
+
+{
+  
+  "ticket":
+  {
+      "idTypeTicketKf" : 4,
+        "idTypeOuther" : 1,
+          "mailContactConsult" :"mail@mas.jf",
+            "addressConsul" : "testing",
+              "description" : "COSNULATAAAAAA"
+       
+  }
+}
+
+
+/******LAS ATAS Y BAJAS PARA PROPIETRIOS ES LO MISO QUE LAS ANTERIORES SOLO QUE DEBES ENVIAR EL idOWnerKf QUE ES EL ID DE EL PROPIETARIO******/
+
+/*OBTER TODOSS  LOS TICKETS */
+http://127.0.0.1/Coferba/Back/index.php/Ticket/all
+METODO:POST
+
+"searchFilter":
+{
+    "searchFilter":
+  {
+     "topFilter" : 0,
+     "idTypeTicketKf":0, 
+       "idProfileKf":1
+       
+  }
+}
+
+
+///FILTROSS PARA TODOS LOS PORMULARIOS  //
+http://127.0.0.1/Coferba/Back/index.php/Ticket/filter
+METODO:get
