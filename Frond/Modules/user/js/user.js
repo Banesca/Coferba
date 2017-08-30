@@ -96,39 +96,17 @@ app.controller('coferbaCtrl', function($scope, $http) {
 $(document).ready(function() {
     $(this).scrollTop(0);
     $('#registerU').hide();
-    $('#registerT').hide(); 
-    $('#loginType').hide();
-    $('#registerType').hide();
     $('#loginU').hide();
-    $('#loginT').hide();
     
     /*Login Button*/
     $('#lr1').click(function(){
-        $('#loginType').show();
-        $('#loginRegister').hide();  
-    });
-    /*Login Type*/
-    $('#lt1').click(function(){
         $('#loginU').show();
-        $('#loginType').hide();  
-    });
-     $('#lt2').click(function(){
-        $('#loginT').show();
-        $('#loginType').hide();  
+        $('#loginRegister').hide();  
     });
     /*Register Button*/
     $('#lr2').click(function(){
-        $('#registerType').show();
+        $('#registerU').show();
         $('#loginRegister').hide();  
-    });
-    /*Register Button*/
-    $('#rt1').click(function(){
-        $('#registerType').hide();
-        $('#registerU').show();  
-    });
-    $('#rt2').click(function(){
-        $('#registerType').hide();
-        $('#registerT').show();  
     });
     /*Close Form*/
     $('.frmclose').click(function(){
@@ -142,5 +120,7 @@ $(document).ready(function() {
     $('#breset').click(function(){
         $('#loginRegister').show();
         $('#loginU').hide();
+        $('#registerU').hide();
+        
     });
 });

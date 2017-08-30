@@ -4,10 +4,18 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
+$left-color:  #242e4d;
+$right-color: #897e79;
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
 body {
     margin:0;
     font-family: 'Open Sans', sans-serif;
-    background: #FFF;
+    height: 100%;
 }
 body a {
     transition: 0.5s all;
@@ -33,6 +41,14 @@ body a:hover {
 }
 body a:focus {
     outline: none;
+}
+/*main_container*/
+.main_container form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    width: 100%; 
 }
 /* FORM*/
 #fNewUser .form-control-feedback {
@@ -243,7 +259,7 @@ color: #FFF;
 }
 .w3btn {
     border: none;
-    color: #FFF;
+    color: #000;
     background: #ADFF00;
     padding: 12px 60px 12px 25px;
     display: inline-block;
@@ -257,7 +273,7 @@ color: #FFF;
     overflow: hidden;
 }
 .w3btn:hover {
-    color: #FFF;
+    color: #yellow;
 }
 .w3btn:after {
     content: '';
@@ -307,6 +323,8 @@ p {
     font-weight: 400;
 }
 .agileits-title {
+    border-top: 5px #000;
+    background-color: #fff;
     margin-bottom: 4em;
 }
 .agileits-title h3 {
