@@ -95,32 +95,84 @@ app.controller('coferbaCtrl', function($scope, $http) {
 /*JQUERY SHOW/HIDE */
 $(document).ready(function() {
     $(this).scrollTop(0);
-    $('#registerU').hide();
-    $('#loginU').hide();
+    $('.main_container [id^="frm_"]').hide();
+    $('.p-r').hide();
+    $('.jumbotron [id^="m_"]').removeClass('active');
     
+    /* MENU ICONS*/
+    $('.jumbotron [id^="m_"]').click(function(){
+        $('.main_container [id^="frm_"]').hide();
+    });
+    $('#m_pedidos').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+        $('.p-r').hide();
+        $('#SubM_Pedidos').show();
+    });
+    $('#m_monitor').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+        $('.p-r').hide();
+        $('#SubM_Monitor').show();
+    });
+    $('#m_report').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+        $('.p-r').hide();
+    });
+    $('#m_user').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+        $('.p-r').hide();
+        $('#SubM_user ').show();
+    });
+     $('#m_config').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+        $('.p-r').hide();
+    });
+      $('#m_contact').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+        $('.p-r').hide();
+    });
+    /*SUB MENU*/
+    $('#lr1').click(function(){
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_loginU').show();
+        $('#loginRegister').hide();  
+    });
     /*Login Button*/
     $('#lr1').click(function(){
-        $('#loginU').show();
-        $('#loginRegister').hide();  
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_loginU').show();
+        $('#loginRegister').hide(); 
     });
     /*Register Button*/
     $('#lr2').click(function(){
-        $('#registerU').show();
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_registerU').show();
         $('#loginRegister').hide();  
+    });
+    $('[href^="#Alta"]').click(function(){
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_rku').fadeIn(1500);
+        $('#loginRegister').hide();
+    });
+    $('[href^="#Baja"]').click(function(){
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_rkd').fadeIn(1500);
+        $('#loginRegister').hide();
     });
     /*Close Form*/
     $('.frmclose').click(function(){
         $('#loginRegister').show();
-        $('#loginU').hide();
-        $('#registerU').hide();
-        $('#registerT').hide();
-        $('#loginT').hide();
+        $('.main_container [id^="frm_"]').hide();
     });
     /*Button Reset*/
     $('#breset').click(function(){
         $('#loginRegister').show();
-        $('#loginU').hide();
-        $('#registerU').hide();
+        $('.main_container [id^="frm_"]').hide();
         
     });
 });
