@@ -13,7 +13,8 @@ class User extends REST_Controller {
 	public function auth_post()
 	{
 
-		$user = $this->user_model->auth($this->post('user'));        
+        $user = $this->user_model->auth($this->post('user'));   
+             
         if(!is_null($user))
         {
         	$this->response(array('response' => $user),200);
