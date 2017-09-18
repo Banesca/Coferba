@@ -2,8 +2,6 @@
 
 app.controller('coferbaCtrl', function($scope, $http) {
      $userType=0;
-     $urlAddT='http://localhost/Coferba/Back/index.php/Tenant';
-     $urlAddU='http://localhost/Coferba/Back/index.php/User';
      /*Validate if the user is a company */
      $scope.getSelectedData = function(){$scope.selectedItem=$scope.idProfileKf;
         if ($scope.selectedItem==2){$scope.cpnyinput=true;}else{$scope.cpnyinput=false;}
@@ -18,14 +16,26 @@ app.controller('coferbaCtrl', function($scope, $http) {
             }, function myError(response) {
           });
       }
-
-      $scope.CallFilterForm = function(){
+      /* Retrieve Select Data for user profile*/
+      $scope.CallFilterFormU = function(){
          $http({
             method : "GET",
             url : "http://localhost/Coferba/Back/index.php/User/filterForm"
           }).then(function mySuccess(response) {
               $scope.listProfile = response.data.profile;
               $scope.listType = response.data.type;
+            }, function myError(response) {
+          });
+      }
+      /*Retrieve date for select ticket up/down */
+      $scope.CallFilterFormT = function(){
+         $http({
+            method : "GET",
+            url : "http://localhost/Coferba/Back/index.php/Ticket/filter"
+          }).then(function mySuccess(response) {
+              $scope.listTypeDelivery = response.data.typedelivery;
+              $scope.listTypeLost = response.data.reason_disabled_item;
+              $scope.listTypeQuery = response.data.typeouther
             }, function myError(response) {
           });
       }
@@ -96,6 +106,7 @@ app.controller('coferbaCtrl', function($scope, $http) {
 $(document).ready(function() {
     $(this).scrollTop(0);
     $('.main_container [id^="frm_"]').hide();
+    $('form').each(function(){this.reset();});
     $('.p-r').hide();
     $('.jumbotron [id^="m_"]').removeClass('active');
     
@@ -154,20 +165,39 @@ $(document).ready(function() {
         $('#frm_registerU').show();
         $('#loginRegister').hide();  
     });
+    /*Request UP key*/
     $('[href^="#Alta"]').click(function(){
         $('.main_container [id^="frm_"]').hide();
-        $('#frm_rku').fadeIn(1500);
+        $('#frm_rkuu').fadeIn(1500);
+        $('form').each(function(){this.reset();});
         $('#loginRegister').hide();
     });
+    /*Request DOWN key*/
     $('[href^="#Baja"]').click(function(){
         $('.main_container [id^="frm_"]').hide();
-        $('#frm_rkd').fadeIn(1500);
+        $('#frm_rkdu').fadeIn(1500);
+        $('form').each(function(){this.reset();});
+        $('#loginRegister').hide();
+    });
+    /*Request SERVICE */
+    $('[href^="#Servicio"]').click(function(){
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_rusvc').fadeIn(1500);
+        $('form').each(function(){this.reset();});
+        $('#loginRegister').hide();
+    });
+    /*Request OTHER QUERIES */
+    $('[href^="#Otros"]').click(function(){
+        $('.main_container [id^="frm_"]').hide();
+        $('#frm_ruoqry').fadeIn(1500);
+        $('form').each(function(){this.reset();});
         $('#loginRegister').hide();
     });
     /*Close Form*/
     $('.frmclose').click(function(){
         $('#loginRegister').show();
         $('.main_container [id^="frm_"]').hide();
+        $('form').each(function(){this.reset();});
     });
     /*Button Reset*/
     $('#breset').click(function(){

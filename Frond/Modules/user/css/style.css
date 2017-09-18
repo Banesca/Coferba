@@ -4,14 +4,6 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
-$left-color:  #242e4d;
-$right-color: #897e79;
-
-* {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
 body {
     margin:0;
     font-family: 'Open Sans', sans-serif;
@@ -43,13 +35,15 @@ body a:focus {
     outline: none;
 }
 /*main_container*/
-.main_container form{
+.main_container {
+    padding-top: 3em;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column; 
     width: 100%; 
 }
+active
 /* FORM*/
 #fNewUser .form-control-feedback {
     pointer-events: auto;
@@ -79,6 +73,7 @@ body a:focus {
     position: absolute;
     top: 0;
     width: 100%;
+    height: 20%;
     margin: 0 auto;
 }
 .w3header {
@@ -125,8 +120,9 @@ color: #FFF;
 .navbar-nav > li {
     margin: 0 0.8em;
 }
+/* top nav color margen*/
 .navbar-default .navbar-nav > li > a {
-    color: #FFF;
+    color: #fff;
     font-size: 1.2em;
     padding: 1.3em 0.5em;
     position: relative;
@@ -163,7 +159,7 @@ color: #FFF;
     font-size: 13px;
 }
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    color: #FFF;
+    color: #000;
     text-decoration: none;
     background-color: #ADFF00;
 }
@@ -323,8 +319,6 @@ p {
     font-weight: 400;
 }
 .agileits-title {
-    border-top: 5px #000;
-    background-color: #fff;
     margin-bottom: 4em;
 }
 .agileits-title h3 {
@@ -333,7 +327,7 @@ p {
     text-align: center;
     font-family: 'Open Sans Condensed', sans-serif;
 }
-.agileits-title p {
+.agileits-title p, span{
     text-align: justify;
     width: 45%;
     margin: 0.5em auto 0;
@@ -381,6 +375,7 @@ p {
     text-align: center;
     padding: 6em 0;
 }
+
 .agileits-title h4 {
     font-size: 3em;
     text-align: center;
@@ -396,43 +391,7 @@ p {
     margin: 0 auto;
 }
 /*-- //slid --*/
-/*-- skills --*/
-.skills-w3left {
-    padding: 0 8em 0 0;
-}
-.skills h4 {
-    font-size: 2.5em;
-    color: #ADFF00;
-    font-family: 'Open Sans Condensed', sans-serif;
-    margin-bottom: 0.8em;
-}
-.skills .nav-tabs {
-    border: none;
-}
-.skills .nav-tabs li {
-    margin: 0;
-    width: 33.33%;
-    text-align: center;
-}
-.skills .nav-tabs > li > a {
-    margin: 0;
-    font-size: 1em;
-    color: #999;
-    border: 1px solid #CCC;
-    border-radius: 0;
-}
-.skills .nav-tabs li:nth-child(2) a {
-    border-left: 0;
-    border-right: 0;
-}
-.skills .nav-tabs > li.active > a, .skills .nav-tabs > li.active > a:hover, .skills .nav-tabs > li.active > a:focus {
-    color: #038292;
-    border-top-width: 3px;
-    border-top-color: #00BCD4;
-    border-bottom-color: transparent;
-    background: rgb(146, 232, 243);
-    margin-top: -1px;
-}
+
 .tabcontent-grids {
     padding-top: 2em;
 }
@@ -445,6 +404,175 @@ p {
 .tabcontent-grids ul li span.glyphicon {
     margin-right: 0.5em;
 }
+/* CONSORCIOS */
+/*Seccion de Consorcios top nav*/
+.main_consorcios .navbar-default .navbar-nav > li > a  {
+    color: #000;
+    font-size: 1.2em;
+    padding: 1.3em 0.5em;
+    position: relative;
+}
+.main_consorcios .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav li a.active {
+    color: #ADFF00;
+}
+.consorcio-backg{
+    margin-top: 3%;
+    padding-bottom: 10px;
+    background-color: #e5e5e5;
+    display: block;
+}
+
+.imgconsorcio{
+    margin: auto;
+    width: 100%;
+    height: 700px;
+    position: relative;
+    display: block;
+}
+.consorcio-backg div{
+    margin: 0 108px 0 108px;
+    display: block;
+    bottom: 0;
+    min-height: 85px;
+}
+.consorcio-backg span{
+    margin-left: 0px;
+    bottom: 0px;
+    float: left;
+    font-family: sans-serif;
+    min-height: 1px;
+    position: relative;
+}
+.consorcio-backg h4{
+    text-align: center;
+    padding: 15px 10px 5px 10px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5em;
+    font-family: sans-serif;
+}
+.consorcio-backg span:hover, span:focus{
+    margin-left: 0px;
+    bottom: 0px;
+    float: left;
+    display: block;
+    background: #000;
+    opacity: 0.2;
+    cursor: pointer;
+    min-height: 1px;
+    position: relative;
+}
+.consorcio-backg h4:hover, h4:focus{
+        color: #ADFF00;
+}
+#img_llave {
+    width: 344px;
+    height: auto;
+    position: absolute;
+    left:1050px;
+    bottom: 228px;
+}
+#img_cerradura {
+    width: 486px;
+    height: auto;
+    position: absolute;
+    left:510px;
+    bottom: 180px;
+}
+#img_leftcamera {
+    width: 426px;
+    height: auto;
+    position: absolute;
+    left:1365px;
+    bottom: 595px;
+}
+#img_rightcamera {
+    width: 428px;
+    height: auto;
+    position: absolute;
+    left:110px;
+    bottom: 595px;
+}
+#img_rightcamera2 {
+    width: 428px;
+    height: auto;
+    position: absolute;
+    left:1090px;
+    bottom: 330px;
+}
+#txt_op1{
+    width: 400px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    position: absolute;
+    text-align: justify;
+    padding: 15px 10px 5px 10px;
+    left:750px;
+    bottom: 628px;
+    z-index: 9999;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+
+}
+#txt_op2{
+    width: 400px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    position: absolute;
+    text-align: justify;
+    padding: 15px 10px 5px 10px;
+    left:750px;
+    bottom: 628px;
+    z-index: 9999;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+#txt_op3{
+    width: 400px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    position: absolute;
+    text-align: justify;
+    padding: 15px 10px 5px 10px;
+    left:750px;
+    bottom: 600px;
+    z-index: 9999;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+@media (max-width: 1680px) {
+    #img_llave {
+        left:915px;
+        bottom: 228px;
+    }
+    #img_cerradura {
+        left:387px;
+        bottom: 180px;
+    }
+    #txt_op1, #txt_op2, #txt_op3{
+        left:627px;
+        bottom: 580px;
+    }
+    #img_leftcamera {
+        left:1150px;
+        bottom: 590px;
+    }
+    #img_rightcamera {
+        left:100px;
+        bottom: 590px;
+    }
+    #img_rightcamera2 {
+        left:950px;
+        bottom: 330px;
+    }
+}
+/* CONSORCIOS */
 /*-- progress-bars --*/
 .b_label {
     color: #555;
@@ -1654,7 +1782,7 @@ h2.typoh2 {
     .banner-w3text h2 {
         font-size: 3.3em;
     }
-    .agileits-title p {
+    .agileits-title p, span{
         width: 51%;
     }
     .welcome-grid-left {
@@ -1781,7 +1909,7 @@ h2.typoh2 {
     .about-info {
         margin-top: 3em;
     }
-    .agileits-title p {
+    .agileits-title p, span {
         width: 68%;
     }
     .about-grids:nth-child(2) {
@@ -2059,7 +2187,7 @@ h2.typoh2 {
     .subscribe input[type="email"] {
         width: 69%;
     }
-    .agileits-title p {
+    .agileits-title p, span {
         width: 90%;
     }
     .wthree_single_grid ul li {
@@ -2255,7 +2383,7 @@ h2.typoh2 {
     .banner-img1, .banner-img2, .banner-img3 {
         min-height: 409px;
     }
-    .agileits-title p {
+    .agileits-title p, span {
         width: 100%;
     }
     .welcome, .subscribe, .about, .portfolio, .team, .skills, .contact, .single, .codes, .news-w3layouts {

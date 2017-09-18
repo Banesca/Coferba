@@ -16,7 +16,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href="css/style.css" type="text/css" rel="stylesheet" media="all">  
 <link href="css/font-awesome.css" rel="stylesheet">  <!-- font-awesome icons -->
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
-
 <!-- //Custom Theme files --> 
 <!-- js -->
 <script src="js/jquery-2.2.3.min.js"></script>  
@@ -26,208 +25,210 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
 <!-- //web-fonts -->
 </head>
-<body>  
-	<!-- banner -->
-	<div class="banner-w3layouts">  
-		<div class="flexslider">
-			<ul class="slides">
-				<li>
-					<div class="banner-img1"> 
-					</div>
-				</li>
-				<li>
-					<div class="banner-img2"> 
-					</div>
-				</li>
-				<li>
-					<div class="banner-img3"> 
-					</div>
-				</li>
-			</ul> 
-		</div> 
-		<script defer src="js/jquery.flexslider.js"></script>
-		<script type="text/javascript">
-			$(window).load(function(){
-			  $('.flexslider').flexslider({
-				animation: "slide",
-				start: function(slider){
-				  $('body').removeClass('loading');
-				}
-			  });
-			});
-		</script>
-		<!-- //FlexSlider -->
-		<!-- menu -->
-		<div class="banner-agileinfo">
-			<div class="container">		
-				<div class="w3header"> <!--header--> 
-					<nav class="navbar navbar-default">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<div><a  href="index.html"><img src="images/logo.png" width="300" height="80"></a></div>
+<body>
+	<div class="main">
+		<!-- banner -->
+		<div class="banner-w3layouts">  
+			<div id="web_flex" class="flexslider">
+				<ul class="slides">
+					<li>
+						<div class="banner-img1"> 
 						</div>
-						<!-- navbar-header -->
-						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<!--<form class="navbar-right w3ls-search" action="#" method="post">
-								<input type="search" name="Search" placeholder="Ingresa un texto..." required="">
-								<button type="submit" class="btn btn-default" aria-label="Left Align">
-									<span class="glyphicon glyphicon-search"></span>
-								</button>
-							</form>-->
-							<ul class="nav navbar-nav navbar-right">
-								<li><a href="index.html" class="active">Inicio</a></li>
-								<li><a href="#aboutus">Quienes somos</a></li> 
-								<li><a href="#whoweare">Nuestro trabajo</a></li>
-								<li><a href="#">Consorcios</a></li>
-								<li><a href="#">Empresas</a></li>
-								<li><a href="#contact">Contacto</a></li>
-							</ul> 
-							<div class="clearfix"> </div>	
+					</li>
+					<li>
+						<div class="banner-img2"> 
 						</div>
-					</nav>
-				</div>  
-				<!-- //banner text --> 
-				<div class="banner-w3text">
-					<h4>La tranquilidad de entirse seguro / Coferba Seguridad</h4>
-					<!--<h2>coferba seguridad</h2>
-					<h4>Consorcios / Empresas </h4>								
-					<!--<a href="single.html" class="w3btn"><span>Read More</span></a>-->
-				</div> 
-			</div>
-			<!-- //menu --> 
-		</div>
-	</div>
-	<!-- //banner -->
-	<!-- Sobre Nosotros w3about-slid -->
-	<div class="agileits-w3layouts"> 
-		<div class="container">
-			<div class="agileits-title"> 
-				<h4 id="aboutus">Qui&#233nes Somos</h4>
-				<p>Coferba Seguridad es una empresa creada para brindar soluciones integrales de seguridad, para su hogar, su empresa o su consorcio, proporcionándole la tranquilidad que necesita.<br><br>Asesoramos y diseñamos sistemas de seguridad electrónica con las más avanzadas tecnologías teniendo en cuenta las necesidades y diferencias de cada uno de nuestros clientes. Para ello, nos capacitamos de manera constante e integramos todas las opciones disponibles para optimizar los resultados obtenidos en nuestros proyectos.<br><br>Acompañamos el avance de la tecnología modificando nuestras propuestas y servicios para mantenernos siempre actualizados. Pero sin variar, en nuestros más de 30 años de experiencia, ninguno de nuestros principales valores, honestidad y compromiso con nuestros clientes y profesionalismo en nuestro trabajo.</p><br><br>
-				<h4>Nuestra Misi&#243n</h4>
-				<p>Es nuestra misión brindar a nuestros clientes la tranquilidad de sentirse seguros. El deseo de cumplir nuestra misión fija nuestros objetivos como empresa y nos sirve como referencia para tomar nuestras decisiones y medir nuestras acciones.</p>
-			</div>
-		</div>
-	</div>
-	<!-- //Sobre Nosotros about-slid-info-->
-	<!-- Nuestro Trabajo agileits-title-->
-	<div class="w3about-slid welcome">
-		<div class="container">	
-			<div class="agileits-title">
-				<h4 id="whoweare">Nuestro Trabajo</h4><br><br>
-				<p>Nuestro servicio está orientado y dirigido a quienes necesitan soluciones en seguridad. Para ésto, brindamos asesoramiento en seguridad electrónica, diseñando instalaciones e instalando controles de acceso, cerraduras electrónicas, cámaras de seguridad y alarmas monitoreadas entre otras opciones.<br><br>Contamos con una amplia variedad de productos y servicios disponibles para satisfacer adecuadamente cada necesidad en el control de entradas y salidas de su propiedad.</p>
-			</div>
-			<div class="welcome-agileinfo">
-				<div class="col-md-4 col-xs-6 welcome-grid agileits-w3layouts">  
-					<div class="col-xs-2 welcome-grid-left">
-						<span class="glyphicon glyphicon-console" aria-hidden="false"></span>
-					</div>
-					<div class="col-xs-10 welcome-grid-right">
-						<h4>Controles de acceso </h4>
-						<p>Por proximidad - Biométricos Reconocimiento de rostros</p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="col-md-4 col-xs-6 welcome-grid agileits-w3layouts">
-					<div class="col-xs-2 welcome-grid-left">
-						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-					</div>
-					<div class="col-xs-10 welcome-grid-right">
-						<h4>Cerraduras electrónicas</h4>
-						<p>Electroimanes - Cerraduras de perno electromagnético - Pestillos eléctricos </p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="col-md-4 col-xs-6 welcome-grid agileits-w3layouts">
-					<div class="col-xs-2 welcome-grid-left">
-						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-					</div>
-					<div class="col-xs-10 welcome-grid-right">
-						<h4>Control de horario de personal</h4>
-						<p>Biométrico - Por proximidad </p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="col-md-4 col-xs-6 welcome-grid welcome-grid-bottom">
-					<div class="col-xs-2 welcome-grid-left">
-						<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-					</div>
-					<div class="col-xs-10 welcome-grid-right">
-						<h4>Cerraduras especiales </h4>
-						<p>Hoteleras - Para oficinas </p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="col-md-4 col-xs-6 welcome-grid welcome-grid-bottom">
-					<div class="col-xs-2 welcome-grid-left">
-						<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
-					</div>
-					<div class="col-xs-10 welcome-grid-right">
-						<h4>CCTV y Cámaras de seguridad</h4>
-						<p>Instalación de videograbadoras digitales y cámaras de seguridad</p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="col-md-4 col-xs-6 welcome-grid welcome-grid-bottom">
-					<div class="col-xs-2 welcome-grid-left">
-						<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					</div>
-					<div class="col-xs-10 welcome-grid-right">
-						<h4>Monitoreo de Alarmas</h4>
-						<p>Sensores de movimiento, barreras infrarrojas y pulsadores de pánico inalámbricos </p>
-					</div>
-					<div class="clearfix"> </div>
-				</div> 
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
-	<!-- //Nuestro Trabajo -->
-	<div class="clearfix"> </div>
-	<!-- contact -->
-	<div id="contact" class="contact">
-		<div class="container">  
-			<div class="map"> 
-				<div class="agileits-title">
-					<h4>Contacto</h4><br>
-					<p>Lo invitamos a contactarse con nosotros. Si desea mayor información sobre nuestros productos o recibir asesoramiento personalizado, no dude en escribirnos y con gusto atenderemos su consulta.Por favor complete el siguiente formulario, a la brevedad estaremos respondiendo a su inquietud.</p>
-				</div> 
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.232853486263!2d-58.416303984395746!3d-34.62355548045449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccafee49fa1b5%3A0x808f35e44a65bc21!2sCarlos+Calvo+3430%2C+C1230ABH+CABA!5e0!3m2!1ses-419!2sar!4v1500993405506" width="1280" height="600" allowfullscreen=""></iframe>
+					</li>
+					<li>
+						<div class="banner-img3"> 
+						</div>
+					</li>
+				</ul> 
 			</div> 
-			<div class="contact-agileinfo"> 
-				<div class="col-md-7 contact-right">				
-					<form action="#" method="post"> 
-						<input type="text" name="Name" placeholder="Nombre" required="">
-						<input type="email" name="Email" placeholder="Email" required=""> 
-						<input type="text" name="Telephone" placeholder="Telefono" required="">
-						<textarea name="Message" placeholder="Escriba Su Mensaje..." required=""></textarea>
-						<input type="submit" value="Submit" >
-					</form>
+			<script defer src="js/jquery.flexslider.js"></script>
+			<script type="text/javascript">
+				$(window).load(function(){
+				  $('.flexslider').flexslider({
+					animation: "slide",
+					start: function(slider){
+					  $('body').removeClass('loading');
+					}
+				  });
+				});
+			</script>
+			<!-- //FlexSlider -->
+			<!-- MENU -->
+			<div class="banner-agileinfo">
+				<div class="container">		
+					<div class="w3header"> <!--header--> 
+						<nav class="navbar navbar-default">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<div><a  href="index.html"><img src="images/logo.png" width="300" height="80"></a></div>
+							</div>
+							<!-- navbar-header -->
+							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+								<!--<form class="navbar-right w3ls-search" action="#" method="post">
+									<input type="search" name="Search" placeholder="Ingresa un texto..." required="">
+									<button type="submit" class="btn btn-default" aria-label="Left Align">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</form>-->
+								<ul class="nav navbar-nav navbar-right">
+									<li><a href="index.html" class="active">Inicio</a></li>
+									<li><a href="#web_ours">Quienes somos</a></li> 
+									<li><a href="#web_work">Nuestro trabajo</a></li>
+									<li><a href="consorcios.html">Consorcios</a></li>
+									<li><a href="empresas.html">Empresas</a></li>
+									<li><a href="#web_contact">Contacto</a></li>
+								</ul> 
+								<div class="clearfix"> </div>	
+							</div>
+						</nav>
+					</div>  
+					<!-- //banner text --> 
+					<div class="banner-w3text">
+						<h4>La tranquilidad de entirse seguro / Coferba Seguridad</h4>
+						<!--<h2>coferba seguridad</h2>
+						<h4>Consorcios / Empresas </h4>								
+						<!--<a href="single.html" class="w3btn"><span>Read More</span></a>-->
+					</div> 
 				</div>
-				<div class="col-md-5 contact-left">
-					<ul>
-						<li><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-							<a target="_blank" href="https://goo.gl/maps/TpJuXwgTsfR2">Carlos Calvo 3430, C.A.B.A.</a>
-						</li>					
-						<li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-							0810-666-COFERBA (2633)
-						</li>
-						<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-							<a href="mailto:ventas@coferba.com.ar">ventas@coferba.com.ar</a>
-						</li>
-					</ul>
-				</div>						
-				<div class="clearfix"> </div>  
+			</div>
+			<!-- //MENU -->
+		</div>
+		<!-- //banner -->
+		<!-- Quienes Somos w3about-slid -->
+		<div id="web_ours" class="agileits-w3layouts"> 
+			<div class="container">
+				<div class="agileits-title"> 
+					<h4 id="aboutus">Qui&#233nes Somos</h4>
+					<p>Coferba Seguridad es una empresa creada para brindar soluciones integrales de seguridad, para su hogar, su empresa o su consorcio, proporcionándole la tranquilidad que necesita.<br><br>Asesoramos y diseñamos sistemas de seguridad electrónica con las más avanzadas tecnologías teniendo en cuenta las necesidades y diferencias de cada uno de nuestros clientes. Para ello, nos capacitamos de manera constante e integramos todas las opciones disponibles para optimizar los resultados obtenidos en nuestros proyectos.<br><br>Acompañamos el avance de la tecnología modificando nuestras propuestas y servicios para mantenernos siempre actualizados. Pero sin variar, en nuestros más de 30 años de experiencia, ninguno de nuestros principales valores, honestidad y compromiso con nuestros clientes y profesionalismo en nuestro trabajo.</p><br><br>
+					<h4>Nuestra Misi&#243n</h4>
+					<p>Es nuestra misión brindar a nuestros clientes la tranquilidad de sentirse seguros. El deseo de cumplir nuestra misión fija nuestros objetivos como empresa y nos sirve como referencia para tomar nuestras decisiones y medir nuestras acciones.</p>
+				</div>
+			</div>
+		</div>
+		<!-- //Sobre Nosotros about-slid-info-->
+		<!-- Nuestro Trabajo agileits-title-->
+		<div id="web_work" class="w3about-slid welcome">
+			<div class="container">	
+				<div class="agileits-title">
+					<h4 id="whoweare">Nuestro Trabajo</h4><br><br>
+					<p>Nuestro servicio está orientado y dirigido a quienes necesitan soluciones en seguridad. Para ésto, brindamos asesoramiento en seguridad electrónica, diseñando instalaciones e instalando controles de acceso, cerraduras electrónicas, cámaras de seguridad y alarmas monitoreadas entre otras opciones.<br><br>Contamos con una amplia variedad de productos y servicios disponibles para satisfacer adecuadamente cada necesidad en el control de entradas y salidas de su propiedad.</p>
+				</div>
+				<div class="welcome-agileinfo">
+					<div class="col-md-4 col-xs-6 welcome-grid agileits-w3layouts">  
+						<div class="col-xs-2 welcome-grid-left">
+							<span class="glyphicon glyphicon-console" aria-hidden="false"></span>
+						</div>
+						<div class="col-xs-10 welcome-grid-right">
+							<h4>Controles de acceso </h4>
+							<p>Por proximidad - Biométricos Reconocimiento de rostros</p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 col-xs-6 welcome-grid agileits-w3layouts">
+						<div class="col-xs-2 welcome-grid-left">
+							<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-10 welcome-grid-right">
+							<h4>Cerraduras electrónicas</h4>
+							<p>Electroimanes - Cerraduras de perno electromagnético - Pestillos eléctricos </p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 col-xs-6 welcome-grid agileits-w3layouts">
+						<div class="col-xs-2 welcome-grid-left">
+							<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-10 welcome-grid-right">
+							<h4>Control de horario de personal</h4>
+							<p>Biométrico - Por proximidad </p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 col-xs-6 welcome-grid welcome-grid-bottom">
+						<div class="col-xs-2 welcome-grid-left">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-10 welcome-grid-right">
+							<h4>Cerraduras especiales </h4>
+							<p>Hoteleras - Para oficinas </p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 col-xs-6 welcome-grid welcome-grid-bottom">
+						<div class="col-xs-2 welcome-grid-left">
+							<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-10 welcome-grid-right">
+							<h4>CCTV y Cámaras de seguridad</h4>
+							<p>Instalación de videograbadoras digitales y cámaras de seguridad</p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 col-xs-6 welcome-grid welcome-grid-bottom">
+						<div class="col-xs-2 welcome-grid-left">
+							<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-10 welcome-grid-right">
+							<h4>Monitoreo de Alarmas</h4>
+							<p>Sensores de movimiento, barreras infrarrojas y pulsadores de pánico inalámbricos </p>
+						</div>
+						<div class="clearfix"> </div>
+					</div> 
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+		<!-- //Nuestro Trabajo -->
+		<div class="clearfix"> </div>
+		<!-- contact -->
+		<div id="web_contact" class="contact">
+			<div class="container">  
+				<div class="map"> 
+					<div class="agileits-title">
+						<h4>Contacto</h4><br>
+						<p>Lo invitamos a contactarse con nosotros. Si desea mayor información sobre nuestros productos o recibir asesoramiento personalizado, no dude en escribirnos y con gusto atenderemos su consulta.Por favor complete el siguiente formulario, a la brevedad estaremos respondiendo a su inquietud.</p>
+					</div> 
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.232853486263!2d-58.416303984395746!3d-34.62355548045449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccafee49fa1b5%3A0x808f35e44a65bc21!2sCarlos+Calvo+3430%2C+C1230ABH+CABA!5e0!3m2!1ses-419!2sar!4v1500993405506" width="1280" height="600" allowfullscreen=""></iframe>
+				</div> 
+				<div class="contact-agileinfo"> 
+					<div class="col-md-7 contact-right">				
+						<form action="#" method="post"> 
+							<input type="text" name="Name" placeholder="Nombre" required="">
+							<input type="email" name="Email" placeholder="Email" required=""> 
+							<input type="text" name="Telephone" placeholder="Telefono" required="">
+							<textarea name="Message" placeholder="Escriba Su Mensaje..." required=""></textarea>
+							<input type="submit" value="Submit" >
+						</form>
+					</div>
+					<div class="col-md-5 contact-left">
+						<ul>
+							<li><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+								<a target="_blank" href="https://goo.gl/maps/TpJuXwgTsfR2">Carlos Calvo 3430, C.A.B.A.</a>
+							</li>					
+							<li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+								0810-666-COFERBA (2633)
+							</li>
+							<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+								<a href="mailto:ventas@coferba.com.ar">ventas@coferba.com.ar</a>
+							</li>
+						</ul>
+					</div>						
+					<div class="clearfix"> </div>  
+				</div>			
 			</div>			
-		</div>			
+		</div>
+		<!-- //contact --> 
 	</div>
-	<!-- //contact --> 
 	<!-- footer  -->
 	<div class="agile-footer"> 
 		<div class="container">
@@ -240,10 +241,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<h3>Mapa de Sitio</h3>
 					<ul>
 						<li><a href="index.html" class="active">Inicio</a></li>
-						<li><a href="#aboutus">Quienes somos</a></li> 
-						<li><a href="#whoweare">Nuestro trabajo</a></li>
-						<li><a href="integra.html">Sistema INTEGRA</a></li>
-						<li><a href="#contact">Contacto</a></li>
+						<li><a href="index.html#web_ours">Quienes somos</a></li> 
+						<li><a href="index.html#web_work">Nuestro trabajo</a></li>
+						<li><a href="consorcios.html">Consorcios</a></li>
+						<li><a href="empresas.html">Empresas</a></li>
+						<li><a href="index.html#web_contact">Contacto</a></li>
 					</ul>
 				</div>
 				<div class="col-md-2 col-sm-6 footer-wthree-grid">
@@ -280,61 +282,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<script src="js/jquery-2.2.3.min.js"></script> 
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>	
-	<!-- start-smooth-scrolling -->	
-	<script type="text/javascript">
-		// Select all links with hashes
-		$('a[href*="#"]')
-		// Remove links that don't actually link to anything
-		.not('[href="#"]')
-		.not('[href="#0"]')
-		.click(function(event) {
-		// On-page links
-		if (
-		  location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-		  && 
-		  location.hostname == this.hostname
-		) {
-		  // Figure out element to scroll to
-		  var target = $(this.hash);
-		  target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-		  // Does a scroll target exist?
-		  if (target.length) {
-		    // Only prevent default if animation is actually gonna happen
-		    event.preventDefault();
-		    $('html, body').animate({
-		      scrollTop: target.offset().top
-		    }, 1000, function() {
-		      // Callback after animation
-		      // Must change focus!
-		      var $target = $(target);
-		      $target.focus();
-		      if ($target.is(":focus")) { // Checking if the target was focused
-		        return false;
-		      } else {
-		        $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
-		        $target.focus(); // Set focus again
-		      };
-		    });
-		  }
-		}
-		});	
-	</script>
-	<!-- //end-smooth-scrolling -->	
-	<!-- smooth-scrolling-of-move-up -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-			};
-			
-			$().UItoTop({ easingType: 'easeOutQuart' });
-			
-		});
-	</script>
-	<!-- //smooth-scrolling-of-move-up --> 
+	<script type="text/javascript" src="js/jquery-functions.js"></script>	
+	
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -5,7 +5,7 @@ METODO:POST
 
 
 
-/*PROPIETARION*/
+/*INQUILINO*/
 /*ALTA LLAVERO*/
 
 {
@@ -19,7 +19,7 @@ METODO:POST
     "description" : "aqui escribo algo"
   }
 }
-/*BAJA	 LLAVERO*/
+/*BAJA	LLAVERO*/
 
 {
   
@@ -32,7 +32,7 @@ METODO:POST
     "description" : "aqui escribo algo"
   }
 }
-/*ADMINISTRADOR*/
+/*ADMINISTRADOR O PROPIETARIO*/
 /*ALTA LLAVERO*/
 
 {
@@ -49,7 +49,7 @@ METODO:POST
        
   }
 }
-/*BAJA	 LLAVERO*/
+/*BAJA LLAVERO*/
 
 {
   
