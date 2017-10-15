@@ -27,9 +27,9 @@ METODO:POST
   {
       "idTypeTicketKf" : 2,
       "idTenantKf" : 1,
-       "idReasonDisabledItemKf":1, 
+      "idReasonDisabledItemKf":1, 
       "numberItemDisabled" : 2,
-    "description" : "aqui escribo algo"
+      "description" : "aqui escribo algo"
   }
 }
 /*ADMINISTRADOR O PROPIETARIO*/
@@ -125,3 +125,18 @@ METODO:POST
 ///FILTROSS PARA TODOS LOS PORMULARIOS  //
 http://127.0.0.1/Coferba/Back/index.php/Ticket/filter
 METODO:get
+
+
+
+
+15/10/2017
+
+Aplica para alta y baja de llaveros
+Lista de direccion de los clientes segun id del usuario registrado asociados al 'Administrador Consorcio'
+
+Anexar al servicio de listar usuarios / campos {cantidad de solicitudes completas, en proceso}
+
+Crear servicio de cancelar ticket.
+
+
+

@@ -1,42 +1,49 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html class="p_AFMaximized" dir="ltr" lang="en">
+<html  ng-app="coferbaApp" lang="es">
 <head>
-<script type="text/javascript" src="js/core-SHERMAN-MLR-1249.js"></script>
 <title>Sistema Coferba</title><!--[if lt IE 9]><link rel="stylesheet" type="text/css" media="all" href="/static/css/style-ie.css"/><![endif]-->
-<link rel="stylesheet" href="css/bootstrap_system.css" type="text/css" media="all">
 <meta content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0" name="viewport">
-<script type="text/javascript" language="javascript" src="js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="js/acsportal.packed.js"></script>
+
+<!-- Default Style Sheets -->
+<link href="css/bootstrap_system.css" type="text/css" rel="stylesheet" media="all">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/acsportal.packed.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/cloud.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/fa.min.css">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+<link rel="stylesheet" type="text/css" afrres="true" href="css/angular-block-ui.css">
+<link rel="stylesheet" type="text/css" afrres="true" href="css/angular-inform.min.css">
+<!-- Default Style Sheets -->
+<!-- User Style Sheets -->
+<link rel="stylesheet" type="text/css" afrres="true" href="css/style.css">
+<!-- User Style Sheets -->
+<link rel="shortcut icon" href="images/favicon.ico">
 
-<script src="../../assets/js/angular.min.js"></script>
 <!-- web-fonts -->  
 <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet"> 
 <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
 <!-- //web-fonts -->
 </head>
-<body class="">
+<body>
+<div id="wLoader">
+
+  <div id="loader">&nbsp;</div>
+  <div class="companyName"></div>
+</div>
     <noscript>This page uses JavaScript and requires a JavaScript enabled browser.Your browser is not JavaScript enabled.</noscript>
 <!--ANGULAR MODULE -->
-<div ng-app="coferbaApp" ng-controller="coferbaCtrl">
-	<div class="navbar navbar-inverse navbar-static-top top-nav">
-	    <div class="navbar-inner m-h-30">
-	        <div class="container">
-	            <div>
-		            <div class="pull-left l-h-15 p-t-2 m-t-10">
-		                <a href="/" alt="Advanced Customer Support Services" class="pull-left h-20 i-b w-130 p-l-5 m-t--5"></a>
-		                <a class="i-b p-r o-90" href="/">
-		                    <div class="c-fff f-13 i-b hidden-phone">Coferba v1.0</div>
-		                    <div class="c-fff f-12 i-b visible-phone">Coferba v1.0</div>
-		                </a>
-		            </div>
-	                <ul class="nav pull-right">
-	                        <li>
-	    					</li>
+<div ng-controller="coferbaCtrl">
+	<div id="sytemHead" >
+		<div  id="navbar" class="navbar navbar-inverse navbar-static-top top-nav">
+		    <div class="navbar-inner m-h-30">
+		        <div class="container">
+		            <div>
+			            <div class="pull-left l-h-15 p-t-2 m-t-10">
+			                <a href="#" alt="Coferba Seguridad" class="ASC-logo pull-left h-25 i-b w-130 p-l-5 m-t--5"></a>
+	                            <a class=" " href="#">
+	                                <div class="c-fff f-12 i-b ">La Tranquilidad de Sentirse Seguro</div>
+	                            </a>
+			            </div>
+		                <ul class="nav pull-right">
 	    					<li>
 	                			<a href="#" class="p-r">
 				                    <i class="icon-envelope-alt"></i>
@@ -47,123 +54,128 @@
 				                </div>
 	    					</li>
 	                    	<li class="dropdown gray">
-		                        <a class="dropdown-toggle" data-toggle="dropdown" href="./index.xhtml">
-		                            <i class="icon-user"></i> David Rincon <i class="icon-caret-down"></i>
+		                        <a class="dropdown-toggle" data-toggle="dropdown" href="sistema.html">
+		                            <i class="icon-user"></i> {{rsJSON.fullNameUser}} <i class="icon-caret-down"></i>
 		                        </a>
-	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-	                            <li role="presentation">
-	                                <a class="clear-lazy-cache" id="logout" href="#" tabindex="-1" role="menuitem"><i class="icon-signout"></i>Salir</a>
-	                            </li>
-	                        </ul>
-	                    </li>
-	                </ul>
-	            </div>
-	    	</div>
+		                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+		                        	<li role="presentation">
+		                                <a class="clear-lazy-cache" id="userData" href="#" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
+		                            </li>
+		                            <li role="presentation">
+		                                <a class="clear-lazy-cache" id="logout" ng-click="logout()" href="#" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
+		                            </li>
+		                        </ul>
+	                    	</li>
+		                </ul>
+		            </div>
+		    	</div>
+			</div>
 		</div>
-	</div>
-	<!--MENU BUTTONS- class="active"-->
-	<div class="jumbotron masthead b-s-20 m-b-5 -m-t-10">
-	    <div class="container">
-	        <table cellspacing="0" cellpadding="0" border="0">
-	            <tbody><tr>
-	                <td>
-	                    <ul class="nav-icon">
-						    <li id="m_pedidos">
-						       <a href="#Pedidos"> 
-						          <i class="icon-bolt"></i>
-						          <br>Pedidos
-						       </a>
+		<!--MENU BUTTONS- class="active"-->
+		<div class="jumbotron masthead b-s-20 m-b-5 -m-t-10">
+		    <div class="container">
+		        <table cellspacing="0" cellpadding="0" border="0">
+		            <tbody><tr>
+		                <td>
+		                    <ul class="nav-icon">
+							    <li id="m_pedidos">
+							       <a href="#Pedidos"> 
+							          <i class="icon-bolt"></i>
+							          <br>Pedidos
+							       </a>
+							    </li>
+							    <li id="m_monitor">
+							       <a href="#Monitor"> 
+							          <i class="icon-desktop"></i>
+							          <br>Monitor de pedidos
+							       </a>
+							    </li>
+							    <li id="m_report">
+							       <a href="#Reportes"> 
+							          <i class="icon-th-large"></i>
+							          <br>Reportes
+							       </a>
+							    </li>
+							    <li id="m_user">
+							       <a href="#Usuarios"> 
+							          <i class="icon-group"></i>
+							          <br>Gestion de usuario
+							       </a>
+							    </li>
+							     <li id="m_config">
+							       <a href="#Config"> 
+							          <i class="icon-cogs"></i>
+							          <br>Configuracion
+							       </a>
+							    </li>
+							    <li id="m_contact">
+							       <a href="#Contact"> 
+							          <i class="icon-phone"></i>
+							          <br>Contacto
+							       </a>
+							    </li>
+		                    </ul>
+		                </td>
+		                <td class="hidden-desktop v-a-t">
+		                    <div id="header-icon-show" style=" margin:-15px -19px  20px -15px ">
+		                        <i class="icon-reorder icon-4x"></i>
+		                    </div>
+		                </td>
+		            </tr>
+		        </tbody></table>
+		    </div>
+		</div>
+		<!--//MENU BUTTONS -->
+		<!--SubMenu Items -->
+		<div class="sub-navi b-s--20">
+		        <div id="SubM_Pedidos" class="container p-r">
+		            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
+			            <ul>
+						    <li class="am">
+						        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
+						        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+						                <li><a href="#Alta" class="dropItemTitle">Alta</a></li>
+						                <li><a href="#Baja" class="dropItemTitle">Baja</a></li>
+						        </ul>
 						    </li>
-						    <li id="m_monitor">
-						       <a href="#Monitor"> 
-						          <i class="icon-desktop"></i>
-						          <br>Monitor de pedidos
-						       </a>
+						    <li class="cms">
+						        <a href="#Servicio">Servicio Tecnico</a>
 						    </li>
-						    <li id="m_report">
-						       <a href="#Reportes"> 
-						          <i class="icon-th-large"></i>
-						          <br>Reportes
-						       </a>
+						    <li class="cms"> <!--class="im active"-->
+						        <a href="#Otros">Otros<i class=""></i></a>
 						    </li>
-						    <li id="m_user">
-						       <a href="#Usuarios"> 
-						          <i class="icon-group"></i>
-						          <br>Gestion de usuario
-						       </a>
+			    		</ul>
+		        </div>
+		        <div id="SubM_Monitor" class="container p-r">
+		            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
+			            <ul>
+						    <li class="am">
+						        <a href="#">Tiempo Real</a>
 						    </li>
-						     <li id="m_config">
-						       <a href="#Config"> 
-						          <i class="icon-cogs"></i>
-						          <br>Configuracion
-						       </a>
+			    		</ul>
+		        </div>
+		        <div id="SubM_user" class="container p-r">
+		            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
+			            <ul>
+			            	<li class="am">
+						        <a href="#">Listar</a>
 						    </li>
-						    <li id="m_contact">
-						       <a href="#Contact"> 
-						          <i class="icon-phone"></i>
-						          <br>Contacto
-						       </a>
+			            	<li class="am">
+						        <a href="#">Nuevo</a>
 						    </li>
-	                    </ul>
-	                </td>
-	                <td class="hidden-desktop v-a-t">
-	                    <div id="header-icon-show" style=" margin:-15px -19px  20px -15px ">
-	                        <i class="icon-reorder icon-4x"></i>
-	                    </div>
-	                </td>
-	            </tr>
-	        </tbody></table>
-	    </div>
-	</div>
-	<!--//MENU BUTTONS -->
-	<!--SubMenu Items -->
-	<div class="sub-navi b-s--20">
-	        <div id="SubM_Pedidos" class="container p-r">
-	            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
-		            <ul>
-					    <li class="am">
-					        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
-					        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-					                <li><a href="#Alta" class="dropItemTitle">Alta</a></li>
-					                <li><a href="#Baja" class="dropItemTitle">Baja</a></li>
-					        </ul>
-					    </li>
-					    <li class="cms">
-					        <a href="#Servicio">Servicio Tecnico</a>
-					    </li>
-					    <li class="cms"> <!--class="im active"-->
-					        <a href="#Otros">Otros<i class=""></i></a>
-					    </li>
-		    		</ul>
-	        </div>
-	        <div id="SubM_Monitor" class="container p-r">
-	            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
-		            <ul>
-					    <li class="am">
-					        <a href="#">Tiempo Real</a>
-					    </li>
-		    		</ul>
-	        </div>
-	        <div id="SubM_user" class="container p-r">
-	            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
-		            <ul>
-		            	<li class="am">
-					        <a href="#">Listar</a>
-					    </li>
-		            	<li class="am">
-					        <a href="#">Nuevo</a>
-					    </li>
-					    <li class="cms">
-					        <a href="#">Modificar</a>
-					    </li>
-					    <li class="cms"> <!--class="im active"-->
-					        <a href="#">Eliminar</a>
-					    </li>
-		    		</ul>
-	        </div>
+						    <li class="cms">
+						        <a href="#">Modificar</a>
+						    </li>
+						    <li class="cms"> <!--class="im active"-->
+						        <a href="#">Eliminar</a>
+						    </li>
+			    		</ul>
+		        </div>
+		</div>
 	</div>
 	<!--//SubMenu Items -->
 	<div class="main_container">
+	
 		<!-- Login&Register Button--> 
 		<div id="loginRegister" class="agileits-w3layouts">
 			<div class="container">
@@ -177,983 +189,1038 @@
 		</div>
 		<!-- //Login&Register Button--> 
 		<!-- USER LOGIN FORM -->
-		<div id="frm_loginU" class=""> 
-			<div class="containerb">
-					<!-- FORM CONTAINER-->
-			    	<form class="well-login form-horizontal" id="fLoginUser" >
-						<fieldset>
-						<legend>Login<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></legend>
-						<!-- Text Mail E-Mail-->
-						<div class="form-group">
-							 <label class="col-md-4 control-label"></label>  
-							   <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="emailLogin" placeholder="E-Mail" class="form-control" ng-model="emailLogin"  type="text">
-							    </div>
-							  </div>
-						</div>
-						<!-- Text Password Contrase&#241a-->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>  
-						    <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-						  		<input name="passwordLogin" placeholder="Contrase&#241a" class="form-control" ng-model="passwordLogin" type="password">
-						    </div>
-							</div>
-						</div>
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						  <span><a class="lostPass">Olvide mi contrase&#241a <i class="icon-cogs icon-2x"></i></a></span>
-						    <button id="btnLogin" type="submit" class="btn-primary-login" >LOGIN <span class="glyphicon glyphicon-ok"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-			</div>
-		</div>
-		<!-- USER REGISTER FORM -->
-		<div id="frm_registerU" class="agileits-w3layouts"> 
+<!-- ******************************************************************************************************************************************** -->
+		<div id="frm_loginU" class="" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fNewUser" ng-init="CallFilterFormU(); checkRS=false">
-						<fieldset>
-						<!-- Form First Name -->
-
-						<legend>Registro de Usuario<a alt="Cerrar" class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Form Last Name -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Apellido</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
-								</div>
-						  	</div>
-						</div>
-						<!-- Text Mail-->
-
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<!-- Text Password-->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Contrase&#241a</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" type="password">
-							    </div>
-							</div>
-						</div>
-						<!-- Text Phone-->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="phone" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberUser" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Select profile -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Perfil</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									    <select name="idProfileKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="idProfileKf" >
-									    	<option value=""></option>
-								    	</select>
-							  	</div>
-							</div>
-						</div>
-						<!-- Company names-->
-						      
-						<div ng-show="cpnyinput" class="form-group">
-						  <label class="col-md-4 control-label">Razon Social</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-							  		<input name="razonSocial" placeholder="Razon Social" class="form-control" ng-disabled="checkRS" ng-model="razonSocial" type="text">
-							    </div>
-						  </div>
-						</div>
-
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button id="uRegister" type="submit" ng-click="addUser(1)" class="btn btn-primary" >Registrar <span class="glyphicon glyphicon-ok"></span></button>
-						    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
+				<br>
+	              <div class="panel panel-default-login" >
+	                  <div class="panel-heading">
+	                    <h3 class="panel-title">LOGIN COFERBA<a class="frmcloseLogin"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+						    	<form name="frmLogin" class="form-horizontal" id="frmLogin" ng-submit="sysLogin('login')">
+									<fieldset>
+									<!-- Text Mail E-Mail-->
+										<div class="form-group" ng-class="{ 'has-error': frmLogin.email.$dirty && frmLogin.email.$error.required }">
+											 <label for="">Email</label>  
+											   <div class="">
+											    <div class="input-group">
+											    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+											  		<input name="emailLogin" placeholder="E-Mail" class="form-control" ng-model="Login.email" value="rexx84@gmail.com"  type="email" required autofocus />
+											    </div>
+											  </div>
+										</div>
+									<!-- Text Password Contrase&#241a-->
+										<div class="form-group" ng-class="{ 'has-error': frmLogin.password.$dirty && frmLogin.password.$error.required }">
+										  <label class="">Contrase&#241a</label>  
+										    <div class="">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										  		<input name="passwordLogin" placeholder="Contrase&#241a" class="form-control" ng-model="Login.password" minlength="7" value="1234567" type="password" required autofocus />
+										    </div>
+											</div>
+										</div>
+									<!-- Actions Button -->
+										<div class="form-actions">
+											<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN <span class="glyphicon glyphicon-ok"></span></button>
+										  	<a class="lostPass">Olvide mi contrase&#241a <i class="icon-cogs icon-2x"></i></a>
+									  	</div>
+									</fieldset>
+								</form>
+		 					</div> <!-- Fin del panel panel-default -->
+    					</div>
+					</div>
 				</div>
+		<!-- USER REGISTER FORM -->
+		<div id="frm_registerU" class="agileits-w3layouts" style="display: none;"> 
+			<div class="container">
+				<br>
+	              <div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">NUEVO USUARIO<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+			    				<form class="form-horizontal" id="fNewUser" ng-init="CallFilterFormU(); checkRS=false" ng-submit="sysRegisterUser()">
+									<fieldset>
+									<!-- Form First Name -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus/>
+											  </div>
+										  </div>
+									</div>
+									<!-- Form Last Name -->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Apellido</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text" required autofocus />
+											</div>
+									  	</div>
+									</div>
+									<!-- Text Mail-->
+
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="email" required autofocus />
+									    </div>
+									  </div>
+									</div>
+									<!-- Text Password-->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Contrase&#241a</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+										    </div>
+										</div>
+									</div>
+									<!-- Text Password Check-->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Confirme su Contrase&#241a</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										  		<input name="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
+										    </div>
+										</div>
+									</div>
+									<!-- Text Phone-->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="phone" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" ng-model="phoneNumberUser" maxlength="12" type="text" required autofocus />
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text" required autofocus />
+										    </div>
+									  </div>
+									</div>
+									<!-- Select profile -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Perfil</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												    <select name="idProfileKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="idProfileKf"  required autofocus />
+												    	<option value=""></option>
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Company names-->
+									      
+									<div ng-show="cpnyinput" class="form-group">
+									  <label class="col-md-4 control-label">Razon Social</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+										  		<input name="razonSocial" placeholder="Razon Social" class="form-control" ng-disabled="checkRS" ng-model="razonSocial" type="text" />
+										    </div>
+									  </div>
+									</div>
+
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button id="uRegister" type="submit" class="btn btn-primary" >Registrar <span class="glyphicon glyphicon-ok"></span></button>
+									    <button id="breset" type="reset" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
+							</div>
+					</div>
 			</div>
 		</div>
 <!--REQUEST FORMS FOR NO REGISTERED USERS -->
 	<!-- GUEST REQUEST KEY UP FORM  rku=Register Key Up-->
-		<div id="frm_rku" class="agileits-w3layouts"> 
+		<div id="frm_rku" class="agileits-w3layouts" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fNewkey" ng-init="CallFilterFormT(); checkRS=false">
-						<fieldset>
+				<br>
+	              	<div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">SOLICITUD DE ALTA DE LLAVE<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+			    				<form class="form-horizontal" id="fNewkey" ng-init="CallFilterFormT(); checkRS=false">
+									<fieldset>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Form First Name -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus>
+											  </div>
+										  </div>
+									</div>
+									<!-- Form Last Name -->
 
-						<legend>Solicitud de Alta de llaves<a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Form First Name -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Form Last Name -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Apellido</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
+											</div>
+									  	</div>
+									</div>
+									<!-- Text Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono de Contacto</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="phone1" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular de Contacto</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="phone2" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Apellido</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
-								</div>
-						  	</div>
-						</div>
-						<!-- Text Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono de Contacto</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="phone1" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular de Contacto</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="phone2" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="email">
+									    </div>
+									  </div>
+									</div>
+									<!-- Form Key Quantity qku = Quantity Keys Up-->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<!-- Form Key Quantity qku = Quantity Keys Up-->
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+										  		<input name="qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="qku" type="number" min="1" max="5">
+											</div>
+									  	</div>
+									</div>
+									<!-- Select Type of Delivery -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Tipo de Entrega</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
+												    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf">
+												    	<option value=""></option>
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Form Special Request sru= Special Request Up -->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-							  		<input name="qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="qku" type="number" min="1" max="5">
-								</div>
-						  	</div>
-						</div>
-						<!-- Select Type of Delivery -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Tipo de Entrega</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-									    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf">
-									    	<option value=""></option>
-								    	</select>
-							  	</div>
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="sru" rows="10" cols="40" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sru" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Enviar <span class="glyphicon glyphicon-ok"></span></button>
+									    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
 							</div>
-						</div>
-						<!-- Form Special Request sru= Special Request Up -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="sru" rows="10" cols="40" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sru" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
-						    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
+					</div>
 			</div>
 		</div>
-	<!-- GUEST REQUEST KEY DOWN FORM  rkd=Register Key Down-->
-		<div id="frm_rkd" class="agileits-w3layouts"> 
+<!-- GUEST REQUEST KEY DOWN FORM  rkd=Register Key Down-->
+		<div id="frm_rkd" class="agileits-w3layouts" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fdelkey" ng-init="CallFilterForm(); checkRS=false">
-						<fieldset>
+				<br>
+	              	<div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">SOLICITUD DE BAJA DE LLAVE<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+						    	<form class="form-horizontal" id="fdelkey" ng-init="CallFilterForm(); checkRS=false">
+									<fieldset>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Form First Name -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required="true">
+											  </div>
+										  </div>
+									</div>
+									<!-- Form Last Name -->
 
-						<legend>Solicitud de Baja de llaves<a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Form First Name -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Form Last Name -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Apellido</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
+											</div>
+									  	</div>
+									</div>
+									<!-- Text Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono de Contacto</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="phone1" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular de Contacto</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="phone2" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Apellido</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text">
-								</div>
-						  	</div>
-						</div>
-						<!-- Text Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono de Contacto</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="phone1" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular de Contacto</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="phone2" placeholder="(11) 555-1212" class="form-control" ng-model="phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<!-- Form Key Quantity qku = Quantity Keys Up-->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<!-- Form Key Quantity qku = Quantity Keys Up-->
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+										  		<input name="qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="qku" type="number" min="1" max="5">
+											</div>
+									  	</div>
+									</div>
+									<!-- Select Type of Lost -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Motivo</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
+												    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf">
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Form Special Request sru= Special Request Up -->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-							  		<input name="qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="qku" type="number" min="1" max="5">
-								</div>
-						  	</div>
-						</div>
-						<!-- Select Type of Lost -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Motivo</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-									    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf">
-								    	</select>
-							  	</div>
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="sru" rows="10" cols="40" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sru" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Enviar <span class="glyphicon glyphicon-ok"></span></button>
+									    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
 							</div>
-						</div>
-						<!-- Form Special Request sru= Special Request Up -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="sru" rows="10" cols="40" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sru" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
-						    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
+					</div>
 			</div>
 		</div>
 <!--//REQUEST FORMS FOR NO REGISTERED USERS -->
 <!-- ==================================================================-->
 <!--REQUEST KEY FORM FOR REGISTERED USERS -->
 		<!-- USER REQUEST KEY UP FORM  rku=Register Key Up-->
-		<div id="frm_rkuu" class="agileits-w3layouts"> 
+		<div id="frm_rkuu" class="agileits-w3layouts" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fNewkey" ng-init="CallFilterFormT(); checkRS=false">
-						<fieldset>
+				<br>
+	              	<div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">SOLICITUD DE ALTA DE LLAVE<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+						    	<form class="form-horizontal" id="fNewkey" ng-init="CallFilterFormT(); checkRS=false" >
+									<fieldset>
+									
+									<legend style="text-align: center;">Datos del Encargado</legend><br/>
+									<!-- Admin First Name & Lastname -->
 
-						<legend><b>ALTA DE LLAVES</b><a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend><br/>
-						
-						<legend style="text-align: center;">Datos del Encargado</legend><br/>
-						<!-- Admin First Name & Lastname -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="ad_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ad_names"  type="text" required="true">
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="ad_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ad_addresUser" type="text">
+										    </div>
+									  </div>
+									</div>
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="ad_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ad_names"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="ad_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ad_addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
+									<!-- Text Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ad_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ad_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<!-- Text Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ad_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ad_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="ad_email" placeholder="E-Mail" class="form-control" ng-model="ad_email"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<legend style="text-align: center;">Datos del Propietario</legend><br/>
+									<!-- Owner First Name & Lastname -->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="ad_email" placeholder="E-Mail" class="form-control" ng-model="ad_email"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<legend style="text-align: center;">Datos del Propietario</legend><br/>
-						<!-- Owner First Name & Lastname -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="ow_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ow_names"  type="text" required="true">
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="ow_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ow_addresUser" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Department-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Departamento</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="ow_dpto" placeholder="Departamento" class="form-control" ng-model="ow_dpto" type="text">
+										    </div>
+									  </div>
+									</div>
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="ow_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ow_names"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="ow_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ow_addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Department-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Departamento</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="ow_dpto" placeholder="Departamento" class="form-control" ng-model="ow_dpto" type="text">
-							    </div>
-						  </div>
-						</div>
+									<!-- Text Owner Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ow_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Owner Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ow_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<!-- Text Owner Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ow_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Owner Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ow_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="ow_email" placeholder="E-Mail" class="form-control" ng-model="ow_email"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<!-- Form Key Quantity qku = Quantity Keys Up-->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="ow_email" placeholder="E-Mail" class="form-control" ng-model="ow_email"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<!-- Form Key Quantity qku = Quantity Keys Up-->
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+										  		<input name="ow_qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="ow_qku" type="number" min="1" max="5">
+											</div>
+									  	</div>
+									</div>
+									<!-- Select Type of Delivery -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Tipo de Entrega</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
+												    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf">
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Form Special Request sru= Special Request Up -->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-							  		<input name="ow_qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="ow_qku" type="number" min="1" max="5">
-								</div>
-						  	</div>
-						</div>
-						<!-- Select Type of Delivery -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Tipo de Entrega</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-									    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf">
-								    	</select>
-							  	</div>
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="ow_sru" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="ow_sru" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4"></label>
+									  <div class="col-md-4">	
+									  		<button id="uRegister" type="submit" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
+									    	<button id="breset" type="reset" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
 							</div>
-						</div>
-						<!-- Form Special Request sru= Special Request Up -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="ow_sru" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="ow_sru" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4"></label>
-						  <div class="col-md-4">	
-						  		<button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
-						    	<button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
+					</div>
 			</div>
 		</div>
 		<!-- USER REQUEST KEY DOWN FORM  rkd=Register Key Down-->
-		<div id="frm_rkdu" class="agileits-w3layouts"> 
+		<div id="frm_rkdu" class="agileits-w3layouts" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fNewkey" ng-init="CallFilterFormT(); checkRS=false">
-						<fieldset>
+				<br>
+	              	<div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">SOLICITUD DE BAJA DE LLAVE<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+			    				<form class="form-horizontal" id="fNewkey" ng-init="CallFilterFormT(); checkRS=false">
+									<fieldset>
+									<legend style="text-align: center;">Datos del Encargado</legend><br/>
+									<!-- Admin First Name & Lastname -->
 
-						<legend><b>BAJA DE LLAVES</b><a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend><br/>
-						
-						<legend style="text-align: center;">Datos del Encargado</legend><br/>
-						<!-- Admin First Name & Lastname -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="ad_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ad_names"  type="text" required="true">
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="ad_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ad_addresUser" type="text">
+										    </div>
+									  </div>
+									</div>
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="ad_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ad_names"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="ad_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ad_addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
+									<!-- Text Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ad_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ad_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<!-- Text Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ad_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ad_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="ad_email" placeholder="E-Mail" class="form-control" ng-model="ad_email"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<legend style="text-align: center;">Datos del Propietario</legend><br/>
+									<!-- Owner First Name & Lastname -->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="ad_email" placeholder="E-Mail" class="form-control" ng-model="ad_email"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<legend style="text-align: center;">Datos del Propietario</legend><br/>
-						<!-- Owner First Name & Lastname -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="ow_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ow_names"  type="text" required="true">
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="ow_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ow_addresUser" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Department-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Departamento</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="ow_dpto" placeholder="Departamento" class="form-control" ng-model="ow_dpto" type="text">
+										    </div>
+									  </div>
+									</div>
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="ow_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ow_names"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="ow_addresUse" placeholder="Direcci&#243n" class="form-control" ng-model="ow_addresUser" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Department-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Departamento</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="ow_dpto" placeholder="Departamento" class="form-control" ng-model="ow_dpto" type="text">
-							    </div>
-						  </div>
-						</div>
+									<!-- Text Owner Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ow_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Owner Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ow_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<!-- Text Owner Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ow_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Owner Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ow_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ow_phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="ow_email" placeholder="E-Mail" class="form-control" ng-model="ow_email"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<!-- Form Key Quantity qku = Quantity Keys Up-->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="ow_email" placeholder="E-Mail" class="form-control" ng-model="ow_email"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<!-- Form Key Quantity qku = Quantity Keys Up-->
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+										  		<input name="ow_qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="ow_qku" type="number" min="1" max="5">
+											</div>
+									  	</div>
+									</div>
+									<!-- Select Type of Lost -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Motivo</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
+												    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf">
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Form Special Request sru= Special Request Up -->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-							  		<input name="ow_qku" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="ow_qku" type="number" min="1" max="5">
-								</div>
-						  	</div>
-						</div>
-						<!-- Select Type of Lost -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Motivo</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-									    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf">
-								    	</select>
-							  	</div>
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="ow_sru" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="ow_sru" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
+									    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
 							</div>
-						</div>
-						<!-- Form Special Request sru= Special Request Up -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="ow_sru" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="ow_sru" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
-						    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
+					</div>
 			</div>
 		</div>
 		<!-- USER REQUEST SERVICE  rusvc=Register Request User Service-->
-		<div id="frm_rusvc" class="agileits-w3layouts"> 
+		<div id="frm_rusvc" class="agileits-w3layouts" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fdelkey" ng-init="CallFilterFormT(); checkRS=false">
-						<fieldset>
+				<br>
+	              	<div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">SOLICITUD DE SERVICIO<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+						    	<form class="form-horizontal" id="fdelkey" ng-init="CallFilterFormT(); checkRS=false">
+									<fieldset>
+									<legend style="text-align: center;">Datos del Encargado</legend><br/>
+									<!-- Admin First Name & Lastname -->
 
-						<legend><b>SERVICIO</b><a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
-						<legend style="text-align: center;">Datos del Encargado</legend><br/>
-						<!-- Admin First Name & Lastname -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="ad_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ad_names"  type="text" required="true">
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Phone 1 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ad_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberLocal" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Phone 2 -->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Celular</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="ad_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberMovil" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
 
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-							  <div class="col-md-4 inputGroupContainer">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="ad_names" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="ad_names"  type="text" required="true">
-								  </div>
-							  </div>
-						</div>
-						<!-- Text Phone 1 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Telefono</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ad_phoneNumberLocal" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberLocal" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Phone 2 -->
-						       
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Celular</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="ad_phoneNumberMovil" placeholder="(11) 555-1212" class="form-control" ng-model="ad_phoneNumberMovil" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="ad_email" placeholder="E-Mail" class="form-control" ng-model="ad_email"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<legend style="text-align: center;">Datos del Servicio</legend><br/>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="sv_address" placeholder="Direcci&#243n" class="form-control" ng-model="sv_addres" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Select Type of Service -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Tipo de Servicio</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
+												    <select name="idTypeLostKf" class="form-control" placeholder="Tipo de Servicio" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf">
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Form service description -->
 
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="ad_email" placeholder="E-Mail" class="form-control" ng-model="ad_email"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<legend style="text-align: center;">Datos del Servicio</legend><br/>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="sv_address" placeholder="Direcci&#243n" class="form-control" ng-model="sv_addres" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Select Type of Service -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Tipo de Servicio</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-									    <select name="idTypeLostKf" class="form-control" placeholder="Tipo de Servicio" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf">
-								    	</select>
-							  	</div>
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Descripci&#243n</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="sv_detail" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="sv_detail" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Form Special Request sru= Special Request Up -->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="ow_sru" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="ow_sru" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
+									    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
 							</div>
-						</div>
-						<!-- Form service description -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Descripci&#243n</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="sv_detail" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="sv_detail" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Form Special Request sru= Special Request Up -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="ow_sru" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="ow_sru" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
-						    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
+					</div>
 			</div>
 		</div>
 		<!-- USER REQUEST OTHER QUERIES  ruoqry=Register Request User Other Queries-->
-		<div id="frm_ruoqry" class="agileits-w3layouts"> 
+		<div id="frm_ruoqry" class="agileits-w3layouts" style="display: none;"> 
 			<div class="container">
-				<div class="agileits-title">
-					<!-- FORM CONTAINER-->
-			    	<form class="well form-horizontal" id="fdelkey" ng-init="CallFilterFormT(); checkRS=false">
-						<fieldset>
+				<br>
+	              	<div class="panel panel-default">
+	                  	<div class="panel-heading">
+	                    	<h3 class="panel-title">OTRAS CONSULTAS<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+	                	</div>
+	                		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+						    	<form class="form-horizontal" id="fdelkey" ng-init="CallFilterFormT(); checkRS=false">
+									<fieldset>
+									<!-- Select Type of Service -->
+									   
+									<div class="form-group"> 
+									  <label class="col-md-4 control-label">Tipo de Consulta</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
+												    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-change="getSelectedData()" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="idTypeOutherKf">
+											    	</select>
+										  	</div>
+										</div>
+									</div>
+									<!-- Text Mail-->
 
-						<legend><b>OTRAS CONSULTAS</b><a class="frmclose"><i class="glyphicon glyphicon-remove-sign"> </i></a></legend>
-						<!-- Select Type of Service -->
-						   
-						<div class="form-group"> 
-						  <label class="col-md-4 control-label">Tipo de Consulta</label>
-						    <div class="col-md-4 selectContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-									    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-change="getSelectedData()" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="idTypeOutherKf">
-								    	</select>
-							  	</div>
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="o_email" placeholder="E-Mail" class="form-control" ng-model="o_email"  type="text">
+									    </div>
+									  </div>
+									</div>
+									<!-- Text Address-->
+									      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Direcci&#243n</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<input name="sv_address" placeholder="Direcci&#243n" class="form-control" ng-model="sv_addres" type="text">
+										    </div>
+									  </div>
+									</div>
+									<!-- Form query description -->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label" >Descripci&#243n</label> 
+									  	<div class="col-md-4">
+											<div class="input-group">
+										  		<textarea name="o_detail" rows="10" cols="40" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="o_detail" > </textarea>
+											</div>
+									  	</div>
+									</div>
+									<!-- Success message 
+									<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Enviar <span class="glyphicon glyphicon-ok"></span></button>
+									    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
 							</div>
-						</div>
-						<!-- Text Mail-->
-
-						<div class="form-group">
-						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4 inputGroupContainer">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="o_email" placeholder="E-Mail" class="form-control" ng-model="o_email"  type="text">
-						    </div>
-						  </div>
-						</div>
-						<!-- Text Address-->
-						      
-						<div class="form-group">
-						  <label class="col-md-4 control-label">Direcci&#243n</label>  
-						    <div class="col-md-4 inputGroupContainer">
-							    <div class="input-group">
-							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							  		<input name="sv_address" placeholder="Direcci&#243n" class="form-control" ng-model="sv_addres" type="text">
-							    </div>
-						  </div>
-						</div>
-						<!-- Form query description -->
-
-						<div class="form-group">
-						  <label class="col-md-4 control-label" >Descripci&#243n</label> 
-						  	<div class="col-md-4 inputGroupContainer">
-								<div class="input-group">
-							  		<textarea name="o_detail" rows="10" cols="40" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="o_detail" > </textarea>
-								</div>
-						  	</div>
-						</div>
-						<!-- Success message 
-						<div class="alert alert-success" role="alert" id="success_message">Registro Satisfactorio <i class="glyphicon glyphicon-thumbs-up"></i> </div>-->
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button id="uRegister" type="submit" ng-click="" class="btn btn-primary" >Solicitar <span class="glyphicon glyphicon-ok"></span></button>
-						    <button id="breset" type="reset" ng-click="registerU=false" class="btn btn-primary">Cancelar <span class="glyphicon glyphicon-remove"></span></button>
-						  </div>
-						</div>
-
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
+					</div>
 			</div>
 		</div>
 <!--//REQUEST KEY FORM FOR NO REGISTERED USERS -->
 	</div>
+	<!-- Response Inform Meessage plugin -->
+	<div inform class="inform-fixed inform-shadow inform-animate"></div>
 </div>
-<!--//ANGULAR MODULE -->
-<script src="js/bootstrap.js"></script>
-<script src="js/user.js"></script> <!-- CONTROLADOR ANGULAR -->
+<!--ANGULAR MODULES -->
+<script src="https://code.angularjs.org/1.2.22/angular.js"></script>
+<script src="js/angular-block-ui.js"></script>
+<script src="js/angular-inform.min.js"></script>
+<script src="js/angular-showdown.js"></script>
+<script src="js/angular-animate.min.js"></script>
+<!--ANGULAR MODULES -->
+<!--JQUERY MODULES -->
+<script type="text/javascript" language="javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/core-SHERMAN-MLR-1249.js"></script>
+<script type="text/javascript" language="javascript" src="js/acsportal.packed.js"></script>
+<!--JQUERY MODULES -->
+<script src="js/coferbaAngularApp.js"></script> <!-- Coferba Angular App -->
+<script src="js/coferbaJsFunctions.js"></script> <!--  Coferba Jquery Functions -->
+
 </body>
 </html>
 

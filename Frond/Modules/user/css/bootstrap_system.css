@@ -11,7 +11,26 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
-
+body {
+    margin:0;
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+}
+body a:hover {
+    text-decoration: none;
+}
+body a:focus {
+    outline: none;
+}
+/*main_container*/
+.main_container {
+    padding-top: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    width: 100%; 
+}
 article,
 aside,
 details,
@@ -2482,7 +2501,7 @@ table th[class*="col-"] {
 }
 fieldset {
   min-width: 0;
-  padding: 0;
+  padding-top: 20px;
   margin: 0;
   border: 0;
 }
@@ -2573,6 +2592,22 @@ output {
 }
 .form-control::-webkit-input-placeholder {
   color: #999;
+}
+
+.frmclose i{
+    text-align: right;
+    float: right;
+    cursor: pointer;
+}
+#frm_loginU{
+  left: 0;
+  right: 0;
+  margin-top: 100px;
+}
+.frmcloseLogin i{
+    text-align: right;
+    float: right;
+    cursor: pointer;
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -3085,7 +3120,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #fff;
-  background-color: #56c2e1;
+  text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
+  background: #56c2e1;
   border: 1px solid #46b3d3;
   border-radius: 5px;
   cursor: pointer;
@@ -3094,7 +3130,7 @@ fieldset[disabled] .btn-default.active {
   -webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
 
 }
-.btn-primary-login{
+.btn-primary-system{
   float:right;
   padding: 11px 25px;
   font-weight: 300;
@@ -3111,38 +3147,42 @@ fieldset[disabled] .btn-default.active {
 }
 
 .login-form .footer .button:hover {
-  background: #3f9db8;
-  
+  background: #3f9db8; 
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
   -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
   -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+.btn-primary-system:focus{
+  outline: none;
 }
 
-.btn-primary-login:focus, .btn-primary-login:hover{
+.btn-primary-system:hover{
   background: #ADFF00;
+  color: #56c2e1;
   border: 1px solid rgba(256,256,256,0.75);
-  
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
   -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
   -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
 }
-.btn-primary:hover,
+.btn-primary:hover{
+  background: #ADFF00;
+  color: #56c2e1;
+  border: 1px solid rgba(256,256,256,0.75);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+  -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
 .btn-primary:focus,
 .btn-primary.focus,
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-  color: #383838;
-  background-color: #ADFF00;
-  border-color: #383838;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-  -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-  -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+  outline: none;
 }
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-  background-image: none;
+  outline: none;
 }
 .btn-primary.disabled,
 .btn-primary[disabled],
@@ -5149,7 +5189,7 @@ a.thumbnail.active {
   padding-left: 10px;
 }
 .media-left,
-.media > .pull-left {
+.media {
   padding-right: 10px;
 }
 .media-left,
@@ -5346,7 +5386,7 @@ a.list-group-item-danger.active:focus {
   margin-bottom: 20px;
   background-color: #fff;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 0px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
@@ -5574,9 +5614,18 @@ a.list-group-item-danger.active:focus {
   border-bottom: 1px solid #ddd;
 }
 .panel-default {
+  width: 100%;
+}
+.panel-default-login, .panel-default {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   border-color: #ddd;
 }
-.panel-default > .panel-heading {
+.panel-default-login{
+  width: 50%;
+}
+.panel-default > .panel-heading, .panel-default-login > .panel-heading  {
   color: #333;
   background-color: #f5f5f5;
   border-color: #ddd;
@@ -5907,6 +5956,7 @@ button.close {
     width: 300px;
   }
 }
+
 @media (min-width: 992px) {
   .modal-lg {
     width: 900px;
@@ -6418,9 +6468,6 @@ button.close {
 .pull-right {
   float: right !important;
 }
-.pull-left {
-  float: left !important;
-}
 .hide {
   display: none !important;
 }
@@ -6469,6 +6516,9 @@ button.close {
 @media (max-width: 767px) {
   .visible-xs {
     display: block !important;
+  }
+  .panel-default-login, .panel-default{
+  width: 100%;
   }
   table.visible-xs {
     display: table;

@@ -11,7 +11,9 @@ a:focus { outline: 0 none; }
 .btn-group > .btn-mini, .btn-group > .btn.btn-mini, .btn.btn-mini { font-size: 11.5px; }
 
 a:hover, a:active, .OraLink:hover, .OraLinkText:hover { color:#0088CC; text-decoration: none; }
-
+body {
+    font-family: 'Open Sans', sans-serif;
+}
 .globalSearch input[type="text"],.globalSearch input[type="text"]:focus ,.globalSearch input[type="text"]:hover{  height:18px; border:0;
     padding-top: 1px;
     padding-left: 0;
@@ -458,7 +460,7 @@ div.modal {
     text-decoration: none;
     color:#fff;
 }
-.ASC-logo { background: url('/images/logo.png') left top no-repeat; color: transparent; font-size:0; }
+.ASC-logo { background: url('../images/logoV3.png') left top no-repeat; color: transparent; font-size:0; }
 .ASC-logo:hover { color:transparent; }
 
 .nav-icon { margin:0; padding:0; float:left; }
@@ -880,7 +882,7 @@ ul.cloud-ste li.inactive:hover {
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
        .ASC-logo { 
-            background: url('/images/logo.png') left top no-repeat; 
-            background-size: 373px 20px; }
+            background: url('../images/logoV3.png') left top no-repeat; 
+            }
 
 }
