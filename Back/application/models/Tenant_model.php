@@ -38,27 +38,35 @@ class Tenant_model extends CI_Model
             $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_tenant.idTypeKf', 'left');
 			$this->db->where("tb_tenant.idStatusKf !=", -1);
 
+            // Si recibimos id de administrador de cnosorcio  //
+            if (@$searchFilter['idAdminR'] > 0) {
+                $this->db->where('idDepartmentKf in (
+                SELECT  idDepartment  FROM tb_department WHERE idUserAdminRKf = '.$searchFilter['idAdminR'].' )',NULL, FALSE);
+            } 
 
+            if(@$searchFilter['idTypeKf'] > 0)
+            {
+                 $this->db->where('tb_tenant.idTypeKf', $searchFilter['idTypeKf']);
+            } 
 
             /* Busqueda por filtro */
-            if (!is_null($searchFilter['searchFilter'])) 
+            if (!is_null(@$searchFilter['searchFilter']) && @$searchFilter['searchFilter'] != "") 
             {
             	$this->db->like('tb_tenant.fullNameTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
 
-				if(@$searchFilter['idTypeKf'] > 0)
-				{
-					 $this->db->or_where('tb_tenant.idTypeKf', $searchFilter['idTypeKf']);
-				} 
+				
 				
 				if(@$searchFilter['idDepartmentKf'] > 0)
 				{
 					 $this->db->or_where('tb_tenant.idDepartmentKf', $searchFilter['idDepartmentKf']);
-				}                
-               
+                }
+                
                 
             }
+
+            
 
 
             // Si recibimos un limite //
@@ -128,6 +136,43 @@ class Tenant_model extends CI_Model
 
         return $filter;
     }
+
+    /* LISTADO DE FILTROS */
+    public function getTenanatByIdDepartament($id) {
+        
+                $tenant = null;
+        
+                $this->db->select("*")->from("tb_tenant");
+                $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
+                if ($query->num_rows() > 0) {
+                    $tenant = $query->result_array();
+                }
+    
+                $rs = array(
+                    'tenant' => $tenant
+                );
+        
+                return $rs;
+    }
+
+     /* LISTADO DE FILTROS */
+     public function getDepartamentByIdAdminR($id) {
+        
+                $tenant = null;
+        
+                $this->db->select("*")->from("tb_department");
+                $query = $this->db->where("tb_department.idUserAdminRKf =", $id)->get();
+                if ($query->num_rows() > 0) {
+                    $tenant = $query->result_array();
+                }
+    
+                $rs = array(
+                    'tenant' => $tenant
+                );
+        
+                return $rs;
+    }
+        
 
 
      /* EDITAR DATOS DE UN inquilino */

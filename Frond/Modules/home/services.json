@@ -136,7 +136,38 @@ Lista de direccion de los clientes segun id del usuario registrado asociados al 
 
 Anexar al servicio de listar usuarios / campos {cantidad de solicitudes completas, en proceso}
 
-Crear servicio de cancelar ticket.
+Crear servicio de cancelar ticket .
+
+/// mail ,solicitudes alta y baja /cuando activo un usuario///APRUEBA SOLIVITUD//
+// CONFIGURAR MAIL DE COFERBA
+
+
+/* SERVICIO RETORNA EL LISTADO DE DEPARTAMENTOS  POR ID DE UN ADMINISTRADOR  */
+http://127.0.0.1/Coferba/Back/index.php/Tenant/departamentByIdAdminR/1
+
+/* SERVICIO RETORNA EL LISTADO DE INQUILINOS SEGUN UN id DEPARTAMENTO   */
+http://127.0.0.1/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/1
+
+
+/*cantidad de solicitudes completas, en proceso*/
+"tk_complit": "0",
+"tk_incomplit": "0"
+
+
+/*BUSAR  INQUILINO POR ID DE ADMINISTRADOR DE CONSORCIO */
+http://127.0.0.1/Coferba/Back/index.php/Tenant/search
+METODO : POST 
+{
+  
+   "filter":
+   { 
+     "idTypeKf" : 1,
+     "idAdminR": 1,
+     "topFilter" : 0
+   }
+ }
+
+
 
 
 

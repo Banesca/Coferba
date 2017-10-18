@@ -43,8 +43,9 @@ class User_model extends CI_Model
         if (!is_null($id)) 
         {
 
-            $this->db->select("*")->from("tb_user");
-            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idUser', 'left');
+            $this->db->select("*,(SELECT COUNT(*)as tk_complit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 1) as tk_complit,
+            (SELECT COUNT(*)as tk_incomplit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 2)as tk_incomplit")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
             $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
             $quuery = $this->db->where("tb_user.idUser = ", $id)->get();
@@ -58,19 +59,21 @@ class User_model extends CI_Model
         else
          { 
 
-            $this->db->select("*")->from("tb_user");
-            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idUser', 'left');
+            $this->db->select("*,(SELECT COUNT(*)as tk_complit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 1) as tk_complit,
+            (SELECT COUNT(*)as tk_incomplit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 2)as tk_incomplit")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
             $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 
-            /* Busqueda por filtro */
-            if (!is_null($searchFilter['searchFilter'])) 
-            {
-            	$this->db->like('tb_user.fullNameUser', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_user.emailUser', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_user.rezonSocial', $searchFilter['searchFilter']);
-            }
+       
+                 /* Busqueda por filtro */
+                 if (!is_null($searchFilter['searchFilter'])) 
+                 {
+                     $this->db->like('tb_user.fullNameUser', $searchFilter['searchFilter']);
+                     $this->db->or_like('tb_user.emailUser', $searchFilter['searchFilter']);
+                     $this->db->or_like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
+                     $this->db->or_like('tb_user.rezonSocial', $searchFilter['searchFilter']);
+                 }
 
 
             // Si recibimos un limite //

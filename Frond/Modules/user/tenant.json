@@ -48,7 +48,7 @@ METODO : POST
       "topFilter": 0, // top de cuantos resltados quieres que se retornen si mandas 0  retorna todos si no retorna el limite que envies
       
       "idTypeKf" : 1, // !OPCIONAL!  si envias este parametro  puedes fitrar por  id de tipo de inquilino
-	  "idDepartmentKf": 1 // !OPCIONAL!  si envias este parametro  puedes fitrar por  id departamento
+	    "idDepartmentKf": 1 // !OPCIONAL!  si envias este parametro  puedes fitrar por  id departamento
   }
 }
 
