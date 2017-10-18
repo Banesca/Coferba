@@ -5,7 +5,8 @@ class Ticket_model extends CI_Model
 	
 	public function __construct()
 	{
-		parent::__construct();
+        parent::__construct();
+         /*MAIL*/ $this->load->model('mail_model');
 	}
 
 
@@ -38,7 +39,7 @@ private function formatCode($value) {
                     )
             )->where("idCode =", 1)->update("tb_sys_code");
 
-        /* CREAMOS UN USUARIO */
+        /* CREAMOS UN TICKET */
         $this->db->insert('tb_tickets', array(
             'codTicket' => $codTicket,
             'idTypeTicketKf' => @$ticket['idTypeTicketKf'],
@@ -85,7 +86,41 @@ private function formatCode($value) {
 				}
             }
 
-		 
+
+            $to = "";
+            
+            $idUser = 0;
+            if(@$ticket['idUserEnterpriceKf'] > 0){
+                $idUser =  @$ticket['idUserEnterpriceKf'];
+             }
+
+             if(@$ticket['idUserEnterpriceKf'] >0 ){
+                $idUser =  @$ticket['idUserEnterpriceKf'];
+             }
+
+             if(@$ticket['idTenantKf'] > 0){
+                $to['emailUser'] =  @$ticket['emailTenant'];
+             }
+
+        if($idUser >0){
+            $query =  $this->db->select("*")->from("tb_user")->where("idUser =", @$idUser)->get();
+            if ($query->num_rows() > 0) {
+                $to = $query->row_array();
+            }
+        }
+
+        //echo $to['emailUser'];
+
+            if($to != ""){
+                    
+                    /*MAIL*/
+                    $title ="Nuevo Ticket Coferba (".$codTicket.")";
+                    $body ="Tienes un Ticket que fue Recibido por Coferba, pronto Procesaran tu Solicitud!";
+                    $this->mail_model->sendMail($title,$to['emailUser'],$body);
+                
+            }
+        
+           
 
             return true;
         } else {

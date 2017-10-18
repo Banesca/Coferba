@@ -14,6 +14,7 @@ METODO:POST
   {
       "idTypeTicketKf" : 1,
     "idTenantKf" : 1,
+    "emailTenant": "jorguti58@gmial.com",
     "numberItemes" :3,
     "idTypeDeliveryKf" : 1,
     "description" : "aqui escribo algo"
@@ -27,6 +28,7 @@ METODO:POST
   {
       "idTypeTicketKf" : 2,
       "idTenantKf" : 1,
+      "idUserTenant":1,
       "idReasonDisabledItemKf":1, 
       "numberItemDisabled" : 2,
       "description" : "aqui escribo algo"
@@ -61,7 +63,7 @@ METODO:POST
        "numberItemes" :3,
        "idTypeDeliveryKf" : 1,
        "description" : "aqui escribo algo",
-          "idReasonDisabledItemKf":1, 
+      "idReasonDisabledItemKf":1, 
       "numberItemDisabled" : 2
        
   }

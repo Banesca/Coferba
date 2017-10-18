@@ -5,7 +5,9 @@ class User_model extends CI_Model
 	
 	public function __construct()
 	{
-		parent::__construct();
+        parent::__construct();
+        parent::__construct();
+        /*MAIL*/ $this->load->model('mail_model');
 	}
 
  	public function auth($user)
@@ -192,6 +194,24 @@ class User_model extends CI_Model
                 )
         )->where("idUser", $id)->update("tb_user");
 
+
+        if($idStatus == 1){
+
+            $query = $this->db->select("*")->from("tb_user")
+            ->where("idUser =", $id)->get();
+            if ($query->num_rows() > 0) {
+                $to = $query->row_array();
+                
+                /*MAIL*/
+                $title ="Nuevo Acceso a Coferba";
+                $body ="Ya Puede Disfrutar de Nuestros servicios!";
+                $this->mail_model->sendMail($title,$to['emailUser'],$body);
+            }
+        
+
+
+        }
+      
 
         if ($this->db->affected_rows() === 1) {
             return true;
