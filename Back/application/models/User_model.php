@@ -13,16 +13,17 @@ class User_model extends CI_Model
  	public function auth($user)
 	{
 		
-        //echo(sha1(md5($user['userPass'])));
+        //echo(sha1(md5($user['passwordUser'])));
         
         
 
 		/* verificamos el usuario  */
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idUser', 'left');
-        $this->db->where("emailUser =",$user['emailUser']);
-        $this->db->or_where("fullNameUser =",$user['emailUser']);
-		$query = $this->db->where("passwordUser =",sha1(md5($user['passwordUser'])))->get();
+        $this->db->where("passwordUser =",sha1(md5($user['passwordUser'])));
+        $this->db->where("emailUser =",$user['fullNameUser']);
+        $query =$this->db->or_where("fullNameUser =",$user['fullNameUser'])->get();
+		 
 		
 		if($query->num_rows() == 1){ 
 
