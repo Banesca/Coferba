@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.1.26-MariaDB)
 # Base de datos: db_coferba
-# Tiempo de Generación: 2017-10-18 03:28:21 +0000
+# Tiempo de Generación: 2017-10-19 00:01:55 +0000
 # ************************************************************
 
 
@@ -473,7 +473,7 @@ LOCK TABLES `tb_user` WRITE;
 
 INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `addresUser`, `passwordUser`, `idProfileKf`, `idStatusKf`, `dateCreated`, `rezonSocial`)
 VALUES
-	(1,'prueba editada','jorguti58@gmail.com','prueba','prueba','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,1,NULL,'prueba'),
+	(1,'prueba editada','jorguti58@gmail.com','prueba','prueba','ab0ef57f283c0839c6352e673ecef0977e3176a0',1,1,NULL,'prueba'),
 	(2,'prueba editada','prueba','prueba','prueba','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,1,NULL,'prueba'),
 	(3,'prueba editada','prueba','prueba','prueba','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,1,NULL,'prueba'),
 	(4,'prueba editada','prueba','prueba','prueba','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,1,NULL,'prueba'),
