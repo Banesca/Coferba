@@ -172,22 +172,24 @@ private function formatCode($value) {
             /* Busqueda por filtro */
             if (!is_null($searchFilter['searchFilter'])) 
             {
-            	if(@$searchFilter['idTypeTicketKf'] > 0)
+            	/*if(@$searchFilter['idTypeTicketKf'] > 0)
 				{
             		$this->db->where("tb_tickets.idTypeTicketKf !=", @$searchFilter['idTypeTicketKf']);
-            	}
+            	}*/
 
-            	if(@$searchFilter['idProfileKf'] > 0)
+            	/*if(@$searchFilter['idProfileKf'] > 0)
 				{
             		$this->db->where("tb_tickets.idProfileKf !=", @$searchFilter['idProfileKf']);
-            	}
+            	}*/
 
 
-            	/*$this->db->like('tb_tenant.fullNameTenant', $searchFilter['searchFilter']);
+            	$this->db->like('tb_tenant.fullNameTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_tickets.codTicket', $searchFilter['searchFilter']);
 
-				if(@$searchFilter['idTypeKf'] > 0)
+
+/*				if(@$searchFilter['idTypeKf'] > 0)
 				{
 					 $this->db->or_where('tb_tenant.idTypeKf', $searchFilter['idTypeKf']);
 				} 
@@ -195,11 +197,10 @@ private function formatCode($value) {
 				if(@$searchFilter['idDepartmentKf'] > 0)
 				{
 					 $this->db->or_where('tb_tenant.idDepartmentKf', $searchFilter['idDepartmentKf']);
-				}  */              
+				}   */            
                
                 
             }
-
 
             // Si recibimos un limite //
             if ($searchFilter['topFilter'] > 0) {

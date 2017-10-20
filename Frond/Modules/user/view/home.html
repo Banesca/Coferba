@@ -11,79 +11,48 @@
                     <div class="row" style="
                     position: fixed;
                     z-index: 100;
+                    width: 100%;
                     background: #ebf3da;
                 ">
                                 
     
-                                <div class="row"  >
+        <div class="row"  >
+            <div class="col-lg-2">
+                    <div class="form-group">
+                    <label for="sel1">Top:</label>
+                    <select class="form-control" ng-model="topDH" ng-="dhboard()">
+                        <option value="0">Todo</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="100">100</option>
+                        
+                        
+                    </select>
+                    <input type="hidden"  value="{{topDH}}"  id="topDH">
+
+                    
+                    </div>
+                </div>
                 
-                <div class="col-lg-2">
+              
+                
     
-                <div class="form-group">
-                <label for="sel1">Tipo De Usario:</label>
-                <select class="form-control" id="sel1">
-                    <option>Inquilino</option>
-                    <option>Propietarios</option>
-                    <option>ADMIN CONSORCION</option>
-                    <option>ADMIN COFERBA</option>
-                    <option>Empresa</option>
-                </select>
-                </div>
-    
-    
-                    
-                </div>
-                <div class="col-lg-2">
-    
-                <div class="form-group">
-                <label for="sel1">Tipo</label>
-                <select class="form-control" id="sel1">
-                    <option>Solicitud</option>
-                    <option>Servicio</option>
-                </select>
-                </div>
-    
-    
-                    
-                </div>
-                <div class="col-lg-2">
-    
-                <div class="form-group">
-                <label for="sel1">Status:</label>
-                <select class="form-control" id="sel1">
-                    <option>Activas</option>
-                    <option>En Espera</option>
-                    <option>Canceladas</option>
-                    <option>Eliminadas</option>
-                </select>
-                </div>
-    
-    
-                    
-                </div><!-- /.col-lg-6 -->
+           
+                
     
                 <div class="col-lg-2">
                 <br>
     
-                    <div class="input-group" style="    margin-top: 5px;
+                    <div class="form-group" style="    margin-top: 5px;
                 ">
-                    <input type="text" class="form-control" placeholder="...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Buscar!</button>
-                    </span>
+                <input type="text" style=" margin-top: -6px;"
+             class="form-control" ng-model="searchFilter" id="searchFilter" ng-change="dhboard()" placeholder="Buscar...">
+                
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
     
-                <div class="col-lg-2">
-                <br>
-                <button type="button" class="btn btn-success">Nueva Solicitud</button>
-                </div>
-    
-                <div class="col-lg-2">
-                <br>
-                <button type="button" class="btn btn-info">Nuevo Servicio</button>
-                </div>
-    
+                
     
     
     

@@ -29,7 +29,8 @@ class Ticket extends REST_Controller {
          /* SERVICIO GET QUE OBTIENE TODO LOS TIKECT REGISTRADOS */
             public function all_post() {
 
-                $filiter = $this->post('searchFilter');
+                $filiter = $this->post();
+                //print_r($filiter);
                 $rs = $this->ticket_model->get(null,$filiter);        
                 if(!is_null($rs))
                 {
@@ -37,7 +38,7 @@ class Ticket extends REST_Controller {
                 }
                 else
                 {
-                        $this->response(array('error' => "ERROR INESPERADO"),500);
+                    $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
                 }
             }
 

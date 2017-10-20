@@ -599,11 +599,18 @@ $scope.fnShowHide = function(divId, divAction) {
 /*jorge*/
 $scope.listTickt;
 $scope.dhboard = function(){
+
+
+  var top = 0 
+  if($("#topDH").val() > 0){
+    top = $("#topDH").val();
+  }
   
   $searchFilter= 
   {
-      
-       topFilter : 0,
+   
+    searchFilter:$("#searchFilter").val(),
+       topFilter : top,
        idTypeTicketKf:0, 
        idProfileKf:localStorage.getItem("IdPerfil")
          
@@ -619,8 +626,8 @@ $scope.dhboard = function(){
          $scope.listTickt =  sucess.data.response;
 
     },function (error, data,status) {
-            if(status == 404){alert("!Informacion "+status+data.error+"info");}
-            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            
+             if(status == 203){alert("!Informacion "+status,data.error+"info");}
             else{alert("Error !"+status+" Contacte a Soporte"+"error");}
           
     });
