@@ -31,7 +31,7 @@
     <noscript>This page uses JavaScript and requires a JavaScript enabled browser.Your browser is not JavaScript enabled.</noscript>
 <!--ANGULAR MODULE -->
 <div ng-controller="coferbaCtrl">
-<div id="sytemHead" class="fixedHead" ng-if="Token">
+<div id="sytemHead" class="fixedHead" >
 	<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
 	    <div class="navbar-inner m-h-30">
 	        <div class="container">
@@ -145,9 +145,51 @@
 	</div>
 </div>
 	<!--<ng-include src="'../Partial/Header.html'"></ng-include>-->
+	<!-- USER LOGIN FORM -->
+<div id="frm_loginU"> 
+	<div class="container">
+		<br>
+          <div class="panel panel-default-login" >
+              	<div class="panel-heading">
+                	<h3 class="panel-title">LOGIN COFERBA</h3>
+            	</div>
+            		<div class="panel-body">
+						<!-- FORM CONTAINER-->
+				    	<form name="frmLogin" class="form-horizontal" id="frmLogin" ng-submit="sysLogin('login')">
+							<fieldset>
+							<!-- Text Mail E-Mail-->
+								<div class="form-group" ng-class="{ 'has-error': frmLogin.email.$dirty && frmLogin.email.$error.required }">
+									 <label for="">Email</label>  
+									   <div class="">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="emailLogin" placeholder="E-Mail" class="form-control" ng-model="Login.email" type="email" required autofocus />
+									    </div>
+									  </div>
+								</div>
+							<!-- Text Password Contrase&#241a-->
+								<div class="form-group" ng-class="{ 'has-error': frmLogin.password.$dirty && frmLogin.password.$error.required }">
+								  <label class="">Contrase&#241a</label>  
+								    <div class="">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								  		<input name="passwordLogin" placeholder="Contrase&#241a" class="form-control" ng-model="Login.password" type="password" required autofocus />
+								    </div>
+									</div>
+								</div>
+							<!-- Actions Button -->
+								<div class="form-actions">
+									<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+								  	<a class="lostPass">Olvide mi contrase&#241a <i class="icon-cogs icon-2x"></i></a>
+							  	</div>
+							</fieldset>
+						</form>
+ 					</div> 
+			</div>
+	</div>
+</div>
 	<div class="main_container">
-		<ng-include ng-if="!Token" src="'view/formLogin.html'"></ng-include>
-		<div ng-if="!Token">
+		<div>
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<ng-include ng-show="rukeyup" src="'view/formAltaLlave.html'"></ng-include>
 			<ng-include ng-show="rukeydown" src="'view/formBajaLlave.html'"></ng-include>
