@@ -571,6 +571,18 @@ $scope.fnShowHide = function(divId, divAction) {
         }
         
         break;
+
+        case "home":
+        closeAllDiv();
+        if(divAction=="open"){
+          $scope.home = true;
+         // BindDataToForm('frmOther');
+        }else{
+          closeAllDiv();
+          $scope.home = false;
+        }
+        
+        break;
       default: 
         
     }

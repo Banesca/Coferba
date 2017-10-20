@@ -81,7 +81,7 @@
 						       </a>
 						    </li>
 						    <li id="m_monitor">
-						       <a href="#Monitor"> 
+						       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
 						          <i class="icon-desktop"></i>
 						          <br>Monitor de pedidos
 						       </a>
@@ -197,6 +197,7 @@
 			<ng-include ng-show="rukeydown" src="'view/formBajaLlave.html'"></ng-include>
 			<ng-include ng-show="ruservice" src="'view/formServicio.html'"></ng-include>
 			<ng-include ng-show="ruother" src="'view/formOtrasConsultas.html'"></ng-include>
+			<ng-include ng-show="home" src="'view/home.html'"></ng-include>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 			<!-- Response Inform Meessage plugin -->
 			<div inform class="inform-fixed inform-shadow inform-animate"></div>

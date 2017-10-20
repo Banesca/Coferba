@@ -22,7 +22,7 @@ $(document).ready(function() {
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
         $('.p-r').hide();
-        $('#SubM_Monitor').show();
+        
     });
     $('#m_report').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
