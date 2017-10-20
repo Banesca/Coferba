@@ -1,15 +1,20 @@
- var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "inform-http-exception", "showdown", "ngAnimate", "LocalStorageModule"]);
+ var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "inform-http-exception", "showdown", "ngAnimate"]);
     app.config(function(blockUIConfig) {
       // Tell blockUI not to mark the body element as the main block scope.
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = false;
     });
-app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform, $window, localStorageService) {
+app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform, $window) {
      $userType=0;
      $scope.rsJSON = [ ];
-
-     
-    $scope.Token = localStorage.getItem("Token")
+     $scope.Token = localStorage.getItem("Token")
+     $scope.sessionNames       = localStorage.getItem("Nombres")
+     $scope.sessionMail        = localStorage.getItem("Email");
+     $scope.sessionAddress     = localStorage.getItem("Direccion");
+     $scope.sessionPhone       = localStorage.getItem("Telefono");
+     $scope.sessionidProfile   = localStorage.getItem("IdPerfil");
+     $scope.sessionProfileName = localStorage.getItem("nombrePerfil");
+     $scope.sessionName        = localStorage.getItem("IdStatus");
 
 /**************************************************
 *                                                 *
@@ -48,7 +53,17 @@ $scope.CallFilterFormT = function(){
       }, function myError(response) {
     });
 };
-
+  $scope.CallFilterDpto = function(){
+     $http({
+        method : "GET",
+        url : "http://localhost/Coferba/Back/index.php/Tenant/departamentByIdAdminR/"+$scope.sessionidProfile
+      }).then(function mySuccess(response) {
+          console.log(response.data);
+          /*$scope.listProfile = response.data.profile;
+          $scope.listType = response.data.type;*/
+        }, function myError(response) {
+      });
+  };
 /*------------------------------------------------*/
 
 
@@ -74,62 +89,55 @@ function setHeaderRequest(){
 **************************************************/
 var frmValue="";
 function BindDataToForm(frmValue) {
-    var sessionNames       = localStorageService.get("Nombres")
-    var sessionMail        = localStorageService.get("Email");
-    var sessionAddress     = localStorageService.get("Direccion");
-    var sessionPhone       = localStorageService.get("Telefono");
-    var sessionidProfile   = localStorageService.get("IdPerfil");
-    var sessionProfileName = localStorageService.get("nombrePerfil");
-    var sessionName        = localStorageService.get("IdStatus");
-    console.log("MyAddress: "+sessionAddress + " <br> MyEmail: " + sessionMail);
     switch (frmValue) {
       case "fkeyup":
-        if (sessionidProfile==1  || sessionidProfile==4){
-          $scope.fkeyup.namesAd=sessionNames;
-          $scope.fkeyup.addressAd=sessionAddress;
-          $scope.fkeyup.movilPhoneAd=sessionPhone;
-          $scope.fkeyup.emailAd=sessionMail;
-        }else if (sessionidProfile==3){
-          $scope.fkeyup.namesAd=sessionNames;
-          $scope.fkeyup.addressAd=sessionAddress;
-          $scope.fkeyup.movilPhoneAd=sessionPhone;
-          $scope.fkeyup.emailAd=sessionMail;
+        if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
+          $scope.namesAd=$scope.sessionNames;
+          console.log($scope.sessionAddress);
+          $scope.addressAd=$scope.sessionAddress;
+          $scope.movilPhoneAd=$scope.sessionPhone;
+          $scope.emailAd=$scope.sessionMail;
+        }else if ($scope.sessionidProfile==3){
+          $scope.namesAd=$scope.sessionNames;
+          $scope.addressAd=$scope.sessionAddress;
+          $scope.movilPhoneAd=$scope.sessionPhone;
+          $scope.emailAd=$scope.sessionMail;
           /*---------------------------------*/
-          $scope.fkeyup.namesOw=sessionNames;
-          $scope.fkeyup.addressOwd=sessionAddress;
-          $scope.fkeyup.movilPhoneOwd=sessionPhone;
-          $scope.fkeyup.emailOwd=sessionMail;
+          $scope.namesOw=$scope.sessionNames;
+          $scope.addressOwd=$scope.sessionAddress;
+          $scope.movilPhoneOwd=$scope.sessionPhone;
+          $scope.emailOwd=$scope.sessionMail;
         }
         break;
       case "fkeydown":
-        if (sessionidProfile==1  || sessionidProfile==4){
-          $scope.fkeydown.namesAd=sessionNames;
-          $scope.fkeydown.addressAd=sessionAddress;
-          $scope.fkeydown.movilPhoneAd=sessionPhone;
-          $scope.fkeydown.emailAd=sessionMail;
-        }else if (sessionidProfile==3){
-          $scope.fkeydown.namesAd=sessionNames;
-          $scope.fkeydown.addressAd=sessionAddress;
-          $scope.fkeydown.movilPhoneAd=sessionPhone;
-          $scope.fkeydown.emailAd=sessionMail;
+        if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
+          $scope.fkeydown.namesAd=$scope.sessionNames;
+          $scope.fkeydown.addressAd=$scope.sessionAddress;
+          $scope.fkeydown.movilPhoneAd=$scope.sessionPhone;
+          $scope.fkeydown.emailAd=$scope.sessionMail;
+        }else if ($scope.sessionidProfile==3){
+          $scope.fkeydown.namesAd=$scope.sessionNames;
+          $scope.fkeydown.addressAd=$scope.sessionAddress;
+          $scope.fkeydown.movilPhoneAd=$scope.sessionPhone;
+          $scope.fkeydown.emailAd=$scope.sessionMail;
           /*---------------------------------*/
-          $scope.fkeydown.namesOw=sessionNames;
-          $scope.fkeydown.addressOwd=sessionAddress;
-          $scope.fkeydown.movilPhoneOwd=sessionPhone;
-          $scope.fkeydown.emailOwd=sessionMail;
+          $scope.fkeydown.namesOw=$scope.sessionNames;
+          $scope.fkeydown.addressOwd=$scope.sessionAddress;
+          $scope.fkeydown.movilPhoneOwd=$scope.sessionPhone;
+          $scope.fkeydown.emailOwd=$scope.sessionMail;
         }
         break;
       case "fservice":
-        if (sessionidProfile==1  || sessionidProfile==2 || sessionidProfile==4){
-          $scope.fservice.namesAd=sessionNames;
-          $scope.fservice.addressAd=sessionAddress;
-          $scope.fservice.movilPhoneAd=sessionPhone;
-          $scope.fservice.emailAd=sessionMail;
+        if ($scope.sessionidProfile==1  || $scope.sessionidProfile==2 || $scope.sessionidProfile==4){
+          $scope.fservice.namesAd=$scope.sessionNames;
+          $scope.fservice.addressAd=$scope.sessionAddress;
+          $scope.fservice.movilPhoneAd=$scope.sessionPhone;
+          $scope.fservice.emailAd=$scope.sessionMail;
         }
       break;
       case "frmOther":
-        $scope.frmOther.o_email=sessionMail;
-        $scope.frmOther.o_address=sessionAddress;
+        $scope.frmOther.o_email=$scope.sessionMail;
+        $scope.frmOther.o_address=$scope.sessionAddress;
       break;
       default: 
         
@@ -224,18 +232,16 @@ function validateuser($http,$scope){
                       ttl:5000, type: 'success'
                     });
                });
-               localStorageService.set("Nombres", $scope.rsJSON.fullNameUser);
-               localStorageService.set("Email", $scope.rsJSON.emailUser);
-               localStorageService.set("Direccion", $scope.rsJSON.addresUser);
-               localStorageService.set("Telefono", $scope.rsJSON.phoneNumberUser);
-               localStorageService.set("IdPerfil", $scope.rsJSON.idProfileKf);
-               localStorageService.set("nombrePerfil", $scope.rsJSON.nameProfile);
-               localStorageService.set("IdStatus", $scope.rsJSON.idStatusKf);
-              // localStorageService.set("Token", true);
-
-               localStorage.setItem("Token", true);
-
-               $scope.Token = localStorage.getItem("Token");
+                 localStorage.setItem("Nombres", $scope.rsJSON.fullNameUser);
+                 localStorage.setItem("Email", $scope.rsJSON.emailUser);
+                 localStorage.setItem("Direccion", $scope.rsJSON.addresUser);
+                 localStorage.setItem("Telefono", $scope.rsJSON.phoneNumberUser);
+                 localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
+                 localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
+                 localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
+                 localStorage.setItem("Token", true);
+                 $scope.Token = localStorage.getItem("Token");
+                 location.href = "sistema.html"
 
             }
         },function (error, data, status) {
