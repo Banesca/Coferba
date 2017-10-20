@@ -597,8 +597,33 @@ $scope.fnShowHide = function(divId, divAction) {
 
 
 /*jorge*/
+$scope.listTickt;
 $scope.dhboard = function(){
-  alert()
+  
+  $searchFilter= 
+  {
+      
+       topFilter : 0,
+       idTypeTicketKf:0, 
+       idProfileKf:localStorage.getItem("IdPerfil")
+         
+    
+  }
+
+  $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter)
+  .then(function (sucess, data) {
+     inform.add('Consulta realizada y enviada con exito. ',{
+              ttl:5000, type: 'success'
+         });
+
+         $scope.listTickt =  sucess.data.response;
+
+    },function (error, data,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+          
+    });
 }
 /**
  * **********************
