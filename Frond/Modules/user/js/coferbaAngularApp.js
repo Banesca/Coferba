@@ -595,4 +595,13 @@ $scope.fnShowHide = function(divId, divAction) {
   }
 }
 
+
+/*jorge*/
+$scope.dhboard = function(){
+  alert()
+}
+/**
+ * **********************
+ */
+
 }); /*Cierre del JS ANGULAR*/
