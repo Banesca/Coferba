@@ -1,10 +1,10 @@
- var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "inform-http-exception", "showdown", "ngAnimate"]);
+ var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "inform-http-exception", "showdown", "ngAnimate", "LocalStorageModule"]);
     app.config(function(blockUIConfig) {
       // Tell blockUI not to mark the body element as the main block scope.
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = false;
     });
-app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform, $window, ) {
+app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform, $window, localStorageService) {
      $userType=0;
      $scope.rsJSON = [ ];
 
@@ -47,7 +47,14 @@ $scope.CallFilterFormT = function(){
 };
 
 /*------------------------------------------------*/
-var frm="";
+
+
+$scope.searchOwner = function (){
+
+   $('#myModal').modal('toggle');
+}
+
+
 /**************************************************
 *                                                 *
 *            Default content type encode          *
@@ -59,9 +66,80 @@ function setHeaderRequest(){
 }
 /**************************************************
 *                                                 *
+*            Bind Data to LocalStorage            *
+*                                                 *
+**************************************************/
+var frmValue="";
+function BindDataToForm(frmValue) {
+    var sessionNames       = localStorageService.get("Nombres")
+    var sessionMail        = localStorageService.get("Email");
+    var sessionAddress     = localStorageService.get("Direccion");
+    var sessionPhone       = localStorageService.get("Telefono");
+    var sessionidProfile   = localStorageService.get("IdPerfil");
+    var sessionProfileName = localStorageService.get("nombrePerfil");
+    var sessionName        = localStorageService.get("IdStatus");
+    console.log("MyAddress: "+sessionAddress + " <br> MyEmail: " + sessionMail);
+    switch (frmValue) {
+      case "fkeyup":
+        if (sessionidProfile==1  || sessionidProfile==4){
+          $scope.fkeyup.namesAd=sessionNames;
+          $scope.fkeyup.addressAd=sessionAddress;
+          $scope.fkeyup.movilPhoneAd=sessionPhone;
+          $scope.fkeyup.emailAd=sessionMail;
+        }else if (sessionidProfile==3){
+          $scope.fkeyup.namesAd=sessionNames;
+          $scope.fkeyup.addressAd=sessionAddress;
+          $scope.fkeyup.movilPhoneAd=sessionPhone;
+          $scope.fkeyup.emailAd=sessionMail;
+          /*---------------------------------*/
+          $scope.fkeyup.namesOw=sessionNames;
+          $scope.fkeyup.addressOwd=sessionAddress;
+          $scope.fkeyup.movilPhoneOwd=sessionPhone;
+          $scope.fkeyup.emailOwd=sessionMail;
+        }
+        break;
+      case "fkeydown":
+        if (sessionidProfile==1  || sessionidProfile==4){
+          $scope.fkeydown.namesAd=sessionNames;
+          $scope.fkeydown.addressAd=sessionAddress;
+          $scope.fkeydown.movilPhoneAd=sessionPhone;
+          $scope.fkeydown.emailAd=sessionMail;
+        }else if (sessionidProfile==3){
+          $scope.fkeydown.namesAd=sessionNames;
+          $scope.fkeydown.addressAd=sessionAddress;
+          $scope.fkeydown.movilPhoneAd=sessionPhone;
+          $scope.fkeydown.emailAd=sessionMail;
+          /*---------------------------------*/
+          $scope.fkeydown.namesOw=sessionNames;
+          $scope.fkeydown.addressOwd=sessionAddress;
+          $scope.fkeydown.movilPhoneOwd=sessionPhone;
+          $scope.fkeydown.emailOwd=sessionMail;
+        }
+        break;
+      case "fservice":
+        if (sessionidProfile==1  || sessionidProfile==2 || sessionidProfile==4){
+          $scope.fservice.namesAd=sessionNames;
+          $scope.fservice.addressAd=sessionAddress;
+          $scope.fservice.movilPhoneAd=sessionPhone;
+          $scope.fservice.emailAd=sessionMail;
+        }
+      break;
+      case "frmOther":
+        $scope.frmOther.o_email=sessionMail;
+        $scope.frmOther.o_address=sessionAddress;
+      break;
+      default: 
+        
+    }
+  };
+/*-----------------------------------------------*/
+
+/**************************************************
+*                                                 *
 *               RESET FORM FUNCTION               *
 *                                                 *
 **************************************************/
+var frm="";
 function frmReset (value) {
     switch (value) {
       case "login":
@@ -105,13 +183,11 @@ $scope.sysLogin = function(formReset) {
 function showHeader(type){
   switch (type) {
       case "success":
-        $('.main_container [id^="frm_"]').hide();
         $('#frm_loginU').hide();
         $('#loginRegister').hide(); 
         $('#sytemHead').show(); 
         break;
       case "error":
-        $('.main_container [id^="frm_"]').hide();
         $('#loginRegister').hide(); 
         $('#sytemHead').hide(); 
         $('#frm_loginU').show();
@@ -130,19 +206,29 @@ function validateuser($http,$scope){
                  showHeader('error');
                  frmReset(frm);
              }, 500);
-             inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado.',{
+             inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado o verifique su clave.',{
                         ttl:5000, type: 'error'
              }); 
              
            }else{
                $scope.rsJSON=data.data.response;
                $timeout(function() {
-                   showHeader('success');
-                   inform.add('Bienvenido Sr/a '+ $scope.rsJSON.fullNameUser,{
-                  ttl:5000, type: 'success'
+                    showHeader('success');
+                    inform.add('Bienvenido Sr/a '+ $scope.rsJSON.fullNameUser,{
+                      ttl:5000, type: 'success'
+                    });
                });
-               });
-             //console.log($scope.rsJSON);
+               localStorageService.set("Nombres", $scope.rsJSON.fullNameUser);
+               localStorageService.set("Email", $scope.rsJSON.emailUser);
+               localStorageService.set("Direccion", $scope.rsJSON.addresUser);
+               localStorageService.set("Telefono", $scope.rsJSON.phoneNumberUser);
+               localStorageService.set("IdPerfil", $scope.rsJSON.idProfileKf);
+               localStorageService.set("nombrePerfil", $scope.rsJSON.nameProfile);
+               localStorageService.set("IdStatus", $scope.rsJSON.idStatusKf);
+               localStorageService.set("Token", true);
+
+               $scope.Token = localStorageService.get("Token");
+
             }
         },function (error, data, status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -157,7 +243,7 @@ $scope._getLoginData = function () {
   var dataUser =
           {
                user: { 
-                        emailUser : $scope.Login.email,
+                        fullNameUser : $scope.Login.email,
                         passwordUser : $scope.Login.password
                       }
           };
@@ -255,13 +341,13 @@ $scope._getRequestData = function () {
           {
                 ticket:
                         {
-                            idTypeTicketKf: idTypeTicketKf,
-                            idUserEnterpriceKf: idUserEnterpriceKf ,
-                            idOWnerKf: idOWnerKf,
-                            numberItemes: numberItemes,
-                            idTypeDeliveryKf: idTypeDeliveryKf,
-                            description: description,
-                            list_id_clients: list_id_clients
+                            idTypeTicketKf:     $scope.idTypeTicketKf,
+                            idUserEnterpriceKf: $scope.idUserEnterpriceKf ,
+                            idOWnerKf:          $scope.idOWnerKf,
+                            numberItemes:       $scope.numberItemes,
+                            idTypeDeliveryKf:   $scope.idTypeDeliveryKf,
+                            description:        $scope.description,
+                            list_id_clients:    $scope.list_id_clients
                         }
           };
   return newTicket;
@@ -294,14 +380,14 @@ $scope._getreleaseData = function () {
           {
                 ticket:
                         {
-                            idTypeTicketKf: idTypeTicketKf,
-                            idUserEnterpriceKf: idUserEnterpriceKf ,
-                            idOWnerKf: idOWnerKf,
-                            numberItemes: numberItemes,
-                            idTypeDeliveryKf: idTypeDeliveryKf,
-                            description: description,
-                            idReasonDisabledItemKf: idReasonDisabledItemKf,
-                            numberItemDisabled: numberItemDisabled
+                            idTypeTicketKf:         $scope.idTypeTicketKf,
+                            idUserEnterpriceKf:     $scope.idUserEnterpriceKf ,
+                            idOWnerKf:              $scope.idOWnerKf,
+                            numberItemes:           $scope.numberItemes,
+                            idTypeDeliveryKf:       $scope.idTypeDeliveryKf,
+                            description:            $scope.description,
+                            idReasonDisabledItemKf: $scope.idReasonDisabledItemKf,
+                            numberItemDisabled:     $scope.numberItemDisabled
                         }
           };
   return newTicket;
@@ -334,15 +420,15 @@ $scope._getServiceData = function () {
           {
                 ticket:
                         {
-                            idTypeTicketKf: idTypeTicketKf,
-                            idUserEnterpriceKf: idUserEnterpriceKf,
-                            idOWnerKf: idOWnerKf,
-                            numberItemes: numberItemes,
-                            idTypeDeliveryKf: idTypeDeliveryKf,
-                            descriptionOrder: descriptionOrder,
-                            description: description,
-                            list_id_clients: list_id_clients,
-                            idTypeServices: idTypeServices
+                            idTypeTicketKf:     $scope.idTypeTicketKf,
+                            idUserEnterpriceKf: $scope.idUserEnterpriceKf,
+                            idOWnerKf:          $scope.idOWnerKf,
+                            numberItemes:       $scope.numberItemes,
+                            idTypeDeliveryKf:   $scope.idTypeDeliveryKf,
+                            descriptionOrder:   $scope.descriptionOrder,
+                            description:        $scope.description,
+                            list_id_clients:    $scope.list_id_clients,
+                            idTypeServices:     $scope.idTypeServices
                         }
           };
   return newTicket;
@@ -354,12 +440,31 @@ $scope._getServiceData = function () {
 *                   OTRA CONSULTA                 *
 *                                                 *
 **************************************************/
-$scope.otherRequest = function (){
+$scope.sysRequestOther = function() {
+  $scope.roJSON= [ ];
+
+  blockUI.start('Enviando Solicitud.');
+
+  $timeout(function() {
+      blockUI.message('Enviando Solicitud..');
+    }, 500);
+  $timeout(function() {
+      blockUI.message('Enviando Solicitud...');
+    }, 1500);
+  blockUI.done(function(){
+    
+  });
+  $timeout(function() {
+      blockUI.stop();
+      console.log($scope._getOtherRequestData());
+      //$scope.otherRequest($http, $scope);
+    }, 2500);
+};
+$scope.otherRequest = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getOtherRequestData())
       .then(function (sucess, data) {
-
-       inform.add('Solicitud realizada con exito. ',{
-                ttl:5000, type: 'success'
+         inform.add('Consulta realizada y enviada con exito. ',{
+                  ttl:5000, type: 'success'
              });
 
     },function (error, data,status) {
@@ -375,11 +480,11 @@ $scope._getOtherRequestData = function () {
           {
                 ticket:
                         {
-                            idTypeTicketKf: idTypeTicketKf,
-                            idTypeOuther: idTypeOuther,
-                            mailContactConsult: mailContactConsult,
-                            addressConsul: mailContactConsult,
-                            description:description
+                            idTypeTicketKf:     4,
+                            idTypeOuther:       $scope.frmOther.idTypeOutherKf,
+                            mailContactConsult: $scope.frmOther.o_email,
+                            addressConsul:      $scope.frmOther.o_address,
+                            description:        $scope.frmOther.o_detail
                         }
           };
   return newTicket;
@@ -389,7 +494,79 @@ $scope._getOtherRequestData = function () {
 
 $scope.logout = function(){
   $scope.rsJSON = " ";
+
+  localStorageService.set("Token", false);
+  $scope.Token = localStorageService.get("Token");
 };
+/**************************************************
+*                                                 *
+*            SHOW & HIDE FUNCTION                 *
+*                                                 *
+**************************************************/
 /*------------------------------------------------*/
+function closeAllDiv (){
+  $scope.rukeydown = false;
+  $scope.rukeyup = false;
+  $scope.ruservice = false;
+  $scope.ruother = false;
+}
+
+$scope.fnShowHide = function(divId, divAction) {
+  if (divId==null){
+      closeAllDiv();
+   }else{     
+    switch (divId) {
+      case "rUser":
+        closeAllDiv();
+        if(divAction=="open"){
+          $scope.rUser = true;
+        }else{
+          closeAllDiv();
+        }
+        break;
+      case "rukeyup":
+        closeAllDiv();
+        if(divAction=="open"){
+          $scope.rukeyup = true;
+          BindDataToForm('fkeyup');
+        }else{
+          closeAllDiv();
+        }
+        break;
+      case "rukeydown":
+        closeAllDiv();
+        if(divAction=="open"){
+          $scope.rukeydown = true;
+          BindDataToForm('fkeydown');
+        }else{
+          closeAllDiv();
+        }
+        break;
+      case "ruservice":
+        closeAllDiv();
+        if(divAction=="open"){
+          $scope.ruservice = true;
+          BindDataToForm('fservice');
+        }else{
+          closeAllDiv();
+          $scope.ruservice = false;
+        }
+        break;
+      case "ruother":
+        closeAllDiv();
+        if(divAction=="open"){
+          $scope.ruother = true;
+          BindDataToForm('frmOther');
+        }else{
+          closeAllDiv();
+          $scope.ruother = false;
+        }
+        
+        break;
+      default: 
+        
+    }
+  }
+}
 
 }); /*Cierre del JS ANGULAR*/

@@ -1,21 +1,113 @@
-<head>
-<title>Coferba Seguridad | Home </title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- Custom Theme files -->
-<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">  
-<link href="css/font-awesome.css" rel="stylesheet">  <!-- font-awesome icons -->
-<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
-
-<!-- //Custom Theme files --> 
-<!-- js -->
-<script src="js/jquery-2.2.3.min.js"></script>  
-<!-- //js -->
-<!-- web-fonts -->  
-<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet"> 
-<link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
-<!-- //web-fonts -->
-</head>
+<div id="sytemHead" class="fixedHead" ng-if="!Token">
+	<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
+	    <div class="navbar-inner m-h-30">
+	        <div class="container">
+	            <div>
+		            <div class="pull-left l-h-15 p-t-2 m-t-10">
+		                <a href="#" alt="Coferba Seguridad" class="ASC-logo pull-left h-25 i-b w-130 p-l-5 m-t--5"></a>
+		            </div>
+	                <ul class="nav pull-right">
+    					<li>
+                			<a href="#" class="p-r">
+			                    <i class="icon-envelope-alt"></i>
+			                    <font class="c-0">.</font>
+			                    <div id="notificationMessagesHeaderShow"></div>
+                			</a>
+			                <div id="messageContainerView">
+			                </div>
+    					</li>
+                    	<li class="dropdown gray">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="sistema.html">
+	                            <i class="icon-user"></i> {{rsJSON.fullNameUser}} <i class="icon-caret-down"></i>
+	                        </a>
+	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+	                        	<li role="presentation">
+	                                <a class="clear-lazy-cache" ng-click="userData()" href="#" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
+	                            </li>
+	                            <li role="presentation">
+	                                <a class="clear-lazy-cache" ng-click="logout()" href="#" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
+	                            </li>
+	                        </ul>
+                    	</li>
+	                </ul>
+	            </div>
+	    	</div>
+		</div>
+	</div>
+	<!--MENU BUTTONS- class="active"-->
+	<div class="jumbotron masthead b-s-20 m-b-5 -m-t-10">
+	    <div class="container">
+	        <table cellspacing="0" cellpadding="0" border="0">
+	            <tbody><tr>
+	                <td>
+	                    <ul class="nav-icon">
+						    <li id="m_pedidos">
+						       <a href="#Pedidos"> 
+						          <i class="icon-bolt"></i>
+						          <br>Pedidos
+						       </a>
+						    </li>
+						    <li id="m_monitor">
+						       <a href="#Monitor"> 
+						          <i class="icon-desktop"></i>
+						          <br>Monitor de pedidos
+						       </a>
+						    </li>
+						    <li id="m_report">
+						       <a href="#Reportes"> 
+						          <i class="icon-th-large"></i>
+						          <br>Reportes
+						       </a>
+						    </li>
+						    <li id="m_user">
+						       <a href="#Usuarios"> 
+						          <i class="icon-group"></i>
+						          <br>Gestion de usuarios
+						       </a>
+						    </li>
+						     <li id="m_config">
+						       <a href="#Config"> 
+						          <i class="icon-cogs"></i>
+						          <br>Configuracion
+						       </a>
+						    </li>
+						    <li id="m_contact">
+						       <a href="#Contact"> 
+						          <i class="icon-phone"></i>
+						          <br>Contacto
+						       </a>
+						    </li>
+	                    </ul>
+	                </td>
+	                <td class="hidden-desktop v-a-t">
+	                    <div id="header-icon-show" style=" margin:-15px -19px  20px -15px ">
+	                        <i class="icon-reorder icon-4x"></i>
+	                    </div>
+	                </td>
+	            </tr>
+	        </tbody></table>
+	    </div>
+	</div>
+	<!--//MENU BUTTONS -->
+	<!--SubMenu Items -->
+	<div class="sub-navi b-s--20">
+	        <div id="SubM_Pedidos" class="container p-r">
+	            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
+		            <ul>
+					    <li class="am">
+					        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
+					        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+					                <li><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle">Alta</a></li>
+					                <li><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle">Baja</a></li>
+					        </ul>
+					    </li>
+					    <li class="cms">
+					        <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio">Servicio Tecnico</a>
+					    </li>
+					    <li class="cms"> <!--class="im active"-->
+					        <a ng-click="fnShowHide('ruother', 'open')" href="#Otros">Otros<i class=""></i></a>
+					    </li>
+		    		</ul>
+	        </div>
+	</div>
+</div>

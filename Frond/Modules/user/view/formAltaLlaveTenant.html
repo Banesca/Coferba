@@ -1,0 +1,128 @@
+<!-- GUEST REQUEST KEY UP FORM  rku=Register Key Up-->
+<div class="agileits-w3layouts" ng-show="rtkeyup"> 
+	<div class="container">
+		<br>
+          	<div class="panel panel-default">
+              	<div class="panel-heading">
+                	<h3 class="panel-title">SOLICITUD DE ALTA DE LLAVE<a class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+            	</div>
+            		<div class="panel-body">
+						<!-- FORM CONTAINER-->
+	    				<form class="form-horizontal" name="fkeyupT" ng-init="CallFilterFormT(); checkRS=false">
+							<fieldset>
+							<!-- Text Address-->
+							      
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Direcci&#243n</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+								  		<input name="addressT" placeholder="Direcci&#243n" class="form-control" ng-model="fkeyupT.addressT" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Form First Name -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Nombres</label>  
+								  <div class="col-md-4">
+									  <div class="input-group">
+										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  <input  name="fnameT" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="fkeyupT.fnameT"  type="text" required autofocus />
+									  </div>
+								  </div>
+							</div>
+							<!-- Form Last Name -->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" >Apellido</label> 
+							  	<div class="col-md-4">
+									<div class="input-group">
+								  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								  		<input name="lnameT" placeholder="Apellido" class="form-control" ng-model="fkeyupT.lnameT" type="text" required autofocus />
+									</div>
+							  	</div>
+							</div>
+							<!-- Text Phone 1 -->
+							       
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Telefono de Contacto</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								  		<input name="localPhoneT" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fkeyupT.localPhoneT" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Text Phone 2 -->
+							       
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Telefono Celular de Contacto</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								  		<input name="movilPhoneT" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fkeyupT.movilPhoneT" type="text" required autofocus /> 
+								    </div>
+							  </div>
+							</div>
+							<!-- Text Mail-->
+
+							<div class="form-group">
+							 <label class="col-md-4 control-label">E-Mail</label>  
+							   <div class="col-md-4">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+							  		<input name="emailT" placeholder="E-Mail" class="form-control" ng-model="fkeyupT.emailT"  type="email" required autofocus />
+							    </div>
+							  </div>
+							</div>
+							<!-- Form Key Quantity qku = Quantity Keys Up-->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
+							  	<div class="col-md-4">
+									<div class="input-group">
+								  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+								  		<input name="qkuT" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="fkeyupT.qkuT" type="number" min="1" max="5" maxlength="1" required autofocus />
+									</div>
+							  	</div>
+							</div>
+							<!-- Select Type of Delivery -->
+							   
+							<div class="form-group"> 
+							  <label class="col-md-4 control-label">Tipo de Entrega</label>
+							    <div class="col-md-4 selectContainer">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
+										    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="fkeyupT.idTypeDeliveryKf" required autofocus >
+										    	<option value=""></option>
+									    	</select>
+								  	</div>
+								</div>
+							</div>
+							<!-- Form Special Request sru= Special Request Up -->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+							  	<div class="col-md-4">
+									<div class="input-group">
+								  		<textarea name="sruT" rows="10" cols="40" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="fkeyupT.sruT" required autofocus ></textarea>
+									</div>
+							  	</div>
+							</div>
+
+							<!-- Actions Button -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label"></label>
+							  <div class="col-md-4">
+							    <button type="submit" ng-click="" class="btn btn-primary" >Enviar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+
+							  </div>
+							</div>
+
+							</fieldset>
+						</form>
+						<div class="clearfix"> </div> 
+					</div>
+			</div>
+	</div>
+</div>	

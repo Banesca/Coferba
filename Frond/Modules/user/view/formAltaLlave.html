@@ -1,0 +1,190 @@
+<!-- USER REQUEST KEY UP FORM  rukeyup=Register Key Up-->
+<div class="agileits-w3layouts"> 
+	<div class="container">
+		<br>
+          	<div class="panel panel-default">
+              	<div class="panel-heading">
+                	<h3 class="panel-title">SOLICITUD DE ALTA DE LLAVE<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+            	</div>
+            		<div class="panel-body">
+						<!-- FORM CONTAINER-->
+				    	<form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); checkRS=false" >
+							<fieldset>
+							
+							<legend style="text-align: center;">Datos del Encargado</legend><br/>
+							<!-- Admin First Name & Lastname -->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+								  <div class="col-md-4">
+									  <div class="input-group">
+										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  <input  name="namesAd" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="fkeyup.namesAd"  type="text" required autofocus />
+									  </div>
+								  </div>
+							</div>
+							<!-- Text Address-->
+							      
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Direcci&#243n</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+								  		<input name="addressAd" placeholder="Direcci&#243n" class="form-control" ng-model="fkeyup.addressAd" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+
+							<!-- Text Phone 1 -->
+							       
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Telefono local</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								  		<input name="localPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fkeyup.localPhoneAd" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Text Phone 2 -->
+							       
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Telefono Celular</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								  		<input name="movilPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fkeyup.movilPhoneAd" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Text Mail-->
+
+							<div class="form-group">
+							 <label class="col-md-4 control-label">E-Mail</label>  
+							   <div class="col-md-4">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+							  		<input name="emailAd" placeholder="E-Mail" class="form-control" ng-model="fkeyup.emailAd"  type="email" required autofocus />
+							    </div>
+							  </div>
+							</div>
+							<legend style="text-align: center;">Datos del Propietario</legend><br/>
+							<!-- Select Department -->
+							   
+							<div class="form-group"> 
+							  <label class="col-md-4 control-label">Departamento</label>
+							    <div class="col-md-4 selectContainer">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
+										    <select name="dptoOw" class="form-control" ng-change="searchOwner()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="fkeyup.dptoOw" required autofocus />
+										    	<option value=""></option>
+									    	</select>
+								  	</div>
+								</div>
+							</div>
+							<!-- Text Address-->
+							      
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Direcci&#243n</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+								  		<input name="addressOw" placeholder="Direcci&#243n" class="form-control" ng-model="fkeyup.addressOw" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Owner First Name & Lastname -->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+								  <div class="col-md-4">
+									  <div class="input-group">
+										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  <input  name="namesOw" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="fkeyup.namesOw"  type="text" required="true" required autofocus />
+									  </div>
+								  </div>
+							</div>
+													
+
+							<!-- Text Owner Phone 1 -->
+							       
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Telefono Local</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								  		<input name="localPhoneOw" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fkeyup.localPhoneOw" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Text Owner Phone 2 -->
+							       
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Telefono Celular</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								  		<input name="movilPhoneOw" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fkeyup.movilPhoneOw" type="text" required autofocus />
+								    </div>
+							  </div>
+							</div>
+							<!-- Text Mail-->
+
+							<div class="form-group">
+							 <label class="col-md-4 control-label">E-Mail</label>  
+							   <div class="col-md-4">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+							  		<input name="emailOw" placeholder="E-Mail" class="form-control" ng-model="fkeyup.emailOw"  type="email" required autofocus />
+							    </div>
+							  </div>
+							</div>
+							<!-- Form Key Quantity qku = Quantity Keys Up-->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" >Cantidad de llaves</label> 
+							  	<div class="col-md-4">
+									<div class="input-group">
+								  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+								  		<input name="qkuOw" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="fkeyup.qkuOw" type="number" min="1" max="5" maxlength="1" required autofocus />
+									</div>
+							  	</div>
+							</div>
+							<!-- Select Type of Delivery -->
+							   
+							<div class="form-group"> 
+							  <label class="col-md-4 control-label">Tipo de Entrega</label>
+							    <div class="col-md-4 selectContainer">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
+										    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="fkeyup.idTypeDeliveryKf" required autofocus />
+									    	</select>
+								  	</div>
+								</div>
+							</div>
+							<!-- Form Special Request sru= Special Request Up -->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+							  	<div class="col-md-4">
+									<div class="input-group">
+								  		<textarea name="sruOw" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="fkeyup.sruOw" required autofocus ></textarea>
+									</div>
+							  	</div>
+							</div>
+
+							<!-- Actions Button -->
+							<div class="form-group">
+							  <label class="col-md-4"></label>
+							  <div class="col-md-4">	
+							  		<button type="submit" class="btn btn-primary" >Solicitar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+							  </div>
+							</div>
+
+							</fieldset>
+						</form>
+						<div class="clearfix"> </div> 
+					</div>
+			</div>
+	</div>
+</div>

@@ -22,14 +22,20 @@ body a:hover {
 body a:focus {
     outline: none;
 }
+.fixedHead{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
 /*main_container*/
 .main_container {
     padding-top: 3em;
+    margin-top: 9em;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column; 
-    width: 100%; 
 }
 article,
 aside,
@@ -1314,11 +1320,20 @@ p {
   font-weight: 300;
   line-height: 1.4;
 }
+@media (min-width: 767px) {
+  .fixedHead {
+  width: 100%;
+  }
+}
 @media (min-width: 768px) {
   .lead {
     font-size: 21px;
   }
+  .fixedHead {
+  width: 100%;
+  }
 }
+
 small,
 .small {
   font-size: 85%;
@@ -2499,6 +2514,55 @@ table th[class*="col-"] {
     border-bottom: 0;
   }
 }
+.form-tabs {
+  background: #34495e;  /*tablebg e74c3c #34495e  #88565b ed7271*/
+  margin: 0 auto;
+  width: 100%;
+  height: 44px;
+  position: relative;
+  border-color: #ddd;
+}
+.tabs-login {
+  background: #ccc;  
+  height: 44px;
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+}
+.tabs-login li {
+  display: inline-block;
+  float: left;
+  margin: 0 auto;
+  padding: 0;
+}
+.tabs-login a {
+  background: #ccc;  
+  display: inline-block;
+  float: left;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  padding: 12px 22px 12px 22px;
+}
+.tabs-login li:last-child a {
+  border-right: none;
+  width: 174px;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+.tabs-login a.active {
+  background: #34495e; /
+  border-right: none;
+  -webkit-transition: all 0.5s linear;
+  -moz-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+}
+
 fieldset {
   min-width: 0;
   padding-top: 20px;
