@@ -31,7 +31,7 @@
     <noscript>This page uses JavaScript and requires a JavaScript enabled browser.Your browser is not JavaScript enabled.</noscript>
 <!--ANGULAR MODULE -->
 <div ng-controller="coferbaCtrl">
-<div id="sytemHead" class="fixedHead" >
+<div id="sytemHead" class="fixedHead"  ng-show="Token">
 	<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
 	    <div class="navbar-inner m-h-30">
 	        <div class="container">
@@ -146,8 +146,10 @@
 </div>
 	<!--<ng-include src="'../Partial/Header.html'"></ng-include>-->
 	<!-- USER LOGIN FORM -->
-<div id="frm_loginU"> 
-	<div class="container">
+
+
+	<div id="frm_loginU" ng-show="!Token"> 
+		<div class="container">
 		<br>
           <div class="panel panel-default-login" >
               	<div class="panel-heading">
@@ -186,9 +188,9 @@
 						</form>
  					</div> 
 			</div>
+		</div>
 	</div>
-</div>
-	<div class="main_container">
+	<div class="main_container" ng-show="Token">
 		<div>
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<ng-include ng-show="rukeyup" src="'view/formAltaLlave.html'"></ng-include>

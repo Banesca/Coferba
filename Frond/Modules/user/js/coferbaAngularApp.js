@@ -8,6 +8,9 @@ app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform,
      $userType=0;
      $scope.rsJSON = [ ];
 
+     
+    $scope.Token = localStorage.getItem("Token")
+
 /**************************************************
 *                                                 *
 *            FILTROS GET DE FORMULARIOS           *
@@ -199,6 +202,9 @@ function showHeader(type){
 /****** Validate data into the database ****/
 
 function validateuser($http,$scope){
+
+
+  
     $http.post("http://localhost/Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
@@ -225,9 +231,11 @@ function validateuser($http,$scope){
                localStorageService.set("IdPerfil", $scope.rsJSON.idProfileKf);
                localStorageService.set("nombrePerfil", $scope.rsJSON.nameProfile);
                localStorageService.set("IdStatus", $scope.rsJSON.idStatusKf);
-               localStorageService.set("Token", true);
+              // localStorageService.set("Token", true);
 
-               $scope.Token = localStorageService.get("Token");
+               localStorage.setItem("Token", true);
+
+               $scope.Token = localStorage.getItem("Token");
 
             }
         },function (error, data, status) {
@@ -494,9 +502,9 @@ $scope._getOtherRequestData = function () {
 
 $scope.logout = function(){
   $scope.rsJSON = " ";
-
-  localStorageService.set("Token", false);
-  $scope.Token = localStorageService.get("Token");
+  localStorage.clear();
+  $scope.Token = false;
+  location.href = "sistema.html"
 };
 /**************************************************
 *                                                 *
