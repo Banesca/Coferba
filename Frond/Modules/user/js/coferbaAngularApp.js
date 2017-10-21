@@ -589,17 +589,22 @@ $scope.dhboard = function(){
   if($("#topDH").val() > 0){
     top = $("#topDH").val();
   }
+
+  var idTypeTicket = 0;
+  if($("#idTypeTicket").val() > 0){
+    idTypeTicket = $("#idTypeTicket").val();
+  }
   
   $searchFilter= 
   {
    
     searchFilter:$("#searchFilter").val(),
-       topFilter : top,
-       idTypeTicketKf:0, 
-       idProfileKf:localStorage.getItem("IdPerfil")
+       topFilter : top, 
+       idProfileKf:localStorage.getItem("IdPerfil"),
+       idTypeTicketKf:idTypeTicket
          
     
-  }///avisame hablame estoy aqui resolviendo algo si dale 
+  }
 
 
   $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter)
@@ -616,6 +621,25 @@ $scope.dhboard = function(){
             else{alert("Error !"+status+" Contacte a Soporte"+"error");}
           
     });
+}
+
+$scope.cancelTicket = function(idTicket){
+
+  if (confirm("Confirme Para Cancelar el Ticket!") == true) {
+    // el problema es que no te deja seleccionar el id ?
+  $http({
+    method : "GET",
+    url : "http://localhost/Coferba/Back/index.php/Ticket/cancel/"+idTicket
+  }).then(function mySuccess(response) {
+      $scope.dhboard();
+     
+    }, function myError(response) {
+  });
+} else {
+    
+}
+
+ 
 }
 /**
  * **********************

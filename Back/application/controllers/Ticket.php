@@ -23,7 +23,23 @@ class Ticket extends REST_Controller {
                 	$this->response(array('error' => "ERROR INESPERADO"),500);
                 }
                
-	}
+    }
+    
+    /* SERVICIO INACTIVA  UN USUARIOS POR ID */
+    public function cancel_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->ticket_model->changueStatus($id, -1);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 
 
          /* SERVICIO GET QUE OBTIENE TODO LOS TIKECT REGISTRADOS */

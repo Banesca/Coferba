@@ -1,5 +1,20 @@
 
-    
+    <style>
+    .blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+    </style>
     
     <div   ng-init="dhboard();test()">
     
@@ -20,7 +35,7 @@
             <div class="col-lg-2">
                     <div class="form-group">
                     <label for="sel1">Top:</label>
-                    <select class="form-control" ng-model="topDH" ng-="dhboard()">
+                    <select class="form-control" ng-model="topDH" ng-blur="dhboard()">
                         <option value="0">Todo</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
@@ -34,6 +49,22 @@
                     
                     </div>
                 </div>
+
+
+                <div class="col-lg-2"> 
+                    
+                               <div class="form-group"> 
+                               <label for="sel1">Tipo</label> 
+                               <select class="form-control"  ng-model="idTypeTicket" ng-blur="dhboard()"> 
+                                    <option value="0">Todo</option> 
+                                   <option value="1">ALTA DE LLAVEROS</option> 
+                                   <option  value="2">BAJA DE LLAVEROS</option> 
+                                   <option value="3">SERVICIO TECNICO</option> 
+                                   <option value="4">OTRAS SOLICITUDES O CONSULTAS</option> 
+                               </select> 
+                               <input type="hidden"  value="{{idTypeTicket}}"  id="idTypeTicket">
+                               </div> 
+                 </div> 
                 
               
                 
@@ -44,13 +75,22 @@
                 <div class="col-lg-2">
                 <br>
     
-                    <div class="form-group" style="    margin-top: 5px;
-                ">
-                <input type="text" style=" margin-top: -6px;"
-             class="form-control" ng-model="searchFilter" id="searchFilter" ng-change="dhboard()" placeholder="Buscar...">
+                    <div class="form-group" style="    margin-top: 5px;">
+                     <input type="text" style=" margin-top: -6px;"
+                    class="form-control" ng-model="searchFilter" id="searchFilter" ng-change="dhboard()" placeholder="Buscar...">
                 
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <br>
+        
+                        <div class="form-group" style="    margin-top: 5px;">
+                                <button type="button" class="btn btn-primary" ng-click="dhboard()">Buscar </button>
+                                
+                        
+                        </div>
+                    </div>
     
                 
     
@@ -70,17 +110,17 @@
                     <div class="col-lg-3">
                         <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
                         <label>Total Ticket Finalizados</label>
-                        <label style="color: #39af24;font-size: 20px;">90</label>
+                        <label style="color: #39af24;font-size: 20px;">0</label>
                     </div>
                     <div class="col-lg-3">
                         <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
                         <label>Total Ticket Cancelados</label>
-                        <label style="color: #af2424;font-size: 20px;">70</label>
+                        <label style="color: #af2424;font-size: 20px;">0</label>
                     </div>
                     <div class="col-lg-3">
                         <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
                         <label>Total Ticket Pendientes</label>
-                        <label  style="color: #af8424;font-size: 20px;">10</label>
+                        <label  style="color: #af8424;font-size: 20px;">0</label>
                     </div>
                     <div class="col-lg-3">
                         <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -105,7 +145,10 @@
     
     
                         <div class="col-lg-10">
-                            <label>{{tk.codTicket}}</label><br>
+                            <label>{{tk.codTicket}}</label>
+                            <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
+                            <br>
+                            <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
                             <label>Creado {{tk.dateCrated}}</label> - 
                             <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
                             <label>Cliente:{{tk.fullNameTenant}}</label> - 
@@ -115,17 +158,13 @@
                         <div class="col-lg-2">
                             <!-- Split button -->
                         <div class="btn-group">
-                        <button type="button" class="btn btn-lg btn-success">En Proceso</button>
+                        <button type="button" class="btn btn-lg btn-success">{{tk.statusName}}</button>
                         <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Aprobar</a></li>
-                            <li><a href="#">Finalizar</a></li>
-                            <li><a href="#">Cancelar</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Ver Detalle</a></li>
+                            <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
                         </ul>
                         </div>
                         </div>

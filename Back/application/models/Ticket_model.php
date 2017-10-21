@@ -15,6 +15,23 @@ private function formatCode($value) {
         return $CODE;
     }
 
+
+    public function changueStatus($id, $idStatus) {
+        $this->db->set(
+                array(
+                    'idStatusTicketKf' => $idStatus
+                )
+        )->where("idTicket", $id)->update("tb_tickets");
+
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function add($ticket) {
 
 
@@ -158,6 +175,7 @@ private function formatCode($value) {
             $this->db->select("*")->from("tb_tickets");
             $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
+            $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
             $this->db->join('tb_reason_disabled_item', 'tb_reason_disabled_item.idReasonDisabledItem = tb_tickets.idReasonDisabledItemKf', 'left');
             $this->db->join('tb_user a', 'a.idUser = tb_tickets.idUserCompany', 'left');
@@ -165,17 +183,20 @@ private function formatCode($value) {
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
             $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
 			$this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
-			$this->db->where("tb_tickets.idStatusTicketKf !=", -1);
+            $this->db->where("tb_tickets.idStatusTicketKf !=", -1);
+            
+            if(@$searchFilter['idTypeTicketKf'] > 0)
+            {
+                $this->db->where("tb_tickets.idTypeTicketKf =", @$searchFilter['idTypeTicketKf']);
+            }
+
 
 
 
             /* Busqueda por filtro */
-            if (!is_null($searchFilter['searchFilter'])) 
+            if (!is_null($searchFilter['searchFilter']) &&  strlen($searchFilter['searchFilter']) > 0) 
             {
-            	/*if(@$searchFilter['idTypeTicketKf'] > 0)
-				{
-            		$this->db->where("tb_tickets.idTypeTicketKf !=", @$searchFilter['idTypeTicketKf']);
-            	}*/
+            	
 
             	/*if(@$searchFilter['idProfileKf'] > 0)
 				{
@@ -201,6 +222,9 @@ private function formatCode($value) {
                
                 
             }
+
+            
+          
 
             // Si recibimos un limite //
             if ($searchFilter['topFilter'] > 0) {
