@@ -12,7 +12,7 @@ a:focus { outline: 0 none; }
 
 a:hover, a:active, .OraLink:hover, .OraLinkText:hover { color:#0088CC; text-decoration: none; }
 body {
-    font-family: 'Open Sans', sans-serif;
+    
 }
 .globalSearch input[type="text"],.globalSearch input[type="text"]:focus ,.globalSearch input[type="text"]:hover{  height:18px; border:0;
     padding-top: 1px;
@@ -423,15 +423,7 @@ a.btn-submit {
     padding: 10px 20px 10px 20px;
     letter-spacing: -1px;
 }
-div.modal {
-    text-align: left;
-}
-.modal-header { filter:progid:DXImageTransform.Microsoft.gradient(enabled=false); }
-.modal-footer .btn { min-width:60px;
-      -webkit-border-radius:20px;
-     -moz-border-radius:20px;
-          border-radius:20px;
- }
+
 
 /*header */
 .navbar .nav > li > a {

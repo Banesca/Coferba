@@ -14,23 +14,23 @@
 
 							  <!-- Admin First Name & Lastname -->
 							      
-							<div ng-show="cpnyinput" class="form-group">
+							<div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group">
 							  <label class="col-md-4 control-label">Nombre y Apellido</label> 
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-								  		<input name="razonSocial" placeholder="Razon Social" class="form-control" ng-disabled="checkRS" ng-model="fservice.razonSocial" type="text" />
+								  		<input  name="namesAd" autofocus="true" placeholder="" class="form-control" ng-model="namesAd"  type="text" />
 								    </div>
 							  </div>
 							</div>
 							<!-- Company names-->
 
-							<div ng-show="cpnyinput" class="form-group">
+							<div ng-show="sessionidProfile==2 || sessionidProfile==4" class="form-group">
 							  <label class="col-md-4 control-label">Razon Social</label>  
 								  <div class="col-md-4">
 									  <div class="input-group">
 										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  <input  name="namesAd" autofocus="true" placeholder="" class="form-control" ng-model="fservice.namesAd"  type="text" required autofocus />
+										  <input name="razonSocial" placeholder="Razon Social" class="form-control" ng-model="razonSocial" type="text" />
 									  </div>
 								  </div>
 							</div>
@@ -41,7 +41,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="localPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fservice.localPhoneAd" type="text" required autofocus />
+								  		<input name="localPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneAd" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -52,7 +52,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="movilPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="fservice.movilPhoneAd" type="text" required autofocus />
+								  		<input name="movilPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneAd" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -63,7 +63,7 @@
 							   <div class="col-md-4">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="emailAd" placeholder="E-Mail" class="form-control" ng-model="fservice.emailAd"  type="email" required autofocus />
+							  		<input name="emailAd" placeholder="E-Mail" class="form-control" ng-model="emailAd"  type="email" required autofocus />
 							    </div>
 							  </div>
 							</div>
@@ -75,7 +75,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								  		<input name="addressAd" placeholder="Direcci&#243n" class="form-control" ng-model="fservice.addressAd" type="text" required autofocus />
+								  		<input name="addressAd" placeholder="Direcci&#243n" class="form-control" ng-model="addressAd" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -86,7 +86,7 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeLostKf" class="form-control" placeholder="Tipo de Servicio" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="fservice.idTypeLostKf" required autofocus />
+										    <select name="idTypeLostKf" class="form-control" placeholder="Tipo de Servicio" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf" required autofocus />
 									    	</select>
 								  	</div>
 								</div>
@@ -97,7 +97,7 @@
 							  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="fservice.detailSv"  required autofocus ></textarea>
+								  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="detailSv"  required autofocus ></textarea>
 									</div>
 							  	</div>
 							</div>
@@ -107,7 +107,7 @@
 							  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="sruAd" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="fservice.sruAd" ></textarea>
+								  		<textarea name="sruAd" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruAd" ></textarea>
 									</div>
 							  	</div>
 							</div>
@@ -117,7 +117,6 @@
 							  <label class="col-md-4 control-label"></label>
 							  <div class="col-md-4">
 							    <button type="submit" ng-click="" class="btn btn-primary" >Solicitar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-							    <button type="reset" ng-click="fnShowHide('ruservice', 'close')" class="btn btn-primary">Cancelar <!--<span class="glyphicon glyphicon-remove"></span>--></button>
 							  </div>
 							</div>
 

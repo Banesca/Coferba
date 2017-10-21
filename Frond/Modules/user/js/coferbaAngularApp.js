@@ -14,7 +14,8 @@ app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform,
      $scope.sessionPhone       = localStorage.getItem("Telefono");
      $scope.sessionidProfile   = localStorage.getItem("IdPerfil");
      $scope.sessionProfileName = localStorage.getItem("nombrePerfil");
-     $scope.sessionName        = localStorage.getItem("IdStatus");
+     $scope.sessionidStatus    = localStorage.getItem("IdStatus");
+     $scope.sessionrazonSocial = localStorage.getItem("razonSocial");
 
 /**************************************************
 *                                                 *
@@ -40,7 +41,7 @@ $scope.CallFilterFormU = function(){
         $scope.listType = response.data.type;
       }, function myError(response) {
     });
-};
+}
 /*Retrieve date for select ticket up/down */
 $scope.CallFilterFormT = function(){
    $http({
@@ -52,26 +53,54 @@ $scope.CallFilterFormT = function(){
         $scope.listTypeQuery = response.data.typeouther
       }, function myError(response) {
     });
-};
+}
   $scope.CallFilterDpto = function(){
+     // el problema es que no te deja seleccionar el id ?
      $http({
         method : "GET",
         url : "http://localhost/Coferba/Back/index.php/Tenant/departamentByIdAdminR/"+$scope.sessionidProfile
       }).then(function mySuccess(response) {
-          console.log(response.data);
-          /*$scope.listProfile = response.data.profile;
-          $scope.listType = response.data.type;*/
+           $scope.names = response.data.tenant;
+         
         }, function myError(response) {
       });
+  }
+
+$scope.CallFilterTenant = function(op){
+  var id=0;
+  if($("#idDepartmentKf").val() && $scope.opc=='a' ){
+    id=$("#idDepartmentKf").val();
+  }else if ($("#idSelectKeyD").val() && $scope.opc=='b'){
+    id=$("#idSelectKeyD").val();
   };
+  alert(id);
+     $http({
+        method : "GET",
+        url : "http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+id
+      }).then(function mySuccess(response) {
+        if (!response.data.tenant){
+             inform.add('La direccion no presenta inquilinos asociados.',{
+                        ttl:5000, type: 'error'
+             }); 
+             
+           }else{
+                $scope.listTenant = response.data.tenant;
+                $('#myModal').modal('toggle');
+          }
+        }, function myError(response) {
+      });
+  }
 /*------------------------------------------------*/
 
 
-$scope.searchOwner = function (){
-
-   $('#myModal').modal('toggle');
+$scope.searchOwner = function (op){
+  $scope.opc=op;
+   $scope.CallFilterTenant();
 }
 
+$scope.selectTenant = function (obj){
+  console.log(obj);
+}
 
 /**************************************************
 *                                                 *
@@ -92,52 +121,52 @@ function BindDataToForm(frmValue) {
     switch (frmValue) {
       case "fkeyup":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
-          $scope.namesAd=$scope.sessionNames;
-          console.log($scope.sessionAddress);
-          $scope.addressAd=$scope.sessionAddress;
-          $scope.movilPhoneAd=$scope.sessionPhone;
-          $scope.emailAd=$scope.sessionMail;
+          $scope.namesAd      = $scope.sessionNames;
+          $scope.addressAd    = $scope.sessionAddress;
+          $scope.movilPhoneAd = $scope.sessionPhone;
+          $scope.emailAd      = $scope.sessionMail;
         }else if ($scope.sessionidProfile==3){
-          $scope.namesAd=$scope.sessionNames;
-          $scope.addressAd=$scope.sessionAddress;
-          $scope.movilPhoneAd=$scope.sessionPhone;
-          $scope.emailAd=$scope.sessionMail;
+          $scope.namesAd      = $scope.sessionNames;
+          $scope.addressAd    = $scope.sessionAddress;
+          $scope.movilPhoneAd = $scope.sessionPhone;
+          $scope.emailAd      = $scope.sessionMail;
           /*---------------------------------*/
-          $scope.namesOw=$scope.sessionNames;
-          $scope.addressOwd=$scope.sessionAddress;
-          $scope.movilPhoneOwd=$scope.sessionPhone;
-          $scope.emailOwd=$scope.sessionMail;
+          $scope.namesOw      = $scope.sessionNames;
+          $scope.addressOw    = $scope.sessionAddress;
+          $scope.movilPhoneOw = $scope.sessionPhone;
+          $scope.emailOw      = $scope.sessionMail;
         }
         break;
       case "fkeydown":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
-          $scope.fkeydown.namesAd=$scope.sessionNames;
-          $scope.fkeydown.addressAd=$scope.sessionAddress;
-          $scope.fkeydown.movilPhoneAd=$scope.sessionPhone;
-          $scope.fkeydown.emailAd=$scope.sessionMail;
+          $scope.namesAd     = $scope.sessionNames;
+          $scope.addressAd   = $scope.sessionAddress;
+          $scope.movilPhoneAd= $scope.sessionPhone;
+          $scope.emailAd     = $scope.sessionMail;
         }else if ($scope.sessionidProfile==3){
-          $scope.fkeydown.namesAd=$scope.sessionNames;
-          $scope.fkeydown.addressAd=$scope.sessionAddress;
-          $scope.fkeydown.movilPhoneAd=$scope.sessionPhone;
-          $scope.fkeydown.emailAd=$scope.sessionMail;
+          $scope.namesAd     = $scope.sessionNames;
+          $scope.addressAd   = $scope.sessionAddress;
+          $scope.movilPhoneAd= $scope.sessionPhone;
+          $scope.emailAd=$scope.sessionMail;
           /*---------------------------------*/
-          $scope.fkeydown.namesOw=$scope.sessionNames;
-          $scope.fkeydown.addressOwd=$scope.sessionAddress;
-          $scope.fkeydown.movilPhoneOwd=$scope.sessionPhone;
-          $scope.fkeydown.emailOwd=$scope.sessionMail;
+          $scope.namesOw     = $scope.sessionNames;
+          $scope.addressOw   = $scope.sessionAddress;
+          $scope.movilPhoneOw= $scope.sessionPhone;
+          $scope.emailOw     = $scope.sessionMail;
         }
         break;
       case "fservice":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==2 || $scope.sessionidProfile==4){
-          $scope.fservice.namesAd=$scope.sessionNames;
-          $scope.fservice.addressAd=$scope.sessionAddress;
-          $scope.fservice.movilPhoneAd=$scope.sessionPhone;
-          $scope.fservice.emailAd=$scope.sessionMail;
+          $scope.namesAd     = $scope.sessionNames;
+          $scope.razonSocial = $scope.sessionrazonSocial
+          $scope.addressAd   = $scope.sessionAddress;
+          $scope.movilPhoneAd= $scope.sessionPhone;
+          $scope.emailAd     = $scope.sessionMail;
         }
       break;
       case "frmOther":
-        $scope.frmOther.o_email=$scope.sessionMail;
-        $scope.frmOther.o_address=$scope.sessionAddress;
+        $scope.o_email  = $scope.sessionMail;
+        $scope.o_address= $scope.sessionAddress;
       break;
       default: 
         
@@ -145,28 +174,6 @@ function BindDataToForm(frmValue) {
   };
 /*-----------------------------------------------*/
 
-/**************************************************
-*                                                 *
-*               RESET FORM FUNCTION               *
-*                                                 *
-**************************************************/
-var frm="";
-function frmReset (value) {
-    switch (value) {
-      case "login":
-        $scope.Login = {};
-        $scope.frmLogin.$setPristine();
-        break;
-      case "register":
-
-        break;
-      case "warning":
-        
-        break;
-      default: 
-        
-    }
-  };
 /**************************************************
 *                                                 *
 *               INGRESO DE USUARIO                *
@@ -190,36 +197,13 @@ $scope.sysLogin = function(formReset) {
       validateuser($http, $scope);
     }, 2500);
 };
-/****** Show and Hide Main Site ****/
-function showHeader(type){
-  switch (type) {
-      case "success":
-        $('#frm_loginU').hide();
-        $('#loginRegister').hide(); 
-        $('#sytemHead').show(); 
-        break;
-      case "error":
-        $('#loginRegister').hide(); 
-        $('#sytemHead').hide(); 
-        $('#frm_loginU').show();
-        break;
-      default: 
-        
-    }
-}
+
 /****** Validate data into the database ****/
 
-function validateuser($http,$scope){
-
-
-  
+function validateuser($http,$scope){  
     $http.post("http://localhost/Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
-            $timeout(function() {
-                 showHeader('error');
-                 frmReset(frm);
-             }, 500);
              inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado o verifique su clave.',{
                         ttl:5000, type: 'error'
              }); 
@@ -227,7 +211,6 @@ function validateuser($http,$scope){
            }else{
                $scope.rsJSON=data.data.response;
                $timeout(function() {
-                    showHeader('success');
                     inform.add('Bienvenido Sr/a '+ $scope.rsJSON.fullNameUser,{
                       ttl:5000, type: 'success'
                     });
@@ -239,6 +222,7 @@ function validateuser($http,$scope){
                  localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
                  localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
                  localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
+                 localStorage.setItem("razonSocial", $scope.rsJSON.rezonSocial);
                  localStorage.setItem("Token", true);
                  $scope.Token = localStorage.getItem("Token");
                  location.href = "sistema.html"
@@ -302,7 +286,7 @@ $scope.addUser = function ($http, $scope){
 
         inform.add('Usuario registrado con exito. ',{
                 ttl:5000, type: 'success'
-             });;
+             });
 
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -471,7 +455,7 @@ $scope.sysRequestOther = function() {
   $timeout(function() {
       blockUI.stop();
       console.log($scope._getOtherRequestData());
-      //$scope.otherRequest($http, $scope);
+      //$scope.otherRequest();
     }, 2500);
 };
 $scope.otherRequest = function ($http, $scope){
@@ -615,7 +599,8 @@ $scope.dhboard = function(){
        idProfileKf:localStorage.getItem("IdPerfil")
          
     
-  }
+  }///avisame hablame estoy aqui resolviendo algo si dale 
+
 
   $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter)
   .then(function (sucess, data) {

@@ -8,7 +8,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="frmOther" ng-submit="sysRequestOther()" ng-init="CallFilterFormT(); checkRS=false">
+				    	<form class="form-horizontal" name="frmOther" ng-submit="sysRequestOther()" ng-init="CallFilterFormT()">
 							<fieldset>
 							<!-- Select Type of Service -->
 							   
@@ -17,7 +17,7 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="frmOther.idTypeOutherKf" required autofocus /><option value=" "></option></select>
+										    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="idTypeOutherKf" required autofocus /><option value=" "></option></select>
 								  	</div>
 								</div>
 							</div>
@@ -28,7 +28,7 @@
 							   <div class="col-md-4">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="o_email" placeholder="E-Mail" class="form-control" ng-model="frmOther.o_email"  type="email" required autofocus />
+							  		<input name="o_email" placeholder="E-Mail" class="form-control" ng-model="o_email"  type="email" required autofocus />
 							    </div>
 							  </div>
 							</div>
@@ -39,7 +39,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								  		<input name="o_address" placeholder="Direcci&#243n" class="form-control" ng-model="frmOther.o_address" type="text" required autofocus />
+								  		<input name="o_address" placeholder="Direcci&#243n" class="form-control" ng-model="o_address" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -49,7 +49,7 @@
 							  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="frmOther.o_detail" required autofocus ></textarea>
+								  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="o_detail" required autofocus ></textarea>
 									</div>
 							  	</div>
 							</div>
@@ -59,7 +59,6 @@
 							  <label class="col-md-4 control-label"></label>
 							  <div class="col-md-4">
 							    <button type="submit" ng-click="" class="btn btn-primary" >Enviar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-							    <input type="button" ng-click="fnShowHide('ruother', 'close');" class="btn btn-primary" value ="Cancelar" > <!--<span class="glyphicon glyphicon-remove"></span>-->
 							  </div>
 							</div>
 

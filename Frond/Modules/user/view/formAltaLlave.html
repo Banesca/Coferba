@@ -8,7 +8,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); CallFilterDpto(); checkRS=false" >
+				    	<form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); CallFilterDpto()" >
 							<fieldset>
 							
 							<legend style="text-align: center;">Datos del Encargado</legend><br/>
@@ -70,18 +70,20 @@
 							</div>
 							<legend style="text-align: center;">Datos del Propietario</legend><br/>
 							<!-- Select Department -->
-							   
-							<div class="form-group"> 
+							<div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group"> 
 							  <label class="col-md-4 control-label">Departamento</label>
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-										    <select name="dptoOw" class="form-control" ng-change="searchOwner()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="dptoOw" required autofocus />
-										    	<option value=""></option>
+								        <span style="cursor: pointer;" ng-click="searchOwner('a')" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i></a></span>
+								        <select ng-model="idDepartmentKf"   class="form-control" ng-options="x.idDepartment as x.departmentAddress + '-' + x.departmentFloor for x in names" required autofocus >
+								        	<option value="" >Seleccione</option>
 									    	</select>
+									    	<input type="text" ng-show="hideMe"  name="" id="idDepartmentKf" value="{{idDepartmentKf}}" >
 								  	</div>
 								</div>
 							</div>
+
+	
 							<!-- Text Address-->
 							      
 							<div class="form-group">
@@ -157,11 +159,12 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-										    <select name="idTypeDeliveryKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf" required autofocus />
+										    <select name="idTypeDeliveryKf" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf" required autofocus />
 									    	</select>
 								  	</div>
 								</div>
 							</div>
+
 							<!-- Form Special Request sru= Special Request Up -->
 
 							<div class="form-group">
@@ -183,26 +186,6 @@
 
 							</fieldset>
 						</form>
-									<!-- Modal -->
-							<div id="myModal" class="modal fade" role="dialog">
-							  <div class="modal-dialog">
-
-							    <!-- Modal content-->
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal">&times;</button>
-							        <h4 class="modal-title">Modal Header</h4>
-							      </div>
-							      <div class="modal-body">
-							        <p>Some text in the modal.</p>
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							      </div>
-							    </div>
-
-							  </div>
-							</div>
 					</div>
 			</div>
 	</div>

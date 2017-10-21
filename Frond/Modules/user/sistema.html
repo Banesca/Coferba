@@ -51,7 +51,7 @@
     					</li>
                     	<li class="dropdown gray">
 	                        <a class="dropdown-toggle" data-toggle="dropdown" href="sistema.html">
-	                            <i class="icon-user"></i> {{rsJSON.fullNameUser}} <i class="icon-caret-down"></i>
+	                            <i class="icon-user"></i> {{sessionNames}} <i class="icon-caret-down"></i>
 	                        </a>
 	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 	                        	<li role="presentation">
@@ -127,7 +127,7 @@
 	        <div id="SubM_Pedidos" class="container p-r">
 	            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
 		            <ul>
-					    <li class="am">
+					    <li ng-show="sessionidProfile==1 || sessionidProfile==4" class="am">
 					        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
 					        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 					                <li><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle">Alta</a></li>
@@ -198,8 +198,56 @@
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 			<!-- Response Inform Meessage plugin -->
 			<div inform class="inform-fixed inform-shadow inform-animate"></div>
-	</div>
+		<!-- Modal -->
+			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
+			  	<div class="modal-dialog modal-lg" >
+			    <!-- Modal content-->
+				    <div class="modal-content">
+				      	<div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Inquilinos / Propietarios</h4>
+				      	</div>
+				      	<div class="modal-body pre-scrollable">
+	                				<table class="table  table-striped ">
+					                    <thead style=" background: #4d5d6f; color: white;">
+					                        <tr >
+					                            <th style="width:20px">#</th>
+					                            <th>ID</th>
+					                            <th>Nombres</th>
+					                            <th>Tlf Movil</th>
+					                            <th>Tlf Local</th>
+					                            <th>Departmento</th>
+					                            <th>Correo</th>
+					                            <th>Cliente</th>
+					                            <th>Status</th>
+					                        </tr>
+					                    </thead>
+					                    <tbody>
+					                        <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter : paginate track by $index">
+					                        	<td><button ng-click="selectTenant(item)" class=" button btn-default">{{$index + 1}}</button></td>
+						                        <td>{{item.idTenant}}</td>
+						                        <td>{{item.fullNameTenant}}</td>
+						                        <td>{{item.phoneNumberTenant}}</td>
+						                        <td>{{item.phoneNumberContactTenant}}</td>
+						                        <td>{{item.idDepartmentKf}}</td>
+						                        <td>{{item.emailTenant}}</td>
+						                        <td ng-if="item.idTypeKf==1">Inquilino</td>
+						                        <td ng-if="item.idTypeKf==2">Propietario</td>
+						                        <td ng-if="item.idStatusKf==1">Activo</td>
+						                        <td ng-if="item.idStatusKf==2">Inactivo</td>
+						                    </tr>
+						                </tbody>
+		            				</table>
+					      		<!--<div class="modal-footer">
+					        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      		</div>-->
+			    		</div>
 
+			  		</div>
+				</div>
+			</div>
+
+	</div>
 </div>
 <!--ANGULAR MODULES -->
 <script src="https://code.angularjs.org/1.2.22/angular.js"></script>

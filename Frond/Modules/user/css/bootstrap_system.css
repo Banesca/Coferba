@@ -1602,7 +1602,7 @@ pre code {
   border-radius: 0;
 }
 .pre-scrollable {
-  max-height: 340px;
+  max-height: 540px;
   overflow-y: scroll;
 }
 .containerb {
@@ -5906,11 +5906,11 @@ button.close {
 }
 .modal {
   position: fixed;
-  top: 0;
+  top: 125px;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 99999;
   display: none;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
@@ -5947,7 +5947,7 @@ button.close {
           background-clip: padding-box;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, .2);
-  border-radius: 6px;
+  border-radius: 0px;
   outline: 0;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
           box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
@@ -5983,7 +5983,7 @@ button.close {
 }
 .modal-body {
   position: relative;
-  padding: 15px;
+  padding: 0px;
 }
 .modal-footer {
   padding: 15px;
