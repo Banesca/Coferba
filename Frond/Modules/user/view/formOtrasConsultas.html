@@ -8,7 +8,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="frmOther" ng-submit="sysRequestOther()" ng-init="CallFilterFormT()">
+				    	<form class="form-horizontal" name="frmOther" ng-submit="newTicket('other')" ng-init="CallFilterFormT()">
 							<fieldset>
 							<!-- Select Type of Service -->
 							   
@@ -17,7 +17,7 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="idTypeOutherKf" required autofocus /><option value=" "></option></select>
+										    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="$parent.idTypeOutherKf" required autofocus /><option value=" "></option></select>
 								  	</div>
 								</div>
 							</div>
@@ -49,7 +49,7 @@
 							  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="o_detail" required autofocus ></textarea>
+								  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.o_detail" required autofocus ></textarea>
 									</div>
 							  	</div>
 							</div>
@@ -58,7 +58,7 @@
 							<div class="form-group">
 							  <label class="col-md-4 control-label"></label>
 							  <div class="col-md-4">
-							    <button type="submit" ng-click="" class="btn btn-primary" >Enviar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+							    <button type="submit" class="btn btn-primary" >Enviar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
 							  </div>
 							</div>
 

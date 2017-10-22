@@ -8,7 +8,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="fservice" ng-init="CallFilterFormT(); checkRS=false">
+				    	<form class="form-horizontal" name="fservice" ng-submit="newTicket('srvs')" ng-init="CallFilterFormT(); checkRS=false">
 							<fieldset>
 							<legend style="text-align: center;">Datos del Encargado</legend><br/>
 
@@ -67,7 +67,6 @@
 							    </div>
 							  </div>
 							</div>
-							<legend style="text-align: center;">Datos del Servicio</legend><br/>
 							<!-- Text Address-->
 							      
 							<div class="form-group">
@@ -79,6 +78,26 @@
 								    </div>
 							  </div>
 							</div>
+
+							<legend style="text-align: center;">Datos del Servicio</legend><br/>
+
+							<!-- Select Type of Service -->
+							   
+							<div class="form-group" ng-show="sessionidProfile==1"> 
+							  <label class="col-md-4 control-label">Seleccione Empresa</label>
+							    <div class="col-md-4 selectContainer">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
+										    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="$parent.idTypeServiceKf" required autofocus />
+										    <option value=""></option>
+										    <option value="1">Telecom</option>
+										    <option value="2">Coferba</option>
+										    <option value="3">Coto</option>
+									    	</select>
+								  	</div>
+								</div>
+							</div>
+
 							<!-- Select Type of Service -->
 							   
 							<div class="form-group"> 
@@ -86,7 +105,14 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeLostKf" class="form-control" placeholder="Tipo de Servicio" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf" required autofocus />
+										    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="$parent.idTypeServiceKf" required autofocus />
+										    <option value=""></option>
+										    <option value="1">Cambio de Lector de llave HID</option>
+										    <option value="2">Cambio de Camara</option>
+										    <option value="3">Cambio de Cerradura Electromagnetica</option>
+										    <option value="4">Cambio de Lector de llave HID</option>
+										    <option ng-show="sessionidProfile==1 || sessionidProfile==2" value="5">Cambio de Molinete</option>
+										    <option ng-show="sessionidProfile==1 || sessionidProfile==2" value="6">Cambio de Control de Acceso</option>
 									    	</select>
 								  	</div>
 								</div>
@@ -97,7 +123,7 @@
 							  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="detailSv"  required autofocus ></textarea>
+								  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.detailSv"  required autofocus ></textarea>
 									</div>
 							  	</div>
 							</div>
@@ -107,7 +133,7 @@
 							  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="sruAd" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruAd" ></textarea>
+								  		<textarea name="sruSv" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="$parent.sruSv" ></textarea>
 									</div>
 							  	</div>
 							</div>

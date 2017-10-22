@@ -172,7 +172,7 @@ private function formatCode($value) {
          { 
 
             
-            $this->db->select("*")->from("tb_tickets");
+            $this->db->select("*,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
             $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');

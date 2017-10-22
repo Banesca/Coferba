@@ -1,130 +1,153 @@
 <!-- USER REGISTER FORM -->
-<div class="agileits-w3layouts" ng-show="rUser"> 
-	<div class="container">
-		<br>
-          	<div class="panel panel-default">
-              	<div class="panel-heading">
-                	<h3 class="panel-title">NUEVO USUARIO<a ng-click="fnShowHide('rUser', 'open')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-            	</div>
-            		<div class="panel-body">
-						<!-- FORM CONTAINER-->
-	    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU(); checkRS=false" ng-submit="sysRegisterUser()">
-							<fieldset>
-							<!-- Form First Name -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Nombre</label>  
-								  <div class="col-md-4">
-									  <div class="input-group">
-										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus/>
-									  </div>
-								  </div>
-							</div>
-							<!-- Form Last Name -->
+<div id="RegisterModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
+  	<div class="modal-dialog modal-lg" >
+    <!-- Modal content-->
+	    <div class="modal-content">
+	      	<div class="modal-body pre-scrollable">
+				<div class="agileits-w3layouts"> 
+					<div class="container">
+						<br>
+				          	<div class="panel panel-default">
+				              	<div class="panel-heading">
+				                	<h3 class="panel-title">NUEVO USUARIO<a ng-click="fnShowHide('rUser', 'open')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+				            	</div>
+				            		<div class="panel-body">
+										<!-- FORM CONTAINER-->
+					    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU(); checkRS=false" ng-submit="sysRegisterUser()">
+											<fieldset>
+											<!-- Form First Name -->
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Nombre</label>  
+												  <div class="col-md-4">
+													  <div class="input-group">
+														  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+														  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus/>
+													  </div>
+												  </div>
+											</div>
+											<!-- Form Last Name -->
 
-							<div class="form-group">
-							  <label class="col-md-4 control-label" >Apellido</label> 
-							  	<div class="col-md-4">
-									<div class="input-group">
-								  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text" required autofocus />
+											<div class="form-group">
+											  <label class="col-md-4 control-label" >Apellido</label> 
+											  	<div class="col-md-4">
+													<div class="input-group">
+												  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text" required autofocus />
+													</div>
+											  	</div>
+											</div>
+											<!-- Text Mail-->
+
+											<div class="form-group">
+											 <label class="col-md-4 control-label">E-Mail</label>  
+											   <div class="col-md-4">
+											    <div class="input-group">
+											    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+											  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="email" required autofocus />
+											    </div>
+											  </div>
+											</div>
+											<!-- Text Password-->
+
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Contrase&#241a</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+												  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+												    </div>
+												</div>
+											</div>
+											<!-- Text Password Check-->
+
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Confirme su Contrase&#241a</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+												  		<input name="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
+												    </div>
+												</div>
+											</div>
+											<!-- Text Phone-->
+											       
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Telefono Local</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+												  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phonelocalNumberUser"  type="text" required autofocus />
+												    </div>
+											  </div>
+											</div>
+											<!-- Text Phone-->
+											       
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Telefono Movil</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+												  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phoneNumberUser"  type="text" required autofocus />
+												    </div>
+											  </div>
+											</div>
+											<!-- Text Address-->
+											      
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Direcci&#243n</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+												  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text" required autofocus />
+												    </div>
+											  </div>
+											</div>
+											<!-- Select profile -->
+											   
+											<div class="form-group"> 
+											  <label class="col-md-4 control-label">Perfil</label>
+											    <div class="col-md-4 selectContainer">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+														    <select name="idProfileKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="idProfileKf"  required autofocus >
+														    	<option value=""></option>
+													    	</select>
+												  	</div>
+												</div>
+											</div>
+											<!-- Company names-->
+											      
+											<div ng-show="cpnyinput" class="form-group">
+											  <label class="col-md-4 control-label">Razon Social</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+												  		<input name="razonSocial" placeholder="Razon Social" class="form-control" ng-disabled="checkRS" ng-model="razonSocial" type="text" />
+												    </div>
+											  </div>
+											</div>
+
+
+											<!-- Actions Button -->
+											<div class="form-group">
+											  <label class="col-md-4 control-label"></label>
+											  <div class="col-md-4">
+											    <button type="submit" class="btn btn-primary" >Registrar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+					
+											  </div>
+											</div>
+
+											</fieldset>
+										</form>
+										<div class="clearfix"> </div> 
 									</div>
-							  	</div>
 							</div>
-							<!-- Text Mail-->
-
-							<div class="form-group">
-							 <label class="col-md-4 control-label">E-Mail</label>  
-							   <div class="col-md-4">
-							    <div class="input-group">
-							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="email" placeholder="E-Mail" class="form-control" ng-model="emailUser"  type="email" required autofocus />
-							    </div>
-							  </div>
-							</div>
-							<!-- Text Password-->
-
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Contrase&#241a</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								  		<input name="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
-								    </div>
-								</div>
-							</div>
-							<!-- Text Password Check-->
-
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Confirme su Contrase&#241a</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								  		<input name="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
-								    </div>
-								</div>
-							</div>
-							<!-- Text Phone-->
-							       
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Telefono</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="phone" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phoneNumberUser"  type="text" required autofocus />
-								    </div>
-							  </div>
-							</div>
-							<!-- Text Address-->
-							      
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Direcci&#243n</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								  		<input name="address" placeholder="Direcci&#243n" class="form-control" ng-model="addresUser" type="text" required autofocus />
-								    </div>
-							  </div>
-							</div>
-							<!-- Select profile -->
-							   
-							<div class="form-group"> 
-							  <label class="col-md-4 control-label">Perfil</label>
-							    <div class="col-md-4 selectContainer">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										    <select name="idProfileKf" class="form-control" ng-change="getSelectedData()"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="idProfileKf"  required autofocus >
-										    	<option value=""></option>
-									    	</select>
-								  	</div>
-								</div>
-							</div>
-							<!-- Company names-->
-							      
-							<div ng-show="cpnyinput" class="form-group">
-							  <label class="col-md-4 control-label">Razon Social</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-								  		<input name="razonSocial" placeholder="Razon Social" class="form-control" ng-disabled="checkRS" ng-model="razonSocial" type="text" />
-								    </div>
-							  </div>
-							</div>
-
-
-							<!-- Actions Button -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4">
-							    <button type="submit" class="btn btn-primary" >Registrar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-	
-							  </div>
-							</div>
-
-							</fieldset>
-						</form>
-						<div class="clearfix"> </div> 
 					</div>
+				</div>
 			</div>
+		</div>
 	</div>
 </div>
+	
+
+	

@@ -8,7 +8,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-	    				<form class="form-horizontal" name="fkeydown" ng-init="CallFilterFormT(); checkRS=false">
+	    				<form class="form-horizontal" name="fkeydown" ng-submit="newTicket('down')" ng-init="CallFilterFormT(); checkRS=false">
 							<fieldset>
 							<legend style="text-align: center;">Datos del Encargado</legend><br/>
 							<!-- Admin First Name & Lastname -->
@@ -107,7 +107,7 @@
 							<!-- Text Owner Phone 1 -->
 							       
 							<div class="form-group">
-							  <label class="col-md-4 control-label">Telefono</label>  
+							  <label class="col-md-4 control-label">Telefono Local</label>  
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
@@ -144,7 +144,14 @@
 							  	<div class="col-md-4">
 									<div class="input-group">
 								  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-								  		<input name="qkuOw" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="qkuOw" type="number" min="1" max="5" maxlength="1" required autofocus />
+								  		<select name="qkuOw" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="$parent.qkuOw" required autofocus />
+										    <option value=""></option>
+										    <option value="1">1</option>
+										    <option value="2">2</option>
+										    <option value="3">3</option>
+										    <option value="4">4</option>
+										    <option value="5">5</option>
+									    	</select>
 									</div>
 							  	</div>
 							</div>
@@ -155,7 +162,7 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="idTypeLostKf" required autofocus />
+										    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="$parent.idTypeLostKf" required autofocus />
 									    	</select>
 								  	</div>
 								</div>
@@ -166,7 +173,7 @@
 							  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="sruOw" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruOw" required autofocus ></textarea>
+								  		<textarea name="sruOw" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="$parent.sruOw"  ></textarea>
 									</div>
 							  	</div>
 							</div>

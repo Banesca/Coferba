@@ -8,7 +8,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); CallFilterDpto()" >
+				    	<form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); CallFilterDpto()" ng-submit="newTicket('up')" >
 							<fieldset>
 							
 							<legend style="text-align: center;">Datos del Encargado</legend><br/>
@@ -42,7 +42,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="localPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneAd" type="text" required autofocus />
+								  		<input name="localPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.localPhoneAd" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -148,7 +148,14 @@
 							  	<div class="col-md-4">
 									<div class="input-group">
 								  		<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-								  		<input name="qkuOw" placeholder="Inique la cantidad de llaves" class="form-control" ng-model="qkuOw" type="number" min="1" max="5" maxlength="1" required autofocus />
+								  		<select name="qkuOw" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="$parent.qkuOw" required autofocus />
+										    <option value=""></option>
+										    <option value="1">1</option>
+										    <option value="2">2</option>
+										    <option value="3">3</option>
+										    <option value="4">4</option>
+										    <option value="5">5</option>
+									    	</select>
 									</div>
 							  	</div>
 							</div>
@@ -159,7 +166,8 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-										    <select name="idTypeDeliveryKf" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="idTypeDeliveryKf" required autofocus />
+										    <select name="idTypeDeliveryKf" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="$parent.idTypeDeliveryKf" required autofocus />
+										    <option value=""></option>
 									    	</select>
 								  	</div>
 								</div>
@@ -171,7 +179,7 @@
 							  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 							  	<div class="col-md-4">
 									<div class="input-group">
-								  		<textarea name="sruOw" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruOw" required autofocus ></textarea>
+								  		<textarea name="sruOw" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruOw" ></textarea>
 									</div>
 							  	</div>
 							</div>

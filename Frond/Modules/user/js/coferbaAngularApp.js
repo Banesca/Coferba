@@ -7,11 +7,14 @@
 app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform, $window) {
      $userType=0;
      $scope.rsJSON = [ ];
-     $scope.Token = localStorage.getItem("Token")
-     $scope.sessionNames       = localStorage.getItem("Nombres")
+     $scope.loginRegiterButtons = true;
+     $scope.Token = localStorage.getItem("Token");
+     $scope.sessionIdUser      = localStorage.getItem("idUser");
+     $scope.sessionNames       = localStorage.getItem("Nombres");
      $scope.sessionMail        = localStorage.getItem("Email");
      $scope.sessionAddress     = localStorage.getItem("Direccion");
-     $scope.sessionPhone       = localStorage.getItem("Telefono");
+     $scope.sessionMovilPhone  = localStorage.getItem("TelefonoM");
+     $scope.sessionLocalPhone  = localStorage.getItem("TelefonoL");
      $scope.sessionidProfile   = localStorage.getItem("IdPerfil");
      $scope.sessionProfileName = localStorage.getItem("nombrePerfil");
      $scope.sessionidStatus    = localStorage.getItem("IdStatus");
@@ -66,14 +69,13 @@ $scope.CallFilterFormT = function(){
       });
   }
 
-$scope.CallFilterTenant = function(op){
+$scope.CallFilterTenant = function(){
   var id=0;
   if($("#idDepartmentKf").val() && $scope.opc=='a' ){
     id=$("#idDepartmentKf").val();
   }else if ($("#idSelectKeyD").val() && $scope.opc=='b'){
     id=$("#idSelectKeyD").val();
   };
-  alert(id);
      $http({
         method : "GET",
         url : "http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+id
@@ -90,15 +92,47 @@ $scope.CallFilterTenant = function(op){
         }, function myError(response) {
       });
   }
-/*------------------------------------------------*/
 
+/*------------------------------------------------*/
+/**************************************************
+*                                                 *
+*     BUSCAR DEPARTAMENTO POR ID DE INQUILINO     *
+*                                                 *
+**************************************************/
+$scope.searchDptoById = function(){
+     $http({
+        method : "GET",
+        url : "http://localhost/Coferba/Back/index.php/Department/find/"+$scope.idDpto
+      }).then(function mySuccess(response) {
+        if (!response.data){
+             inform.add('La direccion no presenta inquilinos asociados.',{
+                        ttl:5000, type: 'error'
+             }); 
+             
+           }else{
+                $scope.addressOw=response.data.departmentAddress +' - '+response.data.deparmentDescription;
+                $('#myModal').modal('hide');
+                
+          }
+        }, function myError(response) {
+      });
+  }
+/*------------------------------------------------*/
 
 $scope.searchOwner = function (op){
   $scope.opc=op;
    $scope.CallFilterTenant();
+
 }
 
 $scope.selectTenant = function (obj){
+    $scope.idDpto=obj.idTenant;
+    $scope.searchDptoById();
+    $scope.idTenantKf   =  obj.idTenant;
+    $scope.namesOw      =  obj.fullNameTenant;
+    $scope.localPhoneOw =  obj.phoneNumberContactTenant;
+    $scope.movilPhoneOw =  obj.phoneNumberTenant;
+    $scope.emailOw      =  obj.emailTenant;
   console.log(obj);
 }
 
@@ -123,36 +157,53 @@ function BindDataToForm(frmValue) {
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
           $scope.namesAd      = $scope.sessionNames;
           $scope.addressAd    = $scope.sessionAddress;
-          $scope.movilPhoneAd = $scope.sessionPhone;
+          $scope.movilPhoneAd = $scope.sessionMovilPhone;
+          $scope.localPhoneAd = $scope.sessionLocalPhone;
           $scope.emailAd      = $scope.sessionMail;
+          /*---------------------------------*/
+          $scope.namesOw      = " ";
+          $scope.addressOw    = " ";
+          $scope.movilPhoneOw = " ";
+          $scope.emailOw      = " ";
+          $scope.localPhoneOw = " ";
         }else if ($scope.sessionidProfile==3){
           $scope.namesAd      = $scope.sessionNames;
           $scope.addressAd    = $scope.sessionAddress;
-          $scope.movilPhoneAd = $scope.sessionPhone;
+          $scope.movilPhoneAd = $scope.sessionMovilPhone;
+          $scope.localPhoneAd = $scope.sessionLocalPhone;
           $scope.emailAd      = $scope.sessionMail;
           /*---------------------------------*/
           $scope.namesOw      = $scope.sessionNames;
           $scope.addressOw    = $scope.sessionAddress;
-          $scope.movilPhoneOw = $scope.sessionPhone;
+          $scope.movilPhoneOw = $scope.sessionMovilPhone;
           $scope.emailOw      = $scope.sessionMail;
         }
         break;
       case "fkeydown":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
-          $scope.namesAd     = $scope.sessionNames;
-          $scope.addressAd   = $scope.sessionAddress;
-          $scope.movilPhoneAd= $scope.sessionPhone;
-          $scope.emailAd     = $scope.sessionMail;
-        }else if ($scope.sessionidProfile==3){
-          $scope.namesAd     = $scope.sessionNames;
-          $scope.addressAd   = $scope.sessionAddress;
-          $scope.movilPhoneAd= $scope.sessionPhone;
-          $scope.emailAd=$scope.sessionMail;
+          $scope.namesAd      = $scope.sessionNames;
+          $scope.addressAd    = $scope.sessionAddress;
+          $scope.movilPhoneAd = $scope.sessionMovilPhone;
+          $scope.localPhoneAd = $scope.sessionLocalPhone;
+          $scope.emailAd      = $scope.sessionMail;
           /*---------------------------------*/
-          $scope.namesOw     = $scope.sessionNames;
-          $scope.addressOw   = $scope.sessionAddress;
-          $scope.movilPhoneOw= $scope.sessionPhone;
-          $scope.emailOw     = $scope.sessionMail;
+          $scope.namesOw      = " ";
+          $scope.addressOw    = " ";
+          $scope.movilPhoneOw = " ";
+          $scope.emailOw      = " ";
+          $scope.localPhoneOw = " ";
+        }else if ($scope.sessionidProfile==3){
+          $scope.namesAd      = $scope.sessionNames;
+          $scope.addressAd    = $scope.sessionAddress;
+          $scope.movilPhoneAd = $scope.sessionMovilPhone;
+          $scope.localPhoneAd = $scope.sessionLocalPhone;
+          $scope.emailAd      = $scope.sessionMail;
+          /*---------------------------------*/
+          $scope.namesOw      = $scope.sessionNames;
+          $scope.addressOw    = $scope.sessionAddress;
+          $scope.movilPhoneOw = $scope.sessionMovilPhone;
+          $scope.localPhoneOw = $scope.sessionLocalPhone;
+          $scope.emailOw      = $scope.sessionMail;
         }
         break;
       case "fservice":
@@ -160,7 +211,8 @@ function BindDataToForm(frmValue) {
           $scope.namesAd     = $scope.sessionNames;
           $scope.razonSocial = $scope.sessionrazonSocial
           $scope.addressAd   = $scope.sessionAddress;
-          $scope.movilPhoneAd= $scope.sessionPhone;
+          $scope.movilPhoneAd= $scope.sessionMovilPhone;
+          $scope.localPhoneAd= $scope.sessionLocalPhone;
           $scope.emailAd     = $scope.sessionMail;
         }
       break;
@@ -205,20 +257,20 @@ function validateuser($http,$scope){
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
              inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado o verifique su clave.',{
-                        ttl:5000, type: 'error'
+                        ttl:3000, type: 'error'
              }); 
              
            }else{
                $scope.rsJSON=data.data.response;
-               $timeout(function() {
                     inform.add('Bienvenido Sr/a '+ $scope.rsJSON.fullNameUser,{
-                      ttl:5000, type: 'success'
+                      ttl:3000, type: 'success'
                     });
-               });
+                 localStorage.setItem("idUser", $scope.rsJSON.idUser);
                  localStorage.setItem("Nombres", $scope.rsJSON.fullNameUser);
                  localStorage.setItem("Email", $scope.rsJSON.emailUser);
                  localStorage.setItem("Direccion", $scope.rsJSON.addresUser);
-                 localStorage.setItem("Telefono", $scope.rsJSON.phoneNumberUser);
+                 localStorage.setItem("TelefonoM", $scope.rsJSON.phoneNumberUser);
+                 localStorage.setItem("TelefonoL", $scope.rsJSON.phoneLocalNumberUser);
                  localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
                  localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
                  localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
@@ -283,10 +335,14 @@ $scope.sysRegisterUser = function() {
 $scope.addUser = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/User/", $scope._setuser())
       .then(function (sucess, data) {
-
+        if ($scope.selectedItem=3){
+          $scope.addTenant($http, $scope);
+        }
         inform.add('Usuario registrado con exito. ',{
-                ttl:5000, type: 'success'
+                ttl:2000, type: 'success'
              });
+
+        $('#RegisterModal').modal('hide');
 
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -300,30 +356,56 @@ var itemSelected="";
  if ($scope.selectedItem==2){itemSelected=$scope.razonSocial;}
   var user =
           {
-                user:
-                        {
-                            fullNameUser: $scope.fname+' '+$scope.lname,
-                            emailUser: $scope.emailUser,
-                            phoneNumberUser: $scope.phoneNumberUser,
-                            addresUser: $scope.addresUser,
-                            passwordUser: $scope.passwordUser,
-                            idProfileKf: $scope.idProfileKf,
-                            rezonSocial: itemSelected
-                        }
+                user:{
+                            fullNameUser        : $scope.fname+' '+$scope.lname,
+                            emailUser           : $scope.emailUser,
+                            phoneNumberUser     : $scope.phoneNumberUser,
+                            phoneLocalNumberUser:$scope.phonelocalNumberUser,
+                            addresUser          : $scope.addresUser,
+                            passwordUser        : $scope.passwordUser,
+                            idProfileKf         : $scope.idProfileKf,
+                            rezonSocial         : itemSelected
+                      }
           };
   return user;
 };
 
-/**************************************************
-*                                                 *
-*               ALTA DE LLAVE                     *
-*                                                 *
-**************************************************/
-$scope.requestKey = function (){
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getRequestData())
+$scope.addTenant = function ($http, $scope){
+  $http.post("http://localhost/Coferba/Back/index.php/Tenant", $scope._setTenant())
       .then(function (sucess, data) {
 
-       inform.add('Solicitud realizada con exito. ',{
+    },function (error, data,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
+$scope._setTenant = function () {
+  var tenant =
+          {
+                tenant:
+                      {
+                        fullNameTenant    : $scope.fname+' '+$scope.lname,
+                        idTypeKf          : 2,
+                        phoneNumberTenant : $scope.phoneNumberUser,
+                        idDepartmentKf    : 1,
+                        emailTenant       : $scope.emailUser
+                      }
+          };
+  return tenant;
+};
+
+/**************************************************
+*                                                 *
+*               MODIFICAR USUARIO                 *
+*                                                 *
+**************************************************/
+$scope.modificarUsuario = function ($http, $scope){
+  $http.post("http://localhost/Coferba/Back/index.php/User/update", $scope._getData2Update())
+      .then(function (sucess, data) {
+
+       inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
                 ttl:5000, type: 'success'
              });
 
@@ -334,113 +416,27 @@ $scope.requestKey = function (){
            
     });
 };
-$scope._getRequestData = function () {
-  var newTicket =
+$scope._getData2Update = function () {
+  var updUser =
           {
-                ticket:
-                        {
-                            idTypeTicketKf:     $scope.idTypeTicketKf,
-                            idUserEnterpriceKf: $scope.idUserEnterpriceKf ,
-                            idOWnerKf:          $scope.idOWnerKf,
-                            numberItemes:       $scope.numberItemes,
-                            idTypeDeliveryKf:   $scope.idTypeDeliveryKf,
-                            description:        $scope.description,
-                            list_id_clients:    $scope.list_id_clients
-                        }
+                         user:
+                              {
+                                fullNameUser         : $scope.namesAd,
+                                emailUser            : $scope.emailAd,
+                                phoneNumberUser      : $scope.movilPhoneAd,
+                                phoneLocalNumberUser : $scope.localPhoneAdU,
+                                addresUser           : $scope.addressAd,
+                                idProfileKf          : $scope.sessionidProfile,
+                                idUser               : $scope.sessionIdUser
+                              }
           };
-  return newTicket;
+          console.log(updUser)
+    return updUser;
+
 };
 
 /**************************************************/
-/**************************************************
-*                                                 *
-*               BAJA DE LLAVE                     *
-*                                                 *
-**************************************************/
-$scope.releaseKey = function (){
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getReleasedata())
-      .then(function (sucess, data) {
-
-       inform.add('Solicitud realizada con exito. ',{
-                ttl:5000, type: 'success'
-             });
-
-    },function (error, data,status) {
-            if(status == 404){alert("!Informacion "+status+data.error+"info");}
-            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
-           
-    });
-};
-$scope._getreleaseData = function () {
-
-  var newTicket =
-          {
-                ticket:
-                        {
-                            idTypeTicketKf:         $scope.idTypeTicketKf,
-                            idUserEnterpriceKf:     $scope.idUserEnterpriceKf ,
-                            idOWnerKf:              $scope.idOWnerKf,
-                            numberItemes:           $scope.numberItemes,
-                            idTypeDeliveryKf:       $scope.idTypeDeliveryKf,
-                            description:            $scope.description,
-                            idReasonDisabledItemKf: $scope.idReasonDisabledItemKf,
-                            numberItemDisabled:     $scope.numberItemDisabled
-                        }
-          };
-  return newTicket;
-};
-
-/**************************************************/
-/**************************************************
-*                                                 *
-*                   SERVICIO                      *
-*                                                 *
-**************************************************/
-$scope.requestService = function (){
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getServiceData())
-      .then(function (sucess, data) {
-
-       inform.add('Solicitud realizada con exito. ',{
-                ttl:5000, type: 'success'
-             });
-
-    },function (error, data,status) {
-            if(status == 404){alert("!Informacion "+status+data.error+"info");}
-            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
-           
-    });
-};
-$scope._getServiceData = function () {
-
-  var newTicket =
-          {
-                ticket:
-                        {
-                            idTypeTicketKf:     $scope.idTypeTicketKf,
-                            idUserEnterpriceKf: $scope.idUserEnterpriceKf,
-                            idOWnerKf:          $scope.idOWnerKf,
-                            numberItemes:       $scope.numberItemes,
-                            idTypeDeliveryKf:   $scope.idTypeDeliveryKf,
-                            descriptionOrder:   $scope.descriptionOrder,
-                            description:        $scope.description,
-                            list_id_clients:    $scope.list_id_clients,
-                            idTypeServices:     $scope.idTypeServices
-                        }
-          };
-  return newTicket;
-};
-
-/**************************************************/
-/**************************************************
-*                                                 *
-*                   OTRA CONSULTA                 *
-*                                                 *
-**************************************************/
-$scope.sysRequestOther = function() {
-  $scope.roJSON= [ ];
-
+$scope.sysFunctionSend = function() {
   blockUI.start('Enviando Solicitud.');
 
   $timeout(function() {
@@ -454,15 +450,168 @@ $scope.sysRequestOther = function() {
   });
   $timeout(function() {
       blockUI.stop();
-      console.log($scope._getOtherRequestData());
-      //$scope.otherRequest();
     }, 2500);
 };
-$scope.otherRequest = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getOtherRequestData())
+/**************************************************
+*                                                 *
+*             SOLICITUDES DE SERVICIOS            *
+*  Alta, Baja (llave), Servicios, Otras Consultas *
+**************************************************/
+$scope.newTicket = function(opt){
+    switch (opt) {
+      case "up":
+            $scope.sysFunctionSend();
+            $scope.requestUpKey($http, $scope);
+      break;
+      case "down":
+            $scope.sysFunctionSend();
+            $scope.requestDownKey($http, $scope);
+      break;
+      case "srvs":
+            $scope.sysFunctionSend();
+            $scope.requestService($http, $scope);
+      break;
+      case "other":
+          $scope.sysFunctionSend();
+          $scope.otherRequest($http, $scope);
+      break;
+
+      default: 
+    }
+
+
+}
+/**************************************************
+*                                                 *
+*               ALTA DE LLAVE                     *
+*                                                 *
+**************************************************/
+$scope.requestUpKey = function ($http, $scope){
+  console.log($scope._getData2AddKey())
+  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2AddKey())
       .then(function (sucess, data) {
-         inform.add('Consulta realizada y enviada con exito. ',{
-                  ttl:5000, type: 'success'
+          closeAllDiv ();
+       inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
+        $scope.modificarUsuario($http, $scope);
+
+    },function (error, data,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
+$scope._getData2AddKey = function () {
+  
+
+  var newKey =
+          {
+                ticket:
+                        {
+                            idTypeTicketKf    : 1,
+                            idUserEnterpriceKf: $scope.sessionIdUser,
+                            idTenantKf        : $scope.idTenantKf,
+                            numberItemes      : $scope.qkuOw,
+                            idTypeDeliveryKf  : $scope.idTypeDeliveryKf,
+                            description       : $scope.sruOw,
+                            list_id_clients   : null
+                        }
+          };
+  return newKey;
+};
+
+/**************************************************/
+/**************************************************
+*                                                 *
+*               BAJA DE LLAVE                     *
+*                                                 *
+**************************************************/
+$scope.requestDownKey = function (){
+  console.log($scope._getData2DelKey())
+  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2DelKey())
+      .then(function (sucess, data) {
+          closeAllDiv ();
+          inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
+          $scope.modificarUsuario($http, $scope);
+    },function (error, data,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
+$scope._getData2DelKey={};
+$scope._getData2DelKey = function () {
+
+  var delKey =
+          {
+                ticket:
+                        {
+                            idTypeTicketKf        : 2,
+                            idUserEnterpriceKf    : $scope.sessionIdUser,
+                            idTenantKf             : $scope.idTenantKf,
+                            numberItemes          : null,
+                            description           : $scope.sruOw,
+                            idReasonDisabledItemKf: $scope.idTypeLostKf,
+                            numberItemDisabled    : $scope.qkuOw
+                        }
+          };
+  return delKey;
+};
+
+/**************************************************/
+/**************************************************
+*                                                 *
+*                   SERVICIO                      *
+*                                                 *
+**************************************************/
+$scope.requestService = function (){
+  console.log($scope._getServiceData());
+  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getServiceData())
+      .then(function (sucess, data) {
+          closeAllDiv ();
+          inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
+          $scope.modificarUsuario($http, $scope);
+
+    },function (error, data,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
+$scope._getServiceData={};
+$scope._getServiceData = function () {
+
+  var reqService =
+          {
+                ticket:
+                        {
+                            idTypeTicketKf    : 3,
+                            idUserEnterpriceKf: $scope.sessionIdUser,
+                            numberItemes      : null,
+                            descriptionOrder  : $scope.detailSv,
+                            description       : $scope.sruSv,
+                            list_id_clients   : null,
+                            idTypeServices    : $scope.idTypeServiceKf
+                        }
+          };
+  return reqService;
+};
+
+/**************************************************/
+/**************************************************
+*                                                 *
+*                   OTRA CONSULTA                 *
+*                                                 *
+**************************************************/
+$scope.otherRequest = function ($http, $scope){
+  console.log($scope._getData2RequestOther())
+  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2RequestOther())
+      .then(function (sucess, data) {
+          closeAllDiv ();
+          inform.add('Consulta realizada y enviada con exito. ',{
+                  ttl:2000, type: 'success'
              });
 
     },function (error, data,status) {
@@ -472,20 +621,21 @@ $scope.otherRequest = function ($http, $scope){
            
     });
 };
-$scope._getOtherRequestData = function () {
+$scope._getData2RequestOther={};
+$scope._getData2RequestOther = function () {
 
-  var newTicket =
+  var otherReq =
           {
                 ticket:
                         {
                             idTypeTicketKf:     4,
-                            idTypeOuther:       $scope.frmOther.idTypeOutherKf,
-                            mailContactConsult: $scope.frmOther.o_email,
-                            addressConsul:      $scope.frmOther.o_address,
-                            description:        $scope.frmOther.o_detail
+                            idTypeOuther:       $scope.idTypeOutherKf,
+                            mailContactConsult: $scope.o_email,
+                            addressConsul:      $scope.o_address,
+                            description:        $scope.o_detail
                         }
           };
-  return newTicket;
+  return otherReq;
 };
 
 /**************************************************/
@@ -507,6 +657,8 @@ function closeAllDiv (){
   $scope.rukeyup = false;
   $scope.ruservice = false;
   $scope.ruother = false;
+  $scope.home = false;
+  $scope.loginRegiterButtons = false;
 }
 
 $scope.fnShowHide = function(divId, divAction) {
@@ -514,13 +666,16 @@ $scope.fnShowHide = function(divId, divAction) {
       closeAllDiv();
    }else{     
     switch (divId) {
-      case "rUser":
+      case "uLogin":
         closeAllDiv();
         if(divAction=="open"){
-          $scope.rUser = true;
+          $scope.uLogin = true;
         }else{
           closeAllDiv();
         }
+        break;
+        case "uRegister":
+            $('#RegisterModal').modal('toggle');
         break;
       case "rukeyup":
         closeAllDiv();
@@ -609,10 +764,6 @@ $scope.dhboard = function(){
 
   $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter)
   .then(function (sucess, data) {
-     inform.add('Consulta realizada y enviada con exito. ',{
-              ttl:5000, type: 'success'
-         });
-
          $scope.listTickt =  sucess.data.response;
 
     },function (error, data,status) {

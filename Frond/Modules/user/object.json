@@ -126,9 +126,10 @@ METODO : POST
   
   "user":
   {
-    "fullNameUser" : "prueba editada",
+    "fullNameUser" : "Pepito Ramirez",
     "emailUser" : "prueba",
     "phoneNumberUser" : "prueba",
+    "phoneNumberUser" :
     "addresUser" : "prueba",
     "passwordUser" : "prueba",
     "idProfileKf" : "1",

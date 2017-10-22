@@ -75,6 +75,7 @@ class User_model extends CI_Model
                      $this->db->like('tb_user.fullNameUser', $searchFilter['searchFilter']);
                      $this->db->or_like('tb_user.emailUser', $searchFilter['searchFilter']);
                      $this->db->or_like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
+                     $this->db->or_like('tb_user.phoneLocalNumberUser', $searchFilter['searchFilter']);
                      $this->db->or_like('tb_user.rezonSocial', $searchFilter['searchFilter']);
                  }
 
@@ -104,6 +105,7 @@ class User_model extends CI_Model
             'fullNameUser' => $user['fullNameUser'],
             'emailUser' => $user['emailUser'],
             'phoneNumberUser' => $user['phoneNumberUser'],
+            'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
             'addresUser' => $user['addresUser'],
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
@@ -165,6 +167,7 @@ class User_model extends CI_Model
                     'fullNameUser' => $user['fullNameUser'],
                     'emailUser' => $user['emailUser'],
                     'phoneNumberUser' => $user['phoneNumberUser'],
+                    'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
                     'addresUser' => $user['addresUser'],
                     'idProfileKf'=> $user['idProfileKf'],
                     'rezonSocial'=> $user['rezonSocial']
