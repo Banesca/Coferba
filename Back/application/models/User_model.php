@@ -110,7 +110,8 @@ class User_model extends CI_Model
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
             'rezonSocial' => @$user['rezonSocial'],
-            'idStatusKf' => 1
+            'idStatusKf' => 0,
+            'idCompanyKf' => $user['idCompanyKf']
                 )
         );
 
@@ -131,6 +132,7 @@ class User_model extends CI_Model
         $profile = null;
         $status = null;
         $type = null;
+        $company = null;
 
 
         $query =  $this->db->select("*")->from("tb_profile")->get();
@@ -148,12 +150,18 @@ class User_model extends CI_Model
             $type = $query->result_array();
         }
 
+        $query =  $this->db->select("*")->from("tb_company")->get();
+        if ($query->num_rows() > 0) {
+            $company = $query->result_array();
+        }
+
 
 
         $filter = array(
             'status'  => $status,
             'profile' => $profile,
-            'type' => $type
+            'type' => $type,
+            'company' => $company
         );
 
         return $filter;
