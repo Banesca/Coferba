@@ -156,6 +156,24 @@ class Tenant_model extends CI_Model
     }
 
      /* LISTADO DE FILTROS */
+     public function findByEmail($mail) {
+        
+                $tenant = null;
+        
+                $this->db->select("*")->from("tb_tenant");
+                $query = $this->db->where("tb_tenant.emailTenant =", $mail)->get();
+                if ($query->num_rows() > 0) {
+                    $tenant = $query->row_array();
+                }
+
+                return $tenant;
+    }
+
+
+
+    
+
+     /* LISTADO DE FILTROS */
      public function getDepartamentByIdAdminR($id) {
         
                 $tenant = null;

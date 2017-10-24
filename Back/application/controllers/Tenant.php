@@ -143,6 +143,21 @@ class Tenant extends REST_Controller {
         }
     }
 
+    public function findByEmail_get($mail) {
+        if (!$mail) {
+            $this->response(NULL, 404);
+        }
+
+        $tenant = null;
+        $tenant = $this->tenant_model->findByEmail($mail);
+
+        if (!is_null($tenant)) {
+            $this->response($tenant, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     /* SERVICIO GET QUE OBTIENE LOS USUARIOS POR FILTRO */
     public function search_post() {
 
