@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.1.26-MariaDB)
 # Base de datos: db_coferba
-# Tiempo de Generación: 2017-10-24 14:58:03 +0000
+# Tiempo de Generación: 2017-10-24 15:15:39 +0000
 # ************************************************************
 
 
@@ -41,6 +41,35 @@ VALUES
 	(3,'olivos 300');
 
 /*!40000 ALTER TABLE `tb_addres` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Volcado de tabla tb_attendant
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_attendant`;
+
+CREATE TABLE `tb_attendant` (
+  `idAttendant` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nameAttendant` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `idAddresKf` int(11) DEFAULT NULL,
+  `phoneAttendant` varchar(25) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `mailAttendant` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`idAttendant`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+LOCK TABLES `tb_attendant` WRITE;
+/*!40000 ALTER TABLE `tb_attendant` DISABLE KEYS */;
+
+INSERT INTO `tb_attendant` (`idAttendant`, `nameAttendant`, `idAddresKf`, `phoneAttendant`, `mailAttendant`)
+VALUES
+	(1,'JORGE GUTIERREZ',1,'12319283712','adsaa@daas.djh'),
+	(2,'DAVID',1,'31221312321','adsaa@daas.djh'),
+	(3,'MIGUEL MARTINEZ',2,'312312312211','adsaa@daas.djh'),
+	(4,'MARTINEZ JULO',3,'12321321312','adsaa@daas.djh'),
+	(5,'leonador',1,'1323123213213','adsaa@daas.djh');
+
+/*!40000 ALTER TABLE `tb_attendant` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

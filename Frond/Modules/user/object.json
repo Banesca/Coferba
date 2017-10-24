@@ -1,107 +1,3 @@
- <div class="table-scrollable">
-
-                <table class="table table-hover table-striped table-hover">
-                    <thead style=" background: #4d5d6f; color: white;">
-                        <tr>
-                            <th style="width:50px">#</th>
-                            <th></th>
-                            <th></th>
-                            <th>Identificacion</th>
-                            <th>Nombre/Empresa</th>
-                            <th>Telefono</th>
-                            <th>Correo</th>
-                            <th>Status</th>
-                            <th style="width:130px; text-align:center">Accion</th>
-                        </tr>
-                    </thead>
-                    
-                    
-                 
-                    <tbody>
-                        <tr data-ng-repeat="item in listClient| filter : paginate track by $index">
-                            <td>{{$index + 1}}</td>
-                            <td >
-                                <a ng-if="item.idTypeClient == 2" class="btn yellow-gold  btn-block" ng-click="changueUri(item.idClient)" >Gestionar Empresa</a>
-                                <a ng-if="item.idTypeClient == 1" class="btn  blue-steel   btn-block"  href="../MangerParticular/#/Dashboard{{item.idClient}}">Gestionar Particular</a>
-                            </td>
-                            
-                          
-
-                            <td>{{item.typeClient}}</td>
-
-                            <td ng-if="item.idTypeClient == 1"
-                                style="font-weight: bold;">
-                                {{item.dniClient}}
-                            </td>
-
-
-
-                            <td ng-if="item.idTypeClient == 2"
-                                style="font-weight: bold;">
-                                {{item.cuit}}
-                            </td>
-
-
-                            <td ng-if="item.idTypeClient == 1">{{
-                                    item.firtNameClient + " " + item.lastNameClient
-                                }}</td>
-
-                            <td ng-if="item.idTypeClient == 2" >{{item.nameClientCompany}}</td>
-                            <td>{{item.phoneClient}}</td>
-                            <td>{{item.mailClient}}</td>
-
-
-                            <td ng-if="item.idStatusClient == 0" class="font-red-sunglo font-lg sbold">
-                                {{item.nameStatusClient}} 
-                            </td>
-
-                            <td ng-if="item.idStatusClient == 1" class="font-green-soft font-lg sbold">
-                                {{item.nameStatusClient}} 
-                            </td>
-
-                            <td>
-                                <div class="btn-group" style="    margin-top: -8px;    position: absolute;">
-                                    <a class="btn dark " href="javascript:;" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="icon-settings "></i> Opciones
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-
-                                        <li ng-if="item.idTypeClient == 1">
-                                            <a ng-href="#Edit{{item.idClient}}">
-                                                <i class="fa fa fa-edit"></i> Editar </a>
-                                        </li>
-                                        <li ng-if="item.idTypeClient == 2">
-                                            <a ng-href="#Company{{item.idClient}}">
-                                                <i class="fa fa fa-edit"></i> Editar </a>
-                                        </li>
-
-                                        <li ng-if="item.idStatusClient == 1" >
-                                            <a ng-click="inactiveCliet(item.idClient)">
-                                                <i class="fa fa-exclamation"></i> InActivar </a>
-                                        </li>
-                                        <li>
-                                            <a ng-if="item.idStatusClient == 0" ng-click="activeClient(item.idClient)">
-                                                <i class="fa fa-check"></i> Activar </a>
-                                        </li>
-                                        <li>
-                                            <a ng-click="deleteCliet(item.idClient)" >
-                                                <i class="fa fa-times font-red-sunglo"></i> Eliminar </a>
-                                        </li>
-                                        <li class="divider"> </li>
-                                        <li>
-                                            <a data-toggle="modal" ng-click="viewDetaill(item.idClient)" data-target="#myModal">
-                                                <i class="i"></i>Ver Detalle </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-               </div>
-
-
 
 {
   
@@ -182,6 +78,11 @@ http://127.0.0.1/Coferba/Back/index.php/User/delete/1
 "1 es el id"
 METODO : delete 
 
+
+----------------------    GET DE LISTADO ENCARGADOS POR ID DIRECCION --------------
+http://127.0.0.1/Coferba/Back/index.php/User/attendantByIdDirecction/1
+"1 es el id"
+METODO : GET 
 
 
 

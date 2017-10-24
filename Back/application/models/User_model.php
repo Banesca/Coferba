@@ -233,5 +233,27 @@ class User_model extends CI_Model
     }
 
 
+
+    // GET DE LISTADO ENCARGADOS POR ID DIRECCION //
+    public function attendantByIdDirecction($id) {
+        $quuery = null;
+        $rs = null;
+
+        
+            $this->db->select("*")->from("tb_attendant");
+            $this->db->where("tb_attendant.idAddresKf =", $id);
+
+
+            $quuery = $this->db->order_by("tb_attendant.nameAttendant", "asc")->get();
+
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            }
+            return null;
+        
+    }
+
+
 }
 ?>		

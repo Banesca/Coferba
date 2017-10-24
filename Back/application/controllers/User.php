@@ -81,6 +81,25 @@ class User extends REST_Controller {
         }
     }
 
+
+    
+
+
+    public function attendantByIdDirecction_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->user_model->attendantByIdDirecction($id);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     /* SERVICIO GET QUE OBTIENE LOS USUARIOS POR FILTRO */
     public function search_post() {
 
