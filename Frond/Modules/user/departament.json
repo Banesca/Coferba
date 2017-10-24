@@ -72,3 +72,14 @@ http://127.0.0.1/Coferba/Back/index.php/Department/delete/1
 "1 es el id"
 METODO : delete 
 
+
+
+
+---------------------- listado de direccions --------------
+http://localhost/Coferba/Back/index.php/Direccion
+METODO : get 
+
+---------------------- listado de departamentos por id direccions  --------------
+http://localhost/Coferba/Back/index.php/Department/byIdDireccion/1
+"1 es el id"
+METODO : get 

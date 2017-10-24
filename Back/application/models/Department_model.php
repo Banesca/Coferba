@@ -63,6 +63,29 @@ class Department_model extends CI_Model
     }
 
 
+     // GET DE LISTADO BUSQUEDA DE INQUIILINO //
+     public function byIdDireccion($id) {
+        $quuery = null;
+        $rs = null;
+
+        
+            $this->db->select("*")->from("tb_department");
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
+            $this->db->where("tb_addres.idAdress =", $id);
+
+
+            $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
+
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            }
+            return null;
+        
+    }
+
+
+
 	
     /* AGREGRA NUEVO USUARIO EMPRESA */
     public function add($department) {

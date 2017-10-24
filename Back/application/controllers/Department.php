@@ -109,6 +109,21 @@ class Department extends REST_Controller {
         }
     }
 
+    public function byIdDireccion_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $department = null;
+        $department = $this->department_model->byIdDireccion($id);
+
+        if (!is_null($department)) {
+            $this->response($department, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     /* SERVICIO GET QUE OBTIENE LOS USUARIOS POR FILTRO */
     public function search_post() {
 
