@@ -167,6 +167,23 @@ class User_model extends CI_Model
         return $filter;
     }
 
+
+
+      /* LISTADO DE FILTROS */
+      public function mailsmtp() {
+        
+               $param = null;
+        
+        
+                $query =  $this->db->select("*")->from("tb_sys_param")->get();
+                if ($query->num_rows() > 0) {
+                    $param = $query->result_array();
+                }
+        
+             
+                return $param;
+            }
+
     /* EDITAR DATOS DE UN EMPRESA */
     public function update($user) {
 
@@ -198,6 +215,31 @@ class User_model extends CI_Model
             return false;
         }
     }
+
+/* EDITAR DATOS DE UN EMPRESA */
+public function updateMailSmtp($mail) {
+    
+            $this->db->set(
+                    array(
+                        'value' => $mail['email']
+                    )
+            )->where("idParam", 1)->update("tb_sys_param");
+    
+            $this->db->set(
+                array(
+                    'value' => $mail['pass']
+                )
+            )->where("idParam", 2)->update("tb_sys_param");
+            
+            if ($this->db->affected_rows() === 1) {
+                return true;
+            } else {
+                return false;
+            }
+ }
+
+    
+
 
     public function changueStatus($id, $idStatus) {
         $this->db->set(

@@ -85,4 +85,16 @@ http://127.0.0.1/Coferba/Back/index.php/User/attendantByIdDirecction/1
 METODO : GET 
 
 
+ ---- MODIFICAR MAIL ENVIO  ---
+http://127.0.0.1/coferba/Back/index.php/User/updateMailSmtp
+METODO: POST
+{
+	"mail":{
+		"email": "jorguti58@gmail.com",
+		"pass" :"122312"
+	}
+}
 
+----------------------    GET mail configurado--------------
+http://127.0.0.1/Coferba/Back/index.php/User/mailsmtp
+METODO:GET

@@ -10,11 +10,13 @@ class Mail_model extends CI_Model
 
         public function	sendMail($title,$to,$body)
         {
+
+            $param = $this->getMailSmtp();
             $config = array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'smtp.googlemail.com',
-                'smtp_user' => 'remisasnube@gmail.com', 
-                'smtp_pass' => 'AdMg1210#*', 
+                'smtp_user' => $param['0']['value'], 
+                'smtp_pass' => $param['1']['value'], 
                 'smtp_port' => '465',
                 'smtp_crypto' => 'ssl',
                 'mailtype' => 'html',
@@ -39,6 +41,20 @@ class Mail_model extends CI_Model
 
                 //$this->response($this->email->print_debugger(array('headers')),500);
                 }
+            }
+
+
+
+            private function getMailSmtp()
+            {
+                $param = null;
+                
+                
+                        $query =  $this->db->select("*")->from("tb_sys_param")->get();
+                        if ($query->num_rows() > 0) {
+                            $param = $query->result_array();
+                        }
+                        return $param;
             }
         
     }

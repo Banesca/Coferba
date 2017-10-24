@@ -130,14 +130,45 @@ class User extends REST_Controller {
         }
     }
 
+
+     /* SERVICIO EDITA UN USUARIOS  */
+     public function updateMailSmtp_post() {
+        
+                if (!$this->post('mail')) {
+                    $this->response(NULL, 404);
+                }
+        
+                $rs = $this->user_model->updateMailSmtp($this->post('mail'));
+        
+                if (!is_null($rs)) {
+                    $this->response(array('response' => "Mail De envio Configurado"), 200);
+                } else {
+                    $this->response(array('error' => "ERROR INESPERADO"), 500);
+                }
+            }
+
+
+            public function inactive_get($id) {
+                if (!$id) {
+                    $this->response(NULL, 404);
+                }
+        
+                $user = null;
+                $user = $this->user_model->changueStatus($id, 0);
+        
+                if (!is_null($user)) {
+                    $this->response($user, 200);
+                } else {
+                    $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+                }
+            }
+
     /* SERVICIO INACTIVA  UN USUARIOS POR ID */
-    public function inactive_get($id) {
-        if (!$id) {
-            $this->response(NULL, 404);
-        }
+    public function mailsmtp_get() {
+      
 
         $user = null;
-        $user = $this->user_model->changueStatus($id, 0);
+        $user = $this->user_model->mailsmtp();
 
         if (!is_null($user)) {
             $this->response($user, 200);
