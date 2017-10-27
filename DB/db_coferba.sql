@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2017 a las 19:21:10
+-- Tiempo de generación: 27-10-2017 a las 07:16:20
 -- Versión del servidor: 10.1.25-MariaDB
 -- Versión de PHP: 7.0.21
 
@@ -21,6 +21,51 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_coferba`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_addres`
+--
+
+CREATE TABLE `tb_addres` (
+  `idAdress` int(11) UNSIGNED NOT NULL,
+  `nameAdress` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_addres`
+--
+
+INSERT INTO `tb_addres` (`idAdress`, `nameAdress`) VALUES
+(1, 'Ayacucho 55'),
+(2, 'Martinez 100'),
+(3, 'olivos 300');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_attendant`
+--
+
+CREATE TABLE `tb_attendant` (
+  `idAttendant` int(11) UNSIGNED NOT NULL,
+  `nameAttendant` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `idAddresKf` int(11) DEFAULT NULL,
+  `phoneAttendant` varchar(25) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `mailAttendant` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_attendant`
+--
+
+INSERT INTO `tb_attendant` (`idAttendant`, `nameAttendant`, `idAddresKf`, `phoneAttendant`, `mailAttendant`) VALUES
+(1, 'JORGE GUTIERREZ', 1, '12319283712', 'adsaa@daas.djh'),
+(2, 'DAVID', 1, '31221312321', 'adsaa@daas.djh'),
+(3, 'MIGUEL MARTINEZ', 2, '312312312211', 'adsaa@daas.djh'),
+(4, 'MARTINEZ JULO', 3, '12321321312', 'adsaa@daas.djh'),
+(5, 'leonador', 1, '1323123213213', 'adsaa@daas.djh');
 
 -- --------------------------------------------------------
 
@@ -58,16 +103,34 @@ INSERT INTO `tb_clients_tickets` (`idTicketsCliets`, `idTicketKf`, `idClientKf`)
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tb_company`
+--
+
+CREATE TABLE `tb_company` (
+  `idCompany` int(11) UNSIGNED NOT NULL,
+  `nameCompany` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_company`
+--
+
+INSERT INTO `tb_company` (`idCompany`, `nameCompany`) VALUES
+(1, 'COCA - COLA'),
+(2, 'Oracle'),
+(3, 'Pepsi');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tb_department`
 --
 
 CREATE TABLE `tb_department` (
   `idDepartment` int(11) NOT NULL,
-  `departmentAddress` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `idAdressKf` int(255) DEFAULT NULL,
   `departmentFloor` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `deparmentNumber` int(11) DEFAULT NULL,
-  `departmentLat` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `departmentLon` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `deparmentDescription` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `idStatusKf` int(11) DEFAULT NULL,
   `idUserAdminRKf` int(11) DEFAULT NULL,
@@ -78,24 +141,24 @@ CREATE TABLE `tb_department` (
 -- Volcado de datos para la tabla `tb_department`
 --
 
-INSERT INTO `tb_department` (`idDepartment`, `departmentAddress`, `departmentFloor`, `deparmentNumber`, `departmentLat`, `departmentLon`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`) VALUES
-(1, 'Arribeños 3740', 'Porteria', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(2, 'Arribeños 3740', '1-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(3, 'Arribeños 3740', '1-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(4, 'Arribeños 3740', '2-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(5, 'Arribeños 3740', '2-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(6, 'Arribeños 3740', '3-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(7, 'Arribeños 3740', '3-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(8, 'Arribeños 3740', '4-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(9, 'Arribeños 3740', '4-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(10, 'Arribeños 3740', '5-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(11, 'Arribeños 3740', '5-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(12, 'Arribeños 3740', '6-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(13, 'Arribeños 3740', '6-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(14, 'Arribeños 3740', '7-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(15, 'Arribeños 3740', '7-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(16, 'Arribeños 3740', '8-A', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL),
-(17, 'Arribeños 3740', '8-B', 700, '-34.543923', '-58.461462', 'Capital Federal, Nuñez', 1, 1, NULL);
+INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `deparmentNumber`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`) VALUES
+(1, 1, 'Porteria', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(2, 1, '1-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(3, 1, '1-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(4, 1, '2-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(5, 1, '2-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(6, 1, '3-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(7, 1, '3-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(8, 1, '4-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(9, 1, '4-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(10, 1, '5-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(11, 1, '5-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(12, 2, '6-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(13, 2, '6-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(14, 2, '7-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(15, 2, '7-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(16, 2, '8-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL),
+(17, 2, '8-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -113,10 +176,10 @@ CREATE TABLE `tb_profile` (
 --
 
 INSERT INTO `tb_profile` (`idProfile`, `nameProfile`) VALUES
-(1, 'Admin'),
-(2, 'Company'),
+(1, 'Coferba'),
+(2, 'Empresa'),
 (3, 'Propietario'),
-(4, 'Admin R');
+(4, 'Admin Consorsio');
 
 -- --------------------------------------------------------
 
@@ -208,7 +271,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '32', 'TK');
+(1, '35', 'TK');
 
 -- --------------------------------------------------------
 
@@ -233,7 +296,7 @@ CREATE TABLE `tb_tenant` (
 --
 
 INSERT INTO `tb_tenant` (`idTenant`, `fullNameTenant`, `idTypeKf`, `phoneNumberTenant`, `idDepartmentKf`, `emailTenant`, `idStatusKf`, `dateCrated`, `phoneNumberContactTenant`) VALUES
-(1, 'David Rincon', 1, '54115778345', 1, 'rexx84@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(1, 'David Eduardo Rincon Luengo', 2, '1126694918', 1, 'rexx84@gmail.com', 1, '2017-10-18 04:07:25', '1122334455'),
 (2, 'Alberto Fabian', 1, '54115778345', 2, 'Alberto.Fabian@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
 (3, 'Eduardo Peliacani', 1, '54115778345', 3, 'Eduardo.Peliacani@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
 (4, 'Carlos Lazarte', 1, '54115778345', 4, 'Carlos.Lazarte@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
@@ -352,7 +415,10 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 (59, '2017-10-21 15:22:06', NULL, NULL, 1, 'TK-00000029', 1, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (60, '2017-10-21 15:25:27', NULL, NULL, 1, 'TK-00000030', 4, 'Estoy teniendo problemas con mi llavero no estoy seguro si es el lector o la llave.\n\nSaludos,\n\nJorge.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 'jorguti58@gmail.com', NULL, NULL, NULL, NULL, 'Florida 4500', NULL),
 (61, '2017-10-21 15:50:59', NULL, NULL, 1, 'TK-00000031', 2, 'Codigo: 93338', NULL, NULL, NULL, NULL, 1, NULL, NULL, '1', 6, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL),
-(62, '2017-10-21 16:10:26', NULL, NULL, 1, 'TK-00000032', 3, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'El lector de llave repentinamente dejo de funcionar, por favor verificar si es necesario realizar un reemplazo de la parte', NULL, NULL, NULL);
+(62, '2017-10-21 16:10:26', NULL, NULL, 1, 'TK-00000032', 3, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'El lector de llave repentinamente dejo de funcionar, por favor verificar si es necesario realizar un reemplazo de la parte', NULL, NULL, NULL),
+(63, '2017-10-27 04:07:47', NULL, NULL, 1, 'TK-00000033', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(64, '2017-10-27 05:01:00', NULL, NULL, 1, 'TK-00000034', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(65, '2017-10-27 05:06:52', NULL, NULL, 1, 'TK-00000035', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -371,7 +437,7 @@ CREATE TABLE `tb_typetenant` (
 
 INSERT INTO `tb_typetenant` (`idTypeTenant`, `typeTenantName`) VALUES
 ('1', 'Inqulino'),
-('2', 'Dueño Departamento');
+('2', 'Propietario');
 
 -- --------------------------------------------------------
 
@@ -463,25 +529,45 @@ CREATE TABLE `tb_user` (
   `idProfileKf` int(11) DEFAULT NULL,
   `idStatusKf` int(11) DEFAULT NULL,
   `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `rezonSocial` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `idCompanyKf` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `tb_user`
 --
 
-INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `addresUser`, `passwordUser`, `idProfileKf`, `idStatusKf`, `dateCreated`, `rezonSocial`) VALUES
-(1, 'Jorge Gutierrez', 'jorguti58@gmail.com', '1126694918', NULL, 'Florida 4500', 'ab0ef57f283c0839c6352e673ecef0977e3176a0', 1, 1, NULL, NULL);
+INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `addresUser`, `passwordUser`, `idProfileKf`, `idStatusKf`, `dateCreated`, `idCompanyKf`) VALUES
+(1, 'Jorge Gutierrez', 'jorguti58@gmail.com', '1126694918', NULL, 'Florida 4500', 'ab0ef57f283c0839c6352e673ecef0977e3176a0', 3, 1, NULL, NULL),
+(17, 'David Eduardo Rincon Luengo', 'rexx84@gmail.com', '1126694918', 1122334455, '1', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 4, 0, '2017-10-26 02:16:00', 1),
+(22, 'Luis Carreño', 'luis.carreno@coca-cola.com', '1199887766', 1144556677, NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 2, 0, '2017-10-26 18:17:25', 1);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
+-- Indices de la tabla `tb_addres`
+--
+ALTER TABLE `tb_addres`
+  ADD PRIMARY KEY (`idAdress`);
+
+--
+-- Indices de la tabla `tb_attendant`
+--
+ALTER TABLE `tb_attendant`
+  ADD PRIMARY KEY (`idAttendant`);
+
+--
 -- Indices de la tabla `tb_clients_tickets`
 --
 ALTER TABLE `tb_clients_tickets`
   ADD PRIMARY KEY (`idTicketsCliets`);
+
+--
+-- Indices de la tabla `tb_company`
+--
+ALTER TABLE `tb_company`
+  ADD PRIMARY KEY (`idCompany`);
 
 --
 -- Indices de la tabla `tb_department`
@@ -566,10 +652,25 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `tb_addres`
+--
+ALTER TABLE `tb_addres`
+  MODIFY `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `tb_attendant`
+--
+ALTER TABLE `tb_attendant`
+  MODIFY `idAttendant` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT de la tabla `tb_clients_tickets`
 --
 ALTER TABLE `tb_clients_tickets`
   MODIFY `idTicketsCliets` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT de la tabla `tb_company`
+--
+ALTER TABLE `tb_company`
+  MODIFY `idCompany` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `tb_department`
 --
@@ -584,12 +685,12 @@ ALTER TABLE `tb_reason_disabled_item`
 -- AUTO_INCREMENT de la tabla `tb_tenant`
 --
 ALTER TABLE `tb_tenant`
-  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
 --
@@ -604,7 +705,7 @@ ALTER TABLE `tb_type_services`
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
