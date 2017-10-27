@@ -1,10 +1,64 @@
- var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "inform-http-exception", "showdown", "ngAnimate"]);
+ var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "showdown", "ngAnimate"]);
     app.config(function(blockUIConfig) {
       // Tell blockUI not to mark the body element as the main block scope.
       blockUIConfig.autoInjectBodyBlock = true;  
-      blockUIConfig.autoBlock = false;
+      blockUIConfig.autoBlock = true;
     });
-app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform, $window) {
+app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
+/**************************************************************/
+  $scope.pasos = [
+                'PASO 1: DATOS DEL ENCARGADO',
+                'PASO 2: SOLICITUD PARA:',
+                'PASO 3: DATOS PERSONALES'
+                ];
+  $scope.mySwitch = $scope.pasos[0];
+
+  $scope.getCurrentStepIndex = function(){
+    // Get the index of the current step given mySwitch
+    return _.indexOf($scope.pasos, $scope.mySwitch);
+  };
+
+  // Go to a defined step index
+  $scope.goToStep = function(index) {
+    if ( !_.isUndefined($scope.pasos[index]) )
+    {
+      $scope.mySwitch = $scope.pasos[index];
+    }
+  };
+
+  $scope.hasNextStep = function(){
+    var stepIndex = $scope.getCurrentStepIndex();
+    var nextStep = stepIndex + 1;
+    // Return true if there is a next step, false if not
+    return !_.isUndefined($scope.pasos[nextStep]);
+  };
+
+  $scope.hasPreviousStep = function(){
+    var stepIndex = $scope.getCurrentStepIndex();
+    var previousStep = stepIndex - 1;
+    // Return true if there is a next step, false if not
+    return !_.isUndefined($scope.pasos[previousStep]);
+  };
+
+  $scope.incrementStep = function() {
+    if ( $scope.hasNextStep() )
+    {
+      var stepIndex = $scope.getCurrentStepIndex();
+      var nextStep = stepIndex + 1;
+      $scope.mySwitch = $scope.pasos[nextStep];
+    }
+  };
+
+  $scope.decrementStep = function() {
+    if ( $scope.hasPreviousStep() )
+    {
+      var stepIndex = $scope.getCurrentStepIndex();
+      var previousStep = stepIndex - 1;
+      $scope.mySwitch = $scope.pasos[previousStep];
+    }
+  };
+/**************************************************************/
+
      $userType=0;
      $scope.rsJSON = [ ];
      $scope.loginRegiterButtons = true;
@@ -19,6 +73,10 @@ app.controller('coferbaCtrl', function($scope, $http, blockUI, $timeout, inform,
      $scope.sessionProfileName = localStorage.getItem("nombrePerfil");
      $scope.sessionidStatus    = localStorage.getItem("IdStatus");
      $scope.sessionrazonSocial = localStorage.getItem("razonSocial");
+
+     $scope.hideProfile1 = function(item){
+        return item.idProfile != 1;
+     }
 
 /**************************************************
 *                                                 *
@@ -270,11 +328,11 @@ $scope.sysLogin = function(formReset) {
     }, 500);
   $timeout(function() {
       blockUI.message('Validando usuario...');
-    }, 1500);
+    }, 1000);
   $timeout(function() {
       blockUI.stop();
       validateuser($http, $scope);
-    }, 2500);
+    }, 1500);
 };
 
 /****** Validate data into the database ****/
@@ -283,7 +341,7 @@ function validateuser($http,$scope){
     $http.post("http://localhost/Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
-             inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado o verifique su clave.',{
+             inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado o ha colocado una clave errada verifique sus datos.',{
                         ttl:3000, type: 'error'
              }); 
              
@@ -301,7 +359,7 @@ function validateuser($http,$scope){
                  localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
                  localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
                  localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
-                 localStorage.setItem("razonSocial", $scope.rsJSON.rezonSocial);
+                 localStorage.setItem("nameCompany  ", $scope.rsJSON.nameCompany);
                  localStorage.setItem("Token", true);
                  $scope.Token = localStorage.getItem("Token");
                  location.href = "sistema.html"
@@ -370,14 +428,13 @@ $scope.sysRegisterUser = function() {
 $scope.addUser = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/User/", $scope._setuser())
       .then(function (sucess, data) {
-        if ($scope.idProfileKf=3){
+        if ($scope.idProfileKf==3){
           $scope.searchTenantByMail();
         }
-        inform.add('Usuario registrado con exito. ',{
-                ttl:2000, type: 'success'
-             });
-
-        $('#RegisterModal').modal('hide');
+          inform.add('Usuario registrado con exito. ',{
+                  ttl:2000, type: 'success'
+               });
+          $('#RegisterModal').modal('hide');
 
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -397,7 +454,7 @@ $scope._setuser = function () {
                             addresUser          : $scope.idAddressKf,
                             passwordUser        : $scope.passwordUser,
                             idProfileKf         : $scope.idProfileKf,
-                            rezonSocial         : $scope.idCompanyKf
+                            idCompanyKf         : $scope.idCompanyKf
                       }
           };
   return user;
@@ -452,7 +509,7 @@ $scope._getData2Update = function () {
 $scope.addTenant = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/Tenant", $scope._setTenant())
       .then(function (sucess, data) {
-
+      console.log("Registrados Datos del inquilino");
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -475,7 +532,7 @@ $scope._setTenant = function () {
                         idTypeKf                 : $scope.idTypeTenantKf,
                         phoneNumberTenant        : $scope.phoneNumberUser,
                         phoneNumberContactTenant : $scope.phonelocalNumberUser,
-                        idDepartmentKf           : $idDptoKf,
+                        idDepartmentKf           : $scope.idDepartmentKf,
                         emailTenant              : $scope.emailUser
                       }
           };
@@ -492,20 +549,24 @@ $scope.searchTenantByMail = function (){
         method : "GET",
         url : "http://localhost/Coferba/Back/index.php/Tenant/findByEmail/"+$scope.emailUser
       }).then(function mySuccess(response) {        
+            console.log($scope._getData2UpdateTenant());
+            $scope.idTenantTmp=response.data.idTenant;
             $scope.editTenant($http, $scope);
         }, function myError(response) {
+            console.log($scope._setTenant());
             $scope.addTenant($http, $scope);
       });
 };
+/**************************************************/
 /**************************************************
 *                                                 *
 *             ACTUALIZAR DE INQUILINO             *
 *                                                 *
 **************************************************/
 $scope.editTenant = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/Tenant", $scope._getData2UpdateTenant())
+  $http.post("http://localhost/Coferba/Back/index.php/Tenant/update", $scope._getData2UpdateTenant())
       .then(function (sucess, data) {
-
+        console.log("Actualizada Data del Inquilino");
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -513,7 +574,6 @@ $scope.editTenant = function ($http, $scope){
            
     });
 };
-
 $scope._getData2UpdateTenant = function () {
   if(!$scope.idTypeTenantKf && $scope.idProfileKf == 3){
     $scope.idTypeTenantKf = 2;
@@ -528,8 +588,9 @@ $scope._getData2UpdateTenant = function () {
                         idTypeKf                 : $scope.idTypeTenantKf,
                         phoneNumberTenant        : $scope.phoneNumberUser,
                         phoneNumberContactTenant : $scope.phonelocalNumberUser,
-                        idDepartmentKf           : $idDptoKf,
-                        emailTenant              : $scope.emailUser
+                        idDepartmentKf           : $scope.idDepartmentKf,
+                        emailTenant              : $scope.emailUser,
+                        idTenant                 : $scope.idTenantTmp
                       }
           };
   return tenant;
@@ -723,6 +784,9 @@ $scope._getData2RequestOther = function () {
 
 /**************************************************/
 
+
+/**************************************************/
+
 $scope.logout = function(){
   $scope.rsJSON = " ";
   localStorage.clear();
@@ -763,6 +827,7 @@ $scope.fnShowHide = function(divId, divAction) {
       case "rukeyup":
         closeAllDiv();
         if(divAction=="open"){
+          $scope.mySwitch = $scope.pasos[0];
           $scope.rukeyup = true;
           BindDataToForm('fkeyup');
         }else{

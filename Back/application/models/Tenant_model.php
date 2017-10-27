@@ -96,6 +96,7 @@ class Tenant_model extends CI_Model
             'phoneNumberTenant' => $tenant['phoneNumberTenant'],
             'idDepartmentKf' => $tenant['idDepartmentKf'],
             'emailTenant' => $tenant['emailTenant'],
+            'phoneNumberContactTenant' => $tenant['phoneNumberContactTenant'],
             'idStatusKf' => 1
                 )
         );

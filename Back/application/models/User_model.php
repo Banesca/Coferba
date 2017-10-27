@@ -19,7 +19,9 @@ class User_model extends CI_Model
 
 		/* verificamos el usuario  */
 		$this->db->select("*")->from("tb_user");
-		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idUser', 'left');
+		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.addresUser', 'left');
+        $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
         $this->db->where("passwordUser =",sha1(md5($user['passwordUser'])));
         $this->db->where("emailUser =",$user['fullNameUser']);
         $query =$this->db->or_where("fullNameUser =",$user['fullNameUser'])->get();
@@ -109,7 +111,6 @@ class User_model extends CI_Model
             'addresUser' => $user['addresUser'],
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
-            'rezonSocial' => @$user['rezonSocial'],
             'idStatusKf' => 0,
             'idCompanyKf' => $user['idCompanyKf']
                 )

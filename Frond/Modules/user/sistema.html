@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" afrres="true" href="css/angular-inform.min.css">
 <!-- Default Style Sheets -->
 <!-- User Style Sheets -->
+
 <link rel="stylesheet" type="text/css" afrres="true" href="css/style.css">
 <!-- User Style Sheets -->
 <link rel="shortcut icon" href="images/favicon.ico">
@@ -30,120 +31,119 @@
     <noscript>This page uses JavaScript and requires a JavaScript enabled browser.Your browser is not JavaScript enabled.</noscript>
 <!--ANGULAR MODULE -->
 <div ng-controller="coferbaCtrl">
-<div id="sytemHead" class="fixedHead"  ng-show="Token">
-	<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
-	    <div class="navbar-inner m-h-30">
-	        <div class="container">
-	            <div>
-		            <div class="pull-left l-h-15 p-t-2 m-t-10">
-		                <a href="#" alt="Coferba Seguridad" class="ASC-logo pull-left h-25 i-b w-130 p-l-5 m-t--5"></a>
+	<div id="sytemHead" class="fixedHead"  ng-show="Token">
+		<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
+		    <div class="navbar-inner m-h-30">
+		        <div class="container">
+		            <div>
+			            <div class="pull-left l-h-15 p-t-2 m-t-10">
+			                <a href="#" alt="Coferba Seguridad" class="ASC-logo pull-left h-25 i-b w-130 p-l-5 m-t--5"></a>
+			            </div>
+		                <ul class="nav pull-right">
+	    					<li>
+	                			<a href="#" class="p-r">
+				                    <i class="icon-envelope-alt"></i>
+				                    <font class="c-0">.</font>
+				                    <div id="notificationMessagesHeaderShow"></div>
+	                			</a>
+				                <div id="messageContainerView">
+				                </div>
+	    					</li>
+	                    	<li class="dropdown gray">
+		                        <a class="dropdown-toggle" data-toggle="dropdown" href="sistema.html">
+		                            <i class="icon-user"></i> {{sessionNames}} <i class="icon-caret-down"></i>
+		                        </a>
+		                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+		                        	<li role="presentation">
+		                                <a class="clear-lazy-cache" ng-click="userData()" href="#" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
+		                            </li>
+		                            <li role="presentation">
+		                                <a class="clear-lazy-cache" ng-click="logout()" href="#" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
+		                            </li>
+		                        </ul>
+	                    	</li>
+		                </ul>
 		            </div>
-	                <ul class="nav pull-right">
-    					<li>
-                			<a href="#" class="p-r">
-			                    <i class="icon-envelope-alt"></i>
-			                    <font class="c-0">.</font>
-			                    <div id="notificationMessagesHeaderShow"></div>
-                			</a>
-			                <div id="messageContainerView">
-			                </div>
-    					</li>
-                    	<li class="dropdown gray">
-	                        <a class="dropdown-toggle" data-toggle="dropdown" href="sistema.html">
-	                            <i class="icon-user"></i> {{sessionNames}} <i class="icon-caret-down"></i>
-	                        </a>
-	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-	                        	<li role="presentation">
-	                                <a class="clear-lazy-cache" ng-click="userData()" href="#" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
-	                            </li>
-	                            <li role="presentation">
-	                                <a class="clear-lazy-cache" ng-click="logout()" href="#" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
-	                            </li>
-	                        </ul>
-                    	</li>
-	                </ul>
-	            </div>
-	    	</div>
+		    	</div>
+			</div>
+		</div>
+		<!--MENU BUTTONS- class="active"-->
+		<div class="jumbotron masthead b-s-20 m-b-5 -m-t-10">
+		    <div class="container">
+		        <table cellspacing="0" cellpadding="0" border="0">
+		            <tbody><tr>
+		                <td>
+		                    <ul class="nav-icon">
+							    <li id="m_pedidos">
+							       <a href="#Pedidos"> 
+							          <i class="icon-bolt"></i>
+							          <br>Pedidos
+							       </a>
+							    </li>
+							    <li id="m_monitor">
+							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
+							          <i class="icon-desktop"></i>
+							          <br>Monitor de pedidos
+							       </a>
+							    </li>
+							    <li id="m_report">
+							       <a href="#Reportes"> 
+							          <i class="icon-th-large"></i>
+							          <br>Reportes
+							       </a>
+							    </li>
+							    <li id="m_user">
+							       <a href="#Usuarios"> 
+							          <i class="icon-group"></i>
+							          <br>Gestion de usuarios
+							       </a>
+							    </li>
+							     <li id="m_config">
+							       <a href="#Config"> 
+							          <i class="icon-cogs"></i>
+							          <br>Configuracion
+							       </a>
+							    </li>
+							    <li id="m_contact">
+							       <a href="#Contact"> 
+							          <i class="icon-phone"></i>
+							          <br>Contacto
+							       </a>
+							    </li>
+		                    </ul>
+		                </td>
+		                <td class="hidden-desktop v-a-t">
+		                    <div id="header-icon-show" style=" margin:-15px -19px  20px -15px ">
+		                        <i class="icon-reorder icon-4x"></i>
+		                    </div>
+		                </td>
+		            </tr>
+		        </tbody></table>
+		    </div>
+		</div>
+		<!--//MENU BUTTONS -->
+		<!--SubMenu Items -->
+		<div class="sub-navi b-s--20">
+		        <div id="SubM_Pedidos" class="container p-r">
+		            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
+			            <ul>
+						    <li ng-show="sessionidProfile==1 || sessionidProfile==3 || sessionidProfile==4" class="am">
+						        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
+						        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+						                <li><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle">Alta</a></li>
+						                <li><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle">Baja</a></li>
+						        </ul>
+						    </li>
+						    <li ng-show="sessionidProfile==1 || sessionidProfile==4" class="cms">
+						        <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio">Servicio Tecnico</a>
+						    </li>
+						    <li class="cms"> <!--class="im active"-->
+						        <a ng-click="fnShowHide('ruother', 'open')" href="#Otros">Otros<i class=""></i></a>
+						    </li>
+			    		</ul>
+		        </div>
 		</div>
 	</div>
-	<!--MENU BUTTONS- class="active"-->
-	<div class="jumbotron masthead b-s-20 m-b-5 -m-t-10">
-	    <div class="container">
-	        <table cellspacing="0" cellpadding="0" border="0">
-	            <tbody><tr>
-	                <td>
-	                    <ul class="nav-icon">
-						    <li id="m_pedidos">
-						       <a href="#Pedidos"> 
-						          <i class="icon-bolt"></i>
-						          <br>Pedidos
-						       </a>
-						    </li>
-						    <li id="m_monitor">
-						       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
-						          <i class="icon-desktop"></i>
-						          <br>Monitor de pedidos
-						       </a>
-						    </li>
-						    <li id="m_report">
-						       <a href="#Reportes"> 
-						          <i class="icon-th-large"></i>
-						          <br>Reportes
-						       </a>
-						    </li>
-						    <li id="m_user">
-						       <a href="#Usuarios"> 
-						          <i class="icon-group"></i>
-						          <br>Gestion de usuarios
-						       </a>
-						    </li>
-						     <li id="m_config">
-						       <a href="#Config"> 
-						          <i class="icon-cogs"></i>
-						          <br>Configuracion
-						       </a>
-						    </li>
-						    <li id="m_contact">
-						       <a href="#Contact"> 
-						          <i class="icon-phone"></i>
-						          <br>Contacto
-						       </a>
-						    </li>
-	                    </ul>
-	                </td>
-	                <td class="hidden-desktop v-a-t">
-	                    <div id="header-icon-show" style=" margin:-15px -19px  20px -15px ">
-	                        <i class="icon-reorder icon-4x"></i>
-	                    </div>
-	                </td>
-	            </tr>
-	        </tbody></table>
-	    </div>
-	</div>
-	<!--//MENU BUTTONS -->
-	<!--SubMenu Items -->
-	<div class="sub-navi b-s--20">
-	        <div id="SubM_Pedidos" class="container p-r">
-	            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
-		            <ul>
-					    <li ng-show="sessionidProfile==1 || sessionidProfile==3 || sessionidProfile==4" class="am">
-					        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
-					        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-					                <li><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle">Alta</a></li>
-					                <li><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle">Baja</a></li>
-					        </ul>
-					    </li>
-					    <li ng-show="sessionidProfile==1 || sessionidProfile==4" class="cms">
-					        <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio">Servicio Tecnico</a>
-					    </li>
-					    <li class="cms"> <!--class="im active"-->
-					        <a ng-click="fnShowHide('ruother', 'open')" href="#Otros">Otros<i class=""></i></a>
-					    </li>
-		    		</ul>
-	        </div>
-	</div>
-</div>
-	<!--<ng-include src="'../Partial/Header.html'"></ng-include>-->
 	<!-- USER LOGIN FORM -->
 	<div id="frm_loginU" ng-show="!Token"> 
 		<div class="container">
@@ -219,7 +219,7 @@
 										    <div class="col-md-4 selectContainer">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="$parent.idProfileKf"  required autofocus >
+													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfile1" ng-model="$parent.idProfileKf"  required autofocus >
 													    	<option value=""></option>
 												    	</select>
 											  	</div>
@@ -240,12 +240,12 @@
 										</div>
 										<!-- List Address-->
 										      
-										<div class="form-group" ng-show="idProfileKf!=2">
+										<div class="form-group" ng-disable="idProfileKf!=2" ng-show="idProfileKf!=2">
 										  <label class="col-md-4 control-label">Direcci&#243n</label>  
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-model="$parent.idAddressKf"  required autofocus >
+											  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="$parent.idAddressKf" autofocus >
 													    	<option value=""></option>
 												    	</select>
 											    </div>
@@ -254,12 +254,12 @@
 										<!-- List Department by address-->
 										      
 										<div class="form-group" ng-show="idProfileKf==3">
-										  <label class="col-md-4 control-label">department</label>  
+										  <label class="col-md-4 control-label">Departamento</label>  
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf"  required autofocus >
-													    	<option value=" "> </option>
+											  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="idProfileKf==3" autofocus >
+													    	<option value=""> </option>
 												    	</select>
 											    </div>
 										  </div>
@@ -291,7 +291,7 @@
 										 <label class="col-md-4 control-label">E-Mail</label>  
 										   <div class="col-md-4">
 										    <div class="input-group">
-										    	<span class="input-group-addon"><a href="#" ng-click="searchTenantByMail();"><i class="glyphicon glyphicon-envelope"></i></a></span>
+										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 										  		<input name="emailUser" placeholder="E-Mail" class="form-control" ng-model="$parent.emailUser"  type="email" required autofocus />
 										    </div>
 										  </div>
@@ -385,8 +385,6 @@
 			<ng-include ng-show="ruother" src="'view/formOtrasConsultas.html'"></ng-include>
 			<ng-include ng-show="home" src="'view/home.html'" class="ng-scope" style="width: 100%;"></ng-include>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
-			<!-- Response Inform Meessage plugin -->
-			<div inform class="inform-fixed inform-shadow inform-animate"></div>
 		<!-- Modal -->
 			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
@@ -435,11 +433,15 @@
 			  		</div>
 				</div>
 			</div>
-
+		<!-- //Modal -->
 	</div>
+	<!-- Response Inform Meessage plugin -->
+	<div inform class="inform-fixed inform-shadow inform-animate"></div>
+	<!-- //Response Inform Meessage plugin -->
 </div>
 <!--ANGULAR MODULES -->
 <script src="https://code.angularjs.org/1.2.22/angular.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
 <script src="js/angular-block-ui.js"></script>
 <script src="js/angular-inform.min.js"></script>
 <script src="js/angular-showdown.js"></script>

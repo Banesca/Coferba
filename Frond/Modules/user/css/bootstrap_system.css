@@ -37,6 +37,9 @@ body a:focus {
     justify-content: center;
     flex-direction: column; 
 }
+.form-horizontal{
+  z-index: 0;
+}
 article,
 aside,
 details,
@@ -1106,7 +1109,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -1559,8 +1562,13 @@ samp {
 }
 code {
   padding: 2px 4px;
-  font-size: 90%;
-  color: #c7254e;
+  font-size: 100%;
+  color: #000;
+}
+code:hover {
+  padding: 2px 4px;
+  font-size: 100%;
+  color: green;
   background-color: #f9f2f4;
   border-radius: 4px;
 }
