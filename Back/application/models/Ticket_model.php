@@ -79,7 +79,8 @@ private function formatCode($value) {
 			'addressConsul'=> @$ticket['addressConsul'],
             'idProfileKf' => @$ticket['idProfileKf'],
             
-            'idOpcionLowTicketKf' => @$ticket['idOpcionLowTicketKf']
+            'idOpcionLowTicketKf' => @$ticket['idOpcionLowTicketKf'],
+            'idAttendantKf' => @$ticket['idAttendantKf']
 
 		)
         );

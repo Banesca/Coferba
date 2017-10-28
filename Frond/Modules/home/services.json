@@ -17,7 +17,8 @@ METODO:POST
     "emailTenant": "jorguti58@gmial.com",
     "numberItemes" :3,
     "idTypeDeliveryKf" : 1,
-    "description" : "aqui escribo algo"
+    "description" : "aqui escribo algo",
+    "idAttendantKf":1
   }
 }
 /*BAJA	LLAVERO*/
@@ -32,7 +33,8 @@ METODO:POST
       "idReasonDisabledItemKf":1, 
       "numberItemDisabled" : 2,
       "description" : "aqui escribo algo",
-      "idOpcionLowTicketKf": 1
+      "idOpcionLowTicketKf": 1,
+      "idAttendantKf":1
   }
 }
 /*ADMINISTRADOR O PROPIETARIO*/
