@@ -8,22 +8,15 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
 /**************************************************************/
   $scope.pasos = [
                 'PASO 1: DATOS DEL ENCARGADO',
-                'PASO 2: SOLICITUD PARA:',
+                'PASO 2: SOLICITUD PARA',
                 'PASO 3: DATOS PERSONALES'
                 ];
   $scope.mySwitch = $scope.pasos[0];
-
+  $scope.btnShow=true;
+  $scope.btnBack=false;
   $scope.getCurrentStepIndex = function(){
     // Get the index of the current step given mySwitch
     return _.indexOf($scope.pasos, $scope.mySwitch);
-  };
-
-  // Go to a defined step index
-  $scope.goToStep = function(index) {
-    if ( !_.isUndefined($scope.pasos[index]) )
-    {
-      $scope.mySwitch = $scope.pasos[index];
-    }
   };
 
   $scope.hasNextStep = function(){
@@ -46,6 +39,8 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
       var stepIndex = $scope.getCurrentStepIndex();
       var nextStep = stepIndex + 1;
       $scope.mySwitch = $scope.pasos[nextStep];
+      $scope.btnBack=true;
+      if(nextStep>1){$scope.btnShow=false;}
     }
   };
 
@@ -55,6 +50,8 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
       var stepIndex = $scope.getCurrentStepIndex();
       var previousStep = stepIndex - 1;
       $scope.mySwitch = $scope.pasos[previousStep];
+      $scope.btnShow=true;
+      if(previousStep<1){$scope.btnBack=false;}
     }
   };
 /**************************************************************/
@@ -114,16 +111,23 @@ $scope.getAllAddress = function (){
       
   });
 }
+/**************************************************
+*                                                 *
+*    LISTADO DE DEPARTAMENTO SEGUN DIRECCION      *
+*                                                 *
+**************************************************/
 $scope.getAllDeparment = function (){
-  //alert($scope.idAddressKf);
+   var idAddressTmp
+  if (!$scope.idAddressKf){
+      idAddressTmp=$scope.select.idAddressAtt;
+    }else{
+      idAddressTmp=$scope.idAddressKf;
+    }
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+$scope.idAddressKf
+      url : "http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp
     }).then(function mySuccess(response){
-
           $scope.ListDpto = response.data;
-
-
     }, function myError (response){
         if (response.status=="404"){
           alert("ENTRO");
@@ -131,6 +135,7 @@ $scope.getAllDeparment = function (){
         }
   });
 }
+/*------------------------------------------------*/
 /*Retrieve date for select ticket up/down */
 $scope.CallFilterFormT = function(){
    $http({
@@ -153,11 +158,11 @@ $scope.CallFilterFormT = function(){
         }, function myError(response) {
       });
   }
-
+$scope.select={idDepartmentKf: ''}
 $scope.CallFilterTenant = function(){
   var id=0;
-  if($("#idDepartmentKf").val() && $scope.opc=='a' ){
-    id=$("#idDepartmentKf").val();
+  if($scope.select.idDepartmentKf && $scope.opc=='a' ){
+    id=$scope.select.idDepartmentKf;
   }else if ($("#idSelectKeyD").val() && $scope.opc=='b'){
     id=$("#idSelectKeyD").val();
   };
@@ -165,20 +170,40 @@ $scope.CallFilterTenant = function(){
         method : "GET",
         url : "http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+id
       }).then(function mySuccess(response) {
-        if (!response.data.tenant){
-             inform.add('La direccion no presenta inquilinos asociados.',{
-                        ttl:5000, type: 'error'
-             }); 
-             
-           }else{
-                $scope.listTenant = response.data.tenant;
-                $('#myModal').modal('toggle');
+          if (!response.data.tenant){
+              inform.add('La direccion no presenta inquilinos asociados.',{
+                          ttl:3000, type: 'error'
+               });             
+          }else{
+              $scope.listTenant = response.data.tenant;
+              $('#myModal').modal('toggle');
           }
         }, function myError(response) {
       });
   }
 
 /*------------------------------------------------*/
+/**************************************************
+*                                                 *
+*     LISTADO DE ENCARGADOS SEGUN DIRECCION       *
+*                                                 *
+**************************************************/
+  $scope.select={idAddressAtt:''};
+  $scope.getAllAttendant = function(){
+    var idAddressAttKf=$scope.select.idAddressAtt;
+     $http({
+        method : "GET",
+        url : "http://localhost/Coferba/Back/index.php/User/attendantByIdDirecction/"+idAddressAttKf
+      }).then(function mySuccess(response) {
+            $scope.listAttendant = response.data;
+
+            $scope.emailAtt=response.data.mailAttendant;
+        }, function myError(response) {
+      });
+  }
+/*------------------------------------------------*/
+
+
 /**************************************************
 *                                                 *
 *     BUSCAR DEPARTAMENTO POR ID DE INQUILINO     *
@@ -240,11 +265,11 @@ function BindDataToForm(frmValue) {
     switch (frmValue) {
       case "fkeyup":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
-          $scope.namesAd      = $scope.sessionNames;
-          $scope.addressAd    = $scope.sessionAddress;
-          $scope.movilPhoneAd = $scope.sessionMovilPhone;
-          $scope.localPhoneAd = $scope.sessionLocalPhone;
-          $scope.emailAd      = $scope.sessionMail;
+          $scope.namesUser        = $scope.sessionNames;
+          $scope.addressUser      = $scope.sessionAddress;
+          $scope.movilPhoneUser   = $scope.sessionMovilPhone;
+          $scope.localPhoneAdUser = $scope.sessionLocalPhone;
+          $scope.emailUser        = $scope.sessionMail;
           /*---------------------------------*/
           $scope.namesOw      = " ";
           $scope.addressOw    = " ";
@@ -252,11 +277,11 @@ function BindDataToForm(frmValue) {
           $scope.emailOw      = " ";
           $scope.localPhoneOw = " ";
         }else if ($scope.sessionidProfile==3){
-          $scope.namesAd      = $scope.sessionNames;
-          $scope.addressAd    = $scope.sessionAddress;
-          $scope.movilPhoneAd = $scope.sessionMovilPhone;
-          $scope.localPhoneAd = $scope.sessionLocalPhone;
-          $scope.emailAd      = $scope.sessionMail;
+          $scope.namesUser        = $scope.sessionNames;
+          $scope.addressUser      = $scope.sessionAddress;
+          $scope.movilPhoneUser   = $scope.sessionMovilPhone;
+          $scope.localPhoneAdUser = $scope.sessionLocalPhone;
+          $scope.emailUser        = $scope.sessionMail;
           /*---------------------------------*/
           $scope.namesOw      = $scope.sessionNames;
           $scope.addressOw    = $scope.sessionAddress;
@@ -266,11 +291,11 @@ function BindDataToForm(frmValue) {
         break;
       case "fkeydown":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
-          $scope.namesAd      = $scope.sessionNames;
-          $scope.addressAd    = $scope.sessionAddress;
-          $scope.movilPhoneAd = $scope.sessionMovilPhone;
-          $scope.localPhoneAd = $scope.sessionLocalPhone;
-          $scope.emailAd      = $scope.sessionMail;
+          $scope.namesUser      = $scope.sessionNames;
+          $scope.addressUser    = $scope.sessionAddress;
+          $scope.movilPhoneUser = $scope.sessionMovilPhone;
+          $scope.localPhoneUser = $scope.sessionLocalPhone;
+          $scope.emailUser      = $scope.sessionMail;
           /*---------------------------------*/
           $scope.namesOw      = " ";
           $scope.addressOw    = " ";
@@ -278,11 +303,11 @@ function BindDataToForm(frmValue) {
           $scope.emailOw      = " ";
           $scope.localPhoneOw = " ";
         }else if ($scope.sessionidProfile==3){
-          $scope.namesAd      = $scope.sessionNames;
-          $scope.addressAd    = $scope.sessionAddress;
-          $scope.movilPhoneAd = $scope.sessionMovilPhone;
-          $scope.localPhoneAd = $scope.sessionLocalPhone;
-          $scope.emailAd      = $scope.sessionMail;
+          $scope.namesUser        = $scope.sessionNames;
+          $scope.addressUser      = $scope.sessionAddress;
+          $scope.movilPhoneUser   = $scope.sessionMovilPhone;
+          $scope.localPhoneAdUser = $scope.sessionLocalPhone;
+          $scope.emailUser        = $scope.sessionMail;
           /*---------------------------------*/
           $scope.namesOw      = $scope.sessionNames;
           $scope.addressOw    = $scope.sessionAddress;
@@ -293,12 +318,12 @@ function BindDataToForm(frmValue) {
         break;
       case "fservice":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==2 || $scope.sessionidProfile==4){
-          $scope.namesAd     = $scope.sessionNames;
-          $scope.razonSocial = $scope.sessionrazonSocial
-          $scope.addressAd   = $scope.sessionAddress;
-          $scope.movilPhoneAd= $scope.sessionMovilPhone;
-          $scope.localPhoneAd= $scope.sessionLocalPhone;
-          $scope.emailAd     = $scope.sessionMail;
+          $scope.namesUser     = $scope.sessionNames;
+          $scope.razonSocial   = $scope.sessionrazonSocial
+          $scope.addressUser   = $scope.sessionAddress;
+          $scope.movilPhoneUser= $scope.sessionMovilPhone;
+          $scope.localPhoneUser= $scope.sessionLocalPhone;
+          $scope.emailUser     = $scope.sessionMail;
         }
       break;
       case "frmOther":
@@ -604,20 +629,20 @@ $scope._getData2UpdateTenant = function () {
 $scope.newTicket = function(opt){
     switch (opt) {
       case "up":
-            $scope.sysFunctionSend();
-            $scope.requestUpKey($http, $scope);
+            //$scope.sysFunctionSend();
+            //$scope.requestUpKey($http, $scope);
       break;
       case "down":
-            $scope.sysFunctionSend();
-            $scope.requestDownKey($http, $scope);
+            //$scope.sysFunctionSend();
+            //$scope.requestDownKey($http, $scope);
       break;
       case "srvs":
-            $scope.sysFunctionSend();
-            $scope.requestService($http, $scope);
+            //$scope.sysFunctionSend();
+            //$scope.requestService($http, $scope);
       break;
       case "other":
-          $scope.sysFunctionSend();
-          $scope.otherRequest($http, $scope);
+            //$scope.sysFunctionSend();
+            //$scope.otherRequest($http, $scope);
       break;
 
       default: 
@@ -806,6 +831,8 @@ function closeAllDiv (){
   $scope.ruother = false;
   $scope.home = false;
   $scope.loginRegiterButtons = false;
+  $scope.btnBack=false;
+  $scope.btnShow=true;
 }
 
 $scope.fnShowHide = function(divId, divAction) {

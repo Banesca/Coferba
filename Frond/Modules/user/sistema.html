@@ -379,11 +379,11 @@
 
 	<div class="main_container" ng-show="Token">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
-			<ng-include ng-show="rukeyup" src="'view/formAltaLlave.html'"></ng-include>
-			<ng-include ng-show="rukeydown" src="'view/formBajaLlave.html'"></ng-include>
-			<ng-include ng-show="ruservice" src="'view/formServicio.html'"></ng-include>
-			<ng-include ng-show="ruother" src="'view/formOtrasConsultas.html'"></ng-include>
-			<ng-include ng-show="home" src="'view/home.html'" class="ng-scope" style="width: 100%;"></ng-include>
+			<div  ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
+			<div  ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
+			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
+			<div ng-show="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
+			<div ng-show="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 		<!-- Modal -->
 			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
