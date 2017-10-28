@@ -239,10 +239,10 @@ $scope.selectTenant = function (obj){
     $scope.idDpto=obj.idTenant;
     $scope.searchDptoById();
     $scope.idTenantKf   =  obj.idTenant;
-    $scope.namesOw      =  obj.fullNameTenant;
-    $scope.localPhoneOw =  obj.phoneNumberContactTenant;
-    $scope.movilPhoneOw =  obj.phoneNumberTenant;
-    $scope.emailOw      =  obj.emailTenant;
+    $scope.namesTenant      =  obj.fullNameTenant;
+    $scope.localPhoneTenant =  obj.phoneNumberContactTenant;
+    $scope.movilPhoneTenant =  obj.phoneNumberTenant;
+    $scope.emailTenant      =  obj.emailTenant;
   console.log(obj);
 }
 
@@ -255,39 +255,41 @@ $scope.selectTenant = function (obj){
 function setHeaderRequest(){
    return  { headers: { 'Content-Type': 'application/json; charset=utf-8' }}
 }
+/*Select Attendant Names */
+$scope.select={nameAtt:''};
+$scope.getData = function (n){
+    $scope.namesTenant      = " ";
+    $scope.addressTenant    = " ";
+    $scope.movilPhoneTenant = " ";
+    $scope.emailTenant      = " ";
+    $scope.localPhoneTenant = " "; 
+  if (n===1){
+    $scope.typeTenant = 1;
+    BindDataToForm('1');
+  }
+  else if (n===2){
+    $scope.typeTenant = 2; 
+    $scope.getAllDeparment();
+  }else if (n==3){
+    alert($scope.select.nameAtt)
+
+  }
+}
 /**************************************************
 *                                                 *
-*            Bind Data to LocalStorage            *
+*           Bind Data From LocalStorage           *
 *                                                 *
 **************************************************/
 var frmValue="";
 function BindDataToForm(frmValue) {
     switch (frmValue) {
-      case "fkeyup":
-        if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
-          $scope.namesUser        = $scope.sessionNames;
-          $scope.addressUser      = $scope.sessionAddress;
-          $scope.movilPhoneUser   = $scope.sessionMovilPhone;
-          $scope.localPhoneAdUser = $scope.sessionLocalPhone;
-          $scope.emailUser        = $scope.sessionMail;
+      case "1":
+          $scope.namesTenant        = $scope.sessionNames;
+          $scope.addressTenant      = $scope.sessionAddress;
+          $scope.movilPhoneTenant   = $scope.sessionMovilPhone;
+          $scope.localPhoneAdTenant = $scope.sessionLocalPhone;
+          $scope.emailTenant        = $scope.sessionMail;
           /*---------------------------------*/
-          $scope.namesOw      = " ";
-          $scope.addressOw    = " ";
-          $scope.movilPhoneOw = " ";
-          $scope.emailOw      = " ";
-          $scope.localPhoneOw = " ";
-        }else if ($scope.sessionidProfile==3){
-          $scope.namesUser        = $scope.sessionNames;
-          $scope.addressUser      = $scope.sessionAddress;
-          $scope.movilPhoneUser   = $scope.sessionMovilPhone;
-          $scope.localPhoneAdUser = $scope.sessionLocalPhone;
-          $scope.emailUser        = $scope.sessionMail;
-          /*---------------------------------*/
-          $scope.namesOw      = $scope.sessionNames;
-          $scope.addressOw    = $scope.sessionAddress;
-          $scope.movilPhoneOw = $scope.sessionMovilPhone;
-          $scope.emailOw      = $scope.sessionMail;
-        }
         break;
       case "fkeydown":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
@@ -297,11 +299,11 @@ function BindDataToForm(frmValue) {
           $scope.localPhoneUser = $scope.sessionLocalPhone;
           $scope.emailUser      = $scope.sessionMail;
           /*---------------------------------*/
-          $scope.namesOw      = " ";
-          $scope.addressOw    = " ";
-          $scope.movilPhoneOw = " ";
-          $scope.emailOw      = " ";
-          $scope.localPhoneOw = " ";
+          $scope.namesTenant      = " ";
+          $scope.addressTenant    = " ";
+          $scope.movilPhoneTenant = " ";
+          $scope.emailTenant      = " ";
+          $scope.localPhoneTenant = " ";
         }else if ($scope.sessionidProfile==3){
           $scope.namesUser        = $scope.sessionNames;
           $scope.addressUser      = $scope.sessionAddress;
@@ -841,7 +843,7 @@ $scope.fnShowHide = function(divId, divAction) {
    }else{     
     switch (divId) {
       case "uLogin":
-        closeAllDiv();
+          closeAllDiv();
         if(divAction=="open"){
           $scope.uLogin = true;
         }else{
@@ -852,7 +854,7 @@ $scope.fnShowHide = function(divId, divAction) {
             $('#RegisterModal').modal('toggle');
         break;
       case "rukeyup":
-        closeAllDiv();
+          closeAllDiv();
         if(divAction=="open"){
           $scope.mySwitch = $scope.pasos[0];
           $scope.rukeyup = true;
@@ -862,41 +864,38 @@ $scope.fnShowHide = function(divId, divAction) {
         }
         break;
       case "rukeydown":
-        closeAllDiv();
+          closeAllDiv();
         if(divAction=="open"){
           $scope.rukeydown = true;
-          BindDataToForm('fkeydown');
+ 
         }else{
           closeAllDiv();
         }
         break;
       case "ruservice":
-        closeAllDiv();
+          closeAllDiv();
         if(divAction=="open"){
           $scope.ruservice = true;
-          BindDataToForm('fservice');
+
         }else{
           closeAllDiv();
           $scope.ruservice = false;
         }
         break;
       case "ruother":
-        closeAllDiv();
+          closeAllDiv();
         if(divAction=="open"){
           $scope.ruother = true;
-          BindDataToForm('frmOther');
         }else{
           closeAllDiv();
           $scope.ruother = false;
         }
-        
         break;
 
         case "home":
-        closeAllDiv();
+          closeAllDiv();
         if(divAction=="open"){
           $scope.home = true;
-         // BindDataToForm('frmOther');
         }else{
           closeAllDiv();
           $scope.home = false;

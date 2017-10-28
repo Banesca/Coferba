@@ -26,10 +26,9 @@
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											  		<select name="nameAtt" class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="idProfileKf!=2" ng-model="nameAtt" autofocus >
+											  		<select name="nameAtt" class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="idProfileKf!=2" ng-change="getData(3)" ng-model="select.nameAtt" autofocus >
 													    <option value=""></option>
 												    </select>
-												    <input type="text" name="" ng-show="hideMe" id="nameAtt" value="{{nameAtt}}"/>
 											    </div>
 										  	</div>
 									</div>
@@ -69,18 +68,18 @@
 									<div class="form-group">
 										<div class="col-md-6 col-md-offset-3">
 										    <label class="col-xs-6 ">
-										  		<input type="radio" name="typeTenant" ng-checked="2" value="2" ng-model="typeTenant" required autofocus>
+										  		<input type="radio" ng-click="getData(1)" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
 											  		<code ng-show="sessionidProfile==3">{{sessionNames}}</code>
 											  		<code ng-show="sessionidProfile!=3">Propietario</code>
 									  		</label> 
 									  		<label class="col-xs-6">
-										  		<input ng-click="getAllDeparment()"type="radio" ng-checked="1" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
+										  		<input ng-click="getData(2)" type="radio" ng-checked="1" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
 											  		<code>Inquilino</code>
 									  		</label> 
 									 	</div>
 									</div>
 									<!-- Select Department -->
-									<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant==1) || sessionidProfile==4" class="form-group"> 
+									<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant==2) || sessionidProfile==4" class="form-group"> 
 									  <label class="col-md-4 control-label">Departamento</label>
 									    <div class="col-md-4 selectContainer">
 										    <div class="input-group">
@@ -99,7 +98,7 @@
 										  <div class="col-md-4">
 											  <div class="input-group">
 												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												  <input  name="namesOw" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesOw"  type="text" required="true" required autofocus />
+												  <input  name="namesTenant" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesTenant"  type="text" required="true" required autofocus />
 											  </div>
 										  </div>
 									</div>
@@ -109,7 +108,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-										  		<input name="localPhoneOw" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneOw" type="text" required autofocus />
+										  		<input name="localPhoneTenant" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneTenant" type="text" required autofocus />
 										    </div>
 									  </div>
 									</div>
@@ -119,7 +118,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-										  		<input name="movilPhoneOw" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneOw" type="text" required autofocus />
+										  		<input name="movilPhoneTenant" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneTenant" type="text" required autofocus />
 										    </div>
 									  </div>
 									</div>
@@ -129,7 +128,7 @@
 									   <div class="col-md-4">
 									    <div class="input-group">
 									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-									  		<input name="emailOw" placeholder="E-Mail" class="form-control" ng-model="emailOw"  type="email" required autofocus />
+									  		<input name="emailTenant" placeholder="E-Mail" class="form-control" ng-model="emailTenant"  type="email" required autofocus />
 									    </div>
 									  </div>
 									</div>
@@ -139,7 +138,7 @@
 									  		<div class="col-md-4">
 												<div class="input-group">
 										  			<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-										  				<select name="qkuOw" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="$parent.qkuOw" required autofocus >
+										  				<select name="qkuTenant" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="$parent.qkuTenant" required autofocus >
 														    <option value=""></option>
 														    <option value="1">1</option>
 														    <option value="2">2</option>
@@ -167,7 +166,7 @@
 									  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 									  	<div class="col-md-4">
 											<div class="input-group">
-										  		<textarea name="sruOw" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruOw" ></textarea>
+										  		<textarea name="sruTenant" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="sruTenant" ></textarea>
 											</div>
 									  	</div>
 									</div>
