@@ -59,7 +59,7 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
      $userType=0;
      $scope.rsJSON = [ ];
      $scope.loginRegiterButtons = true;
-     $scope.Token = localStorage.getItem("Token");
+     $scope.Token              = localStorage.getItem("Token");
      $scope.sessionIdUser      = localStorage.getItem("idUser");
      $scope.sessionNames       = localStorage.getItem("Nombres");
      $scope.sessionMail        = localStorage.getItem("Email");
@@ -238,7 +238,7 @@ $scope.searchOwner = function (op){
 $scope.selectTenant = function (obj){
     $scope.idDpto=obj.idTenant;
     $scope.searchDptoById();
-    $scope.idTenantKf   =  obj.idTenant;
+    $scope.idTenantKf       =  obj.idTenant;
     $scope.namesTenant      =  obj.fullNameTenant;
     $scope.localPhoneTenant =  obj.phoneNumberContactTenant;
     $scope.movilPhoneTenant =  obj.phoneNumberTenant;
@@ -271,8 +271,18 @@ $scope.getData = function (n){
     $scope.typeTenant = 2; 
     $scope.getAllDeparment();
   }else if (n==3){
-    alert($scope.select.nameAtt)
+      var idAtt = $scope.select.nameAtt;
+    /* Recorrer el Json Attendant para obtener datos */
+    var length = $scope.listAttendant.length;
+    for (i = 0; i < length; i++) {
+        if($scope.listAttendant[i].idAttendant == idAtt){
+            $scope.localPhoneAtt=$scope.listAttendant[i].phoneLocalAttendant;
+            $scope.movilPhoneAtt=$scope.listAttendant[i].phoneAttendant;
+            $scope.emailAtt     =$scope.listAttendant[i].mailAttendant;
 
+            break;
+        }
+    }; 
   }
 }
 /**************************************************
@@ -287,7 +297,7 @@ function BindDataToForm(frmValue) {
           $scope.namesTenant        = $scope.sessionNames;
           $scope.addressTenant      = $scope.sessionAddress;
           $scope.movilPhoneTenant   = $scope.sessionMovilPhone;
-          $scope.localPhoneAdTenant = $scope.sessionLocalPhone;
+          $scope.localPhoneTenant = $scope.sessionLocalPhone;
           $scope.emailTenant        = $scope.sessionMail;
           /*---------------------------------*/
         break;
@@ -388,7 +398,6 @@ function validateuser($http,$scope){
                  localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
                  localStorage.setItem("nameCompany  ", $scope.rsJSON.nameCompany);
                  localStorage.setItem("Token", true);
-                 $scope.Token = localStorage.getItem("Token");
                  location.href = "sistema.html"
 
             }
