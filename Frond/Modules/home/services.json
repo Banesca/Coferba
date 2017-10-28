@@ -31,7 +31,8 @@ METODO:POST
       "idUserTenant":1,
       "idReasonDisabledItemKf":1, 
       "numberItemDisabled" : 2,
-      "description" : "aqui escribo algo"
+      "description" : "aqui escribo algo",
+      "idOpcionLowTicketKf": 1
   }
 }
 /*ADMINISTRADOR O PROPIETARIO*/

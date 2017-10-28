@@ -77,7 +77,9 @@ private function formatCode($value) {
 			'idTypeServicesKf'  => @$ticket['idTypeServicesKf'],
 
 			'addressConsul'=> @$ticket['addressConsul'],
-			'idProfileKf' => @$ticket['idProfileKf']
+            'idProfileKf' => @$ticket['idProfileKf'],
+            
+            'idOpcionLowTicketKf' => @$ticket['idOpcionLowTicketKf']
 
 		)
         );
@@ -251,6 +253,7 @@ private function formatCode($value) {
         $typedelivery = null;
         $typeouther  = null;
         $typeticket = null;
+        $tipeOpcion = null;
 
         /* LISTADO DE CONDICIONES DE IVA */
         $query = $this->db->select("*")->from("tb_user")->get();
@@ -283,6 +286,13 @@ private function formatCode($value) {
             $typeticket = $query->result_array();
         }
 
+
+          /* LISTADO DE CONDICIONES DE TYPOS DE TARJETAS */
+          $query = $this->db->select("*")->from("tb_opcion_low")->get();
+          if ($query->num_rows() > 0) {
+              $tipeOpcion = $query->result_array();
+          }
+
        
 
         $filter = array(
@@ -290,7 +300,8 @@ private function formatCode($value) {
             'reason_disabled_item'      => $reason_disabled_item,
             'typedelivery' => $typedelivery,
             'typeouther' => $typeouther,
-            'typeticket'  => $typeticket
+            'typeticket'  => $typeticket,
+            'tipeOpcion' => $tipeOpcion
 
         );
 
