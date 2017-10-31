@@ -53,10 +53,10 @@ class Tenant extends REST_Controller {
 
 
      /* SERVICIO RETORNA EL LISTADO DE INQUILINOS SEGUN UN id DEPARTAMENTO   */
-     public function tenanatByIdDepartament_get($id) {
+     public function tenanatByIdDepartament_get($id, $idType) {
         
         
-                $rs = $this->tenant_model->getTenanatByIdDepartament($id);
+                $rs = $this->tenant_model->getTenanatByIdDepartament($id, $idType);
         
                 if (!is_null($rs)) {
                     $this->response($rs, 200);

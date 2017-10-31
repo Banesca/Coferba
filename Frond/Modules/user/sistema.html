@@ -55,10 +55,10 @@
 		                        </a>
 		                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 		                        	<li role="presentation">
-		                                <a class="clear-lazy-cache" ng-click="userData()" href="#" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
+		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
 		                            </li>
 		                            <li role="presentation">
-		                                <a class="clear-lazy-cache" ng-click="logout()" href="#" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
+		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="logout()" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
 		                            </li>
 		                        </ul>
 	                    	</li>
@@ -134,7 +134,7 @@
 						                <li><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle">Baja</a></li>
 						        </ul>
 						    </li>
-						    <li ng-show="sessionidProfile==1 || sessionidProfile==4" class="cms">
+						    <li ng-show="sessionidProfile==1 || sessionidProfile==2 || sessionidProfile==4" class="cms">
 						        <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio">Servicio Tecnico</a>
 						    </li>
 						    <li class="cms"> <!--class="im active"-->
@@ -199,18 +199,18 @@
     </div>
     <!-- //Login&Register Button-->
     <!-- USER REGISTER FORM -->
-	<div id="RegisterModal" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
+	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">
 		      	<div class="modal-body">
 					<div class="agileits-w3layouts"> 
 			          	<div class="panel panel-default">
 			              	<div class="panel-heading">
-			                	<h3 class="panel-title">NUEVO USUARIO<a ng-click="fnShowHide('uRegister', 'close')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			                	<h3 class="panel-title">NUEVO USUARIO<a ng-click="closeModal('u')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 			            	</div>
 			            		<div class="panel-body" style="overflow-y: scroll;">
 									<!-- FORM CONTAINER-->
-				    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU(); getAllAddress(); checkRS=false" ng-submit="sysRegisterUser()">
+				    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU(); getAllAddress();" ng-submit="sysRegisterUser()">
 										<fieldset>
 										<!-- Select profile -->
 										   
@@ -219,7 +219,7 @@
 										    <div class="col-md-4 selectContainer">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfile1" ng-model="$parent.idProfileKf"  required autofocus >
+													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:showProfile3" ng-model="$parent.idProfileKf"  required autofocus >
 													    	<option value=""></option>
 												    	</select>
 											  	</div>
@@ -379,6 +379,7 @@
 
 	<div class="main_container" ng-show="Token">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
+			<div  ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div  ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
 			<div  ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
 			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
@@ -386,13 +387,14 @@
 			<div ng-show="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 		<!-- Modal -->
-			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
+			<div id="ModalListTenant" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
 			    <!-- Modal content-->
 				    <div class="modal-content">
 				      	<div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title">Inquilinos / Propietarios</h4>
+					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="registerTenant()" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="registerTenant()" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 				      	</div>
 				      	<div class="modal-body pre-scrollable">
 	                				<table class="table  table-striped ">
@@ -411,15 +413,15 @@
 					                    </thead>
 					                    <tbody>
 					                        <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter : paginate track by $index">
-					                        	<td><button ng-click="selectTenant(item)" class=" button btn-default">{{$index + 1}}</button></td>
+					                        	<td><button ng-click="selectTenant(item)" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-check"></i></button></td>
 						                        <td>{{item.idTenant}}</td>
 						                        <td>{{item.fullNameTenant}}</td>
 						                        <td>{{item.phoneNumberTenant}}</td>
 						                        <td>{{item.phoneNumberContactTenant}}</td>
 						                        <td>{{item.idDepartmentKf}}</td>
 						                        <td>{{item.emailTenant}}</td>
-						                        <td ng-if="item.idTypeKf==1">Inquilino</td>
-						                        <td ng-if="item.idTypeKf==2">Propietario</td>
+						                        <td ng-if="item.idTypeKf==1">Propietario</td>
+						                        <td ng-if="item.idTypeKf==2">Inquilino</td>
 						                        <td ng-if="item.idStatusKf==1">Activo</td>
 						                        <td ng-if="item.idStatusKf==2">Inactivo</td>
 						                    </tr>
@@ -434,6 +436,133 @@
 				</div>
 			</div>
 		<!-- //Modal -->
+		<!-- TENANT REGISTER FORM -->
+			<div id="RegisterModalTenant" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
+			  	<div class="modal-dialog modal-lg" >
+				    <div class="modal-content">
+				      	<div class="modal-body">
+							<div class="agileits-w3layouts"> 
+					          	<div class="panel panel-default">
+					              	<div class="panel-heading">
+					                	<h3 class="panel-title">NUEVO INQUILINO<a ng-click="closeModal('t')" title="Cerrar" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+					            	</div>
+					            		<div class="panel-body" style="overflow-y: scroll;">
+											<!-- FORM CONTAINER-->
+						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="sendData()">
+												<fieldset>
+												<!-- Select profile -->
+												   
+												<div class="form-group" ng-show="sessionidProfile!=2 && sessionidProfile!=3"> 
+												  <label class="col-md-4 control-label">Tipo de Inquilino</label>
+												    <div class="col-md-4 selectContainer">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+															    <select name="idTypeTenantKf" class="form-control"  ng-options="item.idTypeTenant as item.typeTenantName for item in lisTypeTenant " ng-model="$parent.idTypeTenantKf" ng-required="!sessionidProfile"  autofocus >
+															    	<option value=""></option>
+														    	</select>
+													  	</div>
+													</div>
+												</div>
+												<!-- List Address-->
+												      
+												<div class="form-group" ng-show="!sessionidProfile">
+												  <label class="col-md-4 control-label">Direcci&#243n</label>  
+												    <div class="col-md-4">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+													  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="!sessionidProfile" ng-model="$parent.idAddressKf" autofocus >
+															    	<option value=""></option>
+														    	</select>
+													    </div>
+												  </div>
+												</div>
+												<!-- List Department by address-->
+												      
+												<div class="form-group" ng-show="!sessionidProfile">
+												  <label class="col-md-4 control-label">Departamento</label>  
+												    <div class="col-md-4">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+													  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="!sessionidProfile" autofocus >
+															    	<option value=""> </option>
+														    	</select>
+													    </div>
+												  </div>
+												</div>
+												<!-- Form First Name -->
+												<div class="form-group">
+												  <label class="col-md-4 control-label">Nombre</label>  
+													  <div class="col-md-4">
+														  <div class="input-group">
+															  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+															  <input  name="fnameT" autofocus="true" placeholder="Nombre" class="form-control" ng-model="$parent.fnameT"  type="text" required autofocus/>
+														  </div>
+													  </div>
+												</div>
+												<!-- Form Last Name -->
+
+												<div class="form-group">
+												  <label class="col-md-4 control-label" >Apellido</label> 
+												  	<div class="col-md-4">
+														<div class="input-group">
+													  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+													  		<input name="lnameT" placeholder="Apellido" class="form-control" ng-model="$parent.lnameT" type="text" required autofocus />
+														</div>
+												  	</div>
+												</div>
+												<!-- Text Mail-->
+
+												<div class="form-group">
+												 <label class="col-md-4 control-label">E-Mail</label>  
+												   <div class="col-md-4">
+												    <div class="input-group">
+												    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+												  		<input name="emailT" placeholder="E-Mail" class="form-control" ng-model="$parent.emailT"  type="email" required autofocus />
+												    </div>
+												  </div>
+												</div>
+												<!-- Text Phone-->
+												       
+												<div class="form-group">
+												  <label class="col-md-4 control-label">Telefono Local</label>  
+												    <div class="col-md-4">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+													  		<input name="phoneLocalT" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phonelocalT"  type="text" required autofocus />
+													    </div>
+												  </div>
+												</div>
+												<!-- Text Phone-->
+												       
+												<div class="form-group">
+												  <label class="col-md-4 control-label">Telefono Movil</label>  
+												    <div class="col-md-4">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+													  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phoneMovilT"  type="text" required autofocus />
+													    </div>
+												  </div>
+												</div>
+
+												<!-- Actions Button -->
+												<div class="form-group">
+												  <label class="col-md-4 control-label"></label>
+												  <div class="col-md-4">
+												    <button type="submit" class="btn btn-primary" >Registrar </button>
+													<button type="reset" ng-click="closeModal('t')" class="btn btn-primary" >Cancelar </button>
+												  </div>
+												</div>
+
+												</fieldset>
+											</form>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 	</div>
 	<!-- Response Inform Meessage plugin -->
 	<div inform class="inform-fixed inform-shadow inform-animate"></div>

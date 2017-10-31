@@ -286,7 +286,6 @@ public function updateMailSmtp($mail) {
             $this->db->select("*")->from("tb_attendant");
             $this->db->where("tb_attendant.idAddresKf =", $id);
 
-
             $quuery = $this->db->order_by("tb_attendant.nameAttendant", "asc")->get();
 
 

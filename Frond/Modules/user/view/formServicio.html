@@ -1,104 +1,91 @@
 <!-- USER REQUEST SERVICE  ruservice=Register Request User Service-->
-<div class="agileits-w3layouts"> 
-	<div class="container">
-		<br>
-          	<div class="panel panel-default">
-              	<div class="panel-heading">
-                	<h3 class="panel-title">SOLICITUD DE SERVICIO<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-            	</div>
-            		<div class="panel-body">
-						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="fservice" ng-submit="newTicket('srvs')" ng-init="CallFilterFormT(); checkRS=false">
-							<fieldset>
-							<legend style="text-align: center;">Datos del Encargado</legend><br/>
-
-							  <!-- Admin First Name & Lastname -->
-							      
-							<div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group">
-							  <label class="col-md-4 control-label">Nombre y Apellido</label> 
+<div class="container">
+  	<div class="panel panel-default">
+      	<div class="panel-heading">
+        	<h3 class="panel-title">SERVICIO - {{mySwitch}}<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+    	</div>
+    		<div class="panel-body">
+		    <form class="form-horizontal" ng-init="CallFilterFormT(); getAllAddress();" name="fservice" ng-submit="newTicket('srvs')" >
+		    		<div ng-switch on="mySwitch">
+						<fieldset ng-switch-when="PASO 1: DATOS DE LA EMPRESA">
+							<!-- Company List-->    
+							<div ng-show="sessionidProfile==1" class="form-group">
+							  <label class="col-md-4 control-label">Empresa</label>
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-								  		<input  name="namesAd" autofocus="true" placeholder="" class="form-control" ng-model="namesAd"  type="text" />
+								  		<select name="idCompanyKf" ng-change="DataToForm()" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-model="$parent.idCompanyKf"  ><option value=""></option>
+									    	</select>
 								    </div>
 							  </div>
 							</div>
-							<!-- Company names-->
-
-							<div ng-show="sessionidProfile==2 || sessionidProfile==4" class="form-group">
-							  <label class="col-md-4 control-label">Razon Social</label>  
+							<!-- Company List-->    
+							<div ng-show="sessionidProfile==1" class="form-group">
+							  <label class="col-md-4 control-label">Empresa</label>
+							    <div class="col-md-4">
+								    <div class="input-group">
+										  <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+										  <input  name="CompanyName" autofocus="true" placeholder="Empresa" class="form-control" ng-model="CompanyName"  type="text" required="true" required autofocus />
+									  </div>
+							  </div>
+							</div>
+							<!-- List Address-->
+							      
+							<div class="form-group" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
+							  <label class="col-md-4 control-label">Consorcio</label>  
+							    <div class="col-md-4">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+								  		<select name="idAddressKf" class="form-control" ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=2" ng-model="$parent.idAddressKf" autofocus >
+										    	<option value=""></option>
+									    	</select>
+								    </div>
+							  </div>
+							</div>
+							<!-- Encargado First Name & Lastname -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Nombre y Apellido</label>  
 								  <div class="col-md-4">
 									  <div class="input-group">
 										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  <input name="razonSocial" placeholder="Razon Social" class="form-control" ng-model="razonSocial" type="text" />
+										  <input  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" required="true" required autofocus />
 									  </div>
 								  </div>
 							</div>
-							<!-- Text Phone 1 -->
-							       
+							<!-- Text Local Phone -->       
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Telefono local</label>  
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="localPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneAd" type="text" required autofocus />
+									  		<input name="localPhoneAdmin" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.localPhoneAdmin" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
-							<!-- Text Phone 2 -->
-							       
+							<!-- Text Phone 2 -->       
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Telefono Celular</label>  
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="movilPhoneAd" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneAd" type="text" required autofocus />
+								  		<input name="movilPhoneAdmin" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneAdmin" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
 							<!-- Text Mail-->
-
 							<div class="form-group">
-							 <label class="col-md-4 control-label">E-Mail</label>  
+							 <label class="col-md-4 control-label">E-Mail</label>
 							   <div class="col-md-4">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="emailAd" placeholder="E-Mail" class="form-control" ng-model="emailAd"  type="email" required autofocus />
+							  		<input name="emailAdmin" placeholder="E-Mail" class="form-control" ng-model="emailAdmin"  type="email" required autofocus />
 							    </div>
 							  </div>
 							</div>
-							<!-- Text Address-->
-							      
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Direcci&#243n</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								  		<input name="addressAd" placeholder="Direcci&#243n" class="form-control" ng-model="addressAd" type="text" required autofocus />
-								    </div>
-							  </div>
-							</div>
-
-							<legend style="text-align: center;">Datos del Servicio</legend><br/>
-
-							<!-- Select Type of Service -->
-							   
-							<div class="form-group" ng-show="sessionidProfile==1"> 
-							  <label class="col-md-4 control-label">Seleccione Empresa</label>
-							    <div class="col-md-4 selectContainer">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="$parent.idTypeServiceKf" required autofocus />
-										    <option value=""></option>
-										    <option value="1">Telecom</option>
-										    <option value="2">Coferba</option>
-										    <option value="3">Coto</option>
-									    	</select>
-								  	</div>
-								</div>
-							</div>
-
-							<!-- Select Type of Service -->
+						</fieldset>
+						<fieldset ng-switch-when="PASO 2: DATOS DEL SERVICIO">
+							<!-- Type of Tenant -->
+														<!-- Select Type of Service -->
 							   
 							<div class="form-group"> 
 							  <label class="col-md-4 control-label">Tipo de Servicio</label>
@@ -137,19 +124,18 @@
 									</div>
 							  	</div>
 							</div>
-
-							<!-- Actions Button -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4">
-							    <button type="submit" ng-click="" class="btn btn-primary" >Solicitar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-							  </div>
-							</div>
-
-							</fieldset>
-						</form>
-						<div class="clearfix"> </div> 
+						</fieldset>
 					</div>
+					<!-- Actions Button -->
+					<div class="form-group">
+					  <label class="col-md-4"></label>
+					  <div class="col-md-4">
+					  	<input type="button" ng-click="decrementStep()" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
+				  		<input type="button" ng-click="incrementStep()" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
+				  		<button type="submit" ng-show="!hasNextStep()" class="btn btn-primary" >Enviar</button>
+					  </div>
+					</div>
+				</form>
 			</div>
 	</div>
 </div>

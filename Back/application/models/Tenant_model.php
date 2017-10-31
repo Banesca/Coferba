@@ -139,11 +139,15 @@ class Tenant_model extends CI_Model
     }
 
     /* LISTADO DE FILTROS */
-    public function getTenanatByIdDepartament($id) {
+    public function getTenanatByIdDepartament($id, $idType) {
         
                 $tenant = null;
         
                 $this->db->select("*")->from("tb_tenant");
+                
+
+                if (@$idType > 0){
+                $this->db->where("tb_tenant.idTypeKf =", $idType);}
                 $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
                 if ($query->num_rows() > 0) {
                     $tenant = $query->result_array();

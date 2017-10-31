@@ -1,0 +1,174 @@
+    <!-- USER REGISTER FORM -->
+	<div id="ProfileModalUser" class="modal fade bd-example-modal-lg" role="dialog">
+	  	<div class="modal-dialog modal-lg" >
+		    <div class="modal-content">
+		      	<div class="modal-body">
+			          	<div class="panel panel-default">
+			              	<div class="panel-heading">
+			                	<h3 class="panel-title">PERFIL USUARIO<a ng-click="closeModal('p')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			            	</div>
+			            		<div class="panel-body" style="overflow-y: scroll;">
+									<!-- FORM CONTAINER-->
+				    				<form class="form-horizontal" name="fUser" ng-init="CallFilterFormU(); getAllAddress();" ng-submit="sysRegisterUser()">
+										<fieldset>
+										<!-- Select profile -->
+										   
+										<div class="form-group"> 
+										  <label class="col-md-4 control-label">Perfil</label>
+										    <div class="col-md-4 selectContainer">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:showProfile3" ng-model="$parent.idProfileKf"  required autofocus >
+													    	<option value=""></option>
+												    	</select>
+											  	</div>
+											</div>
+										</div>
+										<!-- Company List-->
+										      
+										<div ng-show="idProfileKf==2" class="form-group">
+										  <label class="col-md-4 control-label">Empresa</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+											  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-model="$parent.idCompanyKf"  >
+													    	<option value=""></option>
+												    	</select>
+											    </div>
+										  </div>
+										</div>
+										<!-- List Address-->      
+										<div class="form-group" ng-disable="idProfileKf!=2" ng-show="idProfileKf!=2">
+										  <label class="col-md-4 control-label">Direcci&#243n</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+											  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="$parent.idAddressKf" autofocus >
+													    	<option value=""></option>
+												    	</select>
+											    </div>
+										  </div>
+										</div>
+										<!-- List Department by address-->
+										      
+										<div class="form-group" ng-show="idProfileKf==3">
+										  <label class="col-md-4 control-label">Departamento</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+											  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="idProfileKf==3" autofocus >
+													    	<option value=""> </option>
+												    	</select>
+											    </div>
+										  </div>
+										</div>
+										<!-- Form First Name -->
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Nombre</label>  
+											  <div class="col-md-4">
+												  <div class="input-group">
+													  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+													  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus/>
+												  </div>
+											  </div>
+										</div>
+										<!-- Form Last Name -->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label" >Apellido</label> 
+										  	<div class="col-md-4">
+												<div class="input-group">
+											  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text" required autofocus />
+												</div>
+										  	</div>
+										</div>
+										<!-- Text Mail-->
+
+										<div class="form-group">
+										 <label class="col-md-4 control-label">E-Mail</label>  
+										   <div class="col-md-4">
+										    <div class="input-group">
+										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+										  		<input name="emailUser" placeholder="E-Mail" class="form-control" ng-model="$parent.emailUser"  type="email" required autofocus />
+										    </div>
+										  </div>
+										</div>
+										<!-- Text Password-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Contrase&#241a</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+											    </div>
+											</div>
+										</div>
+										<!-- Text Password Check-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Confirme su Contrase&#241a</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input id="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
+											    </div>
+											</div>
+										</div>
+										<!-- Text Phone-->
+										       
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Telefono Local</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+											  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phonelocalNumberUser"  type="text" required autofocus />
+											    </div>
+										  </div>
+										</div>
+										<!-- Text Phone-->
+										       
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Telefono Movil</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+											  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phoneNumberUser"  type="text" required autofocus />
+											    </div>
+										  </div>
+										</div>
+
+										<!-- Actions Button -->
+										<div class="form-group">
+										  <label class="col-md-4 control-label"></label>
+										  <div class="col-md-4">
+										    <button type="submit" class="btn btn-primary" >Registrar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+											<button type="reset" class="btn btn-primary" >Limpiar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+										  </div>
+										</div>
+
+										</fieldset>
+									</form>
+									<script type="text/javascript">
+										var password = document.getElementById("passwordUser")
+  											, confirm_password = document.getElementById("passwordUsertmp");
+
+												function validatePassword(){
+												  if(password.value != confirm_password.value) {
+												    confirm_password.setCustomValidity("La clave no coincide");
+												  } else {
+												    confirm_password.setCustomValidity('');
+												  }
+												}
+
+												password.onchange = validatePassword;
+												confirm_password.onkeyup = validatePassword;
+									</script>
+									<div class="clearfix"> </div> 
+								</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
