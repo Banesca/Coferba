@@ -2,12 +2,12 @@
 <div class="container">
   	<div class="panel panel-default">
       	<div class="panel-heading">
-        	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}}<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+        	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}} & DATOS DEL ENCARGADO<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
     	</div>
     		<div class="panel-body">
 		    <form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); CallFilterDpto(); getAllAddress();" ng-submit="newTicket('up')" >
 		    		<div ng-switch on="mySwitch">
-						<fieldset ng-switch-when="PASO 1: DATOS DEL ENCARGADO">
+						<fieldset ng-switch-when="PASO 1: DIRECCION">
 							<!-- Text Address-->      
 							<div class="form-group" ng-disable="idProfileKf!=2" ng-show="idProfileKf!=2">
 							  	<label class="col-md-4 control-label">Direcci&#243n</label>
@@ -65,7 +65,7 @@
 						</fieldset>
 						<fieldset ng-switch-when="PASO 2: SOLICITUD PARA">
 							<!-- Type of Tenant -->
-							<div class="form-group">
+							<div class="form-check form-check-inline">
 								<div class="col-md-6 col-md-offset-3">
 								    <label class="col-xs-6 ">
 								  		<input type="radio" ng-click="getData(1)" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
@@ -73,7 +73,7 @@
 									  		<code ng-show="sessionidProfile!=3">Propietario</code>
 							  		</label> 
 							  		<label class="col-xs-6">
-								  		<input ng-click="getData(2)" type="radio" ng-checked="1" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
+								  		<input ng-click="getData(2)" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
 									  		<code>Inquilino</code>
 							  		</label> 
 							 	</div>
@@ -118,7 +118,7 @@
 							  <label class="col-md-4 control-label">Telefono Celular</label>  
 							    <div class="col-md-4">
 								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 								  		<input name="movilPhoneTenant" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneTenant" type="text" required autofocus />
 								    </div>
 							  </div>

@@ -1,71 +1,68 @@
 <!-- USER REQUEST OTHER QUERIES  ruother=Register Request User Other Queries-->
-<div class="agileits-w3layouts"> 
-	<div class="container">
-		<br>
-          	<div class="panel panel-default">
-              	<div class="panel-heading">
-                	<h3 class="panel-title">OTRAS CONSULTAS<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-            	</div>
-            		<div class="panel-body">
-						<!-- FORM CONTAINER-->
-				    	<form class="form-horizontal" name="frmOther" ng-submit="newTicket('other')" ng-init="CallFilterFormT()">
-							<fieldset>
-							<!-- Select Type of Service -->
-							   
-							<div class="form-group"> 
-							  <label class="col-md-4 control-label">Tipo de Consulta</label>
-							    <div class="col-md-4 selectContainer">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-										    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="$parent.idTypeOutherKf" required autofocus ><option value="">Selecione una opcion</option></select>
-								  	</div>
-								</div>
-							</div>
-							<!-- Text Mail-->
-
-							<div class="form-group">
-							 <label class="col-md-4 control-label">E-Mail</label>  
-							   <div class="col-md-4">
-							    <div class="input-group">
-							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="o_email" placeholder="E-Mail" class="form-control" ng-model="o_email"  type="email" required autofocus />
-							    </div>
-							  </div>
-							</div>
-							<!-- Text Address-->
-							      
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Direcci&#243n</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								  		<input name="o_address" placeholder="Direcci&#243n" class="form-control" ng-model="o_address" type="text" required autofocus />
-								    </div>
-							  </div>
-							</div>
-							<!-- Form query description -->
-
-							<div class="form-group">
-							  <label class="col-md-4 control-label" >Descripci&#243n</label> 
-							  	<div class="col-md-4">
-									<div class="input-group">
-								  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.o_detail" required autofocus ></textarea>
-									</div>
-							  	</div>
-							</div>
-
-							<!-- Actions Button -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4">
-							    <button type="submit" class="btn btn-primary" >Enviar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-							  </div>
-							</div>
-
-							</fieldset>
-						</form>
-						<div class="clearfix"> </div> 
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">OTRAS CONSULTAS<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon  glyphicon-remove-sign"> </i></a></h3>
+		</div>
+		<div class="panel-body">
+			<!-- FORM CONTAINER-->
+	    	<form class="form-horizontal" name="frmOther" ng-submit="newTicket('other')" ng-init="CallFilterFormT()">
+				<fieldset>
+				<!-- Select Type of Service -->
+				   
+				<div class="form-group"> 
+				  <label class="col-md-4 control-label">Tipo de Consulta</label>
+				    <div class="col-md-4 selectContainer">
+					    <div class="input-group">
+					        <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
+							    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery" ng-model="$parent.idTypeOutherKf" required autofocus ><option value="">Selecione una opcion</option></select>
+					  	</div>
 					</div>
-			</div>
+				</div>
+				<!-- Text Mail-->
+
+				<div class="form-group">
+				 <label class="col-md-4 control-label">E-Mail</label>  
+				   <div class="col-md-4">
+				    <div class="input-group">
+				    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+				  		<input name="o_email" placeholder="E-Mail" class="form-control" ng-model="o_email"  type="email" required autofocus />
+				    </div>
+				  </div>
+				</div>
+				<!-- Text Address-->
+				      
+				<div class="form-group">
+				  <label class="col-md-4 control-label">Direcci&#243n</label>  
+				    <div class="col-md-4">
+					    <div class="input-group">
+					        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+					  		<input name="o_address" placeholder="Direcci&#243n" class="form-control" ng-model="o_address" type="text" required autofocus />
+					    </div>
+				  </div>
+				</div>
+				<!-- Form query description -->
+
+				<div class="form-group">
+				  <label class="col-md-4 control-label" >Descripci&#243n</label> 
+				  	<div class="col-md-4">
+						<div class="input-group">
+					  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.o_detail" required autofocus ></textarea>
+						</div>
+				  	</div>
+				</div>
+
+				<!-- Actions Button -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label"></label>
+				  <div class="col-md-4">
+				    <button type="submit" class="btn btn-primary" >Enviar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+				  </div>
+				</div>
+
+				</fieldset>
+			</form>
+			<div class="clearfix"> </div> 
+		</div>
 	</div>
 </div>

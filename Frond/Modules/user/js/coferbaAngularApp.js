@@ -13,12 +13,12 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
 **************************************************/
   $scope.pasos = [];
   $scope.pasos1 = [
-                'PASO 1: DATOS DEL ENCARGADO',
+                'PASO 1: DIRECCION',
                 'PASO 2: SOLICITUD PARA',
                 'PASO 3: DATOS PERSONALES'
                 ];
   $scope.pasos2= [
-                'PASO 1: DATOS DE LA EMPRESA',
+                'PASO 1: DATOS',
                 'PASO 2: DATOS DEL SERVICIO'
                  ];
   $scope.fSwitch = "";
@@ -72,25 +72,37 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
     }
   };
 /**************************************************************/
-
-     $userType=0;
+/**************************************************
+*                                                 *
+*         GET THE LOCAL STORAGE VARIALES          *
+*                                                 *
+**************************************************/
      $scope.rsJSON = [ ];
+     $scope.Token=false;
      $scope.loginRegiterButtons = true;
      $scope.Token              = localStorage.getItem("Token");
      $scope.sessionIdUser      = localStorage.getItem("idUser");
      $scope.sessionNames       = localStorage.getItem("Nombres");
      $scope.sessionMail        = localStorage.getItem("Email");
-     $scope.sessionAddress     = localStorage.getItem("Direccion");
+     $scope.sessionidAddress   = localStorage.getItem("idAddress");
+     $scope.sessionNameAdress  = localStorage.getItem("nameAddress");
      $scope.sessionMovilPhone  = localStorage.getItem("TelefonoM");
      $scope.sessionLocalPhone  = localStorage.getItem("TelefonoL");
      $scope.sessionidProfile   = localStorage.getItem("IdPerfil");
      $scope.sessionProfileName = localStorage.getItem("nombrePerfil");
      $scope.sessionidStatus    = localStorage.getItem("IdStatus");
-     $scope.sessionrazonSocial = localStorage.getItem("nameCompany");
+     $scope.sessionidCompany   = localStorage.getItem("idCompany");
+     $scope.sessionNameCompany = localStorage.getItem("nameCompany");
 
-     $scope.hideProfile1 = function(item){
-        return item.idProfile != 1;
-     }
+/**************************************************
+*                                                 *
+*            HIDE PROFILES FUNCTION               *
+*         USED IN THE USER REGISTER FORM          *
+**************************************************/
+     $scope.hideProfiles = function(item){
+        return item.idProfile == 3;
+     };
+/**************************************************/     
 
 /**************************************************
 *                                                 *
@@ -121,7 +133,8 @@ $scope.CallFilterFormT = function(){
     }).then(function mySuccess(response) {
         $scope.listTypeDelivery = response.data.typedelivery;
         $scope.listTypeLost     = response.data.reason_disabled_item;
-        $scope.listTypeQuery    = response.data.typeouther
+        $scope.listTypeQuery    = response.data.typeouther;
+        $scope.listUser         = response.data.user;
       }, function myError(response) {
     });
 }
@@ -157,7 +170,6 @@ $scope.getAllAddress = function (){
         url : "http://localhost/Coferba/Back/index.php/User/attendantByIdDirecction/"+idAddressAttKf
       }).then(function mySuccess(response) {
             $scope.listAttendant = response.data;
-
             $scope.emailAtt=response.data.mailAttendant;
         }, function myError(response) {
       });
@@ -243,11 +255,14 @@ $scope.getAllDeparment = function (){
       url : "http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp
     }).then(function mySuccess(response){
           $scope.ListDpto = response.data;
+          console.log(response.data);
     }, function myError (response){
         if (response.status=="404"){
-            inform.add('Debe Seleccionar una direccion en el PASO 1.',{
+          if ($scope.idAddressKf){
+            inform.add('La direccion selecionada no posee departamentos asignados. Contacte a su administrador.',{
                           ttl:3000, type: 'error'
-               });
+               }); 
+          }
             $scope.decrementStep(); 
         }
   });
@@ -272,11 +287,7 @@ $scope.searchTenant = function (op){
 $scope.select={idDepartmentKf: ''}
 $scope.lisTenantByType = function(){
   var idDepto=0;
-  if($scope.select.idDepartmentKf && $scope.opc=='a' ){
     idDepto=$scope.select.idDepartmentKf;
-  }else if ($("#idSelectKeyD").val() && $scope.opc=='b'){
-    idDepto=$("#idSelectKeyD").val();
-  };
      $http({
         method : "GET",
         url : "http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+idDepto+"/"+$scope.typeTenant
@@ -347,9 +358,6 @@ $scope.searchDptoById = function(){
 *           Bind Data From LocalStorage           *
 *                                                 *
 **************************************************/
-$scope.DataToForm = function (){
-  BindDataToForm ('fservice');
-}
 var frmValue="";
 function BindDataToForm(frmValue) {
     switch (frmValue) {
@@ -357,14 +365,14 @@ function BindDataToForm(frmValue) {
           $scope.namesTenant        = $scope.sessionNames;
           $scope.addressTenant      = $scope.sessionAddress;
           $scope.movilPhoneTenant   = $scope.sessionMovilPhone;
-          $scope.localPhoneTenant = $scope.sessionLocalPhone;
+          $scope.localPhoneTenant   = $scope.sessionLocalPhone;
           $scope.emailTenant        = $scope.sessionMail;
           /*---------------------------------*/
         break;
       case "fkeydown":
         if ($scope.sessionidProfile==1  || $scope.sessionidProfile==4){
           $scope.namesUser      = $scope.sessionNames;
-          $scope.addressUser    = $scope.sessionAddress;
+          $scope.addressUser    = $scope.sessionNameAdress;
           $scope.movilPhoneUser = $scope.sessionMovilPhone;
           $scope.localPhoneUser = $scope.sessionLocalPhone;
           $scope.emailUser      = $scope.sessionMail;
@@ -376,7 +384,7 @@ function BindDataToForm(frmValue) {
           $scope.localPhoneTenant = " ";
         }else if ($scope.sessionidProfile==3){
           $scope.namesUser        = $scope.sessionNames;
-          $scope.addressUser      = $scope.sessionAddress;
+          $scope.addressUser      = $scope.sessionNameAdress;
           $scope.movilPhoneUser   = $scope.sessionMovilPhone;
           $scope.localPhoneAdUser = $scope.sessionLocalPhone;
           $scope.emailUser        = $scope.sessionMail;
@@ -389,21 +397,21 @@ function BindDataToForm(frmValue) {
         }
         break;
       case "fservice":
-        if ($scope.sessionidProfile==1  || $scope.sessionidProfile==2 || $scope.sessionidProfile==4){
-          $scope.namesAdmin     = "";
-          $scope.movilPhoneAdmin= "";
+        if ($scope.sessionidProfile==2 || $scope.sessionidProfile==4){
+          $scope.namesAdmin      = "";
+          $scope.movilPhoneAdmin = "";
           $scope.localPhoneAdmin = "";
           $scope.emailAdmin      = "";
-          $scope.namesAdmin     = $scope.sessionNames;
-          $scope.movilPhoneAdmin= $scope.sessionMovilPhone;
+          $scope.namesAdmin      = $scope.sessionNames;
+          $scope.movilPhoneAdmin = $scope.sessionMovilPhone;
           $scope.localPhoneAdmin = $scope.sessionLocalPhone;
           $scope.emailAdmin      = $scope.sessionMail;
-          $scope.CompanyName = $scope.sessionrazonSocial;
+          $scope.CompanyName     = $scope.sessionNameCompany; 
         }
       break;
       case "frmOther":
         $scope.o_email  = $scope.sessionMail;
-        $scope.o_address= $scope.sessionAddress;
+        $scope.o_address= $scope.sessionNameAdress;
       break;
       default: 
         
@@ -453,16 +461,19 @@ function validateuser($http,$scope){
                     inform.add('Bienvenido Sr/a '+ $scope.rsJSON.fullNameUser,{
                       ttl:3000, type: 'success'
                     });
+                    console.log(data.data.response);
                  localStorage.setItem("idUser", $scope.rsJSON.idUser);
                  localStorage.setItem("Nombres", $scope.rsJSON.fullNameUser);
                  localStorage.setItem("Email", $scope.rsJSON.emailUser);
-                 localStorage.setItem("Direccion", $scope.rsJSON.addresUser);
+                 localStorage.setItem("idAddress", $scope.rsJSON.addresUser);
+                 localStorage.setItem("nameAddress", $scope.rsJSON.nameAdress);
                  localStorage.setItem("TelefonoM", $scope.rsJSON.phoneNumberUser);
                  localStorage.setItem("TelefonoL", $scope.rsJSON.phoneLocalNumberUser);
                  localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
                  localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
                  localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
-                 localStorage.setItem("nameCompany  ", $scope.rsJSON.nameCompany);
+                 localStorage.setItem("idCompany", $scope.rsJSON.idCompany);
+                 localStorage.setItem("nameCompany", $scope.rsJSON.nameCompany);
                  localStorage.setItem("Token", true);
                  location.href = "sistema.html"
 
@@ -503,7 +514,22 @@ $scope.sysFunctionSend = function() {
       blockUI.stop();
     }, 2500);
 };
-
+/**************************************************
+*                                                 *
+*   Radio Button function to select the tenant    *
+*                                                 *
+**************************************************/
+$scope.ndpto = 0;
+$scope.optionDepto = function (n){
+    $scope.ndpto = n;
+  if(n==1 && $scope.idProfileKf==3){
+      $scope.ndpto=1;
+  }else
+  if(n==2 && $scope.idProfileKf==3){
+    $scope.ndpto=2;
+  }
+}
+/**************************************************/
 /**************************************************
 *                                                 *
 *               REGISTRO DE USUARIO               *
@@ -1009,6 +1035,7 @@ function closeAllDiv (){
   $scope.loginRegiterButtons = false;
   $scope.btnBack=false;
   $scope.btnShow=true;
+  $scope.userManage = false;
 }
 $scope.closeModal = function(value){
 
@@ -1033,36 +1060,43 @@ $scope.fnShowHide = function(divId, divAction) {
    }else{     
     switch (divId) {
       case "uLogin":
-          closeAllDiv();
-        if(divAction=="open"){
-          $scope.uLogin = true;
-        }else{
-          closeAllDiv();
-        }
-        break;
-        case "ruprofile":
-          closeAllDiv();
-          cleanForms();
-        if(divAction=="open"){
-          $('#ProfileModalUser').modal('toggle');
-          $scope.ruprofile = true;
-        }else{
-          closeAllDiv();
-        }
+            closeAllDiv();
+          if(divAction=="open"){
+            $scope.uLogin = true;
+          }else{
+            closeAllDiv();
+          }
+      break;
+      case "user":
+            closeAllDiv();
+          if(divAction=="open"){
+            $scope.userManage = true;
+          }else{
+            closeAllDiv();
+          }
+      break;
+      case "ruprofile":
+            cleanForms();
+          if(divAction=="open"){
+            $('#ProfileModalUser').modal('toggle');
+            $scope.ruprofile = true;
+          }else{
+            closeAllDiv();
+          }
         break;
         case "uRegister":
             $('#RegisterModalUser').modal('toggle');
-        break;
+      break;
       case "rukeyup":
-          closeAllDiv();
-          cleanForms();
-        if(divAction=="open"){
-          $scope.rukeyup = true;
-          selectSwitch ('t');
-        }else{
-          closeAllDiv();
-        }
-        break;
+            closeAllDiv();
+            cleanForms();
+          if(divAction=="open"){
+            $scope.rukeyup = true;
+            selectSwitch ('t');
+          }else{
+            closeAllDiv();
+          }
+      break;
       case "rukeydown":
           closeAllDiv();
           cleanForms();
@@ -1072,18 +1106,19 @@ $scope.fnShowHide = function(divId, divAction) {
         }else{
           closeAllDiv();
         }
-        break;
+      break;
       case "ruservice":
           closeAllDiv();
           cleanForms();
         if(divAction=="open"){
           $scope.ruservice = true;  
           selectSwitch ('s');
+          BindDataToForm ('fservice');
         }else{
           closeAllDiv();
           $scope.ruservice = false;
         }
-        break;
+      break;
       case "ruother":
           closeAllDiv();
         if(divAction=="open"){
@@ -1093,9 +1128,9 @@ $scope.fnShowHide = function(divId, divAction) {
           closeAllDiv();
           $scope.ruother = false;
         }
-        break;
+      break;
 
-        case "home":
+      case "home":
           closeAllDiv();
         if(divAction=="open"){
           $scope.home = true;
@@ -1104,7 +1139,7 @@ $scope.fnShowHide = function(divId, divAction) {
           $scope.home = false;
         }
         
-        break;
+      break;
       default: 
         
     }

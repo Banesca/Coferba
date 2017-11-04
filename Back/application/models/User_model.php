@@ -129,7 +129,7 @@ class User_model extends CI_Model
     /* LISTADO DE FILTROS */
     public function getFilterForm() {
 
-       $query = null;
+        $query = null;
         $profile = null;
         $status = null;
         $type = null;

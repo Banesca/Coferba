@@ -6,6 +6,8 @@
 
 <!-- Default Style Sheets -->
 <link href="css/bootstrap_system.css" type="text/css" rel="stylesheet" media="all">
+<!-- Bootstrap CSS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
 <link rel="stylesheet" type="text/css" afrres="true" href="css/acsportal.packed.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/cloud.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/fa.min.css">
@@ -80,25 +82,31 @@
 							          <br>Pedidos
 							       </a>
 							    </li>
-							    <li id="m_monitor">
+							    <li id="m_user" ng-show="sessionidProfile!=2">
+							       <a href="#Usuarios" ng-click="fnShowHide('', 'open')"> 
+							          <i class="icon-building"></i>
+							          <br>Gestion de Departamento
+							       </a>
+							    </li>
+							    <li id="m_monitor" ng-show="sessionidProfile!=3">
 							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
 							          <i class="icon-desktop"></i>
 							          <br>Monitor de pedidos
 							       </a>
 							    </li>
 							    <li id="m_report">
-							       <a href="#Reportes"> 
+							       <a href="#Reportes" ng-show="sessionidProfile==1"> 
 							          <i class="icon-th-large"></i>
 							          <br>Reportes
 							       </a>
 							    </li>
-							    <li id="m_user">
-							       <a href="#Usuarios"> 
+							    <li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
+							       <a href="#Usuarios" ng-click="fnShowHide('user', 'open')"> 
 							          <i class="icon-group"></i>
 							          <br>Gestion de usuarios
 							       </a>
 							    </li>
-							     <li id="m_config">
+							     <li id="m_config" ng-show="sessionidProfile==1">
 							       <a href="#Config"> 
 							          <i class="icon-cogs"></i>
 							          <br>Configuracion
@@ -178,26 +186,28 @@
 								</div>
 							<!-- Actions Button -->
 								<div class="form-actions">
-									<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-								  	<a class="lostPass">Olvide mi contrase&#241a <i class="icon-cogs icon-2x"></i></a>
+									<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN </button>
 							  	</div>
 							</fieldset>
 						</form>
+							<!-- Login&Register Button--> 
+							
+							<div ng-show="!Token" class="row">
+								<hr class="style14">
+							  	<div class="col-xs-12 col-md-8">
+							  		<br>
+							  		<a id="lr2" ng-click="fnShowHide('uRegister', 'open')" class="btn btn-default">Crear Cuenta</a>
+							  	</div>
+							  	<div class="col-xs-6 col-md-4">
+							  		<a class="lostPass"><i class="icon-cogs icon-2x"></i> Olvide mi clave </a>
+							  	</div>
+							</div>
+						    <!-- //Login&Register Button-->
  					</div> 
 			</div>
 		</div>
 	</div>    
-	<!-- Login&Register Button--> 
-    <div id="loginRegister" class="agileits-w3layouts" ng-show="!Token">
-      <div class="container">
-        <div class="banner-w3text">
-          <div>
-            <a id="lr2" ng-click="fnShowHide('uRegister', 'open')" class="w3btn">Registrar</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- //Login&Register Button-->
+
     <!-- USER REGISTER FORM -->
 	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
@@ -219,7 +229,7 @@
 										    <div class="col-md-4 selectContainer">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:showProfile3" ng-model="$parent.idProfileKf"  required autofocus >
+													    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfiles" ng-model="$parent.idProfileKf"  required autofocus >
 													    	<option value=""></option>
 												    	</select>
 											  	</div>
@@ -227,39 +237,25 @@
 										</div>
 										<!-- Company List-->
 										      
-										<div ng-show="idProfileKf==2" class="form-group">
-										  <label class="col-md-4 control-label">Empresa</label>  
+										<div class="form-group" ng-show="sessionidProfile==1">  
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-											  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-model="$parent.idCompanyKf"  >
+											  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="$parent.idCompanyKf"  >
 													    	<option value=""></option>
 												    	</select>
 											    </div>
 										  </div>
 										</div>
 										<!-- List Address-->
-										      
-										<div class="form-group" ng-disable="idProfileKf!=2" ng-show="idProfileKf!=2">
+      
+										<div class="form-group" ng-show="sessionidProfile==1">
 										  <label class="col-md-4 control-label">Direcci&#243n</label>  
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="$parent.idAddressKf" autofocus >
-													    	<option value=""></option>
-												    	</select>
-											    </div>
-										  </div>
-										</div>
-										<!-- List Department by address-->
-										      
-										<div class="form-group" ng-show="idProfileKf==3">
-										  <label class="col-md-4 control-label">Departamento</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="idProfileKf==3" autofocus >
-													    	<option value=""> </option>
+											  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="$parent.idAddressKf" autofocus >
+													    	<option value="">Seleccione una direccion</option>
 												    	</select>
 											    </div>
 										  </div>
@@ -335,7 +331,7 @@
 										  <label class="col-md-4 control-label">Telefono Movil</label>  
 										    <div class="col-md-4">
 											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 											  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phoneNumberUser"  type="text" required autofocus />
 											    </div>
 										  </div>
@@ -380,6 +376,7 @@
 	<div class="main_container" ng-show="Token">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div  ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
+			<div  ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
 			<div  ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
 			<div  ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
 			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
