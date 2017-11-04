@@ -209,5 +209,21 @@ class User extends REST_Controller {
         }
     }
 
+    public function attendant_post()
+	{
+
+        $user = $this->user_model->addAttendant($this->post('attendant'));   
+             
+        if(!is_null($user))
+        {
+        	$this->response(array('response' => $user),200);
+        }
+        else
+        {
+        	$this->response(array('error' => "Usuario Invalido"),203);
+        }
+               
+	}
+
 }
 ?>

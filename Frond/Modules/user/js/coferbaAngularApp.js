@@ -1174,7 +1174,7 @@ $scope.dhboard = function(){
   }
 
 
-  $http.post("http://localhost/coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
+  $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
          $scope.listTickt =  sucess.data.response;
 

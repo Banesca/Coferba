@@ -98,3 +98,19 @@ METODO: POST
 ----------------------    GET mail configurado--------------
 http://127.0.0.1/Coferba/Back/index.php/User/mailsmtp
 METODO:GET
+
+
+----------------------   POST  ADD ENCARGADO --------------
+http://localhost/Coferba/Back/index.php/User/attendant
+
+{
+  
+  "attendant":
+  {
+  "nameAttendant" : "prueba",
+"idAddresKf" : "1",
+"phoneAttendant" : "31321321321",
+"mailAttendant" : "DFSD@SDDDS.DF",
+"hoursWork" : "08:40"
+  }
+}

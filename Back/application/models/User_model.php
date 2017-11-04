@@ -124,7 +124,30 @@ class User_model extends CI_Model
         }
     }
 
+
+    /* AGRAGR NUEVO USUARIO EMPRESA */
+    public function addAttendant($user) {
+        
+                /* CREAMOS UN USUARIO */
+                $this->db->insert('tb_attendant', array(
+                    'nameAttendant' => $user['nameAttendant'],
+                    'idAddresKf' => $user['idAddresKf'],
+                    'phoneAttendant' => $user['phoneAttendant'],
+                    'mailAttendant' => $user['mailAttendant'],
+                    'hoursWork' => $user['hoursWork']
+                        )
+                );
+        
+                if ($this->db->affected_rows() === 1) {
+                    $idUser = $this->db->insert_id();
+                    return $idUser;
+                } else {
+                    return null;
+                }
+            }
  
+
+    
 
     /* LISTADO DE FILTROS */
     public function getFilterForm() {
