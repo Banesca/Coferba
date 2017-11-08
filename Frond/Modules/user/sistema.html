@@ -254,7 +254,7 @@
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="$parent.idAddressKf" autofocus >
+											  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf==1" ng-model="$parent.idAddressKf" autofocus >
 													    	<option value="">Seleccione una direccion</option>
 												    	</select>
 											    </div>
@@ -321,7 +321,7 @@
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-											  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phonelocalNumberUser"  type="text" required autofocus />
+											  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phonelocalNumberUser"  type="text" required autofocus />
 											    </div>
 										  </div>
 										</div>
@@ -376,7 +376,7 @@
 	<div class="main_container" ng-show="Token">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div  ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
-			<div  ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
+			<div id="formUserM"  ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
 			<div  ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
 			<div  ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
 			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
@@ -390,8 +390,8 @@
 				    <div class="modal-content">
 				      	<div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="registerTenant()" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="registerTenant()" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="registerTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="registerTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 				      	</div>
 				      	<div class="modal-body pre-scrollable">
 	                				<table class="table  table-striped ">
@@ -445,7 +445,7 @@
 					            	</div>
 					            		<div class="panel-body" style="overflow-y: scroll;">
 											<!-- FORM CONTAINER-->
-						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="sendData()">
+						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="registerTenant('save')">
 												<fieldset>
 												<!-- Select profile -->
 												   

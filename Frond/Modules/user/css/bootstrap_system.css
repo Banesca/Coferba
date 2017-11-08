@@ -3381,8 +3381,8 @@ fieldset[disabled] .btn-info.active {
 }
 .btn-warning {
   color: #fff;
-  background-color: #ADFF00;
-  border-color: #ADFF00;
+  background-color: #ffc107;
+  border-color: #ffc107;
 }
 .btn-warning:hover,
 .btn-warning:focus,
@@ -3391,8 +3391,8 @@ fieldset[disabled] .btn-info.active {
 .btn-warning.active,
 .open > .dropdown-toggle.btn-warning {
   color: #fff;
-  background-color: #ADFF00;
-  border-color: #ADFF00;
+  background-color: #ffc107;
+  border-color: #ffc107;
 }
 .btn-warning:active,
 .btn-warning.active,

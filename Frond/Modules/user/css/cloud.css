@@ -397,10 +397,6 @@ border-bottom: 1px solid #dadada;
     font-weight: normal;
 }
 
-.btn-group.open .dropdown-toggle {
-    background-color: #225FAF;
-}
-
 .table-bordered th, .table-bordered td {
     vertical-align: middle;
 }
@@ -514,7 +510,7 @@ a.btn-submit {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffffffff', GradientType=0);
   background: none; 
  }
-.sub-navi ul.dropdown-menu .divider { display:none; }
+.sub-navi ul.dropdown-menu { display:none; }
 .sub-navi li.active:before { border-bottom: 5px solid #fff;border-left: 5px solid transparent;border-right: 5px solid transparent;bottom: 0px;content: "";display: inline-block;left: 50%;margin-left: -8px;position: absolute;     }
 
 .jumbotron:before { background: none; }
