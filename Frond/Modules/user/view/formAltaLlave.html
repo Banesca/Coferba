@@ -9,26 +9,27 @@
 		    		<div ng-switch on="mySwitch">
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
 							<!-- Text Address-->      
-							<div class="form-group" ng-disable="idProfileKf!=2" ng-show="idProfileKf!=2">
+							<div class="form-group" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
 							  	<label class="col-md-4 control-label">Direcci&#243n</label>
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="select.idAddressAtt" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=2" ng-model="select.idAddressAtt" autofocus >
 											    <option value=""></option>
 										    </select>
 									    </div>
 								  	</div>
 							</div>
 							<!-- Encargado First Name & Lastname -->
-							<div class="form-group" ng-disable="idProfileKf!=2" ng-show="idProfileKf!=2">
+							<div class="form-group" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
 							  	<label class="col-md-4 control-label">Nombres</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  		<select name="nameAtt" class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="idProfileKf!=2" ng-change="getAttData()" ng-model="select.nameAtt" autofocus >
+									  		<select name="nameAtt" class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData()" ng-model="select.nameAtt" autofocus >
 											    <option value=""></option>
 										    </select>
+										    <span ng-show="Attendant && sessionidProfile!=3" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 									    </div>
 								  	</div>
 							</div>
@@ -87,7 +88,7 @@
 								        <select ng-model="select.idDepartmentKf" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto" required autofocus >
 								        	<option value="" >Seleccione</option>
 									    	</select>
-									    <span style="cursor: pointer;" ng-click="searchTenant('a')" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="registerTenant('create')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+									    <span style="cursor: pointer;" ng-click="searchTenant('a')" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysRegisterTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 								  	</div>
 								</div>
 							</div>

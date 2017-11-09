@@ -383,15 +383,15 @@
 			<div ng-show="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
 			<div ng-show="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
-		<!-- Modal -->
+		<!-- LIST TENANT MODAL -->
 			<div id="ModalListTenant" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
 			    <!-- Modal content-->
 				    <div class="modal-content">
 				      	<div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="registerTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="registerTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="sysRegisterTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="sysRegisterTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 				      	</div>
 				      	<div class="modal-body pre-scrollable">
 	                				<table class="table  table-striped ">
@@ -432,7 +432,7 @@
 			  		</div>
 				</div>
 			</div>
-		<!-- //Modal -->
+		<!-- // LIST TENANT MODAL -->
 		<!-- TENANT REGISTER FORM -->
 			<div id="RegisterModalTenant" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
@@ -445,7 +445,7 @@
 					            	</div>
 					            		<div class="panel-body" style="overflow-y: scroll;">
 											<!-- FORM CONTAINER-->
-						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="registerTenant('save')">
+						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="sysRegisterTenant('addT')">
 												<fieldset>
 												<!-- Select profile -->
 												   
@@ -559,6 +559,95 @@
 					</div>
 				</div>
 			</div>
+		<!-- // TENANT REGISTER FORM -->
+		<!-- ATTENDANT REGISTER FORM -->
+			<div id="RegisterModalAtt" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
+			  	<div class="modal-dialog modal-lg" >
+				    <div class="modal-content">
+				      	<div class="modal-body">
+							<div class="agileits-w3layouts"> 
+					          	<div class="panel panel-default">
+					              	<div class="panel-heading">
+					                	<h3 class="panel-title">NUEVO ENCARGADO<a ng-click="closeModal('att')" title="Cerrar" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+					            	</div>
+					            		<div class="panel-body" style="overflow-y: scroll;">
+											<!-- FORM CONTAINER-->
+						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="sysRegisterAtt('save')">
+												<fieldset>
+												<!-- Form First Name -->
+												<div class="form-group">
+												  <label class="col-md-4 control-label">Nombre</label>  
+													  <div class="col-md-4">
+														  <div class="input-group">
+															  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+															  <input  name="fnameAtt" autofocus="true" placeholder="Nombre" class="form-control" ng-model="$parent.fnameAtt"  type="text" required autofocus/>
+														  </div>
+													  </div>
+												</div>
+												<!-- Form Last Name -->
+
+												<div class="form-group">
+												  <label class="col-md-4 control-label" >Apellido</label> 
+												  	<div class="col-md-4">
+														<div class="input-group">
+													  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+													  		<input name="lnameAtt" placeholder="Apellido" class="form-control" ng-model="$parent.lnameAtt" type="text" required autofocus />
+														</div>
+												  	</div>
+												</div>
+												<!-- Text Mail-->
+
+												<div class="form-group">
+												 <label class="col-md-4 control-label">E-Mail</label>  
+												   <div class="col-md-4">
+												    <div class="input-group">
+												    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+												  		<input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="$parent.emailAtt"  type="emailAtt" required autofocus />
+												    </div>
+												  </div>
+												</div>
+												<!-- Text Phone-->
+												       
+												<div class="form-group">
+												  <label class="col-md-4 control-label">Telefono Local</label>  
+												    <div class="col-md-4">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+													  		<input name="phoneLocalAtt" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phonelocalAtt"  type="text" required autofocus />
+													    </div>
+												  </div>
+												</div>
+												<!-- Text Phone-->
+												       
+												<div class="form-group">
+												  <label class="col-md-4 control-label">Telefono Movil</label>  
+												    <div class="col-md-4">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+													  		<input name="phoneMovilAtt" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phoneMovilAtt"  type="text" required autofocus />
+													    </div>
+												  </div>
+												</div>
+
+												<!-- Actions Button -->
+												<div class="form-group">
+												  <label class="col-md-4 control-label"></label>
+												  <div class="col-md-4">
+												    <button type="submit" class="btn btn-primary" >Registrar </button>
+													<button type="reset" ng-click="closeModal('att')" class="btn btn-primary" >Cancelar </button>
+												  </div>
+												</div>
+
+												</fieldset>
+											</form>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- // ATTENDANT REGISTER FORM -->
 
 	</div>
 	<!-- Response Inform Meessage plugin -->

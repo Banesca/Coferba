@@ -125,7 +125,7 @@ class User_model extends CI_Model
     }
 
 
-    /* AGRAGR NUEVO USUARIO EMPRESA */
+    /* AGREGAR NUEVO ENCARGADO DE EDIFICIO */
     public function addAttendant($user) {
         
                 /* CREAMOS UN USUARIO */
@@ -133,6 +133,7 @@ class User_model extends CI_Model
                     'nameAttendant' => $user['nameAttendant'],
                     'idAddresKf' => $user['idAddresKf'],
                     'phoneAttendant' => $user['phoneAttendant'],
+                    'phoneLocalAttendant' => $user['phoneLocalAttendant'],
                     'mailAttendant' => $user['mailAttendant'],
                     'hoursWork' => $user['hoursWork']
                         )
