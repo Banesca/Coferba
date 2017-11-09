@@ -85,6 +85,10 @@ class Department_model extends CI_Model
     }
 
 
+    
+    
+
+
 
 	
     /* AGREGRA NUEVO USUARIO EMPRESA */

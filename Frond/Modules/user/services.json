@@ -18,7 +18,9 @@ METODO:POST
     "numberItemes" :3,
     "idTypeDeliveryKf" : 1,
     "description" : "aqui escribo algo",
-    "idAttendantKf":1
+    "idAttendantKf":1,
+    "idBranchKf" : 1,// OPCIONAL PARA SUCARSALES DE UNA EMPRESA 
+    "idCompanyKf":1// OPCIONAL PARA EMPRES 
   }
 }
 /*BAJA	LLAVERO*/
@@ -34,7 +36,9 @@ METODO:POST
       "numberItemDisabled" : 2,
       "description" : "aqui escribo algo",
       "idOpcionLowTicketKf": 1,
-      "idAttendantKf":1
+      "idAttendantKf":1,
+      "idBranchKf" : 1,// OPCIONAL PARA SUCARSALES DE UNA EMPRESA 
+      "idCompanyKf":1// OPCIONAL PARA EMPRES 
   }
 }
 /*ADMINISTRADOR O PROPIETARIO*/

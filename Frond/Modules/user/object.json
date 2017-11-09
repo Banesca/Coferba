@@ -114,3 +114,7 @@ http://localhost/Coferba/Back/index.php/User/attendant
 "hoursWork" : "08:40"
   }
 }
+
+
+----- TODALS LAS SUCIRSALES POR ID DE EMPRESA  GET ---
+http://localhost/Coferba/Back/index.php/DIreccion/companyByid/2

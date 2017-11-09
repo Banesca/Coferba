@@ -24,6 +24,28 @@ class Direccion_model extends CI_Model
      }
 
 
+      // GET DE LISTADO BUSQUEDA DE sucursales de una empresa //
+      public function companyByid($id) {
+        $quuery = null;
+        $rs = null;
+
+        
+            $this->db->select("*")->from("tb_branch");
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_branch.idCompanyKf', 'left');
+            $this->db->where("tb_company.idCompany =", $id);
+
+
+            $quuery = $this->db->order_by("tb_branch.branchName", "asc")->get();
+
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            }
+            return null;
+        
+    }
+
+
      public function byidTenant($id) {
         $quuery = null;
         $rs = null;

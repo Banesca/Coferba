@@ -80,7 +80,11 @@ private function formatCode($value) {
             'idProfileKf' => @$ticket['idProfileKf'],
             
             'idOpcionLowTicketKf' => @$ticket['idOpcionLowTicketKf'],
-            'idAttendantKf' => @$ticket['idAttendantKf']
+            'idAttendantKf' => @$ticket['idAttendantKf'],
+
+            'idBranchKf' => @$ticket['idBranchKf'],
+            'idCompanyKf' => @$ticket['idCompanyKf'],
+            
 
 		)
         );
