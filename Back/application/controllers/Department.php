@@ -123,6 +123,21 @@ class Department extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }
+    /* SERVICIO GET QUE RETORNA LOS DEPARTAMENTO SEGUN EL ID DE DIRECION Y ID DEL INQUILINO */
+    public function byIdTenantYDireccion_get($id, $idT) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $department = null;
+        $department = $this->department_model->byIdTenantYDireccion($id, $idT);
+
+        if (!is_null($department)) {
+            $this->response($department, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 
     /* SERVICIO GET QUE OBTIENE LOS USUARIOS POR FILTRO */
     public function search_post() {

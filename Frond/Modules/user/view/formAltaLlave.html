@@ -2,10 +2,10 @@
 <div class="container">
   	<div class="panel panel-default">
       	<div class="panel-heading">
-        	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}} & DATOS DEL ENCARGADO<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+        	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}} <a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
     	</div>
     		<div class="panel-body">
-		    <form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); CallFilterDpto(); getAllAddress();" ng-submit="newTicket('up')" >
+		    <form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); getAllAddress(); getAllAddressByIdTenant();" ng-submit="newTicket('up')" >
 		    		<div ng-switch on="mySwitch">
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
 							<!-- Text Address-->      
@@ -14,7 +14,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=2" ng-model="select.idAddressAtt" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress | unique:'nameAdress'" ng-required="sessionidProfile!=2" ng-model="select.idAddressAtt" autofocus >
 											    <option value=""></option>
 										    </select>
 									    </div>
@@ -39,7 +39,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="localPhoneAtt" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.localPhoneAtt" type="text" required autofocus />
+									  		<input name="localPhoneAtt" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneAtt" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -80,15 +80,15 @@
 							 	</div>
 							</div>
 							<!-- Select Department -->
-							<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant==2) || sessionidProfile==4" class="form-group"> 
+							<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant!=0) || sessionidProfile==4" class="form-group"> 
 							  <label class="col-md-4 control-label">Departamento</label>
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								        <select ng-model="select.idDepartmentKf" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto" required autofocus >
+								        <select ng-model="select.idDepartmentKf" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDptoT " required autofocus >
 								        	<option value="" >Seleccione</option>
 									    	</select>
-									    <span style="cursor: pointer;" ng-click="searchTenant('a')" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysRegisterTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+									    <span style="cursor: pointer;" ng-click="searchTenant('a')" ng-show="typeTenant!=1" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysRegisterTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 								  	</div>
 								</div>
 							</div>

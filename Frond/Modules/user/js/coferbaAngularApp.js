@@ -1,9 +1,22 @@
- var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "showdown", "ngAnimate"]);
+var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "showdown", "ngAnimate"]);
     app.config(function(blockUIConfig) {
       // Tell blockUI not to mark the body element as the main block scope.
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = true;
     });
+app.filter('unique', function() {
+    return function(input, key) {
+        var unique = {};
+        var uniqueList = [];
+        for(var i = 0; i < input.length; i++){
+            if(typeof unique[input[i][key]] == "undefined"){
+                unique[input[i][key]] = "";
+                uniqueList.push(input[i]);
+            }
+        }
+        return uniqueList;
+    };
+});
 app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
 /**************************************************************/
 
@@ -114,28 +127,29 @@ $http({
      $scope.rsJSON = [ ];
      $scope.Token=false;
      $scope.loginRegiterButtons = true;
-     $scope.Token              = localStorage.getItem("Token");
-     $scope.sessionIdUser      = localStorage.getItem("idUser");
-     $scope.sessionNames       = localStorage.getItem("Nombres");
-     $scope.sessionMail        = localStorage.getItem("Email");
-     $scope.sessionidAddress   = localStorage.getItem("idAddress");
-     $scope.sessionNameAdress  = localStorage.getItem("nameAddress");
-     $scope.sessionMovilPhone  = localStorage.getItem("TelefonoM");
-     $scope.sessionLocalPhone  = localStorage.getItem("TelefonoL");
-     $scope.sessionidProfile   = localStorage.getItem("IdPerfil");
-     $scope.sessionProfileName = localStorage.getItem("nombrePerfil");
-     $scope.sessionidStatus    = localStorage.getItem("IdStatus");
-     $scope.sessionidCompany   = localStorage.getItem("idCompany");
-     $scope.sessionNameCompany = localStorage.getItem("nameCompany");
+     $scope.Token               = localStorage.getItem("Token");
+     $scope.sessionIdUser       = localStorage.getItem("idUser");
+     $scope.sessionNames        = localStorage.getItem("Nombres");
+     $scope.sessionMail         = localStorage.getItem("Email");
+     $scope.sessionidAddress    = localStorage.getItem("idAddress");
+     $scope.sessionNameAdress   = localStorage.getItem("nameAddress");
+     $scope.sessionMovilPhone   = localStorage.getItem("TelefonoM");
+     $scope.sessionLocalPhone   = localStorage.getItem("TelefonoL");
+     $scope.sessionidProfile    = localStorage.getItem("IdPerfil");
+     $scope.sessionProfileName  = localStorage.getItem("nombrePerfil");
+     $scope.sessionidStatus     = localStorage.getItem("IdStatus");
+     $scope.sessionidCompany    = localStorage.getItem("idCompany");
+     $scope.sessionNameCompany  = localStorage.getItem("nameCompany");
+     $scope.sessionidTenantUser = localStorage.getItem("idTenantUser");
 
 /**************************************************
 *                                                 *
 *            HIDE PROFILES FUNCTION               *
 *         USED IN THE USER REGISTER FORM          *
 **************************************************/
-     $scope.hideProfiles = function(item){
-        return item.idProfile == 3;
-     };
+$scope.hideProfiles = function(item){
+  return item.idProfile == 3;
+};
 /**************************************************/     
 
 /**************************************************
@@ -192,6 +206,23 @@ $scope.getAllAddress = function (){
 
 /**************************************************
 *                                                 *
+*           ADDRESS LIST BY ID TENANT             *
+*                                                 *
+**************************************************/
+$scope.getAllAddressByIdTenant = function (){
+  $http({
+      method : "GET",
+      url : "http://localhost/Coferba/Back/index.php/Direccion/byidTenant/"+$scope.sessionidTenantUser
+    }).then(function mySuccess(response){
+        $scope.ListTenantAddress = response.data;
+    }, function myError (response){
+      
+  });
+}
+/**************************************************/
+
+/**************************************************
+*                                                 *
 *     ATTENDANT LIST BY THE SELECTED ADDRESS      *
 *                                                 *
 **************************************************/
@@ -204,7 +235,6 @@ $scope.getAllAddress = function (){
         url : "http://localhost/Coferba/Back/index.php/User/attendantByIdDirecction/"+idAddressAttKf
       }).then(function mySuccess(response) {
             $scope.listAttendant = response.data;
-            $scope.emailAtt=response.data.mailAttendant;
         }, function myError(response) {
           inform.add('Debe selecionar una direccion para obtener el listado de encargados asociados.',{
                           ttl:2000, type: 'warning'
@@ -276,22 +306,27 @@ $scope.getData = function (n){
     $scope.addressTenant    = "";
     $scope.movilPhoneTenant = "";
     $scope.emailTenant      = "";
-    $scope.localPhoneTenant = ""; 
-  if(n && $scope.sessionidProfile!=3){
+    $scope.localPhoneTenant = "";
+    $scope.tenantNotFound = false;
+  if(n!=0 && $scope.sessionidProfile!=3){
+
       $scope.getAllDeparment();
   }
   if (n==1 && $scope.sessionidProfile==3){
     $scope.typeTenant = 1;
+    $scope.getAllDeparmentByTenant();
     BindDataToForm('ticketTenantData');
-  }else if(n==1 && $scope.sessionidProfile!=3){
-    $scope.typeTenant = 1;
-  }
-  if (n==2 && $scope.sessionidProfile==3){
+  }else if (n==2 && $scope.sessionidProfile==3){
     $scope.typeTenant = 2;
+    $scope.getAllDeparmentByTenant();
+  }
+  if(n==1 && $scope.sessionidProfile!=3){
+    $scope.typeTenant = 1;
     $scope.getAllDeparment();
   }else if(n==2 && $scope.sessionidProfile!=3){
     $scope.typeTenant = 2;
   }
+
 }
 /**************************************************/
 
@@ -312,6 +347,37 @@ $scope.getAllDeparment = function (){
       url : "http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp
     }).then(function mySuccess(response){
           $scope.ListDpto = response.data;
+          console.log(response.data);
+    }, function myError (response){
+        if (response.status=="404"){
+          if ($scope.idAddressKf){
+            inform.add('La direccion selecionada no posee departamentos asignados. Contacte a su administrador.',{
+                          ttl:3000, type: 'error'
+               }); 
+          }
+            $scope.decrementStep(); 
+        }
+  });
+}
+/**************************************************/
+
+/**************************************************
+*                                                 *
+*   DEPARTMENT LIST BY PROPIETARIO AND ADDRESS    *
+*                                                 *
+**************************************************/
+$scope.getAllDeparmentByTenant = function (){
+   var idAddressTmp
+  if (!$scope.idAddressKf){
+      idAddressTmp=$scope.select.idAddressAtt;
+    }else{
+      idAddressTmp=$scope.idAddressKf;
+    }
+  $http({
+      method : "GET",
+      url : "http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser
+    }).then(function mySuccess(response){
+          $scope.ListDptoT = response.data;
           console.log(response.data);
     }, function myError (response){
         if (response.status=="404"){
@@ -387,7 +453,7 @@ $scope.lisTenantByType = function(){
 
 /**************************************************
 *                                                 *
-*     BUSCAR DEPARTAMENTO POR ID DE INQUILINO     *
+*    BUSCAR INQUILINO POR ID DE DEPARTAMENTO      *
 *                                                 *
 **************************************************/
 $scope.searchDptoById = function(){
@@ -492,7 +558,9 @@ $scope.profileUser = function (){
 }
 
 /****** Submit Event at the Login Form ****/
+$scope.isLogin=false;
 $scope.sysLogin = function(formReset) {
+  $scope.isLogin=true;
   frm = formReset;
   $scope.rsJSON="";
   blockUI.start('Validando usuario.');
@@ -533,15 +601,16 @@ function validateuser($http,$scope){
                    localStorage.setItem("TelefonoM", $scope.rsJSON.phoneNumberUser);
                    localStorage.setItem("TelefonoL", $scope.rsJSON.phoneLocalNumberUser);
                    localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
-                    if($scope.rsJSON.idProfileKf==3){
-
-                    }
                    localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
                    localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
                    localStorage.setItem("idCompany", $scope.rsJSON.idCompany);
                    localStorage.setItem("nameCompany", $scope.rsJSON.nameCompany);
                    localStorage.setItem("Token", true);
-                   location.href = "sistema.html";
+                   if($scope.rsJSON.idProfileKf==3){
+                      mail2Search = $scope.rsJSON.emailUser;
+                      $scope.searchTenantByMail();
+                    }else{location.href = "sistema.html"}
+                   
 
             }
         },function (error, data, status) {
@@ -703,6 +772,7 @@ $scope.sysRegisterTenant = function(value){  //Funciones add, search, update, ac
     switch (value) {
       case "open": //Opcion Utilizada para registrar un inquilino de cualquier tipo. 
         $scope.IsTenant=true;
+        mail2Search ="";
         $('#RegisterModalTenant').modal('toggle');
         $('#ModalListTenant').modal('hide');
       break;
@@ -710,15 +780,15 @@ $scope.sysRegisterTenant = function(value){  //Funciones add, search, update, ac
       /*------------------------------------------------------------------------------*/
       case "search": //Buscamos en la tabla tb_tenant por el parametro email.
         if($scope.IsTenant==false){mail2Search=$scope.emailUser;}else if($scope.IsTenant==true){mail2Search=$scope.emailT}
+        $scope.tSearch=true;
         $scope.searchTenantByMail();
       break;
       /*------------------------------------------------------------------------------*/
       case "update": //Opcion Usada para actualizados datos de un usuario de tipo propietario o un inqulino normal.
-        $scope.tSearch=true;
         if($scope.rsTenantData){
-            $scope.idTenantmp   = $scope.rsTenantData.idTenant;
+            $scope.idTenantmp  = "";
+            $scope.idTenantmp  = $scope.rsTenantData.idTenant;
             $scope.editTenant($http, $scope);
-            console.log(getData2UpdateTenant());
             if ($scope.IsTenant==true){
               $('#RegisterModalTenant').modal('hide'); //Hide the modal windows
               if($scope.typeTenant==1){
@@ -735,9 +805,7 @@ $scope.sysRegisterTenant = function(value){  //Funciones add, search, update, ac
       break;
       /*------------------------------------------------------------------------------*/
       case "addT": //Opcion Usada para registrar los datos de un usuarios [propietario] en la tabla tenant o un inquilino normal.
-            $scope.tSearch=true;
             $scope.addTenant($http, $scope);
-            console.log(getTenantData2Add());
             if ($scope.IsTenant==true){
               $('#RegisterModalTenant').modal('hide'); //Hide the modal windows
               if($scope.typeTenant==1){
@@ -749,22 +817,15 @@ $scope.sysRegisterTenant = function(value){  //Funciones add, search, update, ac
               inform.add($scope.messageInform+' '+$scope.fnameT+' ha sido registrado satisfactoriamente.',{
                   ttl:3000, type: 'success'
               });
-                alert("HACE EL SEARCH");
-                $scope.sysRegisterTenant('search');
-                alert("BIND DATA");
                 $scope.sysRegisterTenant('data');
                 $scope.incrementStep();
             }     
       break;
       /*------------------------------------------------------------------------------*/
-      case "data": //Caso usado cuando un [admin / propietario] registran un inquilino y carga la data en el form de Ticket
-          if($scope.rsTenantData){
-            $scope.idTenantKf       =  $scope.rsTenantData.idTenant;
-            $scope.namesTenant      =  $scope.rsTenantData.fullNameTenant;
-            $scope.localPhoneTenant =  $scope.rsTenantData.phoneNumberContactTenant;
-            $scope.movilPhoneTenant =  $scope.rsTenantData.phoneNumberTenant;
-            $scope.emailTenant      =  $scope.rsTenantData.emailTenant;
-          }
+       case "data":
+        $scope.tSearch=false;
+        mail2Search=$scope.emailT;
+        $scope.searchTenantByMail();
       break;
       default:
     };  
@@ -781,14 +842,27 @@ $scope.searchTenantByMail = function (){
         url : "http://localhost/Coferba/Back/index.php/Tenant/findByEmail/"+mail2Search
       }).then(function mySuccess(response) {
             $scope.rsTenantData = response.data;
-            alert($scope.tSearch);
-            if($scope.tSearch==true){$scope.sysRegisterTenant('update');$scope.tSearch=false;}
+            if($scope.isLogin==true){
+              $scope.idTenantmp = response.data.idTenant;
+              localStorage.setItem("idTenantUser", $scope.idTenantmp);
+              location.href = "sistema.html"
+            }
+            if($scope.tSearch==false){ //Cargamos el form del Ticket con la data del inquilino.
+              $scope.idTenantKf       =  $scope.rsTenantData.idTenant;
+              $scope.namesTenant      =  $scope.rsTenantData.fullNameTenant;
+              $scope.localPhoneTenant =  $scope.rsTenantData.phoneNumberContactTenant;
+              $scope.movilPhoneTenant =  $scope.rsTenantData.phoneNumberTenant;
+              $scope.emailTenant      =  $scope.rsTenantData.emailTenant;
+            }
+            console.log("INQUILINO ENCONTRADO");
+            console.log(response.data);
+            if($scope.tSearch==true){console.log("INQUILINO ENCONTRADO --> ACTUALIZADO DATOS"); $scope.sysRegisterTenant('update');$scope.tSearch=false;}
         }, function myError(response) {
-            console.log("INQUILINO NO ENCONTRADO --> INICIO DE REGISTRO")
-            if($scope.tSearch==true){$scope.sysRegisterTenant('addT'); $scope.tSearch=false;}
+            if($scope.tSearch==true){console.log("INQUILINO NO ENCONTRADO --> INICIO DE REGISTRO"); $scope.sysRegisterTenant('addT'); $scope.tSearch=false;}
       });
 };
 /**************************************************/
+
 /**************************************************
 *                                                 *
 *               REGISTRO DE INQUILINO             *
@@ -798,6 +872,7 @@ $scope.addTenant = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/Tenant", getTenantData2Add(),setHeaderRequest())
       .then(function (sucess, data) {
       console.log("Registrados Datos del inquilino");
+      console.log(getTenantData2Add());
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -851,6 +926,7 @@ $scope.editTenant = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/Tenant/update", getData2UpdateTenant())
       .then(function (sucess, data) {
         console.log("Los Datos han sido actualizados");
+        console.log(getData2UpdateTenant());
     },function (error, data,status) {
         if(status == 404){alert("!Informacion "+status+data.error+"info");}
         else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -918,6 +994,9 @@ $scope.sysRegisterAtt = function(value){
       
     break;
     case "save":
+        $scope.localPhoneAtt="";
+        $scope.movilPhoneAtt="";
+        $scope.emailAtt     ="";
         $scope.addAttendant($http, $scope);
     break;
     default:
@@ -930,7 +1009,9 @@ $scope.addAttendant = function ($http, $scope){
         inform.add('Encargado registrado satisfactoriamente',{
                 ttl:2000, type: 'success'
         });
+        console.log(getAttData2Add());
         $('#RegisterModalAtt').modal('hide');
+        $scope.getAllAttendant();
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -943,12 +1024,12 @@ function getAttData2Add () {
             {
                   attendant:
                         {
-                          nameAttendant       : $scope.fnameAtt+' '+$scope.lnameAtt,
+                          nameAttendant       : $scope.fnameAttd+' '+$scope.lnameAttd,
                           idAddresKf          : $scope.select.idAddressAtt,
-                          phoneAttendant      : $scope.phoneMovilAtt,
-                          phoneLocalAttendant : $scope.phonelocalAtt,
+                          phoneAttendant      : $scope.phoneMovilAttd,
+                          phoneLocalAttendant : $scope.phonelocalAttd,
                           hoursWork           : null,
-                          mailAttendant       : $scope.emailAtt
+                          mailAttendant       : $scope.emailAttd
                         }
             };
   return attendant;
@@ -1008,18 +1089,18 @@ $scope.newTicket = function(opt){
 *                                                 *
 **************************************************/
 $scope.requestUpKey = function ($http, $scope){
-  console.log($scope._getData2AddKey())
   $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2AddKey())
       .then(function (sucess, data) {
           closeAllDiv ();
           cleanForms();
        inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
-        $scope.modificarUsuario($http, $scope);
+        //$scope.modificarUsuario($http, $scope);
 
-    },function (error, data,status) {
-            if(status == 404){alert("!Informacion "+status+data.error+"info");}
-            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+    },function (error, status) {
+        $scope.handleErrors={Error: error, Status: status};
+            if(status == 404){alert("!Informacion "+$scope.handleErrors.error+"info");}
+            else if(status == 203){alert("!Informacion ",$scope.handleErrors.error+"info");}
+            else{alert("Error ! "+$scope.handleErrors.error+" Contacte a Soporte"+"error");}
            
     });
 };
@@ -1050,6 +1131,8 @@ $scope._getData2AddKey = function () {
                             idTypeDeliveryKf  : $scope.delivery.idTypeDeliveryKf,
                             description       : $scope.txt.sruTenant,
                             idAttendantKf     : $scope.select.nameAtt,
+                            idBranchKf        : null,
+                            idCompanyKf       : null,
                             list_id_clients   : null
                         }
           };

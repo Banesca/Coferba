@@ -83,7 +83,23 @@ class Department_model extends CI_Model
             return null;
         
     }
+     // GET DE LISTADO DE DEPARTAMENTO POR ID DE DIRECCION Y ID DE INQUILINO //
+    public function byIdTenantYDireccion($id, $idT) {
+        $quuery = null;
+        $rs = null;
 
+        
+            $this->db->select("*")->from("tb_department");
+            $this->db->where("tb_department.idAdressKf =", $id);
+
+            $quuery = $this->db->where("tb_department.idTenantKf =", $idT)->get();
+            
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            }
+            return null;
+        
+    }
 
     
     
