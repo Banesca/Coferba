@@ -52,6 +52,7 @@ class Direccion_model extends CI_Model
 
         $this->db->select("*")->from("tb_addres");
         $this->db->join('tb_department', 'tb_department.idAdressKf = tb_addres.idAdress', 'inner');
+        $this->db->group_by('tb_addres.idAdress');
         $quuery =   $this->db->where("tb_department.idTenantKf =", $id)->get();
         
 
