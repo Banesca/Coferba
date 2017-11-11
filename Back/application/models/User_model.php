@@ -218,9 +218,7 @@ class User_model extends CI_Model
                     'emailUser' => $user['emailUser'],
                     'phoneNumberUser' => $user['phoneNumberUser'],
                     'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
-                    'addresUser' => $user['addresUser'],
-                    'idProfileKf'=> $user['idProfileKf'],
-                    'rezonSocial'=> $user['rezonSocial']
+                    'idProfileKf'=> $user['idProfileKf']
                 )
         )->where("idUser", $user['idUser'])->update("tb_user");
 

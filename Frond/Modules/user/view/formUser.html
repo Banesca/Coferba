@@ -1,4 +1,4 @@
-    <!-- USER REGISTER FORM -->
+    <!-- USER PROFILE FORM -->
 	<div id="ProfileModalUser" style="top: 130px;" class="modal fade bd-example-modal-lg" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">
@@ -9,7 +9,7 @@
 		            	</div>
 	            		<div class="panel-body" style="overflow-y: scroll;">
 							<!-- FORM CONTAINER-->
-		    				<form class="form-horizontal" name="fUser" ng-init="" ng-submit="">
+		    				<form class="form-horizontal" name="fUserProfile" ng-init="" ng-submit="userFunctions('updprofile')">
 								<fieldset>
 								<!-- Select profile -->
 								   
@@ -18,7 +18,7 @@
 								    <div class="col-md-4 selectContainer">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											    <span class="form-control">{{sessionProfileName}}</span>
+											    <span class="form-control disabled">{{sessionProfileName}}</span>
 									  	</div>
 									</div>
 								</div>
@@ -29,9 +29,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-									  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-model="$parent.idCompanyKf"  >
-											    	<option value=""></option>
-										    	</select>
+									  		<span class="form-control disabled">{{sessionNameCompany}}</span>
 									    </div>
 								  </div>
 								</div>
@@ -41,7 +39,7 @@
 									  <div class="col-md-4">
 										  <div class="input-group">
 											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											  <input  name="profileNames" autofocus="true" placeholder="Nombre" class="form-control" ng-model="profileNames"  type="text" required autofocus/>
+											  <input  name="profileNames" autofocus="true" placeholder="Nombre" class="form-control" ng-model="profile.Names"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
@@ -52,7 +50,7 @@
 								   <div class="col-md-4">
 								    <div class="input-group">
 								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								  		<input name="profileEmail" placeholder="E-Mail" class="form-control" ng-model="$parent.profileEmail"  type="email" required autofocus />
+								  		<input name="profileEmail" placeholder="E-Mail" class="form-control" ng-model="profile.Email"  type="email" required autofocus />
 								    </div>
 								  </div>
 								</div>
@@ -63,7 +61,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="profilePhonelocalNumber"  type="text" required autofocus />
+									  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="profile.PhonelocalNumber"  type="text" required autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -74,7 +72,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="profileMovilPhoneNumber" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="profileMovilPhoneNumber"  type="text" required autofocus />
+									  		<input name="MovilPhoneNumber" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="profile.MovilPhoneNumber"  type="text" required autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -83,8 +81,7 @@
 								<div class="form-group">
 								  <label class="col-md-4 control-label"></label>
 								  <div class="col-md-4">
-								    <button type="submit" class="btn btn-primary" >Actualizar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-									<button type="reset" ng-click="closeModal('p')" class="btn btn-primary" >Caencelar</button>
+								    <button type="submit" class="btn btn-primary" >Actualizar</button>
 								  </div>
 								</div>
 

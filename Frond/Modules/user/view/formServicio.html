@@ -4,19 +4,25 @@
 		<div class="panel-heading">
 		<h3 class="panel-title" ng-show="sessionidProfile==2">SERVICIO - {{mySwitch}} DE LA EMPRESA<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 		<h3 class="panel-title" ng-show="sessionidProfile==4">SERVICIO - {{mySwitch}} DEL CONSORCIO<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		<h3 class="panel-title" ng-show="sessionidProfile==1">SERVICIOS - EMPRESAS O CONSORCIOS<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 	</div>
 	<div class="panel-body">
-		<form class="form-horizontal" ng-init="CallFilterFormT(); getAllAddress();" name="fservice" ng-submit="newTicket('srvs')" >
+		<form class="form-horizontal" ng-init="CallFilterFormT(); officeListByCompnayID(); getAllAddress();" name="fservice" ng-submit="newTicket('srvs')" >
 			<div ng-switch on="mySwitch">
 				<fieldset ng-switch-when="PASO 1: DATOS">
 					<!-- Company Name-->    
-					<div ng-show="sessionidProfile!=3" class="form-group">
+					<div class="form-group">
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Empresa</label>
+					  <label ng-show="sessionidProfile==3" class="col-md-4 control-label">Empresa / Consorcio</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Consorcio</label>
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="icon-building"></i></span>
-						  		<input name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+						  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+
+						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="$parent.idCompanyKf"  >
+								    	<option value=""></option>
+							    	</select>
 						    </div>
 					  	</div>
 					</div>
@@ -24,11 +30,15 @@
 					      
 					<div class="form-group" ng-show="sessionidProfile!=3">
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Sucursal</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Sucursal / Edificio</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Edificio</label>   
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-						  		<select name="idAddressKf" class="form-control" ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=3" ng-model="$parent.idAddressKf" autofocus >
+						  		<select ng-show="sessionidProfile==1" name="idAddressKf" class="form-control" ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile==1" ng-model="select.idAddressKf" autofocus >
+								    	<option value=""></option>
+							    	</select>
+							   	<select ng-show="sessionidProfile!=1" name="idAddressKf" class="form-control" ng-options="item.idBranch as item.nameLocation for item in listOffice" ng-required="sessionidProfile==2 || sessionidProfile==4" ng-model="select.idAddressKf" autofocus >
 								    	<option value=""></option>
 							    	</select>
 						    </div>
@@ -84,7 +94,7 @@
 					    <div class="col-md-4 selectContainer">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-wrench"></i></span>
-								    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="$parent.idTypeServiceKf" required autofocus >
+								    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="select.idTypeServiceKf" required autofocus >
 								    <option value=""></option>
 								    <option value="1">Cambio de Lector de llave HID</option>
 								    <option value="2">Cambio de Camara</option>
@@ -102,7 +112,7 @@
 					  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 					  	<div class="col-md-4">
 							<div class="input-group">
-						  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.detailSv"  required autofocus ></textarea>
+						  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="txt.detailSv"  required autofocus ></textarea>
 							</div>
 					  	</div>
 					</div>
@@ -112,7 +122,7 @@
 					  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 					  	<div class="col-md-4">
 							<div class="input-group">
-						  		<textarea name="sruSv" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="$parent.sruSv" ></textarea>
+						  		<textarea name="sruSv" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruSv" ></textarea>
 							</div>
 					  	</div>
 					</div>

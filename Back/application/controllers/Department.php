@@ -125,7 +125,7 @@ class Department extends REST_Controller {
     }
     /* SERVICIO GET QUE RETORNA LOS DEPARTAMENTO SEGUN EL ID DE DIRECION Y ID DEL INQUILINO */
     public function byIdTenantYDireccion_get($id, $idT) {
-        if (!$id) {
+        if (!$id || !$idT) {
             $this->response(NULL, 404);
         }
 

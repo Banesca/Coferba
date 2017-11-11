@@ -4,19 +4,7 @@ var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception",
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = true;
     });
-app.filter('unique', function() {
-    return function(input, key) {
-        var unique = {};
-        var uniqueList = [];
-        for(var i = 0; i < input.length; i++){
-            if(typeof unique[input[i][key]] == "undefined"){
-                unique[input[i][key]] = "";
-                uniqueList.push(input[i]);
-            }
-        }
-        return uniqueList;
-    };
-});
+
 app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
 /**************************************************************/
 
@@ -141,7 +129,8 @@ $http({
      $scope.sessionidCompany    = localStorage.getItem("idCompany");
      $scope.sessionNameCompany  = localStorage.getItem("nameCompany");
      $scope.sessionidTenantUser = localStorage.getItem("idTenantUser");
-
+ /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
+     $scope.home = true;
 /**************************************************
 *                                                 *
 *            HIDE PROFILES FUNCTION               *
@@ -151,6 +140,22 @@ $scope.hideProfiles = function(item){
   return item.idProfile == 3;
 };
 /**************************************************/     
+
+
+/**************************************************
+*                                                 *
+*    LISTADO DE SUCURSALES POR ID DE EMPRESA      *
+*                                                 *
+**************************************************/
+$scope.officeListByCompnayID = function(){
+   $http({
+      method : "GET",
+      url : "http://localhost/Coferba/Back/index.php/DIreccion/companyByid/"+$scope.sessionidCompany
+    }).then(function mySuccess(response) {
+        $scope.listOffice   = response.data
+      }, function myError(response) {
+    });
+}
 
 /**************************************************
 *                                                 *
@@ -209,6 +214,8 @@ $scope.getAllAddress = function (){
 *           ADDRESS LIST BY ID TENANT             *
 *                                                 *
 **************************************************/
+
+
 $scope.getAllAddressByIdTenant = function (){
   $http({
       method : "GET",
@@ -308,21 +315,17 @@ $scope.getData = function (n){
     $scope.emailTenant      = "";
     $scope.localPhoneTenant = "";
     $scope.tenantNotFound = false;
-  if(n!=0 && $scope.sessionidProfile!=3){
-
-      $scope.getAllDeparment();
+  if(n!=0){
+      $scope.getDeparment();
   }
   if (n==1 && $scope.sessionidProfile==3){
     $scope.typeTenant = 1;
-    $scope.getAllDeparmentByTenant();
     BindDataToForm('ticketTenantData');
   }else if (n==2 && $scope.sessionidProfile==3){
     $scope.typeTenant = 2;
-    $scope.getAllDeparmentByTenant();
   }
   if(n==1 && $scope.sessionidProfile!=3){
     $scope.typeTenant = 1;
-    $scope.getAllDeparment();
   }else if(n==2 && $scope.sessionidProfile!=3){
     $scope.typeTenant = 2;
   }
@@ -332,65 +335,42 @@ $scope.getData = function (n){
 
 /**************************************************
 *                                                 *
-*       DEPARTMENT LIST BY SELECTED ADDRESS       *
+* DEPARTMENT LIST BY SELECTED ADDRESS AND TENANT  *
 *                                                 *
 **************************************************/
-$scope.getAllDeparment = function (){
-   var idAddressTmp
-  if (!$scope.idAddressKf){
+$scope.getDeparment = function (){
+   var idAddressTmp; 
+   var urlT;
       idAddressTmp=$scope.select.idAddressAtt;
-    }else{
-      idAddressTmp=$scope.idAddressKf;
-    }
+      if($scope.sessionidProfile!=3){
+        urlT="http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp;
+      }if ($scope.sessionidProfile==3 && $scope.sessionidTenantUser!=0){
+        urlT="http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser;
+      }
+
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp
+      url : urlT
     }).then(function mySuccess(response){
           $scope.ListDpto = response.data;
           console.log(response.data);
     }, function myError (response){
-        if (response.status=="404"){
-          if ($scope.idAddressKf){
+        if (response.status=="404" || response.status=="500"){
+          if (!$scope.idAddressKf && $scope.sessionidProfile!=3){
+            inform.add('La direccion selecionada no posee departamentos asignados. Contacte a su administrador.',{
+                          ttl:3000, type: 'error'
+               }); 
+          }else if (!$scope.idAddressKf && $scope.sessionidProfile==3){
             inform.add('La direccion selecionada no posee departamentos asignados. Contacte a su administrador.',{
                           ttl:3000, type: 'error'
                }); 
           }
-            $scope.decrementStep(); 
+           $scope.decrementStep();  
         }
   });
 }
 /**************************************************/
 
-/**************************************************
-*                                                 *
-*   DEPARTMENT LIST BY PROPIETARIO AND ADDRESS    *
-*                                                 *
-**************************************************/
-$scope.getAllDeparmentByTenant = function (){
-   var idAddressTmp
-  if (!$scope.idAddressKf){
-      idAddressTmp=$scope.select.idAddressAtt;
-    }else{
-      idAddressTmp=$scope.idAddressKf;
-    }
-  $http({
-      method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser
-    }).then(function mySuccess(response){
-          $scope.ListDptoT = response.data;
-          console.log(response.data);
-    }, function myError (response){
-        if (response.status=="404"){
-          if ($scope.idAddressKf){
-            inform.add('La direccion selecionada no posee departamentos asignados. Contacte a su administrador.',{
-                          ttl:3000, type: 'error'
-               }); 
-          }
-            $scope.decrementStep(); 
-        }
-  });
-}
-/**************************************************/
 
 /**************************************************
 *                                                 *
@@ -492,10 +472,10 @@ function BindDataToForm(frmValue) {
           /*---------------------------------*/
         break;
       case "userProfile":
-        $scope.profileNames              = $scope.sessionNames;
-        $scope.profileMovilPhoneNumber   = $scope.sessionMovilPhone;
-        $scope.profilePhonelocalNumber   = $scope.sessionLocalPhone;
-        $scope.profileEmail              = $scope.sessionMail;
+          $scope.profile.Names              = $scope.sessionNames;
+          $scope.profile.MovilPhoneNumber   = $scope.sessionMovilPhone;
+          $scope.profile.PhonelocalNumber   = $scope.sessionLocalPhone;
+          $scope.profile.Email              = $scope.sessionMail;
         /*---------------------------------*/
       break;
       case "fkeydown":
@@ -609,7 +589,7 @@ function validateuser($http,$scope){
                    if($scope.rsJSON.idProfileKf==3){
                       mail2Search = $scope.rsJSON.emailUser;
                       $scope.searchTenantByMail();
-                    }else{location.href = "sistema.html"}
+                    }else{location.href = "sistema.html";}
                    
 
             }
@@ -665,6 +645,48 @@ $scope.optionDepto = function (n){
   }
 }
 /**************************************************/
+/********************************************************************************************************************************************
+*                                                                                                                                           *
+*                                                                                                                                           *
+*                                           F U N C I O N E S    D E   U S U A R I O S                                                      *
+*                                                                                                                                           *
+*                                                                                                                                           *
+********************************************************************************************************************************************/                         
+
+$scope.getUpdateData = function(){
+        $scope.CallFilterFormT();
+        var idUser = $scope.sessionIdUser;
+         /*Recorrer el Json User para obtener datos*/
+        var length = $scope.listUser.length;
+        for (i = 0; i < length; i++) {
+          if($scope.listUser[i].idUser == idUser){
+              localStorage.setItem("Nombres",   $scope.listUser[i].fullNameUser);
+              localStorage.setItem("Email",     $scope.listUser[i].emailUser);
+              localStorage.setItem("TelefonoM", $scope.listUser[i].phoneNumberUser);
+              localStorage.setItem("TelefonoL", $scope.listUser[i].phoneLocalNumberUser);
+              /*------------------------------------------------------------------------*/
+              $scope.sessionNames      = localStorage.getItem("Nombres");
+              $scope.sessionMail       = localStorage.getItem("Email");
+              $scope.sessionMovilPhone = localStorage.getItem("TelefonoM");
+              $scope.sessionLocalPhone = localStorage.getItem("TelefonoL");
+              break;
+              }
+          };
+
+      }
+$scope.userFunctions = function(value){
+  switch (value){
+    case "updprofile":
+      console.log($scope._getData2Update());
+      $scope.modificarUsuario($http, $scope);
+      $('#ProfileModalUser').modal('hide');
+      $scope.getUpdateData();
+    break;
+    default:
+  }
+}
+
+
 /**************************************************
 *                                                 *
 *               REGISTRO DE USUARIO               *
@@ -703,7 +725,7 @@ $scope.addUser = function ($http, $scope){
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+            else{alert("Error Registro de Usuario !"+status+" Contacte a Soporte"+"error");}
            
     });
 };
@@ -733,32 +755,31 @@ $scope.modificarUsuario = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/User/update", $scope._getData2Update())
       .then(function (sucess, data) {
 
-       inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
-                ttl:3000, type: 'success'
-             });
+          inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
+                    ttl:3000, type: 'success'
+          });
 
-    },function (error, data,status) {
+    },function (error,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+            else{alert("Error Modificacion de Usuario !"+status+" Contacte a Soporte"+"error");}
            
     });
 };
+$scope.profile = {Names:'', Email:'', MovilPhoneNumber:'', PhonelocalNumber:''};
 $scope._getData2Update = function () {
   var updUser =
           {
                          user:
                               {
-                                fullNameUser         : $scope.namesAd,
-                                emailUser            : $scope.emailAd,
-                                phoneNumberUser      : $scope.movilPhoneAd,
-                                phoneLocalNumberUser : $scope.localPhoneAdU,
-                                /*addresUser           : $scope.addressAd,*/
+                                fullNameUser         : $scope.profile.Names,
+                                emailUser            : $scope.profile.Email,
+                                phoneNumberUser      : $scope.profile.MovilPhoneNumber,
+                                phoneLocalNumberUser : $scope.profile.PhonelocalNumber,
                                 idProfileKf          : $scope.sessionidProfile,
                                 idUser               : $scope.sessionIdUser
                               }
           };
-          console.log(updUser)
     return updUser;
 
 };
@@ -1045,13 +1066,6 @@ function getAttData2Add () {
 /**************************************************/
 
 
-
-
-
-
-
-
-
 /**************************************************
 *                                                 *
 *             SOLICITUDES DE SERVICIOS            *
@@ -1061,17 +1075,20 @@ $scope.newTicket = function(opt){
     switch (opt) {
       case "up":
             console.log($scope._getData2AddKey());
-            $scope.sysFunctionSend();
+            //$scope.sysFunctionSend();
             $scope.requestUpKey($http, $scope);
       break;
       case "down":
-            console.log($scope._getData2DelKey())
-            $scope.sysFunctionSend();
+            console.log($scope._getData2DelKey());
+            //$scope.sysFunctionSend();
+            $('#confirmRequestModal').modal('toggle');
             $scope.requestDownKey($http, $scope);
+            
       break;
       case "srvs":
+            console.log($scope._getServiceData());
             //$scope.sysFunctionSend();
-            //$scope.requestService($http, $scope);
+            $scope.requestService($http, $scope);
       break;
       case "other":
             //$scope.sysFunctionSend();
@@ -1113,10 +1130,20 @@ $scope._getData2AddKey = function () {
   var tenantKf         = 0;   //INQUILINO
   var userIdOwner      = 0;  //PROPIETARIO
   var userIdAConsorcio = 0; //ADMIN. CONSORCIO
-    if ($scope.typeOfTenant == 1){tenantKf=null; userIdOwner=$scope.sessionIdUser;}
-    else if ($scope.typeOfTenant == 2){tenantKf = $scope.idTenantKf;}
-    if ($scope.sessionidProfile == 4){userIdAConsorcio = $scope.sessionIdUser;}
-    else if ($scope.sessionidProfile == 1){idUserAdmin = $scope.sessionIdUser;}
+  if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
+    userIdOwner = $scope.sessionIdUser;
+    tenantKf    = $scope.sessionidTenantUser;
+  }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
+    userIdOwner = $scope.sessionIdUser;
+    tenantKf    = $scope.idTenantKf;
+  }
+  if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
+    userIdAConsorcio = $scope.sessionIdUser;
+    tenantKf         = $scope.idTenantKf;
+  }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
+    idUserAdmin = $scope.sessionIdUser;
+    tenantKf    = $scope.idTenantKf;
+  }
 
   var newKey =
           {
@@ -1152,7 +1179,7 @@ $scope.requestDownKey = function (){
           closeAllDiv ();
           cleanForms();
           inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
-          $scope.modificarUsuario($http, $scope);
+          //$scope.modificarUsuario($http, $scope);
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -1167,16 +1194,26 @@ $scope._getData2DelKey = function () {
   var tenantKf         = 0;   //INQUILINO
   var userIdOwner      = 0;  //PROPIETARIO
   var userIdAConsorcio = 0; //ADMIN. CONSORCIO
-    if ($scope.typeOfTenant == 1){tenantKf=null; userIdOwner=$scope.sessionIdUser;}
-    else if ($scope.typeOfTenant == 2){tenantKf = $scope.idTenantKf;}
-    if ($scope.sessionidProfile == 4){userIdAConsorcio = $scope.sessionIdUser;}
-    else if ($scope.sessionidProfile == 1){idUserAdmin = $scope.sessionIdUser;}
+  if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
+    userIdOwner = $scope.sessionIdUser;
+    tenantKf    = $scope.sessionidTenantUser;
+  }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
+    userIdOwner = $scope.sessionIdUser;
+    tenantKf    = $scope.idTenantKf;
+  }
+  if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
+    userIdAConsorcio = $scope.sessionIdUser;
+    tenantKf         = $scope.idTenantKf;
+  }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
+    idUserAdmin = $scope.sessionIdUser;
+    tenantKf    = $scope.idTenantKf;
+  }
 
   var delKey =
           {
                 ticket:
                         {
-                            idTypeTicketKf        : 1,
+                            idTypeTicketKf        : 2,
                             idUserEnterpriceKf    : idUserAdmin,
                             idTenantKf            : tenantKf,
                             idUserAdminKf         : userIdAConsorcio,
@@ -1186,7 +1223,9 @@ $scope._getData2DelKey = function () {
                             idAttendantKf         : $scope.select.nameAtt,
                             idReasonDisabledItemKf: $scope.select.idTypeLostKf,
                             numberItemDisabled    : $scope.qkuOw,
-                            list_id_clients   : null
+                            idBranchKf            : null,
+                            idCompanyKf           : null,
+                            list_id_clients       : null
                         }
           };
   return delKey;
@@ -1204,7 +1243,7 @@ $scope.requestService = function (){
       .then(function (sucess, data) {
           closeAllDiv ();
           inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
-          $scope.modificarUsuario($http, $scope);
+          //$scope.modificarUsuario($http, $scope);
 
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -1213,20 +1252,39 @@ $scope.requestService = function (){
            
     });
 };
+$scope.select={idTypeServiceKf: '', idAddressKf: ''};
+$scope.txt={sruSv: '', detailSv: '' };
 $scope._getServiceData={};
 $scope._getServiceData = function () {
-
+  var idUserAdmin      = 0;    //ADMINISTRADOR COFERBA
+  var idCompany        = 0;   //ID DE LA EMPRESA O CONSORCIO
+  var idCompanyUser    = 0;  //USUARIO EMPRESA
+  var userIdAConsorcio = 0; //ADMIN. CONSORCIO
+  if($scope.sessionidProfile==1){
+    idUserAdmin = $scope.sessionIdUser;
+    idCompany   = $scope.idCompanyKf;
+  }else if($scope.sessionidProfile==2){
+    idCompanyUser = $scope.sessionIdUser;
+    idCompany     = $scope.sessionidCompany;
+  }else if($scope.sessionidProfile==4){
+    userIdAConsorcio = $scope.sessionIdUser;
+    idCompany        = $scope.sessionidCompany;
+  }
   var reqService =
           {
                 ticket:
                         {
                             idTypeTicketKf    : 3,
-                            idUserEnterpriceKf: $scope.sessionIdUser,
+                            idUserCompany     : idCompanyUser,
+                            idUserEnterpriceKf: idUserAdmin,
+                            idUserAdminKf     : userIdAConsorcio,
                             numberItemes      : null,
-                            descriptionOrder  : $scope.detailSv,
-                            description       : $scope.sruSv,
+                            descriptionOrder  : $scope.txt.detailSv,
+                            description       : $scope.txt.sruSv,
+                            idBranchKf        : $scope.select.idAddressKf,
+                            idCompanyKf       : idCompany,
                             list_id_clients   : null,
-                            idTypeServices    : $scope.idTypeServiceKf
+                            idTypeServices    : $scope.select.idTypeServiceKf
                         }
           };
   return reqService;
@@ -1304,6 +1362,7 @@ function cleanForms (){
     $scope.txt.sruTenant              = "";
     $scope.delivery.idTypeDeliveryKf  ="";
     $scope.typeOfSwitch               ="";
+    $scope.quantity.qkuTenant         ="";
 }
 /*-----------------------------------------------*/
 function closeAllDiv (){
@@ -1316,6 +1375,7 @@ function closeAllDiv (){
   $scope.btnBack=false;
   $scope.btnShow=true;
   $scope.userManage = false;
+  $scope.rucontact = false;
 }
 $scope.closeModal = function(value){
 
@@ -1375,6 +1435,7 @@ $scope.fnShowHide = function(divId, divAction) {
             $('#RegisterModalUser').modal('toggle');
       break;
       case "rukeyup":
+            $('#confirmRequestModal').modal('hide');
             closeAllDiv();
             cleanForms();
           if(divAction=="open"){
@@ -1408,6 +1469,7 @@ $scope.fnShowHide = function(divId, divAction) {
       break;
       case "ruother":
           closeAllDiv();
+          cleanForms();
         if(divAction=="open"){
           BindDataToForm('frmOther');
           $scope.ruother = true;
@@ -1416,7 +1478,15 @@ $scope.fnShowHide = function(divId, divAction) {
           $scope.ruother = false;
         }
       break;
-
+      case "frmcontact":
+          closeAllDiv();
+        if(divAction=="open"){
+          $scope.rucontact = true;
+        }else{
+          closeAllDiv();
+          $scope.rucontact = false;
+        }
+      break;
       case "home":
           closeAllDiv();
         if(divAction=="open"){

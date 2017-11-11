@@ -76,22 +76,22 @@
 		            <tbody><tr>
 		                <td>
 		                    <ul class="nav-icon">
+		                    	<li id="m_monitor" ng-show="sessionidProfile!=3">
+							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
+							          <i class="icon-desktop"></i>
+							          <br>Monitor de pedidos
+							       </a>
+							    </li>
 							    <li id="m_pedidos">
-							       <a href="#Pedidos"> 
+							       <a href="#Pedidos" ng-click="fnShowHide()"> 
 							          <i class="icon-bolt"></i>
 							          <br>Pedidos
 							       </a>
 							    </li>
 							    <li id="m_user" ng-show="sessionidProfile!=2">
-							       <a href="#Usuarios" ng-click="fnShowHide('', 'open')"> 
+							       <a href="#Departamentos" ng-click="fnShowHide('', 'open')"> 
 							          <i class="icon-building"></i>
 							          <br>Gestion de Departamento
-							       </a>
-							    </li>
-							    <li id="m_monitor" ng-show="sessionidProfile!=3">
-							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
-							          <i class="icon-desktop"></i>
-							          <br>Monitor de pedidos
 							       </a>
 							    </li>
 							    <li id="m_report">
@@ -113,7 +113,7 @@
 							       </a>
 							    </li>
 							    <li id="m_contact">
-							       <a href="#Contact"> 
+							       <a href="#Contact" ng-click="fnShowHide('frmcontact', 'open')"> 
 							          <i class="icon-phone"></i>
 							          <br>Contacto
 							       </a>
@@ -381,6 +381,7 @@
 			<div  ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
 			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
 			<div ng-show="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
+			<div ng-show="rucontact" ng-include="'view/formContact.html'"></div>
 			<div ng-show="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 		<!-- LIST TENANT MODAL -->
@@ -648,7 +649,25 @@
 				</div>
 			</div>
 		<!-- // ATTENDANT REGISTER FORM -->
-
+		<!-- Modal Confirmation -->
+			<div class="modal fade" id="confirmRequestModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="ModalLabel">Coferba <a  data-dismiss="modal" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"></i></a></h5>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p style="text-align: center;">Desea solicitar una nueva llave ?</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" ng-click="fnShowHide('rukeyup', 'open')" class="btn btn-success">Si</button>
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		<!-- Modal Confirmation -->
 	</div>
 	<!-- Response Inform Meessage plugin -->
 	<div inform class="inform-fixed inform-shadow inform-animate"></div>
