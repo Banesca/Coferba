@@ -6,11 +6,11 @@ METODO : POST
   
   "department":
   {
-    "departmentAddress" : "AYACUCHO 559 ,  LORIDA ",
-    "departmentFloor" : "1-A",
-    "deparmentNumber" : "900",
-    "departmentLat" : "11.2222122",
-    "departmentLon" : "-11.212112",
+    "departmentAddress"    : "AYACUCHO 559 ,  LORIDA ",
+    "departmentFloor"      : "1-A",
+    "deparmentNumber"      : "900",
+    "departmentLat"        : "11.2222122",
+    "departmentLon"        : "-11.212112",
     "deparmentDescription" :" DEPARTAMNETO"
   }
 }
@@ -25,11 +25,9 @@ METODO : POST
   
   "department":
   {
-    "departmentAddress" : " edite AYACUCHO 559 ,  LORIDA ",
-    "departmentFloor" : "1-A",
-    "deparmentNumber" : "900",
-    "departmentLat" : "11.2222122",
-    "departmentLon" : "-11.212112",
+    "departmentAddress"    : " edite AYACUCHO 559 ,  LORIDA ",
+    "departmentFloor"      : "1-A",
+    "deparmentNumber"      : "900",
     "deparmentDescription" :"NO,BRE DEPARTAMNETO",
     "idDepartment":1
   }

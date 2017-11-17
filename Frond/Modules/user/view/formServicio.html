@@ -13,14 +13,14 @@
 					<!-- Company Name-->    
 					<div class="form-group">
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Empresa</label>
-					  <label ng-show="sessionidProfile==3" class="col-md-4 control-label">Empresa / Consorcio</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Empresa / Consorcio</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Consorcio</label>
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="icon-building"></i></span>
 						  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
 
-						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="$parent.idCompanyKf"  >
+						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
 								    	<option value=""></option>
 							    	</select>
 						    </div>
@@ -35,10 +35,10 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-						  		<select ng-show="sessionidProfile==1" name="idAddressKf" class="form-control" ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile==1" ng-model="select.idAddressKf" autofocus >
+						  		<select ng-show="sessionidProfile==3" name="idAddressKf" class="form-control" ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile==3" ng-model="select.idAddressKf" autofocus >
 								    	<option value=""></option>
 							    	</select>
-							   	<select ng-show="sessionidProfile!=1" name="idAddressKf" class="form-control" ng-options="item.idBranch as item.nameLocation for item in listOffice" ng-required="sessionidProfile==2 || sessionidProfile==4" ng-model="select.idAddressKf" autofocus >
+							   	<select ng-show="sessionidProfile!=3" name="idAddressKf" class="form-control" ng-options="item.idBranch as item.nameLocation for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
 								    	<option value=""></option>
 							    	</select>
 						    </div>
@@ -50,7 +50,11 @@
 						  <div class="col-md-4">
 							  <div class="input-group">
 								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								  <input  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" required="true" required autofocus />
+								  <input ng-show="sessionidProfile!=1"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" autofocus />
+								  <!-- ___________________________________________________________________ -->
+								  <select ng-show="sessionidProfile==1" name="namesAdmin" class="form-control"  ng-options="item.idUser as item.fullNameUser for item in listUser | filter:showCompanyUser" ng-required="sessionidProfile==1" ng-change="getUserCompanyData()" ng-model="select.namesAdmin" autofocus >
+									    <option value=""></option>
+								    </select>
 							  </div>
 						  </div>
 					</div>

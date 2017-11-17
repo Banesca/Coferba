@@ -137,12 +137,7 @@ class Department_model extends CI_Model
 
         $this->db->set(
                 array(
-                    'departmentAddress' => $department['departmentAddress'],
-					'departmentFloor' => $department['departmentFloor'],
-					'deparmentNumber' => $department['deparmentNumber'],
-					'departmentLat' => $department['departmentLat'],
-					'departmentLon' => $department['departmentLon'],
-					'deparmentDescription' => $department['deparmentDescription']
+                    'idTenantKf'=>$department['idTenantKf']
                 )
         )->where("idDepartment", $department['idDepartment'])->update("tb_department");
 

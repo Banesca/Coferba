@@ -22,18 +22,17 @@ METODO : POST
   
   "user":
   {
-    "fullNameUser" : "Pepito Ramirez",
-    "emailUser" : "prueba",
-    "phoneNumberUser" : "prueba",
-    "phoneNumberUser" :
-    "addresUser" : "prueba",
-    "passwordUser" : "prueba",
-    "idProfileKf" : "1",
-    "rezonSocial" : "prueba",
-    "idUser": 1
+    "fullNameUser"         : "David Eduardo Rincon",
+    "emailUser"            : "rexx84@gmail.com",
+    "phoneNumberUser"      : "22222222222",
+    "phoneLocalNumberUser" : "11111111111",
+    "addresUser"           : null,
+    "idProfileKf"          : "2",
+    "rezonSocial"          : "prueba",
+    "idUser"               : 17
   }
 }
-}
+
 
 ---------------------- EDITAR USUARIO  Y CAMBIAR CLAVE -------------------
 http://127.0.0.1/Coferba/Back/index.php/User/update

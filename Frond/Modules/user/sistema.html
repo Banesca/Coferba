@@ -60,6 +60,12 @@
 		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
 		                            </li>
 		                            <li role="presentation">
+		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruchpwd', 'open')" tabindex="-1" role="menuitem"><i class="icon-key"></i> Cambiar clave</a>
+		                            </li>
+		                            <li role="presentation">
+		                                <div class="divider"></div>
+		                            </li>
+		                            <li role="presentation">
 		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="logout()" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
 		                            </li>
 		                        </ul>
@@ -89,7 +95,7 @@
 							       </a>
 							    </li>
 							    <li id="m_user" ng-show="sessionidProfile!=2">
-							       <a href="#Departamentos" ng-click="fnShowHide('', 'open')"> 
+							       <a href="#Departamentos" ng-click="fnShowHide('managedepto', 'open')"> 
 							          <i class="icon-building"></i>
 							          <br>Gestion de Departamento
 							       </a>
@@ -375,10 +381,11 @@
 
 	<div class="main_container" ng-show="Token">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
-			<div  ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
-			<div id="formUserM"  ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
-			<div  ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
-			<div  ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
+			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
+			<div ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
+			<div ng-show="rudepto" ng-include="'view/frmDepartment.html'"></div>
+			<div ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
+			<div ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
 			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
 			<div ng-show="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
 			<div ng-show="rucontact" ng-include="'view/formContact.html'"></div>
