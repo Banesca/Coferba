@@ -8,6 +8,7 @@
 			    <form class="form-horizontal" ng-init="CallFilterFormT(); getAllAddress(); getAllAddressByIdTenant();" name="fkeydown" ng-submit="newTicket('down')" >
 			    		<div ng-switch on="mySwitch">
 							<fieldset ng-switch-when="PASO 1: DIRECCION">
+							<legend style="visibility: hidden;"></legend>
 								<!-- Text Address for Onwers-->      
 								<div class="form-group" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
 								  	<label class="col-md-4 control-label">Direcci&#243n</label>
@@ -15,7 +16,7 @@
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-												    <option value=""></option>
+												    <option value="">Seleccione una direccion</option>
 											    </select>
 										    </div>
 									  	</div>
@@ -27,11 +28,12 @@
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
-												    <option value=""></option>
+												    <option value="">Seleccione una direccion</option>
 											    </select>
 										    </div>
 									  	</div>
 								</div>
+								<legend style="text-align: center;">DATOS DEL ENCARGADO</legend>
 								<!-- Encargado First Name & Lastname -->
 								<div class="form-group" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
 								  	<label class="col-md-4 control-label">Nombres</label>  
@@ -39,7 +41,7 @@
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 										  		<select name="nameAtt" class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData()" ng-model="select.nameAtt" autofocus >
-												    <option value=""></option>
+												    <option value="">Seleccione un encargado</option>
 											    </select>
 											    <span ng-show="Attendant && sessionidProfile!=3" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 										    </div>

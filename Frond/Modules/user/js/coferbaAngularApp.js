@@ -481,15 +481,16 @@ $scope.getDeparment = function (value){
 *         Search Tenant or Owner Functions        *
 *                                                 *
 **************************************************/
-$scope.searchTenant = function (op){
+$scope.select={idDepartmentKf: ''}
+$scope.searchTenant = function (op, item){
     switch (op){
       case "ticket":
-          $scope.lisTenantByType();
+          $scope.lisTenantByType($scope.select.idDepartmentKf,$scope.typeTenant);
       break;
       case "depto":
         if ($scope.sessionidProfile==3){
           $scope.typeTenant = 2;
-          $scope.lisTenantByType();
+          $scope.lisTenantByType(item,$scope.typeTenant);
         }
       default:
     }
@@ -502,16 +503,15 @@ $scope.searchTenant = function (op){
 *     SELECCIONA DATA DE TENANT SELECCIONADO      *
 *                 DE LA LISTA                     *
 **************************************************/
-$scope.select={idDepartmentKf: ''}
-$scope.lisTenantByType = function(){
-  var idDepto=0;
-    idDepto=$scope.select.idDepartmentKf;
+$scope.lisTenantByType = function(v1, v2){
+  var idDepto   = v1;
+  var typeTenant= v2;
      $http({
         method : "GET",
-        url : "http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+idDepto+"/"+$scope.typeTenant
+        url : "http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+idDepto+"/"+typeTenant
       }).then(function mySuccess(response) {
           if (!response.data.tenant){
-              if($scope.typeTenant==1){$scope.messageInform = "registrado a ningun Propietario";}else{$scope.messageInform = "asociado a ningun inquilino";}
+              if(typeTenant==1){$scope.messageInform = "registrado a ningun Propietario";}else{$scope.messageInform = "asociado a ningun inquilino";}
               inform.add('El departamento no esta '+$scope.messageInform+'.',{
                           ttl:3000, type: 'error'
                });  
@@ -911,6 +911,16 @@ $scope._getData2Update = function () {
 };
 
 /**************************************************/
+
+
+
+/********************************************************************************************************************************************
+*                                                                                                                                           *
+*                                                                                                                                           *
+*                                              F U N C I O N E S    D E   I N Q U I L I N O S                                               *
+*                                                                                                                                           *
+*                                                                                                                                           *
+********************************************************************************************************************************************/    
 var mail2Search ="";
 $scope.rsTenantData = [];
 $scope.IsTenant=false;
@@ -1234,6 +1244,7 @@ $scope.newTicket = function(opt){
 $scope.requestUpKey = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2AddKey())
       .then(function (sucess, data) {
+          if($scope.typeTenant==2){$scope.sysRegisterTenant('update');}
           closeAllDiv ();
           cleanForms();
        inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
@@ -1528,8 +1539,8 @@ $scope.closeModal = function(value){
 }
 $scope.fnShowHide = function(divId, divAction) {
   if (divId==null){
-      closeAllDiv();
       cleanForms();
+      closeAllDiv();
    }else{     
     switch (divId) {
       case "uLogin":
