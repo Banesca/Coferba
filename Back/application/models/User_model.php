@@ -193,6 +193,40 @@ class User_model extends CI_Model
     }
 
 
+    
+    /* LISTADO DE PARAMETROS */
+    public function getParam() {
+    
+            $query = null;
+            $param = null;
+    
+            $query =  $this->db->select("*")->from("tb_sys_param")->get();
+            if ($query->num_rows() > 0) {
+                $param = $query->result_array();
+            }
+    
+
+         
+            return $param;
+    }
+
+
+    /* LISTADO DE PARAMETROS */
+    public function getdeliveryType() {
+        
+                $query = null;
+                $param = null;
+        
+                $query =  $this->db->select("*")->from("tb_type_delivery")->get();
+                if ($query->num_rows() > 0) {
+                    $param = $query->result_array();
+                }
+    
+                return $param;
+        }
+
+    
+
 
       /* LISTADO DE FILTROS */
       public function mailsmtp() {
@@ -239,6 +273,31 @@ class User_model extends CI_Model
         }
     }
 
+
+     /* EDITAR CLAVES  */
+     public function updatePass($user) {
+        
+                $this->db->set(
+                        array(
+                            'passwordUser' => sha1(md5(12345))
+                        )
+                )->where("emailUser", $user['emailUser'])->update("tb_user");
+        
+                 /*MAIL*/
+                 $title ="Nuevo Clave de Acceso a Coferba";
+                 $body = "Se Restablecio su clave de acceso!<br> Usuario: ".$user['emailUser']."<br> Clave: 12345";
+                 $m = $this->mail_model->sendMail($title,$user['emailUser'],$body);
+
+               
+                
+                if ($this->db->affected_rows() === 1) {
+                   
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
 /* EDITAR DATOS DE UN EMPRESA */
 public function updateMailSmtp($mail) {
     
@@ -254,6 +313,24 @@ public function updateMailSmtp($mail) {
                 )
             )->where("idParam", 2)->update("tb_sys_param");
             
+            if ($this->db->affected_rows() === 1) {
+                return true;
+            } else {
+                return false;
+            }
+ }
+
+ /* UPDATE PARAM */
+ 
+ public function updateParam($param) {
+    
+            $this->db->set(
+                    array(
+                        'value' => $param['value']
+                    )
+            )->where("idParam", $param['idParam'])->update("tb_sys_param");
+    
+         
             if ($this->db->affected_rows() === 1) {
                 return true;
             } else {

@@ -26,7 +26,7 @@ class Mail_model extends CI_Model
 
             $this->load->library('email', $config);
             $this->email->set_newline("\r\n");
-            $this->email->from('remisasnube@gmail.com');
+            $this->email->from($param['0']['value']);
             $this->email->subject($title);
 
           
@@ -34,12 +34,17 @@ class Mail_model extends CI_Model
 
                 $this->email->to($to);
 
-                if($this->email->send(FALSE)){
+                $rs = $this->email->send(FALSE);
+                
+
+             
+
+                if($rs){
                 //$this->response("Solicitud Enviada",200);
 
                 }else {
 
-                //$this->response($this->email->print_debugger(array('headers')),500);
+                   return $rs;
                 }
             }
 

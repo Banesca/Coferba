@@ -10,9 +10,44 @@ class Ticket_model extends CI_Model
 	}
 
 
-private function formatCode($value) {
+    private function formatCode($value) {
         $CODE = sprintf("%08d", $value);
         return $CODE;
+    }
+
+
+    
+
+    public function aprobated($id) {
+        $this->db->set(
+                array(
+                    'isAprobatedAdmin' => 1 
+                )
+        )->where("idTicket", $id)->update("tb_tickets");
+
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function cancel($id) {
+        $this->db->set(
+                array(
+                    'isCancelTicket' => 1,
+                    'dateCancel' => date("Y-m-d h:i:sa")
+                )
+        )->where("idTicket", $id)->update("tb_tickets");
+
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

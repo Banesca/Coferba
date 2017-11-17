@@ -117,3 +117,54 @@ http://localhost/Coferba/Back/index.php/User/attendant
 
 ----- TODALS LAS SUCIRSALES POR ID DE EMPRESA  GET ---
 http://localhost/Coferba/Back/index.php/DIreccion/companyByid/2
+
+
+/*****************************************************************/
+/*****************************************************************/
+/* 17/11/2017 */
+/*****************************************************************/
+
+
+
+----- LISTADO DE PARAMETROS DEL SISTEM -----
+http://localhost/Coferba/Back/index.php/User/param
+
+----- LISTADO DEtipos de tipos de delivery  -----
+http://localhost/Coferba/Back/index.php/User/deliveryType
+
+----- APROBAR TICKET PARA ADMINISTRADORES DE CONSORCIO -----
+http://localhost/Coferba/Back/index.php/Ticket/aprobated/1
+
+----- APROBAR DEPARTAMENTO PARA ADMINISTRADORES DE CONSORCIO -----
+http://localhost/Coferba/Back/index.php/Department/aprobated/1
+
+
+----- CAMBIO DECLAVE -----
+http://localhost/Coferba/Back/index.php/User/updatePass
+POST
+{"user":
+  {
+    "emailUser":"jorguti58@gmail.com"
+    }
+}
+
+
+----- MODIFICAR PARAMETRO CUALQUIERA EJEMPLO SIRVE PARA EL QUE NOS INDICA A QUE HORA DEL DIA 
+SE MANDARA EL MAIL A LOS ADMINISTRADORES CON TICKETS POR APORBAR -----
+http://localhost/Coferba/Back/index.php/User/updateParam
+{"param":
+  {
+    "value":"20:00",
+    "idParam" 5 : 
+    }
+}
+
+
+
+---- CANCELAR UN VIAJE POR EL PRIPIETARIO ---
+http://localhost/Coferba/Back/index.php/Ticket/cancel/1
+
+
+
+
+/// SOLICITAR BAJA DE DEPARTAMENTO AL PROPIETARIO Y APRORBLAO

@@ -32,7 +32,23 @@ class Ticket extends REST_Controller {
         }
 
         $rs = null;
-        $rs = $this->ticket_model->changueStatus($id, -1);
+        $rs = $this->ticket_model->cancel($id);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+     /* SERVICIO INACTIVA  UN USUARIOS POR ID */
+     public function aprobated_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->ticket_model->aprobated($id);
 
         if (!is_null($rs)) {
             $this->response($rs, 200);

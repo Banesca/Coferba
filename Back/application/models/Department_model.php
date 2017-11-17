@@ -64,7 +64,7 @@ class Department_model extends CI_Model
 
 
      // GET DE LISTADO BUSQUEDA DE INQUIILINO //
-     public function byIdDireccion($id) {
+     public function byIdDireccion($id,$idStatus) {
         $quuery = null;
         $rs = null;
 
@@ -72,6 +72,12 @@ class Department_model extends CI_Model
             $this->db->select("*")->from("tb_department");
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
             $this->db->where("tb_addres.idAdress =", $id);
+
+            if($idStatus == 1){ // si le mandas 1 te retorna los APROBADOS 
+                $this->db->where("tb_department.isAprobatedAdmin =", 1);
+            }else if($idStatus == 0){// SI LE MANDAS 0 LO NO APROBADOS 
+                $this->db->where("tb_department.isAprobatedAdmin =", 0);
+            }
 
 
             $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
@@ -103,6 +109,22 @@ class Department_model extends CI_Model
 
     
     
+
+    public function aprobated($id) {
+        $this->db->set(
+                array(
+                    'isAprobatedAdmin' => 1 
+                )
+        )->where("idDepartment", $id)->update("tb_department");
+
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

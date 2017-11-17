@@ -82,7 +82,33 @@ class User extends REST_Controller {
     }
 
 
+
+    /* get param*/
+    public function param_get() {
+      
+        $PARAM = null;
+        $PARAM = $this->user_model->getParam();
+
+        if (!is_null($PARAM)) {
+            $this->response($PARAM, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
     
+
+    /* get param*/
+    public function deliveryType_get() {
+        
+          $rs = null;
+          $rs = $this->user_model->getdeliveryType();
+  
+          if (!is_null($rs)) {
+              $this->response($rs, 200);
+          } else {
+              $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+          }
+      }
 
 
     public function attendantByIdDirecction_get($id) {
@@ -114,6 +140,8 @@ class User extends REST_Controller {
         }
     }
 
+    
+
      /* SERVICIO EDITA UN USUARIOS  */
     public function update_post() {
 
@@ -129,6 +157,45 @@ class User extends REST_Controller {
             $this->response(array('error' => "ERROR INESPERADO"), 500);
         }
     }
+
+
+    /*  CAMBIO DE CLAVE */
+    public function updatePass_post() {
+        
+                if (!$this->post('user')) {
+                    $this->response(NULL, 404);
+                }
+        
+                $rs = $this->user_model->updatePass($this->post('user'));
+        
+                if (!is_null($rs)) {
+
+                    //$this->response(array('response' => $rs), 200);
+                    $this->response(array('response' => "Su Nueva Clave fue enviada a su direccion de correo!"), 200);
+                } else {
+                    $this->response(array('error' => "ERROR INESPERADO"), 500);
+                }
+            }
+
+
+
+             /*  CAMBIO DE CLAVE */
+    public function updateParam_post() {
+        
+                if (!$this->post('param')) {
+                    $this->response(NULL, 404);
+                }
+        
+                $rs = $this->user_model->updateParam($this->post('param'));
+        
+                if (!is_null($rs)) {
+
+                    //$this->response(array('response' => $rs), 200);
+                    $this->response(array('response' => "Parametro actualizado!"), 200);
+                } else {
+                    $this->response(array('error' => "ERROR INESPERADO"), 500);
+                }
+            }
 
 
      /* SERVICIO EDITA UN USUARIOS  */
