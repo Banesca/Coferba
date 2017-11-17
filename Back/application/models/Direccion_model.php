@@ -32,6 +32,7 @@ class Direccion_model extends CI_Model
         
             $this->db->select("*")->from("tb_branch");
             $this->db->join('tb_company', 'tb_company.idCompany = tb_branch.idCompanyKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf', 'left');
             $this->db->where("tb_company.idCompany =", $id);
 
 
