@@ -5,17 +5,17 @@
         	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}} <a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
     	</div>
     		<div class="panel-body">
-		    <form class="form-horizontal" name="fkeyup" ng-init="CallFilterFormT(); getAllAddress(); getAllAddressByIdTenant();"  ng-submit="newTicket('up')" >
+		    <form class="form-horizontal" name="fkeyup" ng-submit="newTicket('up')" >
 		    		<div ng-switch on="mySwitch">
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
 							<legend style="visibility: hidden;"></legend>
 							<!-- Text Address for Onwers-->      
-							<div class="form-group" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
+							<div ng-init="getAllAddressByIdTenant();" class="form-group" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
 							  	<label class="col-md-4 control-label">Direcci&#243n</label>
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile==3" ng-model="select.idAddressAtt" autofocus >
 											    <option value="">Seleccione una direccion</option>
 										    </select>
 									    </div>
@@ -27,7 +27,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 											    <option value="">Seleccione una direccion</option>
 										    </select>
 									    </div>
@@ -49,7 +49,7 @@
 							</div>
 							<!-- Text Local Phone -->       
 							<div class="form-group">
-							  <label class="col-md-4 control-label">Telefono local</label>  
+							  <label class="col-md-4 control-label">Telefono Fijo</label>  
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
@@ -93,21 +93,21 @@
 							  		</label> 
 							 	</div>
 							</div>
+							<br><br>
 							<!-- Select Department -->
 							<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant!=0) || sessionidProfile==4" class="form-group"> 
 							  <label class="col-md-4 control-label">Departamento</label>
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								        <select ng-model="select.idDepartmentKf" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+								        <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
 								        	<option value="" >Seleccione</option>
 									    	</select>
-									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysRegisterTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 								  	</div>
 								</div>
 							</div>
-						</fieldset>
-						<fieldset ng-switch-when="PASO 3: DATOS PERSONALES">
+							<br>
 							<!-- Owner First Name & Lastname -->
 							<div class="form-group">
 							  <label class="col-md-4 control-label">Nombre y Apellido</label>  
@@ -120,7 +120,7 @@
 							</div>
 							<!-- Text Owner Phone 1 -->      
 							<div class="form-group">
-							  <label class="col-md-4 control-label">Telefono Local</label>  
+							  <label class="col-md-4 control-label">Telefono Fijo</label>  
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
@@ -148,6 +148,8 @@
 							    </div>
 							  </div>
 							</div>
+						</fieldset>
+						<fieldset ng-switch-when="PASO 3: DATOS DE LA SOLICITUD">
 							<!-- Form Key Quantity qku = Quantity Keys Up-->
 							<div class="form-group">
 							  	<label class="col-md-4 control-label" >Cantidad de llaves</label> 

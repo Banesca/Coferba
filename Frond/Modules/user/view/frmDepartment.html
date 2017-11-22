@@ -22,23 +22,22 @@
                   </div>
             </div>
             <!-- Select Department -->
-                  <div ng-show="sessionidProfile!=2" class="form-group"> 
+                  <div ng-show="sessionidProfile==3" class="form-group"> 
                     <label class="col-md-4 control-label">Departamento</label>
                       <div class="col-md-4 selectContainer">
                         <div class="input-group">
                             <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                            <select ng-model="select.idDepartmentKf" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
                               <option value="" >Seleccione</option>
                             </select>
-                          <span style="cursor: pointer;" ng-click="searchTenant('depto')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysRegisterTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
                         </div>
                     </div>
                   </div>
             <!-- Actions Button -->
-            <div class="form-group">
+            <div class="form-group" ng-show="sessionidProfile==3">
               <label class="col-md-4 control-label"></label>
               <div class="col-md-4">
-                <button type="submit" ng-click="assignDepto()" class="btn btn-primary" >Asociar</button>
+                <button type="submit" ng-click="assignDepto()" class="btn btn-primary" ng-disabled="dptoNotFound!=true" >Asociar</button>
               </div>
             </div>
           </fieldset>
@@ -47,7 +46,45 @@
       <div ng-show="noRecordsFound" class="alert alert-info" role="alert">
             <strong>INFO: </strong>La direccion<strong>{{nameAdress}} </strong>No posee departamentos asociados en la direccion seleccionada.
       </div>
-        <table ng-show="recordsFound"  class="table  table-striped" style="width: 500px; margin: 0 auto;">
+      <!-- Tabla para propietarios -->
+        <table ng-show="recordsFound && sessionidProfile==3"  class="table  table-striped" style="width: 500px; margin: 0 auto;">
+          <thead style=" background: #4d5d6f; color: white;">
+              <tr >
+                  <th></th>
+                  <th>ID</th>
+                  <th>Departamento</th>
+                  <th>Status</th>
+              </tr>
+          </thead>
+          <tbody>
+    
+              <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in ListDptoByTenant | filter : paginate track by $index">
+                <td>
+                  <div ng-show=item.isAprobatedAdmin==1 class="btn-group">
+                    <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="searchTenant('depto', item.idDepartment)""><i title="desactivar" class="glyphicon glyphicon-user"></i> Ver inquilinos</a></li>
+                        <li><a ng-click="updateUser(item.idDepartment, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Solicitar Baja</a></li>
+                    </ul>
+                  </div>
+                </td>
+                <td>{{item.idDepartment}}</td>
+                <td>{{item.departmentFloor}}</td>
+                <td>
+                  <div class="btn-group">
+                    <button type="button" ng-if="item.isAprobatedAdmin==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> APROBADO </button>
+                    <button type="button" ng-if="item.isAprobatedAdmin==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> PENDIENTE</button>
+                    <button type="button" ng-if="item.isAprobatedAdmin<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO</button>
+                  </div>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <!-- Tabla para administradores -->
+        <table ng-show="recordsFound && sessionidProfile!=3"  class="table  table-striped" style="width: 500px; margin: 0 auto;">
           <thead style=" background: #4d5d6f; color: white;">
               <tr >
                   <th></th>
@@ -66,7 +103,7 @@
                       <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a ng-click="searchTenant('depto', item.idDepartment)""><i title="desactivar" class="glyphicon glyphicon-user"></i> Ver inquilinos</a></li>
+                        <li><a ng-click="searchTenant('depto', item.idDepartment)""><i title="desactivar" class="glyphicon glyphicon-user"></i> Ver propietario</a></li>
                         <li><a ng-click="updateUser(item.idDepartment, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Solicitar Baja</a></li>
                     </ul>
                   </div>
@@ -75,67 +112,10 @@
                 <td>{{item.departmentFloor}}</td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO </button>
-                    <button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO</button>
-                    <button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO</button>
-                  </div>
-                </td>
-              </tr>
-          </tbody>
-        </table>
-        <table ng-show="sessionidProfile!=3" class="table  table-striped ">
-          <thead style=" background: #4d5d6f; color: white;">
-              <tr >
-                  <th style="width:20px">#</th>
-                  <th>ID</th>
-                  <th>Departamento</th>
-                  <th>Tlf Movil</th>
-                  <th>Tlf Local</th>
-                  <th>Correo</th>
-                  <th>Perfil</th>
-                  <th>Status</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUser | filter : paginate track by $index">
-                <td>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="updateUser(item.idUser, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Solicitar Baja</a></li>
-                    </ul>
-                  </div>
-                </td>
-                <td>{{item.idUser}}</td>
-                <td>{{item.fullNameUser}}</td>
-                <td>{{item.phoneNumberUser}}</td>
-                <td>{{item.phoneLocalNumberUser}}</td>
-                <td>{{item.emailUser}}</td>
-                <td ng-if="item.idProfileKf==1">Coferba</td>
-                <td ng-if="item.idProfileKf==2">Empresa</td>
-                <td ng-if="item.idProfileKf==3">Propietario</td>
-                <td ng-if="item.idProfileKf==4">Admin. Consorcio</td>
-                <td>
-                  <div class="btn-group">
-                    <button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO <span ng-show="sessionidProfile!=3">|</span> 
-                      <span ng-show="sessionidProfile!=3" class="caret"></span>
-                      <span  ng-show="sessionidProfile!=3" class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO | 
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" ng-show="sessionidProfile!=3">
-                      <li><a ng-click="enableUser(item.idUser, $index)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
-                      <li><a ng-click="disabledUser(item.idUser, $index)" ng-if="item.idStatusKf>0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
-                    </ul>
+                    <button type="button" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ASIGNADO </button>
+                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf==null" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DISPONIBLE</button>
+                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOLICITADO</button>
+                    <button type="button" ng-if="item.isAprobatedAdmin<0 && item.idTenantKf==null" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO</button>
                   </div>
                 </td>
               </tr>

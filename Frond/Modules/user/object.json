@@ -115,7 +115,7 @@ http://localhost/Coferba/Back/index.php/User/attendant
 }
 
 
------ TODALS LAS SUCIRSALES POR ID DE EMPRESA  GET ---
+----- TODALS LAS SUCURSALES POR ID DE EMPRESA  GET ---
 http://localhost/Coferba/Back/index.php/DIreccion/companyByid/2
 
 

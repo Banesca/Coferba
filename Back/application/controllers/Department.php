@@ -124,13 +124,13 @@ class Department extends REST_Controller {
         }
     }
     /* SERVICIO GET QUE RETORNA LOS DEPARTAMENTO SEGUN EL ID DE DIRECION Y ID DEL INQUILINO */
-    public function byIdTenantYDireccion_get($id, $idT) {
+    public function byIdTenantYDireccion_get($id, $idT, $idStatus) {
         if (!$id || !$idT) {
             $this->response(NULL, 404);
         }
 
         $department = null;
-        $department = $this->department_model->byIdTenantYDireccion($id, $idT);
+        $department = $this->department_model->byIdTenantYDireccion($id, $idT, $idStatus);
 
         if (!is_null($department)) {
             $this->response($department, 200);

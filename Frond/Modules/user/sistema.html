@@ -82,7 +82,7 @@
 		            <tbody><tr>
 		                <td>
 		                    <ul class="nav-icon">
-		                    	<li id="m_monitor" ng-show="sessionidProfile!=3">
+		                    	<li id="m_monitor" class="active" ng-show="sessionidProfile!=0">
 							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
 							          <i class="icon-desktop"></i>
 							          <br>Monitor de pedidos
@@ -90,11 +90,11 @@
 							    </li>
 							    <li id="m_pedidos">
 							       <a href="#Pedidos" ng-click="fnShowHide()"> 
-							          <i class="icon-bolt"></i>
+							          <i class="icon-file-text"></i>
 							          <br>Pedidos
 							       </a>
 							    </li>
-							    <li id="m_user" ng-show="sessionidProfile!=2">
+							    <li id="m_depto" ng-show="sessionidProfile!=2">
 							       <a href="#Departamentos" ng-click="fnShowHide('managedepto', 'open')"> 
 							          <i class="icon-building"></i>
 							          <br>Gestion de Departamento
@@ -168,7 +168,7 @@
             	</div>
             		<div class="panel-body">
 						<!-- FORM CONTAINER-->
-				    	<form name="frmLogin" class="form-horizontal" id="frmLogin" ng-submit="sysLogin('login')">
+				    	<form name="frmLogin" class="form-horizontal" id="frmLogin" ng-submit="sysFunctionsUser('login')">
 							<fieldset>
 							<!-- Text Mail E-Mail-->
 								<div class="form-group" ng-class="{ 'has-error': frmLogin.email.$dirty && frmLogin.email.$error.required }">
@@ -226,7 +226,7 @@
 			            	</div>
 			            		<div class="panel-body" style="overflow-y: scroll;">
 									<!-- FORM CONTAINER-->
-				    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU(); getAllAddress();" ng-submit="sysRegisterUser()">
+				    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU(); getAllAddress();" ng-submit="sysFunctionsUser('regiser')">
 										<fieldset>
 										<!-- Select profile -->
 										   
@@ -379,7 +379,7 @@
 	</div>
 	
 
-	<div class="main_container" ng-show="Token">
+	<div class="main_container" ng-show="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress();">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
@@ -398,14 +398,14 @@
 				    <div class="modal-content">
 				      	<div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="sysRegisterTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="sysRegisterTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="sysFunctionsTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 				      	</div>
 				      	<div class="modal-body pre-scrollable">
 	                				<table class="table  table-striped ">
 					                    <thead style=" background: #4d5d6f; color: white;">
 					                        <tr >
-					                            <th style="width:20px">#</th>
+					                            <th ng-show="manageDpto==0" style="width:20px">#</th>
 					                            <th>ID</th>
 					                            <th>Nombres</th>
 					                            <th>Tlf Movil</th>
@@ -418,7 +418,7 @@
 					                    </thead>
 					                    <tbody>
 					                        <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter : paginate track by $index">
-					                        	<td><button ng-click="selectTenant(item)" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-check"></i></button></td>
+					                        	<td ng-show="manageDpto==0"><button ng-click="selectTenant(item)" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-check"></i></button></td>
 						                        <td>{{item.idTenant}}</td>
 						                        <td>{{item.fullNameTenant}}</td>
 						                        <td>{{item.phoneNumberTenant}}</td>
@@ -441,6 +441,7 @@
 				</div>
 			</div>
 		<!-- // LIST TENANT MODAL -->
+
 		<!-- TENANT REGISTER FORM -->
 			<div id="RegisterModalTenant" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
@@ -453,7 +454,7 @@
 					            	</div>
 					            		<div class="panel-body" style="overflow-y: scroll;">
 											<!-- FORM CONTAINER-->
-						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="sysRegisterTenant('addT')">
+						    				<form class="form-horizontal" name="fNewTenant" ng-init="CallFilterFormU();" ng-submit="sysFunctionsTenant('addT')">
 												<fieldset>
 												<!-- Select profile -->
 												   
@@ -568,6 +569,7 @@
 				</div>
 			</div>
 		<!-- // TENANT REGISTER FORM -->
+
 		<!-- ATTENDANT REGISTER FORM -->
 			<div id="RegisterModalAtt" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
@@ -656,6 +658,7 @@
 				</div>
 			</div>
 		<!-- // ATTENDANT REGISTER FORM -->
+
 		<!-- Modal Confirmation -->
 			<div class="modal fade" id="confirmRequestModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">

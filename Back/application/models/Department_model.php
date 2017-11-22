@@ -75,7 +75,7 @@ class Department_model extends CI_Model
 
             if($idStatus == 1){ // si le mandas 1 te retorna los APROBADOS 
                 $this->db->where("tb_department.isAprobatedAdmin =", 1);
-            }else if($idStatus == 0){// SI LE MANDAS 0 LO NO APROBADOS 
+            }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 
                 $this->db->where("tb_department.isAprobatedAdmin =", 0);
             }
 
@@ -89,16 +89,23 @@ class Department_model extends CI_Model
             return null;
         
     }
-     // GET DE LISTADO DE DEPARTAMENTO POR ID DE DIRECCION Y ID DE INQUILINO //
-    public function byIdTenantYDireccion($id, $idT) {
+     // GET DE LISTADO DE DEPARTAMENTO POR ID DE DIRECCION, ID DE INQUILINO Y SI ESTA APROBADO //
+    public function byIdTenantYDireccion($id, $idT, $idStatus) {
         $quuery = null;
         $rs = null;
 
         
             $this->db->select("*")->from("tb_department");
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
             $this->db->where("tb_department.idAdressKf =", $id);
-
-            $quuery = $this->db->where("tb_department.idTenantKf =", $idT)->get();
+            
+            if($idStatus == 1){ // si le mandas 1 te retorna los APROBADOS 
+                $this->db->where("tb_department.isAprobatedAdmin =", 1);
+            }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 
+                $this->db->where("tb_department.isAprobatedAdmin =", 0);
+            }
+            $this->db->where("tb_department.idTenantKf =", $idT);
+            $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
             
             if ($quuery->num_rows() > 0) {
                 return $quuery->result_array();

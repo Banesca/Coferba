@@ -90,8 +90,8 @@
 		                    				<span class="sr-only">Toggle Dropdown</span>
 		                				</button>
 									  	<ul class="dropdown-menu">
-	                    					<li><a ng-click="enableUser(item.idUser, $index)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
-	                    					<li><a ng-click="disabledUser(item.idUser, $index)" ng-if="item.idStatusKf>0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
+	                    					<li><a ng-click="sysFunctionsUser('enabled',item.idUser)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
+	                    					<li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.idStatusKf>0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
 	                					</ul>
 									</div>
 		                        </td>

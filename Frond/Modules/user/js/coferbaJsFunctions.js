@@ -7,7 +7,6 @@ $(window).on('load', function() { // makes sure the whole site is loaded
 })
 /*JQUERY SHOW/HIDE FUNCTIONS */
 $(document).ready(function() {
-    $('.jumbotron [id^="m_"]').removeClass('active');
     $('#SubM_Pedidos').hide();
     
     /* MENU ICONS*/
@@ -23,6 +22,11 @@ $(document).ready(function() {
         $(this).addClass('active');
          $('#SubM_Pedidos').hide();
         
+    });
+    $('#m_depto').click(function(){
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        $(this).addClass('active');
+         $('#SubM_Pedidos').hide();
     });
     $('#m_report').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
