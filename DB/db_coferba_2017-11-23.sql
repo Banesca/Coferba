@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2017 a las 21:34:15
+-- Tiempo de generación: 23-11-2017 a las 07:31:35
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.10
 
@@ -38,9 +38,12 @@ CREATE TABLE `tb_addres` (
 --
 
 INSERT INTO `tb_addres` (`idAdress`, `nameAdress`) VALUES
-(1, 'Ayacucho 55'),
-(2, 'Martinez 100'),
-(3, 'olivos 300');
+(1, 'Cramer 1275'),
+(2, 'Blanco Encalada 2355'),
+(3, 'Cabildo 3510'),
+(4, 'Gral. La valle 1920'),
+(5, 'Parana 2568'),
+(6, 'Rivadavia 4530');
 
 -- --------------------------------------------------------
 
@@ -90,9 +93,11 @@ CREATE TABLE `tb_branch` (
 
 INSERT INTO `tb_branch` (`idBranch`, `branchName`, `idCompanyKf`, `idAdressKf`) VALUES
 (1, 'SUCURSAL 1', 1, 1),
-(2, 'SUCURSAL 2', 1, 3),
-(3, 'SUCURSAL 3', 2, 2),
-(4, 'SUCURSAL 4', 2, 3);
+(2, 'SUCURSAL 2', 1, 2),
+(3, 'SUCURSAL 1', 2, 3),
+(4, 'SUCURSAL 2', 2, 4),
+(5, 'Toyota 1', 3, 5),
+(6, 'Toyota 2', 3, 6);
 
 -- --------------------------------------------------------
 
@@ -143,9 +148,9 @@ CREATE TABLE `tb_company` (
 --
 
 INSERT INTO `tb_company` (`idCompany`, `nameCompany`) VALUES
-(1, 'COCA - COLA'),
-(2, 'Oracle'),
-(3, 'Pepsi');
+(1, 'Carlos Castaño'),
+(2, 'Talcahuano Propiedades'),
+(3, 'Toyota');
 
 -- --------------------------------------------------------
 
@@ -171,23 +176,23 @@ CREATE TABLE `tb_department` (
 --
 
 INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `deparmentNumber`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`, `idTenantKf`, `isAprobatedAdmin`) VALUES
-(1, 1, 'Porteria', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 3, 1),
-(2, 2, '1-A', 700, 'Capital Federal, Nuñez', 0, 1, NULL, 1, 1),
-(3, 1, '1-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 2, 0),
-(4, 1, '2-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 3, 0),
-(5, 1, '2-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(6, 1, '3-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 1, 0),
-(7, 1, '3-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(8, 1, '4-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(9, 1, '4-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(10, 1, '5-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(11, 1, '5-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 1, 0),
-(12, 2, '6-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(13, 2, '6-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 1, 0),
-(14, 2, '7-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(15, 2, '7-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, NULL, 0),
-(16, 2, '8-A', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 2, 1),
-(17, 3, '8-B', 700, 'Capital Federal, Nuñez', 1, 1, NULL, 1, 1);
+(1, 1, 'Porteria', 0, '', 1, 1, NULL, NULL, 0),
+(2, 1, '1-A', 0, '', 1, 1, NULL, NULL, 0),
+(3, 1, '1-B', 0, '', 1, 1, NULL, NULL, 0),
+(4, 1, '2-A', 0, '', 1, 1, NULL, NULL, 0),
+(5, 1, '2-B', 0, '', 1, 1, NULL, NULL, 0),
+(6, 1, '3-A', 0, '', 1, 1, NULL, NULL, 0),
+(7, 1, '3-B', 0, '', 1, 1, NULL, NULL, 0),
+(8, 1, '4-A', 0, '', 1, 1, NULL, NULL, 0),
+(9, 1, '4-B', 0, '', 1, 1, NULL, NULL, 0),
+(10, 1, '5-A', 0, '', 1, 1, NULL, NULL, 0),
+(11, 1, '5-B', 0, '', 1, 1, NULL, NULL, 0),
+(12, 2, '6-A', 0, '', 1, 1, NULL, NULL, 0),
+(13, 0, '6-B', 0, '', 1, 1, NULL, NULL, 0),
+(14, 2, '7-A', 0, '', 1, 1, NULL, NULL, 0),
+(15, 2, '7-B', 0, '', 1, 1, NULL, NULL, 0),
+(16, 2, '8-A', 0, '', 1, 1, NULL, NULL, 0),
+(17, 3, '8-B', 0, '', 1, 1, NULL, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -320,7 +325,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '56', 'TK');
+(1, '57', 'TK');
 
 -- --------------------------------------------------------
 
@@ -368,27 +373,29 @@ CREATE TABLE `tb_tenant` (
 --
 
 INSERT INTO `tb_tenant` (`idTenant`, `fullNameTenant`, `idTypeKf`, `phoneNumberTenant`, `idDepartmentKf`, `emailTenant`, `idStatusKf`, `dateCrated`, `phoneNumberContactTenant`) VALUES
-(1, 'David Eduardo Rincon Luengo', 1, '1126694918', 1, 'rexx84@gmail.com', 1, '2017-10-18 04:07:25', '1122334455'),
-(2, 'Alberto Fabian', 1, '54115778345', 2, 'Alberto.Fabian@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(3, 'Eduardo Peliacani', 1, '54115778345', 3, 'Eduardo.Peliacani@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(4, 'Carlos Lazarte', 1, '54115778345', 4, 'Carlos.Lazarte@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(5, 'Marcos Padilla', 1, '54115778345', 5, 'Marcos.Padilla@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(6, 'Nahuel Barrati', 1, '54115778345', 6, 'Nahuel.Barrati@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(7, 'Jan Zambrano', 1, '54115778345', 7, 'Jan.Zambrano@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(8, 'Marcos Quispes', 1, '54115778345', 8, 'Marcos.Quispes@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(9, 'Beatriz Gonzalez', 1, '54115778345', 9, 'Beatriz.Gonzalez@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(10, 'Juan de Vicenti', 1, '54115778345', 10, 'juan.vicenti@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
-(11, 'Jorge Gutierrez', 2, '541189054333', 11, 'jorguti85@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(12, 'Carlos Romero', 2, '541189054333', 12, 'jorguti86@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(13, 'Jose Carrasco', 2, '541189054333', 13, 'jorguti87@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(14, 'Alfredo Wirth', 2, '541189054333', 14, 'jorguti88@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(15, 'Victor Machado', 2, '541189054333', 15, 'jorguti89@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(16, 'Martin Hatchman', 2, '541189054333', 16, 'jorguti90@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(17, 'Flavio Alfano', 2, '541189054333', 17, 'jorguti91@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(18, 'Jorge Dangelo', 2, '541189054333', 18, 'jorguti92@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
-(19, 'Jose Perez', 2, '222222222222', 5, 'jose.perez@gmail.com', 1, '2017-11-10 17:10:02', '111111111111'),
-(20, 'Roberto Vicuña', 1, '113344559966', 17, 'roberto.vicuna@gmail.com', 1, '2017-11-10 18:08:15', '113445567788'),
-(21, 'Jesus Antunez', 2, '222222222222', 2, 'jesus.antunez@gmail.com', 1, '2017-11-11 14:27:42', '111111111111');
+(1, 'David Eduardo Rincon Luengo', 1, '1126694918', NULL, 'rexx84@gmail.com', 1, '2017-10-18 04:07:25', '1122334455'),
+(2, 'Alberto Fabian', 1, '54115778345', NULL, 'Alberto.Fabian@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(3, 'Eduardo Peliacani', 2, '54115778345', NULL, 'Eduardo.Peliacani@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(4, 'Carlos Lazarte', 1, '54115778345', NULL, 'Carlos.Lazarte@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(5, 'Marcos Padilla', 1, '54115778345', NULL, 'Marcos.Padilla@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(6, 'Nahuel Barrati', 1, '54115778345', NULL, 'Nahuel.Barrati@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(7, 'Jan Zambrano', 1, '54115778345', NULL, 'Jan.Zambrano@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(8, 'Marcos Quispes', 1, '54115778345', NULL, 'Marcos.Quispes@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(9, 'Beatriz Gonzalez', 1, '54115778345', NULL, 'Beatriz.Gonzalez@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(10, 'Juan de Vicenti', 1, '54115778345', NULL, 'juan.vicenti@gmail.com', 1, '2017-10-18 04:07:25', '54115778345'),
+(11, 'Jorge Gutierrez', 2, '541189054333', NULL, 'jorguti85@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(12, 'Carlos Romero', 2, '541189054333', NULL, 'jorguti86@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(13, 'Jose Carrasco', 2, '541189054333', NULL, 'jorguti87@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(14, 'Alfredo Wirth', 2, '541189054333', NULL, 'jorguti88@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(15, 'Victor Machado', 2, '541189054333', NULL, 'jorguti89@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(16, 'Martin Hatchman', 2, '541189054333', NULL, 'jorguti90@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(17, 'Flavio Alfano', 2, '541189054333', NULL, 'jorguti91@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(18, 'Jorge Dangelo', 2, '541189054333', NULL, 'jorguti92@gmail.com', 1, '2017-10-18 04:07:25', '541189054333'),
+(19, 'Jose Perez', 2, '222222222222', NULL, 'jose.perez@gmail.com', 1, '2017-11-10 17:10:02', '111111111111'),
+(20, 'Roberto Vicuña', 1, '113344559966', NULL, 'roberto.vicuna@gmail.com', 1, '2017-11-10 18:08:15', '113445567788'),
+(21, 'Jesus Antunez', 2, '222222222222', NULL, 'jesus.antunez@gmail.com', 1, '2017-11-11 14:27:42', '111111111111'),
+(22, 'Carlos Villalobos', 1, '113243545556', NULL, 'carlos.villalobos@gmail.com', 1, '2017-11-23 00:28:25', '114567677888'),
+(23, 'Jorge Gutierrez', 1, '116677889900', NULL, 'jorguti58@gmail.com', 1, '2017-11-23 05:36:21', '114455667788');
 
 -- --------------------------------------------------------
 
@@ -520,7 +527,8 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 (82, '2017-11-11 14:28:14', NULL, NULL, 1, 'TK-00000053', 1, 'Probando', NULL, 21, 0, NULL, 0, 2, 2, NULL, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, 0, 0, NULL),
 (83, '2017-11-11 14:31:13', NULL, NULL, 1, 'TK-00000054', 2, '123213, 123213', NULL, 1, 0, NULL, 0, 2, NULL, NULL, 17, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
 (84, '2017-11-21 00:06:52', NULL, NULL, 1, 'TK-00000055', 2, '123345', NULL, 21, 0, NULL, 0, 1, NULL, NULL, 17, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, 0, 0, NULL),
-(85, '2017-11-21 00:07:11', NULL, NULL, 1, 'TK-00000056', 1, '', NULL, 17, 0, NULL, 0, 1, 2, NULL, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, 0, 0, NULL);
+(85, '2017-11-21 00:07:11', NULL, NULL, 1, 'TK-00000056', 1, '', NULL, 17, 0, NULL, 0, 1, 2, NULL, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, 0, 0, NULL),
+(86, '2017-11-23 04:17:15', NULL, NULL, 1, 'TK-00000057', 3, '', NULL, NULL, 17, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Cambiar camara de entrada.', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -640,9 +648,10 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `addresUser`, `passwordUser`, `idProfileKf`, `idStatusKf`, `dateCreated`, `idCompanyKf`) VALUES
-(1, 'Jorge Gutierrez', 'jorguti58@gmail.com', '117788999003', '112233445566', NULL, 'fe703d258c7ef5f50b71e06565a65aa07194907f', 1, 1, NULL, NULL),
+(24, 'Jorge Gutierrez', 'jorguti58@gmail.com', '116677889900', '114455667788', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 1, 1, '2017-11-23 05:36:20', NULL),
 (17, 'David Rincón Luengo', 'rexx84@gmail.com', '112235667799', '112345664556', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 4, 1, '2017-10-26 02:16:00', 1),
-(22, 'Luis Carreño', 'luis.carreno@coca-cola.com', '1199887766', '1144556677', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 2, 1, '2017-10-26 18:17:25', 1);
+(22, 'Luis Carreño', 'luis.carreno@coca-cola.com', '1199887766', '1144556677', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 2, 1, '2017-10-26 18:17:25', 3),
+(23, 'Carlos Villalobos', 'carlos.villalobos@gmail.com', '113243545556', '114567677888', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 0, '2017-11-23 00:28:25', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -776,7 +785,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT de la tabla `tb_addres`
 --
 ALTER TABLE `tb_addres`
-  MODIFY `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_attendant`
@@ -788,7 +797,7 @@ ALTER TABLE `tb_attendant`
 -- AUTO_INCREMENT de la tabla `tb_branch`
 --
 ALTER TABLE `tb_branch`
-  MODIFY `idBranch` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idBranch` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_clients_tickets`
@@ -830,13 +839,13 @@ ALTER TABLE `tb_sys_param`
 -- AUTO_INCREMENT de la tabla `tb_tenant`
 --
 ALTER TABLE `tb_tenant`
-  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
@@ -854,7 +863,7 @@ ALTER TABLE `tb_type_services`
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

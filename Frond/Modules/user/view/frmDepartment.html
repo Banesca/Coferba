@@ -6,16 +6,41 @@
     </div>
     <div class="panel-body">
       <!-- FORM CONTAINER-->
-      <form class="form-horizontal" name="frmDpto" ng-submit="assignUserDepto()" ng-init="CallFilterFormT();">
+      <form class="form-horizontal" name="frmDpto" ng-submit="assignUserDepto()" ng-init="officeListByCompnayID(); getAllAddressByIdTenant();">
           <fieldset>
-        
-            <!-- Text Address for Admins-->      
+            <!-- Company Name-->    
             <div class="form-group">
+              <label ng-show="sessionidProfile!=3" class="col-md-4 control-label">Consorcio</label>
+                <div class="col-md-4">
+                  <div class="input-group">
+                      <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+                    <input ng-show="sessionidProfile!=1 && sessionidProfile!=3" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
+
+                    <select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+                        <option value="">Seleccione un consorcio</option>
+                      </select>
+                  </div>
+                </div>
+            </div>
+            <!-- Address for Owner-->      
+            <div ng-show="sessionidProfile==3" class="form-group">
                 <label class="col-md-4 control-label">Direcci&#243n</label>
                   <div class="col-md-4">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                       <select name="idAddressAtt" class="form-control" ng-change="getDeparment(1); listUserDepto();"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+                        <option value="" >Seleccione</option>
+                      </select>
+                    </div>
+                  </div>
+            </div>
+            <!-- Address for Admins-->      
+            <div ng-show="sessionidProfile!=3" class="form-group">
+                <label class="col-md-4 control-label">Direcci&#243n</label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                      <select name="idAddressAtt" class="form-control" ng-change="getDeparment(1); listUserDepto();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
                         <option value="" >Seleccione</option>
                       </select>
                     </div>
@@ -26,7 +51,7 @@
                     <label class="col-md-4 control-label">Departamento</label>
                       <div class="col-md-4 selectContainer">
                         <div class="input-group">
-                            <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                            <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon icon-building"></i></span>
                             <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
                               <option value="" >Seleccione</option>
                             </select>
@@ -43,8 +68,8 @@
           </fieldset>
       </form>
       <div class="clearfix"></div> 
-      <div ng-show="noRecordsFound" class="alert alert-info" role="alert">
-            <strong>INFO: </strong>La direccion<strong>{{nameAdress}} </strong>No posee departamentos asociados en la direccion seleccionada.
+      <div ng-show="noRecordsFound && sessionidProfile==3" class="alert alert-info" role="alert">
+            <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No posee departamentos asociados en la direccion seleccionada.
       </div>
       <!-- Tabla para propietarios -->
         <table ng-show="recordsFound && sessionidProfile==3"  class="table  table-striped" style="width: 500px; margin: 0 auto;">

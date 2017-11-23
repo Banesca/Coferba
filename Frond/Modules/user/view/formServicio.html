@@ -7,7 +7,7 @@
 		<h3 class="panel-title" ng-show="sessionidProfile==1">SERVICIOS - EMPRESAS O CONSORCIOS<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 	</div>
 	<div class="panel-body">
-		<form class="form-horizontal" ng-init="CallFilterFormT(); officeListByCompnayID(); getAllAddress();" name="fservice" ng-submit="newTicket('srvs')" >
+		<form class="form-horizontal" name="fservice" ng-submit="newTicket('srvs')" >
 			<div ng-switch on="mySwitch">
 				<fieldset ng-switch-when="PASO 1: DATOS">
 					<!-- Company Name-->    
@@ -17,11 +17,11 @@
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Consorcio</label>
 					    <div class="col-md-4">
 						    <div class="input-group">
-						        <span class="input-group-addon"><i class="icon-building"></i></span>
+						        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
 						  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
 
 						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-								    	<option value=""></option>
+								    	<option value="">Seleccione una Empresa o Consorcio</option>
 							    	</select>
 						    </div>
 					  	</div>
@@ -34,12 +34,9 @@
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Edificio</label>   
 					    <div class="col-md-4">
 						    <div class="input-group">
-						        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-						  		<select ng-show="sessionidProfile==3" name="idAddressKf" class="form-control" ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile==3" ng-model="select.idAddressKf" autofocus >
-								    	<option value=""></option>
-							    	</select>
-							   	<select ng-show="sessionidProfile!=3" name="idAddressKf" class="form-control" ng-options="item.idBranch as item.nameLocation for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
-								    	<option value=""></option>
+						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+						  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
+								    	<option value="">Seleccione una sucursal o eficio</option>
 							    	</select>
 						    </div>
 					  </div>
