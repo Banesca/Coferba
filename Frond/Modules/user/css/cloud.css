@@ -119,8 +119,6 @@ table tbody tr:hover td.pivot { background-color: white;}
     margin: 0; padding:0; height:23px;
 }
 ul, ol { margin: 0;padding: 0; }
-h1, h2, h3 {line-height: 20px; font-size:14px; }
-h1, h2, h3 , h4, h5, h6 { font-weight:600; }
 .btn i { filter:alpha(opacity=80);
     -moz-opacity:0.8;
     opacity: 0.8;

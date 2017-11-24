@@ -1,6 +1,6 @@
 
 
-$(window).on('load', function() { // makes sure the whole site is loaded 
+$(window).on('load', function() { // makes sure the whole site is loaded  #14162B
   $('#loader').fadeOut(); // will first fade out the loading animation 
   $('#wLoader').delay(250).fadeOut('slow'); // will fade out the white DIV that covers the website. 
   $('body').delay(350).css({'overflow':'visible'});

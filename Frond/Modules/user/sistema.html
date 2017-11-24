@@ -84,7 +84,7 @@
 		                    <ul class="nav-icon">
 		                    	<li id="m_monitor" class="active" ng-show="sessionidProfile!=0">
 							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
-							          <i class="icon-desktop"></i>
+							          <i class="icon-dashboard"></i>
 							          <br>Monitor de pedidos
 							       </a>
 							    </li>
@@ -100,12 +100,6 @@
 							          <br>Gestion de Departamento
 							       </a>
 							    </li>
-							    <li id="m_report">
-							       <a href="#Reportes" ng-show="sessionidProfile==1"> 
-							          <i class="icon-th-large"></i>
-							          <br>Reportes
-							       </a>
-							    </li>
 							    <li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
 							       <a href="#Usuarios" ng-click="fnShowHide('user', 'open')"> 
 							          <i class="icon-group"></i>
@@ -113,7 +107,7 @@
 							       </a>
 							    </li>
 							     <li id="m_config" ng-show="sessionidProfile==1">
-							       <a href="#Config"> 
+							       <a href="#Config" ng-click="fnShowHide('sysConfig', 'open')"> 
 							          <i class="icon-cogs"></i>
 							          <br>Configuracion
 							       </a>
@@ -379,7 +373,7 @@
 	</div>
 	
 
-	<div class="main_container" ng-show="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); ">
+	<div class="main_container" ng-show="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter();">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
@@ -388,6 +382,7 @@
 			<div ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
 			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
 			<div ng-show="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
+			<div ng-show="rusysconfig" ng-include="'view/formConfig.html'"></div>
 			<div ng-show="rucontact" ng-include="'view/formContact.html'"></div>
 			<div ng-show="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
@@ -682,64 +677,64 @@
 		<!-- Modal Password Change -->
 			<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-lg" role="dialog">
 	  			<div class="modal-dialog modal-lg" >
-		    <div class="modal-content">
-		      	<div class="modal-body">
-		          	<div class="panel panel-default">
-		              	<div class="panel-heading">
-		                	<h3 class="panel-title">Cambio de Contrase&#241a<a data-dismiss="modal" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-		            	</div>
-	            		<div class="panel-body" style="overflow-y: scroll;">
-							<!-- FORM CONTAINER-->
-		    				<form class="form-horizontal" name="fUserProfile" ng-init="" ng-submit="sysFunctionsUser('updprofile')">
-								<fieldset>
-								<!-- Old Password-->
+				    <div class="modal-content">
+				      	<div class="modal-body">
+				          	<div class="panel panel-default">
+				              	<div class="panel-heading">
+				                	<h3 class="panel-title">Cambio de Contrase&#241a<a data-dismiss="modal" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+				            	</div>
+			            		<div class="panel-body" style="overflow-y: scroll;">
+									<!-- FORM CONTAINER-->
+				    				<form class="form-horizontal" name="fUserProfile" ng-init="" ng-submit="sysFunctionsUser('updprofile')">
+										<fieldset>
+										<!-- Old Password-->
 
-								<div class="form-group">
-								  <label class="col-md-4 control-label">Contrase&#241a Actual</label>  
-								    <div class="col-md-4">
-									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
-									    </div>
-									</div>
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Contrase&#241a Actual</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+											    </div>
+											</div>
+										</div>
+										<!-- New Password-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+											    </div>
+											</div>
+										</div>
+										<!-- New Password Check-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input id="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
+											    </div>
+											</div>
+										</div>
+
+										<!-- Actions Button -->
+										<div class="form-group">
+										  <label class="col-md-4 control-label"></label>
+										  <div class="col-md-4">
+										    <button type="submit" class="btn btn-primary" >Cambiar</button>
+										  </div>
+										</div>
+
+										</fieldset>
+									</form>
 								</div>
-								<!-- New Password-->
-
-								<div class="form-group">
-								  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
-								    <div class="col-md-4">
-									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
-									    </div>
-									</div>
-								</div>
-								<!-- New Password Check-->
-
-								<div class="form-group">
-								  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
-								    <div class="col-md-4">
-									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									  		<input id="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
-									    </div>
-									</div>
-								</div>
-
-								<!-- Actions Button -->
-								<div class="form-group">
-								  <label class="col-md-4 control-label"></label>
-								  <div class="col-md-4">
-								    <button type="submit" class="btn btn-primary" >Cambiar</button>
-								  </div>
-								</div>
-
-								</fieldset>
-							</form>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
 				</div>
 			</div>
 		<!-- //Modal Password Change -->

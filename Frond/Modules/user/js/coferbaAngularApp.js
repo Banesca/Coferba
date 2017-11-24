@@ -120,6 +120,31 @@ $scope.hideProfiles = function(item){
 };
 /**************************************************/  
 
+
+  $('#sidebar-nav > div').click(function(){
+    alert("Hola");
+  var i = $(this).index();
+  $('#sidebar-nav > div').removeClass('active').eq(i).addClass('active');
+
+});
+
+
+
+/**************************************************
+*                                                 *
+*                 GET PARAMETER                   *
+*      (smtpmail, cost, typeTenant, company)      *
+**************************************************/
+$scope.getParameter = function(){
+   $http({
+      method : "GET",
+      url : "http://localhost/Coferba/Back/index.php/User/mailsmtp"
+    }).then(function mySuccess(response) {
+        $scope.listParameter   = response.data;
+      }, function myError(response) {
+    });
+}
+
 /**************************************************
 *                                                 *
 *    LISTADO DE SUCURSALES POR ID DE EMPRESA      *
@@ -1719,6 +1744,7 @@ function closeAllDiv (){
   $scope.rucontact = false;
   $scope.rudepto = false;
   $scope.recordsFound = false;
+  $scope.rusysconfig = false;
 }
 /**************************************************/
 
@@ -1868,6 +1894,16 @@ $scope.fnShowHide = function(divId, divAction) {
         }else{
           closeAllDiv();
           $scope.home = false;
+        }
+        
+      break;
+      case "sysConfig":
+          closeAllDiv();
+        if(divAction=="open"){
+          $scope.rusysconfig = true;
+        }else{
+          closeAllDiv();
+          $scope.rusysconfig = false;
         }
         
       break;
