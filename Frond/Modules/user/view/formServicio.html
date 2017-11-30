@@ -36,7 +36,8 @@
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
 						  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
-								    	<option value="">Seleccione una sucursal o eficio</option>
+								    	<option ng-show="sessionidProfile==1" value="">Seleccione un Edificio</option>
+								    	<option ng-show="sessionidProfile==4" value="">Seleccione una sucursal o edificio</option>
 							    	</select>
 						    </div>
 					  </div>
@@ -113,7 +114,7 @@
 					  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 					  	<div class="col-md-4">
 							<div class="input-group">
-						  		<textarea name="detailSv" rows="10" cols="50" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="txt.detailSv"  required autofocus ></textarea>
+						  		<textarea name="detailSv" rows="10" cols="50" style="resize: vertical;" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="txt.detailSv"  required autofocus ></textarea>
 							</div>
 					  	</div>
 					</div>
@@ -123,7 +124,7 @@
 					  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
 					  	<div class="col-md-4">
 							<div class="input-group">
-						  		<textarea name="sruSv" rows="10" cols="50" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruSv" ></textarea>
+						  		<textarea name="sruSv" rows="10" cols="50" style="resize: vertical;" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruSv" ></textarea>
 							</div>
 					  	</div>
 					</div>

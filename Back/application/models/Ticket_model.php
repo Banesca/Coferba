@@ -296,7 +296,7 @@ class Ticket_model extends CI_Model
         $tipeOpcion = null;
 
         /* LISTADO DE CONDICIONES DE IVA */
-        $query = $this->db->select("*")->from("tb_user")->get();
+        $query = $this->db->select("*")->from("tb_user")->order_by("tb_user.dateCreated", "DESC")->get();
         if ($query->num_rows() > 0) {
             $user = $query->result_array();
         }

@@ -5,27 +5,36 @@
 	      	<div class="panel-body">
 		      	<div class="row"  >
 		            <div ng-show="sessionidProfile>0" class="col-lg-2">
-		                    <div class="form-group">
-		                    	<label for="sel1">Tipo de usuario:</label>
-			                    <select class="form-control" ng-model="idProfileKf" ng-blur="listUserLoad()" ng-options="item.idProfile as item.nameProfile for item in listProfile ">
-			                        <option value=""> </option> 
-			                    </select>
-			                    <input type="hidden"  value="{{idProfileKf}}"  id="idProfileKf">
-		                    </div>
+		                    <!-- Address List-->  
+						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
+							<label for="sel1" ng-show="sessionidProfile==2">Sucursal</label>
+							<label for="sel1" ng-show="sessionidProfile==1">Sucursal / Edificio</label>
+							<label for="sel1" ng-show="sessionidProfile==4">Edificio</label>   
+							<select name="idAddressAtt" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" ng-change="getDeparment(0);" autofocus >
+						    	<option ng-show="sessionidProfile==1" value="">Seleccione un Edificio</option>
+					    		<option ng-show="sessionidProfile==4" value="">Seleccione una sucursal o edificio</option>
+					    	</select>
+						</div>
 		            </div>
-	                <div class="col-lg-2">  
-                       	<div class="form-group"> 
-                       	<label for="sel1">Tipo inquilino</label> 
-                       	<select class="form-control"  ng-model="idTypeTicket" ng-blur="listUserLoad()"> 
-                            <option value="0">Todo</option> 
-                           	<option value="1">ALTA DE LLAVEROS</option> 
-                           	<option  value="2">BAJA DE LLAVEROS</option> 
-                           	<option value="3">SERVICIO TECNICO</option> 
-                           	<option value="4">OTRAS SOLICITUDES O CONSULTAS</option> 
-                       	</select> 
-                       	<input type="hidden"  value="{{idTypeTicket}}"  id="idTypeTicket">
-                       	</div> 
-	                 </div> 
+	                <div ng-show="sessionidProfile>0" class="col-lg-2">
+		                    <!-- Department List-->  
+						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
+							<label for="sel1" ng-show="sessionidProfile==1 || sessionidProfile==4">Departamento</label>
+                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+                              	<option value="" >Seleccione una opcion</option>	
+                              	<option value="0" >Todos</option>
+                            </select>
+						</div>
+		            </div> 
+		            <div ng-show="sessionidProfile>0" class="col-lg-2">
+		                <!-- Type Tenant-->  
+						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
+							<label for="sel1" ng-show="sessionidProfile==1 || sessionidProfile==4">Tipo de Inquilino</label>
+                            <select ng-model="select.idTypeTenantKf" ng-change="searchTenant('manageTenant', select.idDepartmentKf, select.idTypeTenantKf);" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idTypeTenant as x.typeTenantName for x in lisTypeTenant " required autofocus >	
+                              	<option value="" >Todos</option>
+                            </select>
+						</div>
+		            </div> 
 	                <div class="col-lg-2">
 	                	<br>
 	                    <div class="form-group" style="    margin-top: 5px;">
@@ -33,48 +42,41 @@
 	                    class="form-control" ng-model="searchFilter" id="searchFilter" ng-change="listUserLoad()" placeholder="Buscar...">
 	                
 	                    </div>
-	                </div>
-	                <div class="col-lg-2">
-	                    <br>
-		                    <div class="form-group" style="    margin-top: 5px;">
-		                            <button type="button" class="btn btn-primary" ng-click="refresDiv()">Refresh </button>
-		                    </div>
-	                </div>
-					<table class="table  table-striped ">
+	                </div>	
+					<table  class="table  table-striped ">
 	                    <thead style=" background: #4d5d6f; color: white;">
 	                        <tr >
 	                            <th style="width:20px">#</th>
 	                            <th>ID</th>
-	                            <th>Nombres</th>
-	                            <th>Tlf Movil</th>
-	                            <th>Tlf Local</th>
-	                            <th>Correo</th>
+	                            <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
+	                            <th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
+	                            <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>
+	                            <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
 	                            <th>Perfil</th>
-	                            <th>Status</th>
+	                            <th><i class="glyphicon icon-flag"> </i> Status</th>
+	                            <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
 	                        </tr>
 	                    </thead>
-	                    <tbody>
-	                        <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUser | filter : paginate track by $index">
+	                    <tbody >
+	                        <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter : paginate track by $index">
 	                        	<td><div class="btn-group">
 										<button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
 											<span class="caret"></span>
 		                    				<span class="sr-only">Toggle Dropdown</span>
 		                				</button>
 									  	<ul class="dropdown-menu">
-	                    					<li><a ng-click="updateUser(item.idUser, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Modificar</a></li>
-	                    					<li><a ng-click="deleteUser(item.idUser, $index)" ng-if="item.idStatusKf>=0"><i title="desactivar" class="glyphicon glyphicon-remove-circle"></i> Eliminar</a></li>
+	                    					<li><a ng-click="updateUser(item.idTenant, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Modificar</a></li>
+	                    					<li><a ng-click="deleteUser(item.idTenant, $index)" ng-if="item.idStatusKf>=0"><i title="desactivar" class="glyphicon glyphicon-remove-circle"></i> Eliminar</a></li>
 	                					</ul>
 									</div>
 								</td>
-		                        <td>{{item.idUser}}</td>
-		                        <td>{{item.fullNameUser}}</td>
-		                        <td>{{item.phoneNumberUser}}</td>
-		                        <td>{{item.phoneLocalNumberUser}}</td>
-		                        <td>{{item.emailUser}}</td>
-		                        <td ng-if="item.idProfileKf==1">Coferba</td>
-		                        <td ng-if="item.idProfileKf==2">Empresa</td>
-		                        <td ng-if="item.idProfileKf==3">Propietario</td>
-		                        <td ng-if="item.idProfileKf==4">Admin. Consorcio</td>
+		                        <td>{{item.idTenant}}</td>
+		                        <td>{{item.fullNameTenant}}</td>
+		                        <td>{{item.phoneNumberTenant}}</td>
+		                        <td>{{item.phoneNumberContactTenant}}</td>
+		                        <td>{{item.emailTenant}}</td>
+		                        <td ng-if="item.idTypeKf==1">Propietario</td>
+		                        <td ng-if="item.idTypeKf==2">Inquilino</td>
 		                        <td>
 		                        	<div class="btn-group">
 										<button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO | 
@@ -95,6 +97,7 @@
 	                					</ul>
 									</div>
 		                        </td>
+		                        <td>{{item.dateCrated}}</td>
 		                    </tr>
 		                </tbody>
 					</table>

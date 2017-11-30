@@ -183,7 +183,7 @@
 <section id="sidebar"> 
   <div class="white-label"></div> 
   <div id="sidebar-nav">   
-      <div ng-class="ActiveClass" ng-click="changeClass()"><a href="#"><i class="icon-group"></i> Registrar Usuarios</a></div>
+      <div ng-click="sideBarMenu()"><a href="#"><i class="icon-group"></i> Registrar Usuarios</a></div>
       <div><a href="#"><i class="icon-user"></i>Registrar Encargados</a></div>
       <div><a href="#"><i class="icon-envelope"></i>Configurar Correos</a></div>
       <div><a href="#"><i class="icon-usd"></i>Configurar costos</a></div>
@@ -205,20 +205,17 @@
 	                <thead style=" background: #4d5d6f; color: white;">
 	                    <tr >
 	                        <th>ID</th>
-	                        <th>Nombres</th>
-	                        <th>Tlf Movil</th>
-	                        <th>Tlf Local</th>
-	                        <th>Correo</th>
+	                        <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
+	                        <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
 	                        <th>Perfil</th>
-	                        <th>Status</th>
+	                        <th><i class="glyphicon icon-flag"> </i> Status</th>
+	                        <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUser | orderBy:'item.dateCreated'">
+	                    <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUser | orderBy:'item.idUser'">
 	                        <td>{{item.idUser}}</td>
 	                        <td>{{item.fullNameUser}}</td>
-	                        <td>{{item.phoneNumberUser}}</td>
-	                        <td>{{item.phoneLocalNumberUser}}</td>
 	                        <td>{{item.emailUser}}</td>
 	                        <td ng-if="item.idProfileKf==1">Coferba</td>
 	                        <td ng-if="item.idProfileKf==2">Empresa</td>
@@ -226,24 +223,12 @@
 	                        <td ng-if="item.idProfileKf==4">Admin. Consorcio</td>
 	                        <td>
 	                        	<div class="btn-group">
-									<button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO | 
-										<span class="caret"></span>
-	                    				<span class="sr-only">Toggle Dropdown</span>
-	                				</button>
-	                				<button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO | 
-										<span class="caret"></span>
-	                    				<span class="sr-only">Toggle Dropdown</span>
-	                				</button>
-	                				<button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
-										<span class="caret"></span>
-	                    				<span class="sr-only">Toggle Dropdown</span>
-	                				</button>
-								  	<ul class="dropdown-menu">
-	                					<li><a ng-click="sysFunctionsUser('enabled',item.idUser)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
-	                					<li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.idStatusKf>0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
-	            					</ul>
+									<span  ng-if="item.idStatusKf==1" class="btn btn-success"> ACTIVO</span>
+	                				<span  ng-if="item.idStatusKf==0" class="btn btn-warning"> INACTIVO</span>
+	                				<span  ng-if="item.idStatusKf<0" class="btn btn-danger"> ELIMINADO</span>
 								</div>
 	                        </td>
+	                        <td>{{item.dateCreated}}</td>
 	                    </tr>
 	                </tbody>
 				</table>
@@ -251,7 +236,7 @@
 	  	</div>
 	    <div class="widget-box sample-widget">
 		    <div class="widget-header">
-		    	<h2>Correo Principal</h2>
+		    	<h2>Correo Principal: PARAMETRO {{ParameterId}}</h2>
 		    </div>
 	      	<div class="widget-content">
 	        	<!-- FORM CONTAINER-->
@@ -260,7 +245,7 @@
 					<!-- Old Password-->
 
 					<div class="form-group">
-					  <label class="col-md-4 control-label">SMTP MAIL</label>  
+					  <label class="col-md-4 control-label">Correo SMTP</label>  
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
@@ -275,7 +260,7 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-						  		<input id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="passwordSmtp" minlength="8" type="password" required autofocus />
+						  		<input id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="passwordSmtp" minlength="8" type="text" required autofocus />
 						    </div>
 						</div>
 					</div>

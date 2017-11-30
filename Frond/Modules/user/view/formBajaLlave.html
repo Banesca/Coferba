@@ -53,7 +53,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" ng-disabled="companyFound!=true"  class="form-control" ng-change="getAllAttendant(); Attendant=true"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione una direccion</option>
 											    </select>
 										    </div>
@@ -66,10 +66,10 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  		<select name="nameAtt" ng-disabled="Attendant!=true"  class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData()" ng-model="select.nameAtt" autofocus >
+										  		<select name="nameAtt" ng-disabled="Attendant!=true" ng-disabled="attendantFound!=true"  class="form-control"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData()" ng-model="select.nameAtt" autofocus >
 												    <option value="">Seleccione un encargado</option>
 											    </select>
-											    <span ng-show="Attendant && sessionidProfile!=3" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+											    <span ng-show="Attendant==true && sessionidProfile!=3" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 										    </div>
 									  	</div>
 								</div>
@@ -88,7 +88,7 @@
 								  <label class="col-md-4 control-label">Telefono Celular</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 									  		<input name="movilPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneAtt" type="text" required autofocus />
 									    </div>
 								  </div>
@@ -236,7 +236,7 @@
 									  	</div>
 									</div>
 								</div>
-								<!-- Information key to delete -->
+								<!-- Form Special Request sru= Special Request Up -->
 								<div  class="form-group">
 								  <label class="col-md-4 control-label">Observaciones Adicionales</label> 
 								  	<div class="col-md-4">

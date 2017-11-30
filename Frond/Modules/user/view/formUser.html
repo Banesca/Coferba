@@ -7,7 +7,7 @@
 		              	<div class="panel-heading">
 		                	<h3 class="panel-title">PERFIL USUARIO<a data-dismiss="modal" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 		            	</div>
-	            		<div class="panel-body" style="overflow-y: scroll;">
+	            		<div class="panel-body">
 							<!-- FORM CONTAINER-->
 		    				<form class="form-horizontal" name="fUserProfile" ng-init="" ng-submit="sysFunctionsUser('updprofile')">
 								<fieldset>
@@ -57,7 +57,7 @@
 								<!-- Text Phone-->
 								       
 								<div class="form-group">
-								  <label class="col-md-4 control-label">Telefono Local</label>  
+								  <label class="col-md-4 control-label">Telefono Fijo</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
@@ -71,7 +71,7 @@
 								  <label class="col-md-4 control-label">Telefono Movil</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 									  		<input name="MovilPhoneNumber" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="profile.MovilPhoneNumber"  type="text" required autofocus />
 									    </div>
 								  </div>
