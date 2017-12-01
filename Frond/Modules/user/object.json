@@ -165,6 +165,7 @@ http://localhost/Coferba/Back/index.php/User/updateParam
 http://localhost/Coferba/Back/index.php/Ticket/cancel/1
 
 
-
-
-/// SOLICITAR BAJA DE DEPARTAMENTO AL PROPIETARIO Y APRORBLAO
+//******************************** 
+litado de inquilinos mas el propietario de un departamento
+//
+http://localhost/coferba/Back/index.php/tenant/allByIdDepartament/1

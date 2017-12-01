@@ -143,12 +143,36 @@ class Tenant_model extends CI_Model
         
                 $tenant = null;
         
-                $this->db->select("*")->from("tb_tenant");
-                
-
+               
+        
                 if (@$idType > 0){
-                $this->db->where("tb_tenant.idTypeKf =", $idType);}
-                $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
+                    $this->db->select("*")->from("tb_tenant");
+                    
+                    if (@$id > 0){
+                        $this->db->where("tb_tenant.idTypeKf =", $idType);
+                        $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
+                        
+                    }else{
+                        $query = $this->db->where("tb_tenant.idTypeKf =", $idType)->get();
+                    }
+                   
+                 }
+
+                 if (@$idType < 1){
+                    
+                    if (@$id > 0){
+                        $this->db->select("*")->from("tb_tenant");
+                        $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
+                        
+                    }else{
+                        $query =  $this->db->select("*")->from("tb_tenant")->get();
+                        
+                    }
+                 }
+                  
+                
+                
+            
                 if ($query->num_rows() > 0) {
                     $tenant = $query->result_array();
                 }
@@ -159,6 +183,30 @@ class Tenant_model extends CI_Model
         
                 return $rs;
     }
+
+
+    
+    public function allByIdDepartament($id) {
+        
+                $tenant = null;
+                
+                $query = $query = $this->db->query("select * from tb_tenant t1 where  t1.idDepartmentKf = ".$id."
+                or idTenant in (select idTenantKf from  tb_department where idDepartment = ".$id." )
+                 " );
+
+
+    
+            if($query->num_rows() > 0){
+                $rs = $query->row_array();
+                $tenant = $query->result_array();
+            
+                $rs = array(
+                    'tenant' => $tenant
+                );
+            }
+                return $rs;
+    }
+    
 
      /* LISTADO DE FILTROS */
      public function findByEmail($mail) {
