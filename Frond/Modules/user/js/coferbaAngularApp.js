@@ -97,11 +97,12 @@ $scope.sysLoadLStorage = function (){
      $scope.sessionidCompany    = localStorage.getItem("idCompany");
      $scope.sessionNameCompany  = localStorage.getItem("nameCompany");
      $scope.sessionidTenantUser = localStorage.getItem("idTenantUser");
-     $scope.sysParameterVar     = localStorage.getItem("sysParameters")
+     //$scope.sysParameterVar     = localStorage.getItem("sysParameters");
      //if($scope.sessionidProfile==3){$scope.getAllAddressByIdTenant();}
      if($scope.sessionidProfile==2 && $scope.sessionidCompany || $scope.sessionidProfile==1){
       $scope.officeListByCompnayID();
      }
+
 }
  /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
      if($scope.sessionidProfile!=3){$scope.home = true;}
@@ -149,6 +150,7 @@ $scope.getParameter = function(){
     }).then(function mySuccess(response) {
         $scope.listParameter   = response.data;
         console.log(response.data);
+        $scope.loadParameter();
         localStorage.setItem("sysParameters", response.data);
       }, function myError(response) {
     });
@@ -158,6 +160,7 @@ $scope.getParameter = function(){
 *   Get SMTP Parameter from the List Parameter    *
 *                                                 *
 **************************************************/
+var rsParameter = {id:'', value: '', description: ''};
 
 $scope.loadParameter = function(item, value){
     var idParameter = item;
@@ -165,14 +168,17 @@ $scope.loadParameter = function(item, value){
     /* Recorrer el Json Parameter para obtener datos*/
     var length = $scope.listParameter.length;
     for (i = 0; i < length; i++){
-      if($scope.listParameter[i].idParam == idParameter){
+        rsParameter[i]['id']=$scope.listParameter[i].idParam;
+        rsParameter[i]['Value']=$scope.listParameter[i].value;
+        rsParameter[i]['Description']=$scope.listParameter[i].description;
+      /*if($scope.listParameter[i].idParam == idParameter){
           $scope.parameterId        = $scope.listParameter[i].idParam;
           $scope.parameterValue     = $scope.listParameter[i].value;
           $scope.parameterDescrip   = $scope.listParameter[i].description;
           BindDataToForm(section2Load);
-          break;
+          break;*/
       }
-    }
+      console.log(rsParameter);
 }
 /**************************************************/
 /**************************************************
@@ -1564,10 +1570,13 @@ $scope.newTicket = function(opt){
 }
 /**************************************************/
 
-$scope.calculateTotal = function (){
+$scope.getTotalService = function (){
   var nKey=$scope.quantity.qkuTenant;
   var tDelivery=$scope.delivery.idTypeDeliveryKf;
-    if (nKey==1){$scope.total=nKey}
+  if (tDelivery>1){$scope.cost.delivery = $scope.session
+    
+  if (nKey==1){$scope.total=nKey}
+  }
 
 }
 
