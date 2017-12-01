@@ -6,7 +6,7 @@
 		</div>
 		<div class="panel-body">
 			<!-- FORM CONTAINER-->
-	    	<form class="form-horizontal" name="frmOther" ng-submit="newTicket('other')" ng-init="CallFilterFormT()">
+	    	<form class="form-horizontal" name="frmOther" ng-submit="newTicket('other')">
 				<fieldset>
 				<!-- Select Type of Service -->
 				   
@@ -36,7 +36,7 @@
 				  <label class="col-md-4 control-label" >Descripci&#243n</label> 
 				  	<div class="col-md-4">
 						<div class="input-group">
-					  		<textarea name="o_detail" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.o_detail" required autofocus ></textarea>
+					  		<textarea name="o_detail" style="resize: vertical;" rows="10" cols="45" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="$parent.o_detail" required autofocus ></textarea>
 						</div>
 				  	</div>
 				</div>

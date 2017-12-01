@@ -6,12 +6,12 @@
     </div>
     <div class="panel-body">
       <!-- FORM CONTAINER-->
-      <form class="form-horizontal" name="frmDpto" ng-submit="assignUserDepto()" ng-init="officeListByCompnayID(); getAllAddressByIdTenant();">
+      <form class="form-horizontal" name="frmDpto" ng-submit="assignUserDepto()">
           <fieldset>
             <!-- Company Name-->    
-            <div ng-show="sessionidProfile!=3" class="form-group">
+            <div ng-show="sessionidProfile!=3" class="form-group col-md-6">
               <label class="col-md-4 control-label">Consorcio</label>
-                <div class="col-md-4">
+                <div class="col-xs-12">
                   <div class="input-group">
                       <span class="input-group-addon"><i class="icon-suitcase"></i></span>
                     <input ng-show="sessionidProfile==4" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
@@ -23,9 +23,9 @@
                 </div>
             </div>
             <!-- Address for Owner-->      
-            <div ng-show="sessionidProfile==3" class="form-group">
+            <div ng-show="sessionidProfile==3" class="form-group col-md-6">
                 <label class="col-md-4 control-label">Direcci&#243n</label>
-                  <div class="col-md-4">
+                  <div class="col-xs-12">
                     <div class="input-group">
                       <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                       <select name="idAddressAtt" class="form-control" ng-change="getDeparment(1); listUserDepto(1);"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
@@ -35,9 +35,9 @@
                   </div>
             </div>
             <!-- Address for Admins-->      
-            <div ng-show="sessionidProfile!=3" class="form-group">
+            <div ng-show="sessionidProfile!=3" class="form-group col-md-6">
                 <label class="col-md-4 control-label">Direcci&#243n</label>
-                  <div class="col-md-4">
+                  <div class="col-xs-12">
                     <div class="input-group">
                       <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                       <select name="idAddressAtt" class="form-control" ng-change="listUserDepto(1);"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
@@ -47,12 +47,12 @@
                   </div>
             </div>
             <!-- Select Department -->
-                  <div ng-show="sessionidProfile==3" class="form-group"> 
+                  <div ng-show="sessionidProfile==3" class="form-group col-md-6">
                     <label class="col-md-4 control-label">Departamento</label>
-                      <div class="col-md-4 selectContainer">
+                      <div class="col-xs-12 selectContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
                               <option value="">Seleccione</option>
                             </select>
                         </div>
@@ -60,16 +60,16 @@
                   </div>
             <!-- Actions Button -->
             <div class="form-group" ng-show="sessionidProfile==3">
-              <label class="col-md-4 control-label"></label>
+              <label class="col-md-5 control-label"></label>
               <div class="col-md-4">
-                <button type="submit" ng-click="assignDepto()" class="btn btn-primary" ng-disabled="dptoNotFound!=true" >Asociar</button>
+                <button type="submit" ng-click="assignDepto()" class="btn btn-primary" ng-disabled="dptoNotFound!=false" >Asociar</button>
               </div>
             </div>
           </fieldset>
       </form>
       <div class="clearfix"></div> 
-      <div ng-show="noRecordsFound && sessionidProfile==3" class="alert alert-info" role="alert">
-            <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No posee departamentos asociados en la direccion seleccionada.
+      <div ng-show="noRecordsFound && sessionidProfile" class="alert alert-info" role="alert">
+            <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No existen departamentos asociados a la direccion seleccionada.
       </div>
       <!-- Tabla para propietarios -->
         <table ng-show="recordsFound && sessionidProfile==3"  class="table  table-striped" style="width: 500px; margin: 0 auto;">
@@ -119,30 +119,38 @@
               </tr>
           </thead>
           <tbody>
-    
               <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in ListDptoByTenant | filter : paginate track by $index">
                 <td>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
+                    <button type="button" class="btn btn-info" ng-click="searchTenant('listTenant', item.idDepartment, -1)"><i title="desactivar" class="glyphicon glyphicon-search"> </i> INQUILINOS 
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="searchTenant('listTenant', item.idDepartment, -1)"><i title="desactivar" class="glyphicon glyphicon-user"></i> Ver Inquilinos</a></li>
-                        <li><a ng-click="updateUser(item.idDepartment, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Solicitar Baja</a></li>
-                    </ul>
                   </div>
                 </td>
                 <td>{{item.idDepartment}}</td>
                 <td>{{item.departmentFloor}}</td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ASIGNADO </button>
-                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf==null" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DISPONIBLE</button>
-                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOLICITADO</button>
-                    <button type="button" ng-if="item.isAprobatedAdmin<0 && item.idTenantKf==null" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO</button>
+                    <button type="button" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ASIGNADO | 
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf==null" class="btn btn-info dropdown-toggle" aria-haspopup="true" aria-expanded="false"> DISPONIBLE
+                    </button>
+                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOLICITADO | 
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <button type="button" ng-if="item.isAprobatedAdmin<0 && item.idTenantKf==null" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                      <ul class="dropdown-menu">
+                                <li><a ng-click="approveDepto(item.idDepartment)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Aprobar</a></li>
+                                <li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
+                                <li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf!=null"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
+                            </ul>
                   </div>
-                </td>
+                            </td>
               </tr>
           </tbody>
         </table>

@@ -11,8 +11,7 @@
 							<label for="sel1" ng-show="sessionidProfile==1">Sucursal / Edificio</label>
 							<label for="sel1" ng-show="sessionidProfile==4">Edificio</label>   
 							<select name="idAddressAtt" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" ng-change="getDeparment(0);" autofocus >
-						    	<option ng-show="sessionidProfile==1" value="">Seleccione un Edificio</option>
-					    		<option ng-show="sessionidProfile==4" value="">Seleccione una sucursal o edificio</option>
+						    	<option  value="">Seleccione un opcion</option>
 					    	</select>
 						</div>
 		            </div>
@@ -20,9 +19,8 @@
 		                    <!-- Department List-->  
 						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
 							<label for="sel1" ng-show="sessionidProfile==1 || sessionidProfile==4">Departamento</label>
-                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
-                              	<option value="" >Seleccione una opcion</option>	
-                              	<option value="0" >Todos</option>
+                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+                              	<option value="" >Todos</option>	
                             </select>
 						</div>
 		            </div> 
@@ -30,7 +28,7 @@
 		                <!-- Type Tenant-->  
 						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
 							<label for="sel1" ng-show="sessionidProfile==1 || sessionidProfile==4">Tipo de Inquilino</label>
-                            <select ng-model="select.idTypeTenantKf" ng-change="searchTenant('manageTenant', select.idDepartmentKf, select.idTypeTenantKf);" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idTypeTenant as x.typeTenantName for x in lisTypeTenant " required autofocus >	
+                            <select ng-model="select.idTypeTenantKf" ng-change="searchTenant('manageTenant', select.idDepartmentKf, select.idTypeTenantKf);" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idTypeTenant as x.typeTenantName for x in lisTypeTenant " required autofocus >	
                               	<option value="" >Todos</option>
                             </select>
 						</div>
@@ -116,7 +114,7 @@
 		            	</div>
 		            		<div class="panel-body" style="overflow-y: scroll;">
 								<!-- FORM CONTAINER-->
-			    				<form class="form-horizontal" name="fUpdateUser" ng-init="CallFilterFormU(); getAllAddress();" ng-submit="updateUser()">
+			    				<form class="form-horizontal" name="fUpdateUser" ng-submit="updateUser()">
 									<fieldset>
 									<!-- Select profile --> 
 									<div class="form-group"> 

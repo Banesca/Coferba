@@ -10,7 +10,7 @@
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
 								<legend style="visibility: hidden;"></legend>
 							    <!-- Company Name-->    
-					            <div class="form-group">
+					            <div class="form-group" ng-show="sessionidProfile!=3">
 					              <label class="col-md-4 control-label">Consorcio</label>
 					                <div class="col-md-4">
 					                  <div class="input-group">
@@ -126,7 +126,7 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								        <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=true" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+								        <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
 								        	<option value="" >Seleccione</option>
 									    	</select>
 									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
