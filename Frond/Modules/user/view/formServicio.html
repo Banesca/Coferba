@@ -35,9 +35,8 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-						  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
-								    	<option ng-show="sessionidProfile==1" value="">Seleccione un Edificio</option>
-								    	<option ng-show="sessionidProfile==4" value="">Seleccione una sucursal o edificio</option>
+						  		<select name="idAddressKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
+								    <option value="">Seleccione una opcion</option>
 							    	</select>
 						    </div>
 					  </div>
@@ -135,7 +134,7 @@
 			  <label class="col-md-4"></label>
 			  <div class="col-md-4">
 			  	<input type="button" ng-click="decrementStep()" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
-		  		<input type="button" ng-click="incrementStep()" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
+		  		<input type="button" ng-click="incrementStep()" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
 		  		<button type="submit" ng-show="!hasNextStep()" class="btn btn-primary" >Enviar</button>
 			  </div>
 			</div>

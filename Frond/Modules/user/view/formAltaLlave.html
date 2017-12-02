@@ -17,7 +17,7 @@
 					                      <span ng-show="sessionidProfile!=3" class="input-group-addon"><i class="icon-suitcase"></i></span>
 					                    <input ng-show="sessionidProfile!=1 && sessionidProfile!=3" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
 
-					                    <select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+					                    <select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); enabledNextBtn();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
 					                        <option value="">Seleccione un consorcio</option>
 					                      </select>
 					                  </div>
@@ -29,7 +29,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione una direccion</option>
 											    </select>
 										    </div>
@@ -41,7 +41,7 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 					                        <option value="" >Seleccione</option>
 					                      </select>
 					                    </div>
@@ -53,7 +53,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione una direccion</option>
 											    </select>
 										    </div>
@@ -66,7 +66,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData()" ng-model="select.nameAtt" autofocus >
+										  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData(); enabledNextBtn();" ng-model="select.nameAtt" autofocus >
 												    <option value="">Seleccione un encargado</option>
 											    </select>
 											    <span ng-show="attendantFound==true && sessionidProfile!=3" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
@@ -109,12 +109,12 @@
 							<div class="form-check form-check-inline">
 								<div class="col-md-6 col-md-offset-3">
 								    <label class="col-xs-6 ">
-								  		<input type="radio" ng-click="getData(1)" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
+								  		<input type="radio" ng-click="getData(1); enabledNextBtn();" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
 									  		<code ng-show="sessionidProfile==3">{{sessionNames}}</code>
 									  		<code ng-show="sessionidProfile!=3">Propietario</code>
 							  		</label> 
 							  		<label class="col-xs-6">
-								  		<input ng-click="getData(2)" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
+								  		<input ng-click="getData(2); enabledNextBtn();" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
 									  		<code>Inquilino</code>
 							  		</label> 
 							 	</div>
@@ -126,7 +126,7 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								        <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+								        <select ng-model="select.idDepartmentKf" ng-change="enabledNextBtn();" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
 								        	<option value="" >Seleccione</option>
 									    	</select>
 									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
@@ -140,7 +140,7 @@
 								  <div class="col-md-4">
 									  <div class="input-group">
 										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  <input  name="namesTenant" ng-disabled="typeTenant!=2" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesTenant"  type="text" required="true" required autofocus />
+										  <input  name="namesTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="tenant.namesTenant"  type="text" required="true" required autofocus />
 									  </div>
 								  </div>
 							</div>
@@ -150,7 +150,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="localPhoneTenant" ng-disabled="typeTenant!=2"  placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.localPhoneTenant" type="text" required autofocus />
+								  		<input name="localPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2"  placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="tenant.localPhoneTenant" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -160,7 +160,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-								  		<input name="movilPhoneTenant" ng-disabled="typeTenant!=2" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneTenant" type="text" required autofocus />
+								  		<input name="movilPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -170,7 +170,7 @@
 							   <div class="col-md-4">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="emailTenant" ng-disabled="typeTenant!=2" placeholder="E-Mail" class="form-control" ng-model="emailTenant"  type="email" required autofocus />
+							  		<input name="emailTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
 							    </div>
 							  </div>
 							</div>
@@ -182,7 +182,7 @@
 								  <label class="col-md-5 control-label" >Cantidad de llaves</label> 
 									<div class="col-md-6 input-group">
 							  		  <span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-							  			<select name="qkuTenant" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
+							  			<select name="qkuTenant" ng-change="getTotalService()" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
 											    <option value=""></option>
 											    <option value="1">1</option>
 											    <option value="2">2</option>
@@ -197,7 +197,7 @@
 								  <label class="col-md-5 control-label">Tipo de Entrega</label>
 								    <div class="col-md-6 input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-										    <select name="idTypeDeliveryKf" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
+										    <select name="idTypeDeliveryKf" ng-change="getTotalService()" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
 										    <option value=""></option>
 									    	</select>
 								  	</div>
@@ -216,19 +216,19 @@
 									  <div class="col-md-4">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">
-											  <input style="text-align: right;"  name="cost.service" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
+											  <input disabled style="text-align: right;"  name="cost.service" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-4 ">
 									  	<label class="control-label">Llave</label> 
 										  <div class="input-group">
-											  <input  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.key"  type="text" required autofocus/>
+											  <input disabled  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.key"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-4">
 									  	<label class="control-label">Envio</label> 
 										  <div class="input-group">
-											  <input style="text-align: right;"" name="cost.delivery" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
+											  <input disabled style="text-align: right;"" name="cost.delivery" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
@@ -236,7 +236,7 @@
 									  <div class="pull-right">
 									  	<label class="control-label">Total</label> 
 										  <div class="input-group">
-											  <input style="text-align: right"; name="cost.total" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.total"  type="text" required autofocus/>
+											  <input disabled style="text-align: right"; name="cost.total" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.total"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
@@ -247,10 +247,10 @@
 					<div class="form-group">
 					  <label class="col-md-4"></label>
 					  <div class="col-md-4">
-					  	<input type="button" ng-click="decrementStep()" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
-				  		<input type="button" ng-click="incrementStep()" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
+					  	<input type="button" ng-click="decrementStep();" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
+				  		<input type="button" ng-click="incrementStep(); enabledNextBtn();" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
 				  		<button type="submit" ng-show="!hasNextStep()" class="btn btn-primary" >Enviar</button>
-					  </div>
+					  </div><!--  -->
 					</div>
 				</form>
 			</div>
