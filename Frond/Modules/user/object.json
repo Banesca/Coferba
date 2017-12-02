@@ -169,3 +169,10 @@ http://localhost/Coferba/Back/index.php/Ticket/cancel/1
 litado de inquilinos mas el propietario de un departamento
 //
 http://localhost/coferba/Back/index.php/tenant/allByIdDepartament/1
+
+
+
+
+----- DESAPROBAR DEPARTAMENTO PARA ADMINISTRADORES DE CONSORCIO -----
+http://localhost/Coferba/Back/index.php/Department/desaprobated/1
+
