@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2017 a las 07:26:59
+-- Tiempo de generación: 02-12-2017 a las 14:08:23
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.10
 
@@ -177,8 +177,8 @@ CREATE TABLE `tb_department` (
 
 INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `deparmentNumber`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`, `idTenantKf`, `isAprobatedAdmin`) VALUES
 (1, 1, 'Porteria', 0, '', 1, 1, NULL, NULL, 0),
-(2, 1, '1-A', 0, '', 1, 1, NULL, 22, 0),
-(3, 1, '1-B', 0, '', 1, 1, NULL, NULL, 0),
+(2, 1, '1-A', 0, '', 1, 1, NULL, 22, 1),
+(3, 1, '1-B', 0, '', 1, 1, NULL, 22, 1),
 (4, 1, '2-A', 0, '', 1, 1, NULL, NULL, 0),
 (5, 1, '2-B', 0, '', 1, 1, NULL, NULL, 0),
 (6, 1, '3-A', 0, '', 1, 1, NULL, NULL, 0),
@@ -187,12 +187,12 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 (9, 1, '4-B', 0, '', 1, 1, NULL, NULL, 0),
 (10, 1, '5-A', 0, '', 1, 1, NULL, NULL, 0),
 (11, 1, '5-B', 0, '', 1, 1, NULL, NULL, 0),
-(12, 2, '6-A', 0, '', 1, 1, NULL, NULL, 0),
+(12, 2, '6-A', 0, '', 1, 1, NULL, 22, 0),
 (13, 0, '6-B', 0, '', 1, 1, NULL, NULL, 0),
 (14, 2, '7-A', 0, '', 1, 1, NULL, NULL, 0),
 (15, 2, '7-B', 0, '', 1, 1, NULL, NULL, 0),
 (16, 2, '8-A', 0, '', 1, 1, NULL, NULL, 0),
-(17, 3, '8-B', 0, '', 1, 1, NULL, NULL, 0);
+(17, 3, '8-B', 0, '', 1, 1, NULL, 22, 0);
 
 -- --------------------------------------------------------
 
@@ -325,7 +325,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '59', 'TK');
+(1, '73', 'TK');
 
 -- --------------------------------------------------------
 
@@ -395,8 +395,12 @@ INSERT INTO `tb_tenant` (`idTenant`, `fullNameTenant`, `idTypeKf`, `phoneNumberT
 (19, 'Jose Perez', 2, '222222222222', NULL, 'jose.perez@gmail.com', 1, '2017-11-10 17:10:02', '111111111111'),
 (20, 'Roberto Vicuña', 1, '113344559966', NULL, 'roberto.vicuna@gmail.com', 1, '2017-11-10 18:08:15', '113445567788'),
 (21, 'Jesus Antunez', 2, '222222222222', NULL, 'jesus.antunez@gmail.com', 1, '2017-11-11 14:27:42', '111111111111'),
-(22, 'Carlos Villalobos', 1, '113243545556', NULL, 'carlos.villalobos@gmail.com', 1, '2017-11-23 00:28:25', '114567677888'),
-(23, 'Jorge Gutierrez', 1, '116677889900', NULL, 'jorguti58@gmail.com', 1, '2017-11-23 05:36:21', '114455667788');
+(22, 'Carlos Villalobos', 1, '114446456474', NULL, 'carlos.villalobos@gmail.com', 1, '2017-11-23 00:28:25', '113532532476'),
+(23, 'Jorge Gutierrez', 1, '116677889900', NULL, 'jorguti58@gmail.com', 1, '2017-11-23 05:36:21', '114455667788'),
+(30, 'Teresa Carreño', 1, '11435436477', NULL, 'teresa.carreno@gmail.com', 1, '2017-11-30 23:43:16', '114325436436'),
+(31, 'Osmel Sousa', 2, '112321432532', 2, 'osmel.sousa@gmail.com', 1, '2017-12-02 12:00:09', '123243253253'),
+(33, 'Karen Figueroa', 2, '113543643763', 3, 'karen.figueroa@gmail.com', 1, '2017-12-02 12:06:50', '112435434354'),
+(34, 'Arturo Michelena', 2, '325325325325', 3, 'arturo.michelena@gmail.com', 1, '2017-12-02 12:13:30', '212432143243');
 
 -- --------------------------------------------------------
 
@@ -532,7 +536,21 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 (85, '2017-11-21 00:07:11', NULL, NULL, 1, 'TK-00000056', 1, '', NULL, 17, 0, NULL, 0, 1, 2, NULL, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, 0, 0, NULL),
 (86, '2017-11-23 04:17:15', NULL, NULL, 1, 'TK-00000057', 3, '', NULL, NULL, 17, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Cambiar camara de entrada.', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL),
 (87, '2017-11-29 01:34:09', NULL, NULL, 1, 'TK-00000058', 1, '', NULL, NULL, 17, NULL, 0, 1, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL),
-(88, '2017-11-30 02:08:22', NULL, NULL, 1, 'TK-00000059', 1, '', NULL, NULL, 0, NULL, 24, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 1, '2017-11-30 09:55:37');
+(88, '2017-11-30 02:08:22', NULL, NULL, 1, 'TK-00000059', 1, '', NULL, NULL, 0, NULL, 24, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 1, '2017-11-30 09:55:37'),
+(89, '2017-12-01 18:58:24', NULL, NULL, 1, 'TK-00000060', 1, '', NULL, 0, 0, NULL, 0, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL),
+(90, '2017-12-02 03:39:36', NULL, NULL, 1, 'TK-00000061', 1, '', NULL, 22, 0, NULL, 24, 4, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(91, '2017-12-02 11:13:21', NULL, NULL, 1, 'TK-00000062', 1, 'El propietario entregara pago del servicio al encargado seleccionado.', NULL, 22, 0, NULL, 24, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(92, '2017-12-02 11:22:50', NULL, NULL, 1, 'TK-00000063', 1, '', NULL, 22, 0, NULL, 24, 2, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(93, '2017-12-02 11:24:33', NULL, NULL, 1, 'TK-00000064', 1, '', NULL, 22, 0, NULL, 24, 1, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(94, '2017-12-02 11:25:25', NULL, NULL, 1, 'TK-00000065', 1, '', NULL, 22, 0, NULL, 24, 1, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(95, '2017-12-02 11:30:24', NULL, NULL, 1, 'TK-00000066', 1, '', NULL, 22, 0, NULL, 24, 2, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(96, '2017-12-02 11:56:26', NULL, NULL, 1, 'TK-00000067', 1, '', NULL, 22, 0, NULL, 24, 1, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(97, '2017-12-02 11:58:41', NULL, NULL, 1, 'TK-00000068', 1, '', NULL, 22, 0, NULL, 24, 1, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(98, '2017-12-02 12:01:58', NULL, NULL, 1, 'TK-00000069', 1, '', NULL, 31, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(99, '2017-12-02 12:09:37', NULL, NULL, 1, 'TK-00000070', 1, '', NULL, 33, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(100, '2017-12-02 12:13:45', NULL, NULL, 1, 'TK-00000071', 1, '', NULL, 34, 0, NULL, 0, 2, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(101, '2017-12-02 12:27:14', NULL, NULL, 1, 'TK-00000072', 2, '', NULL, 31, 0, NULL, 0, 1, NULL, '1234214', 23, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL),
+(102, '2017-12-02 12:45:30', NULL, NULL, 1, 'TK-00000073', 1, '', NULL, 22, 17, NULL, 0, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -844,13 +862,13 @@ ALTER TABLE `tb_sys_param`
 -- AUTO_INCREMENT de la tabla `tb_tenant`
 --
 ALTER TABLE `tb_tenant`
-  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
