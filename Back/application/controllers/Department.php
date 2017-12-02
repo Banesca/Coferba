@@ -185,6 +185,24 @@ class Department extends REST_Controller {
     }
 
 
+
+    //*** SOCILITAR BAJA DE DEPARTAMENTO POR PROPIETARIO */
+
+    public function requesLowByProp_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->department_model->requesLowByProp($id);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     
  }
  ?>

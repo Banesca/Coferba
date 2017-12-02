@@ -20,7 +20,8 @@ METODO:POST
     "description" : "aqui escribo algo",
     "idAttendantKf":1,
     "idBranchKf" : 1,// OPCIONAL PARA SUCARSALES DE UNA EMPRESA 
-    "idCompanyKf":1// OPCIONAL PARA EMPRES 
+    "idCompanyKf":1,// OPCIONAL PARA EMPRES 
+    "totalService" : "100.40"
   }
 }
 /*BAJA	LLAVERO*/

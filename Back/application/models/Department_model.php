@@ -149,6 +149,23 @@ class Department_model extends CI_Model
 
 
 
+    public function requesLowByProp($id) {
+        $this->db->set(
+                array(
+                    'isRequesLowByProp' => 1
+                )
+        )->where("idDepartment", $id)->update("tb_department");
+
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 
 	
     /* AGREGRA NUEVO USUARIO EMPRESA */

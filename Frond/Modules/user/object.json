@@ -176,3 +176,8 @@ http://localhost/coferba/Back/index.php/tenant/allByIdDepartament/1
 ----- DESAPROBAR DEPARTAMENTO PARA ADMINISTRADORES DE CONSORCIO -----
 http://localhost/Coferba/Back/index.php/Department/desaprobated/1
 
+
+
+----- SOLICITAR LA BAJA DE UN DEPARTAMENTO POR UN PROPIETARIO O INQUILINO  -----
+http://localhost/Coferba/Back/index.php/Department/requesLowByProp/1
+MANDAS EL ID DEPARTAMENTO 

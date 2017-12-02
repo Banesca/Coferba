@@ -119,7 +119,7 @@ class Ticket_model extends CI_Model
 
             'idBranchKf' => @$ticket['idBranchKf'],
             'idCompanyKf' => @$ticket['idCompanyKf'],
-            
+            'totalService' => @$ticket['totalService']
 
 		)
         );
