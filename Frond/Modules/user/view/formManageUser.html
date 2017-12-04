@@ -1,35 +1,51 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">GESTION DE USUARIOS<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			<h3 class="panel-title">GESTION DE INQUILINOS<a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 		</div>
 	      	<div class="panel-body">
 		      	<div class="row"  >
+		      		<div ng-show="sessionidProfile==1" class="col-lg-2">
+		                    <!-- Company List For Admins -->  
+						<div class="form-group col-xs-12" >
+							<label for="sel1" ng-show="sessionidProfile==1">Consorcio</label> 
+							<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID()"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+					            <option value="">Seleccione un consorcio</option>
+					        </select>
+						</div>
+		            </div>
 		            <div ng-show="sessionidProfile>0" class="col-lg-2">
-		                    <!-- Address List-->  
+		                    <!-- Address List For Admins -->  
 						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
 							<label for="sel1" ng-show="sessionidProfile==2">Sucursal</label>
 							<label for="sel1" ng-show="sessionidProfile==1">Sucursal / Edificio</label>
-							<label for="sel1" ng-show="sessionidProfile==4">Edificio</label>   
-							<select name="idAddressAtt" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" ng-change="getDeparment(0);" autofocus >
+							<label for="sel1" ng-show="sessionidProfile==4">Edificio</label> 
+
+							<select name="idAddressAtt" ng-show="sessionidProfile!=1 && sessionidProfile!=3" class="form-control"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" ng-change="getDeparment(0);" aut<ofocus >
 						    	<option  value="">Seleccione un opcion</option>
 					    	</select>
+
+					    	<select name="idAddressAtt" ng-show="sessionidProfile==1" ng-disabled="companyFound!=true" class="form-control" ng-change="getDeparment(0);"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+								<option value="">Seleccione una direccion</option>
+							</select>
 						</div>
 		            </div>
 	                <div ng-show="sessionidProfile>0" class="col-lg-2">
 		                    <!-- Department List-->  
 						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
 							<label for="sel1" ng-show="sessionidProfile==1 || sessionidProfile==4">Departamento</label>
-                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
-                              	<option value="" >Todos</option>	
+                            <select ng-model="select.idDepartmentKf" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto" ng-change="lisTenantByType(select.idDepartmentKf, 0)" required autofocus >
+                              	<option value="0"></option>	
                             </select>
 						</div>
-		            </div> 
+		            </div>
 		            <div ng-show="sessionidProfile>0" class="col-lg-2">
-		                <!-- Type Tenant-->  
+		                 <!--Type Tenant -->
 						<div class="form-group col-xs-12" ng-show="sessionidProfile!=3">
 							<label for="sel1" ng-show="sessionidProfile==1 || sessionidProfile==4">Tipo de Inquilino</label>
-                            <select ng-model="select.idTypeTenantKf" ng-change="searchTenant('manageTenant', select.idDepartmentKf, select.idTypeTenantKf);" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idTypeTenant as x.typeTenantName for x in lisTypeTenant " required autofocus >	
+                            <select ng-model="idTypeTenantKf" ng-disabled="dptoNotFound!=false" class="form-control" required autofocus >	
                               	<option value="" >Todos</option>
+                              	<option value="1" >Propietarios</option>
+                              	<option value="2" >Inquilinos</option>
                             </select>
 						</div>
 		            </div> 
@@ -37,10 +53,10 @@
 	                	<br>
 	                    <div class="form-group" style="    margin-top: 5px;">
 	                     <input type="text" style=" margin-top: -6px;"
-	                    class="form-control" ng-model="searchFilter" id="searchFilter" ng-change="listUserLoad()" placeholder="Buscar...">
+	                    class="form-control" ng-model="searchFilter" id="searchFilter" placeholder="Buscar...">
 	                
 	                    </div>
-	                </div>	
+	                </div>
 					<table  class="table  table-striped ">
 	                    <thead style=" background: #4d5d6f; color: white;">
 	                        <tr >
@@ -50,22 +66,15 @@
 	                            <th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
 	                            <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>
 	                            <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
-	                            <th>Perfil</th>
+	                            <th>Tipo</th>
 	                            <th><i class="glyphicon icon-flag"> </i> Status</th>
 	                            <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
 	                        </tr>
 	                    </thead>
-	                    <tbody >
-	                        <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter : paginate track by $index">
+	                    <tbody ng-show="tenantNotFound!=true" >
+	                        <tr style="align-content: center;" ng-repeat="item in listTenant | filter: searchFilter | filter: {idTypeKf:idTypeTenantKf}">
 	                        	<td><div class="btn-group">
-										<button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
-											<span class="caret"></span>
-		                    				<span class="sr-only">Toggle Dropdown</span>
-		                				</button>
-									  	<ul class="dropdown-menu">
-	                    					<li><a ng-click="updateUser(item.idTenant, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Modificar</a></li>
-	                    					<li><a ng-click="deleteUser(item.idTenant, $index)" ng-if="item.idStatusKf>=0"><i title="desactivar" class="glyphicon glyphicon-remove-circle"></i> Eliminar</a></li>
-	                					</ul>
+										<button type="button" ng-click="select2EditTenant(item);" class="btn btn-lg btn-info">Modificar</button>
 									</div>
 								</td>
 		                        <td>{{item.idTenant}}</td>
@@ -89,9 +98,9 @@
 											<span class="caret"></span>
 		                    				<span class="sr-only">Toggle Dropdown</span>
 		                				</button>
-									  	<ul class="dropdown-menu">
+									  	<ul ng-show="item.idStatusKf==0 || sessionidProfile==1" class="dropdown-menu">
 	                    					<li><a ng-click="sysFunctionsUser('enabled',item.idUser)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
-	                    					<li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.idStatusKf>0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
+	                    					<li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.idStatusKf>0 && sessionidProfile==1"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
 	                					</ul>
 									</div>
 		                        </td>
@@ -102,6 +111,83 @@
     			</div>
 	  		</div>
 	</div>
+
+<div id="EditModalTenant" class="modal fade bd-example-modal-lg" style="top:130px;" role="dialog">
+  	<div class="modal-dialog modal-lg" >
+	    <div class="modal-content">
+	      	<div class="modal-body">
+				<div class="agileits-w3layouts"> 
+		          	<div class="panel panel-default">
+		              	<div class="panel-heading">
+		                	<h3 class="panel-title">MODIFICAR INQUILINO<a data-dismiss="modal" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		            	</div>
+		            		<div class="panel-body" style="overflow-y: scroll;">
+								<!-- FORM CONTAINER-->
+			    				<form class="form-horizontal" name="fUpdateTenant" ng-submit="sysFunctionsTenant('prueba')">
+									<fieldset>
+									<!-- Form First Name -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombres</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="namesTenant" autofocus="true" placeholder="Nombre" class="form-control" ng-model="tenant.namesTenant"  type="text" required autofocus/>
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Mail-->
+
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="emailTenant" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
+									    </div>
+									  </div>
+									</div>
+									<!-- Text Phone-->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono Fijo</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="localPhoneTenant" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="tenant.localPhoneTenant"  type="text" required autofocus />
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Phone-->
+									       
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono Movil</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+										  		<input name="movilPhoneTenant" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="tenant.movilPhoneTenant"  type="text" required autofocus />
+										    </div>
+									  </div>
+									</div>
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button type="submit" class="btn btn-primary" >Actualizar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+								<div class="clearfix"> </div> 
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <div id="EditModalUser" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
   	<div class="modal-dialog modal-lg" >

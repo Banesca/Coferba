@@ -159,8 +159,9 @@ $scope.showCompanyUser = function(item){
 *           SHOW USER COMPANY FUNCTION            *
 *        USED IN THE SERVICE REQUEST FORM         *
 **************************************************/
-$scope.hideProfiles = function(item){
-  return item.idProfile == 3;
+$scope.hideTypeTenant = function(item){
+  console.log($scope.typeTenant);
+  return $scope.hideTypeTenant= $scope.typeTenant;
 };
 /**************************************************/  
 
@@ -458,7 +459,7 @@ $scope.listUserDepto = function(value){
   var urlT="";
   idTenantTmp = $scope.sessionidProfile==3 ? $scope.sessionidTenantUser : $scope.idTenantKf;
    if ($scope.sessionidProfile==3){
-        urlT="http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'1';
+        urlT="http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'-1';
       }else{
         urlT="http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
       }
@@ -491,16 +492,20 @@ $scope.listUserDepto = function(value){
 *                                                 *
 **************************************************/
 $scope.rsDpto={};
-$scope.assignUserDepto = function(){
-  console.log($scope._getData2AssignDepto());
-  $http.post("http://localhost/Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(),setHeaderRequest())
+$scope.UserAassignUnAssignDepto = function(itemId){
+  var idDeptoKf=!itemId ? $scope.select.idDepartmentKf : itemId;
+  console.log($scope._getData2AssignDepto(idDeptoKf));
+  $http.post("http://localhost/Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(idDeptoKf),setHeaderRequest())
         .then(function(success, data) {
             if ($scope.sessionidProfile==3){
                 inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
                   ttl:3000, type: 'success'
                 });
             }
-            if ($scope.sessionidProfile!=3){$scope.approveDepto();}
+            if ($scope.sessionidProfile!=3 && $scope.removeOwnerDepto==1){
+              console.log("<<<<DEPARTAMENTO ID: "+idDeptoKf+" FUE DADO DE BAJA SATISFACTORIAMENTE>>>>");
+            }
+            if ($scope.sessionidProfile!=3 && $scope.removeOwnerDepto==0){$scope.approveDepto();}
                 $scope.listUserDepto(1);  
         },function (error, data, status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -509,18 +514,21 @@ $scope.assignUserDepto = function(){
            
         }); 
 }
-$scope._getData2AssignDepto = function () {
+$scope._getData2AssignDepto = function (item) {
   var idTenantUsertmp;
-  if ($scope.sessionidProfile==3){
-    idTenantUsertmp = $scope.sessionidTenantUser;
-  }else if($scope.sessionidProfile!=3){
-    idTenantUsertmp=$scope.idTenantKf;
+  var isRequestLowKf;
+  if ($scope.removeOwnerDepto>=0){isRequestLowKf=0;}
+  var idDepartmentKf= !$scope.select.idDepartmentKf ? item : $scope.select.idDepartmentKf
+  if ($scope.sessionidProfile==3){idTenantUsertmp = $scope.sessionidTenantUser;}
+  else if($scope.sessionidProfile!=3 && $scope.removeOwnerDepto==0){idTenantUsertmp=$scope.idTenantKf;}
+  else if($scope.sessionidProfile!=3 && $scope.removeOwnerDepto==1){idTenantUsertmp=null;
   }
   var dpto =
           {
                department: { 
-                            idDepartment      : $scope.select.idDepartmentKf,
-                            idTenantKf        : idTenantUsertmp
+                            idDepartment        : idDepartmentKf,
+                            idTenantKf          : idTenantUsertmp,
+                            isRequesLowByProp   : isRequestLowKf
                            }
           };
   return dpto;
@@ -541,7 +549,48 @@ $scope.approveDepto = function (itemId) {
         if($scope.manageDepto==1){
           $scope.listUserDepto(1);
         }
+        console.log("<<<<DEPARTAMENTO ID: "+idDeptoKf+" FUE APROBADO SATISFACTORIAMENTE>>>>");
+      }, function myError(response) {
+    });
+ };
 
+/**************************************************/
+/**************************************************
+*                                                 *
+*      DISALLOW DEPARTMENT TO AN OWNER USER       *
+*                                                 *
+**************************************************/
+$scope.removeOwnerDepto=0;
+$scope.disallowDepto = function (itemId) {
+  $scope.removeOwnerDepto=1;
+  var idDeptoKf = !itemId ? $scope.select.idDepartmentKf : itemId;
+  $http({
+      method : "GET",
+      url : "http://localhost/Coferba/Back/index.php/Department/desaprobated/"+idDeptoKf
+    }).then(function mySuccess(response) {
+            if($scope.manageDepto==1){
+              $scope.UserAassignUnAssignDepto(idDeptoKf);
+            }
+      }, function myError(response) {
+    });
+ };
+
+/**************************************************/
+/**************************************************
+*                                                 *
+*     DOWN REQUEST DEPARTMENT TO AN OWNER USER    *
+*                                                 *
+**************************************************/
+$scope.requestDownDepto = function (itemId) {
+  var idDeptoKf = !itemId ? $scope.select.idDepartmentKf : itemId;
+  $http({
+      method : "GET",
+      url : "http://localhost/Coferba/Back/index.php/Department/requesLowByProp/"+idDeptoKf
+    }).then(function mySuccess(response) {
+        if($scope.manageDepto==1){
+          $scope.listUserDepto(1);
+        }
+        console.log("<<<<SOLICITUD DE BAJA DEL DEPARTAMENTO ID: "+idDeptoKf+" HA SIDO ENVIADA>>>>");
       }, function myError(response) {
     });
  };
@@ -612,9 +661,9 @@ $scope.lisTenantByType = function(v1, v2){
       }).then(function mySuccess(response) {
               $scope.listTenant = response.data.tenant;
               $scope.tenantNotFound=false; 
-              if ($scope.manageDepto >=0 && response.data.tenant){
+              if ($scope.manageDepto >=0 && response.data.tenant && typeTenant<0){
                 $('#ModalListTenant').modal('toggle');
-              }else {
+              }else if($scope.manageDepto>=0 && response.data.tenant && typeTenant!=0) {
                     $scope.messageInform1 = " Propietario registrado.";
                     $scope.messageInform2 = " inquilinos registrados.";
                     $scope.messageInform  = typeTenant == 1 ? $scope.messageInform1 : $scope.messageInform2;
@@ -640,6 +689,17 @@ $scope.lisTenantByType = function(v1, v2){
               } 
       });
   }
+/**************************************************
+*                                                 *
+*    FILTRAR GESTION DE INQUILINOS POR EL TIPO    *
+*                                                 *
+**************************************************/
+$scope.filterByTenantType = function(x){
+    alert(x);
+    $scope.filterMTenant = x;
+    alert($scope.filterMTenant);
+
+}
 
 
 /**************************************************
@@ -863,6 +923,9 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
         }, 1000);
         console.log($scope._getData2Update());
     break;
+    case "updateUser":
+      $scope.$scope.updateUser();
+    break;
     case "enabled":                               //Enabled User Module
         $scope.enabledUser(isVarUser);
     break;
@@ -981,7 +1044,7 @@ $scope._setuser = function () {
 *                                                 *
 **************************************************/
 $scope.modificarUsuario = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/User/update", $scope._getData2Update())
+  $http.post("http://localhost/Coferba/Back/index.php/User/update", $scope._getData2Update(0))
       .then(function (sucess, data) {
           inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
                     ttl:3000, type: 'success'
@@ -995,7 +1058,10 @@ $scope.modificarUsuario = function ($http, $scope){
     });
 };
 $scope.profile = {Names:'', Email:'', MovilPhoneNumber:'', PhonelocalNumber:''};
-$scope._getData2Update = function () {
+$scope._getData2Update = function (value) {
+  var isChPwd=value;
+  var isEditUserKf=false;
+  if (isChPwd==0){
   var updUser =
           {
                          user:
@@ -1005,10 +1071,22 @@ $scope._getData2Update = function () {
                                 phoneNumberUser      : $scope.profile.MovilPhoneNumber,
                                 phoneLocalNumberUser : $scope.profile.PhonelocalNumber,
                                 idProfileKf          : $scope.sessionidProfile,
-                                idUser               : $scope.sessionIdUser
+                                idUser               : $scope.sessionIdUser,
                               }
-          };
+          }
+  }else{
+    isEditUserKf = true;
+    var updUser =
+          {
+                         user:
+                              {
+                                passwordUser  : nuevavlave,
+                                idUser        : $scope.sessionIdUser,
+                                isEditUser    : isEditUserKf
+                              }
+          }
     return updUser;
+  }
 
 };
 /**************************************************/
@@ -1066,8 +1144,24 @@ $http({
   });
 };
 
-
-
+/**************************************************
+*                                                 *
+*              CHANGE PWD AN USER                 *
+*                                                 *
+**************************************************/
+$scope.chgPwdUser = function ($http, $scope){
+  $http.post("http://localhost/Coferba/Back/index.php/User/update", $scope._getData2Update(1))
+      .then(function (sucess, data) {
+          inform.add($scope.sessionNames +' Ha cambiado su clave satisfactoriamente.',{
+                    ttl:3000, type: 'success'
+          });
+    },function (error,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error Modificacion de Usuario !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
 
 $scope.getUpdateData = function(){
 
@@ -1142,6 +1236,7 @@ var mail2Search ="";
 $scope.rsTenantData = [];
 $scope.IsTenant=false;
 $scope.tSearch=false;
+$scope.IsFnAdd=false;
 $scope.sysFunctionsTenant = function(value){  //Funciones add, search, update, active, inactive Tenants
     switch (value) {
       case "open": //Opcion Utilizada para registrar un inquilino de cualquier tipo. 
@@ -1153,12 +1248,17 @@ $scope.sysFunctionsTenant = function(value){  //Funciones add, search, update, a
 
       /*------------------------------------------------------------------------------*/
       case "search": //Buscamos en la tabla tb_tenant por el parametro email.
-        if($scope.IsTenant==false){mail2Search=$scope.emailUser;}else if($scope.IsTenant==true){mail2Search=$scope.emailT}
+        if($scope.IsTenant==false){mail2Search=$scope.emailUser;}else if($scope.IsTenant==true){
+          if($scope.isEditTenantByAdmin==false){mail2Search=$scope.emailT;}else{mail2Search=$scope.tenant.emailTenant;}}
         $scope.tSearch=true;
         $scope.searchTenantByMail();
       break;
       /*------------------------------------------------------------------------------*/
-      case "update": //Opcion Usada para actualizados datos de un usuario de tipo propietario o un inqulino normal.
+      case "prueba":
+        //$scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTenant: '', typeTenantKf: ''};
+        console.log($scope.tenant);
+      break;
+      case "update": //Opcion Usada para actualizados datos de un inquilino de tipo propietario o un inqulino normal.
         if($scope.rsTenantData){
             $scope.idTenantmp  = "";
             $scope.idTenantmp  = !$scope.rsTenantData.idTenant ? $scope.idTenantKf : $scope.rsTenantData.idTenant;
@@ -1174,11 +1274,16 @@ $scope.sysFunctionsTenant = function(value){  //Funciones add, search, update, a
               inform.add('Datos del '+$scope.messageInform+' '+$scope.fnameT+' han sido actulizados satisfactoriamente.',{
                   ttl:3000, type: 'success'
               });
+              if ($scope.sessionidProfile!=3 && $scope.isEditTenantByAdmin==true){
+                  $scope.lisTenantByType(select.idDepartmentKf, 0);
+                  $('#EditModalTenant').modal('hide');
+              }
             }
         }
       break;
       /*------------------------------------------------------------------------------*/
       case "addT": //Opcion Usada para registrar los datos de un usuarios [propietario] en la tabla tenant o un inquilino normal.
+            $scope.IsFnAdd=true;
             $scope.addTenant($http, $scope);
             if ($scope.IsTenant==true){
               $('#RegisterModalTenant').modal('hide'); //Hide the modal windows
@@ -1191,7 +1296,6 @@ $scope.sysFunctionsTenant = function(value){  //Funciones add, search, update, a
               inform.add($scope.messageInform+' '+$scope.fnameT+' ha sido registrado satisfactoriamente.',{
                   ttl:3000, type: 'success'
               });
-                $scope.sysFunctionsTenant('data');
         
             }     
       break;
@@ -1211,29 +1315,38 @@ $scope.sysFunctionsTenant = function(value){  //Funciones add, search, update, a
 **************************************************/
 
 $scope.searchTenantByMail = function (){
+  alert(mail2Search);
   $http({
         method : "GET",
         url : "http://localhost/Coferba/Back/index.php/Tenant/findByEmail/"+mail2Search
       }).then(function mySuccess(response) {
             $scope.rsTenantData = response.data;
+            console.log("<<<INQUILINO ENCONTRADO>>>");
+            console.log(response.data);
+
             if($scope.isLogin==true){
               $scope.idTenantmp = response.data.idTenant;
               localStorage.setItem("idTenantUser", $scope.idTenantmp);
               location.href = "sistema.html"
             }
+
             if($scope.tSearch==false){ //Cargamos el form del Ticket con la data del inquilino.
-              $scope.idTenantKf       =  $scope.rsTenantData.idTenant;
+              $scope.idTenantKf              =  $scope.rsTenantData.idTenant;
               $scope.tenant.namesTenant      =  $scope.rsTenantData.fullNameTenant;
               $scope.tenant.localPhoneTenant =  $scope.rsTenantData.phoneNumberContactTenant;
               $scope.tenant.movilPhoneTenant =  $scope.rsTenantData.phoneNumberTenant;
               $scope.tenant.emailTenant      =  $scope.rsTenantData.emailTenant;
-              if($scope.sessionidProfile!=3){alert("ASIGNO EL DEPTO AL PROPIETARIO APROBADO");$scope.assignUserDepto();}
+              $scope.enabledNextBtn();
+              /*VERIFICAMOS SI EL REGISTRO DEL PROPIETARIO LO ESTA REALIZANDO UN ADMINISTRADOR PARA ASIGNARLE EL DPTO CORRESPONDIENTE*/
+              if($scope.sessionidProfile!=3 && $scope.IsFnAdd==true && $scope.typeTenant==1){
+                console.log("==>SE ASIGNA EL "+$scope.select.idDepartmentKf+" Y ES APROBADO AL PROPIETARIO: "+$scope.tenant.namesTenant+" SATISFACTORIAMENTE");
+                $scope.UserAassignUnAssignDepto();
+              }
             }
-            console.log("INQUILINO ENCONTRADO");
-            console.log(response.data);
-            if($scope.tSearch==true){console.log("INQUILINO ENCONTRADO --> ACTUALIZADO DATOS"); $scope.sysFunctionsTenant('update');$scope.tSearch=false;}
+            //SI LA PETICION ES DE BUSQUEDA, SI EXISTE ACTUALIZAMOS LOS DATOS DE LO CONTRARIO SE INICIA EL PROCESO DE REGISTRO
+            if($scope.tSearch==true){console.log("==>INQUILINO ENCONTRADO => ACTUALIZADO DATOS"); $scope.sysFunctionsTenant('update');$scope.tSearch=false;}
         }, function myError(response) {
-            if($scope.tSearch==true){console.log("INQUILINO NO ENCONTRADO --> INICIO DE REGISTRO"); $scope.sysFunctionsTenant('addT'); $scope.tSearch=false;}
+            if($scope.tSearch==true){console.log("====>INQUILINO NO ENCONTRADO => INICIO DE REGISTRO"); $scope.sysFunctionsTenant('addT'); $scope.tSearch=false;}
       });
 };
 /**************************************************/
@@ -1246,8 +1359,13 @@ $scope.searchTenantByMail = function (){
 $scope.addTenant = function ($http, $scope){
   $http.post("http://localhost/Coferba/Back/index.php/Tenant", getTenantData2Add(),setHeaderRequest())
       .then(function (sucess, data) {
-      console.log("Registrados Datos del inquilino");
-      console.log(getTenantData2Add());
+        console.log(getTenantData2Add());
+        console.log("===>INQUILINO REGISTRADO SATISFACTORIAMENTE");
+        if($scope.sessionidProfile!=3 && $scope.IsFnAdd==true && $scope.typeTenant==1){
+          console.log("=>BUSCAMOS LOS DATOS DEL INQUILINO REGISTRADO PARA CARGARLOS AL FORMULARIO DEL TiCKET");
+          $scope.sysFunctionsTenant('data');
+        }
+
     },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -1373,14 +1491,14 @@ $scope.searchTenant = function (op, idDpto, idTypeTenant){
           $scope.lisTenantByType($scope.select.idDepartmentKf,$scope.typeTenant);
         }
       break;
-      case "depto":
+      /*case "depto":
         if ($scope.sessionidProfile==3){
           $scope.typeTenant = 2;
           $scope.lisTenantByType(idDpto,$scope.typeTenant);
         }else{
           $scope.typeTenant = 1;
           $scope.lisTenantByType(idDpto,$scope.typeTenant);
-        }
+        }*/
       case "manageTenant":
           //console.log(idDpto,$scope.typeTenant);
           $scope.typeTenant=idTypeTenant;
@@ -1402,8 +1520,8 @@ $scope.searchTenant = function (op, idDpto, idTypeTenant){
 /*------------------------------------------------*/
 /**************************************************
 *                                                 *
-*     SELECCIONA DATA DE TENANT SELECCIONADO      *
-*                 DE LA LISTA                     *
+*     SELECCIONA DATA DE TENANT DE LA LISTA       *
+*                                                 *
 **************************************************/
 $scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTenant: ''};
   $scope.selectTenant = function (obj){
@@ -1417,6 +1535,26 @@ $scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTe
       $('#ModalListTenant').modal('hide');
       console.log(obj);
   }
+/*------------------------------------------------*/
+/**************************************************
+*                                                 *
+*       SELECCIONA DATA DE TENANT TO UPDATE       *
+*                                                 *
+**************************************************/
+$scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTenant: '', typeTenantKf: ''};
+  $scope.select2EditTenant = function (obj){
+      $scope.isEditTenantByAdmin=true;
+      $scope.idDpto                  =  $scope.select.idDepartmentKf;
+      $scope.idTenantKf              =  obj.idTenant;
+      $scope.tenant.namesTenant      =  obj.fullNameTenant;
+      $scope.tenant.localPhoneTenant =  obj.phoneNumberContactTenant;
+      $scope.tenant.movilPhoneTenant =  obj.phoneNumberTenant;
+      $scope.tenant.emailTenant      =  obj.emailTenant;
+      $scope.tenant.typeTenantKf     =  obj.idTypeKf;
+      $('#EditModalTenant').modal('toggle');
+      console.log(obj);
+  }
+
 /*------------------------------------------------*/
 /**************************************************/
 /*
@@ -1726,7 +1864,7 @@ $scope._getData2AddKey = function () {
                             idTypeDeliveryKf  : $scope.delivery.idTypeDeliveryKf,
                             description       : $scope.txt.sruTenant,
                             idAttendantKf     : $scope.select.nameAtt,
-                            idTotalService    : $scope.cost.total,
+                            TotalService      : $scope.cost.total,
                             idBranchKf        : null,
                             idCompanyKf       : null,
                             list_id_clients   : null
@@ -2009,8 +2147,13 @@ function cleanForms (){
     $scope.recordsFound               = false;
     $scope.rusysconfig                = false;
     $scope.noRecordsFound             = false;
-    $scope.formValidated              =false;
+    $scope.formValidated              = false;
+    $scope.isEditTenantByAdmin        = false;
     $scope.stepIndexTmp               =0;
+    $scope.removeOwnerDepto           =0;
+    $scope.manageTenantUser           =0;
+    $scope.listTenant                 ="";
+    $scope.filterMTenant              ="";
 }
 /**************************************************/
 

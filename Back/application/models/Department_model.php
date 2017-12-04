@@ -198,7 +198,8 @@ class Department_model extends CI_Model
 
         $this->db->set(
                 array(
-                    'idTenantKf'=>$department['idTenantKf']
+                    'idTenantKf'=>$department['idTenantKf'],
+                    'isRequesLowByProp'=>$department['isRequesLowByProp']
                 )
         )->where("idDepartment", $department['idDepartment'])->update("tb_department");
 
