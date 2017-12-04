@@ -2353,7 +2353,6 @@ $scope.fnShowHide = function(divId, divAction) {
   }
 }
 
-
 /*jorge*/
 $scope.listTickt;
 $scope.dhboard = function(){
