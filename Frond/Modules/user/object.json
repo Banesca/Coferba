@@ -158,7 +158,7 @@ http://localhost/Coferba/Back/index.php/User/updateParam
     "idParam" 5 : 
     }
 }
-
+ 
 
 
 ---- CANCELAR UN VIAJE POR EL PRIPIETARIO ---
@@ -181,3 +181,20 @@ http://localhost/Coferba/Back/index.php/Department/desaprobated/1
 ----- SOLICITAR LA BAJA DE UN DEPARTAMENTO POR UN PROPIETARIO O INQUILINO  -----
 http://localhost/Coferba/Back/index.php/Department/requesLowByProp/1
 MANDAS EL ID DEPARTAMENTO 
+
+
+----- BUSCAR TICKETS POR FITROS  -----
+http://localhost/Coferba/Back/index.php/Ticket/all
+
+  {
+    "searchFilter":"BUSCADOR",
+    "topFilter"  : "5",
+    "idCompanyKf" : 1,// SOLO PARA EMPRESA O ADMIN CONSORCIO
+    "idProfileKf" : 1,
+    "idTenantKf": 1, // solo si  es propietario
+    "idTypeTicketKf" : 2,
+    "idAdress" :1,
+    "idStatusTicketKf" : 1
+    }
+
+ 

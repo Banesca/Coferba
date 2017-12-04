@@ -2229,10 +2229,11 @@ $scope.dhboard = function(){
   $searchFilter= 
   {
    
-    searchFilter:$("#searchFilter").val(),
+       searchFilter:$("#searchFilter").val(),
        topFilter : top, 
        idProfileKf:localStorage.getItem("IdPerfil"),
-       idTypeTicketKf:idTypeTicket
+       idTypeTicketKf:idTypeTicket,
+       
          
     
   }
