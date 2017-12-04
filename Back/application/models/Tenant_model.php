@@ -189,10 +189,14 @@ class Tenant_model extends CI_Model
     public function allByIdDepartament($id) {
         
                 $tenant = null;
+                $extrawhere = "";
+                $extrawheresubquery = "";
+
+                if($id > 0){
+                    $extrawhere = " where  t1.idDepartmentKf = ".$id."  or idTenant in (select idTenantKf from  tb_department where idDepartment = ".$id." ) ";
+                }
                 
-                $query = $query = $this->db->query("select * from tb_tenant t1 where  t1.idDepartmentKf = ".$id."
-                or idTenant in (select idTenantKf from  tb_department where idDepartment = ".$id." )
-                 " );
+                $query = $query = $this->db->query(" select * from tb_tenant t1 ".$extrawhere);
 
 
     

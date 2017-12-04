@@ -6,7 +6,7 @@
     </div>
     <div class="panel-body">
       <!-- FORM CONTAINER-->
-      <form class="form-horizontal" name="frmDpto" ng-submit="assignUserDepto()">
+      <form class="form-horizontal" name="frmDpto" ng-submit="UserAassignUnAssignDepto()">
           <fieldset>
             <!-- Company Name-->    
             <div ng-show="sessionidProfile!=3" class="form-group col-md-6">
@@ -31,6 +31,7 @@
                       <select name="idAddressAtt" class="form-control" ng-change="getDeparment(1); listUserDepto(1);"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
                         <option value="">Seleccione</option>
                       </select>
+                      <span ng-show="select.idAddressAtt!=0" style="cursor: pointer;" class="input-group-addon"><i ng-click="getDeparment(1); listUserDepto(1);" class="glyphicon glyphicon-refresh"></i></span>
                     </div>
                   </div>
             </div>
@@ -43,6 +44,7 @@
                       <select name="idAddressAtt" class="form-control" ng-change="listUserDepto(1);"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
                         <option value="">Seleccione</option>
                       </select>
+                      <span ng-show="select.idAddressAtt!=0" style="cursor: pointer;" class="input-group-addon"><i ng-click="listUserDepto(1);" class="glyphicon glyphicon-refresh"></i></span>
                     </div>
                   </div>
             </div>
@@ -68,8 +70,11 @@
           </fieldset>
       </form>
       <div class="clearfix"></div> 
-      <div ng-show="noRecordsFound && sessionidProfile" class="alert alert-info" role="alert">
+      <div ng-show="noRecordsFound && sessionidProfile==3" class="alert alert-info" role="alert">
             <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No existen departamentos asociados a la direccion seleccionada.
+      </div>
+      <div ng-show="noRecordsFound && sessionidProfile!=3 && !select.idAddressAtt" class="alert alert-info" role="alert">
+            <strong>INFO: </strong>Favor seleccione una direccion.
       </div>
       <!-- Tabla para propietarios -->
         <table ng-show="recordsFound && sessionidProfile==3"  class="table  table-striped" style="width: 500px; margin: 0 auto;">
@@ -85,14 +90,14 @@
     
               <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in ListDptoByTenant | filter : paginate track by $index">
                 <td>
-                  <div ng-show=item.isAprobatedAdmin==1 class="btn-group">
-                    <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
+                  <div ng-show=item.isAprobatedAdmin==1  class="btn-group">
+                    <button ng-disabled="item.isRequesLowByProp==1" type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acciones | 
                       <span class="caret"></span>
                       <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a ng-click="searchTenant('depto', item.idDepartment)""><i title="desactivar" class="glyphicon glyphicon-user"></i> Ver inquilinos</a></li>
-                        <li><a ng-click="updateUser(item.idDepartment, $index)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Solicitar Baja</a></li>
+                        <li><a ng-click="searchTenant('listTenant', item.idDepartment)""><i title="desactivar" class="glyphicon glyphicon-user"></i> Ver inquilinos</a></li>
+                        <li><a ng-click="requestDownDepto(item.idDepartment)"><i title="desactivar" class="glyphicon glyphicon-edit"></i> Solicitar Baja</a></li>
                     </ul>
                   </div>
                 </td>
@@ -100,9 +105,10 @@
                 <td>{{item.departmentFloor}}</td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" ng-if="item.isAprobatedAdmin==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> APROBADO </button>
+                    <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> APROBADO </button>
                     <button type="button" ng-if="item.isAprobatedAdmin==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> PENDIENTE</button>
                     <button type="button" ng-if="item.isAprobatedAdmin<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO</button>
+                    <button type="button" ng-if="item.isRequesLowByProp==1 && item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> BAJA SOLICITADA</button>
                   </div>
                 </td>
               </tr>
@@ -130,11 +136,11 @@
                 <td>{{item.departmentFloor}}</td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ASIGNADO | 
+                    <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ASIGNADO | 
                       <span class="caret"></span>
                       <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf==null" class="btn btn-info dropdown-toggle" aria-haspopup="true" aria-expanded="false"> DISPONIBLE
+                    <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==0 && item.idTenantKf==null" class="btn btn-info dropdown-toggle" aria-haspopup="true" aria-expanded="false"> DISPONIBLE
                     </button>
                     <button type="button" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOLICITADO | 
                       <span class="caret"></span>
@@ -144,10 +150,15 @@
                       <span class="caret"></span>
                       <span class="sr-only">Toggle Dropdown</span>
                     </button>
+                    <button type="button" ng-if="item.isRequesLowByProp==1 && item.isAprobatedAdmin==1 && item.idTenantKf!=null" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SOLICITO BAJA | 
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
                       <ul class="dropdown-menu">
                                 <li><a ng-click="approveDepto(item.idDepartment)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Aprobar</a></li>
-                                <li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
-                                <li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf!=null"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
+                                <li><a ng-click="disallowDepto(item.idDepartment)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf!=null"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
+                                <li><a ng-click="disallowDepto(item.idDepartment)" ng-if="(item.isAprobatedAdmin==1 && item.idTenantKf!=null) || isRequesLowByProp==1"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
+
                             </ul>
                   </div>
                             </td>

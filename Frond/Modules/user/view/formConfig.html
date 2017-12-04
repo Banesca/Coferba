@@ -200,6 +200,7 @@
 	      <div class="widget-header">
 	        <h2>Usuarios Recientes Registrados</h2>
 	      </div>
+	      	<!-- LISTA DE USUARIOS REGISTRADOS-->
 	      	<div class="widget-content">
 		        <table class="table  table-striped ">
 	                <thead style=" background: #4d5d6f; color: white;">
@@ -213,7 +214,7 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUser | orderBy:'item.idUser'">
+	                    <tr  style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUser | orderBy:'item.idUser'">
 	                        <td>{{item.idUser}}</td>
 	                        <td>{{item.fullNameUser}}</td>
 	                        <td>{{item.emailUser}}</td>
@@ -221,13 +222,26 @@
 	                        <td ng-if="item.idProfileKf==2">Empresa</td>
 	                        <td ng-if="item.idProfileKf==3">Propietario</td>
 	                        <td ng-if="item.idProfileKf==4">Admin. Consorcio</td>
-	                        <td>
-	                        	<div class="btn-group">
-									<span  ng-if="item.idStatusKf==1" class="btn btn-success"> ACTIVO</span>
-	                				<span  ng-if="item.idStatusKf==0" class="btn btn-warning"> INACTIVO</span>
-	                				<span  ng-if="item.idStatusKf<0" class="btn btn-danger"> ELIMINADO</span>
-								</div>
-	                        </td>
+	                        		                        <td>
+		                        	<div class="btn-group">
+										<button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO | 
+											<span class="caret"></span>
+		                    				<span class="sr-only">Toggle Dropdown</span>
+		                				</button>
+		                				<button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO | 
+											<span class="caret"></span>
+		                    				<span class="sr-only">Toggle Dropdown</span>
+		                				</button>
+		                				<button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
+											<span class="caret"></span>
+		                    				<span class="sr-only">Toggle Dropdown</span>
+		                				</button>
+									  	<ul class="dropdown-menu">
+	                    					<li><a ng-click="sysFunctionsUser('enabled',item.idUser)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
+	                    					<li><a ng-click="sysFunctionsUser('disabled',item.idUser)" ng-if="item.idStatusKf>0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
+	                					</ul>
+									</div>
+		                        </td>
 	                        <td>{{item.dateCreated}}</td>
 	                    </tr>
 	                </tbody>
@@ -392,7 +406,7 @@
 									<div class="form-group">
 									  <label class="col-md-4 control-label"></label>
 									  <div class="col-md-4">
-									    <button type="submit" class="btn btn-primary" >Actualizar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+									    <button type="submit" class="btn btn-primary" >Actualizar</button>
 									  </div>
 									</div>
 
