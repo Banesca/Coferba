@@ -119,7 +119,10 @@ class Ticket_model extends CI_Model
 
             'idBranchKf' => @$ticket['idBranchKf'],
             'idCompanyKf' => @$ticket['idCompanyKf'],
-            'totalService' => @$ticket['totalService']
+            'totalService' => @$ticket['totalService'],
+            'idAdressKf' => @$ticket['idAdressKf']
+            
+            
 
 		)
         );
@@ -225,6 +228,8 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
             $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
 			$this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tenant.idAdressKf',  'left');                        
+            $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
             $this->db->where("tb_tickets.idStatusTicketKf !=", -1);
             
             if(@$searchFilter['idTypeTicketKf'] > 0)
@@ -232,6 +237,38 @@ class Ticket_model extends CI_Model
                 $this->db->where("tb_tickets.idTypeTicketKf =", @$searchFilter['idTypeTicketKf']);
             }
 
+            if(@$searchFilter['idStatusTicketKf'] > 0)
+            {
+                $this->db->where("tb_tickets.idStatusTicketKf =", @$searchFilter['idStatusTicketKf']);
+            }
+
+            if(@$searchFilter['idAdressKf'] > 0)
+            {
+                $this->db->where("tb_tickets.idAdressKf =", @$searchFilter['idAdressKf']);
+            }
+            
+
+            /* verificamos el id de perfil */
+            if(@$searchFilter['idProfileKf'] > 0)
+            {
+
+                if(@$searchFilter['idProfileKf'] == 3) // prpietario 
+                {
+                    $this->db->where("tb_department.idTenantKf =", @$searchFilter['idTenantKf']); 
+                }
+
+                if(@$searchFilter['idProfileKf'] == 4 ) // admin consorcio 
+                {
+                    $this->db->where("tb_department.idAdressKf =  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
+                    
+                }
+
+                if( @$searchFilter['idProfileKf'] == 2) // empresa
+                {
+                    $this->db->where("tb_department.idAdressKf =  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
+                    
+                }
+            }
 
 
 
@@ -240,16 +277,11 @@ class Ticket_model extends CI_Model
             {
             	
 
-            	/*if(@$searchFilter['idProfileKf'] > 0)
-				{
-            		$this->db->where("tb_tickets.idProfileKf !=", @$searchFilter['idProfileKf']);
-            	}*/
-
-
             	$this->db->like('tb_tenant.fullNameTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tickets.codTicket', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_tickets.nameAdress', $searchFilter['searchFilter']);
 
 
 /*				if(@$searchFilter['idTypeKf'] > 0)
@@ -294,6 +326,8 @@ class Ticket_model extends CI_Model
         $typeouther  = null;
         $typeticket = null;
         $tipeOpcion = null;
+        $statusticket = null;
+        
 
         /* LISTADO DE CONDICIONES DE IVA */
         $query = $this->db->select("*")->from("tb_user")->order_by("tb_user.dateCreated", "DESC")->get();
@@ -333,6 +367,12 @@ class Ticket_model extends CI_Model
               $tipeOpcion = $query->result_array();
           }
 
+           /* LISTADO DE ESTATUS */
+           $query = $this->db->select("*")->from("tb_statusticket")->get();
+           if ($query->num_rows() > 0) {
+               $statusticket = $query->result_array();
+           }
+
        
 
         $filter = array(
@@ -341,7 +381,8 @@ class Ticket_model extends CI_Model
             'typedelivery' => $typedelivery,
             'typeouther' => $typeouther,
             'typeticket'  => $typeticket,
-            'tipeOpcion' => $tipeOpcion
+            'tipeOpcion' => $tipeOpcion,
+            'statusticket' => $statusticket
 
         );
 
