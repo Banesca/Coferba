@@ -21,7 +21,8 @@ class Ticket_model extends CI_Model
     public function aprobated($id) {
         $this->db->set(
                 array(
-                    'isAprobatedAdmin' => 1 
+                    'isAprobatedAdmin' => 1,
+                    'dateAprovatedAdmin' => date("Y-m-d h:i:sa")
                 )
         )->where("idTicket", $id)->update("tb_tickets");
 
@@ -217,7 +218,7 @@ class Ticket_model extends CI_Model
          { 
 
             
-            $this->db->select("*,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
+            $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
             $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
@@ -281,7 +282,7 @@ class Ticket_model extends CI_Model
                 $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tickets.codTicket', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_tickets.nameAdress', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_addres.nameAdress', $searchFilter['searchFilter']);
 
 
 /*				if(@$searchFilter['idTypeKf'] > 0)

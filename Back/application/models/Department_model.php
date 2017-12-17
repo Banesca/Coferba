@@ -5,7 +5,8 @@ class Department_model extends CI_Model
 	
 	public function __construct()
 	{
-		parent::__construct();
+        parent::__construct();
+         /*MAIL*/ $this->load->model('mail_model');
 	}
 
 
@@ -209,6 +210,81 @@ class Department_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+
+     /* REMOVER  inquilino */
+     public function removeTenant($data) {
+
+
+        if($data['idTypeTenant'] == 1 ) //PROPIETARO
+        {
+            $this->db->set(
+                array(
+                    'idTenantKf' => 0
+                )
+            )
+            ->where("idTenantKf", $data['idTenant'])
+            ->where("idDepartment", $data['idDepartmentKf'])
+            ->update("tb_department");
+
+            
+            if ($this->db->affected_rows() === 1) {
+
+                 /*MAIL*/
+                $this->db->select("*")->from("tb_tenant");
+                $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant', 'left');
+                $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
+                $this->db->where("idTenant =", $data['idTenant']);
+                $query =   $this->db->where("idDepartment", $data['idDepartmentKf'])->get();
+                if ($query->num_rows() > 0) {
+                    $to = $query->row_array();
+                    if($to != ""){
+                        $title ="Baja de un Departamento!";
+                        $body ="Coferba, Notifica que se le dio de baja el departamento".$to['nameAdress']."!";
+                        $this->mail_model->sendMail($title,$to['emailTenant'],$body);
+                    }
+                }
+
+                return true;
+            } else {
+                return false;
+            }
+
+        }else { // inquilino
+            
+                $this->db->set(
+                    array(
+                        'idDepartmentKf' => 0
+                    )
+                )
+                ->where("idTenant", $data['idTenant'])
+                ->where("idDepartmentKf", $data['idDepartmentKf'])
+                ->update("tb_tenant");
+
+                
+                if ($this->db->affected_rows() === 1) {
+
+                     /*MAIL*/
+                    $this->db->select("*")->from("tb_tenant");
+                    $this->db->join('tb_department', 'tb_department.idDepartment = tb_tenant.idDepartmentKf', 'left');
+                    $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
+                    $this->db->where("idTenant =", $data['idTenant']);
+                    $query =   $this->db->where("idDepartment", $data['idDepartmentKf'])->get();
+                    if ($query->num_rows() > 0) {
+                        $to = $query->row_array();
+                        if($to != ""){
+                            $title ="Baja de un Departamento!";
+                            $body ="Coferba, Notifica que se le dio de baja el departamento".$to['nameAdress']."!";
+                            $this->mail_model->sendMail($title,$to['emailTenant'],$body);
+                        }
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+        }
+       
     }
 
 

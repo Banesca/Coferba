@@ -44,7 +44,8 @@ METODO : POST
   {
     "fullNameUser" : "prueba editada",
     "emailUser" : "prueba",
-    "phoneNumberUser" : "prueba",
+    "phoneNumberUser" : 12312312,
+    "phoneLocalNumberUser" : 3243242343,
     "addresUser" : "prueba",
     "passwordUser" : "nuevavlave",
     "idProfileKf" : "1",
@@ -53,7 +54,7 @@ METODO : POST
     "isEditUser": true
   }
 }
-}
+
 
 
 
@@ -198,3 +199,18 @@ http://localhost/Coferba/Back/index.php/Ticket/all
     }
 
  
+
+    /*
+    17-12-2017
+    */  
+
+----- DESASOCIAR UN INQUILINO o PROPIETARIO DE UN DEPARTAMENTO    -----
+http://localhost/Coferba/Back/index.php/Department/removeTenant
+{"info":
+  {
+    "idTenant":34,
+    "idDepartmentKf":  3,
+    "idTypeTenant":1 // ENVIAR EL TIPO DE PERFEIL SEGUN SEA INQUILINO O PROPIETARIO
+    }
+}
+

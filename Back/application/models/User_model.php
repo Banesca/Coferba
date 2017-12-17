@@ -263,7 +263,8 @@ class User_model extends CI_Model
 
             $this->db->set(
                     array(
-                        'passwordUser' => sha1(md5($user['passwordUser']))
+                        'passwordUser' => sha1(md5($user['passwordUser'])),
+                        'resetPasword' => 0
                     )
             )->where("idUser", $user['idUser'])->update("tb_user");
         }
@@ -281,13 +282,14 @@ class User_model extends CI_Model
         
                 $this->db->set(
                         array(
-                            'passwordUser' => sha1(md5(12345))
+                            'passwordUser' => sha1(md5(12345)),
+                            'resetPasword' => 1
                         )
                 )->where("emailUser", $user['emailUser'])->update("tb_user");
         
                  /*MAIL*/
                  $title ="Nuevo Clave de Acceso a Coferba";
-                 $body = "Se Restablecio su clave de acceso!<br> Usuario: ".$user['emailUser']."<br> Clave: 12345";
+                 $body = "Se Restablecio su clave de acceso!<br> Usuario: ".$user['emailUser']."<br> Clave: 12345 <br> Le Recomendamos luego de acceder cambie su clave!";
                  $m = $this->mail_model->sendMail($title,$user['emailUser'],$body);
 
                

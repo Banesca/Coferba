@@ -203,6 +203,20 @@ class Department extends REST_Controller {
         }
     }
 
+
+    /* EDITAR DATOS DE UN inquilino */
+    public function removeTenant_post() {
+
+        $data = $this->post('info');
+
+        $rs = $this->department_model->removeTenant($data);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
     
  }
  ?>
