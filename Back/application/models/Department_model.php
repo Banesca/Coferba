@@ -200,7 +200,7 @@ class Department_model extends CI_Model
         $this->db->set(
                 array(
                     'idTenantKf'=>$department['idTenantKf'],
-                    'isRequesLowByProp'=>$department['isRequesLowByProp']
+                    'idDepartment'=>$department['idDepartment']
                 )
         )->where("idDepartment", $department['idDepartment'])->update("tb_department");
 
@@ -221,7 +221,8 @@ class Department_model extends CI_Model
         {
             $this->db->set(
                 array(
-                    'idTenantKf' => 0
+                    'idTenantKf' => 0,
+                    'isAprobatedAdmin' => 0
                 )
             )
             ->where("idTenantKf", $data['idTenant'])

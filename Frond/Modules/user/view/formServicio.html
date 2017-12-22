@@ -3,8 +3,8 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 		<h3 class="panel-title" ng-show="sessionidProfile==2">SERVICIO - {{mySwitch}} DE LA EMPRESA<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-		<h3 class="panel-title" ng-show="sessionidProfile==4">SERVICIO - {{mySwitch}} DEL CONSORCIO<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-		<h3 class="panel-title" ng-show="sessionidProfile==1">SERVICIOS - EMPRESAS O CONSORCIOS<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		<h3 class="panel-title" ng-show="sessionidProfile==4">SERVICIO - {{mySwitch}} DE LA ADMINISTRACION<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		<h3 class="panel-title" ng-show="sessionidProfile==1">SERVICIOS - EMPRESAS O ADMINISTRACION<a ng-click="fnShowHide()" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 	</div>
 	<div class="panel-body">
 		<form class="form-horizontal" name="fservice" ng-submit="newTicket('srvs')" >
@@ -13,7 +13,7 @@
 					<!-- Company Name-->    
 					<div class="form-group">
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Empresa</label>
-					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Empresa / Consorcio</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Empresa / Administracion</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Consorcio</label>
 					    <div class="col-md-4">
 						    <div class="input-group">
@@ -29,9 +29,9 @@
 					<!-- List Address-->
 					      
 					<div class="form-group" ng-show="sessionidProfile!=3">
-					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Sucursal</label>
-					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Sucursal / Edificio</label>
-					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Edificio</label>   
+					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Direccion Sucursal</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion Sucursal o Administracion</label>
+					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Direccion de Consorcio</label>   
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>

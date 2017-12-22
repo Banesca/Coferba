@@ -11,50 +11,50 @@
 								<legend style="visibility: hidden;"></legend>
 							    <!-- Company Name-->    
 					            <div class="form-group" ng-show="sessionidProfile!=3">
-					              <label class="col-md-4 control-label">Consorcio</label>
+					              <label class="col-md-4 control-label">Administracion</label>
 					                <div class="col-md-4">
 					                  <div class="input-group">
 					                      <span ng-show="sessionidProfile!=3" class="input-group-addon"><i class="icon-suitcase"></i></span>
 					                    <input ng-show="sessionidProfile!=1 && sessionidProfile!=3" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
 
 					                    <select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); enabledNextBtn();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-					                        <option value="">Seleccione un consorcio</option>
+					                        <option value="">Seleccione una Administracion</option>
 					                      </select>
 					                  </div>
 					                </div>
 					            </div>     
 								<!-- Address for Onwers-->      
 								<div class="form-group" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
-								  	<label class="col-md-4 control-label">Direcci&#243n</label>
+								  	<label class="col-md-4 control-label">Direcci&#243n del Consorcio</label>
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-												    <option value="">Seleccione una direccion</option>
+												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
 									  	</div>
 								</div>
 								<!-- Address for Admins Consorcios-->      
 					            <div class="form-group" ng-disable="sessionidProfile!=4" ng-show="sessionidProfile==4">
-					                <label class="col-md-4 control-label">Direcci&#243n</label>
+					                <label class="col-md-4 control-label">Direcci&#243n del Consorcio</label>
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-					                        <option value="" >Seleccione</option>
+					                        <option value="" >Seleccione un consorcio</option>
 					                      </select>
 					                    </div>
 					                  </div>
 					            </div>
 								<!-- Text Address for Admins-->       
 								<div class="form-group" ng-disable="sessionidProfile!=1" ng-show="sessionidProfile==1">
-								  	<label class="col-md-4 control-label">Direcci&#243n</label>
+								  	<label class="col-md-4 control-label">Direcci&#243n del Consorcio</label>
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
-												    <option value="">Seleccione una direccion</option>
+												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
 									  	</div>

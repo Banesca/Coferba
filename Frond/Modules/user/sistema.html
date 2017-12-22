@@ -16,7 +16,7 @@
 <!-- Default Style Sheets -->
 <!-- User Style Sheets -->
 
-<link rel="stylesheet" type="text/css" afrres="true" href="css/style.css">
+
 <!-- User Style Sheets -->
 <link rel="shortcut icon" href="images/favicon.ico">
 
@@ -33,7 +33,7 @@
     <noscript>This page uses JavaScript and requires a JavaScript enabled browser.Your browser is not JavaScript enabled.</noscript>
 <!--ANGULAR MODULE -->
 <div ng-controller="coferbaCtrl">
-	<div id="sytemHead" class="fixedHead"  ng-show="Token">
+	<div id="sytemHead" class="fixedHead"  ng-if="Token">
 		<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
 		    <div class="navbar-inner m-h-30">
 		        <div class="container">
@@ -100,12 +100,12 @@
 							          <br>Gestion de Departamento
 							       </a>
 							    </li>
-							    <li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
+							    <!--<li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
 							       <a href="#Usuarios" ng-click="fnShowHide('user', 'open')"> 
 							          <i class="icon-group"></i>
 							          <br>Gestion de inquilinos
 							       </a>
-							    </li>
+							    </li>-->
 							     <li id="m_config" ng-show="sessionidProfile==1">
 							       <a href="#Config" ng-click="fnShowHide('sysConfig', 'open')"> 
 							          <i class="icon-cogs"></i>
@@ -209,14 +209,14 @@
 	</div>    
 
     <!-- USER REGISTER FORM -->
-	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
+	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 50px;" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">
 		      	<div class="modal-body">
 					<div class="agileits-w3layouts"> 
 			          	<div class="panel panel-default">
 			              	<div class="panel-heading">
-			                	<h3 class="panel-title">NUEVO USUARIO {{idProfileKf}}<a ng-click="closeModal('u')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			                	<h3 class="panel-title">NUEVO USUARIO <a ng-click="closeModal('u')" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 			            	</div>
 			            		<div class="panel-body" style="padding-right: 0px;">
 									<!-- FORM CONTAINER-->
@@ -228,11 +228,11 @@
 										   <div class="col-xs-12">
 										    <div class="input-group">
 										    	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												<input type="text" style="width:96%;" name="idProfileKf" value=3 ng-show="!Token" placeholder="Propietario" class="form-control" ng-disabled="!token" ng-model="$parent.idProfileKf"  ng-required="!Token" autofocus />
+												<input type="text" style="width:96%;" name="idProfileKf" placeholder="Propietario" ng-show="!Token" placeholder="Propietario" class="form-control" ng-disabled="!token" ng-model="$parent.idProfileKf"  ng-required="!Token" autofocus />
 										    </div>
 										  </div>
 										</div>  
-										<div class="form-group col-md-6" ng-show="sessionidProfile==1"> 
+										<div class="form-group col-md-6" ng-if="sessionidProfile==1"> 
 										  <label style="padding-left: 15px;">Perfil</label>
 										    <div class="col-xs-12 selectContainer">
 											    <div class="input-group">
@@ -245,12 +245,14 @@
 										</div>
 										<!-- Company List-->
 										      
-										<div class="form-group col-md-6" ng-show="sessionidProfile==1" >  
-										  <label style="padding-left: 15px;">Empresa / Consorcio</label>
+										<div class="form-group col-md-6" ng-if="sessionidProfile==1" >  
+										  <label ng-if="idProfileKf!=2 && idProfileKf!=4" style="padding-left: 15px;">Empresa / Administracion</label>
+										  <label ng-if="idProfileKf==2" style="padding-left: 15px;">Empresa</label>
+										  <label ng-if="idProfileKf==4" style="padding-left: 15px;">Administracion</label>
 										    <div class="col-xs-12 selectContainer">
 											    <div  class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-											  		<select ng-disabled="idProfileKf==1 || idProfileKf==3" name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="$parent.idCompanyKf"  >
+											  		<select ng-disabled="idProfileKf==1 || idProfileKf==3 || idProfileKf==null" name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="$parent.idCompanyKf"  >
 													    	<option value="">Seleccione una opcion</option>
 												    	</select>
 											    </div>
@@ -308,7 +310,7 @@
 										    <div class="col-xs-12">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordUser" placeholder="Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+											  		<input placeholder="Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" ng-model="passwordUser" minlength="8" maxlength="20" type="password" required autofocus />
 											    </div>
 											    <small id="passwordHelpBlock" class="form-text text-muted">
       													La clave debe contener entre 8 y 20 caracteres alfanumericos.
@@ -322,21 +324,24 @@
 										    <div class="col-xs-12">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordUsertmp" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
+											  		<input ng-change="fnValidatePwd()" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="passwordUsertmp" type="password" required autofocus />
 											    </div>
-											    <small id="passwordHelpBlock" class="form-text text-muted">
+											    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
       													La clave debe contener entre 8 y 20 caracteres alfanumericos.
+    											</small>
+    											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+      													La clave no coinciden verifique por favor y continue.
     											</small>
 											</div>
 										</div>
 										<!-- Text Phone-->
 										       
 										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;">Telefono Local</label>  
+										  <label style="padding-left: 15px;">Telefono Fijo</label>  
 										    <div class="col-xs-12">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-											  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phonelocalNumberUser"  type="text" required autofocus />
+											  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalNumberUser"  type="text" required autofocus />
 											    </div>
 										  </div>
 										</div>
@@ -347,7 +352,7 @@
 										    <div class="col-xs-12">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-											  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phoneNumberUser"  type="text" required autofocus />
+											  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="phoneNumberUser"  type="text" required autofocus />
 											    </div>
 										  </div>
 										</div>
@@ -363,21 +368,6 @@
 
 										</fieldset>
 									</form>
-									<script type="text/javascript">
-										var password = document.getElementById("passwordUser")
-  											, confirm_password = document.getElementById("passwordUsertmp");
-
-												function validatePassword(){
-												  if(password.value != confirm_password.value) {
-												    confirm_password.setCustomValidity("La clave no coincide");
-												  } else {
-												    confirm_password.setCustomValidity('');
-												  }
-												}
-
-												password.onchange = validatePassword;
-												confirm_password.onkeyup = validatePassword;
-									</script>
 									<div class="clearfix"> </div> 
 								</div>
 						</div>
@@ -388,7 +378,7 @@
 	</div>
 	
 
-	<div class="main_container" ng-show="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
+	<div class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
@@ -556,11 +546,11 @@
 												<!-- Text Phone-->
 												       
 												<div class="form-group">
-												  <label class="col-md-4 control-label">Telefono Local</label>  
+												  <label class="col-md-4 control-label">Telefono Fijo</label>  
 												    <div class="col-md-4">
 													    <div class="input-group">
 													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneLocalT" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phonelocalT"  type="text" required autofocus />
+													  		<input name="phoneLocalT" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalT"  type="text" autofocus />
 													    </div>
 												  </div>
 												</div>
@@ -571,7 +561,7 @@
 												    <div class="col-md-4">
 													    <div class="input-group">
 													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phoneMovilT"  type="text" required autofocus />
+													  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phoneMovilT"  type="text" autofocus />
 													    </div>
 												  </div>
 												</div>
@@ -645,11 +635,11 @@
 												<!-- Text Phone-->
 												       
 												<div class="form-group">
-												  <label class="col-md-4 control-label">Telefono Local</label>  
+												  <label class="col-md-4 control-label">Telefono Fijo</label>  
 												    <div class="col-md-4">
 													    <div class="input-group">
 													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneLocalAtt" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phonelocalAttd"  type="text" required autofocus />
+													  		<input name="phoneLocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalAttd"  type="text" autofocus />
 													    </div>
 												  </div>
 												</div>
@@ -660,7 +650,7 @@
 												    <div class="col-md-4">
 													    <div class="input-group">
 													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneMovilAtt" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.phoneMovilAttd"  type="text" required autofocus />
+													  		<input name="phoneMovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phoneMovilAttd"  type="text" autofocus />
 													    </div>
 												  </div>
 												</div>
@@ -706,8 +696,8 @@
 		<!-- //Modal Confirmation -->
 
 		<!-- Modal Password Change -->
-			<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-lg" role="dialog">
-	  			<div class="modal-dialog modal-lg" >
+			<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-md" role="dialog">
+	  			<div class="modal-dialog modal-md" >
 				    <div class="modal-content">
 				      	<div class="modal-body">
 				          	<div class="panel panel-default">
@@ -716,39 +706,40 @@
 				            	</div>
 			            		<div class="panel-body">
 									<!-- FORM CONTAINER-->
-				    				<form class="form-horizontal" name="fUserProfile" ng-submit="sysFunctionsUser('updprofile')">
+				    				<form class="form-horizontal" name="fChPwd" ng-submit="sysFunctionsUser('chgPwdUser')">
 										<fieldset>
-										<!-- Old Password-->
-
-										<div class="form-group">
-										  <label class="col-md-4 control-label">Contrase&#241a Actual</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
-											    </div>
-											</div>
-										</div>
 										<!-- New Password-->
 
 										<div class="form-group">
 										  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
-										    <div class="col-md-4">
+										    <div class="col-md-6">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordUser" placeholder="Contrase&#241a" class="form-control" ng-model="passwordUser" minlength="8" type="password" required autofocus />
+											  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Contrase&#241a" class="form-control" aria-describedby="passwordHelpBlock" ng-model="newPwd1" minlength="8" maxlength="20" type="password" required autofocus />
 											    </div>
+										    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+      													Debe ser de 8 a 20 caracteres alfanumericos.
+    											</small>
+    											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+      													Debe ser de 8 a 20 caracteres alfanumericos.
+    											</small>
 											</div>
 										</div>
 										<!-- New Password Check-->
 
 										<div class="form-group">
 										  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
-										    <div class="col-md-4">
+										    <div class="col-md-6">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordUsertmp" placeholder="Confirme su Contrase&#241a" class="form-control" minlength="8" ng-model="passwordUsertmp" type="password" required autofocus />
+											  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
 											    </div>
+											    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+      													Debe ser de 8 a 20 caracteres alfanumericos.
+    											</small>
+    											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+      													Debe ser de 8 a 20 caracteres alfanumericos.
+    											</small>
 											</div>
 										</div>
 
@@ -781,10 +772,12 @@
 <script src="js/angular-inform.min.js"></script>
 <script src="js/angular-showdown.js"></script>
 <script src="js/angular-animate.min.js"></script>
+<script src="js/ui-bootstrap.js"></script>
 <!--ANGULAR MODULES -->
 <!--JQUERY MODULES -->
 <script type="text/javascript" language="javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/core-SHERMAN-MLR-1249.js"></script>
+<script type="text/javascript" language="javascript" src="js/core-SHERMAN-MLR-1249.js"></script>
+<script type="text/javascript" language="javascript" src="js/inputMask.js"></script>
 <script type="text/javascript" language="javascript" src="js/acsportal.packed.js"></script>
 <!--JQUERY MODULES -->
 <script src="js/coferbaAngularApp.js"></script> <!-- Coferba Angular App -->
