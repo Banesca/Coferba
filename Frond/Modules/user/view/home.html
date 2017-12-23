@@ -16,172 +16,112 @@
 }
     </style>
     
-    <div   ng-init="dhboard();test()">
-    
-    
-    
-                <div style="margin:   20px;">
-                <div class="row" >
-                    <div class="col-lg-12" style="background-color: #f1f1f1;    margin-top: -63px;">
-                    <div class="row" style="
-                    position: fixed;
-                    z-index: 100;
-                    width: 100%;
-                    background: #ebf3da;
-                ">
-                                
-    
-        <div class="row"  >
-            <div class="col-lg-2">
-                    <div class="form-group">
-                    <label for="sel1">Top:</label>
-                    <select class="form-control" ng-model="topDH" ng-blur="dhboard()">
-                        <option value="0">Todo</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="100">100</option>
-                        
-                        
-                    </select>
-                    <input type="hidden"  value="{{topDH}}"  id="topDH">
-
-                    
-                    </div>
-                </div>
-
-
-                <div class="col-lg-2"> 
-                    
-                               <div class="form-group"> 
-                               <label for="sel1">Tipo</label> 
-                               <select class="form-control"  ng-model="idTypeTicket" ng-blur="dhboard()"> 
-                                    <option value="0">Todo</option> 
-                                   <option value="1">ALTA DE LLAVEROS</option> 
-                                   <option  value="2">BAJA DE LLAVEROS</option> 
-                                   <option value="3">SERVICIO TECNICO</option> 
-                                   <option value="4">OTRAS SOLICITUDES O CONSULTAS</option> 
-                               </select> 
-                               <input type="hidden"  value="{{idTypeTicket}}"  id="idTypeTicket">
-                               </div> 
-                 </div> 
-                
-              
-                
-    
-           
-                
-    
-                <div class="col-lg-2">
-                <br>
-    
-                    <div class="form-group" style="    margin-top: 5px;">
-                     <input type="text" style=" margin-top: -6px;"
-                    class="form-control" ng-model="searchFilter" id="searchFilter" ng-change="dhboard()" placeholder="Buscar...">
-                
-                    </div>
-                </div>
-
-                <div class="col-lg-2">
-                    <br>
-        
-                        <div class="form-group" style="    margin-top: 5px;">
-                                <button type="button" class="btn btn-primary" ng-click="dhboard()">Buscar </button>
-                                
-                        
+<div ng-init="dhboard();test()">
+    <div style="margin:   20px;">
+        <div class="row" >
+            <div class="col-lg-12" style="background-color: #f1f1f1;    margin-top: -68px;">
+                <div class="row" style="position: fixed;z-index: 100;width: 100%;background: #ebf3da; padding-top: 10px;">
+                    <div class="row" >
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="sel1">Top:</label>
+                                <select class="form-control" ng-model="topDH" ng-blur="dhboard()">
+                                    <option value="0">Todo</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="100">100</option>
+                                </select>
+                                <input type="hidden"  value="{{topDH}}"  id="topDH">
+                            </div>
                         </div>
-                    </div>
-    
-                
-    
-    
-    
-                
-    
-    
-                </div><!-- /.row -->
-                        
-                
-                
+                        <div class="col-lg-2"> 
+                           <div class="form-group"> 
+                                <label for="sel1">Tipo</label> 
+                                   <select class="form-control"  ng-model="idTypeTicket" ng-blur="dhboard()"> 
+                                        <option value="0">Todo</option> 
+                                       <option value="1">ALTA DE LLAVEROS</option> 
+                                       <option  value="2">BAJA DE LLAVEROS</option> 
+                                       <option value="3">SERVICIO TECNICO</option> 
+                                       <option value="4">OTRAS SOLICITUDES O CONSULTAS</option> 
+                                   </select> 
+                                   <input type="hidden"  value="{{idTypeTicket}}"  id="idTypeTicket">
+                            </div> 
+                        </div> 
+                        <div class="col-lg-2">
+                            <br>
+                                <div class="form-group" style="    margin-top: 5px;">
+                                    <input type="text" class="form-control"  ng-model="searchFilter" ng-change="dhboard()" placeholder="Buscar...">
+                                </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <br>
+                                <div class="form-group" style="    margin-top: 5px;">
+                                    <button type="button" class="btn btn-primary" ng-click="dhboard()">Buscar </button>
+                                </div>
+                        </div>
+                    </div><!-- /.row -->                 
+                        <div class="col-lg-3">
+                            <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+                            <label>Total Ticket Finalizados</label>
+                            <label style="color: #39af24;font-size: 20px;">0</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
+                            <label>Total Ticket Cancelados</label>
+                            <label style="color: #af2424;font-size: 20px;">0</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+                            <label>Total Ticket Pendientes</label>
+                            <label  style="color: #af8424;font-size: 20px;">0</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                            <label>Total</label>
+                            <label style="font-size: 20px;">179</label>
+                        </div>
                 </div>
-    
-                <div class="row" style=" background-color: #f4fbff;margin-top: 87px;">
-                
-                    <div class="col-lg-3">
-                        <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
-                        <label>Total Ticket Finalizados</label>
-                        <label style="color: #39af24;font-size: 20px;">0</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
-                        <label>Total Ticket Cancelados</label>
-                        <label style="color: #af2424;font-size: 20px;">0</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
-                        <label>Total Ticket Pendientes</label>
-                        <label  style="color: #af8424;font-size: 20px;">0</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                        <label>Total</label>
-                        <label style="font-size: 20px;">179</label>
-                    </div>
-                
-                
-                </div>
-    
-                
-    
-    <div style="background: #737373;">
+
+                <div style="background: #737373; margin-top: 130px;">
 
                     <div class="col-lg-12" 
-                    ng-repeat="tk in listTickt"
-                    style="background-color: #ced3d6;
-                    height: 72px;
-                    border-radius: 10px;
-                    padding: 10px;
-                    margin-bottom: 5px;">
-    
-    
-                        <div class="col-lg-10">
-                            <label>{{tk.codTicket}}</label>
-                            <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
-                            <br>
-                            <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
-                            <label>Creado {{tk.dateCratedTicket}}</label> - 
-                            <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
-                            <label>Cliente:{{tk.fullNameTenant}}</label> - 
-                            <label>{{tk.phoneNumberTenant}}</label> 
-                        </div>
-            
-                        <div class="col-lg-2">
-                            <!-- Split button -->
-                        <div class="btn-group">
-                        <button type="button" class="btn btn-lg btn-success">{{tk.statusName}}</button>
-                        <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
-                        </ul>
-                        </div>
-                        </div>
-    
-                    
+                        ng-repeat="tk in listTickt"
+                        style="background-color: #ced3d6;
+                        height: 82px;
+                        border-radius: 10px;
+                        padding: 10px;
+                        margin-bottom: 5px;">
+                            <div class="col-lg-10">
+                                <label>{{tk.codTicket}}</label>
+                                <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
+                                <br>
+                                <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
+                                <label>Creado {{tk.dateCratedTicket}}</label> - 
+                                <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
+                                <label>Cliente:{{tk.fullNameTenant}}</label> - 
+                                <label>{{tk.phoneNumberTenant}}</label> 
+                            </div>
+                        
+                            <div class="col-lg-2">
+                                    <!-- Split button -->
+                                <div class="btn-group">
+                                <button type="button" class="btn btn-lg btn-success">{{tk.statusName}}</button>
+                                <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
+                                </ul>
+                                </div>
+                            </div>              
                     </div>
-    
-    
-    </div>
-    
                 </div>
-    
-    
-    
-                </div>
-    
+            </div>
+        </div>
     </div>
+</div>
     
     
    

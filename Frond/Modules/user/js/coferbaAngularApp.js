@@ -200,9 +200,13 @@ $scope.sysLoadLStorage = function (){
 
 /* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
 if($scope.Token){
-  inform.add('Bienvenido Sr/a '+ $scope.sessionNames,{
+  var nameUser = localStorage.getItem("Nombres");
+  $timeout(function() {
+      inform.add('Bienvenido Sr/a '+ nameUser,{
     ttl:3000, type: 'success'
   });
+    }, 620);
+  
 }
  /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
      if($scope.sessionidProfile!=3){$scope.home = true;}
@@ -763,11 +767,7 @@ $scope.lisTenantByType = function(v1, v2){
                     inform.add('El departamento no presenta'+$scope.messageInform+'.',{
                                 ttl:3000, type: 'warning'
                      });          
-              }else {
-                inform.add('El departamento no presenta Inquilinos registrados.',{
-                              ttl:3000, type: 'warning'
-                   });
-              } 
+              }
       });
   }
 
@@ -1013,19 +1013,20 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
     case "delete":                               //Delete User Module
         $scope.deleteUser(isVarUser);
     break;
-    case "chpwd":                               //Delete User Module
+    case "lostpwd":                               //Lost Password Module
         $scope.chgPwdUser($http, $scope);
     break;
     case "chgPwdUser":                          //Change PWD User Module
-      var isChPwd = 1
-      if ($scope.tagPwd==1){
-          inform.add('La clave no coincide debe verificar para completar su registro.',{
-          ttl:3000, type: 'error'
-           }); 
-      }else{
-        console.log($scope._getData2Update(isChPwd));
-        $scope.modificarUsuario($http, $scope, isChPwd);
-      }
+      var isChPwd = $scope.Token ? 1 : 2;
+      console.log('OPCION: '+isChPwd);
+          if ($scope.tagPwd==1){
+              inform.add('La clave no coincide debe verificar para completar su registro.',{
+              ttl:3000, type: 'error'
+               }); 
+          }else{
+            console.log($scope._getData2Update(isChPwd));
+            $scope.modificarUsuario($http, $scope, isChPwd);
+          }
 
         
     break;
@@ -1038,20 +1039,32 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
 *               INGRESO DE USUARIO                *
 *                                                 *
 **************************************************/
-
+$scope.tmp={fullNameUser:'',emailUser : '', phoneNumberUser : '', phoneLocalNumberUser : '', idProfileKf : '', idUser : ''}
 function sysLoginUser($http,$scope){  
     $http.post("http://localhost/Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
-             inform.add('El Correo: '+ $scope.Login.email + ' no se encuentra registrado o ha colocado una clave errada verifique sus datos.',{
+             inform.add('El Correo: '+ $scope.Login.email + ', no se encuentra registrado o ha colocado una clave errada verifique sus datos.',{
                         ttl:3000, type: 'error'
              }); 
              
            }else{
                $scope.rsJSON=data.data.response;
-               //alert($scope.rsJSON.resetPasword);
-                    
-                    console.log(data.data.response);
+               console.log(data.data.response);
+                if($scope.rsJSON.resetPasword==1){
+                  inform.add('Recorda: '+ $scope.rsJSON.fullNameUser + ' que no puedes usar la misma clave o claves anteriores.',{
+                        ttl:3000, type: 'wrining'
+                  }); 
+             
+                    $scope.tmp.fullNameUser         = $scope.rsJSON.fullNameUser,
+                    $scope.tmp.emailUser            = $scope.rsJSON.emailUser,
+                    $scope.tmp.phoneNumberUser      = $scope.rsJSON.phoneNumberUser,
+                    $scope.tmp.phoneLocalNumberUser = $scope.rsJSON.phoneLocalNumberUser,
+                    $scope.tmp.idProfileKf          = $scope.rsJSON.idProfileKf,
+                    $scope.tmp.idUser               = $scope.rsJSON.idUser,
+                    console.log($scope.tmp);
+                    $('#PasswdModalUser').modal('toggle');
+                }else{
                    localStorage.setItem("idUser", $scope.rsJSON.idUser);
                    localStorage.setItem("Nombres", $scope.rsJSON.fullNameUser);
                    localStorage.setItem("Email", $scope.rsJSON.emailUser);
@@ -1069,7 +1082,7 @@ function sysLoginUser($http,$scope){
                       mail2Search = $scope.rsJSON.emailUser;
                       $scope.searchTenantByMail();
                     }else{location.href = "sistema.html";}
-                   
+                }  
 
             }
         },function (error, data, status) {
@@ -1146,8 +1159,9 @@ $scope.modificarUsuario = function ($http, $scope, itemOp){
           inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
                     ttl:3000, type: 'success'
           });
-         }else if ($scope.isPwdCh==1){
-            inform.add($scope.sessionNames +' Su clave ha sido cambiada satisfactoriamente.',{
+         }else if ($scope.isPwdCh>=1){
+            var names = $scope.Token ? $scope.sessionNames : $scope.tmp.fullNameUser;
+            inform.add(names +' Su clave ha sido cambiada satisfactoriamente.',{
                     ttl:3000, type: 'success'
           });
             $('#PasswdModalUser').modal('hide');
@@ -1190,6 +1204,22 @@ $scope._getData2Update = function (value) {
                                 idProfileKf          : $scope.sessionidProfile,
                                 passwordUser         : $scope.newPwd2,
                                 idUser               : $scope.sessionIdUser,
+                                isEditUser           : isEditUserKf
+                              }
+          }
+  }else if (isChPwd==2){
+    isEditUserKf = true;
+    var updUser =
+          {
+                         user:
+                              {
+                                fullNameUser         : $scope.tmp.fullNameUser,
+                                emailUser            : $scope.tmp.emailUser,
+                                phoneNumberUser      : $scope.tmp.phoneNumberUser,
+                                phoneLocalNumberUser : $scope.tmp.phoneLocalNumberUser,
+                                idProfileKf          : $scope.tmp.idProfileKf,
+                                passwordUser         : $scope.newPwd2,
+                                idUser               : $scope.tmp.idUser ,
                                 isEditUser           : isEditUserKf
                               }
           }
@@ -1646,8 +1676,9 @@ $scope.searchTenant = function (op, idDpto, idTypeTenant){
         $scope.manageDepto=1;
         $scope.typeTenant=idTypeTenant;
         if(!$scope.typeTenant){$scope.typeTenant=-1;}
-        alert(idDpto);
+        //alert(idDpto);
          $scope.lisTenantByType(idDpto,$scope.typeTenant);
+         $scope.typeTenant = 0;
       break;
       default:
     }
@@ -1987,7 +2018,7 @@ $scope.newTicket = function(opt){
     switch (opt) {
       case "up": // SOLOCITUD DE ALTA
             console.log($scope._getData2AddKey());
-            //$scope.sysFunctionSend();
+        
             if ($scope.sessionidProfile==3 && $scope.typeTenant==2){
               $scope.allowUpdate=true;
             }else if ($scope.sessionidProfile!=3 && $scope.typeTenant!=0){
@@ -1997,7 +2028,7 @@ $scope.newTicket = function(opt){
       break;
       case "down": // SOLOCITUD DE BAJA
             console.log($scope._getData2DelKey());
-            //$scope.sysFunctionSend();
+
             if ($scope.sessionidProfile==3 && $scope.typeTenant==2){
               $scope.allowUpdate=true;
             }else if ($scope.sessionidProfile!=3 && $scope.typeTenant!=0){
@@ -2009,12 +2040,16 @@ $scope.newTicket = function(opt){
       break;
       case "srvs": // SOLOCITUD DE SERVICIOS
             console.log($scope._getServiceData());
-            //$scope.sysFunctionSend();
+            if ($scope.sessionidProfile==3 && $scope.typeTenant==2){
+              $scope.allowUpdate=true;
+            }else if ($scope.sessionidProfile!=3 && $scope.typeTenant!=0){
+              $scope.allowUpdate=true;
+            }
             $scope.requestService($http, $scope);
       break;
       case "other": // SOLOCITUD DE OTRA CONSULTA
             console.log($scope._getData2RequestOther());
-            //$scope.sysFunctionSend();
+
             $scope.otherRequest($http, $scope);
       break;
 
@@ -2051,8 +2086,6 @@ $scope.requestUpKey = function ($http, $scope){
           closeAllDiv ();
           cleanForms();
        inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
-        //$scope.modificarUsuario($http, $scope);
-
     },function (error, status) {
         $scope.handleErrors={Error: error, Status: status};
             if(status == 404){alert("!Informacion "+$scope.handleErrors.error+"info");}
@@ -2192,7 +2225,9 @@ $scope.requestService = function (){
   console.log($scope._getServiceData());
   $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getServiceData())
       .then(function (sucess, data) {
+          if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
           closeAllDiv ();
+          cleanForms();
           inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
           //$scope.modificarUsuario($http, $scope);
 

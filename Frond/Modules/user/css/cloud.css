@@ -11,9 +11,7 @@ a:focus { outline: 0 none; }
 .btn-group > .btn-mini, .btn-group > .btn.btn-mini, .btn.btn-mini { font-size: 11.5px; }
 
 a:hover, a:active, .OraLink:hover, .OraLinkText:hover { color:#0088CC; text-decoration: none; }
-body {
-    
-}
+
 .globalSearch input[type="text"],.globalSearch input[type="text"]:focus ,.globalSearch input[type="text"]:hover{  height:18px; border:0;
     padding-top: 1px;
     padding-left: 0;
@@ -767,8 +765,6 @@ ul.cloud-ste li.inactive:hover {
 .bs-docs-sidenav {
     width: 258px;
 }
-
-.btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover { font-size: 12px; }
 
 /*div.show-detail-con > label {
     display: inline-block;

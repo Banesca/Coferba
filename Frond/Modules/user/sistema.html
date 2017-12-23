@@ -204,7 +204,7 @@
  									<div class="col-lg-4">
 								  		<br>
 								  		<div class="col-md-4 form-actions">
-								  			<button id="lr2" ng-click="fnLostPaswd(1)" class="btn btn-default">Olviden mi clave</button>
+								  			<button id="lr2" ng-click="fnLostPaswd(1)" class="btn btn-default">Olvide mi clave</button>
 								  		</div>
 								  	</div>
 								</div>
@@ -218,7 +218,7 @@
 		    	</div>
 	    		<div class="panel-body">
 					<!-- FORM CONTAINER-->
-			    	<form name="frmForgotpwd class="form-horizontal" id="frmForgotpwd" ng-submit="sysFunctionsUser('chpwd')">
+			    	<form name="frmForgotpwd class="form-horizontal" id="frmForgotpwd" ng-submit="sysFunctionsUser('lostpwd')">
 						<fieldset>
 						<!-- Text Mail E-Mail-->
 							<div class="form-group" ng-class="{ 'has-error': frmForgotpwd.email.$dirty && frmForgotpwd.email.$error.required }">
@@ -812,6 +812,71 @@
 			</div>
 		<!-- //Modal Password Change -->
 	</div>
+	<!-- Modal Password Change -->
+		<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-md" role="dialog">
+				<div class="modal-dialog modal-md" >
+			    <div class="modal-content">
+			      	<div class="modal-body">
+			          	<div class="panel panel-default">
+			              	<div class="panel-heading">
+			                	<h3 class="panel-title">Cambio de Contrase&#241a<a data-dismiss="modal" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			            	</div>
+		            		<div class="panel-body">
+								<!-- FORM CONTAINER-->
+			    				<form class="form-horizontal" name="fChPwd" ng-submit="sysFunctionsUser('chgPwdUser')">
+									<fieldset>
+									<!-- New Password-->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
+									    <div class="col-md-6">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Contrase&#241a" class="form-control" aria-describedby="passwordHelpBlock" ng-model="newPwd1" minlength="8" maxlength="20" type="password" required autofocus />
+										    </div>
+									    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+														Debe ser de 8 a 20 caracteres alfanumericos.
+											</small>
+											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+														Debe ser de 8 a 20 caracteres alfanumericos.
+											</small>
+										</div>
+									</div>
+									<!-- New Password Check-->
+
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
+									    <div class="col-md-6">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
+										    </div>
+										    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+														Debe ser de 8 a 20 caracteres alfanumericos.
+											</small>
+											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+														Debe ser de 8 a 20 caracteres alfanumericos.
+											</small>
+										</div>
+									</div>
+
+									<!-- Actions Button -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label"></label>
+									  <div class="col-md-4">
+									    <button type="submit" class="btn btn-primary" >Cambiar</button>
+									  </div>
+									</div>
+
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- //Modal Password Change --
 	<!-- Response Inform Meessage plugin -->
 	<div inform class="inform-fixed inform-shadow inform-animate"></div>
 	<!-- //Response Inform Meessage plugin -->
