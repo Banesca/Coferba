@@ -196,8 +196,13 @@ $scope.sysLoadLStorage = function (){
       if($scope.sessionidProfile!=3 && $scope.sessionidCompany){
         $scope.officeListByCompnayID();
       }
-}
 
+}
+ /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
+if($scope.sessionidProfile!=0){
+  $scope.home = true;
+  $scope.companyN = $scope.sessionNameCompany;
+}
 /* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
 if($scope.Token){
   var nameUser = localStorage.getItem("Nombres");
@@ -208,8 +213,8 @@ if($scope.Token){
     }, 620);
   
 }
- /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
-     if($scope.sessionidProfile!=3){$scope.home = true;}
+
+/*VALIDAMOS LOS CAMPOS PASSWORD QUE SEAN IGUALES*/     
 $scope.tagPwd=0;
 $scope.fnValidatePwd = function(pwd1, pwd2){
   var paswd1=pwd1;
@@ -849,6 +854,9 @@ function BindDataToForm(value) {
         $scope.o_address= $scope.sessionNameAdress;
       break;
       case "mngdepto":
+        $scope.companyN = $scope.sessionNameCompany;
+      break;
+      case "dashboard":
         $scope.companyN = $scope.sessionNameCompany;
       break;
       case "sysParam":
@@ -2603,6 +2611,7 @@ $scope.fnShowHide = function(divId, divAction) {
       case "home":
           closeAllDiv();
         if(divAction=="open"){
+          BindDataToForm('dashboard');
           $scope.home = true;
         }else{
           closeAllDiv();
@@ -2628,35 +2637,36 @@ $scope.fnShowHide = function(divId, divAction) {
 
 /*jorge*/
 $scope.listTickt;
-$scope.dashboard={idTypeTicketKf: '', topDH: '', searchFilter:''}
+$scope.filters={idTypeTicketKf: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', idStatus: ''}
 $scope.dhboard = function(){
+/******************************
+*                             *
+*       FILTER VARIABLES      *
+*                             *
+******************************/
+$scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filters.idTypeTicketKf;
+$scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.idAddress;
+var filterSearch     = $scope.filters.searchFilter,
+    filterTop        = $scope.filters.topDH,
+    filterProfile    = $scope.sessionidProfile,
+    filterTenantKf   = $scope.sessionidProfile == 3 ? 1 : 0,
+    filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.filters.idCompany,
+    filterTypeTicket = $scope.sessionidProfile !=2 ? $scope.filters.idTypeTicketKf : 3,
+    filterAddress    = $scope.filters.idAddress,
+    filterStatus     = $scope.idStatus;
 
-
-  var top = 0 
-  if($scope.dashboard.topDH > 0){
-    top = $scope.dashboard.topDH;
-  }
-
-  var idTypeTicket = 0;
-  if ($scope.sessionidProfile!=2){
-      if($scope.dashboard.idTypeTicketKf > 0){
-      idTypeTicket = $scope.dashboard.idTypeTicketKf;
-    }
-  }else{idTypeTicket = 3};
 
   $searchFilter= 
   {
-   
-       searchFilter:$scope.dashboard.searchFilter,
-       topFilter : top, 
-       idProfileKf:localStorage.getItem("IdPerfil"),
-       idTypeTicketKf:idTypeTicket
-       
-         
-    
+       searchFilter        : filterSearch,
+       topFilter           : filterTop, 
+       idProfileKf         : filterProfile,
+       idTenantKf          : filterTenantKf,
+       idCompanyKf         : filterCompany,
+       idTypeTicketKf      : filterTypeTicket,
+       idAdress            : filterAddress,
+       idStatusTicketKf    : filterStatus
   }
-
-
   $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
          $scope.listTickt =  sucess.data.response;
