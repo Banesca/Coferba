@@ -153,62 +153,113 @@
 		</div>
 	</div>
 	<!-- USER LOGIN FORM -->
+	<!-- USER FORGOT PWD FORM -->
 	<div id="frm_loginU" ng-show="!Token"> 
 		<div class="container">
-		<br>
-          <div class="panel panel-default-login" >
-              	<div class="panel-heading">
-                	<h3 class="panel-title">LOGIN COFERBA</h3>
-            	</div>
-            		<div class="panel-body">
-						<!-- FORM CONTAINER-->
-				    	<form name="frmLogin" class="form-horizontal" id="frmLogin" ng-submit="sysFunctionsUser('login')">
-							<fieldset>
-							<!-- Text Mail E-Mail-->
-								<div class="form-group" ng-class="{ 'has-error': frmLogin.email.$dirty && frmLogin.email.$error.required }">
-									 <label for="">Email</label>  
-									   <div class="">
-									    <div class="input-group">
-									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-									  		<input name="emailLogin" placeholder="E-Mail" class="form-control" ng-model="Login.email" type="email" required autofocus />
-									    </div>
-									  </div>
-								</div>
-							<!-- Text Password Contrase&#241a-->
-								<div class="form-group" ng-class="{ 'has-error': frmLogin.password.$dirty && frmLogin.password.$error.required }">
-								  <label class="">Contrase&#241a</label>  
-								    <div class="">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								  		<input name="passwordLogin" placeholder="Contrase&#241a" class="form-control" ng-model="Login.password" type="password" required autofocus />
-								    </div>
+			<br>
+	        <div ng-show="!lostPaswd" class="panel panel-default-login" >
+	              	<div class="panel-heading">
+	                	<h3 class="panel-title">LOGIN COFERBA</h3>
+	            	</div>
+	            		<div class="panel-body">
+							<!-- FORM CONTAINER-->
+					    	<form name="frmLogin" class="form-horizontal" id="frmLogin" ng-submit="sysFunctionsUser('login')">
+								<fieldset>
+								<!-- Text Mail E-Mail-->
+									<div class="form-group" ng-class="{ 'has-error': frmLogin.email.$dirty && frmLogin.email.$error.required }">
+										 <label for="">Email</label>  
+										   <div class="">
+										    <div class="input-group">
+										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+										  		<input name="emailLogin" placeholder="E-Mail" class="form-control" ng-model="Login.email" type="email" required autofocus />
+										    </div>
+										  </div>
 									</div>
+								<!-- Text Password Contrase&#241a-->
+									<div class="form-group" ng-class="{ 'has-error': frmLogin.password.$dirty && frmLogin.password.$error.required }">
+									  <label class="">Contrase&#241a</label>  
+									    <div class="">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									  		<input name="passwordLogin" placeholder="Contrase&#241a" class="form-control" ng-model="Login.password" type="password" required autofocus />
+									    </div>
+										</div>
+									</div>
+								<!-- Actions Button -->
+									<div class="form-actions">
+										<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN </button>
+								  	</div>
+								</fieldset>
+							</form>
+								<!-- Login&Register Button--> 
+								
+								<div ng-show="!Token" class="row">
+									<hr class="style14">
+								  	<div class="col-lg-8">
+								  		<br>
+								  		<div class="col-md-4 form-actions">
+								  			<button  ng-click="fnShowHide('uRegister', 'open')" class="btn btn-default">Crear Cuenta</button>
+								  		</div>
+								  	</div>
+ 									<div class="col-lg-4">
+								  		<br>
+								  		<div class="col-md-4 form-actions">
+								  			<button id="lr2" ng-click="fnLostPaswd(1)" class="btn btn-default">Olviden mi clave</button>
+								  		</div>
+								  	</div>
 								</div>
-							<!-- Actions Button -->
-								<div class="form-actions">
-									<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN </button>
-							  	</div>
-							</fieldset>
-						</form>
-							<!-- Login&Register Button--> 
-							
-							<div ng-show="!Token" class="row">
-								<hr class="style14">
-							  	<div class="col-xs-12 col-md-8">
-							  		<br>
-							  		<a id="lr2" ng-click="fnShowHide('uRegister', 'open')" class="btn btn-default">Crear Cuenta</a>
-							  	</div>
-							  	<div class="col-xs-6 col-md-4">
-							  		<a class="lostPass"><i class="icon-cogs icon-2x"></i> Olvide mi clave </a>
-							  	</div>
+							    <!-- //Login&Register Button-->
+	 					</div> 
+			</div>
+			<!-- USER FORGOT PWD FORM -->
+	        <div ng-show="lostPaswd" class="panel panel-default-login" >
+		      	<div class="panel-heading">
+		        	<h3 class="panel-title">OLVIDE CONTRASE&#241A</h3>
+		    	</div>
+	    		<div class="panel-body">
+					<!-- FORM CONTAINER-->
+			    	<form name="frmForgotpwd class="form-horizontal" id="frmForgotpwd" ng-submit="sysFunctionsUser('chpwd')">
+						<fieldset>
+						<!-- Text Mail E-Mail-->
+							<div class="form-group" ng-class="{ 'has-error': frmForgotpwd.email.$dirty && frmForgotpwd.email.$error.required }">
+								 <label for="">Email</label>  
+								   <div class="">
+								    <div class="input-group">
+								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								  		<input name="pwdemail" placeholder="E-Mail" class="form-control" ng-model="pwd.email" type="email" required autofocus />
+								    </div>
+								  </div>
 							</div>
-						    <!-- //Login&Register Button-->
- 					</div> 
+						<!-- Actions Button -->
+							<div class="form-actions">
+								<button id="btnRequest" type="submit" class="btn-primary-system" >ENVIAR </button>
+						  	</div>
+						</fieldset>
+					</form>
+						<!-- Login&Register Button--> 
+						
+						<div ng-show="!Token" class="row">
+							<hr class="style14">
+						  	<div class="col-lg-8">
+						  		<br>
+						  		<div class="col-md-4 form-actions">
+						  			<button  ng-click="fnShowHide('uRegister', 'open')" class="btn btn-default">Crear Cuenta</button>
+						  		</div>
+						  	</div>
+								<div class="col-lg-4">
+						  			<br>
+						  			<div class="pull-right col-md-6 form-actions">
+						  			<button id="lr2" ng-click="fnLostPaswd(0)" class="btn btn-default">LOGIN</button>
+						  			</div>
+						  		</div>
+						</div>
+					    <!-- //Login&Register Button-->
+					</div> 
 			</div>
 		</div>
 	</div>    
 
-    <!-- USER REGISTER FORM -->
+    <!-- USER FORGOT PWD FORM -->
 	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 50px;" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">

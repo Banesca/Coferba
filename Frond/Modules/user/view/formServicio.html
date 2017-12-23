@@ -61,7 +61,7 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="localPhoneAdmin" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="$parent.localPhoneAdmin" type="text" required autofocus />
+							  		<input name="localPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="$parent.localPhoneAdmin" type="text" required autofocus />
 						    </div>
 					  </div>
 					</div>
@@ -71,7 +71,7 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-						  		<input name="movilPhoneAdmin" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneAdmin" type="text" required autofocus />
+						  		<input name="movilPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAdmin" type="text" required autofocus />
 						    </div>
 					  </div>
 					</div>

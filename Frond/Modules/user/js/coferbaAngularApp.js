@@ -192,10 +192,17 @@ $scope.sysLoadLStorage = function (){
      $scope.sessionidTenantUser = localStorage.getItem("idTenantUser");
      //$scope.sysParameterVar     = localStorage.getItem("sysParameters");
      //if($scope.sessionidProfile==3){$scope.getAllAddressByIdTenant();}
-     if($scope.sessionidProfile!=3 && $scope.sessionidCompany){
-      $scope.officeListByCompnayID();
-     }
+     /*VALIDAMOS QUE EL USUARIO SEA DIFERENTE DE USUARIO PROPIETARIO Y QUE ESTE ASIGNADO A UNA COMPAÑIA Y CARGAMOS LA LISTA DE COMPAÑIAS*/
+      if($scope.sessionidProfile!=3 && $scope.sessionidCompany){
+        $scope.officeListByCompnayID();
+      }
+}
 
+/* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
+if($scope.Token){
+  inform.add('Bienvenido Sr/a '+ $scope.sessionNames,{
+    ttl:3000, type: 'success'
+  });
 }
  /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
      if($scope.sessionidProfile!=3){$scope.home = true;}
@@ -1006,6 +1013,9 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
     case "delete":                               //Delete User Module
         $scope.deleteUser(isVarUser);
     break;
+    case "chpwd":                               //Delete User Module
+        $scope.chgPwdUser($http, $scope);
+    break;
     case "chgPwdUser":                          //Change PWD User Module
       var isChPwd = 1
       if ($scope.tagPwd==1){
@@ -1039,9 +1049,8 @@ function sysLoginUser($http,$scope){
              
            }else{
                $scope.rsJSON=data.data.response;
-                    inform.add('Bienvenido Sr/a '+ $scope.rsJSON.fullNameUser,{
-                      ttl:3000, type: 'success'
-                    });
+               //alert($scope.rsJSON.resetPasword);
+                    
                     console.log(data.data.response);
                    localStorage.setItem("idUser", $scope.rsJSON.idUser);
                    localStorage.setItem("Nombres", $scope.rsJSON.fullNameUser);
@@ -1255,6 +1264,7 @@ $scope.fnLostPaswd=function(value){
   }else { $scope.lostPaswd=false;}
 }
 $scope.chgPwdUser = function ($http, $scope){
+  console.log($scope.requestNewPwd());
   $http.post("http://localhost/Coferba/Back/index.php/User/updatePass", $scope.requestNewPwd(),setHeaderRequest())
       .then(function (sucess, data) {
           inform.add('Se ha restablecido su clave por favor verifique su correo.',{

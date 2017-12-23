@@ -79,7 +79,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-										  		<input name="localPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="localPhoneAtt" type="text" required autofocus />
+										  		<input name="localPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="localPhoneAtt" type="text" required autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -89,7 +89,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-									  		<input name="movilPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="movilPhoneAtt" type="text" required autofocus />
+									  		<input name="movilPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAtt" type="text" required autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -150,7 +150,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="localPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2"  placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="tenant.localPhoneTenant" type="text" required autofocus />
+								  		<input name="localPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2"  placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.localPhoneTenant" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
@@ -160,7 +160,7 @@
 							    <div class="col-md-4">
 								    <div class="input-group">
 								        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-								  		<input name="movilPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
+								  		<input name="movilPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
 								    </div>
 							  </div>
 							</div>
