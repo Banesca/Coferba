@@ -231,16 +231,26 @@ class Ticket_model extends CI_Model
 			$this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');                        
             $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
-            $this->db->where("tb_tickets.idStatusTicketKf !=", -1);
+            //$this->db->where("tb_tickets.idStatusTicketKf !=", -1);
             
+            if(@$searchFilter['idCompanyKf'] > 0)
+            {
+                $this->db->where("tb_tickets.idCompanyKf =", @$searchFilter['idCompanyKf']);
+                $this->db->where("tb_tickets.idBranchKf >", 0);
+            }
+
             if(@$searchFilter['idTypeTicketKf'] > 0)
             {
                 $this->db->where("tb_tickets.idTypeTicketKf =", @$searchFilter['idTypeTicketKf']);
             }
 
+            
+
             if(@$searchFilter['idStatusTicketKf'] > 0)
             {
                 $this->db->where("tb_tickets.idStatusTicketKf =", @$searchFilter['idStatusTicketKf']);
+            }else{
+                $this->db->where("tb_tickets.idStatusTicketKf !=", -1);
             }
 
             if(@$searchFilter['idAdressKf'] > 0)
