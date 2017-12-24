@@ -199,13 +199,11 @@ $scope.sysLoadLStorage = function (){
 
 }
  /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
-if($scope.sessionidProfile!=0){
-  $scope.home = true;
-  $scope.companyN = $scope.sessionNameCompany;
-}
 /* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
 if($scope.Token){
   var nameUser = localStorage.getItem("Nombres");
+  $scope.home = true;
+  $scope.companyN = localStorage.getItem("nameCompany");
   $timeout(function() {
       inform.add('Bienvenido Sr/a '+ nameUser,{
     ttl:3000, type: 'success'
@@ -1102,6 +1100,7 @@ function sysLoginUser($http,$scope){
         
   };
 /****** Get Data from the Login Form ****/
+$scope.Login = {email: '', password: ''};
 $scope._getLoginData = function () {
   var dataUser =
           {
@@ -2048,11 +2047,7 @@ $scope.newTicket = function(opt){
       break;
       case "srvs": // SOLOCITUD DE SERVICIOS
             console.log($scope._getServiceData());
-            if ($scope.sessionidProfile==3 && $scope.typeTenant==2){
-              $scope.allowUpdate=true;
-            }else if ($scope.sessionidProfile!=3 && $scope.typeTenant!=0){
-              $scope.allowUpdate=true;
-            }
+
             $scope.requestService($http, $scope);
       break;
       case "other": // SOLOCITUD DE OTRA CONSULTA
@@ -2246,7 +2241,7 @@ $scope.requestService = function (){
            
     });
 };
-$scope.select={idTypeServiceKf: '', idAddressKf: ''};
+$scope.select={idTypeServiceKf: '', idAddressKf: '', idCompanyKf: ''};
 $scope.txt={sruSv: '', detailSv: '' };
 $scope._getServiceData={};
 $scope._getServiceData = function () {
@@ -2256,7 +2251,7 @@ $scope._getServiceData = function () {
   var userIdAConsorcio = 0; //ADMIN. CONSORCIO
   if($scope.sessionidProfile==1){
     idUserAdmin = $scope.sessionIdUser;
-    idCompany   = $scope.idCompanyKf;
+    idCompany   = $scope.select.idCompanyKf;
   }else if($scope.sessionidProfile==2){
     idCompanyUser = $scope.sessionIdUser;
     idCompany     = $scope.sessionidCompany;
@@ -2648,9 +2643,9 @@ $scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filte
 $scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.idAddress;
 var filterSearch     = $scope.filters.searchFilter,
     filterTop        = $scope.filters.topDH,
-    filterProfile    = $scope.sessionidProfile,
+    filterProfile    = $scope.sessionidUser,
     filterTenantKf   = $scope.sessionidProfile == 3 ? 1 : 0,
-    filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.filters.idCompany,
+    filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf,
     filterTypeTicket = $scope.sessionidProfile !=2 ? $scope.filters.idTypeTicketKf : 3,
     filterAddress    = $scope.filters.idAddress,
     filterStatus     = $scope.idStatus;

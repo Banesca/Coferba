@@ -14,14 +14,14 @@
 					<div class="form-group">
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Empresa</label>
 					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Empresa / Administracion</label>
-					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Consorcio</label>
+					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Administracion</label>
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
 						  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
 
 						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-								    	<option value="">Seleccione una Empresa o Consorcio</option>
+								    	<option value="">Seleccione una Empresa o Administracion</option>
 							    </select>
 						    </div>
 					  	</div>
@@ -30,7 +30,7 @@
 					      
 					<div class="form-group" ng-show="sessionidProfile!=3">
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Direccion Sucursal</label>
-					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion Sucursal o Administracion</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion Sucursal o Consorcio</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Direccion de Consorcio</label>   
 					    <div class="col-md-4">
 						    <div class="input-group">

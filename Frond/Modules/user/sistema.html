@@ -154,7 +154,7 @@
 	</div>
 	<!-- USER LOGIN FORM -->
 	<!-- USER FORGOT PWD FORM -->
-	<div id="frm_loginU" ng-show="!Token"> 
+	<div id="frm_loginU" ng-if="!Token"> 
 		<div class="container">
 			<br>
 	        <div ng-show="!lostPaswd" class="panel panel-default-login" >
@@ -212,7 +212,7 @@
 	 					</div> 
 			</div>
 			<!-- USER FORGOT PWD FORM -->
-	        <div ng-show="lostPaswd" class="panel panel-default-login" >
+	        <div ng-if="lostPaswd" class="panel panel-default-login" >
 		      	<div class="panel-heading">
 		        	<h3 class="panel-title">OLVIDE CONTRASE&#241A</h3>
 		    	</div>
@@ -431,16 +431,16 @@
 
 	<div class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
-			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
-			<div ng-show="userManage" ng-include="'view/formManageUser.html'"></div>
-			<div ng-show="rudepto" ng-include="'view/frmDepartment.html'"></div>
-			<div ng-show="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
-			<div ng-show="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
-			<div ng-show="ruservice" ng-include="'view/formServicio.html'"></div>
-			<div ng-show="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
-			<div ng-show="rusysconfig" ng-include="'view/formConfig.html'"></div>
-			<div ng-show="rucontact" ng-include="'view/formContact.html'"></div>
-			<div ng-show="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
+			<div ng-if="ruprofile" ng-include="'view/formUser.html'"></div>
+			<div ng-if="userManage" ng-include="'view/formManageUser.html'"></div>
+			<div ng-if="rudepto" ng-include="'view/frmDepartment.html'"></div>
+			<div ng-if="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
+			<div ng-if="rukeydown" ng-include="'view/formBajaLlave.html'"></div>
+			<div ng-if="ruservice" ng-include="'view/formServicio.html'"></div>
+			<div ng-if="ruother" ng-include="'view/formOtrasConsultas.html'"></div>
+			<div ng-if="rusysconfig" ng-include="'view/formConfig.html'"></div>
+			<div ng-if="rucontact" ng-include="'view/formContact.html'"></div>
+			<div ng-if="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 		<!-- LIST TENANT MODAL -->
 			<div id="ModalListTenant" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
