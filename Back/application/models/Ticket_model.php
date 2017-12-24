@@ -253,9 +253,9 @@ class Ticket_model extends CI_Model
                 $this->db->where("tb_tickets.idStatusTicketKf !=", -1);
             }
 
-            if(@$searchFilter['idAdressKf'] > 0)
+            if(@$searchFilter['idAdress'] > 0)
             {
-                $this->db->where("tb_tickets.idAdressKf =", @$searchFilter['idAdressKf']);
+                $this->db->where("tb_tickets.idAdressKf =", @$searchFilter['idAdress']);
             }
             
 
