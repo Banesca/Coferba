@@ -54,6 +54,7 @@ class Direccion_model extends CI_Model
         $this->db->select("*")->from("tb_addres");
         $this->db->join('tb_department', 'tb_department.idAdressKf = tb_addres.idAdress', 'inner');
         $this->db->group_by('tb_addres.idAdress');
+        
         if($idStatus == 1){ // si le mandas 1 te retorna los APROBADOS 
                 $this->db->where("tb_department.isAprobatedAdmin =", 1);
             }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 

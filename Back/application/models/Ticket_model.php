@@ -198,20 +198,76 @@ class Ticket_model extends CI_Model
         $quuery = null;
         $rs = null;
 
+
+        $idTenant = 0;
+
+        if(!is_null($searchFilter['idTenant']))
+         {
+            $idTenant = $searchFilter['idTenant'];
+         }else{
+            $idTenant = $id;
+         }
+
+
+
+
+
+
+
         // SI RECIBIMOS EL ID DE EL USUARIO //
-        if (!is_null($id)) 
+        if ($idTenant > 0) 
         {
 
             $this->db->select("*")->from("tb_tickets");
             $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
-            $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeKf', 'left');
-			$this->db->where("tb_tenant.idStatusTicketKf !=", -1);
-            $quuery = $this->db->where("tb_tenant.idTenant = ", $id)->get();
+             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
+            $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
+            $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');      
+
+            if(@$searchFilter['idAdress'] > 0)
+            {
+                $this->db->where("tb_addres.idAdress =", @$searchFilter['idAdress']);
+            }
+
+              if(@$searchFilter['idTypeTicketKf'] > 0)
+            {
+                $this->db->where("tb_tickets.idTypeTicketKf =", @$searchFilter['idTypeTicketKf']);
+            }
 
 
-            if ($quuery->num_rows() === 1) {
-                $rs =  $quuery->row_array();
-                return $rs;
+
+              /* Busqueda por filtro */
+            if (!is_null($searchFilter['searchFilter']) &&  strlen($searchFilter['searchFilter']) > 0) 
+            {
+                
+
+                $this->db->like('tb_tenant.fullNameTenant', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_tickets.codTicket', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_addres.nameAdress', $searchFilter['searchFilter']);          
+               
+                
+            }
+
+
+
+             if(@$searchFilter['idProfileKf'] == 3) // prpietario 
+                {
+                        $this->db->where("(tb_tenant.idTenant = ".$idTenant." or tb_tickets.idOWnerKf =".@$searchFilter['idOWnerKf'].")",null,false);
+                        $quuery = $this->db->get();
+                        
+                }else{
+                     $quuery = $this->db->where("tb_tenant.idTenant = ", $idTenant)->get();
+                }
+
+
+           
+
+
+          if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
             }
         } 
         else
@@ -232,9 +288,10 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');                        
             $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
-            //$this->db->where("tb_tickets.idStatusTicketKf !=", -1);
             
-            if(@$searchFilter['idCompanyKf'] > 0)
+
+
+            if(@$searchFilter['idCompanyKf'] > 0 && @$searchFilter['idProfileKf'] != 4)
             {
                 $this->db->where("tb_tickets.idCompanyKf =", @$searchFilter['idCompanyKf']);
                 $this->db->where("tb_tickets.idBranchKf >", 0);
@@ -258,26 +315,26 @@ class Ticket_model extends CI_Model
             {
                 $this->db->where("tb_addres.idAdress =", @$searchFilter['idAdress']);
             }
+
+
+           
             
 
             /* verificamos el id de perfil */
             if(@$searchFilter['idProfileKf'] > 0)
             {
 
-                if(@$searchFilter['idProfileKf'] == 3) // prpietario 
-                {
-                    $this->db->where("tb_department.idTenantKf =", @$searchFilter['idTenantKf']); 
-                }
+               
 
                 if(@$searchFilter['idProfileKf'] == 4 ) // admin consorcio 
                 {
-                    $this->db->where("tb_department.idAdressKf =  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
+                    $this->db->where("tb_branch.idAdressKf  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
                     
                 }
 
                 if( @$searchFilter['idProfileKf'] == 2) // empresa
                 {
-                    $this->db->where("tb_department.idAdressKf =  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
+                    $this->db->where("tb_branch.idAdressKf  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
                     
                 }
             }
@@ -293,18 +350,7 @@ class Ticket_model extends CI_Model
                 $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tickets.codTicket', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_addres.nameAdress', $searchFilter['searchFilter']);
-
-
-/*				if(@$searchFilter['idTypeKf'] > 0)
-				{
-					 $this->db->or_where('tb_tenant.idTypeKf', $searchFilter['idTypeKf']);
-				} 
-				
-				if(@$searchFilter['idDepartmentKf'] > 0)
-				{
-					 $this->db->or_where('tb_tenant.idDepartmentKf', $searchFilter['idDepartmentKf']);
-				}   */            
+                $this->db->or_like('tb_addres.nameAdress', $searchFilter['searchFilter']);          
                
                 
             }

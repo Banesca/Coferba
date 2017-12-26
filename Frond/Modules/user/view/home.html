@@ -26,12 +26,12 @@
                             <label ng-show="sessionidProfile==2" style="padding-left: 15px;">Empresa</label>
                           <label ng-show="sessionidProfile==1" style="padding-left: 15px;">Empresa o Administracion</label>
                           <label ng-show="sessionidProfile==4" style="padding-left: 15px;">Administracion</label>   
-                            <div class="col-xs-12">
+                            <div class="col-xs-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="icon-suitcase"></i></span>
                                   <input ng-show="sessionidProfile!=3 && sessionidProfile!=1" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
 
-                                  <select ng-show="sessionidProfile==1" name="idCompany" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+                                  <select ng-show="sessionidProfile==1" name="idCompany" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); dhboard();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
                                       <option value="">Todos</option>
                                     </select>
                                 </div>
@@ -42,7 +42,7 @@
                           <label ng-show="sessionidProfile==2" style="padding-left: 15px;">Sucursal</label>
                           <label ng-show="sessionidProfile==1" style="padding-left: 15px;">Sucursal o Consorcio</label>
                           <label ng-show="sessionidProfile==4" style="padding-left: 15px;">Consorcio</label>   
-                            <div class="col-xs-12 selectContainer">
+                            <div class="col-xs-10 selectContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
                                     <select name="idAddress" class="form-control" ng-change="dhboard()"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-model="filters.idAddress" autofocus >
@@ -54,19 +54,19 @@
                         <!-- Address for Onwers-->      
                         <div class="form-group col-lg-2" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
                             <label style="padding-left: 15px;">Consorcio</label>
-                                <div class="col-xs-12 selectContainer">
+                                <div class="col-xs-10 selectContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                        <select name="idAddres" class="form-control" ng-change="dhboard()"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-model="filters.idAddres" autofocus >
+                                        <select name="idAddres" class="form-control" ng-change="dhboard()"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-model="filters.idAddress" autofocus >
                                             <option value="">Seleccione un consorcio</option>
                                         </select>
                                     </div>
                                 </div>
                         </div>
                         <!-- Filter Top -->
-                        <div ng-if="sessionidProfile" class="form-group col-lg-2">
+                        <div ng-if="sessionidProfile" class="form-group col-lg-1">
                           <label style="padding-left: 15px;">Top</label>
-                            <div class="col-xs-12 selectContainer">
+                            <div class="col-xs-10 selectContainer">
                               <div class="input-group">
                                   <span class="input-group-addon"><i class="glyphicon glyphicon-align-justify"></i></span>
                                   <select class="form-control" ng-change="dhboard()" ng-model="filters.topDH">
@@ -83,7 +83,7 @@
                         <!-- Filter Type of Ticket for Company User-->
                         <div ng-if="sessionidProfile==2" class="form-group col-lg-2">
                           <label style="padding-left: 15px;">Tipo de Ticket</label>
-                            <div class="col-xs-12 selectContainer">
+                            <div class="col-xs-10 selectContainer">
                               <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                                     <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  | filter: {idTypeTicket:3}" ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
@@ -95,7 +95,7 @@
                         <!-- Filter Type of Ticket for Onwer User-->
                         <div ng-if="sessionidProfile==3" class="form-group col-lg-2">
                           <label style="padding-left: 15px;">Tipo de Ticket</label>
-                            <div class="col-xs-12 selectContainer">
+                            <div class="col-xs-10 selectContainer">
                               <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                                     <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
@@ -107,7 +107,7 @@
                         <!-- Filter Type of Ticket for Onwer User-->
                         <div ng-if="sessionidProfile!=2 && sessionidProfile!=3" class="form-group col-lg-2">
                           <label style="padding-left: 15px;">Tipo de Ticket</label>
-                            <div class="col-xs-12 selectContainer">
+                            <div class="col-xs-10 selectContainer">
                               <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                                     <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
@@ -116,17 +116,28 @@
                               </div>
                             </div>
                         </div>
+                        <!-- Filter Type of Status-->
+                        <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
+                          <label style="padding-left: 15px;">Tipo de Estatus</label>
+                            <div class="col-xs-10 selectContainer">
+                              <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                    <select name="idStatusKf" class="form-control" ng-change="dhboard()"  ng-options="item.idStatus as item.statusName for item in listStatusTicket " ng-model="filters.idStatusKf" >
+                                      <option value="">Todos</option>
+                                    </select>
+                              </div>
+                            </div>
+                        </div>
                         <div class="form-group col-lg-2">
                         <label style="padding-left: 15px;">Buscar</label>
-                          <div class="col-xs-12">
+                          <div class="col-xs-10">
                             <div class="input-group">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-search "></i></span>
                               <input type="text" class="form-control" ng-blur="dhboard()" ng-model="filters.searchFilter" placeholder="Buscar...">
                             </div>
                           </div>
                         </div>
-                        <div class="form-group col-lg-2">
-                            <div class="col-xs-12"><br>
+                        <div class="form-group col-lg-1">
+                            <div class="col-xs-10"><br>
                                 <div class="btn-group">
                                     <button type="button" ng-click="dhboard()" class="btn btn-lg btn-info">
                                         <i title="Agregar Inquilino" class="glyphicon glyphicon-refresh"></i>
@@ -174,14 +185,15 @@
                                 <label>Creado {{tk.dateCratedTicket}}</label> - 
                                 <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
                                 <label>Cliente:{{tk.fullNameTenant}}</label> - 
-                                <label>{{tk.phoneNumberTenant}}</label> 
+                                <label ng-if="!tk.phoneNumberTenant">No registrado</label> 
+                                <label ng-if="tk.phoneNumberTenant">{{tk.phoneNumberTenant}}</label> 
                             </div>
                         
                             <div class="col-lg-2">
                                     <!-- Split button -->
                                 <div class="btn-group">
-                                <button type="button" class="btn btn-lg btn-success">{{tk.statusName}}</button>
-                                <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-success">{{tk.statusName}}</button>
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>

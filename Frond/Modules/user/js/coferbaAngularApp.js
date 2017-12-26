@@ -7,6 +7,7 @@ var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception",
 
 app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
 /**************************************************************/
+$scope.serverHost=$scope.serverHost+"";
 /**************************************************
 *                                                 *
 *          COLLAPSE / EXPAND TABLE ROWS           *
@@ -199,25 +200,6 @@ $scope.sysLoadLStorage = function (){
 
 }
 
-$scope.checkBefore2Load = function(){
-  $scope.home = true;
-  if ($scope.sessionidProfile==3){
-            $scope.getAllAddressByIdTenant();
-  }
-  $scope.companyN = localStorage.getItem("nameCompany");
-}
- /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
-/* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
-if($scope.Token){
-  var nameUser = localStorage.getItem("Nombres");
-  $scope.checkBefore2Load();
-  $timeout(function() {
-      inform.add('Bienvenido Sr/a '+ nameUser,{
-    ttl:3000, type: 'success'
-  });
-    }, 620);
-  
-}
 /*VALIDAMOS LOS CAMPOS PASSWORD QUE SEAN IGUALES*/     
 $scope.tagPwd=0;
 $scope.fnValidatePwd = function(pwd1, pwd2){
@@ -273,7 +255,7 @@ $scope.listParameter = [];
 $scope.getParameter = function(){
    $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/User/mailsmtp"
+      url : $scope.serverHost+"Coferba/Back/index.php/User/mailsmtp"
     }).then(function mySuccess(response) {
         $scope.listParameter   = response.data;
     }, function myError(response) {
@@ -312,7 +294,7 @@ $scope.officeListByCompnayID = function(){
 
    $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/DIreccion/companyByid/"+idCompanytmp
+      url : $scope.serverHost+"Coferba/Back/index.php/DIreccion/companyByid/"+idCompanytmp
     }).then(function mySuccess(response) {
         $scope.listOffice   = response.data
         $scope.companyFound=true;
@@ -329,7 +311,7 @@ $scope.officeListByCompnayID = function(){
 $scope.CallFilterFormU = function(){
    $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/User/filterForm"
+      url : $scope.serverHost+"Coferba/Back/index.php/User/filterForm"
     }).then(function mySuccess(response) {
         $scope.listProfile   = response.data.profile;
         $scope.lisTypeTenant = response.data.type;
@@ -346,13 +328,14 @@ $scope.CallFilterFormU = function(){
 $scope.CallFilterFormT = function(){
    $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Ticket/filter"
+      url : $scope.serverHost+"Coferba/Back/index.php/Ticket/filter"
     }).then(function mySuccess(response) {
         $scope.listTypeDelivery = response.data.typedelivery;
         $scope.listTypeLost     = response.data.reason_disabled_item;
         $scope.listTypeQuery    = response.data.typeouther;
         $scope.listUser         = response.data.user;
         $scope.listTypeTicket   = response.data.typeticket;
+        $scope.listStatusTicket = response.data.statusticket;
       }, function myError(response) {
     });
 }
@@ -365,7 +348,7 @@ $scope.CallFilterFormT = function(){
 $scope.getAllAddress = function (){
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Direccion"
+      url : $scope.serverHost+"Coferba/Back/index.php/Direccion"
     }).then(function mySuccess(response){
         $scope.ListAddress = response.data;
     }, function myError (response){
@@ -384,7 +367,7 @@ $scope.addrNoFound=0;
 $scope.getAllAddressByIdTenant = function (){
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Direccion/byidTenant/"+$scope.sessionidTenantUser+"/"+1
+      url : $scope.serverHost+"Coferba/Back/index.php/Direccion/byidTenant/"+$scope.sessionidTenantUser+"/"+1
     }).then(function mySuccess(response){
         $scope.ListTenantAddress = response.data;
         $scope.addrNoFound = 0;
@@ -409,7 +392,7 @@ $scope.getAllAddressByIdTenant = function (){
     var idAddressAttKf=$scope.select.idAddressAtt;
      $http({
         method : "GET",
-        url : "http://localhost/Coferba/Back/index.php/User/attendantByIdDirecction/"+idAddressAttKf
+        url : $scope.serverHost+"Coferba/Back/index.php/User/attendantByIdDirecction/"+idAddressAttKf
       }).then(function mySuccess(response) {
             $scope.listAttendant = response.data;
             $scope.attendantFound=true;
@@ -550,9 +533,9 @@ $scope.listUserDepto = function(value){
   var urlT="";
   idTenantTmp = $scope.sessionidProfile==3 ? $scope.sessionidTenantUser : $scope.idTenantKf;
    if ($scope.sessionidProfile==3){
-        urlT="http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'-1';
+        urlT=$scope.serverHost+"Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'-1';
       }else{
-        urlT="http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+        urlT=$scope.serverHost+"Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
       }
 
   $http({
@@ -587,7 +570,7 @@ $scope.listUserDepto = function(value){
 $scope.fnAssignDepto = function(item1, item2){
   var fnAction= $scope.sessionidProfile==3 ? 0 : item2;
   console.log($scope._getData2AssignDepto(item1));
-  $http.post("http://localhost/Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(item1),setHeaderRequest())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(item1),setHeaderRequest())
         .then(function(success, data) {
             if ($scope.sessionidProfile==3 && fnAction==0){
                 inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
@@ -632,7 +615,7 @@ $scope.approveDepto = function (item1) {
   var idDeptoKf = !item1 ? $scope.select.idDepartmentKf : item1;
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Department/aprobated/"+idDeptoKf
+      url : $scope.serverHost+"Coferba/Back/index.php/Department/aprobated/"+idDeptoKf
     }).then(function mySuccess(response) {
         if($scope.manageDepto==1){
           $scope.listUserDepto(1);
@@ -652,7 +635,7 @@ $scope.disallowDepto = function (item1) {
   var idDeptoKf = !item1 ? $scope.select.idDepartmentKf : item1;
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Department/desaprobated/"+idDeptoKf
+      url : $scope.serverHost+"Coferba/Back/index.php/Department/desaprobated/"+idDeptoKf
     }).then(function mySuccess(response) {
             if($scope.manageDepto==1){
               $scope.listUserDepto(1); 
@@ -672,7 +655,7 @@ $scope.fn2unsubsDepto = function (item1, item2) {
   var rsRequest = item2;
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Department/requesLowByProp/"+idDeptoKf+'/'+rsRequest
+      url : $scope.serverHost+"Coferba/Back/index.php/Department/requesLowByProp/"+idDeptoKf+'/'+rsRequest
     }).then(function mySuccess(response) {
         if($scope.manageDepto==1){
           $scope.listUserDepto(1);
@@ -698,12 +681,12 @@ $scope.getDeparment = function (value){
    var urlT="";
   $scope.manageDepto = value; //Variable usada en la gestion de departamento
       if ($scope.sessionidProfile>0 && $scope.manageDepto==1){
-         urlT="http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'0';
+         urlT=$scope.serverHost+"Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'0';
       }
       if($scope.sessionidProfile!=3 && $scope.manageDepto==0){
-        urlT="http://localhost/Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+        urlT=$scope.serverHost+"Coferba/Back/index.php/Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
       }if ($scope.sessionidProfile==3 && $scope.sessionidTenantUser!=0 && $scope.manageDepto==0){
-        urlT="http://localhost/Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser+"/"+'1';
+        urlT=$scope.serverHost+"Coferba/Back/index.php/Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser+"/"+'1';
       }
       //console.log(urlT);
   $http({
@@ -743,8 +726,8 @@ $scope.getDeparment = function (value){
 $scope.lisTenantByType = function(v1, v2){
   var idDepto   = v1;
   var typeTenant= v2;
-  var url1="http://localhost/coferba/Back/index.php/tenant/allByIdDepartament/"+idDepto;
-  var url2="http://localhost/Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+idDepto+"/"+typeTenant;
+  var url1=$scope.serverHost+"coferba/Back/index.php/tenant/allByIdDepartament/"+idDepto;
+  var url2=$scope.serverHost+"Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+idDepto+"/"+typeTenant;
   var urlT=$scope.sessionidProfile==3 ? url2 : url1;
      $http({
         method : "GET",
@@ -789,7 +772,7 @@ $scope.lisTenantByType = function(v1, v2){
 $scope.searchDptoById = function(){
      $http({
         method : "GET",
-        url : "http://localhost/Coferba/Back/index.php/Department/find/"+$scope.idDeptoKf
+        url : $scope.serverHost+"Coferba/Back/index.php/Department/find/"+$scope.idDeptoKf
       }).then(function mySuccess(response) {
         if (!response.data){
              inform.add('El Departamento no presenta inquilinos registrados.',{
@@ -1053,7 +1036,7 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
 **************************************************/
 $scope.tmp={fullNameUser:'',emailUser : '', phoneNumberUser : '', phoneLocalNumberUser : '', idProfileKf : '', idUser : ''}
 function sysLoginUser($http,$scope){  
-    $http.post("http://localhost/Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
+    $http.post($scope.serverHost+"Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
              inform.add('El Correo: '+ $scope.Login.email + ', no se encuentra registrado o ha colocado una clave errada verifique sus datos.',{
@@ -1123,9 +1106,10 @@ $scope._getLoginData = function () {
 *                                                 *
 **************************************************/
 $scope.addUser = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/User/", $scope._setuser())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/User/", $scope._setuser())
       .then(function (sucess, data) {
-        if ($scope.idProfileKf==3){
+        alert($scope.idProfileTmp)
+        if ($scope.idProfileTmp==3){
             $scope.sysFunctionsTenant('search'); //CHECK THE TENANT TABLE IF THERE IS ALREADY REGISTERED
         }
         inform.add('Usuario registrado con exito. ',{
@@ -1140,8 +1124,9 @@ $scope.addUser = function ($http, $scope){
            
     });
 };
+$scope.idProfileTmp = "";
 $scope._setuser = function () {
-  var idProfileTmp=!$scope.Token ? 3 : $scope.idProfileKf
+   $scope.idProfileTmp=!$scope.Token ? 3 : $scope.idProfileKf
   var user =
           {
                 user:{
@@ -1150,7 +1135,7 @@ $scope._setuser = function () {
                             phoneNumberUser     : $scope.phoneNumberUser,
                             phoneLocalNumberUser: $scope.phonelocalNumberUser,
                             passwordUser        : $scope.passwordUser,
-                            idProfileKf         : idProfileTmp,
+                            idProfileKf         : $scope.idProfileTmp,
                             idCompanyKf         : $scope.idCompanyKf
                       }
           };
@@ -1166,7 +1151,7 @@ $scope._setuser = function () {
 $scope.modificarUsuario = function ($http, $scope, itemOp){
   $scope.isPwdCh=itemOp;
   console.log($scope._getData2Update($scope.isPwdCh));
-  $http.post("http://localhost/Coferba/Back/index.php/User/update", $scope._getData2Update($scope.isPwdCh))
+  $http.post($scope.serverHost+"Coferba/Back/index.php/User/update", $scope._getData2Update($scope.isPwdCh))
       .then(function (sucess, data) {
          if ($scope.isPwdCh==0){
           inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
@@ -1249,7 +1234,7 @@ $scope._getData2Update = function (value) {
 $scope.disabledUser = function (itemId) {
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/User/inactive/"+itemId
+      url : $scope.serverHost+"Coferba/Back/index.php/User/inactive/"+itemId
     }).then(function mySuccess(response) {
 
         $scope.CallFilterFormT();
@@ -1265,7 +1250,7 @@ $scope.disabledUser = function (itemId) {
 $scope.enabledUser = function (itemId) {
 $http({
     method : "GET",
-    url : "http://localhost/Coferba/Back/index.php/User/active/"+itemId
+    url : $scope.serverHost+"Coferba/Back/index.php/User/active/"+itemId
   }).then(function mySuccess(response) {
       $scope.CallFilterFormT();
     }, function myError(response) {
@@ -1288,7 +1273,7 @@ $scope.updateUser = function (itemId) {
 $scope.deleteUser = function (itemId) {
 $http({
     method : "GET",
-    url : "http://localhost/Coferba/Back/index.php/User/delete/"+itemId
+    url : $scope.serverHost+"Coferba/Back/index.php/User/delete/"+itemId
   }).then(function mySuccess(response) {
       $scope.CallFilterFormT();
     }, function myError(response) {
@@ -1308,7 +1293,7 @@ $scope.fnLostPaswd=function(value){
 }
 $scope.chgPwdUser = function ($http, $scope){
   console.log($scope.requestNewPwd());
-  $http.post("http://localhost/Coferba/Back/index.php/User/updatePass", $scope.requestNewPwd(),setHeaderRequest())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/User/updatePass", $scope.requestNewPwd(),setHeaderRequest())
       .then(function (sucess, data) {
           inform.add('Se ha restablecido su clave por favor verifique su correo.',{
                     ttl:3000, type: 'success'
@@ -1481,7 +1466,7 @@ $scope.sysFunctionsTenant = function(value, obj){  //Funciones add, search, upda
 $scope.searchTenantByMail = function (){
   $http({
         method : "GET",
-        url : "http://localhost/Coferba/Back/index.php/Tenant/findByEmail/"+mail2Search
+        url : $scope.serverHost+"Coferba/Back/index.php/Tenant/findByEmail/"+mail2Search
       }).then(function mySuccess(response) {
             $scope.rsTenantData = response.data;
             console.log("<<<INQUILINO ENCONTRADO>>>");
@@ -1521,7 +1506,7 @@ $scope.searchTenantByMail = function (){
 *                                                 *
 **************************************************/
 $scope.addTenant = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/Tenant", getTenantData2Add(),setHeaderRequest())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Tenant", getTenantData2Add(),setHeaderRequest())
       .then(function (sucess, data) {
         console.log(getTenantData2Add());
         console.log("===>INQUILINO REGISTRADO SATISFACTORIAMENTE");
@@ -1542,7 +1527,7 @@ $scope.addTenant = function ($http, $scope){
 };
 function getTenantData2Add () {
 var idDeptoTmp;
-if(!$scope.typeTenant && $scope.idProfileKf == 3){$scope.typeTenant = 1;}
+if(!$scope.typeTenant && $scope.idProfileTmp == 3){$scope.typeTenant = 1;}
 if($scope.typeTenant && $scope.sessionidProfile == 3){$scope.typeTenant=2;}
 if($scope.typeTenant==1 && $scope.sessionidProfile != 3){
   $scope.typeTenant=1; 
@@ -1591,7 +1576,7 @@ if($scope.IsTenant==false){$scope.idDepartmentKf=null;}
 **************************************************/
 $scope.editTenant = function ($http, $scope){
   console.log(getData2UpdateTenant());
-  $http.post("http://localhost/Coferba/Back/index.php/Tenant/update", getData2UpdateTenant())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Tenant/update", getData2UpdateTenant())
       .then(function (sucess, data) {
         console.log("Los Datos han sido actualizados");
         if($scope.manageDepto==1 && $scope.IsTenant==true){
@@ -1746,7 +1731,7 @@ $scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTe
 $scope.fnRemoveTenant = function(){
   
   console.log($scope._getData2RemoveTenant());
-  $http.post("http://localhost/Coferba/Back/index.php/Department/removeTenant",$scope._getData2RemoveTenant(),setHeaderRequest())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Department/removeTenant",$scope._getData2RemoveTenant(),setHeaderRequest())
         .then(function(success, data) {
             if ($scope.manageDepto==1 && $scope.IsFnRemove==true){
 
@@ -1790,7 +1775,7 @@ $scope._getData2RemoveTenant = function () {
 $scope.disabledTenant = function (itemId) {
   $http({
       method : "GET",
-      url : "http://localhost/Coferba/Back/index.php/Tenant/inactive/"+itemId
+      url : $scope.serverHost+"Coferba/Back/index.php/Tenant/inactive/"+itemId
     }).then(function mySuccess(response) {
 
         $scope.searchTenant('listTenant', $scope.idDeptoKf);
@@ -1806,7 +1791,7 @@ $scope.disabledTenant = function (itemId) {
 $scope.enabledTenant = function (itemId) {
 $http({
     method : "GET",
-    url : "http://localhost/Coferba/Back/index.php/Tenant/active/"+itemId
+    url : $scope.serverHost+"Coferba/Back/index.php/Tenant/active/"+itemId
   }).then(function mySuccess(response) {
       $scope.searchTenant('listTenant', $scope.idDeptoKf);
     }, function myError(response) {
@@ -1883,7 +1868,7 @@ $scope.sysRegisterAtt = function(value){
 }
 
 $scope.addAttendant = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/User/attendant", getAttData2Add(),setHeaderRequest())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/User/attendant", getAttData2Add(),setHeaderRequest())
       .then(function (sucess, data) {
         inform.add('Encargado registrado satisfactoriamente',{
                 ttl:2000, type: 'success'
@@ -2095,7 +2080,7 @@ $scope.getTotalService = function (){
 *                                                 *
 **************************************************/
 $scope.requestUpKey = function ($http, $scope){
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2AddKey())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getData2AddKey())
       .then(function (sucess, data) {
           if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
           closeAllDiv ();
@@ -2120,10 +2105,10 @@ $scope._getData2AddKey = function () {
   var userIdOwner      = 0;  //PROPIETARIO
   var userIdAConsorcio = 0; //ADMIN. CONSORCIO
   if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
-    userIdOwner = $scope.sessionIdUser;
+    userIdOwner = $scope.sessionidTenantUser;
     tenantKf    = $scope.sessionidTenantUser;
   }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
-    userIdOwner = $scope.sessionIdUser;
+    userIdOwner = $scope.sessionidTenantUser;
     tenantKf    = $scope.idTenantKf;
   }
   if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -2148,7 +2133,7 @@ $scope._getData2AddKey = function () {
                             description       : $scope.txt.sruTenant,
                             idAttendantKf     : $scope.select.nameAtt,
                             TotalService      : $scope.cost.total,
-                            idBranchKf        : null,
+                            idBranchKf        : $scope.select.idAddressAtt,
                             idCompanyKf       : null,
                             list_id_clients   : null
                         }
@@ -2166,7 +2151,7 @@ $scope._getData2AddKey = function () {
 **************************************************/
 $scope.requestDownKey = function (){
   console.log($scope._getData2DelKey())
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2DelKey())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getData2DelKey())
       .then(function (sucess, data) {
           if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
           closeAllDiv ();
@@ -2192,7 +2177,7 @@ $scope._getData2DelKey = function () {
     userIdOwner = $scope.sessionIdUser;
     tenantKf    = $scope.sessionidTenantUser;
   }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
-    userIdOwner = $scope.sessionIdUser;
+    userIdOwner = $scope.sessionidTenantUser;
     tenantKf    = $scope.idTenantKf;
   }
   if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -2221,7 +2206,7 @@ $scope._getData2DelKey = function () {
                             idAttendantKf         : $scope.select.nameAtt,
                             idReasonDisabledItemKf: $scope.select.idTypeLostKf,
                             numberItemDisabled    : $scope.codekeys,
-                            idBranchKf            : null,
+                            idBranchKf            : $scope.select.idAddressAtt,
                             idCompanyKf           : null,
                             list_id_clients       : null
                         }
@@ -2238,7 +2223,7 @@ $scope._getData2DelKey = function () {
 **************************************************/
 $scope.requestService = function (){
   console.log($scope._getServiceData());
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getServiceData())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getServiceData())
       .then(function (sucess, data) {
           if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
           closeAllDiv ();
@@ -2300,7 +2285,7 @@ $scope._getServiceData = function () {
 **************************************************/
 $scope.otherRequest = function ($http, $scope){
   console.log($scope._getData2RequestOther())
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket", $scope._getData2RequestOther())
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getData2RequestOther())
       .then(function (sucess, data) {
           closeAllDiv ();
           inform.add('Consulta realizada y enviada con exito. ',{
@@ -2646,7 +2631,7 @@ $scope.fnShowHide = function(divId, divAction) {
 
 /*jorge*/
 $scope.listTickt;
-$scope.filters={idTypeTicketKf: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', idStatus: ''}
+$scope.filters={idTypeTicketKf: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', idStatusKf: ''}
 $scope.dhboard = function(){
 /******************************
 *                             *
@@ -2658,33 +2643,40 @@ $scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.id
 var filterSearch     = $scope.filters.searchFilter,
     filterTop        = $scope.filters.topDH,
     filterProfile    = $scope.sessionidProfile,
-    filterTenantKf   = $scope.sessionidProfile == 3 ? 1 : 0,
+    filterTenantKf   = $scope.sessionidProfile == 3 ? $scope.sessionidTenantUser : null,
     filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf,
     filterTypeTicket = $scope.sessionidProfile !=2 ? $scope.filters.idTypeTicketKf : 3,
     filterAddress    = $scope.filters.idAddress,
-    filterStatus     = $scope.idStatus;
+    filterStatus     = $scope.filters.idStatusKf;
+    filterIdUser     = $scope.sessionidUser;
 
-
+// crea una varible que tenga esto $scope.serverHost+" y lo remplazas en los llamados a los servicios si va
   $searchFilter= 
   {
+       idUserKf            : filterIdUser,
+       idOWnerKf           : filterTenantKf,
        searchFilter        : filterSearch,
        topFilter           : filterTop, 
        idProfileKf         : filterProfile,
-       idTenantKf          : filterTenantKf,
+       idTenant            : filterTenantKf,  // y este lo envio igual ?
        idCompanyKf         : filterCompany,
        idTypeTicketKf      : filterTypeTicket,
        idAdress            : filterAddress,
        idStatusTicketKf    : filterStatus
   }
-  $http.post("http://localhost/Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
          $scope.listTickt =  sucess.data.response;
 
     },function (error, data,status) {
-            
-             if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
-          
+      if(status == 203){
+        console.log("!Informacion "+status,data.error+"info");
+      }else{
+        console.log("Error !"+error+" Contacte a Soporte"+"error");
+      }
+      inform.add('No Records.',{
+                ttl:5000, type: 'warning'
+      }); 
     });
 }
 
@@ -2694,7 +2686,7 @@ $scope.cancelTicket = function(idTicket){
     // el problema es que no te deja seleccionar el id ?
   $http({
     method : "GET",
-    url : "http://localhost/Coferba/Back/index.php/Ticket/cancel/"+idTicket
+    url : $scope.serverHost+"Coferba/Back/index.php/Ticket/cancel/"+idTicket
   }).then(function mySuccess(response) {
       $scope.dhboard();
      
@@ -2705,6 +2697,25 @@ $scope.cancelTicket = function(idTicket){
 }
 
  
+}
+$scope.checkBefore2Load = function(){
+  if ($scope.sessionidProfile==3){
+            $scope.getAllAddressByIdTenant();
+  }
+  $scope.companyN = localStorage.getItem("nameCompany");
+    $scope.home = true;
+}
+ /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
+/* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
+if($scope.Token){
+  var nameUser = localStorage.getItem("Nombres");
+  $scope.checkBefore2Load();
+  $timeout(function() {
+      inform.add('Bienvenido Sr/a '+ nameUser,{
+    ttl:3000, type: 'success'
+  });
+    }, 620);
+  
 }
 /**
  * **********************
