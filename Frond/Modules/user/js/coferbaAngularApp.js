@@ -198,12 +198,19 @@ $scope.sysLoadLStorage = function (){
       }
 
 }
+
+$scope.checkBefore2Load = function(){
+  $scope.home = true;
+  if ($scope.sessionidProfile==3){
+            $scope.getAllAddressByIdTenant();
+  }
+  $scope.companyN = localStorage.getItem("nameCompany");
+}
  /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
 /* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
 if($scope.Token){
   var nameUser = localStorage.getItem("Nombres");
-  $scope.home = true;
-  $scope.companyN = localStorage.getItem("nameCompany");
+  $scope.checkBefore2Load();
   $timeout(function() {
       inform.add('Bienvenido Sr/a '+ nameUser,{
     ttl:3000, type: 'success'
@@ -211,7 +218,6 @@ if($scope.Token){
     }, 620);
   
 }
-
 /*VALIDAMOS LOS CAMPOS PASSWORD QUE SEAN IGUALES*/     
 $scope.tagPwd=0;
 $scope.fnValidatePwd = function(pwd1, pwd2){
@@ -579,7 +585,7 @@ $scope.listUserDepto = function(value){
 *                                                 *
 **************************************************/
 $scope.fnAssignDepto = function(item1, item2){
-  var fnAction=item2;
+  var fnAction= $scope.sessionidProfile==3 ? 0 : item2;
   console.log($scope._getData2AssignDepto(item1));
   $http.post("http://localhost/Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(item1),setHeaderRequest())
         .then(function(success, data) {
@@ -590,7 +596,7 @@ $scope.fnAssignDepto = function(item1, item2){
             }
             if ($scope.sessionidProfile!=3 && fnAction==1){
                 $scope.approveDepto();
-            }else {
+            }else if ($scope.sessionidProfile!=3 && fnAction==2){
                 inform.add('Cancelada solicitud satisfactoriamente.',{
                   ttl:3000, type: 'success'
                 });
@@ -2001,13 +2007,19 @@ $scope.mess2show="";
     break;
     case "checkAddr":
       if (confirm==0 && $scope.addrNoFound==1){
-        $scope.mess2show="No posee departamento autorizados, Desea registrar un departamento?";
+        if (tmpOpt!="home"){
+          $scope.mess2show="No posee departamento autorizados, Desea registrar un departamento?";
+        }else{
+          $scope.mess2show="No registra tickets actualmente, Desea verificar si tiene un departmanto asociado?";
+        }
         $('#confirmRequestModal').modal('toggle');
       }else if(confirm==0 && $scope.addrNoFound==0 && $scope.sessionidProfile==3){ 
           if(tmpOpt=="rukeyup"){
             $scope.rukeyup = true;
           }else if(tmpOpt=="rukeydown"){
             $scope.rukeydown = true;
+          }else if(tmpOpt=="home"){
+            $scope.home = true;
           }
       }else if (confirm==1){
         $('.jumbotron [id^="m_"]').removeClass('active');
@@ -2605,14 +2617,16 @@ $scope.fnShowHide = function(divId, divAction) {
       break;
       case "home":
           closeAllDiv();
+          cleanForms();
         if(divAction=="open"){
-          BindDataToForm('dashboard');
-          $scope.home = true;
+          BindDataToForm('mngdepto');
+          if ($scope.sessionidProfile==3){
+            $scope.getAllAddressByIdTenant();
+          }else {$scope.home = true;}
+          selectSwitch ('t');
         }else{
           closeAllDiv();
-          $scope.home = false;
-        }
-        
+        }        
       break;
       case "sysConfig":
           closeAllDiv();
@@ -2643,7 +2657,7 @@ $scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filte
 $scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.idAddress;
 var filterSearch     = $scope.filters.searchFilter,
     filterTop        = $scope.filters.topDH,
-    filterProfile    = $scope.sessionidUser,
+    filterProfile    = $scope.sessionidProfile,
     filterTenantKf   = $scope.sessionidProfile == 3 ? 1 : 0,
     filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf,
     filterTypeTicket = $scope.sessionidProfile !=2 ? $scope.filters.idTypeTicketKf : 3,

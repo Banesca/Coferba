@@ -74,7 +74,7 @@
               <div ng-show="sessionidProfile==3" class="form-group col-lg-2">
                 <br>
                 <div class="col-xs-12">
-                  <button type="submit" ng-click="assignDepto()" class="btn btn-primary" ng-disabled="dptoNotFound!=false" >Asociar</button>
+                  <button type="submit" class="btn btn-primary" ng-disabled="dptoNotFound!=false" >Asociar</button>
                 </div>
               </div>
             </fieldset>
@@ -164,7 +164,7 @@
                         <ul class="dropdown-menu">
                             <li><a ng-click="approveDepto(item.idDepartment)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf>0"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Aprobar</a></li>
                             <li><a ng-click="modalConfirmation('remove', 0, item)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf>0 && item.isRequesLowByProp>=0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
-                            <li><a ng-click="fnAssignDepto(item.idDepartment,0, item.idTenantKf)" ng-if="item.isAprobatedAdmin==0 && (item.idTenantKf!=null || item.idTenantKf!=0) && item.isRequesLowByProp==0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
+                            <li><a ng-click="fnAssignDepto(item.idDepartment,2, item.idTenantKf)" ng-if="item.isAprobatedAdmin==0 && (item.idTenantKf!=null || item.idTenantKf!=0) && item.isRequesLowByProp==0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
                             
                         </ul>
                     </div>
