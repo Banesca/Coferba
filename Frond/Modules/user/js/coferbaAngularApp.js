@@ -2667,14 +2667,16 @@ var filterSearch     = $scope.filters.searchFilter,
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
          $scope.listTickt =  sucess.data.response;
-
+         $scope.totalTickets = $scope.listTickt.length;
     },function (error, data,status) {
       if(status == 203){
         console.log("!Informacion "+status,data.error+"info");
       }else{
-        console.log("Error !"+error+" Contacte a Soporte"+"error");
+        console.log(error.data.error);
+        $scope.listTickt =  "";
+         $scope.totalTickets = 0;
       }
-      inform.add('No Records.',{
+      inform.add(error.data.error,{
                 ttl:5000, type: 'warning'
       }); 
     });

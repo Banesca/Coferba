@@ -146,17 +146,17 @@
                             </div>
                         </div>
                     </div>          
-                        <div class="col-lg-3">
+                        <div ng-show="noStatus" class="col-lg-3">
                             <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
                             <label>Total Ticket Finalizados</label>
                             <label style="color: #39af24;font-size: 20px;">0</label>
                         </div>
-                        <div class="col-lg-3">
+                        <div ng-show="noStatus" class="col-lg-3">
                             <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
                             <label>Total Ticket Cancelados</label>
                             <label style="color: #af2424;font-size: 20px;">0</label>
                         </div>
-                        <div class="col-lg-3">
+                        <div  ng-show="noStatus" class="col-lg-3">
                             <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
                             <label>Total Ticket Pendientes</label>
                             <label  style="color: #af8424;font-size: 20px;">0</label>
@@ -164,7 +164,7 @@
                         <div class="col-lg-3">
                             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                             <label>Total</label>
-                            <label style="font-size: 20px;">179</label>
+                            <label style="font-size: 20px;">{{totalTickets}}</label>
                         </div>
                 </div>
 
