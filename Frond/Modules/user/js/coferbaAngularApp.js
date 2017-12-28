@@ -4,10 +4,9 @@ var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception",
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = true;
     });
-
 app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
 /**************************************************************/
-$scope.serverHost=$scope.serverHost+"";
+$scope.serverHost="http://localhost/";
 /**************************************************
 *                                                 *
 *          COLLAPSE / EXPAND TABLE ROWS           *
@@ -60,7 +59,33 @@ $scope.serverHost=$scope.serverHost+"";
         }
     };
 
+/********************************************************************************************************************************************
+*                                                                                                                                           *
+*                                                                                                                                           *
+*                                                             P A G I N A C I O N                                                           *
+*                                                                                                                                           *
+*                                                                                                                                           *
+********************************************************************************************************************************************/
+  $scope.viewby = 5;
+  $scope.totalItems = $scope.lengthUser;
+  console.log("TOTAL LENGTH :"+$scope.totalItems)
+  $scope.currentPage = 1;
+  $scope.itemsPerPage = $scope.viewby;
+  $scope.maxSize = 5; //Number of pager buttons to show
 
+     
+ $scope.setPage = function (pageNo) {
+    $scope.currentPage = pageNo;
+  };
+
+  $scope.pageChanged = function() {
+    console.log('Page changed to: ' + $scope.currentPage);
+  };
+
+  $scope.setItemsPerPage = function(num) {
+    $scope.itemsPerPage = num;
+    $scope.currentPage = 1; //reset to first page
+  };
 
 
 
@@ -199,7 +224,7 @@ $scope.sysLoadLStorage = function (){
       }
 
 }
-
+var tmpArr="";
 /*VALIDAMOS LOS CAMPOS PASSWORD QUE SEAN IGUALES*/     
 $scope.tagPwd=0;
 $scope.fnValidatePwd = function(pwd1, pwd2){
@@ -336,6 +361,8 @@ $scope.CallFilterFormT = function(){
         $scope.listUser         = response.data.user;
         $scope.listTypeTicket   = response.data.typeticket;
         $scope.listStatusTicket = response.data.statusticket;
+        $scope.lengthUser = $scope.listUser.length;
+        console.log($scope.lengthUser)
       }, function myError(response) {
     });
 }
@@ -2363,8 +2390,19 @@ $scope._getData2RequestOther = function () {
 *                                                                                                                                           *
 ********************************************************************************************************************************************/
 
-$scope.sideBarMenu = function(){
-  $('#RegisterModalUser').modal('toggle');
+$scope.sideBarMenu = function(value){
+  switch (value){
+    case "user":
+      $('#RegisterModalUser').modal('toggle');
+    break;
+    case "att":
+      $('#RegisterModalAtt').modal('toggle');
+    break;
+    case "smtp":
+      $('#ModalSMTPEmail').modal('toggle');
+    break;
+    default:
+  }
 }
 
 
@@ -2722,6 +2760,29 @@ if($scope.Token){
 /**
  * **********************
  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }); /*Cierre del JS ANGULAR*/
 

@@ -431,7 +431,7 @@
 
 	<div class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
-			<div ng-if="ruprofile" ng-include="'view/formUser.html'"></div>
+			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div ng-if="userManage" ng-include="'view/formManageUser.html'"></div>
 			<div ng-if="rudepto" ng-include="'view/frmDepartment.html'"></div>
 			<div ng-if="rukeyup" ng-include="'view/formAltaLlave.html'"></div>
@@ -645,7 +645,7 @@
 							<div class="agileits-w3layouts"> 
 					          	<div class="panel panel-default">
 					              	<div class="panel-heading">
-					                	<h3 class="panel-title">NUEVO ENCARGADO<a ng-click="closeModal('att')" title="Cerrar" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+					                	<h3 class="panel-title">NUEVO ENCARGADO<a data-dismiss="modal" title="Cerrar" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 					            	</div>
 					            		<div class="panel-body" style="overflow-y: scroll;">
 											<!-- FORM CONTAINER-->
@@ -876,7 +876,7 @@
 				</div>
 			</div>
 		</div>
-	<!-- //Modal Password Change --
+	<!-- //Modal Password Change -->
 	<!-- Response Inform Meessage plugin -->
 	<div inform class="inform-fixed inform-shadow inform-animate"></div>
 	<!-- //Response Inform Meessage plugin -->
