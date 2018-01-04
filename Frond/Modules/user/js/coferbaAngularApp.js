@@ -733,7 +733,7 @@ $scope.getDeparment = function (value){
 $scope.lisTenantByType = function(v1, v2){
   var idDepto   = v1;
   var typeTenant= v2;
-  var url1=$scope.serverHost+"coferba/Back/index.php/tenant/allByIdDepartament/"+idDepto;
+  var url1=$scope.serverHost+"Coferba/Back/index.php/tenant/allByIdDepartament/"+idDepto;
   var url2=$scope.serverHost+"Coferba/Back/index.php/Tenant/tenanatByIdDepartament/"+idDepto+"/"+typeTenant;
   var urlT=$scope.sessionidProfile==3 ? url2 : url1;
      $http({
@@ -1086,7 +1086,7 @@ function sysLoginUser($http,$scope){
                    if($scope.rsJSON.idProfileKf==3){
                       mail2Search = $scope.rsJSON.emailUser;
                       $scope.searchTenantByMail();
-                    }else{location.href = "sistema.html";}
+                    }else{location.href = "index.html";}
                 }  
 
             }
@@ -1548,7 +1548,7 @@ $scope.searchTenantByMail = function (){
             if($scope.isLogin==true){
               $scope.idTenantmp = response.data.idTenant;
               localStorage.setItem("idTenantUser", $scope.idTenantmp);
-              location.href = "sistema.html"
+              location.href = "index.html"
             }
 
             if($scope.tSearch==false && $scope.manageDepto==0){ //Cargamos el form del Ticket con la data del inquilino.
@@ -2596,7 +2596,7 @@ $scope.logout = function(){
   $scope.rsJSON = " ";
   localStorage.clear();
   $scope.Token = false;
-  location.href = "sistema.html"
+  location.href = "index.html"
 };
 /**************************************************/
 
