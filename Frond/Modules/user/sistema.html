@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html  ng-app="coferbaApp" lang="es">
 <head>
 <title>Sistema Coferba</title><!--[if lt IE 9]><link rel="stylesheet" type="text/css" media="all" href="/static/css/style-ie.css"/><![endif]-->
@@ -25,7 +25,7 @@
 <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">-->
 <!-- //web-fonts -->
 </head>
-<body>
+<body ng-controller="coferbaConnect">
 <div id="wLoader">
   <div id="loader">&nbsp;</div>
   <div class="companyName"></div>
@@ -811,6 +811,109 @@
 				</div>
 			</div>
 		<!-- //Modal Password Change -->
+		<!-- Edit User By Admin -->
+		<div id="EditModalUser" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
+		  	<div class="modal-dialog modal-lg" >
+			    <div class="modal-content">
+			      	<div class="modal-body">
+						<div class="agileits-w3layouts"> 
+				          	<div class="panel panel-default">
+				              	<div class="panel-heading">
+				                	<h3 class="panel-title">ACTUALIZAR USUARIO<a ng-click="closeModal('up')" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+				            	</div>
+				            		<div class="panel-body" style="overflow-y: scroll;">
+										<!-- FORM CONTAINER-->
+					    				<form class="form-horizontal" name="fUpdateUser" ng-submit="sysFunctionsUser('updateUser')">
+											<fieldset>
+											<!-- Select profile --> 
+											<div class="form-group"> 
+											  <label class="col-md-4 control-label">Perfil</label>
+											    <div class="col-md-4 selectContainer">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+														    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfiles" ng-model="user.idProfileKf"  required autofocus >
+														    	<option value=""></option>
+													    	</select>
+												  	</div>
+												</div>
+											</div>
+											<!-- Company List-->
+											      
+											<div class="form-group" ng-show="user.idProfileKf!=3 && user.idProfileKf!=1">  
+											    <label class="col-md-4 control-label">Empresa</label>
+											    	<div class="col-md-4 selectContainer">
+													    <div class="input-group">
+													        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+													  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="user.idCompanyKf"  >
+															    	<option value=""></option>
+														    </select>
+													    </div>
+													</div>
+											</div>
+
+											<!-- Form Names -->
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Nombres</label>  
+												  <div class="col-md-4">
+													  <div class="input-group">
+														  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+														  <input  name="namesUser" autofocus="true" placeholder="Nombre" class="form-control" ng-model="user.namesUser"  type="text" required autofocus/>
+													  </div>
+												  </div>
+											</div>
+											<!-- Text Mail-->
+
+											<div class="form-group">
+											 <label class="col-md-4 control-label">E-Mail</label>  
+											   <div class="col-md-4">
+											    <div class="input-group">
+											    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+											  		<input name="emailUser" placeholder="E-Mail" class="form-control" ng-model="user.emailUser"  type="email" required autofocus />
+											    </div>
+											  </div>
+											</div>
+											<!-- Text Phone-->
+											       
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Telefono Fijo</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+												  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="user.phonelocalNumberUser"  type="text"  autofocus />
+												    </div>
+											  </div>
+											</div>
+											<!-- Text Phone-->
+											       
+											<div class="form-group">
+											  <label class="col-md-4 control-label">Telefono Movil</label>  
+											    <div class="col-md-4">
+												    <div class="input-group">
+												        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+												  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="user.phoneNumberUser"  type="text"  autofocus />
+												    </div>
+											  </div>
+											</div>
+
+											<!-- Actions Button -->
+											<div class="form-group">
+											  <label class="col-md-4 control-label"></label>
+											  <div class="col-md-4">
+											    <button type="submit" class="btn btn-primary" >Actualizar</button>
+											  </div>
+											</div>
+
+											</fieldset>
+										</form>
+										<div class="clearfix"> </div> 
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //Edit User By Admin -->
 	</div>
 	<!-- Modal Password Change -->
 		<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-md" role="dialog">
@@ -896,6 +999,7 @@
 <script type="text/javascript" language="javascript" src="js/inputMask.js"></script>
 <script type="text/javascript" language="javascript" src="js/acsportal.packed.js"></script>
 <!--JQUERY MODULES -->
+<script src="js/coferbaConnect.js"></script> <!-- Coferba Angular App -->
 <script src="js/coferbaAngularApp.js"></script> <!-- Coferba Angular App -->
 <script src="js/coferbaJsFunctions.js"></script> <!--  Coferba Jquery Functions -->
 </body>

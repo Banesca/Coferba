@@ -175,14 +175,14 @@
   <div id="sidebar-nav">   
       <div ng-click="sideBarMenu('user')"><a href="#"><i class="icon-group"></i> Registrar Usuarios</a></div>
       <div ng-click="sideBarMenu('att')"><a href="#"><i class="icon-user"></i>Registrar Encargados</a></div>
-      <div ng-click="sideBarMenu('smtp')"><a href="#"><i class="icon-envelope"></i>Configurar Correo</a></div>
-      <div><a href="#"><i class="icon-usd"></i>Configurar costos</a></div>
+      <div ng-click="sideBarMenu('smtp', 'open')"><a href="#"><i class="icon-envelope"></i>Configurar Correo</a></div>
+      <div ng-click="sideBarMenu('services', 'open')"><a href="#"><i class="icon-usd"></i>Configurar costos</a></div>
       <div><a href="#"><i class="icon-bar-chart"></i> Reportes</a></div>
   </div>
   <div class="white-label"></div> 
 </section>
 <section id="content">
-  <div class="content">
+  <div ng-init="loadVarPag();" class="content">
 	    <div class="content-header">
 	      <h1>Administracion del Sistema</h1>
 	    </div>
@@ -193,18 +193,37 @@
 	          <div class="panel-body">
 	            <div  class="row" >
 	                <!-- Filter Type of Tenant For Admins -->
-	                <div ng-if="sessionidProfile!=0" class="form-group col-lg-3">
-                          <label style="padding-left: 15px;">Tipo de Estatus</label>
-                            <div class="col-xs-10 selectContainer">
+	                <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
+                          <label style="padding-left: 15px;">Tipo de Usuarios</label>
+                            <div class="col-xs-12 selectContainer">
                               <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                    <select name="filteroUserPrfile" class="form-control" ng-options="item.idProfile as item.nameProfile for item in listProfile " ng-model="filterUserProfile" >
-                                      <option value="">Todos</option>
+                                    <select name="filteroUserPrfile" class="form-control" ng-model="$parent.filterUserProfile" >
+                                  	    <option value="" >Todos</option>
+                                        <option value="1" >Coferba</option>
+                                        <option value="2" >Empresa</option>
+                                        <option value="3" >Propietario</option>
+                                        <option value="4" >Admin. Consorcio</option>
                                     </select>
                               </div>
                             </div>
-                        </div>
-	                <div class="form-group col-lg-3">
+                    </div>
+                    <!-- Filter Type of Tenant For Admins -->
+	                <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
+                          <label style="padding-left: 15px;">Estatus</label>
+                            <div class="col-xs-12 selectContainer">
+                              <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                    <select name="filterUserStatus" class="form-control" ng-model="$parent.filterUserStatus" >
+                                  	    <option value="" >Todos</option>
+                                        <option value="1" >Activo</option>
+                                        <option value="0" >Inactivo</option>
+                                        <option value="-1" >eliminado</option>
+                                    </select>
+                              </div>
+                            </div>
+                    </div>
+	                <div class="form-group col-lg-2">
 	                <label style="padding-left: 15px;">Buscar</label>
 	                  <div class="col-xs-12">
 	                    <div class="input-group">
@@ -213,33 +232,24 @@
 	                    </div>
 	                  </div>
 	                </div>
-	                <div class="form-group col-lg-1">
-	            		<div class="col-xs-10"><br>
-	                		<div class="btn-group">
-	                    		<button type="button" ng-click="CallFilterFormT()" class="btn btn-info">
-	                        		<i title="Agregar Inquilino" class="glyphicon glyphicon-refresh"></i>
-	                    		</button>
+	                <div class="form-group">
+	            		<div class="col-xs-2"><br>
+	                		<div >
+	                    		<button type="button" ng-click="CallFilterFormT()" class="btn btn-lg btn-info">
+	                        		<i title="Actualizar" class="glyphicon glyphicon-refresh"></i>
+	                    		</button>&nbsp
+	                    		<button type="button" ng-click="sideBarMenu('user')" class="btn btn-lg btn-info">
+	                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Usuario
+	                        	</button>
 	                		</div>
 	            		</div>
 	        		</div>
-	                <div class="form-group col-lg-3">
-	                  <div class="col-xs-12"><br>
-	                    <div class="btn-group">
-	                        <button type="button" ng-click="sideBarMenu('user')" class="btn btn-info">
-	                          <i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Usuario
-	                        </button>
-	                        <!--<button  title="Seleccionar" class="btn btn-lg btn-info">
-	                        <i class="glyphicon glyphicon-plus"></i>Asignar Inquilino
-	                        </button>-->
-	                    </div>
-	                  </div>
-	                </div>
+
 	            </div>
 	            <table  class="table  table-striped table-responsive">
 	                <thead style=" background: #4d5d6f; color: white;">
 	                  <tr>
 	                  	  <th></th>
-	                      <th>#</th>
 	                      <th>ID</th>
 	                      <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
 	                      <th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
@@ -251,25 +261,30 @@
 	                  </tr>
 	                </thead>
 	                <tbody>
-	                  <tr style="align-content: center;" ng-repeat="item in listUser.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter: searchboxfilter | filter: {item.idProfileKf:filterUserProfile} ">
+	                  <tr style="align-content: center;" ng-repeat="item in listUser.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter: {idProfileKf:filterUserProfile} | filter: {idStatusKf:filterUserStatus} | filter: searchboxfilter">
 	                      <td>
-	                        <div class="btn-group">
-	                          <button type="button" ng-click="select2EditTenant(item);" class="btn btn-warning">
-	                          <i title="Modificar Datos" class="glyphicon glyphicon-edit"></i> 
-	                          </button>
-	                          <button type="button" ng-click="modalConfirmation('remove', 0, item)" class="btn btn-danger">
-	                          <i title="Eliminar Inquilino" class="glyphicon glyphicon-remove-circle"></i> 
-	                          </button>
-	                          <button uib-popover="I appeared on mouse enter!" popover-trigger="'mouseenter'" type="button" class="btn btn-default">Mouseenter</button>
-	                        </div>
+	                      	<div class="btn-group">
+							  <button type="button" class="btn btn-primary">Acciones</button>
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+							    <span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu" role="menu">
+							    <li><a href="#" ng-click="updateUser(item);"><i title="Modificar Datos" class="glyphicon glyphicon-edit"></i>  Editar</a></li>
+							    <li ng-if="item.idStatusKf<=0 "><a href="#" ng-click="sysFunctionsUser('enabled',item.idUser)"><i title="Activar Usuario" class="glyphicon glyphicon-remove-circle"></i> Activar</a></li>
+							    <li ng-if="item.idStatusKf>0"><a href="#" ng-click="sysFunctionsUser('disabled',item.idUser)"><i title="Desactivar Usuario" class="glyphicon glyphicon-remove-circle"></i> Desactivar</a></li>
+							    <li role="presentation">
+		                                <div class="divider"></div>
+		                        </li>
+							    <li><a href="#" ng-click="modalConfirmation('removeu', 0, item)"><i title="Eliminar Usuario" class="glyphicon glyphicon-trash"></i> Eliminar</a></li>
+							  </ul>
+							</div>
 	                      </td>
-	                      <td>{{$index+1}}</td>
 	                      <td>{{item.idUser}}</td>
 	                      <td>{{item.fullNameUser}}</td>
-	                      <td ng-if="item.phoneNumberTenant">{{item.phoneLocalNumberUser}}</td>
-	                      <td ng-if="!item.phoneNumberTenant"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span></td>
-	                      <td ng-if="item.phoneNumberContactTenant">{{item.phoneNumberUser}}</td>
-	                      <td ng-if="!item.phoneNumberContactTenant"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span>
+	                      <td ng-if="item.phoneLocalNumberUser">{{item.phoneLocalNumberUser}}</td>
+	                      <td ng-if="!item.phoneLocalNumberUser"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span></td>
+	                      <td ng-if="item.phoneNumberUser">{{item.phoneNumberUser}}</td>
+	                      <td ng-if="!item.phoneNumberUser"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span>
 	                      </td>
 	                      <td>{{item.emailUser}}</td>
 	                      <td ng-if="item.idProfileKf==1">Coferba</td>
@@ -278,18 +293,12 @@
 	                      <td ng-if="item.idProfileKf==4">Admin. Consorcio</td>
 	                      <td> <!-- TD to Admins -->
 	                        <div class="btn-group">
-	                          <button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO | 
-	                            <span class="caret"></span>
-	                            <span class="sr-only">Toggle Dropdown</span>
+	                          <button ng-if="item.idStatusKf==1" class="btn btn-success">ACTIVO
 	                          </button>
-	                           <button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO | 
-	                              <span class="caret"></span>
-	                              <span class="sr-only">Toggle Dropdown</span>
-	                            </button>
-	                            <button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
-	                              <span class="caret"></span>
-	                              <span class="sr-only">Toggle Dropdown</span>
-	                            </button>
+	                          <button ng-if="item.idStatusKf==0" class="btn btn-warning">INACTIVO
+	                          </button>
+	                          <button ng-if="item.idStatusKf<0" class="btn btn-danger">ELIMINADO
+	                          </button>
 	                          <ul ng-show="item.idStatusKf==0 || sessionidProfile!=3" class="dropdown-menu">
 	                            <li><a ng-click="enabledTenant(item.idTenant)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
 	                            <li><a ng-click="disabledTenant(item.idTenant)" ng-if="item.idStatusKf>0 && sessionidProfile!=3"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
@@ -369,118 +378,7 @@
 	  	</div>
   </div>
 </section>
-<div id="EditModalUser" class="modal fade bd-example-modal-lg" style="top: 20px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-	      	<div class="modal-body">
-				<div class="agileits-w3layouts"> 
-		          	<div class="panel panel-default">
-		              	<div class="panel-heading">
-		                	<h3 class="panel-title">ACTUALIZAR USUARIO<a ng-click="closeModal('up')" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-		            	</div>
-		            		<div class="panel-body" style="overflow-y: scroll;">
-								<!-- FORM CONTAINER-->
-			    				<form class="form-horizontal" name="fUpdateUser" ng-init="CallFilterFormU(); getAllAddress();" ng-submit="updateUser()">
-									<fieldset>
-									<!-- Select profile --> 
-									<div class="form-group"> 
-									  <label class="col-md-4 control-label">Perfil</label>
-									    <div class="col-md-4 selectContainer">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfiles" ng-model="$parent.idProfileKf"  required autofocus >
-												    	<option value=""></option>
-											    	</select>
-										  	</div>
-										</div>
-									</div>
-									<!-- Company List-->
-									      
-									<div class="form-group" ng-show="sessionidProfile==1">  
-									    <div class="col-md-4">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-										  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="$parent.idCompanyKf"  >
-												    	<option value=""></option>
-											    	</select>
-										    </div>
-									  </div>
-									</div>
-									<!-- List Address-->
-  
-									<div class="form-group" ng-show="sessionidProfile==1">
-									  <label class="col-md-4 control-label">Direcci&#243n</label>  
-									    <div class="col-md-4">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf!=2" ng-model="$parent.idAddressKf" autofocus >
-												    	<option value="">Seleccione una direccion</option>
-											    	</select>
-										    </div>
-									  </div>
-									</div>
-									<!-- Form First Name -->
-									<div class="form-group">
-									  <label class="col-md-4 control-label">Nombres</label>  
-										  <div class="col-md-4">
-											  <div class="input-group">
-												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="namesUser"  type="text" required autofocus/>
-											  </div>
-										  </div>
-									</div>
-									<!-- Text Mail-->
 
-									<div class="form-group">
-									 <label class="col-md-4 control-label">E-Mail</label>  
-									   <div class="col-md-4">
-									    <div class="input-group">
-									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-									  		<input name="emailUser" placeholder="E-Mail" class="form-control" ng-model="$parent.emailUser"  type="email" required autofocus />
-									    </div>
-									  </div>
-									</div>
-									<!-- Text Phone-->
-									       
-									<div class="form-group">
-									  <label class="col-md-4 control-label">Telefono Local</label>  
-									    <div class="col-md-4">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-										  		<input name="phoneLocal" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phonelocalNumberUser"  type="text" required autofocus />
-										    </div>
-									  </div>
-									</div>
-									<!-- Text Phone-->
-									       
-									<div class="form-group">
-									  <label class="col-md-4 control-label">Telefono Movil</label>  
-									    <div class="col-md-4">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-										  		<input name="phoneMovil" placeholder="(11) 555-1212" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="phoneNumberUser"  type="text" required autofocus />
-										    </div>
-									  </div>
-									</div>
-
-									<!-- Actions Button -->
-									<div class="form-group">
-									  <label class="col-md-4 control-label"></label>
-									  <div class="col-md-4">
-									    <button type="submit" class="btn btn-primary" >Actualizar</button>
-									  </div>
-									</div>
-
-									</fieldset>
-								</form>
-								<div class="clearfix"> </div> 
-							</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <!-- SETUP EMAIL -->
 <div id="ModalSMTPEmail" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
   	<div class="modal-dialog modal-lg" >
@@ -493,7 +391,7 @@
 		            	</div>
 		            		<div class="panel-body" style="overflow-y: scroll;">
 								<!-- FORM CONTAINER-->
-									<form class="form-horizontal" name="frmsmtpMail" ng-init="" ng-submit="">
+									<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('smtp', 'save')">
 										<fieldset>
 										<!-- Old Password-->
 
@@ -502,8 +400,14 @@
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-											  		<input id="smtpMail" placeholder="Correo principal" class="form-control" ng-model="smtpMail" minlength="8" type="mail" required autofocus />
+											  		<input id="smtpMail" placeholder="Correo principal" class="form-control" ng-model="smtp.mail" type="mail" required autofocus />
 											    </div>
+											    <div ng-show="smtpMail" class="alert alert-info" role="alert">
+            										<strong>Mail Actual: </strong>{{smtpMail}}
+            									</div>
+            									<div ng-show="!smtpMail" class="alert alert-warning" role="alert">
+            										<strong>Mail Actual: </strong>Sin Asignar.
+            									</div>
 											</div>
 										</div>
 										<!-- Password-->
@@ -513,8 +417,98 @@
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="passwordSmtp" minlength="8" type="text" required autofocus />
+											  		<input id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="smtp.password" minlength="8" type="password" required autofocus />
 											    </div>
+											    <div ng-show="smtpPwd" class="alert alert-info" role="alert">
+													<strong>Clave Actual: </strong>Asignada
+            									</div>
+            									<div ng-show="!smtpPwd" class="alert alert-warning" role="alert">
+													<strong>Clave Actual: </strong>Sin Asignar.
+            									</div>
+											</div>
+										</div>
+										<!-- Actions Button -->
+										<div class="form-group">
+										  <label class="col-md-4 control-label"></label>
+										  <div class="col-md-4">
+										    <button type="submit" class="btn btn-primary" ><i class="glyphicon glyphicon-save"> </i>Guardar</button>
+										  </div>
+										</div>
+
+										</fieldset>
+									</form>
+								<div class="clearfix"> </div> 
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SETUP SERVICES COST -->
+<div id="ModalServiceCost" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
+  	<div class="modal-dialog modal-lg" >
+	    <div class="modal-content">
+	      	<div class="modal-body">
+				<div class="agileits-w3layouts"> 
+		          	<div class="panel panel-default">
+		              	<div class="panel-heading">
+		                	<h3 class="panel-title">CONFIGURAR COSTOS DE SERVICIOS<a data-dismiss="modal" class="frmclose"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		            	</div>
+		            		<div class="panel-body" style="overflow-y: scroll;">
+								<!-- FORM CONTAINER-->
+									<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('services', 'save')">
+										<fieldset>
+										<!-- Service-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Servicio</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+											  		<input name="configService" placeholder="Costo por servicio" class="form-control" ng-model="config.service" type="number" required autofocus />
+											    </div>
+											    <div ng-show="costService" class="alert alert-info" role="alert">
+            										<strong>Costo Servicio: </strong>{{costService}}
+            									</div>
+            									<div ng-show="!costService" class="alert alert-warning" role="alert">
+            										<strong>Costo Servicio: </strong>Valor No Asignado.
+            									</div>
+											</div>
+										</div>
+										<!-- Key-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Llave</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input name="configKey" placeholder="Costo por llave" class="form-control" ng-model="config.key" type="number" required autofocus />
+											    </div>
+											    <div ng-show="costKey" class="alert alert-info" role="alert">
+            										<strong>Costo de Llave: </strong>{{costKey}}
+            									</div>
+            									<div ng-show="!costKey" class="alert alert-warning" role="alert">
+            										<strong>Costo Llave: </strong>Valor No Asignado.
+            									</div>
+											</div>
+										</div>
+										<!-- Delivery-->
+
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Delivery</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+											  		<input name="configDelivery" placeholder="Costo por servicio de envio" class="form-control" ng-model="config.delivery" type="number" required autofocus />
+											    </div>
+											    <div ng-show="costDelivery" class="alert alert-info" role="alert">
+            										<strong>Costo de Envio: </strong>{{costDelivery}}
+            									</div>
+            									<div ng-show="!costDelivery" class="alert alert-warning" role="alert">
+            										<strong>Costo Envio: </strong>Valor No Asignado.
+            									</div>
 											</div>
 										</div>
 										<!-- Actions Button -->

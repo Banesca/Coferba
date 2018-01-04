@@ -1,12 +1,12 @@
-var app = angular.module('coferbaApp', ["blockUI", "inform", "inform-exception", "showdown", "ngAnimate", "ui.bootstrap"]);
-    app.config(function(blockUIConfig) {
+
+app.config(function(blockUIConfig) {
       // Tell blockUI not to mark the body element as the main block scope.
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = true;
     });
 app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
 /**************************************************************/
-$scope.serverHost="http://localhost/";
+
 /**************************************************
 *                                                 *
 *          COLLAPSE / EXPAND TABLE ROWS           *
@@ -66,13 +66,14 @@ $scope.serverHost="http://localhost/";
 *                                                                                                                                           *
 *                                                                                                                                           *
 ********************************************************************************************************************************************/
-  $scope.viewby = 5;
-  $scope.totalItems = $scope.lengthUser;
-  console.log("TOTAL LENGTH :"+$scope.totalItems)
-  $scope.currentPage = 1;
-  $scope.itemsPerPage = $scope.viewby;
-  $scope.maxSize = 5; //Number of pager buttons to show
-
+  $scope.loadVarPag = function(){
+    $scope.viewby = 10;
+    $scope.totalItems = $scope.lengthUser;
+    console.log("TOTAL LENGTH :"+$scope.totalItems)
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = $scope.viewby;
+    $scope.maxSize = 5; //Number of pager buttons to show
+  }
      
  $scope.setPage = function (pageNo) {
     $scope.currentPage = pageNo;
@@ -219,7 +220,7 @@ $scope.sysLoadLStorage = function (){
      //$scope.sysParameterVar     = localStorage.getItem("sysParameters");
      //if($scope.sessionidProfile==3){$scope.getAllAddressByIdTenant();}
      /*VALIDAMOS QUE EL USUARIO SEA DIFERENTE DE USUARIO PROPIETARIO Y QUE ESTE ASIGNADO A UNA COMPAÑIA Y CARGAMOS LA LISTA DE COMPAÑIAS*/
-      if($scope.sessionidProfile!=3 && $scope.sessionidCompany){
+      if($scope.sessionidProfile==3 || $scope.sessionidProfile==4 && $scope.sessionidCompany){
         $scope.officeListByCompnayID();
       }
 
@@ -261,16 +262,6 @@ $scope.hideTypeTenant = function(item){
 };
 /**************************************************/  
 
-
-  $('#sidebar-nav > div').click(function(){
-    alert("Hola");
-  var i = $(this).index();
-  $('#sidebar-nav > div').removeClass('active').eq(i).addClass('active');
-
-});
-
-
-
 /**************************************************
 *                                                 *
 *                 GET PARAMETER                   *
@@ -294,6 +285,9 @@ $scope.getParameter = function(){
 
 $scope.loadParameter = function(item1, item2, value){
     var section2Load = value;
+    $scope.parameterId        = "";
+    $scope.parameterValue     = "";
+    $scope.parameterDescrip   = "";
     /* Recorrer el Json Parameter para obtener datos*/
     var length = $scope.listParameter.length;
     for (i = 0; i < length; i++){
@@ -351,6 +345,7 @@ $scope.CallFilterFormU = function(){
 *     (typeouther, typeticket, tipeOpcion)        *
 **************************************************/
 $scope.CallFilterFormT = function(){
+  $scope.listUser = "";
    $http({
       method : "GET",
       url : $scope.serverHost+"Coferba/Back/index.php/Ticket/filter"
@@ -362,8 +357,13 @@ $scope.CallFilterFormT = function(){
         $scope.listTypeTicket   = response.data.typeticket;
         $scope.listStatusTicket = response.data.statusticket;
         $scope.lengthUser = $scope.listUser.length;
-        console.log($scope.lengthUser)
       }, function myError(response) {
+        $scope.listTypeDelivery = "";
+        $scope.listTypeLost     = "";
+        $scope.listTypeQuery    = "";
+        $scope.listUser         = "";
+        $scope.listTypeTicket   = "";
+        $scope.listStatusTicket = "";
     });
 }
 /*------------------------------------------------*/
@@ -471,27 +471,7 @@ $scope.getUserCompanyData = function(){
     }; 
   }
 /**************************************************/
-/**************************************************
-*                                                 *
-*   Select Function to bind the User data         *
-*                                                 *
-**************************************************/
-$scope.getUserData = function(item){
-      var idUser = item;
-    /* Recorrer el Json User para obtener datos*/
-    var length = $scope.listUser.length;
-    for (i = 0; i < length; i++) {
-        if($scope.listUser[i].idUser == idUser){
-            $scope.phoneNumberUser     = $scope.listUser[i].phoneNumberUser;
-            $scope.phonelocalNumberUser= $scope.listUser[i].phoneLocalNumberUser;
-            $scope.emailUser           = $scope.listUser[i].emailUser;
-            $scope.idProfileKf         = $scope.listUser[i].idProfileKf;
-            $scope.namesUser           = $scope.listUser[i].fullNameUser;
-            break;
-        }
-    }; 
-  }
-/**************************************************/
+
 
 /**************************************************
 *                                                 *
@@ -875,21 +855,23 @@ function BindDataToForm(value) {
       break;
       case "sysParam":
        if($scope.parameterId==1){
-
+            $scope.smtpMail= $scope.parameterValue
        }else if($scope.parameterId==2){
-
+            $scope.smtpPwd= $scope.parameterValue
        }else if($scope.parameterId==3){
 
-            $scope.cost.key= $scope.parameterValue  
+            $scope.cost.key= $scope.parameterValue;
+            $scope.costKey = $scope.parameterValue; 
 
        }else if($scope.parameterId==4){
 
-        $scope.cost.service = $scope.parameterValue;  
+        $scope.cost.service = $scope.parameterValue;
+        $scope.costService  = $scope.parameterValue;  
 
        }else if($scope.parameterId==5){
 
         $scope.costDeliveryTmp = $scope.parameterValue;  
-    
+        $scope.costDelivery    = $scope.parameterValue;
        }else if($scope.parameterId==6){
    
        }else if($scope.parameterId==7){
@@ -1024,7 +1006,8 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
 
     break;
     case "updateUser":
-        $scope.updateUser($http, $scope);
+          console.log($scope._getData2Update(3));
+          $scope.modificarUsuario($http, $scope, 3);
     break;
     case "enabled":                               //Enabled User Module
         $scope.enabledUser(isVarUser);
@@ -1184,14 +1167,21 @@ $scope.modificarUsuario = function ($http, $scope, itemOp){
           inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
                     ttl:3000, type: 'success'
           });
-         }else if ($scope.isPwdCh>=1){
+         }else if ($scope.isPwdCh==1 || $scope.isChPwd==2){
             var names = $scope.Token ? $scope.sessionNames : $scope.tmp.fullNameUser;
             inform.add(names +' Su clave ha sido cambiada satisfactoriamente.',{
                     ttl:3000, type: 'success'
           });
             $('#PasswdModalUser').modal('hide');
+          }else if ($scope.isPwdCh==3){
+            inform.add('Los datos del usuario: '+ $scope.user.namesUser +' han sido actualizados satisfactoriamente.',{
+                    ttl:3000, type: 'success'
+            });
+            $('#EditModalUser').modal('hide');
           }
-          $scope.CallFilterFormT();
+            $scope.CallFilterFormT();
+
+
     },function (error,status) {
             if(status == 404){alert("!Informacion "+status+error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -1200,10 +1190,28 @@ $scope.modificarUsuario = function ($http, $scope, itemOp){
     });
 };
 $scope.profile = {Names:'', Email:'', MovilPhoneNumber:'', PhonelocalNumber:''};
+$scope.user = {namesUser: '', emailUser: '', phoneNumberUser: '', phonelocalNumberUser: '', idProfileKf: '', idUserTmp: '', idCompanyKf: '' };
 $scope._getData2Update = function (value) {
   var isChPwd=value;
   var isEditUserKf = false;
-  if (isChPwd==0){
+  if (isChPwd==3){
+  var updUser =
+          {
+                         user:
+                              {
+
+                                fullNameUser         : $scope.user.namesUser, 
+                                emailUser            : $scope.user.emailUser, 
+                                phoneNumberUser      : $scope.user.phoneNumberUser,
+                                phoneLocalNumberUser : $scope.user.phonelocalNumberUser,
+                                idProfileKf          : $scope.user.idProfileKf,
+                                idUser               : $scope.user.idUserTmp,
+                                idCompanyKf          : $scope.user.idCompanyKf                   
+                                                                                      
+                                                                 
+                              }
+          }
+  }else if (isChPwd==0){
   var updUser =
           {
                          user:
@@ -1216,6 +1224,7 @@ $scope._getData2Update = function (value) {
                                 idUser               : $scope.sessionIdUser,
                               }
           }
+
   }else if (isChPwd==1){
     isEditUserKf = true;
     var updUser =
@@ -1290,7 +1299,7 @@ $http({
 **************************************************/
 $scope.updateUser = function (itemId) {
   $('#EditModalUser').modal('toggle');
-  $scope.getAttData(itemId);
+  $scope.getDataUser2Edit(itemId);
 };
 /**************************************************
 *                                                 *
@@ -1362,6 +1371,43 @@ $scope.getUpdateData = function(){
           $scope.sysLoadLStorage();
           $('#ProfileModalUser').modal('hide'); 
 }
+/**************************************************/
+/**************************************************
+*                                                 *
+*   Select Function to bind the User data         *
+*                                                 *
+**************************************************/
+$scope.getUserData = function(item){
+      var idUser = item;
+    /* Recorrer el Json User para obtener datos*/
+    var length = $scope.listUser.length;
+    for (i = 0; i < length; i++) {
+        if($scope.listUser[i].idUser == idUser){
+            $scope.phoneNumberUser     = $scope.listUser[i].phoneNumberUser;
+            $scope.phonelocalNumberUser= $scope.listUser[i].phoneLocalNumberUser;
+            $scope.emailUser           = $scope.listUser[i].emailUser;
+            $scope.idProfileKf         = $scope.listUser[i].idProfileKf;
+            $scope.namesUser           = $scope.listUser[i].fullNameUser;
+            break;
+        }
+    }; 
+  }
+/**************************************************/
+/**************************************************
+*                                                 *
+*   Select Function to bind the User data         *
+*                                                 *
+**************************************************/
+$scope.getDataUser2Edit = function(obj){
+    $scope.user.idUserTmp           = obj.idUser
+    $scope.user.phoneNumberUser     = obj.phoneNumberUser;
+    $scope.user.phonelocalNumberUser= obj.phoneLocalNumberUser;
+    $scope.user.emailUser           = obj.emailUser;
+    $scope.user.idProfileKf         = obj.idProfileKf;
+    $scope.user.namesUser           = obj.fullNameUser;
+    $scope.user.idCompanyKf         = obj.idCompanyKf;
+    console.log(obj);
+  }
 /**************************************************/
 /*
 +
@@ -1994,7 +2040,7 @@ $scope.mess2show="";
         $('#confirmRequestModal').modal('hide');
       }
     break;
-    case "remove":
+    case "removet":
       if (confirm==0){
           if ($scope.sessionidProfile!=3 && obj.idTypeKf!=0 || $scope.sessionidProfile==3 && obj.idTypeKf==2){$scope.mess2show="Esta seguro que desea dar de baja al inquilino?";}else if ($scope.sessionidProfile==3){$scope.mess2show="Esta seguro que desea darse de baja?";}
           if($scope.sessionidProfile!=3 && obj.idTypeKf!=0 || $scope.sessionidProfile==3 && obj.idTypeKf==2){
@@ -2038,6 +2084,24 @@ $scope.mess2show="";
         $('#m_depto').addClass('active');
         $('#SubM_Pedidos').hide();
         $scope.fnShowHide('managedepto', 'open');
+        $('#confirmRequestModal').modal('hide');
+      }
+    break;
+    case "removeu":
+      if (confirm==0){
+          if ($scope.sessionidProfile==1 && obj.idUser!=0){
+            if (obj.idProfileKf == 1){$scope.mess2show="El usuario "+obj.fullNameUser+" bajo el perfil de Coferba sera Eliminado.     Confirmar?";}
+            if (obj.idProfileKf == 2){$scope.mess2show="El usuario "+obj.fullNameUser+" bajo el perfil de Empresa sera Eliminado.     Confirmar?";}
+            if (obj.idProfileKf == 3){$scope.mess2show="El usuario "+obj.fullNameUser+" bajo el perfil de Propietario sera Eliminado.     Confirmar?";}
+            if (obj.idProfileKf == 4){$scope.mess2show="El usuario "+obj.fullNameUser+" bajo el perfil de Admin de Consorcio sera Eliminado.     Confirmar?";}
+              $scope.idUserKf   =  obj.idUser;
+              console.log('Usuario a eliminar ID: '+$scope.idUserKf+' BAJO EL NOMBRE: '+obj.fullNameUser);
+              console.log("============================================================================")
+              console.log(obj)
+          }      
+        $('#confirmRequestModal').modal('toggle');
+      }else if (confirm==1){
+            $scope.deleteUser($scope.idUserKf);
         $('#confirmRequestModal').modal('hide');
       }
     break;
@@ -2390,21 +2454,137 @@ $scope._getData2RequestOther = function () {
 *                                                                                                                                           *
 ********************************************************************************************************************************************/
 
-$scope.sideBarMenu = function(value){
+$scope.sideBarMenu = function(value, fnAction){
   switch (value){
     case "user":
       $('#RegisterModalUser').modal('toggle');
+
     break;
     case "att":
       $('#RegisterModalAtt').modal('toggle');
     break;
     case "smtp":
-      $('#ModalSMTPEmail').modal('toggle');
+      if(fnAction=="open"){
+        $scope.smtp.mail ="";
+        $scope.smtp.password ="";
+        $scope.getParameter();
+        $scope.loadParameter(1, 6,'sysParam');
+        $('#ModalSMTPEmail').modal('toggle');
+      }
+      if(fnAction=="save"){
+        $scope.smtpMail="";
+        $scope.smtpPwd = "";
+        $scope.updateMailSmtp($http, $scope);
+      }
+    break;
+    case "services":
+      if(fnAction=="open"){
+        $scope.config.service="";
+        $scope.config.key ="";
+        $scope.config.delivery="";
+        $scope.varSuccessFnCost = 0;
+        $scope.getParameter();
+        $scope.loadParameter(1, 6,'sysParam');
+        $('#ModalServiceCost').modal('toggle');
+      }
+      if(fnAction=="save"){
+        var i = 3;
+        for (i=3; i<6; i++){
+          $scope.updateServiceCost($http, $scope, i)
+        }
+      }
+
     break;
     default:
   }
 }
+/**************************************************
+*                                                 *
+*                MAIL PRINCIPAL                   *
+*                                                 *
+**************************************************/
+$scope.smtp={mail: '', password: ''};
+$scope.updateMailSmtp = function ($http, $scope){
+  console.log($scope.getSmtpMail2Update());
+  $http.post($scope.serverHost+"Coferba/Back/index.php/User/updateMailSmtp", $scope.getSmtpMail2Update())
+      .then(function (sucess, data) {
+          $scope.getParameter();
+          $scope.loadParameter(1, 6,'sysParam');
+          inform.add('Configuracion de smtp email realizada con exito. ',{
+                  ttl:2000, type: 'success'
+             });
 
+          $('#ModalSMTPEmail').modal('hide');
+
+    },function (error, data,status) {
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
+
+$scope.getSmtpMail2Update = function () {
+
+  var mailsmtp =
+          {
+                mail:
+                        {
+                            email    : $scope.smtp.mail,
+                            pass     : $scope.smtp.password
+                        }
+          };
+  return mailsmtp;
+};
+/**************************************************/
+/**************************************************
+*                                                 *
+*                MAIL PRINCIPAL                   *
+*                                                 *
+**************************************************/
+$scope.varSuccessFnCost = 0;
+$scope.updateServiceCost = function ($http, $scope, idParamTmp){
+
+  console.log($scope.getCostValues2Update(idParamTmp));
+  $http.post($scope.serverHost+"Coferba/Back/index.php/User/updateParam", $scope.getCostValues2Update(idParamTmp))
+      .then(function (sucess, data) {
+          $scope.varSuccessFnCost++;
+          if ($scope.varSuccessFnCost==3){
+              $scope.getParameter();
+              $scope.loadParameter(1, 6,'sysParam');
+              inform.add('Configuracion de costos de servicios realizada con exito. ',{
+                  ttl:2000, type: 'success'
+              });
+
+              $('#ModalServiceCost').modal('hide');
+          }
+    },function (error, data,status) {
+          $scope.varSuccessFnCost = 0;
+            if(status == 404){alert("!Informacion "+status+data.error+"info");}
+            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+            else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+           
+    });
+};
+$scope.config={service: '', key: '', delivery: ''};
+$scope.getCostValues2Update = function (idParam) {
+  var idParamTemp = idParam;
+  var paramValue  = 0;
+  if(idParamTemp==3){paramValue=$scope.config.key;}
+  if(idParamTemp==4){paramValue=$scope.config.service;}
+  if(idParamTemp==5){paramValue=$scope.config.delivery;}
+    var servicecost =
+            {
+                  param:
+                          {
+                              idParam     : idParamTemp,
+                              value       : paramValue
+                              
+                          }
+            };
+  return servicecost;
+};
+/**************************************************/
 
 /**************************************************
 *                                                 *
@@ -2465,6 +2645,7 @@ function cleanForms (){
     $scope.listTenant                 ="";
     $scope.filterMTenant              ="";
     $scope.idDepartmentKf             ="";
+        
 }
 /**************************************************/
 
@@ -2654,6 +2835,7 @@ $scope.fnShowHide = function(divId, divAction) {
       case "sysConfig":
           closeAllDiv();
         if(divAction=="open"){
+          $scope.loadParameter(1, 6,'sysParam');
           $scope.rusysconfig = true;
         }else{
           closeAllDiv();
@@ -2744,6 +2926,7 @@ $scope.checkBefore2Load = function(){
   }
   $scope.companyN = localStorage.getItem("nameCompany");
     $scope.home = true;
+    $scope.dhboard();
 }
  /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
 /* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/

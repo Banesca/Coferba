@@ -141,7 +141,7 @@
                       <button ng-disabled="sessionidProfile==3 && item.isAprobatedAdmin!=1" type="button" ng-click="selectTableRow($index, item.idDepartment); isAllowed=item.isAprobatedAdmin" class="btn btn-lg btn-info">
                         <i title="Ver Inquilinos" class="glyphicon glyphicon-user"></i> Inquilinos
                       </button>
-                       <button ng-if="sessionidProfile==3 && item.isAprobatedAdmin==1" type="button" ng-click="modalConfirmation('remove', 0, item)" class="btn btn-lg btn-danger">
+                       <button ng-if="sessionidProfile==3 && item.isAprobatedAdmin==1" type="button" ng-click="modalConfirmation('removet', 0, item)" class="btn btn-lg btn-danger">
                         <i title="Ver Inquilinos" class="glyphicon glyphicon-remove-sign"></i> Darme de Baja
                       </button>
 
@@ -163,7 +163,7 @@
                       </button>
                         <ul class="dropdown-menu">
                             <li><a ng-click="approveDepto(item.idDepartment)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf>0"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Aprobar</a></li>
-                            <li><a ng-click="modalConfirmation('remove', 0, item)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf>0 && item.isRequesLowByProp>=0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
+                            <li><a ng-click="modalConfirmation('removet', 0, item)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf>0 && item.isRequesLowByProp>=0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
                             <li><a ng-click="fnAssignDepto(item.idDepartment,2, item.idTenantKf)" ng-if="item.isAprobatedAdmin==0 && (item.idTenantKf!=null || item.idTenantKf!=0) && item.isRequesLowByProp==0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
                             
                         </ul>
@@ -248,7 +248,7 @@
                                           <button type="button" ng-click="select2EditTenant(item);" class="btn btn-warning">
                                           <i title="Modificar Datos" class="glyphicon glyphicon-edit"></i> Editar 
                                           </button>
-                                          <button type="button" ng-click="modalConfirmation('remove', 0, item)" class="btn btn-danger">
+                                          <button type="button" ng-click="modalConfirmation('removet', 0, item)" class="btn btn-danger">
                                           <i title="Eliminar Inquilino" class="glyphicon glyphicon-remove-circle"></i> Eliminar 
                                           </button>
                                         </div>
