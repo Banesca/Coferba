@@ -112,7 +112,8 @@ class User_model extends CI_Model
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
             'idStatusKf' => 0,
-            'idCompanyKf' => $user['idCompanyKf']
+            'idCompanyKf' => $user['idCompanyKf'],
+            'resetPasword' => 1
                 )
         );
 
