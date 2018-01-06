@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'db_coferba',
+	'hostname' => 'c137admincoferba',
+	'username' => 'c137admincoferba',
+	'password' => 'AdMg1210',
+	'database' => 'c137coferba',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

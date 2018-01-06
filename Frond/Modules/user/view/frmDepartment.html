@@ -141,7 +141,7 @@
                       <button ng-disabled="sessionidProfile==3 && item.isAprobatedAdmin!=1" type="button" ng-click="selectTableRow($index, item.idDepartment); isAllowed=item.isAprobatedAdmin" class="btn btn-lg btn-info">
                         <i title="Ver Inquilinos" class="glyphicon glyphicon-user"></i> Inquilinos
                       </button>
-                       <button ng-if="sessionidProfile==3 && item.isAprobatedAdmin==1" type="button" ng-click="modalConfirmation('remove', 0, item)" class="btn btn-lg btn-danger">
+                       <button ng-if="sessionidProfile==3 && item.isAprobatedAdmin==1" type="button" ng-click="modalConfirmation('removet', 0, item)" class="btn btn-lg btn-danger">
                         <i title="Ver Inquilinos" class="glyphicon glyphicon-remove-sign"></i> Darme de Baja
                       </button>
 
@@ -163,7 +163,7 @@
                       </button>
                         <ul class="dropdown-menu">
                             <li><a ng-click="approveDepto(item.idDepartment)" ng-if="item.isAprobatedAdmin==0 && item.idTenantKf>0"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Aprobar</a></li>
-                            <li><a ng-click="modalConfirmation('remove', 0, item)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf>0 && item.isRequesLowByProp>=0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
+                            <li><a ng-click="modalConfirmation('removet', 0, item)" ng-if="item.isAprobatedAdmin==1 && item.idTenantKf>0 && item.isRequesLowByProp>=0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Dar Baja</a></li>
                             <li><a ng-click="fnAssignDepto(item.idDepartment,2, item.idTenantKf)" ng-if="item.isAprobatedAdmin==0 && (item.idTenantKf!=null || item.idTenantKf!=0) && item.isRequesLowByProp==0"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Cancelar</a></li>
                             
                         </ul>
@@ -182,9 +182,8 @@
                 <tr collapse="dayDataCollapse[$index]" ng-repeat-end="">
                   <!-- G E S T I O N   D E   I N Q U L I N O S -->
                   <td colspan="4" >
-                    <div >
                       <div ng-show="tenantNotFound && sessionidProfile!=0 && select.idAddressAtt" class="alert alert-info" role="alert">
-                            <strong>INFO: </strong>No hay Inquilinos registrados en el departamento seleccionada.
+                          <strong>INFO: </strong>No hay Inquilinos registrados en el departamento seleccionada.
                       </div>
                       <div ng-if="tenantNotFound!=true && sessionidProfile!=0" class="panel panel-default">
                         <div class="panel-heading">
@@ -228,66 +227,67 @@
                                   </div>
                                 </div>
                             </div>
-                                    <table  class="table  table-striped table-responsive">
-                                      <thead style=" background: #4d5d6f; color: white;">
-                                        <tr >
-                                            <th>#</th>
-                                            <th>ID</th>
-                                            <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
-                                            <th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
-                                            <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>
-                                            <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
-                                            <th>Tipo de Habitante</th>
-                                            <th><i class="glyphicon icon-flag"> </i> Status</th>
-                                            <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr style="align-content: center;" ng-repeat="item in listTenant | filter: searchboxfilter | filter: {idTypeKf:filterTenant}">
-                                            <td>
-                                              <div class="btn-group">
-                                                <button type="button" ng-click="select2EditTenant(item);" class="btn btn-warning">
-                                                <i title="Modificar Datos" class="glyphicon glyphicon-edit"></i> Editar 
-                                                </button>
-                                                <button type="button" ng-click="modalConfirmation('remove', 0, item)" class="btn btn-danger">
-                                                <i title="Eliminar Inquilino" class="glyphicon glyphicon-remove-circle"></i> Eliminar 
-                                                </button>
-                                              </div>
-                                            </td>
-                                            <td>{{item.idTenant}}</td>
-                                            <td>{{item.fullNameTenant}}</td>
-                                            <td ng-if="item.phoneNumberTenant">{{item.phoneNumberTenant}}</td>
-                                            <td ng-if="!item.phoneNumberTenant"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span></td>
-                                            <td ng-if="item.phoneNumberContactTenant">{{item.phoneNumberContactTenant}}</td>
-                                            <td ng-if="!item.phoneNumberContactTenant"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span</td>
-                                            <td>{{item.emailTenant}}</td>
-                                            <td ng-if="item.idTypeKf==1 && isAllowed!=1" >Propietario <span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp &nbsp No Autorizado</span></td>
-                                            <td ng-if="item.idTypeKf==1 && isAllowed==1" >Propietario</td>
-                                            <td ng-if="item.idTypeKf==2">Inquilino</td>
-                                            <td> <!-- TD to Admins -->
-                                              <div class="btn-group">
-                                                <button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO | 
-                                                  <span class="caret"></span>
-                                                  <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                 <button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO | 
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                  </button>
-                                                  <button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                  </button>
-                                                <ul ng-show="item.idStatusKf==0 || sessionidProfile!=3" class="dropdown-menu">
-                                                  <li><a ng-click="enabledTenant(item.idTenant)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
-                                                  <li><a ng-click="disabledTenant(item.idTenant)" ng-if="item.idStatusKf>0 && sessionidProfile!=3"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
-                                                </ul>
-                                              </div>
-                                            </td>
-                                            <td>{{item.dateCrated}}</td>
-                                        </tr>
-                                    </tbody>
-                                  </table>
+                            <table  class="table  table-striped table-responsive">
+                                <thead style=" background: #4d5d6f; color: white;">
+                                  <tr >
+                                      <th>#</th>
+                                      <th>ID</th>
+                                      <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
+                                      <th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
+                                      <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>
+                                      <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
+                                      <th>Tipo de Habitante</th>
+                                      <th><i class="glyphicon icon-flag"> </i> Status</th>
+                                      <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr style="align-content: center;" ng-repeat="item in listTenant | filter: searchboxfilter | filter: {idTypeKf:filterTenant}">
+                                      <td>
+                                        <div class="btn-group">
+                                          <button type="button" ng-click="select2EditTenant(item);" class="btn btn-warning">
+                                          <i title="Modificar Datos" class="glyphicon glyphicon-edit"></i> Editar 
+                                          </button>
+                                          <button type="button" ng-click="modalConfirmation('removet', 0, item)" class="btn btn-danger">
+                                          <i title="Eliminar Inquilino" class="glyphicon glyphicon-remove-circle"></i> Eliminar 
+                                          </button>
+                                        </div>
+                                      </td>
+                                      <td>{{item.idTenant}}</td>
+                                      <td>{{item.fullNameTenant}}</td>
+                                      <td ng-if="item.phoneNumberTenant">{{item.phoneNumberTenant}}</td>
+                                      <td ng-if="!item.phoneNumberTenant"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span></td>
+                                      <td ng-if="item.phoneNumberContactTenant">{{item.phoneNumberContactTenant}}</td>
+                                      <td ng-if="!item.phoneNumberContactTenant"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span>
+                                      </td>
+                                      <td>{{item.emailTenant}}</td>
+                                      <td ng-if="item.idTypeKf==1 && isAllowed!=1" >Propietario <span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp &nbsp No Autorizado</span></td>
+                                      <td ng-if="item.idTypeKf==1 && isAllowed==1" >Propietario</td>
+                                      <td ng-if="item.idTypeKf==2">Inquilino</td>
+                                      <td> <!-- TD to Admins -->
+                                        <div class="btn-group">
+                                          <button type="button" ng-if="item.idStatusKf==1" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ACTIVO | 
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                          </button>
+                                           <button type="button" ng-if="item.idStatusKf==0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> INACTIVO | 
+                                              <span class="caret"></span>
+                                              <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <button type="button" ng-if="item.idStatusKf<0" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ELIMINADO | 
+                                              <span class="caret"></span>
+                                              <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                          <ul ng-show="item.idStatusKf==0 || sessionidProfile!=3" class="dropdown-menu">
+                                            <li><a ng-click="enabledTenant(item.idTenant)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
+                                            <li><a ng-click="disabledTenant(item.idTenant)" ng-if="item.idStatusKf>0 && sessionidProfile!=3"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
+                                          </ul>
+                                        </div>
+                                      </td>
+                                      <td>{{item.dateCrated}}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
                           </div>
                       </div>
                     </div>

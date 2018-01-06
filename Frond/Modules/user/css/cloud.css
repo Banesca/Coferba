@@ -85,7 +85,6 @@ box-shadow: none;
 .pagination select{
     margin: 0; padding:0; height:23px;
 }
-ul, ol { margin: 0;padding: 0; }
 .btn i { filter:alpha(opacity=80);
     -moz-opacity:0.8;
     opacity: 0.8;
