@@ -69,16 +69,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
+
+	'hostname' => 'c137admincoferba',
+	'username' => 'c137admincoferba',
+	'password' => 'AdMg1210',
+	'database' => 'c137coferba',
+	'dbdriver' => 'mysqli',
 */
 $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'c137admincoferba',
-	'username' => 'c137admincoferba',
-	'password' => 'AdMg1210',
-	'database' => 'c137coferba',
+	'hostname' => 'localhost', 
+	'username' => 'root', 
+	'password' => '', 
+	'database' => 'db_coferba', 
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
