@@ -326,7 +326,7 @@ $scope.officeListByCompnayID = function(){
 
    $http({
       method : "GET",
-      url : $scope.serverHost+"Coferba/Back/index.php/DIreccion/companyByid/"+idCompanytmp
+      url : $scope.serverHost+"Coferba/Back/index.php/Direccion/companyByid/"+idCompanytmp
     }).then(function mySuccess(response) {
         $scope.listOffice   = response.data
         $scope.companyFound=true;
