@@ -4,13 +4,22 @@ app.config(function(blockUIConfig) {
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = true;
     });
+/**************************************************
+*                                                 *
+*          DATE FILTER FOR MYSQL TIMESTAMP        *
+*                                                 *
+**************************************************/
+app.filter('dateToISO', function() {
+  return function(input) {
+    input = new Date(input).toISOString();
+    return input;
+  }
+});
+/**************************************************************/
 app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeout, inform, $window) {
 /**************************************************************/
-<<<<<<< HEAD
-$scope.serverHost="http://coferba.com.ar/Coferba/";
-=======
 
->>>>>>> master
+
 /**************************************************
 *                                                 *
 *          COLLAPSE / EXPAND TABLE ROWS           *
@@ -35,19 +44,19 @@ $scope.serverHost="http://coferba.com.ar/Coferba/";
         if ($scope.dayDataCollapse === 'undefined') {
             $scope.dayDataCollapse = $scope.dayDataCollapseFn();
         } else {
-            console.log($scope.tableRowExpanded);
-            console.log($scope.tableRowIndexCurrExpanded);
+            console.log('Variable tableRowExpanded: '+$scope.tableRowExpanded);
+            console.log('Variable tableRowIndexCurrExpanded: '+$scope.tableRowIndexCurrExpanded);
             if ($scope.tableRowExpanded === false && $scope.tableRowIndexCurrExpanded === "") {
                 $scope.tableRowIndexPrevExpanded = "";
                 $scope.tableRowExpanded = true;
                 $scope.tableRowIndexCurrExpanded = $scope.vIndex;
-                console.log(idDeptoKf+' / ' +$scope.vIndex)
+                console.log('Id del Departamento: '+idDeptoKf+' / Index Id de la tabla: ' +$scope.vIndex);
                 $scope.searchTenant('listTenant', idDeptoKf);
             } else if ($scope.tableRowExpanded === true) {
                 if ($scope.tableRowIndexCurrExpanded === $scope.vIndex) {
                     $scope.tableRowExpanded = false;
                     $scope.tableRowIndexCurrExpanded = "";
-                    console.log(idDeptoKf+' / ' +$scope.vIndex)
+                    console.log('Id del Departamento: '+idDeptoKf+' / Index Id de la tabla: ' +$scope.vIndex);
                     console.log("ENTRO EN EL ROWEXPANDED TRUE")
                     $scope.dayDataCollapse[$scope.vIndex] = true;
                     $scope.vIndex =null;
@@ -580,8 +589,8 @@ $scope.listUserDepto = function(value){
 **************************************************/
 $scope.fnAssignDepto = function(item1, item2){
   var fnAction= $scope.sessionidProfile==3 ? 0 : item2;
-  console.log($scope._getData2AssignDepto(item1));
-  $http.post($scope.serverHost+"Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(item1),setHeaderRequest())
+  console.log($scope._getData2AssignDepto(item1, item2));
+  $http.post($scope.serverHost+"Coferba/Back/index.php/Department/update",$scope._getData2AssignDepto(item1, item2),setHeaderRequest())
         .then(function(success, data) {
             if ($scope.sessionidProfile==3 && fnAction==0){
                 inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
@@ -603,7 +612,7 @@ $scope.fnAssignDepto = function(item1, item2){
            
         }); 
 }
-$scope._getData2AssignDepto = function (item1) {
+$scope._getData2AssignDepto = function (item1, item2) {
   var idTenantUsertmp =$scope.sessionidProfile==3 ? $scope.sessionidTenantUser : $scope.idTenantKf
   var idDepartmentKf  = !$scope.select.idDepartmentKf ? item1 : $scope.select.idDepartmentKf
   var dpto =
@@ -1312,7 +1321,7 @@ $scope.updateUser = function (itemId) {
 **************************************************/
 $scope.deleteUser = function (itemId) {
 $http({
-    method : "GET",
+    method : "delete",
     url : $scope.serverHost+"Coferba/Back/index.php/User/delete/"+itemId
   }).then(function mySuccess(response) {
       $scope.CallFilterFormT();
@@ -2649,6 +2658,9 @@ function cleanForms (){
     $scope.listTenant                 ="";
     $scope.filterMTenant              ="";
     $scope.idDepartmentKf             ="";
+    $scope.select.idCompanyKf         ="";
+    $scope.select.idAddressAtt        ="";
+    $scope.select.idDepartmentKf      ="";
         
 }
 /**************************************************/

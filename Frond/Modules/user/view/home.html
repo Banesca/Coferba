@@ -168,45 +168,45 @@
                             <label style="font-size: 20px;">{{totalTickets}}</label>
                         </div>
                 </div>
-
-                <div style="background: #737373; margin-top: 130px;">
-
-                    <div class="col-lg-12" 
-                        ng-repeat="tk in listTickt"
-                        style="background-color: #ced3d6;
-                        height: 82px;
-                        border-radius: 10px;
-                        padding: 10px;
-                        margin-bottom: 5px;">
-                            <div class="col-lg-10">
-                                <label>{{tk.codTicket}}</label>
-                                <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
-                                <br>
-                                <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
-                                <label>Creado {{tk.dateCratedTicket}}</label> - 
-                                <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
-                                <label>Cliente:{{tk.fullNameTenant}}</label> - 
-                                <label ng-if="!tk.phoneNumberTenant">No registrado</label> 
-                                <label ng-if="tk.phoneNumberTenant">{{tk.phoneNumberTenant}}</label> 
-                            </div>
-                        
-                            <div class="col-lg-2">
-                                    <!-- Split button -->
-                                <div class="btn-group">
-                                <button type="button" class="btn btn-success">{{tk.statusName}}</button>
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
-                                </ul>
-                                </div>
-                            </div>              
-                    </div>
-                </div>
             </div>
         </div>
+            <div style="background: #737373;margin-top: 80px;">
+
+                <div class="col-lg-12" 
+                    ng-repeat="tk in listTickt"
+                    style="background-color: #ced3d6;
+                    height: 82px;
+                    border-radius: 10px;
+                    padding: 10px;
+                    margin-bottom: 5px;">
+                        <div class="col-lg-10">
+                            <label>{{tk.codTicket}}</label>
+                            <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
+                            <br>
+                            <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
+                            <label>Creado {{tk.dateCratedTicket}}</label> - 
+                            <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
+                            <label>Cliente:{{tk.fullNameTenant}}</label> - 
+                            <label ng-if="!tk.phoneNumberTenant">No registrado</label> 
+                            <label ng-if="tk.phoneNumberTenant">{{tk.phoneNumberTenant}}</label> 
+                        </div>
+                    
+                        <div class="col-lg-2">
+                                <!-- Split button -->
+                            <div class="btn-group">
+                            <button type="button" class="btn btn-success">{{tk.statusName}}</button>
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
+                            </ul>
+                            </div>
+                        </div>              
+                </div>
+            </div>
+
     </div>
 </div>
     
