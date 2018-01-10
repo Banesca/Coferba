@@ -147,7 +147,27 @@ class User_model extends CI_Model
                     return null;
                 }
             }
- 
+        /* EDITAR DATOS DE UN ENCARGADO */
+    public function updateAttendant($user) {
+
+        $this->db->set(
+                array(
+                    'nameAttendant' => $user['nameAttendant'],
+                    'idAddresKf' => $user['idAddresKf'],
+                    'phoneAttendant' => $user['phoneAttendant'],
+                    'phoneLocalAttendant' => $user['phoneLocalAttendant'],
+                    'mailAttendant' => $user['mailAttendant'],
+                    'hoursWork' => $user['hoursWork']
+                )
+        )->where("idAttendant", $user['idAttendant'])->update("tb_attendant");
+
+        
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     
 

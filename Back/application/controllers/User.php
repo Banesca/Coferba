@@ -291,6 +291,20 @@ class User extends REST_Controller {
         }
                
 	}
+    public function updateAtt_post() {
+
+        if (!$this->post('attendant')) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = $this->user_model->updateAttendant($this->post('attendant'));
+
+        if (!is_null($rs)) {
+            $this->response(array('response' => "ENCARGADO EDITADO"), 200);
+        } else {
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+        }
+    }
 
 }
 ?>

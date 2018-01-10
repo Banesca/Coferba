@@ -29,7 +29,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
@@ -41,7 +41,7 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 					                        <option value="" >Seleccione un consorcio</option>
 					                      </select>
 					                    </div>
@@ -53,7 +53,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
@@ -66,10 +66,15 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData(); enabledNextBtn();" ng-model="select.nameAtt" autofocus >
+										  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData(); editAttendant=false; saveAttendant=false; enabledNextBtn();" ng-model="select.nameAtt" autofocus >
 												    <option value="">Seleccione un encargado</option>
 											    </select>
-											    <span ng-show="attendantFound==true && sessionidProfile!=3" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+											    <!--BUTTONS -->
+											    <span ng-show="attendantFound==true && sessionidProfile!=3 && select.nameAtt && !saveAttendant" style="cursor: pointer;" ng-click="editAttendant=true; saveAttendant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
+											    <span ng-show="attendantFound==true && sessionidProfile!=3 && select.nameAtt && editAttendant" style="cursor: pointer;" ng-click="editAttendant=true" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
+											    <span ng-show="attendantFound==true && sessionidProfile!=3 && !select.nameAtt" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a>
+											    </span>
+											    <!-- //BUTTONS -->
 										    </div>
 									  	</div>
 								</div>
@@ -79,7 +84,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-										  		<input name="localPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="localPhoneAtt" type="text" required autofocus />
+										  		<input name="localPhoneAtt" ng-disabled="!editAttendant && sessionidProfile!=0" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="localPhoneAtt" type="text" required autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -89,7 +94,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-									  		<input name="movilPhoneAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAtt" type="text" required autofocus />
+									  		<input name="movilPhoneAtt" ng-disabled="!editAttendant && sessionidProfile!=0" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAtt" type="text" required autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -99,7 +104,7 @@
 								   <div class="col-md-4">
 								    <div class="input-group">
 								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								  		<input name="emailAtt" ng-disabled="sessionidProfile!=1 || sessionidProfile!=4" placeholder="E-Mail" class="form-control" ng-model="emailAtt"  type="email" required autofocus />
+								  		<input name="emailAtt" ng-disabled="!editAttendant && sessionidProfile!=0" placeholder="E-Mail" class="form-control" ng-model="emailAtt"  type="email" required autofocus />
 								    </div>
 								  </div>
 								</div>

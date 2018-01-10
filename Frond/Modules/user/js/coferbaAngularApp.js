@@ -428,6 +428,10 @@ $scope.getAllAddressByIdTenant = function (){
 **************************************************/
   $scope.select={idAddressAtt:''};
   $scope.getAllAttendant = function(){
+    $scope.localPhoneAtt  = ""; 
+    $scope.movilPhoneAtt  = "";
+    $scope.emailAtt       = "";
+    $scope.select.nameAtt = "";
     $scope.select.idDepartmentKf = "";
     var idAddressAttKf=$scope.select.idAddressAtt;
      $http({
@@ -1058,7 +1062,7 @@ $scope.sysFunctionsUser = function(sMenu, aVar){
 *                                                 *
 **************************************************/
 $scope.tmp={fullNameUser:'',emailUser : '', phoneNumberUser : '', phoneLocalNumberUser : '', idProfileKf : '', idUser : ''}
-function sysLoginUser($http,$scope){  
+function sysLoginUser($http,$scope,vOp){  
     $http.post($scope.serverHost+"Coferba/Back/index.php/User/auth",$scope._getLoginData(),setHeaderRequest())
         .then(function(data) {
          if (typeof(data.data.response) === "undefined"){
@@ -1070,7 +1074,7 @@ function sysLoginUser($http,$scope){
                $scope.rsJSON=data.data.response;
                console.log(data.data.response);
                 if($scope.rsJSON.resetPasword==1){
-                  inform.add('Recorda: '+ $scope.rsJSON.fullNameUser + ' que no puedes usar la misma clave o claves anteriores.',{
+                  inform.add('Recorda: '+ $scope.rsJSON.fullNameUser + ' que no podes usar la misma clave o claves anteriores.',{
                         ttl:3000, type: 'wrining'
                   }); 
              
@@ -1104,9 +1108,18 @@ function sysLoginUser($http,$scope){
 
             }
         },function (error, data, status) {
-            if(status == 404){alert("!Informacion "+status+data.error+"info");}
-            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error ! "+status+" Contacte a Soporte");}
+            if(status == 404 || status == 203){
+              console.log("!Informacion: "+error.data.error+"info");
+              inform.add(error.data.error,{
+                ttl:5000, type: 'warning'
+              }); 
+            }
+            else{
+              console.log("!Informacion: "+error.data.error+"info");
+              inform.add(error.data.error,{
+                ttl:5000, type: 'warning'
+              }); 
+            }
            
         });   
         
@@ -2470,10 +2483,12 @@ $scope._getData2RequestOther = function () {
 $scope.sideBarMenu = function(value, fnAction){
   switch (value){
     case "user":
+      cleanForms();
       $('#RegisterModalUser').modal('toggle');
 
     break;
     case "att":
+      $scope.select.idAddressAtt = "";
       $('#RegisterModalAtt').modal('toggle');
     break;
     case "smtp":
@@ -2552,7 +2567,7 @@ $scope.getSmtpMail2Update = function () {
 /**************************************************/
 /**************************************************
 *                                                 *
-*                MAIL PRINCIPAL                   *
+*                 SERVICE COST                    *
 *                                                 *
 **************************************************/
 $scope.varSuccessFnCost = 0;
@@ -2619,6 +2634,7 @@ $scope.logout = function(){
 *                                                 *
 **************************************************/
 function cleanForms (){
+
     $scope.select.idAddressAtt        = "";
     $scope.select.idAddressKf         = "";
     $scope.select.nameAtt             = "";
@@ -2661,6 +2677,8 @@ function cleanForms (){
     $scope.select.idCompanyKf         ="";
     $scope.select.idAddressAtt        ="";
     $scope.select.idDepartmentKf      ="";
+    $scope.editAttendant              = false;
+    $scope.saveAttendant              = false;
         
 }
 /**************************************************/
@@ -2850,6 +2868,7 @@ $scope.fnShowHide = function(divId, divAction) {
       break;
       case "sysConfig":
           closeAllDiv();
+          cleanForms();
         if(divAction=="open"){
           $scope.loadParameter(1, 6,'sysParam');
           $scope.rusysconfig = true;
@@ -2906,11 +2925,11 @@ var filterSearch     = $scope.filters.searchFilter,
          $scope.totalTickets = $scope.listTickt.length;
     },function (error, data,status) {
       if(status == 203){
-        console.log("!Informacion "+status,data.error+"info");
+        console.log("!Informacion: "+error.data.error+" info");
       }else{
         console.log(error.data.error);
         $scope.listTickt =  "";
-         $scope.totalTickets = 0;
+        $scope.totalTickets = 0;
       }
       inform.add(error.data.error,{
                 ttl:5000, type: 'warning'
