@@ -2902,8 +2902,6 @@ $scope.dhboard = function(){
 $scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filters.idTypeTicketKf;
 $scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.idAddress;
 
-
-if ($scope.manageDepto==0){
 var filterSearch     = $scope.filters.searchFilter,
     filterTop        = $scope.filters.topDH,
     filterProfile    = $scope.sessionidProfile,
@@ -2926,31 +2924,6 @@ var filterSearch     = $scope.filters.searchFilter,
        idAdress            : filterAddress,
        idStatusTicketKf    : filterStatus
   }
-}else if ($scope.manageDepto==1){
-    filterSearch     = "",
-    filterTop        = 0,
-    filterProfile    = $scope.sessionidProfile == 3 ? $scope.sessionidProfile : 0;
-    filterTenantKf   = $scope.sessionidProfile == 3 ? $scope.sessionidTenantUser : $scope.idTenantKf,
-    filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf,
-    filterTypeTicket = 0,
-    filterAddress    = $scope.select.idAddressAtt,
-    filterStatus     = null;
-    filterIdUser     = $scope.sessionidProfile == 3 ? $scope.sessionidUser : 0;
-  $searchFilter= 
-  {
-       idUserKf            : filterIdUser,
-       idOWnerKf           : filterTenantKf,
-       searchFilter        : filterSearch,
-       topFilter           : filterTop, 
-       idProfileKf         : filterProfile,
-       idTenant            : $scope.idTenantKf,  
-       idCompanyKf         : filterCompany,
-       idTypeTicketKf      : filterTypeTicket,
-       idAdress            : filterAddress,
-       idStatusTicketKf    : filterStatus
-  }
-
-}
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
       if ($scope.manageDepto==0){
