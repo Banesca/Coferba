@@ -7,7 +7,7 @@ $(window).on('load', function() { // makes sure the whole site is loaded  #14162
 })
 /*JQUERY SHOW/HIDE FUNCTIONS */
 $(document).ready(function() {
-    $(function () {
+$(function () {
   $('.input--tel').mask('(054) 9 99 9999-9999');
   
   $('.input--tel').on('focus', function () {

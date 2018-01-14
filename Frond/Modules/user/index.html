@@ -110,7 +110,7 @@
 							    <li id="m_depto" ng-show="sessionidProfile!=2">
 							       <a href="#Departamentos" ng-click="fnShowHide('managedepto', 'open')"> 
 							          <i class="icon-building"></i>
-							          <br>Gestion de Departamento
+							          <br>Gestion de Edificio
 							       </a>
 							    </li>
 							    <!--<li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
@@ -159,6 +159,9 @@
 						        <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio">Servicio Tecnico</a>
 						    </li>
 						    <li ng-show="sessionidProfile!=1"class="cms"> <!--class="im active"-->
+						        <a ng-click="fnShowHide('ruother', 'open')" href="#Costos">Otros<i class=""></i></a>
+						    </li>
+						    <li ng-show="sessionidProfile==4"class="cms"> <!--class="im active"-->
 						        <a ng-click="fnShowHide('ruother', 'open')" href="#Otros">Otros<i class=""></i></a>
 						    </li>
 			    		</ul>
@@ -817,11 +820,11 @@
 										<!-- New Password Check-->
 
 										<div class="form-group">
-										  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
+										  <label class="col-md-4 control-label">Confirme Contrase&#241a Nueva</label>  
 										    <div class="col-md-6">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
+											  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
 											    </div>
 											    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
       													Debe ser de 8 a 20 caracteres alfanumericos.

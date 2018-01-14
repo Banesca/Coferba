@@ -165,7 +165,7 @@
       <div ng-click="sideBarMenu('user')"><a href="#"><i class="icon-group"></i> Registrar Usuarios</a></div>
       <div ng-click="sideBarMenu('att')"><a href="#"><i class="icon-user"></i>Registrar Encargados</a></div>
       <div ng-click="sideBarMenu('smtp', 'open')"><a href="#"><i class="icon-envelope"></i>Configurar Correo</a></div>
-      <div ng-click="sideBarMenu('services', 'open')"><a href="#"><i class="icon-usd"></i>Configurar costos</a></div>
+      <div ng-click="sideBarMenu('services', 'open')"><a href="#"><i class="icon-usd"></i>Costos de Servicios</a></div>
       <div><a href="#"><i class="icon-bar-chart"></i> Reportes</a></div>
   </div>
   <div class="white-label"></div> 
@@ -432,27 +432,50 @@
 <div id="ModalServiceCost" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
   	<div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
-	      	<div class="modal-body">
+	      	<div class="modal-body" style="overflow-y: scroll;">
 				<div class="agileits-w3layouts"> 
 		          	<div class="panel panel-default">
 		              	<div class="panel-heading">
-		                	<h3 class="panel-title">CONFIGURAR COSTOS DE SERVICIOS<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		                	<h3 class="panel-title">COSTOS DE SERVICIOS<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
 		            	</div>
-		            		<div class="panel-body" style="overflow-y: scroll;">
+		            		<div class="panel-body" >
 								<!-- FORM CONTAINER-->
 									<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('services', 'save')">
 										<fieldset>
-										<!-- Service-->
-
+										
+										<!-- Company Name-->    
 										<div class="form-group">
-										  <label class="col-md-4 control-label">Servicio</label>  
-										    <div class="col-md-4">
+										  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Administracion</label>
+										    <div class="col-md-6">
 											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-											  		<input name="configService" placeholder="Costo por servicio" class="form-control" ng-model="config.service" type="number" required autofocus />
+											        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+											  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+
+											  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+													    	<option value="">Seleccione una opcion</option>
+												    </select>
 											    </div>
+										  	</div>
+										</div>
+										<!-- List Address-->
+										      
+										<div class="form-group" ng-show="sessionidProfile!=3">
+										  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion de Consorcio</label>   
+										    <div class="col-md-6">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+											  		<select name="idAddressKf" ng-disabled="!select.idCompanyKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+													    <option value="">Seleccione una opcion</option>
+												    	</select>
+											    </div>
+										  </div>
+										</div>
+										<!-- Service-->
+										<div class="form-group">
+										  <label class="col-md-4 control-label"></label>  
+										    <div class="col-md-6">
 											    <div ng-show="costService" class="alert alert-info" role="alert">
-            										<strong>Costo Servicio: </strong>{{costService}}
+            										<strong>Costo Gestion (Alta / Baja): </strong>{{costService}}
             									</div>
             									<div ng-show="!costService" class="alert alert-warning" role="alert">
             										<strong>Costo Servicio: </strong>Valor No Asignado.
@@ -462,12 +485,8 @@
 										<!-- Key-->
 
 										<div class="form-group">
-										  <label class="col-md-4 control-label">Llave</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input name="configKey" placeholder="Costo por llave" class="form-control" ng-model="config.key" type="number" required autofocus />
-											    </div>
+										  <label class="col-md-4 control-label"></label>  
+										    <div class="col-md-6">
 											    <div ng-show="costKey" class="alert alert-info" role="alert">
             										<strong>Costo de Llave: </strong>{{costKey}}
             									</div>
@@ -479,12 +498,8 @@
 										<!-- Delivery-->
 
 										<div class="form-group">
-										  <label class="col-md-4 control-label">Delivery</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input name="configDelivery" placeholder="Costo por servicio de envio" class="form-control" ng-model="config.delivery" type="number" required autofocus />
-											    </div>
+										  <label class="col-md-4 control-label"></label>  
+										    <div class="col-md-6">
 											    <div ng-show="costDelivery" class="alert alert-info" role="alert">
             										<strong>Costo de Envio: </strong>{{costDelivery}}
             									</div>
@@ -496,8 +511,8 @@
 										<!-- Actions Button -->
 										<div class="form-group">
 										  <label class="col-md-4 control-label"></label>
-										  <div class="col-md-4">
-										    <button type="submit" class="btn btn-primary" ><i class="glyphicon glyphicon-save"> </i>Guardar</button>
+										  <div class="col-md-6">
+										    <button data-dismiss="modal" class="btn btn-primary" ><i class="glyphicon glyphicon-remove-sign"> </i> Cerrar</button>
 										  </div>
 										</div>
 

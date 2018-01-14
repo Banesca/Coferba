@@ -2074,6 +2074,8 @@ $scope.mess2show="";
               $scope.idDeparmentKf=  !obj.idDepartmentKf ? obj.idDepartment : obj.idDepartmentKf;
               $scope.idDeparmentKf=  !$scope.idDeparmentKf ? $scope.idDeptoKf : $scope.idDeparmentKf;
               $scope.typeTenantKf =  !obj.idTypeKf ? 1 : obj.idTypeKf;
+              alert($scope.manageDepto);
+              $scope.dhboard();
               console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO: '+$scope.typeTenantKf);
               console.log(obj)
           }else if($scope.sessionidProfile==3){
@@ -2081,8 +2083,11 @@ $scope.mess2show="";
               $scope.idDeparmentKf=obj.idDepartment;
               $scope.typeTenantKf =1;
               console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO: '+$scope.typeTenantKf);
+
+              $scope.dhboard();
+              alert($scope.isHasTicket);
           }
-        $('#confirmRequestModal').modal('toggle');
+        //$('#confirmRequestModal').modal('toggle');
       }else if (confirm==1){
         $scope.IsFnRemove=true;
             $scope.fnRemoveTenant($http, $scope);
@@ -2483,7 +2488,6 @@ $scope._getData2RequestOther = function () {
 $scope.sideBarMenu = function(value, fnAction){
   switch (value){
     case "user":
-      cleanForms();
       $('#RegisterModalUser').modal('toggle');
 
     break;
@@ -2679,6 +2683,7 @@ function cleanForms (){
     $scope.select.idDepartmentKf      ="";
     $scope.editAttendant              = false;
     $scope.saveAttendant              = false;
+    $scope.manageDepto                = 0;
         
 }
 /**************************************************/
@@ -2886,7 +2891,8 @@ $scope.fnShowHide = function(divId, divAction) {
 
 /*jorge*/
 $scope.listTickt;
-$scope.filters={idTypeTicketKf: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', idStatusKf: ''}
+$scope.filters={idTypeTicketKf: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', idStatusKf: ''};
+$scope.isHasTicket = false;
 $scope.dhboard = function(){
 /******************************
 *                             *
@@ -2895,6 +2901,9 @@ $scope.dhboard = function(){
 ******************************/
 $scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filters.idTypeTicketKf;
 $scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.idAddress;
+
+
+if ($scope.manageDepto==0){
 var filterSearch     = $scope.filters.searchFilter,
     filterTop        = $scope.filters.topDH,
     filterProfile    = $scope.sessionidProfile,
@@ -2904,8 +2913,6 @@ var filterSearch     = $scope.filters.searchFilter,
     filterAddress    = $scope.filters.idAddress,
     filterStatus     = $scope.filters.idStatusKf;
     filterIdUser     = $scope.sessionidUser;
-
-// crea una varible que tenga esto $scope.serverHost+" y lo remplazas en los llamados a los servicios si va
   $searchFilter= 
   {
        idUserKf            : filterIdUser,
@@ -2913,27 +2920,63 @@ var filterSearch     = $scope.filters.searchFilter,
        searchFilter        : filterSearch,
        topFilter           : filterTop, 
        idProfileKf         : filterProfile,
-       idTenant            : filterTenantKf,  // y este lo envio igual ?
+       idTenant            : filterTenantKf,  
        idCompanyKf         : filterCompany,
        idTypeTicketKf      : filterTypeTicket,
        idAdress            : filterAddress,
        idStatusTicketKf    : filterStatus
   }
+}else if ($scope.manageDepto==1){
+    filterSearch     = "",
+    filterTop        = 0,
+    filterProfile    = $scope.sessionidProfile == 3 ? $scope.sessionidProfile : 0;
+    filterTenantKf   = $scope.sessionidProfile == 3 ? $scope.sessionidTenantUser : $scope.idTenantKf,
+    filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf,
+    filterTypeTicket = 0,
+    filterAddress    = $scope.select.idAddressAtt,
+    filterStatus     = null;
+    filterIdUser     = $scope.sessionidProfile == 3 ? $scope.sessionidUser : 0;
+  $searchFilter= 
+  {
+       idUserKf            : filterIdUser,
+       idOWnerKf           : filterTenantKf,
+       searchFilter        : filterSearch,
+       topFilter           : filterTop, 
+       idProfileKf         : filterProfile,
+       idTenant            : $scope.idTenantKf,  
+       idCompanyKf         : filterCompany,
+       idTypeTicketKf      : filterTypeTicket,
+       idAdress            : filterAddress,
+       idStatusTicketKf    : filterStatus
+  }
+
+}
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
+      if ($scope.manageDepto==0){
          $scope.listTickt =  sucess.data.response;
          $scope.totalTickets = $scope.listTickt.length;
-    },function (error, data,status) {
-      if(status == 203){
-        console.log("!Informacion: "+error.data.error+" info");
       }else{
-        console.log(error.data.error);
-        $scope.listTickt =  "";
-        $scope.totalTickets = 0;
+         $scope.isHasTicket = true;
+         console.log("POSEE TICKET")
+         console.log($scope.isHasTicket);
       }
-      inform.add(error.data.error,{
+    },function (error, data,status) {
+      if ($scope.manageDepto==0){
+        if(status == 203 || status == 404){
+          console.log("!Informacion: "+error.data.error+" info");
+        }else{
+          console.log(error.data.error);
+          $scope.listTickt =  "";
+          $scope.totalTickets = 0;
+        }
+        inform.add(error.data.error,{
                 ttl:5000, type: 'warning'
-      }); 
+        }); 
+      }else{
+         console.log("NO POSEE TICKET")
+         $scope.isHasTicket = false;
+      }
     });
 }
 
