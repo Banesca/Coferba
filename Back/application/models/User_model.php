@@ -136,7 +136,9 @@ class User_model extends CI_Model
                     'phoneAttendant' => $user['phoneAttendant'],
                     'phoneLocalAttendant' => $user['phoneLocalAttendant'],
                     'mailAttendant' => $user['mailAttendant'],
-                    'hoursWork' => $user['hoursWork']
+                    'hoursWork' => $user['hoursWork'],
+                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf']
+
                         )
                 );
         
@@ -147,7 +149,9 @@ class User_model extends CI_Model
                     return null;
                 }
             }
-        /* EDITAR DATOS DE UN ENCARGADO */
+
+
+    /* EDITAR DATOS DE UN ENCARGADO */
     public function updateAttendant($user) {
 
         $this->db->set(
@@ -157,7 +161,8 @@ class User_model extends CI_Model
                     'phoneAttendant' => $user['phoneAttendant'],
                     'phoneLocalAttendant' => $user['phoneLocalAttendant'],
                     'mailAttendant' => $user['mailAttendant'],
-                    'hoursWork' => $user['hoursWork']
+                    'hoursWork' => $user['hoursWork'],
+                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf']
                 )
         )->where("idAttendant", $user['idAttendant'])->update("tb_attendant");
 
@@ -391,6 +396,23 @@ public function updateMailSmtp($mail) {
 
         }
       
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    /* ESTATUS DE UN ENCARGADO */
+    public function changueStatusAntendant($id, $idStatus) {
+        $this->db->set(
+                array(
+                    'idStatusKf' => $idStatus
+                )
+        )->where("idAttendant", $id)->update("tb_attendant");
 
         if ($this->db->affected_rows() === 1) {
             return true;

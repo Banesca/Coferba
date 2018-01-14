@@ -276,6 +276,38 @@ class User extends REST_Controller {
         }
     }
 
+     /* SERVICIO INACTIVA  UN ENCARGADO POR ID */
+     public function antendant_delete($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->changueStatusAntendant($id, -1);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+     /* SERVICIO INACTIVA  UN ENCARGADO POR ID */
+     public function antendantActive_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->changueStatusAntendant($id, 1);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     public function attendant_post()
 	{
 
@@ -305,6 +337,7 @@ class User extends REST_Controller {
             $this->response(array('error' => "ERROR INESPERADO"), 500);
         }
     }
+    
 
 }
 ?>

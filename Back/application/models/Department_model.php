@@ -20,6 +20,7 @@ class Department_model extends CI_Model
         {
 
             $this->db->select("*")->from("tb_department");
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');            
             $this->db->where("tb_department.idStatusKf !=", -1);
             $quuery = $this->db->where("tb_department.idDepartment = ", $id)->get();
 

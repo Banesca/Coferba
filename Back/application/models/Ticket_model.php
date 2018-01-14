@@ -16,6 +16,40 @@ class Ticket_model extends CI_Model
     }
 
 
+    public function find($id)
+	{
+        
+
+        $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
+        $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
+        $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
+        $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
+        $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
+        $this->db->join('tb_reason_disabled_item', 'tb_reason_disabled_item.idReasonDisabledItem = tb_tickets.idReasonDisabledItemKf', 'left');
+        $this->db->join('tb_user a', 'a.idUser = tb_tickets.idUserCompany', 'left');
+        $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
+        $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
+        $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
+        $this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
+        $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
+        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');                        
+        $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
+        $query = $this->db->where("tb_tickets.idTicket =", @$id)->get();
+
+		 
+		
+		if($query->num_rows() == 1){ 
+
+			$user = $query->row_array();
+            return $user;
+        } 
+        else
+        {
+            return null;
+        }
+	}
+
+
     
 
     public function aprobated($id) {
@@ -121,10 +155,10 @@ class Ticket_model extends CI_Model
             'idBranchKf' => @$ticket['idBranchKf'],
             'idCompanyKf' => @$ticket['idCompanyKf'],
             'totalService' => @$ticket['totalService'],
-            'idAdressKf' => @$ticket['idAdressKf']
+            'idAdressKf' => @$ticket['idAdressKf'],
+            'idOtherKf' => @$ticket['idOtherKf']
             
-            
-
+        
 		)
         );
 
@@ -375,7 +409,6 @@ class Ticket_model extends CI_Model
 
 
      /* LISTADO DE FILTROS */
-
     public function getFilterForm() {
 
         $user = null;
@@ -445,6 +478,43 @@ class Ticket_model extends CI_Model
         );
 
         return $filter;
+    }
+
+
+    /* LISTADI DE TIPOS DE ENCARGADOS  */
+    public function getTypeAttendant() {
+
+        $typeAtendant = null;
+
+
+        /* LISTADO DE CONDICIONES DE IVA */
+        $query = $this->db->select("*")->from("tb_type_attendant")->order_by("tb_type_attendant.nameTypeAttendant", "DESC")->get();
+        if ($query->num_rows() > 0) {
+            $typeAtendant = $query->result_array();
+        }
+
+
+        return $typeAtendant;
+    }
+
+
+    /* LISTADI DE TIPOS DE ENCARGADOS  */
+    public function verificateTicketByIdTenant($id) {
+
+        $rs = null;
+
+
+        /* LISTADO DE CONDICIONES DE IVA */
+        $query = $this->db->select("*")->from("tb_tickets")
+        ->where("idTenantKf",$id)
+        ->where("idStatusTicketKf",2)
+        ->or_where("idStatusTicketKf",3)->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->num_rows();
+        }
+
+
+        return $rs;
     }
 
 
