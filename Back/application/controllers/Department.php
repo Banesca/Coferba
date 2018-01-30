@@ -109,6 +109,21 @@ class Department extends REST_Controller {
         }
     }
 
+    public function chekDepartamenteOwner_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->department_model->chekDepartamenteOwner($id);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     public function byIdDireccion_get($id,$idStatus) {
         if (!$id) {
             $this->response(NULL, 404);

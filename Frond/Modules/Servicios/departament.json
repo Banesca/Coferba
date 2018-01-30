@@ -87,3 +87,8 @@ METODO : get
 http://localhost/Coferba/Back/index.php/Direccion/byidTenant/2
 "1 es el id"
 METODO : get 
+
+
+---------------------- verificar si un departamento tienen dueno   --------------
+http://127.0.0.1:8888/Coferba/Back/index.php/Department/chekDepartamenteOwner/2
+METODO : get 

@@ -116,6 +116,23 @@ class Department_model extends CI_Model
         
     }
 
+
+    // VERIFICADOS SI EL DEPARTAMENTO POSEE UN PROPIETARIO //
+    public function chekDepartamenteOwner($id) {
+        $quuery = null;
+        $rs = null;
+
+        
+            $this->db->select("*")->from("tb_department");
+            $this->db->where("tb_department.idDepartment =", $id);
+            $quuery =  $this->db->where("tb_department.idUserAdminPropietariKf >", 0)->get();
+
+            if ($quuery->num_rows() > 0) {
+                return true;
+            }
+            return false;
+        
+    }
     
     
 
