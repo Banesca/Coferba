@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html  ng-app="coferbaApp" lang="es">
 <head>
-<title>Sistema Coferba</title><!--[if lt IE 9]><link rel="stylesheet" type="text/css" media="all" href="/static/css/style-ie.css"/><![endif]-->
+<title>Sistema Coferba</title>
 <meta content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0" name="viewport">
 
 <!-- Default Style Sheets -->
-<link href="css/bootstrap_system.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
 <!-- Bootstrap CSS -->
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
-<link rel="stylesheet" type="text/css" afrres="true" href="css/acsportal.packed.css">
-<link rel="stylesheet" type="text/css" afrres="true" href="css/cloud.css">
+
 <link rel="stylesheet" type="text/css" afrres="true" href="css/fa.min.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/angular-block-ui.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="css/angular-inform.min.css">
+
+
 <!-- Default Style Sheets -->
 <!-- User Style Sheets -->
-
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
 
 <!-- User Style Sheets -->
 <link rel="shortcut icon" href="images/favicon.ico">
@@ -46,128 +46,119 @@
     <noscript>This page uses JavaScript and requires a JavaScript enabled browser.Your browser is not JavaScript enabled.</noscript>
 <!--ANGULAR MODULE -->
 <div ng-controller="coferbaCtrl">
-	<div id="sytemHead" class="fixedHead"  ng-if="Token">
-		<div  id="navbar" class="navbar navbar-inverse navbar-fixed-top top-nav">
-		    <div class="navbar-inner m-h-30">
-		        <div class="container">
-		            <div>
-			            <div class="pull-left l-h-15 p-t-2 m-t-10">
-			                <a href="#" alt="Coferba Seguridad" class="ASC-logo pull-left h-25 i-b w-130 p-l-5 m-t--5"></a>
-			            </div>
-		                <ul class="nav pull-right">
-	    					<li>
-	                			<a href="#" class="p-r">
-				                    <i class="icon-envelope-alt"></i>
-				                    <font class="c-0">.</font>
-				                    <div id="notificationMessagesHeaderShow"></div>
-	                			</a>
-				                <div id="messageContainerView">
-				                </div>
-	    					</li>
-	                    	<li class="dropdown gray">
-		                        <a class="dropdown-toggle" data-toggle="dropdown" href="sistema.html">
-		                            <i class="icon-user"></i> {{sessionNames}} <i class="icon-caret-down"></i>
-		                        </a>
-		                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-		                        	<li role="presentation">
-		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="icon-user"></i> Usuario</a>
-		                            </li>
-		                            <li role="presentation">
-		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruchpwd', 'open')" tabindex="-1" role="menuitem"><i class="icon-key"></i> Cambiar clave</a>
-		                            </li>
-		                            <li role="presentation">
-		                                <div class="divider"></div>
-		                            </li>
-		                            <li role="presentation">
-		                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="logout()" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
-		                            </li>
-		                        </ul>
-	                    	</li>
-		                </ul>
-		            </div>
-		    	</div>
-			</div>
+	<!-- nav bar start -->
+	<nav ng-if="Token" class="navbar navbar-inverse navbar-custom navbar-fixed-top" role="navigation">
+		<div class="navbar-inverse navbar-inner m-h-30">
+	        <div class="container-fluid">
+	            <div>
+	            	<ul class="nav navbar-nav navbar-right">
+	                    <li class="dropdown gray">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="index.html">
+	                            <i class="icon-user"></i> {{sessionNames}} <i class="icon-caret-down"></i>
+	                        </a>
+	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+	                          <li role="presentation">
+	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="icon-user"></i> Perfil</a>
+	                            </li>
+	                            <li role="presentation">
+	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruchpwd', 'open')" tabindex="-1" role="menuitem"><i class="icon-key"></i> Cambiar clave</a>
+	                            </li>
+	                            <li role="presentation">
+	                                <div class="divider"></div>
+	                            </li>
+	                            <li role="presentation">
+	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="logout()" tabindex="-1" role="menuitem"><i class="icon-signout"></i> Salir</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+	      	</div>
+	    </div>
+	    <div class="jumbotron b-s-20 m-b-5">
+			<div class="container-fluid">
+				    <!-- Brand and toggle get grouped for better mobile display -->
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      
+				    </div>
+
+				    <!-- Collect the nav links, forms, and other content for toggling -->
+				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				      <ul class="nav navbar-nav">
+		                <li id="m_monitor"  class="active icon-m" ng-show="sessionidProfile!=0">
+		                    <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
+		                        <i class="icon-dashboard icon-4x"></i>
+		                        <br>Monitor de pedidos
+		                    </a>
+		              	</li>
+				        <li class="dropdown" class="">
+				          <a href="#m_pedidos" class="dropdown-toggle icon-m" data-toggle="dropdown"><i style="margin-left: -0.4em;" class="icon-file-text icon-4x"></i><br>Pedidos <b class="caret"></b></a>
+					        <ul class="dropdown-menu">
+			                	<li ng-show="sessionidProfile!=2" class="dropdown-header">Llaveros</li>
+			                    <li ng-show="sessionidProfile!=2"><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle"><i class="glyphicon glyphicon-upload"></i> Alta</a></li>
+			                    <li ng-show="sessionidProfile!=2"><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle"><i class="glyphicon glyphicon-download"></i> Baja</a></li>
+			                	<li class="divider"></li>
+				                <li ng-show="sessionidProfile==1 || sessionidProfile==2 || sessionidProfile==4" class="cms">
+				                    <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio"><i class="glyphicon glyphicon-wrench"></i> Servicio Tecnico</a>
+				                </li>
+				                <li ng-show="sessionidProfile!=1"class="cms"> <!--class="im active"-->
+				                    <a ng-click="fnShowHide('ruother', 'open')" href="#Costos"><i class="glyphicon glyphicon-envelope"></i> Otras Consultas</a>
+				                </li>
+				                <li ng-show="sessionidProfile!=0"class="cms"> <!--class="im active"-->
+				                    <a ng-click="fnShowHide('ruother', 'open')" href="#Otros"><i class="glyphicon icon-dollar"></i> Costos</a>
+				                </li>
+					        </ul>
+				        </li>
+			            <li id="m_depto" ng-show="sessionidProfile!=2" class="icon-m">
+			                <a href="#Departamentos" ng-click="fnShowHide('managedepto', 'open')"> 
+			                    <i class="icon-building icon-4x"></i>
+			                    <br>Gestion de Edificio
+			                </a>
+			            </li>
+			              <!--<li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
+			                 <a href="#Usuarios" ng-click="fnShowHide('user', 'open')"> 
+			                    <i class="icon-group"></i>
+			                    <br>Gestion de inquilinos
+			                 </a>
+			              </li>-->
+		               	<li id="m_config" ng-show="sessionidProfile==1" class="icon-m">
+		                 	<a href="#Config" ng-click="fnShowHide('sysConfig', 'open')"> 
+		                    <i style="margin-left: -0.4em" class="icon-cogs icon-4x"></i>
+		                    <br>Configuracion
+		                 	</a>
+		              	</li>
+		              	<li id="m_contact" class="icon-m">
+		                 	<a href="#Contact" ng-click="fnShowHide('frmcontact', 'open')"> 
+			                    <i style="margin-left: -0.4em" class="icon-phone icon-4x"></i>
+			                    <br><span>Contacto</span>
+		                 	</a>
+		              	</li>
+				      </ul>
+
+				      <!--<ul class="nav navbar-nav navbar-right">
+				        <li><a href="#">Link</a></li>
+				        <li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+				          <ul class="dropdown-menu">
+				            <li><a href="#">Action</a></li>
+				            <li><a href="#">Another action</a></li>
+				            <li><a href="#">Something else here</a></li>
+				            <li class="divider"></li>
+				            <li><a href="#">Separated link</a></li>
+				          </ul>
+				        </li>
+				      </ul>-->
+				    </div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
 		</div>
-		<!--MENU BUTTONS- class="active"-->
-		<div class="jumbotron masthead b-s-20 m-b-5 -m-t-10">
-		    <div class="container">
-		        <table cellspacing="0" cellpadding="0" border="0">
-		            <tbody><tr>
-		                <td>
-		                    <ul class="nav-icon">
-		                    	<li id="m_monitor" class="active" ng-show="sessionidProfile!=0">
-							       <a href="#Monitor"  ng-click="fnShowHide('home', 'open')"> 
-							          <i class="icon-dashboard"></i>
-							          <br>Monitor de pedidos
-							       </a>
-							    </li>
-							    <li id="m_pedidos">
-							       <a href="#Pedidos" ng-click="fnShowHide()"> 
-							          <i class="icon-file-text"></i>
-							          <br>Pedidos
-							       </a>
-							    </li>
-							    <li id="m_depto" ng-show="sessionidProfile!=2">
-							       <a href="#Departamentos" ng-click="fnShowHide('managedepto', 'open')"> 
-							          <i class="icon-building"></i>
-							          <br>Gestion de Edificio
-							       </a>
-							    </li>
-							    <!--<li id="m_user" ng-show="sessionidProfile==1 || sessionidProfile==4">
-							       <a href="#Usuarios" ng-click="fnShowHide('user', 'open')"> 
-							          <i class="icon-group"></i>
-							          <br>Gestion de inquilinos
-							       </a>
-							    </li>-->
-							     <li id="m_config" ng-show="sessionidProfile==1">
-							       <a href="#Config" ng-click="fnShowHide('sysConfig', 'open')"> 
-							          <i class="icon-cogs"></i>
-							          <br>Configuracion
-							       </a>
-							    </li>
-							    <li id="m_contact">
-							       <a href="#Contact" ng-click="fnShowHide('frmcontact', 'open')"> 
-							          <i class="icon-phone"></i>
-							          <br>Contacto
-							       </a>
-							    </li>
-		                    </ul>
-		                </td>
-		                <td class="hidden-desktop v-a-t">
-		                    <div id="header-icon-show" style=" margin:-15px -19px  20px -15px ">
-		                        <i class="icon-reorder icon-4x"></i>
-		                    </div>
-		                </td>
-		            </tr>
-		        </tbody></table>
-		    </div>
-		</div>
-		<!--//MENU BUTTONS -->
-		<!--SubMenu Items -->
-		<div class="sub-navi b-s--20">
-		        <div id="SubM_Pedidos" class="container p-r">
-		            <a class="sn-close"><i class="icon-double-angle-up"></i></a>
-			            <ul>
-						    <li ng-show="sessionidProfile==1 || sessionidProfile==3 || sessionidProfile==4" class="am">
-						        <a href="#">Llaveros<i class="icon-caret-down"></i></a>
-						        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-						                <li><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle">Alta</a></li>
-						                <li><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle">Baja</a></li>
-						        </ul>
-						    </li>
-						    <li ng-show="sessionidProfile==1 || sessionidProfile==2 || sessionidProfile==4" class="cms">
-						        <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio">Servicio Tecnico</a>
-						    </li>
-						    <li ng-show="sessionidProfile!=1"class="cms"> <!--class="im active"-->
-						        <a ng-click="fnShowHide('ruother', 'open')" href="#Costos">Otros<i class=""></i></a>
-						    </li>
-						    <li ng-show="sessionidProfile==4"class="cms"> <!--class="im active"-->
-						        <a ng-click="fnShowHide('ruother', 'open')" href="#Otros">Otros<i class=""></i></a>
-						    </li>
-			    		</ul>
-		        </div>
-		</div>
-	</div>
+	</nav>
+	<!-- //nav bar end -->
 	<!-- USER LOGIN FORM -->
 	<!-- USER FORGOT PWD FORM -->
 	<div id="frm_loginU" ng-if="!Token"> 
@@ -203,7 +194,7 @@
 									</div>
 								<!-- Actions Button -->
 									<div class="form-actions">
-										<button id="btnLogin" type="submit" class="btn-primary-system" >LOGIN </button>
+										<button id="btnLogin" type="submit" class="btn-primary" >LOGIN </button>
 								  	</div>
 								</fieldset>
 							</form>
@@ -279,173 +270,166 @@
 	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">
-		      	<div class="modal-body" style="overflow-y: scroll; height: 556px">
-					<div class="agileits-w3layouts"> 
-			          	<div class="panel panel-default">
-			              	<div class="panel-heading">
-			                	<h3 class="panel-title">NUEVO USUARIO <a ng-click="closeModal('u')" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-			            	</div>
-			            		<div class="panel-body"  style="padding-right: 0px;">
-									<!-- FORM CONTAINER-->
-				    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU();" ng-submit="sysFunctionsUser('register')">
-										<fieldset>
-										<!-- Select profile -->
-										 <div class="form-group col-lg-12" ng-show="!Token">
-										 <label style="padding-left: 15px;">Perfil</label>  
-										   <div class="col-xs-12">
-										    <div class="input-group">
-										    	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												<input type="text" style="width:96%;" name="idProfileKf" placeholder="Propietario" ng-show="!Token" placeholder="Propietario" class="form-control" ng-disabled="!token" ng-model="$parent.idProfileKf"  ng-required="!Token" autofocus />
-										    </div>
-										  </div>
-										</div>  
-										<div class="form-group col-md-6" ng-if="sessionidProfile==1"> 
-										  <label style="padding-left: 15px;">Perfil</label>
-										    <div class="col-xs-12 selectContainer">
-											    <div class="input-group">
-											    		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												    	<select name="idProfileKf" ng-show="Token" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="$parent.idProfileKf"  ng-required="Token" autofocus >
-													    	<option value="">Seleccione una opcion</option>
-												    	</select>
-											  	</div>
-											</div>
-										</div>
-										<!-- Company List-->
-										      
-										<div class="form-group col-md-6" ng-if="sessionidProfile==1" >  
-										  <label ng-if="idProfileKf!=2 && idProfileKf!=4" style="padding-left: 15px;">Empresa / Administracion</label>
-										  <label ng-if="idProfileKf==2" style="padding-left: 15px;">Empresa</label>
-										  <label ng-if="idProfileKf==4" style="padding-left: 15px;">Administracion</label>
-										    <div class="col-xs-12 selectContainer">
-											    <div  class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-											  		<select ng-disabled="idProfileKf==1 || idProfileKf==3 || idProfileKf==null" name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="$parent.idCompanyKf"  >
-													    	<option value="">Seleccione una opcion</option>
-												    	</select>
-											    </div>
-										  	</div>
-										</div>
-										<!-- List Address-->
-      
-										<!--<div class="form-group" ng-show="sessionidProfile==1">
-										  <label class="col-md-4 control-label">Direcci&#243n</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf==1" ng-model="$parent.idAddressKf" autofocus >
-													    	<option value="">Seleccione una direccion</option>
-												    	</select>
-											    </div>
-										  </div>
-										</div>-->
-										<!-- Form First Name -->
-										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;">Nombre</label>  
-											  <div class="col-xs-12">
-												  <div class="input-group">
-													  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-													  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus/>
-												  </div>
-											  </div>
-										</div>
-										<!-- Form Last Name -->
-
-										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;" >Apellido</label> 
-										  	<div class="col-xs-12">
-												<div class="input-group">
-											  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text" required autofocus />
-												</div>
-										  	</div>
-										</div>
-										<!-- Text Mail-->
-
-										<div class="form-group col-lg-12">
-										 <label style="padding-left: 15px;">E-Mail</label>  
-										   <div class="col-xs-12">
-										    <div class="input-group">
-										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-										  		<input style="width:96%;" name="emailUser" placeholder="E-Mail" class="form-control" ng-model="$parent.emailUser"  type="email" required autofocus />
-										    </div>
-										  </div>
-										</div>
-										<!-- Text Password-->
-
-										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;">Contrase&#241a</label>  
-										    <div class="col-xs-12">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input placeholder="Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" ng-model="passwordUser" minlength="8" maxlength="20" type="password" required autofocus />
-											    </div>
-											    <small id="passwordHelpBlock" class="form-text text-muted">
-      													La clave debe contener entre 8 y 20 caracteres alfanumericos.
-    											</small>
-											</div>
-										</div>
-										<!-- Text Password Check-->
-
-										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;">Confirme su Contrase&#241a</label>  
-										    <div class="col-xs-12">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input ng-change="fnValidatePwd()" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="passwordUsertmp" type="password" required autofocus />
-											    </div>
-											    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
-      													La clave debe contener entre 8 y 20 caracteres alfanumericos.
-    											</small>
-    											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
-      													La clave no coinciden verifique por favor y continue.
-    											</small>
-											</div>
-										</div>
-										<!-- Text Phone-->
-										       
-										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;">Telefono Fijo</label>  
-										    <div class="col-xs-12">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-											  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalNumberUser"  type="text" required autofocus />
-											    </div>
-										  </div>
-										</div>
-										<!-- Text Phone-->
-										       
-										<div class="form-group col-md-6">
-										  <label style="padding-left: 15px;">Telefono Movil</label>  
-										    <div class="col-xs-12">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-											  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="phoneNumberUser"  type="text" required autofocus />
-											    </div>
-										  </div>
-										</div>
-
-										<!-- Actions Button -->
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>
-										  <div class="col-md-4">
-										    <button type="submit" class="btn btn-primary" >Registrar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-											<button type="reset" class="btn btn-primary" >Limpiar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
-										  </div>
-										</div>
-
-										</fieldset>
-									</form>
-									<div class="clearfix"> </div> 
-								</div>
+              	<div class="modal-header">
+              		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+                	<h3 class="modal-title">NUEVO USUARIO</h3>
+            	</div>
+        		<div class="modal-body"  style="overflow-y: scroll; height: 556px">
+					<!-- FORM CONTAINER-->
+    				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU();" ng-submit="sysFunctionsUser('register')">
+						<fieldset>
+						<!-- Select profile -->
+						 <div class="form-group col-lg-12" ng-show="!Token">
+						 <label style="padding-left: 15px;">Perfil</label>  
+						   <div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								<input type="text" style="width:96%;" name="idProfileKf" placeholder="Propietario" ng-show="!Token" placeholder="Propietario" class="form-control" ng-disabled="!token" ng-model="$parent.idProfileKf"  ng-required="!Token" autofocus />
+						    </div>
+						  </div>
+						</div>  
+						<div class="form-group col-md-6" ng-if="sessionidProfile==1"> 
+						  <label style="padding-left: 15px;">Perfil</label>
+						    <div class="col-xs-12 selectContainer">
+							    <div class="input-group">
+							    		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								    	<select name="idProfileKf" ng-show="Token" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="$parent.idProfileKf"  ng-required="Token" autofocus >
+									    	<option value="">Seleccione una opcion</option>
+								    	</select>
+							  	</div>
+							</div>
 						</div>
-					</div>
+						<!-- Company List-->
+						      
+						<div class="form-group col-md-6" ng-if="sessionidProfile==1" >  
+						  <label ng-if="idProfileKf!=2 && idProfileKf!=4" style="padding-left: 15px;">Empresa / Administracion</label>
+						  <label ng-if="idProfileKf==2" style="padding-left: 15px;">Empresa</label>
+						  <label ng-if="idProfileKf==4" style="padding-left: 15px;">Administracion</label>
+						    <div class="col-xs-12 selectContainer">
+							    <div  class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+							  		<select ng-disabled="idProfileKf==1 || idProfileKf==3 || idProfileKf==null" name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="$parent.idCompanyKf"  >
+									    	<option value="">Seleccione una opcion</option>
+								    	</select>
+							    </div>
+						  	</div>
+						</div>
+						<!-- List Address-->
+
+						<!--<div class="form-group" ng-show="sessionidProfile==1">
+						  <label class="col-md-4 control-label">Direcci&#243n</label>  
+						    <div class="col-md-4">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+							  		<select name="idAddressKf" class="form-control"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="idProfileKf==1" ng-model="$parent.idAddressKf" autofocus >
+									    	<option value="">Seleccione una direccion</option>
+								    	</select>
+							    </div>
+						  </div>
+						</div>-->
+						<!-- Form First Name -->
+						<div class="form-group col-md-6">
+						  <label style="padding-left: 15px;">Nombre</label>  
+							  <div class="col-xs-12">
+								  <div class="input-group">
+									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									  <input  name="fname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="fname"  type="text" required autofocus/>
+								  </div>
+							  </div>
+						</div>
+						<!-- Form Last Name -->
+
+						<div class="form-group col-md-6">
+						  <label style="padding-left: 15px;" >Apellido</label> 
+						  	<div class="col-xs-12">
+								<div class="input-group">
+							  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							  		<input name="lname" placeholder="Apellido" class="form-control" ng-model="lname" type="text" required autofocus />
+								</div>
+						  	</div>
+						</div>
+						<!-- Text Mail-->
+
+						<div class="form-group col-lg-12">
+						 <label style="padding-left: 15px;">E-Mail</label>  
+						   <div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						  		<input style="width:96%;" name="emailUser" placeholder="E-Mail" class="form-control" ng-model="$parent.emailUser"  type="email" required autofocus />
+						    </div>
+						  </div>
+						</div>
+						<!-- Text Password-->
+
+						<div class="form-group col-md-6">
+						  <label style="padding-left: 15px;">Contrase&#241a</label>  
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							  		<input placeholder="Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" ng-model="passwordUser" minlength="8" maxlength="20" type="password" required autofocus />
+							    </div>
+							    <small id="passwordHelpBlock" class="form-text text-muted">
+											La clave debe contener entre 8 y 20 caracteres alfanumericos.
+								</small>
+							</div>
+						</div>
+						<!-- Text Password Check-->
+
+						<div class="form-group col-md-6">
+						  <label style="padding-left: 15px;">Confirme su Contrase&#241a</label>  
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							  		<input ng-change="fnValidatePwd()" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="passwordUsertmp" type="password" required autofocus />
+							    </div>
+							    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+											La clave debe contener entre 8 y 20 caracteres alfanumericos.
+								</small>
+								<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+											La clave no coinciden verifique por favor y continue.
+								</small>
+							</div>
+						</div>
+						<!-- Text Phone-->
+						       
+						<div class="form-group col-md-6">
+						  <label style="padding-left: 15px;">Telefono Fijo</label>  
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+							  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalNumberUser"  type="text" required autofocus />
+							    </div>
+						  </div>
+						</div>
+						<!-- Text Phone-->
+						       
+						<div class="form-group col-md-6">
+						  <label style="padding-left: 15px;">Telefono Movil</label>  
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+							  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="phoneNumberUser"  type="text" required autofocus />
+							    </div>
+						  </div>
+						</div>
+
+						<!-- Actions Button -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>
+						  <div class="col-md-4">
+						    <button type="submit" class="btn btn-primary" >Registrar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+							<button type="reset" class="btn btn-primary" >Limpiar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+						  </div>
+						</div>
+
+						</fieldset>
+					</form>
+					<div class="clearfix"> </div> 
 				</div>
 			</div>
 		</div>
 	</div>
-	
-
-	<div class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
+	<main role="main" class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div ng-if="userManage" ng-include="'view/formManageUser.html'"></div>
@@ -458,17 +442,17 @@
 			<div ng-if="rucontact" ng-include="'view/formContact.html'"></div>
 			<div ng-if="home" ng-include="'view/home.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
-		<!-- LIST TENANT MODAL -->
+			<!-- LIST TENANT MODAL -->
 			<div id="ModalListTenant" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
 			    <!-- Modal content-->
 				    <div class="modal-content">
 				      	<div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="sysFunctionsTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="sessionidProfile!=3 && typeTenant<0">Propietarios / Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="sessionidProfile==3 && typeTenant<0">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" ng-disabled="ownerFound==true" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title"  ng-show="sessionidProfile!=3 && typeTenant<0">Propietarios / Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open','add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="sessionidProfile==3 && typeTenant<0">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 				      	</div>
 				      	<div class="modal-body pre-scrollable">
 	                				<table class="table  table-striped ">
@@ -521,253 +505,456 @@
 			  		</div>
 				</div>
 			</div>
-		<!-- // LIST TENANT MODAL -->
+			<!-- // LIST TENANT MODAL -->
 
-		<!-- TENANT REGISTER FORM -->
+			<!-- TENANT REGISTER FORM -->
 			<div id="RegisterModalTenant" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
 				    <div class="modal-content">
-				      	<div class="modal-body" style="overflow-y: scroll; scroll; height: 445px">
-							<div class="agileits-w3layouts"> 
-					          	<div class="panel panel-default">
-					              	<div class="panel-heading">
-					                	<h3 class="panel-title">NUEVO INQUILINO<a ng-click="closeModal('t')" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-					            	</div>
-					            		<div class="panel-body" >
-											<!-- FORM CONTAINER-->
-						    				<form class="form-horizontal" name="fNewTenant" ng-submit="sysFunctionsTenant('search');">
-												<fieldset>
-												<!-- Select profile -->
-												   
-												<div class="form-group" ng-show="sessionidProfile!=2 && sessionidProfile!=3"> 
-												  <label class="col-md-4 control-label">Tipo de Inquilino</label>
-												    <div class="col-md-4 selectContainer">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-															    <select name="idTypeTenantKf" class="form-control"  ng-options="item.idTypeTenant as item.typeTenantName for item in lisTypeTenant " ng-model="$parent.idTypeTenantKf" ng-required="!sessionidProfile"  autofocus >
-															    	<option value=""></option>
-														    	</select>
-													  	</div>
-													</div>
-												</div>
-												<!-- List Address-->
-												      
-												<div class="form-group" ng-show="!sessionidProfile">
-												  <label class="col-md-4 control-label">Direcci&#243n</label>  
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-													  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="!sessionidProfile" ng-model="$parent.idAddressKf" autofocus >
-															    	<option value=""></option>
-														    	</select>
-													    </div>
-												  </div>
-												</div>
-												<!-- List Department by address-->
-												      
-												<div class="form-group" ng-show="!sessionidProfile">
-												  <label class="col-md-4 control-label">Departamento</label>  
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-													  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="!sessionidProfile" autofocus >
-															    	<option value=""> </option>
-														    	</select>
-													    </div>
-												  </div>
-												</div>
-												<!-- Form First Name -->
-												<div class="form-group">
-												  <label class="col-md-4 control-label">Nombre</label>  
-													  <div class="col-md-4">
-														  <div class="input-group">
-															  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-															  <input  name="fnameT" autofocus="true" placeholder="Nombre" class="form-control" ng-model="$parent.fnameT"  type="text" required autofocus/>
-														  </div>
-													  </div>
-												</div>
-												<!-- Form Last Name -->
-
-												<div class="form-group">
-												  <label class="col-md-4 control-label" >Apellido</label> 
-												  	<div class="col-md-4">
-														<div class="input-group">
-													  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-													  		<input name="lnameT" placeholder="Apellido" class="form-control" ng-model="$parent.lnameT" type="text" required autofocus />
-														</div>
-												  	</div>
-												</div>
-												<!-- Text Mail-->
-
-												<div class="form-group">
-												 <label class="col-md-4 control-label">E-Mail</label>  
-												   <div class="col-md-4">
-												    <div class="input-group">
-												    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-												  		<input name="emailT" placeholder="E-Mail" class="form-control" ng-model="$parent.emailT"  type="email" required autofocus />
-												    </div>
-												  </div>
-												</div>
-												<!-- Text Phone-->
-												       
-												<div class="form-group">
-												  <label class="col-md-4 control-label">Telefono Fijo</label>  
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneLocalT" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalT"  type="text" autofocus />
-													    </div>
-												  </div>
-												</div>
-												<!-- Text Phone-->
-												       
-												<div class="form-group">
-												  <label class="col-md-4 control-label">Telefono Movil</label>  
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phoneMovilT"  type="text" autofocus />
-													    </div>
-												  </div>
-												</div>
-
-												<!-- Actions Button -->
-												<div class="form-group">
-												  <label class="col-md-4 control-label"></label>
-												  <div class="col-md-4">
-												    <button type="submit" class="btn btn-primary" >Registrar </button>
-													<button type="reset" ng-click="closeModal('t')" class="btn btn-primary" >Cancelar </button>
-												  </div>
-												</div>
-
-												</fieldset>
-											</form>
-										</div>
+		              	<div class="modal-header">
+		              		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+		                	<h3 class="panel-title">NUEVO INQUILINO</h3>
+		            	</div>
+	            		<div class="modal-body" style="overflow-y: scroll; scroll;" >
+							<!-- FORM CONTAINER-->
+		    				<form class="form-horizontal" name="fNewTenant" ng-submit="sysFunctionsTenant('search', 'add');">
+								<fieldset>
+								<!-- Select profile -->
+								   
+								<div class="form-group" ng-show="sessionidProfile!=2 && sessionidProfile!=3"> 
+								  <label class="col-md-4 control-label">Perfil</label>
+								    <div class="col-md-4 selectContainer">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											    <select name="idTypeTenantKf" class="form-control"  ng-change="deptoHasOwner();" ng-options="item.idTypeTenant as item.typeTenantName for item in lisTypeTenant " ng-model="$parent.idTypeTenantKf" ng-required="!sessionidProfile"  required autofocus >
+											    	<option value=""></option>
+										    	</select>
+									  	</div>
+									</div>
 								</div>
-							</div>
+								<!-- List Address-->
+								      
+								<div class="form-group" ng-show="!sessionidProfile">
+								  <label class="col-md-4 control-label">Direcci&#243n</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+									  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="!sessionidProfile" ng-model="$parent.idAddressKf" autofocus >
+											    	<option value=""></option>
+										    	</select>
+									    </div>
+								  </div>
+								</div>
+								<!-- List Department by address-->
+								      
+								<div class="form-group" ng-show="!sessionidProfile">
+								  <label class="col-md-4 control-label">Departamento</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+									  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="!sessionidProfile" autofocus >
+											    	<option value=""> </option>
+										    	</select>
+									    </div>
+								  </div>
+								</div>
+								<!-- Form First Name -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Nombres</label>  
+									  <div class="col-md-4">
+										  <div class="input-group">
+											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											  <input  name="fullNameTenant" autofocus="true" placeholder="Nombre" class="form-control" ng-model="$parent.fullNameTenant"  type="text" required autofocus/>
+										  </div>
+									  </div>
+								</div>
+								<!-- Text Mail-->
+
+								<div class="form-group">
+								 <label class="col-md-4 control-label">E-Mail</label>  
+								   <div class="col-md-4">
+								    <div class="input-group">
+								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								  		<input name="emailT" placeholder="E-Mail" class="form-control" ng-model="$parent.emailT"  type="email" required autofocus />
+								    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->
+								       
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Telefono Fijo</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									  		<input name="phoneLocalT" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalT"  type="text" autofocus />
+									    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->
+								       
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Telefono Movil</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phoneMovilT"  type="text" autofocus />
+									    </div>
+								  </div>
+								</div>
+								<div ng-show="ownerFound && sessionidProfile!=3" class="alert alert-danger" role="alert">
+				            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: </strong>El departamento ya posee un propietario.
+				        		</div>	
+								<!-- Actions Button -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label"></label>
+								  <div class="col-md-4">
+								    <button type="submit" ng-disabled="ownerFound" class="btn btn-primary" >Registrar </button>
+									<button type="reset" ng-click="closeModal('t')" class="btn btn-primary" >Cancelar </button>
+								  </div>
+								</div>
+								</fieldset>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-		<!-- // TENANT REGISTER FORM -->
+			<!-- // TENANT REGISTER FORM -->
+			<!-- UPDATE TENANT -->
+			<div id="EditModalTenant" class="modal fade" style="top:130px;" role="dialog">
+			  <div class="modal-dialog modal-lg" >
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h3 class="modal-title">MODIFICAR INQUILINO<a data-dismiss="modal" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			      </div>
+			      <div class="modal-body pre-scrollable"  style="overflow-y: scroll;">
+			      <!-- FORM CONTAINER-->
+			      <form class="form-horizontal" name="fUpdateTenant" ng-submit="sysFunctionsTenant('search', 'edit')">
+			        <fieldset>
+			          <!-- Form First Name -->
+			          <div class="form-group">
+			            <label class="col-md-4 control-label">Nombres</label>  
+			              <div class="col-md-4">
+			                <div class="input-group">
+			                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			                  <input  name="namesTenant" autofocus="true" placeholder="Nombre" class="form-control" ng-model="tenant.namesTenant"  type="text" required autofocus/>
+			                </div>
+			              </div>
+			          </div>
+			          <!-- Text Mail-->
 
-		<!-- ATTENDANT REGISTER FORM -->
+			          <div class="form-group">
+			           <label class="col-md-4 control-label">E-Mail</label>  
+			             <div class="col-md-4">
+			              <div class="input-group">
+			                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			                <input name="emailTenant" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
+			              </div>
+			            </div>
+			          </div>
+			          <!-- Text Phone-->
+			                 
+			          <div class="form-group">
+			            <label class="col-md-4 control-label">Telefono Fijo</label>  
+			              <div class="col-md-4">
+			                <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+			                  <input name="localPhoneTenant" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="tenant.localPhoneTenant"  type="text" autofocus />
+			                </div>
+			            </div>
+			          </div>
+			          <!-- Text Phone-->
+			                 
+			          <div class="form-group">
+			            <label class="col-md-4 control-label">Telefono Movil</label>  
+			              <div class="col-md-4">
+			                <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+			                  <input name="movilPhoneTenant" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="tenant.movilPhoneTenant"  type="text" autofocus />
+			                </div>
+			            </div>
+			          </div>
+
+			          <!-- Actions Button -->
+			          <div class="form-group">
+			            <label class="col-md-4 control-label"></label>
+			            <div class="col-md-4">
+			              <button type="submit" class="btn btn-primary" >Actualizar <!--<span class="glyphicon glyphicon-ok"></span>--></button>
+			            </div>
+			          </div>
+
+			        </fieldset>
+			      </form>
+			      <div class="clearfix"> </div> 
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- // UPDATE TENANT -->
+			<!-- ATTENDANT REGISTER FORM -->
 			<div id="RegisterModalAtt" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
 			  	<div class="modal-dialog modal-lg" >
 				    <div class="modal-content">
-				      	<div class="modal-body">
-							<div class="agileits-w3layouts"> 
-					          	<div class="panel panel-default">
-					              	<div class="panel-heading">
-					                	<h3 class="panel-title">NUEVO ENCARGADO<a data-dismiss="modal" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-					            	</div>
-					            		<div class="panel-body" style="overflow-y: scroll;">
-											<!-- FORM CONTAINER-->
-						    				<form class="form-horizontal" name="fNewTenant" ng-submit="sysRegisterAtt('save')">
-												<fieldset>
-												<!-- Company Name-->    
-												<div class="form-group">
-												  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Administracion</label>
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-													  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+		              	<div class="modal-header">
+		                	<h3 class="modal-title">NUEVO ENCARGADO<a data-dismiss="modal" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		            	</div>
+	            		<div class="modal-body" style="overflow-y: scroll;">
+							<!-- FORM CONTAINER-->
+		    				<form class="form-horizontal" name="fNewTenant" ng-submit="sysFunctionsAtt('save')">
+								<fieldset>
+								<!-- Company Name-->    
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Administracion</label>
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+									  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
 
-													  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-															    	<option value="">Seleccione una opcion</option>
-														    </select>
-													    </div>
-												  	</div>
-												</div>
-												<!-- List Address-->
-												      
-												<div class="form-group" ng-show="sessionidProfile!=3">
-												  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion de Consorcio</label>   
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-													  		<select name="idAddressKf" ng-disabled="!select.idCompanyKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-															    <option value="">Seleccione una opcion</option>
-														    	</select>
-													    </div>
-												  </div>
-												</div>
-												<!-- Form First Name -->
-												<div class="form-group">
-												  <label class="col-md-4 control-label">Nombre</label>  
-													  <div class="col-md-4">
-														  <div class="input-group">
-															  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-															  <input  name="fnameAtt" autofocus="true" placeholder="Nombre" class="form-control" ng-model="$parent.fnameAttd"  type="text" required autofocus/>
-														  </div>
-													  </div>
-												</div>
-												<!-- Form Last Name -->
-
-												<div class="form-group">
-												  <label class="col-md-4 control-label" >Apellido</label> 
-												  	<div class="col-md-4">
-														<div class="input-group">
-													  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-													  		<input name="lnameAttd" placeholder="Apellido" class="form-control" ng-model="$parent.lnameAttd" type="text" required autofocus />
-														</div>
-												  	</div>
-												</div>
-												<!-- Text Mail-->
-
-												<div class="form-group">
-												 <label class="col-md-4 control-label">E-Mail</label>  
-												   <div class="col-md-4">
-												    <div class="input-group">
-												    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-												  		<input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="$parent.emailAttd" type="email" required autofocus />
-												    </div>
-												  </div>
-												</div>
-												<!-- Text Phone-->
-												       
-												<div class="form-group">
-												  <label class="col-md-4 control-label">Telefono Fijo</label>  
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneLocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalAttd"  type="text" autofocus />
-													    </div>
-												  </div>
-												</div>
-												<!-- Text Phone-->
-												       
-												<div class="form-group">
-												  <label class="col-md-4 control-label">Telefono Movil</label>  
-												    <div class="col-md-4">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-													  		<input name="phoneMovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phoneMovilAttd"  type="text" autofocus />
-													    </div>
-												  </div>
-												</div>
-
-												<!-- Actions Button -->
-												<div class="form-group">
-												  <label class="col-md-4 control-label"></label>
-												  <div class="col-md-4">
-												    <button type="submit" class="btn btn-primary" >Registrar </button>
-													<button type="reset" ng-click="closeModal('att')" class="btn btn-primary" >Cancelar </button>
-												  </div>
-												</div>
-
-												</fieldset>
-											</form>
-										</div>
+									  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-disabled="disabledSelect" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+											    	<option value="">Seleccione una opcion</option>
+										    </select>
+									    </div>
+								  	</div>
 								</div>
-							</div>
+								<!-- List Address For Admins-->    
+								<div class="form-group" ng-show="sessionidProfile!=3">
+								  <label class="col-md-4 control-label">Direccion de Consorcio</label>   
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+									  		<select name="idAddressKf" ng-disabled="!select.idCompanyKf || disabledSelect" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+											    <option value="">Seleccione una opcion</option>
+										    	</select>
+									    </div>
+								  </div>
+								</div>
+								<!-- List type of Attendant-->    
+								<div class="form-group" ng-show="sessionidProfile!=3">
+								  <label class="col-md-4 control-label">Tipo de Encargado</label>   
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+									  		<select name="idTypeAttKf" ng-disabled="!select.idAddressAtt" class="form-control" ng-change="getDeparment(0);"  ng-options="item.idTyepeAttendant as item.nameTypeAttendant for item in listTypeAttendant" ng-required="sessionidProfile!=3" ng-model="att.idTypeAttKf" autofocus >
+											    <option value="">Seleccione una opcion</option>
+										    	</select>
+									    </div>
+								  </div>
+								</div>
+								  <!-- Select Department -->
+								<div ng-show="sessionidProfile!=3 && att.idTypeAttKf==2" class="form-group"> 
+								  <label class="col-md-4 control-label">Departamento</label>
+								    <div class="col-md-4 selectContainer">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+									        <select ng-model="att.idDepartmentKf" ng-change="deptoHasOwner();" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto | filter: {departmentFloor: 'Porteria'} " autofocus >
+									        	<option value="" >Seleccione una opcion</option>
+										    </select>
+									  	</div>
+									</div>
+								</div>
+								<!-- Form First Name -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Nombres</label>  
+									  <div class="col-md-4">
+										  <div class="input-group">
+											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											  <input  name="fullNamesAtt" autofocus="true" placeholder="Nombre" class="form-control" ng-model="att.fullNamesAtt"  type="text" required autofocus/>
+										  </div>
+									  </div>
+								</div>
+								<!-- Text Mail-->
+
+								<div class="form-group">
+								 <label class="col-md-4 control-label">E-Mail</label>  
+								   <div class="col-md-4">
+								    <div class="input-group">
+								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								  		<input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="att.emailAtt" type="email" required autofocus />
+								    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->
+								       
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Telefono Fijo</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									  		<input name="phoneLocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="att.phonelocalAtt"  type="text" autofocus />
+									    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->
+								       
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Telefono Movil</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									  		<input name="phoneMovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="att.phoneMovilAtt"  type="text" autofocus />
+									    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->    
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Hora de Trabajo</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+											<input type="time"  name="att.hoursWork" placeholder="HH:mm" min="00:00" max="23:00" class="form-control" ng-model="att.hoursWork" aria-showingpicker="false" tabindex="0">
+									    </div>
+								  </div>
+								</div>
+								<div ng-show="ownerFound && sessionidProfile!=3 && IsAttendant" class="alert alert-danger" role="alert">
+			            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: 	</strong>La conserjeria ya posee un Encargado Titular.
+				        		</div>		
+								<!-- Actions Button -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label"></label>
+								  <div class="col-md-4">
+								    <button type="submit" class="btn btn-primary" >Registrar </button>
+									<button data-dismiss="modal" class="btn btn-primary" >Cancelar </button>
+								  </div>
+								</div>
+
+								</fieldset>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-		<!-- // ATTENDANT REGISTER FORM -->
+			<!-- // ATTENDANT REGISTER FORM -->
+			<!-- ATTENDANT UPDATE -->
+			<div id="UpdateModalAtt" class="modal fade bd-example-modal-lg" style="top:130px;" role="dialog">
+			  <div class="modal-dialog modal-lg" >
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h3 class="modal-title">MODIFICAR ENCARGADO<a data-dismiss="modal" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+			      </div>
+			      <div class="modal-body"  style="overflow-y: scroll;">
+			        <!-- FORM CONTAINER-->
+			        <form class="form-horizontal" name="fUpdateAtt" ng-submit="sysFunctionsAtt('search', 'edit')">
+			          <fieldset>
+			            <!-- Company Name-->    
+			            <div class="form-group" ng-if="sessionidProfile==1">
+			              <label class="col-md-4 control-label">Administracion</label>
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                      <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+			                    <select name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-disabled="disabledSelect" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+			                        <option value="">Seleccione una opcion</option>
+			                    </select>
+			                  </div>
+			                </div>
+			            </div>
+			            <!-- List Address For Admins-->    
+			            <div class="form-group" ng-if="sessionidProfile==1">
+			              <label class="col-md-4 control-label">Direccion de Consorcio</label>   
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+			                    <select name="idAddressKf" ng-disabled="!select.idCompanyKf || disabledSelect" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+			                      <option value="">Seleccione una opcion</option>
+			                      </select>
+			                  </div>
+			              </div>
+			            </div>
+			            <!-- List type of Attendant-->    
+			            <div class="form-group" ng-show="sessionidProfile!=3">
+			              <label class="col-md-4 control-label">Tipo de Encargado</label>   
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+			                    <select name="idTypeAttKf" ng-disabled="!select.idAddressAtt" class="form-control" ng-change="getDeparment(0);"  ng-options="item.idTyepeAttendant as item.nameTypeAttendant for item in listTypeAttendant" ng-required="sessionidProfile!=3" ng-model="att.idTypeAttKf" autofocus >
+			                      <option value="">Seleccione una opcion</option>
+			                      </select>
+			                  </div>
+			              </div>
+			            </div>
+			              <!-- Select Department -->
+			            <div ng-show="sessionidProfile!=3 && att.idTypeAttKf==2" class="form-group"> 
+			              <label class="col-md-4 control-label">Departamento</label>
+			                <div class="col-md-4 selectContainer">
+			                  <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+			                      <select ng-model="att.idDepartmentKf" ng-change="deptoHasOwner();" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto | filter: {departmentFloor: 'Porteria'} " autofocus >
+			                        <option value="" >Seleccione una opcion</option>
+			                    </select>
+			                  </div>
+			              </div>
+			            </div>
+			            <!-- Form First Name -->
+			            <div class="form-group">
+			              <label class="col-md-4 control-label">Nombres</label>  
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			                    <input  name="fullNamesAtt" autofocus="true" placeholder="Nombre" class="form-control" ng-model="att.fullNamesAtt"  type="text" required autofocus/>
+			                  </div>
+			                </div>
+			            </div>
+			            <!-- Text Mail-->
 
-		<!-- Modal Confirmation -->
+			            <div class="form-group">
+			             <label class="col-md-4 control-label">E-Mail</label>  
+			               <div class="col-md-4">
+			                <div class="input-group">
+			                  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			                  <input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="att.emailAtt" type="email" required autofocus />
+			                </div>
+			              </div>
+			            </div>
+			            <!-- Text Phone-->
+			                   
+			            <div class="form-group">
+			              <label class="col-md-4 control-label">Telefono Fijo</label>  
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+			                    <input name="LocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="att.phonelocalAtt"  type="text" autofocus />
+			                  </div>
+			              </div>
+			            </div>
+			            <!-- Text Phone-->
+			                   
+			            <div class="form-group">
+			              <label class="col-md-4 control-label">Telefono Movil</label>  
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+			                    <input name="MovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="att.phoneMovilAtt"  type="text" autofocus />
+			                  </div>
+			              </div>
+			            </div>
+			            <!-- Text Phone-->    
+			            <div class="form-group">
+			              <label class="col-md-4 control-label">Hora de Trabajo</label>  
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			                  <input type="time"  name="att.hoursWork" placeholder="HH:mm" min="00:00" max="23:00" class="form-control" ng-model="att.hoursWork" aria-showingpicker="false" tabindex="0">
+			                  </div>
+			              </div>
+			            </div>
+			            <div ng-show="ownerFound && sessionidProfile!=3 && IsAttendant" class="alert alert-danger" role="alert">
+			                  <strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION:  </strong>La conserjeria ya posee un Encargado Titular.
+			                </div>    
+			            <!-- Actions Button -->
+			            <div class="form-group">
+			              <label class="col-md-4 control-label"></label>
+			              <div class="col-md-4">
+			                <button type="submit" class="btn btn-primary" >Registrar </button>
+			              <button data-dismiss="modal" class="btn btn-primary" >Cancelar </button>
+			              </div>
+			            </div>
+			          </fieldset>
+			        </form>
+			        <div class="clearfix"> </div> 
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- //ATTENDANT UPDATE -->
+			<!-- Modal Confirmation -->
 			<div class="modal fade" id="confirmRequestModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
@@ -785,241 +972,230 @@
 			    </div>
 			  </div>
 			</div>
-		<!-- //Modal Confirmation -->
+			<!-- //Modal Confirmation -->
 
-		<!-- Modal Password Change -->
-			<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-md" role="dialog">
+			<!-- Modal Password Change -->
+			<div id="PasswdModalUser" style="top: 130px;" class="modal fade modal-dialog-centered" role="dialog">
 	  			<div class="modal-dialog modal-md" >
 				    <div class="modal-content">
-				      	<div class="modal-body">
-				          	<div class="panel panel-default">
-				              	<div class="panel-heading">
-				                	<h3 class="panel-title">Cambio de Contrase&#241a<a data-dismiss="modal" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-				            	</div>
-			            		<div class="panel-body">
-									<!-- FORM CONTAINER-->
-				    				<form class="form-horizontal" name="fChPwd" ng-submit="sysFunctionsUser('chgPwdUser')">
-										<fieldset>
-										<!-- New Password-->
+		              	<div class="modal-header">
+		                	<h3 class="modal-title">Cambio de Contrase&#241a<a data-dismiss="modal" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		            	</div>
+	            		<div class="modal-body">
+							<!-- FORM CONTAINER-->
+		    				<form class="form-horizontal" name="fChPwd" ng-submit="sysFunctionsUser('chgPwdUser')">
+								<fieldset>
+								<!-- New Password-->
 
-										<div class="form-group">
-										  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
-										    <div class="col-md-6">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Contrase&#241a" class="form-control" aria-describedby="passwordHelpBlock" ng-model="newPwd1" minlength="8" maxlength="20" type="password" required autofocus />
-											    </div>
-										    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
-      													Debe ser de 8 a 20 caracteres alfanumericos.
-    											</small>
-    											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
-      													Debe ser de 8 a 20 caracteres alfanumericos.
-    											</small>
-											</div>
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
+								    <div class="col-md-6">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Contrase&#241a" class="form-control" aria-describedby="passwordHelpBlock" ng-model="newPwd1" minlength="8" maxlength="20" type="password" required autofocus />
+									    </div>
+								    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+													Debe ser de 8 a 20 caracteres alfanumericos.
+										</small>
+										<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+													Debe ser de 8 a 20 caracteres alfanumericos.
+										</small>
+									</div>
+								</div>
+								<!-- New Password Check-->
+
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Confirme Contrase&#241a Nueva</label>  
+								    <div class="col-md-6">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
+									    </div>
+									    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+													Debe ser de 8 a 20 caracteres alfanumericos.
+										</small>
+										<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+													Debe ser de 8 a 20 caracteres alfanumericos.
+										</small>
+									</div>
+								</div>
+
+								<!-- Actions Button -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label"></label>
+								  <div class="col-md-4">
+								    <button type="submit" class="btn btn-primary" >Cambiar</button>
+								  </div>
+								</div>
+
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //Modal Password Change -->
+			<!-- Edit User By Admin -->
+			<div id="EditModalUser" class="modal fade modal-dialog-centered" style="top: 120px;" role="dialog">
+		  		<div class="modal-dialog modal-lg" >
+		    		<div class="modal-content">
+		              	<div class="modal-header">
+		                	<h3 class="modal-title">ACTUALIZAR USUARIO<a data-dismiss="modal" title="Cerrar" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+		            	</div>
+	            		<div class="modal-body" style="overflow-y: scroll; scroll-y;"">
+							<!-- FORM CONTAINER-->
+		    				<form class="form-horizontal" name="fUpdateUser" ng-submit="sysFunctionsUser('updateUser')">
+								<fieldset>
+								<!-- Select profile --> 
+								<div class="form-group"> 
+								  <label class="col-md-4 control-label">Perfil</label>
+								    <div class="col-md-4 selectContainer">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfiles" ng-model="user.idProfileKf"  required autofocus >
+											    	<option value=""></option>
+										    	</select>
+									  	</div>
+									</div>
+								</div>
+								<!-- Company List-->
+								      
+								<div class="form-group" ng-show="user.idProfileKf!=3 && user.idProfileKf!=1">  
+								    <label class="col-md-4 control-label">Empresa</label>
+								    	<div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+										  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="user.idCompanyKf"  >
+												    	<option value=""></option>
+											    </select>
+										    </div>
 										</div>
-										<!-- New Password Check-->
+								</div>
 
-										<div class="form-group">
-										  <label class="col-md-4 control-label">Confirme Contrase&#241a Nueva</label>  
-										    <div class="col-md-6">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
-											    </div>
-											    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
-      													Debe ser de 8 a 20 caracteres alfanumericos.
-    											</small>
-    											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
-      													Debe ser de 8 a 20 caracteres alfanumericos.
-    											</small>
-											</div>
-										</div>
-
-										<!-- Actions Button -->
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>
-										  <div class="col-md-4">
-										    <button type="submit" class="btn btn-primary" >Cambiar</button>
+								<!-- Form Names -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Nombres</label>  
+									  <div class="col-md-4">
+										  <div class="input-group">
+											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											  <input  name="namesUser" autofocus="true" placeholder="Nombre" class="form-control" ng-model="user.namesUser"  type="text" required autofocus/>
 										  </div>
-										</div>
+									  </div>
+								</div>
+								<!-- Text Mail-->
 
-										</fieldset>
-									</form>
+								<div class="form-group">
+								 <label class="col-md-4 control-label">E-Mail</label>  
+								   <div class="col-md-4">
+								    <div class="input-group">
+								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								  		<input name="emailUser" placeholder="E-Mail" class="form-control" ng-model="user.emailUser"  type="email" required autofocus />
+								    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->
+								       
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Telefono Fijo</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+									  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="user.phonelocalNumberUser"  type="text"  autofocus />
+									    </div>
+								  </div>
+								</div>
+								<!-- Text Phone-->
+								       
+								<div class="form-group">
+								  <label class="col-md-4 control-label">Telefono Movil</label>  
+								    <div class="col-md-4">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+									  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="user.phoneNumberUser"  type="text"  autofocus />
+									    </div>
+								  </div>
+								</div>
+
+								<!-- Actions Button -->
+								<div class="form-group">
+								  <label class="col-md-4 control-label"></label>
+								  <div class="col-md-4">
+								    <button type="submit" class="btn btn-primary" >Actualizar</button>
+								  </div>
+								</div>
+
+								</fieldset>
+							</form>
+							<div class="clearfix"> </div> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //Edit User By Admin -->
+	</main>
+	<!-- Modal Password Change -->
+	<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-md" role="dialog">
+		<div class="modal-dialog modal-md" >
+		    <div class="modal-content">
+		      	<div class="modal-body">
+	              	<div class="modal-heading">
+          				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+	                	<h3 class="panel-title">Cambio de Contrase&#241a</h3>
+	            	</div>
+            		<div class="modal-body">
+						<!-- FORM CONTAINER-->
+	    				<form class="form-horizontal" name="fChPwd" ng-submit="sysFunctionsUser('chgPwdUser')">
+							<fieldset>
+							<!-- New Password-->
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
+							    <div class="col-md-6">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Contrase&#241a" class="form-control" aria-describedby="passwordHelpBlock" ng-model="newPwd1" minlength="8" maxlength="20" type="password" required autofocus />
+								    </div>
+							    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+												Debe ser de 8 a 20 caracteres alfanumericos.
+									</small>
+									<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+												Debe ser de 8 a 20 caracteres alfanumericos.
+									</small>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		<!-- //Modal Password Change -->
-		<!-- Edit User By Admin -->
-		<div id="EditModalUser" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
-		  	<div class="modal-dialog modal-lg" >
-			    <div class="modal-content">
-			      	<div class="modal-body" style="overflow-y: scroll; scroll; height: 445px">
-						<div class="agileits-w3layouts"> 
-				          	<div class="panel panel-default">
-				              	<div class="panel-heading">
-				                	<h3 class="panel-title">ACTUALIZAR USUARIO<a data-dismiss="modal" title="Cerrar" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-				            	</div>
-				            		<div class="panel-body">
-										<!-- FORM CONTAINER-->
-					    				<form class="form-horizontal" name="fUpdateUser" ng-submit="sysFunctionsUser('updateUser')">
-											<fieldset>
-											<!-- Select profile --> 
-											<div class="form-group"> 
-											  <label class="col-md-4 control-label">Perfil</label>
-											    <div class="col-md-4 selectContainer">
-												    <div class="input-group">
-												        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-														    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfiles" ng-model="user.idProfileKf"  required autofocus >
-														    	<option value=""></option>
-													    	</select>
-												  	</div>
-												</div>
-											</div>
-											<!-- Company List-->
-											      
-											<div class="form-group" ng-show="user.idProfileKf!=3 && user.idProfileKf!=1">  
-											    <label class="col-md-4 control-label">Empresa</label>
-											    	<div class="col-md-4 selectContainer">
-													    <div class="input-group">
-													        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-													  		<select name="idCompanyKf" class="form-control"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="idProfileKf==2" ng-model="user.idCompanyKf"  >
-															    	<option value=""></option>
-														    </select>
-													    </div>
-													</div>
-											</div>
+							<!-- New Password Check-->
 
-											<!-- Form Names -->
-											<div class="form-group">
-											  <label class="col-md-4 control-label">Nombres</label>  
-												  <div class="col-md-4">
-													  <div class="input-group">
-														  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-														  <input  name="namesUser" autofocus="true" placeholder="Nombre" class="form-control" ng-model="user.namesUser"  type="text" required autofocus/>
-													  </div>
-												  </div>
-											</div>
-											<!-- Text Mail-->
-
-											<div class="form-group">
-											 <label class="col-md-4 control-label">E-Mail</label>  
-											   <div class="col-md-4">
-											    <div class="input-group">
-											    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-											  		<input name="emailUser" placeholder="E-Mail" class="form-control" ng-model="user.emailUser"  type="email" required autofocus />
-											    </div>
-											  </div>
-											</div>
-											<!-- Text Phone-->
-											       
-											<div class="form-group">
-											  <label class="col-md-4 control-label">Telefono Fijo</label>  
-											    <div class="col-md-4">
-												    <div class="input-group">
-												        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-												  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="user.phonelocalNumberUser"  type="text"  autofocus />
-												    </div>
-											  </div>
-											</div>
-											<!-- Text Phone-->
-											       
-											<div class="form-group">
-											  <label class="col-md-4 control-label">Telefono Movil</label>  
-											    <div class="col-md-4">
-												    <div class="input-group">
-												        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-												  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="user.phoneNumberUser"  type="text"  autofocus />
-												    </div>
-											  </div>
-											</div>
-
-											<!-- Actions Button -->
-											<div class="form-group">
-											  <label class="col-md-4 control-label"></label>
-											  <div class="col-md-4">
-											    <button type="submit" class="btn btn-primary" >Actualizar</button>
-											  </div>
-											</div>
-
-											</fieldset>
-										</form>
-										<div class="clearfix"> </div> 
-									</div>
+							<div class="form-group">
+							  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
+							    <div class="col-md-6">
+								    <div class="input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
+								    </div>
+								    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
+												Debe ser de 8 a 20 caracteres alfanumericos.
+									</small>
+									<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
+												Debe ser de 8 a 20 caracteres alfanumericos.
+									</small>
+								</div>
 							</div>
-						</div>
+
+							<!-- Actions Button -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label"></label>
+							  <div class="col-md-4">
+							    <button type="submit" class="btn btn-primary" >Cambiar</button>
+							  </div>
+							</div>
+
+							</fieldset>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- //Edit User By Admin -->
 	</div>
-	<!-- Modal Password Change -->
-		<div id="PasswdModalUser" style="top: 130px;" class="modal fade bd-example-modal-md" role="dialog">
-				<div class="modal-dialog modal-md" >
-			    <div class="modal-content">
-			      	<div class="modal-body">
-			          	<div class="panel panel-default">
-			              	<div class="panel-heading">
-			                	<h3 class="panel-title">Cambio de Contrase&#241a<a data-dismiss="modal" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-			            	</div>
-		            		<div class="panel-body">
-								<!-- FORM CONTAINER-->
-			    				<form class="form-horizontal" name="fChPwd" ng-submit="sysFunctionsUser('chgPwdUser')">
-									<fieldset>
-									<!-- New Password-->
-
-									<div class="form-group">
-									  <label class="col-md-4 control-label">Nueva Contrase&#241a</label>  
-									    <div class="col-md-6">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-										  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Contrase&#241a" class="form-control" aria-describedby="passwordHelpBlock" ng-model="newPwd1" minlength="8" maxlength="20" type="password" required autofocus />
-										    </div>
-									    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
-														Debe ser de 8 a 20 caracteres alfanumericos.
-											</small>
-											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
-														Debe ser de 8 a 20 caracteres alfanumericos.
-											</small>
-										</div>
-									</div>
-									<!-- New Password Check-->
-
-									<div class="form-group">
-									  <label class="col-md-4 control-label">Confirme su Nueva Contrase&#241a</label>  
-									    <div class="col-md-6">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-										  		<input ng-blur="fnValidatePwd(newPwd1, newPwd2)" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock" class="form-control" minlength="8" maxlength="20" ng-model="$parent.newPwd2" type="password" required autofocus />
-										    </div>
-										    <small ng-if="tagPwd==0" id="passwordHelpBlock" class="form-text text-muted">
-														Debe ser de 8 a 20 caracteres alfanumericos.
-											</small>
-											<small style="color: red; font-weight: bold;" ng-if="tagPwd==1" id="passwordHelpBlock" class="form-text text-muted">
-														Debe ser de 8 a 20 caracteres alfanumericos.
-											</small>
-										</div>
-									</div>
-
-									<!-- Actions Button -->
-									<div class="form-group">
-									  <label class="col-md-4 control-label"></label>
-									  <div class="col-md-4">
-									    <button type="submit" class="btn btn-primary" >Cambiar</button>
-									  </div>
-									</div>
-
-									</fieldset>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	<!-- //Modal Password Change -->
 	<!-- Response Inform Meessage plugin -->
 	<div inform class="inform-fixed inform-shadow inform-animate"></div>
@@ -1035,10 +1211,11 @@
 <script src="js/ui-bootstrap.js"></script>
 <!--ANGULAR MODULES -->
 <!--JQUERY MODULES -->
-<script type="text/javascript" language="javascript" src="js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="js/core-SHERMAN-MLR-1249.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/inputMask.js"></script>
-<script type="text/javascript" language="javascript" src="js/acsportal.packed.js"></script>
+
+
 <!--JQUERY MODULES -->
 <script src="js/coferbaConnect.js"></script> <!-- Coferba Angular App -->
 <script src="js/coferbaAngularApp.js"></script> <!-- Coferba Angular App -->

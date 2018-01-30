@@ -2,7 +2,7 @@
 <div class="container">
   	<div class="panel panel-default">
       	<div class="panel-heading">
-        	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}} <a ng-click="fnShowHide()" class="frmclose"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+        	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}}</h3>
     	</div>
     		<div class="panel-body">
 			    <form class="form-horizontal" name="fkeyup" ng-submit="newTicket('up')" >
@@ -41,7 +41,7 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); getDeparment(0); editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 					                        <option value="" >Seleccione un consorcio</option>
 					                      </select>
 					                    </div>
@@ -72,7 +72,7 @@
 											    <!--BUTTONS -->
 											    <span ng-show="attendantFound==true && sessionidProfile!=3 && select.nameAtt && !saveAttendant" style="cursor: pointer;" ng-click="editAttendant=true; saveAttendant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
 											    <span ng-show="attendantFound==true && sessionidProfile!=3 && select.nameAtt && editAttendant" style="cursor: pointer;" ng-click="editAttendant=true" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
-											    <span ng-show="attendantFound==true && sessionidProfile!=3 && !select.nameAtt" style="cursor: pointer;" ng-click="sysRegisterAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a>
+											    <span ng-show="(!attendantFound || attendantFound) && sessionidProfile!=3 && !select.nameAtt && select.idAddressAtt" style="cursor: pointer;" ng-click="sysFunctionsAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a>
 											    </span>
 											    <!-- //BUTTONS -->
 										    </div>
@@ -110,16 +110,25 @@
 								</div>
 						</fieldset>
 						<fieldset ng-switch-when="PASO 2: SOLICITUD PARA">
+							<div ng-if="select.idAddressAtt && sessionidProfile!=3" class="btn-group btn-group-justified">
+					          <a href="#body" ng-model="collap1" ng-click="changeBody(1); listUserDepto(1);" data-toggle="collapse" class="btn btn-primary">DEPARTAMENTO</a>
+					          <a href="#body" ng-model="collap2" ng-click="changeBody(2); getAllAttendant();" data-toggle="collapse" class="btn btn-primary">EDIFICIO</a>
+					      	</div>
+      						<div id="body" ng-class="sessionidProfile==1 ? 'collapse in' : 'collapse'" ng-show="sessionidProfile!=0">
+      						    <div class="alert alert-info" role="alert">
+                    				<strong>INFO: </strong>Estimado/a, No existen departamentos asociados a la direccion seleccionada.
+              					</div>
+      						</div>
 							<!-- Type of Tenant -->
 							<div class="form-check form-check-inline">
 								<div class="col-md-6 col-md-offset-3">
 								    <label class="col-xs-6 ">
-								  		<input type="radio" ng-click="getData(1); enabledNextBtn();" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
+								  		<input type="radio" ng-click="getData(1); saveTenant=false; enabledNextBtn();" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
 									  		<code ng-show="sessionidProfile==3">{{sessionNames}}</code>
 									  		<code ng-show="sessionidProfile!=3">Propietario</code>
 							  		</label> 
 							  		<label class="col-xs-6">
-								  		<input ng-click="getData(2); enabledNextBtn();" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
+								  		<input ng-click="getData(2); saveTenant=false; enabledNextBtn();" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
 									  		<code>Inquilino</code>
 							  		</label> 
 							 	</div>
@@ -131,10 +140,10 @@
 							    <div class="col-md-4 selectContainer">
 								    <div class="input-group">
 								        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								        <select ng-model="select.idDepartmentKf" ng-change="enabledNextBtn();" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+								        <select ng-model="select.idDepartmentKf" ng-change="enabledNextBtn(); saveTenant=false; searchTenant('ticket');" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
 								        	<option value="" >Seleccione</option>
 									    	</select>
-									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open', 'add')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
 								  	</div>
 								</div>
 							</div>
@@ -146,6 +155,10 @@
 									  <div class="input-group">
 										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 										  <input  name="namesTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="tenant.namesTenant"  type="text" required="true" required autofocus />
+									   		<!--BUTTONS -->
+										    <span ng-show="tenant.namesTenant && sessionidProfile!=0 && select.idDepartmentKf>0 && !saveTenant" style="cursor: pointer;" ng-click="editTenant=true; saveTenant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
+										    <span ng-show="saveTenant && sessionidProfile!=0" style="cursor: pointer;" ng-click="" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
+										    <!-- //BUTTONS -->
 									  </div>
 								  </div>
 							</div>

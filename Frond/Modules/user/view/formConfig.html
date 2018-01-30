@@ -101,7 +101,7 @@
 	  height: 100%;
 	  word-wrap: break-word;
 	  background: #FFFFFF;
-	  font-family: Raleway, sans-serif;
+	  margin-top:2em;
 	}
     .content {
 	  float: left;
@@ -365,64 +365,58 @@
 <div id="ModalSMTPEmail" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
   	<div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
-	      	<div class="modal-body">
-				<div class="agileits-w3layouts"> 
-		          	<div class="panel panel-default">
-		              	<div class="panel-heading">
-		                	<h3 class="panel-title">CONFIGURAR CORREO<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-		            	</div>
-		            		<div class="panel-body" style="overflow-y: scroll;">
-								<!-- FORM CONTAINER-->
-									<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('smtp', 'save')">
-										<fieldset>
-										<!-- Old Password-->
+          	<div class="modal-header">
+            	<h3 class="modal-title">CONFIGURAR CORREO<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+        	</div>
+    		<div class="modal-body" style="overflow-y: scroll;">
+				<!-- FORM CONTAINER-->
+					<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('smtp', 'save')">
+						<fieldset>
+						<!-- Old Password-->
 
-										<div class="form-group">
-										  <label class="col-md-4 control-label">Correo SMTP</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-											  		<input id="smtpMail" placeholder="Correo principal" class="form-control" ng-model="smtp.mail" type="mail" required autofocus />
-											    </div>
-											    <div ng-show="smtpMail" class="alert alert-info" role="alert">
-            										<strong>Mail Actual: </strong>{{smtpMail}}
-            									</div>
-            									<div ng-show="!smtpMail" class="alert alert-warning" role="alert">
-            										<strong>Mail Actual: </strong>Sin Asignar.
-            									</div>
-											</div>
-										</div>
-										<!-- Password-->
-
-										<div class="form-group">
-										  <label class="col-md-4 control-label">Contrase&#241a</label>  
-										    <div class="col-md-4">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-											  		<input id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="smtp.password" minlength="8" type="password" required autofocus />
-											    </div>
-											    <div ng-show="smtpPwd" class="alert alert-info" role="alert">
-													<strong>Clave Actual: </strong>Asignada
-            									</div>
-            									<div ng-show="!smtpPwd" class="alert alert-warning" role="alert">
-													<strong>Clave Actual: </strong>Sin Asignar.
-            									</div>
-											</div>
-										</div>
-										<!-- Actions Button -->
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>
-										  <div class="col-md-4">
-										    <button type="submit" class="btn btn-primary" ><i class="glyphicon glyphicon-save"> </i>Guardar</button>
-										  </div>
-										</div>
-
-										</fieldset>
-									</form>
-								<div class="clearfix"> </div> 
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Correo SMTP</label>  
+						    <div class="col-md-4">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+							  		<input id="smtpMail" placeholder="Correo principal" class="form-control" ng-model="smtp.mail" type="mail" required autofocus />
+							    </div>
+							    <div ng-show="smtpMail" class="alert alert-info" role="alert">
+									<strong>Mail Actual: </strong>{{smtpMail}}
+								</div>
+								<div ng-show="!smtpMail" class="alert alert-warning" role="alert">
+									<strong>Mail Actual: </strong>Sin Asignar.
+								</div>
 							</div>
-					</div>
-				</div>
+						</div>
+						<!-- Password-->
+
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Contrase&#241a</label>  
+						    <div class="col-md-4">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							  		<input id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="smtp.password" minlength="8" type="password" required autofocus />
+							    </div>
+							    <div ng-show="smtpPwd" class="alert alert-info" role="alert">
+									<strong>Clave Actual: </strong>Asignada
+								</div>
+								<div ng-show="!smtpPwd" class="alert alert-warning" role="alert">
+									<strong>Clave Actual: </strong>Sin Asignar.
+								</div>
+							</div>
+						</div>
+						<!-- Actions Button -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>
+						  <div class="col-md-4">
+						    <button type="submit" class="btn btn-primary" ><i class="glyphicon glyphicon-save"> </i>Guardar</button>
+						  </div>
+						</div>
+
+						</fieldset>
+					</form>
+				<div class="clearfix"> </div> 
 			</div>
 		</div>
 	</div>
@@ -432,96 +426,90 @@
 <div id="ModalServiceCost" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
   	<div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
-	      	<div class="modal-body" style="overflow-y: scroll;">
-				<div class="agileits-w3layouts"> 
-		          	<div class="panel panel-default">
-		              	<div class="panel-heading">
-		                	<h3 class="panel-title">COSTOS DE SERVICIOS<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-		            	</div>
-		            		<div class="panel-body" >
-								<!-- FORM CONTAINER-->
-									<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('services', 'save')">
-										<fieldset>
-										
-										<!-- Company Name-->    
-										<div class="form-group">
-										  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Administracion</label>
-										    <div class="col-md-6">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-											  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+          	<div class="modal-header">
+            	<h3 class="modal-title">COSTOS DE SERVICIOS<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+        	</div>
+    		<div class="modal-body" style="overflow-y: scroll;">
+				<!-- FORM CONTAINER-->
+					<form class="form-horizontal" name="frmsmtpMail" ng-submit="sideBarMenu('services', 'save')">
+						<fieldset>
+						
+						<!-- Company Name-->    
+						<div class="form-group">
+						  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Administracion</label>
+						    <div class="col-md-6">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+							  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
 
-											  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-													    	<option value="">Seleccione una opcion</option>
-												    </select>
-											    </div>
-										  	</div>
-										</div>
-										<!-- List Address-->
-										      
-										<div class="form-group" ng-show="sessionidProfile!=3">
-										  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion de Consorcio</label>   
-										    <div class="col-md-6">
-											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-											  		<select name="idAddressKf" ng-disabled="!select.idCompanyKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-													    <option value="">Seleccione una opcion</option>
-												    	</select>
-											    </div>
-										  </div>
-										</div>
-										<!-- Service-->
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>  
-										    <div class="col-md-6">
-											    <div ng-show="costService" class="alert alert-info" role="alert">
-            										<strong>Costo Gestion (Alta / Baja): </strong>{{costService}}
-            									</div>
-            									<div ng-show="!costService" class="alert alert-warning" role="alert">
-            										<strong>Costo Servicio: </strong>Valor No Asignado.
-            									</div>
-											</div>
-										</div>
-										<!-- Key-->
-
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>  
-										    <div class="col-md-6">
-											    <div ng-show="costKey" class="alert alert-info" role="alert">
-            										<strong>Costo de Llave: </strong>{{costKey}}
-            									</div>
-            									<div ng-show="!costKey" class="alert alert-warning" role="alert">
-            										<strong>Costo Llave: </strong>Valor No Asignado.
-            									</div>
-											</div>
-										</div>
-										<!-- Delivery-->
-
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>  
-										    <div class="col-md-6">
-											    <div ng-show="costDelivery" class="alert alert-info" role="alert">
-            										<strong>Costo de Envio: </strong>{{costDelivery}}
-            									</div>
-            									<div ng-show="!costDelivery" class="alert alert-warning" role="alert">
-            										<strong>Costo Envio: </strong>Valor No Asignado.
-            									</div>
-											</div>
-										</div>
-										<!-- Actions Button -->
-										<div class="form-group">
-										  <label class="col-md-4 control-label"></label>
-										  <div class="col-md-6">
-										    <button data-dismiss="modal" class="btn btn-primary" ><i class="glyphicon glyphicon-remove-sign"> </i> Cerrar</button>
-										  </div>
-										</div>
-
-										</fieldset>
-									</form>
-								<div class="clearfix"> </div> 
+							  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+									    	<option value="">Seleccione una opcion</option>
+								    </select>
+							    </div>
+						  	</div>
+						</div>
+						<!-- List Address-->
+						      
+						<div class="form-group" ng-show="sessionidProfile!=3">
+						  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion de Consorcio</label>   
+						    <div class="col-md-6">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+							  		<select name="idAddressKf" ng-disabled="!select.idCompanyKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+									    <option value="">Seleccione una opcion</option>
+								    	</select>
+							    </div>
+						  </div>
+						</div>
+						<!-- Service-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>  
+						    <div class="col-md-6">
+							    <div ng-show="costService" class="alert alert-info" role="alert">
+									<strong>Costo Gestion (Alta / Baja): </strong>{{costService}}
+								</div>
+								<div ng-show="!costService" class="alert alert-warning" role="alert">
+									<strong>Costo Servicio: </strong>Valor No Asignado.
+								</div>
 							</div>
-					</div>
-				</div>
+						</div>
+						<!-- Key-->
+
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>  
+						    <div class="col-md-6">
+							    <div ng-show="costKey" class="alert alert-info" role="alert">
+									<strong>Costo de Llave: </strong>{{costKey}}
+								</div>
+								<div ng-show="!costKey" class="alert alert-warning" role="alert">
+									<strong>Costo Llave: </strong>Valor No Asignado.
+								</div>
+							</div>
+						</div>
+						<!-- Delivery-->
+
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>  
+						    <div class="col-md-6">
+							    <div ng-show="costDelivery" class="alert alert-info" role="alert">
+									<strong>Costo de Envio: </strong>{{costDelivery}}
+								</div>
+								<div ng-show="!costDelivery" class="alert alert-warning" role="alert">
+									<strong>Costo Envio: </strong>Valor No Asignado.
+								</div>
+							</div>
+						</div>
+						<!-- Actions Button -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>
+						  <div class="col-md-6">
+						    <button data-dismiss="modal" class="btn btn-primary" ><i class="glyphicon glyphicon-remove-sign"> </i> Cerrar</button>
+						  </div>
+						</div>
+
+						</fieldset>
+					</form>
+				<div class="clearfix"> </div> 
 			</div>
 		</div>
 	</div>

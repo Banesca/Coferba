@@ -1,0 +1,203 @@
+.fixedHead{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+/*main_container*/
+.main_container {
+    padding-top: 3em;
+    margin-top: 8.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+}
+#wLoader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:#fff;
+    z-index: 99999;
+}
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #040D58;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+#loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #ADFF00;;
+    -webkit-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+}
+#loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #040D58;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+.companyName h4{
+  display: inline-block;
+  text-shadow: #111 0 0 1px, rgba(255,255,255,0.1) 0 1px 3px;
+}
+
+.companyName h4:hover {
+  text-shadow: #fff 0 0 5px, #ADFF00 0 0 0px;
+  cursor: default;
+}
+@-webkit-keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.form-horizontal{
+  z-index: 0;
+}
+
+/*-- contact --*/
+.mapa {
+    padding-top: 3em;
+}
+.mapa iframe {
+    width: 100%;
+    height: 300px;
+    border: 10px solid #14162B;
+}
+.contact-sys ul {
+    margin: 1.5em 0 0 0;
+    padding: 0;
+}
+.contact-sys ul li {
+    display: block;
+    margin-top: 1em;
+    font-size: 1em;
+    color: #999;
+}
+.contact-sys ul li a {
+    color: #ADFF00;
+}
+/*-- contact --*/
+/* Jumbotron Settings */
+.m-h-30{min-height:30px}
+.b-s-20{-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.20);-moz-box-shadow:0 2px 4px 0 rgba(0,0,0,.20);box-shadow:0 2px 4px 0 rgba(0,0,0,.20)}
+.m-b-5{margin-bottom:0px}
+.jumbotron:before { background: none; }
+.jumbotron.skin3 {background: #2268AF; /* Old browsers */}
+.jumbotron table { width:100%; }
+.jumbotron table tr td > div:hover { 
+    filter:alpha(opacity=80);
+    -moz-opacity:0.8;
+    opacity: 0.8;
+     }
+.jumbotron table tr td.hidden-desktop { cursor:pointer; }
+.jumbotron table tr td > div i + i.icon-circle { margin-left:3px; }
+.jumbotron table tr td > div p { margin-top:20px; margin-left:8px; font-weight:600; }
+.jumbotron.height-auto { height:auto; }
+.jumbotron{
+    background-color: #229922;
+    padding: 0;
+}
+
+.navbar-custom {
+    background-color:#229922;
+    color:#ffffff;
+    border-radius:0;
+}
+.icon-m i{
+    padding-left: 0.6em;
+}  
+.icon-m span{
+    
+}
+.navbar-custom .navbar-nav > li > a {
+    color:#fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.navbar-custom .navbar-nav > .active > a {
+    color: #2A2D33;
+    background-color:transparent;
+    font-weight: bold;
+}
+      
+.navbar-custom .jumbotron .navbar-nav > li > a:hover,
+.navbar-custom .jumbotron .navbar-nav > li > a:focus,
+.navbar-custom .jumbotron .navbar-nav > .active > a:hover,
+.navbar-custom .jumbotron .navbar-nav > .active > a:focus,
+.navbar-custom .jumbotron .navbar-nav > .open >a {
+    text-decoration: none;
+    background: rgba(108, 117, 125, .8);
+    color:rgba(255, 255, 255, .8);;
+}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #33aa33;
+}     
+.navbar-custom .navbar-brand {
+    color:#eeeeee;
+}
+.navbar-custom .navbar-toggle {
+    background-color:none;
+}
+.navbar-custom .icon-bar {
+    background-color:#fff;
+}
+.modal-backdrop {
+        background-color: #14162b;
+        opacity: .7;
+}
+
+@media (max-width: 767px) {
+    .icon-m i{
+        display: none;
+    }
+    .main_container {
+    margin-top: 4.8em;
+
+}
+
+}

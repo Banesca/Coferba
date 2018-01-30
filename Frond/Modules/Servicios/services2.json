@@ -42,8 +42,8 @@ http://localhost/Coferba/Back/index.php/User/antendantActive/2
 
 
 ----------------------  GET detalles de un tickets por id--------------
-http://127.0.0.1/Coferba/Back/index.php/Ticket/find/1
+http://localhost/Coferba/Back/index.php/Ticket/find/1
 
 
 ----------------------  GET verificat tickets activos por idTenan--------------
-http://127.0.0.1/Coferba/Back/index.php/Ticket/verificateTicketByIdTenant/22
+http://localhost/Coferba/Back/index.php/Ticket/verificateTicketByIdTenant/22
