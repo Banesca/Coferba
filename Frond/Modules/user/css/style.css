@@ -172,7 +172,7 @@
 .navbar-custom .jumbotron .navbar-nav > .open >a {
     text-decoration: none;
     background: rgba(108, 117, 125, .8);
-    color:rgba(255, 255, 255, .8);;
+    color:rgba(255, 255, 255, .8);
 }
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
     background-color: #33aa33;

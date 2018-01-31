@@ -187,6 +187,16 @@
                         <td colspan="4" >
                             <div ng-show="tenantNotFound && sessionidProfile!=0 && select.idAddressAtt" class="alert alert-info" role="alert">
                                 <strong>INFO: </strong>No hay Inquilinos registrados en el departamento seleccionada.
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-info btn-sm"><i title="Registrar" class="glyphicon glyphicon-plus"></i> Registrar</button>
+                                  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" ng-click="sysFunctionsTenant('open', 'add'); "><i title="Registrar Inquilinos" class="glyphicon glyphicon-edit"></i> Inquilinos</a></li>
+                                    <li ng-if="item.departmentFloor=='Porteria'"><a href="#" ng-click="sysFunctionsAtt('open')"><i title="Registrar Encargados" class="glyphicon glyphicon-edit"></i> Encargados</a></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div ng-if="tenantNotFound!=true && sessionidProfile!=0" class="panel panel-default">
                               <div class="panel-heading">
@@ -377,7 +387,7 @@
                         <tr style="align-content: center;" ng-repeat="item in listAttendant | filter: {idTyepeAttendantKf:filteroAttProfile} | filter: {idStatusKf:filterUserStatus} | filter: searchboxfilter | orderBy: 'idAttendant'">
                           <td>
                           <div class="btn-group">
-                            <button type="button" class="btn btn-info btn-sm">{{item.idAttendant}}</button>
+                            <button type="button" ng-click="select2EditAtt(item);" class="btn btn-info btn-sm">{{item.idAttendant}}</button>
                             <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
                               <span class="caret"></span>
                             </button>
@@ -405,7 +415,7 @@
                           <td ng-if="item.idTyepeAttendantKf==2">Titular</td>
                           <td ng-if="item.idTyepeAttendantKf==3">Suplente</td>
                           <td ng-if="item.idTyepeAttendantKf==4">Ayudante</td>
-                          <td ng-if="item.idTyepeAttendantKf==4">Intendente</td>
+                          <td ng-if="item.idTyepeAttendantKf==5">Intendente</td>
                           <td> <!-- TD to Admins -->
                             <label ng-if="item.idStatusKf==1" class="label label-success">ACTIVO
                             </label>

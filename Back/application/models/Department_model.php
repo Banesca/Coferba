@@ -125,7 +125,7 @@ class Department_model extends CI_Model
         
             $this->db->select("*")->from("tb_department");
             $this->db->where("tb_department.idDepartment =", $id);
-            $quuery =  $this->db->where("tb_department.idUserAdminPropietariKf >", 0)->get();
+            $quuery =  $this->db->where("tb_department.idTenantKf >", 0)->get();
 
             if ($quuery->num_rows() > 0) {
                 return true;
