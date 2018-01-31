@@ -16,197 +16,195 @@
 }
     </style>
     
-<div ng-init="sysLoadLStorage(); checkBefore2Load();">
-    <div style="margin:   20px;">
-        <div class="row" >
-            <div class="col-lg-12" style="background-color: #f1f1f1;    margin-top: -68px;">
-                <div class="row" style="position: fixed;z-index: 100;width: 100%;background: #ebf3da; padding-top: 10px;">
-                    <div  class="row" >
-                        <div ng-show="sessionidProfile!=3" class="form-group col-lg-2">
-                            <label ng-show="sessionidProfile==2">Empresa</label>
-                          <label ng-show="sessionidProfile==1">Empresa o Administracion</label>
-                          <label ng-show="sessionidProfile==4">Administracion</label>   
-                            <div class="col-xl-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-                                  <input ng-show="sessionidProfile!=3 && sessionidProfile!=1" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
-
-                                  <select ng-show="sessionidProfile==1" name="idCompany" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); dhboard();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-                                      <option value="">Todos</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- List Address-->
-                        <div ng-if="sessionidProfile!=3" ng-disable="sessionidProfile==3" class="form-group col-lg-2">
-                          <label ng-show="sessionidProfile==2">Sucursal</label>
-                          <label ng-show="sessionidProfile==1">Sucursal o Consorcio</label>
-                          <label ng-show="sessionidProfile==4">Consorcio</label>   
-                            <div class="col-xs-12 selectContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-                                    <select name="idAddress" class="form-control" ng-change="dhboard()"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-model="filters.idAddress" autofocus >
-                                        <option value="">Todos</option>
-                                        </select>
-                                </div>
-                          </div>
-                        </div>
-                        <!-- Address for Onwers-->      
-                        <div class="form-group col-lg-2" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
-                            <label>Consorcio</label>
-                                <div class="col-xl-12 selectContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                        <select name="idAddres" class="form-control" ng-change="dhboard()"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-model="filters.idAddress" autofocus >
-                                            <option value="">Seleccione un consorcio</option>
-                                        </select>
-                                    </div>
-                                </div>
-                        </div>
-                        <!-- Filter Top -->
-                        <div ng-if="sessionidProfile" class="form-group col-lg-1">
-                          <label>Top</label>
-                            <div class="col-xl-12 selectContainer">
-                              <div class="input-group">
-                                  <span class="input-group-addon"><i class="glyphicon glyphicon-align-justify"></i></span>
-                                  <select class="form-control" ng-change="dhboard()" ng-model="filters.topDH">
-                                    <option value="0">Todo</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="100">50</option>
-                                </select>
-                              </div>
-                            </div>
-                        </div>
-                        <!-- Filter Type of Ticket for Company User-->
-                        <div ng-if="sessionidProfile==2" class="form-group col-lg-2">
-                          <label>Tipo de Ticket</label>
-                            <div class="col-xl-12 selectContainer">
-                              <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                    <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  | filter: {idTypeTicket:3}" ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
-                                      <option value="">Todos</option>
-                                    </select>
-                              </div>
-                            </div>
-                        </div>
-                        <!-- Filter Type of Ticket for Onwer User-->
-                        <div ng-if="sessionidProfile==3" class="form-group col-lg-2">
-                          <label>Tipo de Ticket</label>
-                            <div class="col-xl-12 selectContainer">
-                              <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                    <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
-                                      <option value="">Todos</option>
-                                    </select>
-                              </div>
-                            </div>
-                        </div>
-                        <!-- Filter Type of Ticket for Onwer User-->
-                        <div ng-if="sessionidProfile!=2 && sessionidProfile!=3" class="form-group col-lg-2">
-                          <label>Tipo de Ticket</label>
-                            <div class="col-xl-12 selectContainer">
-                              <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                    <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
-                                      <option value="">Todos</option>
-                                    </select>
-                              </div>
-                            </div>
-                        </div>
-                        <!-- Filter Type of Status-->
-                        <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
-                          <label>Tipo de Estatus</label>
-                            <div class="col-xl-12 selectContainer">
-                              <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                    <select name="idStatusKf" class="form-control" ng-change="dhboard()"  ng-options="item.idStatus as item.statusName for item in listStatusTicket " ng-model="filters.idStatusKf" >
-                                      <option value="">Todos</option>
-                                    </select>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-lg-2">
-                        <label>Buscar</label>
-                          <div class="col-xl-12">
+<div ng-init="sysLoadLStorage(); checkBefore2Load();" class="container-fluid" >
+    <div class="row" >
+        <div class="col-lg-12" style="background-color: #f1f1f1; ">
+            <div class="row" style="position: fixed;z-index: 100;width: 100%;background: #ebf3da; padding-top: 15px;margin-top: -0.4em;">
+                <div  class="row" style="margin-left: 10px;" >
+                    <div ng-show="sessionidProfile!=3" class="form-group col-lg-2">
+                        <label ng-show="sessionidProfile==2">Empresa</label>
+                      <label ng-show="sessionidProfile==1">Empresa o Administracion</label>
+                      <label ng-show="sessionidProfile==4">Administracion</label>   
+                        <div class="col-xl-12">
                             <div class="input-group">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                              <input type="text" class="form-control" ng-blur="dhboard()" ng-model="filters.searchFilter" placeholder="Buscar...">
+                                <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+                              <input ng-show="sessionidProfile!=3 && sessionidProfile!=1" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
+
+                              <select ng-show="sessionidProfile==1" name="idCompany" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); dhboard();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+                                  <option value="">Todos</option>
+                                </select>
                             </div>
-                          </div>
                         </div>
-                        <div class="form-group col-lg-1">
-                            <div class="col-xl-12"><br>
-                                <div class="btn-group">
-                                    <button type="button" ng-click="dhboard()" class="btn btn-lg btn-info">
-                                        <i title="Agregar Inquilino" class="glyphicon glyphicon-refresh"></i>
-                                    </button>
+                    </div>
+                    <!-- List Address-->
+                    <div ng-if="sessionidProfile!=3" ng-disable="sessionidProfile==3" class="form-group col-lg-2">
+                      <label ng-show="sessionidProfile==2">Sucursal</label>
+                      <label ng-show="sessionidProfile==1">Sucursal o Consorcio</label>
+                      <label ng-show="sessionidProfile==4">Consorcio</label>   
+                        <div class="col-xs-12 selectContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+                                <select name="idAddress" class="form-control" ng-change="dhboard()"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-model="filters.idAddress" autofocus >
+                                    <option value="">Todos</option>
+                                    </select>
+                            </div>
+                      </div>
+                    </div>
+                    <!-- Address for Onwers-->      
+                    <div class="form-group col-lg-2" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
+                        <label>Consorcio</label>
+                            <div class="col-xl-12 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <select name="idAddres" class="form-control" ng-change="dhboard()"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-model="filters.idAddress" autofocus >
+                                        <option value="">Seleccione un consorcio</option>
+                                    </select>
                                 </div>
                             </div>
+                    </div>
+                    <!-- Filter Top -->
+                    <div ng-if="sessionidProfile" class="form-group col-lg-1">
+                      <label>Top</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-align-justify"></i></span>
+                              <select class="form-control" ng-change="dhboard()" ng-model="filters.topDH">
+                                <option value="0">Todo</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="100">50</option>
+                            </select>
+                          </div>
                         </div>
-                    </div>          
-                        <div ng-show="noStatus" class="col-lg-3">
-                            <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
-                            <label>Total Ticket Finalizados</label>
-                            <label style="color: #39af24;font-size: 20px;">0</label>
+                    </div>
+                    <!-- Filter Type of Ticket for Company User-->
+                    <div ng-if="sessionidProfile==2" class="form-group col-lg-2">
+                      <label>Tipo de Ticket</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  | filter: {idTypeTicket:3}" ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
                         </div>
-                        <div ng-show="noStatus" class="col-lg-3">
-                            <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
-                            <label>Total Ticket Cancelados</label>
-                            <label style="color: #af2424;font-size: 20px;">0</label>
+                    </div>
+                    <!-- Filter Type of Ticket for Onwer User-->
+                    <div ng-if="sessionidProfile==3" class="form-group col-lg-2">
+                      <label>Tipo de Ticket</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
                         </div>
-                        <div  ng-show="noStatus" class="col-lg-3">
-                            <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
-                            <label>Total Ticket Pendientes</label>
-                            <label  style="color: #af8424;font-size: 20px;">0</label>
+                    </div>
+                    <!-- Filter Type of Ticket for Onwer User-->
+                    <div ng-if="sessionidProfile!=2 && sessionidProfile!=3" class="form-group col-lg-2">
+                      <label>Tipo de Ticket</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
                         </div>
-                        <div class="col-lg-3">
-                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                            <label>Total</label>
-                            <label style="font-size: 20px;">{{totalTickets}}</label>
+                    </div>
+                    <!-- Filter Type of Status-->
+                    <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
+                      <label>Tipo de Estatus</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idStatusKf" class="form-control" ng-change="dhboard()"  ng-options="item.idStatus as item.statusName for item in listStatusTicket " ng-model="filters.idStatusKf" >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
                         </div>
-                </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                    <label>Buscar</label>
+                      <div class="col-xl-12">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                          <input type="text" class="form-control" ng-blur="dhboard()" ng-model="filters.searchFilter" placeholder="Buscar...">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <div class="col-xl-12"><br>
+                            <div class="btn-group">
+                                <button type="button" ng-click="dhboard()" class="btn btn-lg btn-info">
+                                    <i title="Agregar Inquilino" class="glyphicon glyphicon-refresh"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+                    <div ng-show="noStatus" class="col-lg-3">
+                        <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+                        <label>Total Ticket Finalizados</label>
+                        <label style="color: #39af24;font-size: 20px;">0</label>
+                    </div>
+                    <div ng-show="noStatus" class="col-lg-3">
+                        <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
+                        <label>Total Ticket Cancelados</label>
+                        <label style="color: #af2424;font-size: 20px;">0</label>
+                    </div>
+                    <div  ng-show="noStatus" class="col-lg-3">
+                        <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+                        <label>Total Ticket Pendientes</label>
+                        <label  style="color: #af8424;font-size: 20px;">0</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <label>Total</label>
+                        <label style="font-size: 20px;">{{totalTickets}}</label>
+                    </div>
             </div>
         </div>
-            <div style="background: #737373;margin-top: 80px;">
-
-                <div class="col-lg-12" 
-                    ng-repeat="tk in listTickt"
-                    style="background-color: #ced3d6;
-                    height: 82px;
-                    border-radius: 10px;
-                    padding: 10px;
-                    margin-bottom: 5px;">
-                        <div class="col-lg-10">
-                            <label>{{tk.codTicket}}</label>
-                            <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
-                            <br>
-                            <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
-                            <label>Creado {{tk.dateCratedTicket}}</label> - 
-                            <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
-                            <label>Cliente:{{tk.fullNameTenant}}</label> - 
-                            <label ng-if="!tk.phoneNumberTenant">No registrado</label> 
-                            <label ng-if="tk.phoneNumberTenant">{{tk.phoneNumberTenant}}</label> 
+    </div>
+    <div class="modal-body" style="margin-top: 9em;">
+        <div style="background: #737373;">
+            <div class="col-lg-12" 
+                ng-repeat="tk in listTickt"
+                style="background-color: #ced3d6;
+                height: 82px;
+                border-radius: 5px;
+                padding: 10px;
+                margin-bottom: 5px;">
+                    <div class="col-lg-10">
+                        <label>{{tk.codTicket}}</label>
+                        <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding: 2px;font-size: 11px;">{{tk.typeDelivery}}</label>
+                        <br>
+                        <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}</label> <br>
+                        <label>Creado {{tk.dateCratedTicket}}</label> - 
+                        <label>Aprobada {{tk.dateRecibedAdmin}}</label> - 
+                        <label>Cliente:{{tk.fullNameTenant}}</label> - 
+                        <label ng-if="!tk.phoneNumberTenant">No registrado</label> 
+                        <label ng-if="tk.phoneNumberTenant">{{tk.phoneNumberTenant}}</label> 
+                    </div>
+                
+                    <div class="col-lg-2">
+                            <!-- Split button -->
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-success">{{tk.statusName}}</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
+                        </ul>
                         </div>
-                    
-                        <div class="col-lg-2">
-                                <!-- Split button -->
-                            <div class="btn-group">
-                            <button type="button" class="btn btn-success">{{tk.statusName}}</button>
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
-                            </ul>
-                            </div>
-                        </div>              
-                </div>
+                    </div>              
             </div>
-
+        </div>
     </div>
 </div>
     

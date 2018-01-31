@@ -30,48 +30,36 @@ $(function () {
         }
     });
 });
-
-
-    $('#SubM_Pedidos').hide();
     
     /* MENU ICONS*/
-    $('.jumbotron [id^="m_"]').click(function(){
-    });
     $('#m_pedidos').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-        $('#SubM_Pedidos').show();
     });
     $('#m_monitor').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-         $('#SubM_Pedidos').hide();
         
     });
     $('#m_depto').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-         $('#SubM_Pedidos').hide();
     });
     $('#m_report').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-         $('#SubM_Pedidos').hide();
     });
     $('#m_user').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-         $('#SubM_Pedidos').hide();
     });
      $('#m_config').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-         $('#SubM_Pedidos').hide();
     });
       $('#m_contact').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');
-         $('#SubM_Pedidos').hide();
     });
   /**************************************************/
 });
