@@ -137,7 +137,8 @@ class User_model extends CI_Model
                     'phoneLocalAttendant' => $user['phoneLocalAttendant'],
                     'mailAttendant' => $user['mailAttendant'],
                     'hoursWork' => $user['hoursWork'],
-                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf']
+                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf'],
+                    'descOther'=> $user['descOther']
 
                         )
                 );
@@ -162,7 +163,8 @@ class User_model extends CI_Model
                     'phoneLocalAttendant' => $user['phoneLocalAttendant'],
                     'mailAttendant' => $user['mailAttendant'],
                     'hoursWork' => $user['hoursWork'],
-                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf']
+                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf'],
+                    'descOther'=> $user['descOther']
                 )
         )->where("idAttendant", $user['idAttendant'])->update("tb_attendant");
 

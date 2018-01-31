@@ -10,7 +10,8 @@ http://localhost/Coferba/Back/index.php/User/attendant
   "phoneAttendant" : "31321321321",
   "mailAttendant" : "prueba@pruba.com",
   "hoursWork" : "08:40",
-  "idTyepeAttendantKf": 1
+  "idTyepeAttendantKf": 1,
+  "descOther" :"adssa"
   }
 }
 
@@ -27,7 +28,9 @@ http://localhost/Coferba/Back/index.php/User/updateAtt
     "phoneAttendant" : "31321321321",
     "mailAttendant" : "prueba@pruba.com",
     "hoursWork" : "08:40",
-    "idTyepeAttendantKf": 2
+    "idTyepeAttendantKf": 2,
+    "descOther" :"adssa"
+
     }
   }
 
