@@ -175,20 +175,21 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
       if(previousStep<1){$scope.btnBack=false;}
     }
   };
-  $scope.enabledNextBtn=function(){
-
+  $scope.enabledNextBtn=function(item){
+  $scope.typeOption = item;
+  $scope.formValidated=false;
     switch ($scope.stepIndexTmp){
       case 0:
         if ($scope.fSwitch=="t" && $scope.sessionidProfile!=0){
           if (!$scope.select.idAddressAtt || !$scope.select.nameAtt ){
-                $scope.formValidated=false; 
+              $scope.formValidated=false; 
           }else{
             $scope.formValidated=true;
           }
 
         }else if ($scope.fSwitch=="s" && $scope.sessionidProfile!=3){
           if (!$scope.select.idAddressKf){
-                $scope.formValidated=false; 
+              $scope.formValidated=false; 
           }else{
             $scope.formValidated=true;
           }
@@ -196,11 +197,24 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
         break;
         case 1:
         if ($scope.fSwitch=="t" && $scope.sessionidProfile!=0){
-          if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
-                $scope.formValidated=false; 
-          }else{
-            $scope.formValidated=true;
-          }
+          if ($scope.collap==1){
+            if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
+              $scope.formValidated=false;
+            }else{
+              $scope.formValidated=true;
+            }
+          }else 
+            if ($scope.collap==2){
+              if($scope.typeOption==3){
+                  if($scope.other.fullNamesAtt==""){
+                    $scope.formValidated=false; 
+                  }else{
+                    $scope.formValidated=true;
+                  }
+                }else{
+                  $scope.formValidated=true;
+              } 
+            }
 
         }
         break;
@@ -423,6 +437,35 @@ $scope.getAllAddressByIdTenant = function (){
 
 /**************************************************
 *                                                 *
+*   Select Function to bind the Cost of Service   *
+*                                                 *
+**************************************************/
+$scope.getCostServiceData = function(item){
+    var idAddress = $scope.select.idAddressAtt;
+    /* Recorrer el Json de Address para obtener datos */
+    var length = item==3 ? $scope.ListTenantAddress.length : $scope.listOffice.length;
+    for (i = 0; i < length; i++) {
+      if (item==3){
+        if($scope.ListTenantAddress[i].idAdress == idAddress){
+            $scope.costService  = $scope.ListTenantAddress[i].priceManagement;
+            $scope.costKey      = $scope.ListTenantAddress[i].priceUni;
+            $scope.costDelivery = $scope.ListTenantAddress[i].priceShipping;
+            break;
+        }
+      }else if(item==4){
+        if($scope.listOffice[i].idAdress == idAddress){
+            $scope.costService  = $scope.listOffice[i].priceManagement;
+            $scope.costKey      = $scope.listOffice[i].priceUni;
+            $scope.costDelivery = $scope.listOffice[i].priceShipping;
+            break;
+        }
+      }
+    }; 
+}
+/**************************************************/
+
+/**************************************************
+*                                                 *
 *                ATTENDANT TYPE LIST              *
 *                                                 *
 **************************************************/
@@ -503,7 +546,7 @@ $scope.getUserCompanyData = function(){
             break;
         }
     }; 
-  }
+}
 /**************************************************/
 
 
@@ -1010,6 +1053,19 @@ $scope.checkTicketTenant = function(){
   }
 /**************************************************/
 $scope.changeBody = function(value){
+  if ($scope.IsTicket){
+    $scope.formValidated=false; 
+    $scope.typeOption="";
+    /*-------------------*/
+    $scope.typeTenant              = "";
+    $scope.select.idDepartmentKf   = "";
+    $scope.tenant.namesTenant      = "";
+    $scope.tenant.addressTenant    = "";
+    $scope.tenant.movilPhoneTenant = "";
+    $scope.tenant.emailTenant      = "";
+    $scope.tenant.localPhoneTenant = "";
+    $scope.tenantNotFound = false;
+  }
   if(value==1){
       $scope.collap=1;
   }else if(value==2){
@@ -2875,12 +2931,8 @@ $scope.sideBarMenu = function(value, fnAction){
     break;
     case "services":
       if(fnAction=="open"){
-        $scope.config.service="";
-        $scope.config.key ="";
-        $scope.config.delivery="";
-        $scope.varSuccessFnCost = 0;
-        $scope.getParameter();
-        $scope.loadParameter(1, 6,'sysParam');
+        $scope.select.idCompanyKf="";
+        $scope.select.idAddressAtt="";
         $('#ModalServiceCost').modal('toggle');
       }
       if(fnAction=="save"){
@@ -3061,6 +3113,8 @@ function cleanForms (){
     $scope.tmp.idDepartment           = "";
     $scope.isAttUpdated               = false;
     $scope.tmp.idTypeAttTmp           = "";
+    $scope.typeOption                 = 0;
+    $scope.other={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '' };
     $scope.t={idTenant:'', fullNameTenant:'', idTypeKf:'', phoneNumberTenant:'', phoneNumberContactTenant:'', idDepartmentKf: '', emailTenant:''};
     $scope.att={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '' };
 }
@@ -3081,6 +3135,9 @@ function closeAllDiv (){
   $scope.rucontact    = false;
   $scope.rudepto      = false;
   $scope.rusysconfig  = false;
+  /* Variables usadas en las solicitudes */
+  $scope.btnBack=false;
+  $scope.btnShow=true;
 }
 /**************************************************/
 
@@ -3168,7 +3225,7 @@ $scope.fnShowHide = function(divId, divAction) {
             $scope.IsTicket = true;
             $scope.manageDepto = 0;
           if(divAction=="open"){
-            BindDataToForm('mngdepto');
+            if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;}
             $scope.loadParameter(3, 6,'sysParam');
             if ($scope.sessionidProfile==3){
               $scope.getAllAddressByIdTenant();
@@ -3184,7 +3241,7 @@ $scope.fnShowHide = function(divId, divAction) {
           $scope.IsTicket = true;
           $scope.manageDepto = 0;
         if(divAction=="open"){
-          BindDataToForm('mngdepto');
+          if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;}
           if ($scope.sessionidProfile==3){
             $scope.getAllAddressByIdTenant();
           }else {$scope.rukeydown = true;}
@@ -3234,7 +3291,7 @@ $scope.fnShowHide = function(divId, divAction) {
           cleanForms();
           $scope.manageDepto = 1;
         if(divAction=="open"){
-          BindDataToForm('mngdepto');
+          if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;}
           $scope.rudepto = true;
         }else{
           closeAllDiv();
@@ -3245,7 +3302,7 @@ $scope.fnShowHide = function(divId, divAction) {
           closeAllDiv();
           cleanForms();
         if(divAction=="open"){
-          BindDataToForm('mngdepto');
+          if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;};
           if ($scope.sessionidProfile==3){
             $scope.getAllAddressByIdTenant();
           }else {$scope.home = true;}
@@ -3258,6 +3315,7 @@ $scope.fnShowHide = function(divId, divAction) {
           closeAllDiv();
           cleanForms();
         if(divAction=="open"){
+          if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;}
           $scope.rucost = true;
         }else{
           closeAllDiv();

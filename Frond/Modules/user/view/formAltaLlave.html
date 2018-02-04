@@ -66,7 +66,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData(); editAttendant=false; isAttUpdated=false; saveAttendant=false; enabledNextBtn();" ng-model="select.nameAtt" autofocus >
+										  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idAttendant as item.nameAttendant for item in listAttendant" ng-required="sessionidProfile!=2" ng-change="getAttData(); editAttendant=false; isAttUpdated=false; saveAttendant=false; enabledNextBtn(); collap=1;" ng-model="select.nameAtt" autofocus >
 												    <option value="">Seleccione un encargado</option>
 											    </select>
 											    <!--BUTTONS -->
@@ -111,86 +111,160 @@
 						</fieldset>
 						<fieldset ng-switch-when="PASO 2: SOLICITUD PARA">
 							<div ng-if="select.idAddressAtt && sessionidProfile!=3" class="btn-group btn-group-justified">
-					          <a href="#body" ng-model="collap1" ng-click="changeBody(1); listUserDepto(1);" data-toggle="collapse" class="btn btn-primary">DEPARTAMENTO</a>
-					          <a href="#body" ng-model="collap2" ng-click="changeBody(2); getAllAttendant();" data-toggle="collapse" class="btn btn-primary">EDIFICIO</a>
-					      	</div>
-      						<div id="body" ng-class="sessionidProfile==1 ? 'collapse in' : 'collapse'" ng-show="sessionidProfile!=0">
-      						    <div class="alert alert-info" role="alert">
-                    				<strong>INFO: </strong>Estimado/a, No existen departamentos asociados a la direccion seleccionada.
-              					</div>
-      						</div>
-							<!-- Type of Tenant -->
-							<div class="form-check form-check-inline">
-								<div class="col-md-6 col-md-offset-3">
-								    <label class="col-xs-6 ">
-								  		<input type="radio" ng-click="getData(1); saveTenant=false; enabledNextBtn();" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
-									  		<code ng-show="sessionidProfile==3">{{sessionNames}}</code>
-									  		<code ng-show="sessionidProfile!=3">Propietario</code>
-							  		</label> 
-							  		<label class="col-xs-6">
-								  		<input ng-click="getData(2); saveTenant=false; enabledNextBtn();" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
-									  		<code>Inquilino</code>
-							  		</label> 
-							 	</div>
-							</div>
-							<br><br>
-							<!-- Select Department -->
-							<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant!=0) || sessionidProfile==4" class="form-group"> 
-							  <label class="col-md-4 control-label">Departamento</label>
-							    <div class="col-md-4 selectContainer">
-								    <div class="input-group">
-								        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-								        <select ng-model="select.idDepartmentKf" ng-change="enabledNextBtn(); saveTenant=false; searchTenant('ticket');" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
-								        	<option value="" >Seleccione</option>
-									    	</select>
-									    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open', 'add')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
-								  	</div>
-								</div>
-							</div>
-							<br>
-							<!-- Owner First Name & Lastname -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-								  <div class="col-md-4">
-									  <div class="input-group">
-										  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  <input  name="namesTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="tenant.namesTenant"  type="text" required="true" required autofocus />
-									   		<!--BUTTONS -->
-										    <span ng-show="tenant.namesTenant && sessionidProfile!=0 && select.idDepartmentKf>0 && !saveTenant" style="cursor: pointer;" ng-click="editTenant=true; saveTenant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
-										    <span ng-show="saveTenant && sessionidProfile!=0" style="cursor: pointer;" ng-click="" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
-										    <!-- //BUTTONS -->
+					          <a href="#body" ng-model="collap1" ng-click="changeBody(1);" data-toggle="collapse" class="btn btn-primary">DEPARTAMENTO</a>
+					          <a href="#body" ng-model="collap2" ng-click="changeBody(2);" data-toggle="collapse" class="btn btn-primary">EDIFICIO</a>
+					      	</div><br><br>
+      						<div id="body" ng-class="sessionidProfile==3 ? 'collapse in' : 'collapse'" ng-show="sessionidProfile!=0">
+								<!--*********************DEPARTAMENTOS *******************************-->
+								<div ng-if="collap==1 && sessionidProfile!=3 || sessionidProfile==3" class="panel panel-default">
+									<div class="form-check form-check-inline">
+										<div class="col-md-6 col-md-offset-3">
+										    <label class="col-xs-6 ">
+										  		<input type="radio" ng-click="getData(1); saveTenant=false; enabledNextBtn();" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
+											  		<code ng-show="sessionidProfile==3">{{sessionNames}}</code>
+											  		<code ng-show="sessionidProfile!=3">Propietario</code>
+									  		</label> 
+									  		<label class="col-xs-6">
+										  		<input ng-click="getData(2); saveTenant=false; enabledNextBtn();" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
+											  		<code>Inquilino</code>
+									  		</label> 
+									 	</div>
+									</div>
+									<br><br>
+									<!-- Select Department -->
+									<div ng-show="sessionidProfile==1 || (sessionidProfile==3 && typeTenant!=0) || sessionidProfile==4" class="form-group"> 
+									  <label class="col-md-4 control-label">Departamento</label>
+									    <div class="col-md-4 selectContainer">
+										    <div class="input-group">
+										        <span style="cursor: pointer;" class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										        <select ng-model="select.idDepartmentKf" ng-change="enabledNextBtn(); saveTenant=false; searchTenant('ticket');" ng-disabled="dptoNotFound!=false" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " required autofocus >
+										        	<option value="" >Seleccione</option>
+											    	</select>
+											    <span style="cursor: pointer;" ng-click="searchTenant('ticket')" ng-show="typeTenant!=1 || sessionidProfile!=3" class="input-group-addon"><a><i class="glyphicon glyphicon-search"></i> Buscar</a></span><span ng-show="tenantNotFound" style="cursor: pointer;" ng-click="sysFunctionsTenant('open', 'add')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a></span>
+										  	</div>
+										</div>
+									</div>
+									<br>
+									<!-- Owner First Name & Lastname -->
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+										  <div class="col-md-4">
+											  <div class="input-group">
+												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+												  <input  name="namesTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="tenant.namesTenant"  type="text" required="true" required autofocus />
+											   		<!--BUTTONS -->
+												    <span ng-show="tenant.namesTenant && sessionidProfile!=0 && select.idDepartmentKf>0 && !saveTenant" style="cursor: pointer;" ng-click="editTenant=true; saveTenant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
+												    <span ng-show="saveTenant && sessionidProfile!=0" style="cursor: pointer;" ng-click="" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
+												    <!-- //BUTTONS -->
+											  </div>
+										  </div>
+									</div>
+									<!-- Text Owner Phone 1 -->      
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono Fijo</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+										  		<input name="localPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2"  placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.localPhoneTenant" type="text" required autofocus />
+										    </div>
 									  </div>
-								  </div>
-							</div>
-							<!-- Text Owner Phone 1 -->      
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Telefono Fijo</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-								  		<input name="localPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2"  placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.localPhoneTenant" type="text" required autofocus />
-								    </div>
-							  </div>
-							</div>
-							<!-- Text Owner Phone 2 -->     
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Telefono Celular</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-								  		<input name="movilPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
-								    </div>
-							  </div>
-							</div>
-							<!-- Text Mail-->
-							<div class="form-group">
-							 <label class="col-md-4 control-label">E-Mail</label>  
-							   <div class="col-md-4">
-							    <div class="input-group">
-							    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-							  		<input name="emailTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
-							    </div>
-							  </div>
+									</div>
+									<!-- Text Owner Phone 2 -->     
+									<div class="form-group">
+									  <label class="col-md-4 control-label">Telefono Celular</label>  
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+										  		<input name="movilPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
+										    </div>
+									  </div>
+									</div>
+									<!-- Text Mail-->
+									<div class="form-group">
+									 <label class="col-md-4 control-label">E-Mail</label>  
+									   <div class="col-md-4">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="emailTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
+									    </div>
+									  </div>
+									</div>
+								</div>
+								<!--*********************EDIFICIO *******************************-->
+								<div ng-if="collap==2 && sessionidProfile!=3" class="panel panel-default">
+									<div class="form-check form-check-inline">
+										<div class="col-md-6 col-md-offset-3">
+										    <label class="col-xs-4 ">
+										  		<input type="radio" ng-click=" enabledNextBtn(1);" name="typeOption" value="1" ng-model="typeOption" required autofocus>
+											  		<code >Encargado</code>
+									  		</label> 
+									  		<label class="col-xs-4">
+										  		<input ng-click="  enabledNextBtn(2);" type="radio" name="typeOption" value="2" ng-model="typeOption" required autofocus>
+											  		<code>Edificio</code>
+									  		</label> 
+									  		<label class="col-xs-4">
+										  		<input ng-click="  enabledNextBtn(3);" type="radio" name="typeOption" value="3" ng-model="typeOption" required autofocus>
+											  		<code>Otros</code>
+									  		</label>
+									 	</div>
+									</div>
+									<br><br>
+									<!-- OTHER ATTENDANT -->
+									<div ng-if="sessionidProfile!=3 && typeOption == 3" class="row">
+										<!-- List type of Attendant-->    
+										<div class="form-group" ng-show="sessionidProfile!=3">
+										  <label class="col-md-4 control-label">Tipo de Encargado</label>   
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+											  		<select name="idTypeAttKf" class="form-control"  ng-options="item.idTyepeAttendant as item.nameTypeAttendant for item in listTypeAttendant" ng-model="other.idTypeAttTmp" autofocus disabled>
+													    <option value="">Seleccione una opcion</option>
+												    	</select>
+											    </div>
+										  </div>
+										</div>
+										<!-- Other Attendant First Name & Lastname -->
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Nombres</label>  
+											  <div class="col-md-4">
+												  <div class="input-group">
+													  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+													  <input  name="fullNamesAtt" placeholder="Nombre y Apellido" class="form-control" ng-model="other.fullNamesAtt"  type="text" required="true" required autofocus />
+												  </div>
+											  </div>
+										</div>
+										<!-- Text Owner Phone 1 -->      
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Telefono Fijo</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+											  		<input name="phonelocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="other.phonelocalAtt" type="text" autofocus />
+											    </div>
+										  </div>
+										</div>
+										<!-- Text Owner Phone 2 -->     
+										<div class="form-group">
+										  <label class="col-md-4 control-label">Telefono Celular</label>  
+										    <div class="col-md-4">
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+											  		<input name="phoneMovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="other.phoneMovilAtt" type="text" autofocus />
+											    </div>
+										  </div>
+										</div>
+										<!-- Text Mail-->
+										<div class="form-group">
+										 <label class="col-md-4 control-label">E-Mail</label>  
+										   <div class="col-md-4">
+										    <div class="input-group">
+										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+										  		<input name="emailAtt" ng-blur="enabledNextBtn();" placeholder="E-Mail" class="form-control" ng-model="other.emailAtt"  type="email" required autofocus />
+										    </div>
+										  </div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</fieldset>
 						<fieldset ng-switch-when="PASO 3: DATOS DE LA SOLICITUD">

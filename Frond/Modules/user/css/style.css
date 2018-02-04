@@ -198,6 +198,9 @@
     .main_container {
     margin-top: 4.8em;
 
-}
+    }
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #fff;
+    }
 
 }
