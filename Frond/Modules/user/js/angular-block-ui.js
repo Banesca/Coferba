@@ -299,7 +299,7 @@ blkUI.directive('blockUi', ["blockUiCompileFn", function (blockUiCompileFn) {
 blkUI.constant('blockUIConfig', {
     templateUrl: 'angular-block-ui/angular-block-ui.ng.html',
     delay: 250,
-    message: "Loading ...",
+    message: "Cargando ...",
     autoBlock: true,
     resetOnException: true,
     requestFilter: angular.noop,

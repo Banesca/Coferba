@@ -151,10 +151,10 @@
 										  <div class="col-md-4">
 											  <div class="input-group">
 												  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-												  <input  name="namesTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="tenant.namesTenant"  type="text" required="true" required autofocus />
+												  <input  name="namesTenant" ng-disabled="typeTenant!=0 && !isEditTenant && sessionidProfile!=0" placeholder="Nombre y Apellido" class="form-control" ng-model="tenant.namesTenant"  type="text" required="true" required autofocus />
 											   		<!--BUTTONS -->
-												    <span ng-show="tenant.namesTenant && sessionidProfile!=0 && select.idDepartmentKf>0 && !saveTenant" style="cursor: pointer;" ng-click="editTenant=true; saveTenant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
-												    <span ng-show="saveTenant && sessionidProfile!=0" style="cursor: pointer;" ng-click="" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
+												    <span ng-show="select.idDepartmentKf>0 && !saveTenant && tenant.namesTenant && (!isEditTenant && sessionidProfile==3 && typeTenant!=1) || (!isEditTenant && sessionidProfile!=3 && typeTenant!=0)" style="cursor: pointer;" ng-click="isEditTenant=true; saveTenant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
+												    <span ng-show="saveTenant && sessionidProfile!=0" style="cursor: pointer;" ng-click="isEditTenant=false; saveTenant=false; sysFunctionsTenant('edit', 'ticket');"" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
 												    <!-- //BUTTONS -->
 											  </div>
 										  </div>
@@ -165,7 +165,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-										  		<input name="localPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2"  placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.localPhoneTenant" type="text" required autofocus />
+										  		<input name="localPhoneTenant" ng-disabled="typeTenant!=0 && !isEditTenant && sessionidProfile!=0"  placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.localPhoneTenant" type="text" required autofocus />
 										    </div>
 									  </div>
 									</div>
@@ -175,7 +175,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-										  		<input name="movilPhoneTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
+										  		<input name="movilPhoneTenant" ng-disabled="typeTenant!=0 && !isEditTenant && sessionidProfile!=0" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="tenant.movilPhoneTenant" type="text" required autofocus />
 										    </div>
 									  </div>
 									</div>
@@ -185,7 +185,7 @@
 									   <div class="col-md-4">
 									    <div class="input-group">
 									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-									  		<input name="emailTenant" ng-disabled="sessionidProfile==3 && typeTenant!=2" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
+									  		<input name="emailTenant" ng-disabled="typeTenant!=0 && !isEditTenant && sessionidProfile!=0" placeholder="E-Mail" class="form-control" ng-model="tenant.emailTenant"  type="email" required autofocus />
 									    </div>
 									  </div>
 									</div>
@@ -208,7 +208,7 @@
 									  		</label>
 									 	</div>
 									</div>
-									<br><br>
+									<br ng-if="sessionidProfile!=3"><br ng-if="sessionidProfile!=3">
 									<!-- OTHER ATTENDANT -->
 									<div ng-if="sessionidProfile!=3 && typeOption == 3" class="row">
 										<!-- List type of Attendant-->    

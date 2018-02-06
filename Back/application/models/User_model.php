@@ -446,4 +446,4 @@ public function updateMailSmtp($mail) {
 
 
 }
-?>		
+?>
