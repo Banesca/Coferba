@@ -337,6 +337,20 @@ class User extends REST_Controller {
             $this->response(array('error' => "ERROR INESPERADO"), 500);
         }
     }
+    public function findAttByEmail_get($mail) {
+        if (!$mail) {
+            $this->response(NULL, 404);
+        }
+
+        $attendant = null;
+        $attendant = $this->user_model->findAttByEmail($mail);
+
+        if (!is_null($attendant)) {
+            $this->response($attendant, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
     
 
 }

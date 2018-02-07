@@ -175,8 +175,21 @@ class User_model extends CI_Model
             return false;
         }
     }
-
+    /*BUSCAR ENCARGADO POR EL EMAIL*/
+    public function findAttByEmail($mail) {
     
+            $attendant = null;
+    
+            $this->db->select("*")->from("tb_attendant");
+            $query = $this->db->where("tb_attendant.mailAttendant =", $mail)->get();
+            if ($query->num_rows() > 0) {
+                $attendant = $query->row_array();
+            }
+
+            return $attendant;
+    }
+
+        
 
     /* LISTADO DE FILTROS */
     public function getFilterForm() {

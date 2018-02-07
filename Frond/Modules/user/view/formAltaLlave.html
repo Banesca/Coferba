@@ -5,7 +5,7 @@
         	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}}</h3>
     	</div>
     		<div class="panel-body">
-			    <form class="form-horizontal" name="fkeyup" ng-submit="newTicket('up')" >
+			    <form class="form-horizontal" name="fkeyup" ng-submit="sysFunctionsAtt('other');" >
 			    	<div ng-switch on="mySwitch">
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
 								<legend style="visibility: hidden;"></legend>
@@ -195,31 +195,49 @@
 									<div class="form-check form-check-inline">
 										<div class="col-md-6 col-md-offset-3">
 										    <label class="col-xs-4 ">
-										  		<input type="radio" ng-click=" enabledNextBtn(1);" name="typeOption" value="1" ng-model="typeOption" required autofocus>
+										  		<input type="radio" ng-click=" enabledNextBtn(1); typeOption=1" name="typeOption" value="1" ng-model="typeOption" required autofocus>
 											  		<code >Encargado</code>
 									  		</label> 
 									  		<label class="col-xs-4">
-										  		<input ng-click="  enabledNextBtn(2);" type="radio" name="typeOption" value="2" ng-model="typeOption" required autofocus>
+										  		<input ng-click="  enabledNextBtn(2); typeOption=2" type="radio" name="typeOption" value="2" ng-model="typeOption" required autofocus>
 											  		<code>Edificio</code>
 									  		</label> 
 									  		<label class="col-xs-4">
-										  		<input ng-click="  enabledNextBtn(3);" type="radio" name="typeOption" value="3" ng-model="typeOption" required autofocus>
+										  		<input ng-click="  enabledNextBtn(3); typeOption=3" type="radio" name="typeOption" value="3" ng-model="typeOption" required autofocus>
 											  		<code>Otros</code>
 									  		</label>
 									 	</div>
 									</div>
 									<br ng-if="sessionidProfile!=3"><br ng-if="sessionidProfile!=3">
+									<!-- Request made for Attendant Selected in the First Step-->
+									<div class="container-fluid" ng-if="sessionidProfile!=3 && typeOption==1" >
+										<div  class="row">
+											<div class="col-md-8 col-md-offset-2">
+											    <div class="alert alert-success" role="alert">
+								                 Solicitud a realizar a nombre del Encargado: <strong>{{att.fullNamesAtt}}</strong>
+								             	</div>
+								            </div>
+										</div>
+									</div>
+									<!-- Request made for Building Selected in the First Step-->
+									<div class="container-fluid" ng-if="sessionidProfile!=3 && typeOption==2" >
+										<div  class="row">
+											<div class="col-md-8 col-md-offset-2">
+											    <div class="alert alert-success" role="alert">
+								                 <span style="text-align: center;"> La solicitud sera asignada al Edificio.</span>
+								             	</div>
+								            </div>
+										</div>
+									</div>
 									<!-- OTHER ATTENDANT -->
 									<div ng-if="sessionidProfile!=3 && typeOption == 3" class="row">
-										<!-- List type of Attendant-->    
+										<!-- Function of other attendant-->    
 										<div class="form-group" ng-show="sessionidProfile!=3">
-										  <label class="col-md-4 control-label">Tipo de Encargado</label>   
+										  <label class="col-md-4 control-label">Funcion:</label>   
 										    <div class="col-md-4">
 											    <div class="input-group">
-											        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-											  		<select name="idTypeAttKf" class="form-control"  ng-options="item.idTyepeAttendant as item.nameTypeAttendant for item in listTypeAttendant" ng-model="other.idTypeAttTmp" autofocus disabled>
-													    <option value="">Seleccione una opcion</option>
-												    	</select>
+											        <span class="input-group-addon"><i class="glyphicon icon-wrench"></i></span>
+											  		 <input  name="descOther" placeholder="Funcion que realiza" class="form-control" ng-model="other.descOther"  type="text" required="true" required autofocus />
 											    </div>
 										  </div>
 										</div>
@@ -233,13 +251,23 @@
 												  </div>
 											  </div>
 										</div>
+										<!-- Text Mail-->
+										<div class="form-group">
+										 <label class="col-md-4 control-label">E-Mail</label>  
+										   <div class="col-md-4">
+										    <div class="input-group">
+										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+										  		<input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="other.emailAtt"  type="email" required autofocus />
+										    </div>
+										  </div>
+										</div>
 										<!-- Text Owner Phone 1 -->      
 										<div class="form-group">
 										  <label class="col-md-4 control-label">Telefono Fijo</label>  
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-											  		<input name="phonelocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="other.phonelocalAtt" type="text" autofocus />
+											  		<input name="phonelocalAtt" ng-blur="enabledNextBtn(3);" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="other.phonelocalAtt" type="text" autofocus />
 											    </div>
 										  </div>
 										</div>
@@ -251,16 +279,6 @@
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 											  		<input name="phoneMovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="other.phoneMovilAtt" type="text" autofocus />
 											    </div>
-										  </div>
-										</div>
-										<!-- Text Mail-->
-										<div class="form-group">
-										 <label class="col-md-4 control-label">E-Mail</label>  
-										   <div class="col-md-4">
-										    <div class="input-group">
-										    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-										  		<input name="emailAtt" ng-blur="enabledNextBtn();" placeholder="E-Mail" class="form-control" ng-model="other.emailAtt"  type="email" required autofocus />
-										    </div>
 										  </div>
 										</div>
 									</div>

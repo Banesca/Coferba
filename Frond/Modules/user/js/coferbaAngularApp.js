@@ -176,7 +176,6 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
     }
   };
   $scope.enabledNextBtn=function(item){
-  $scope.typeOption = item;
   $scope.formValidated=false;
   //alert($scope.stepIndexTmp);
     switch ($scope.stepIndexTmp){
@@ -198,6 +197,8 @@ app.controller('coferbaCtrl', function($scope, $location, $http, blockUI, $timeo
         }
         break;
         case 1:
+          $scope.typeOption = item;
+          console.log($scope.typeOption);
         //alert("ENTRO CASE 1");
         if ($scope.fSwitch=="t" && $scope.sessionidProfile!=3){
           //alert("ENTRO");
@@ -1066,8 +1067,8 @@ $scope.checkTicketTenant = function(){
 $scope.changeBody = function(value){
   if ($scope.IsTicket){
     $scope.formValidated=false; 
-    $scope.typeOption="";
     /*-------------------*/
+    $scope.typeOption              =0;
     $scope.typeTenant              = "";
     $scope.select.idDepartmentKf   = "";
     $scope.tenant.namesTenant      = "";
@@ -2287,6 +2288,29 @@ $scope.sysFunctionsAtt = function(value){
         console.log($scope.att.idDepartmentKf);
         $scope.addAttendant($http, $scope);
     break;
+        break;
+    case "other":
+      $scope.att.idTypeAttKf   = "";
+      $scope.att.idAttendant   = "";
+      $scope.att.fullNamesAtt  = "";
+      $scope.att.idAddressAtt  = "";
+      $scope.att.descOther     = "";
+      console.log("Tipo de Opcion seleccionada: "+$scope.typeOption);
+      if($scope.manageDepto==0 && $scope.IsTicket && $scope.collap==2 && $scope.typeOption==3){
+        $scope.att.fullNamesAtt    = $scope.other.fullNamesAtt;
+        $scope.att.phonelocalAtt   = $scope.other.phonelocalAtt;
+        $scope.att.phoneMovilAtt   = $scope.other.phoneMovilAtt;
+        $scope.att.emailAtt        = $scope.other.emailAtt;
+        $scope.att.descOther       = $scope.other.descOther;
+        $scope.att.idTypeAttKf     = 1;
+        console.log(getAttData2Add());
+        $scope.IsAttendant=false;
+        $scope.addAttendant($http, $scope);
+      }else{
+        $scope.newTicket("up");
+      }
+        
+    break;
     case "save":
         if ($scope.att.idTypeAttKf!=1){$scope.att.descOther=null;}
         $scope.updateAttendant($http, $scope);
@@ -2325,8 +2349,10 @@ $scope.addAttendant = function ($http, $scope){
           $scope.t.phoneNumberTenant        = $scope.att.phoneMovilAtt;
           $scope.t.phoneNumberContactTenant = $scope.att.phonelocalAtt;
           $scope.t.emailTenant              = $scope.att.emailAtt;
-
           $scope.sysFunctionsTenant('search'); //CHECK THE TENANT TABLE IF THERE IS ALREADY REGISTERED
+        }
+        if ($scope.manageDepto==0 && $scope.IsTicket==true && $scope.att.idTypeAttKf==1){
+            $scope.searchAttendantByMail($scope.att.emailAtt);
         }
 
         $('#RegisterModalAtt').modal('hide');
@@ -2407,6 +2433,31 @@ function getAttData2Update () {
             };
   return attendant;
 };
+/**************************************************
+*                                                 *
+*         BUSCAR ENCARGADO POR EL EMAIL           *
+*                                                 *
+**************************************************/
+
+$scope.searchAttendantByMail = function (mailAtt2Search){
+  $http({
+        method : "GET",
+        url : $scope.serverHost+"Coferba/Back/index.php/user/findAttByEmail/"+mailAtt2Search
+      }).then(function mySuccess(response) {
+            $scope.rsAttData = response.data;
+            console.log("<<<ENCARGADO ENCONTRADO>>>");
+            console.log("--------Data del Encargado de tipo Other Registrado para la solicitud-------");
+            console.log($scope.rsAttData);
+            if($scope.IsTicket && $scope.manageDepto==0){
+              $scope.other.idAttendant  = $scope.rsAttData.idAttendant;
+              console.log("Id Encarado de tipo Otro: "+$scope.other.idAttendant);
+              $scope.newTicket("up");
+            }
+        }, function myError(response) {
+           console.log("<<<ENCARGADO NO ENCONTRADO>>>");
+      });
+};
+/**************************************************/
 
 /**************************************************
 *                                                 *
@@ -2440,6 +2491,7 @@ $scope.getAttData = function(){
     }; 
   }
 /**************************************************/
+
 /**************************************************
 *                                                 *
 *        SELECT DATA OF ATTENDANT TO UPDATE       *
@@ -2611,16 +2663,48 @@ $scope.mess2show="";
 }
 
 $scope.newTicket = function(opt){
+  $scope.tk.idUserAdminKf      = 0;    //ADMINISTRADOR COFERBA O ADMIN CONSORCIO
+  $scope.tk.idTenantKf         = 0;   //INQUILINO
+  $scope.tk.idOWnerKf          = 0;  //PROPIETARIO
+  $scope.tk.idUserEnterpriceKf = 0; //ADMIN. CONSORCIO
+  $scope.tk.idAttendant        = 0; //ENCARGADO
     switch (opt) {
       case "up": // SOLOCITUD DE ALTA
-            console.log($scope._getData2AddKey());
-            /*
-            if ($scope.sessionidProfile==3 && $scope.typeTenant==2){
-              $scope.allowUpdate=true;
-            }else if ($scope.sessionidProfile!=3 && $scope.typeTenant!=0){
-              $scope.allowUpdate=true;
-            }*/
-            $scope.requestUpKey($http, $scope);
+                  $scope.tk.idTicket           = 1;
+              if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
+                  $scope.tk.idOWnerKf          = $scope.sessionidTenantUser;
+                  $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
+              }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
+                  $scope.tk.idOWnerKf          = $scope.sessionidTenantUser;
+                  $scope.tk.idTenantKf         = $scope.idTenantKf;
+              }
+              if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
+                  $scope.tk.idUserEnterpriceKf = $scope.sessionIdUser;
+                  $scope.tk.idCompanyKf        = $scope.sessionidCompany;
+                if ($scope.collap==1){
+                  $scope.tk.idTenantKf         = $scope.idTenantKf;
+                }else if ($scope.collap==2){
+                  if ($scope.typeOption==3){
+                    $scope.tk.idOtherKf        = $scope.other.idAttendant;
+                  }
+                }
+              }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
+                  $scope.tk.idUserAdminKf      = $scope.sessionIdUser;
+                  $scope.tk.idTenantKf         = $scope.idTenantKf;
+                  $scope.tk.idCompanyKf        = $scope.select.idCompanyKf;
+                  if ($scope.collap==1){
+                  $scope.tk.idTenantKf         = $scope.idTenantKf;
+                }else if ($scope.collap==2){
+                  if ($scope.typeOption==3){
+                    $scope.tk.idOtherKf        = $scope.other.idAttendant;
+                  }
+                }
+              }
+                  $scope.tk.idAttendant        = $scope.select.nameAtt;
+                  $scope.tk.idAddresKf         = $scope.select.idAddressAtt;
+              console.log("DATOS DE LA SOLICITUD DE ALTA DE LLAVE")
+              console.log($scope._getData2AddKey());
+            //$scope.requestUpKey($http, $scope);
       break;
       case "down": // SOLOCITUD DE BAJA
             console.log($scope._getData2DelKey());
@@ -2672,7 +2756,6 @@ $scope.getTotalService = function (){
 $scope.requestUpKey = function ($http, $scope){
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getData2AddKey())
       .then(function (sucess, data) {
-          if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
           closeAllDiv ();
           cleanForms();
        inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
@@ -2689,43 +2772,24 @@ $scope.quantity={qkuTenant: ''};
 $scope.delivery={idTypeDeliveryKf: ''};
 $scope.txt={sruTenant: ''};
 $scope.cost={service: '', key: '', delivery: '', total: ''};
-$scope._getData2AddKey = function () {
-  var idUserAdmin      = 0;    //ADMINISTRADOR COFERBA
-  var tenantKf         = 0;   //INQUILINO
-  var userIdOwner      = 0;  //PROPIETARIO
-  var userIdAConsorcio = 0; //ADMIN. CONSORCIO
-  if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
-    userIdOwner = $scope.sessionidTenantUser;
-    tenantKf    = $scope.sessionidTenantUser;
-  }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
-    userIdOwner = $scope.sessionidTenantUser;
-    tenantKf    = $scope.idTenantKf;
-  }
-  if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
-    userIdAConsorcio = $scope.sessionIdUser;
-    tenantKf         = $scope.idTenantKf;
-  }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
-    idUserAdmin = $scope.sessionIdUser;
-    tenantKf    = $scope.idTenantKf;
-  }
 
+$scope._getData2AddKey = function () {
   var newKey =
           {
                 ticket:
                         {
-                            idTypeTicketKf    : 1,
-                            idUserEnterpriceKf: idUserAdmin,
-                            idTenantKf        : tenantKf,
-                            idUserAdminKf     : userIdAConsorcio,
-                            idOWnerKf         : userIdOwner,
+                            idTypeTicketKf    : $scope.tk.idTicket,
+                            idUserEnterpriceKf: $scope.tk.idUserEnterpriceKf,
+                            idTenantKf        : $scope.tk.idTenantKf,
+                            idUserAdminKf     : $scope.tk.idUserAdminKf,
+                            idOWnerKf         : $scope.tk.idOWnerKf,
                             numberItemes      : $scope.quantity.qkuTenant,
                             idTypeDeliveryKf  : $scope.delivery.idTypeDeliveryKf,
                             description       : $scope.txt.sruTenant,
                             idAttendantKf     : $scope.select.nameAtt,
                             TotalService      : $scope.cost.total,
                             idBranchKf        : $scope.select.idAddressAtt,
-                            idCompanyKf       : null,
-                            list_id_clients   : null
+                            idOtherKf         : $scope.tk.idOtherKf
                         }
           };
   return newKey;
@@ -3037,6 +3101,9 @@ $scope.getSmtpMail2Update = function () {
 *                 SERVICE COST                    *
 *                                                 *
 **************************************************/
+$scope.getServicesValues = function(){
+
+}
 $scope.varSuccessFnCost = 0;
 $scope.updateServiceCost = function ($http, $scope, idParamTmp){
 
@@ -3163,9 +3230,10 @@ function cleanForms (){
     $scope.isAttUpdated               = false;
     $scope.tmp.idTypeAttTmp           = "";
     $scope.typeOption                 = 0;
-    $scope.other={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '' };
-    $scope.t    ={idTenant:'', fullNameTenant:'', idTypeKf:'', phoneNumberTenant:'', phoneNumberContactTenant:'', idDepartmentKf: '', emailTenant:''};
+    $scope.other={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther:'' };
     $scope.att  ={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther:'' };
+    $scope.t    ={idTenant:'', fullNameTenant:'', idTypeKf:'', phoneNumberTenant:'', phoneNumberContactTenant:'', idDepartmentKf: '', emailTenant:''};
+    $scope.tk   ={idTypeTicketKf:'', idUserEnterpriceKf:'', idTenantKf:'', idUserAdminKf:'', idOWnerKf:'', numberItemes:'', idTypeDeliveryKf: '', description:'', TotalService:'', idBranchKf:'', idOtherKf:''  };
 }
 /**************************************************/
 
