@@ -7,7 +7,9 @@ $(window).on('load', function() { // makes sure the whole site is loaded  #14162
 })
 /*JQUERY SHOW/HIDE FUNCTIONS */
 $(document).ready(function() {
-$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover('options');
+
   $('.input--tel').mask('(054) 9 99 9999-9999');
   
   $('.input--tel').on('focus', function () {
@@ -29,7 +31,7 @@ $(function () {
             e.preventDefault();
         }
     });
-});
+
     
     /* MENU ICONS*/
     $('#m_pedidos').click(function(){

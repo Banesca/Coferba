@@ -29,7 +29,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
@@ -41,7 +41,7 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); getDeparment(0); editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+					                      <select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); getDeparment(0); editAttendant=false; saveAttendant=false; select.nameAtt=null; getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 					                        <option value="" >Seleccione un consorcio</option>
 					                      </select>
 					                    </div>
@@ -53,7 +53,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change="getAllAttendant(); enabledNextBtn();  getServicesValues(select.idAddressAtt);editAttendant=false; saveAttendant=false; select.nameAtt=null; select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
@@ -286,11 +286,11 @@
 							</div>
 						</fieldset>
 						<fieldset ng-switch-when="PASO 3: DATOS DE LA SOLICITUD">
-							<div class="row justify-content-md-center">
+							<div ng-init="alert('Hola');" class="row justify-content-md-center">
 								<!-- Form Key Quantity qku = Quantity Keys Up-->
-								<div class="form-group col-lg-6">
-								  <label class="col-md-5 control-label" >Cantidad de llaves</label> 
-									<div class="col-md-6 input-group">
+								<div class="form-group col-md-4">
+								  <label class="col-md-6 control-label" >Cantidad de llaves</label> 
+									<div class="col-md-4 input-group">
 							  		  <span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
 							  			<select name="qkuTenant" ng-change="getTotalService()" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
 											    <option value=""></option>
@@ -303,9 +303,9 @@
 							    	</div>
 								</div>
 								<!-- Select Type of Delivery -->   
-								<div class="form-group col-lg-6"> 
-								  <label class="col-md-5 control-label">Tipo de Entrega</label>
-								    <div class="col-md-6 input-group">
+								<div class="form-group col-md-8"> 
+								  <label class="col-md-4 control-label">Tipo de Entrega</label>
+								    <div class="col-md-8 input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
 										    <select name="idTypeDeliveryKf" ng-change="getTotalService()" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
 										    <option value=""></option>
@@ -314,42 +314,43 @@
 								</div>
 							</div>
 							<div class="row">
-							<!-- Form Special Request sru= Special Request Up -->
-								<div class="form-group col-md-6">
-								  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
-									<div class="col-md-6 input-group">
+								<!-- Form Special Request sru= Special Request Up -->
+								<div style="margin-left: 15px; padding-right: 40px;" class="form-group col-md-12">
+								  <label class="col-xs-12" >Observaciones Adicionales</label> 
+									<div class="col-md-12 input-group">
 								  		<textarea style="resize: vertical;" name="sruTenant" rows="9" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruTenant" ></textarea>
 									</div>
 								</div>
-								<div class="form-group col-md-6 "> 
+							</div>
+							<div style="margin-left: 25px;" class="row">
+								<div class="form-group col-md-12 "> 
 									<legend>Costos de Servicios</legend>
-									  <div class="col-md-4">
+									  <div class="col-md-3">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">
-											  <input disabled style="text-align: right;"  name="cost.service" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
+											  <input data-toggle="popover" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
 										  </div>
 									  </div>
-									  <div class="col-md-4 ">
+									  <div class="col-md-3 ">
 									  	<label class="control-label">Llave</label> 
 										  <div class="input-group">
 											  <input disabled  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.key"  type="text" required autofocus/>
 										  </div>
 									  </div>
-									  <div class="col-md-4">
+									  <div class="col-md-3">
 									  	<label class="control-label">Envio</label> 
 										  <div class="input-group">
-											  <input disabled style="text-align: right;"" name="cost.delivery" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
+											  <input data-toggle="tooltip" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
 										  </div>
 									  </div>
-								</div>
-								<div class="form-group col-md-6 "> 
-									  <div class="pull-right">
+									  <div class="col-md-3 "> 
 									  	<label class="control-label">Total</label> 
 										  <div class="input-group">
-											  <input disabled style="text-align: right"; name="cost.total" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.total"  type="text" required autofocus/>
+											  <input disabled style="text-align: right"; name="cost.total"placeholder="$0,00" class="form-control" ng-model="cost.total"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
+
 							</div>
 						</fieldset>
 					</div>

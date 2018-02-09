@@ -190,7 +190,9 @@
         background-color: #14162b;
         opacity: .7;
 }
-
+.popover-content {
+    padding: 2px 4px;
+}
 @media (max-width: 767px) {
     .icon-m i{
         display: none;
