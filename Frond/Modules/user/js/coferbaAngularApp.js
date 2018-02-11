@@ -422,6 +422,34 @@ $scope.getAllAddress = function (){
   });
 }
 /**************************************************/
+/**************************************************
+*                                                 *
+*   Select Function to bind the Cost of Service   *
+*                                                 *
+**************************************************/
+$scope.getCostServiceData = function(item){
+    var idAddress = $scope.select.idAddressAtt;
+    /* Recorrer el Json de Address para obtener datos */
+    var length = item==3 ? $scope.ListTenantAddress.length : $scope.listOffice.length;
+    for (i = 0; i < length; i++) {
+      if (item==3){
+        if($scope.ListTenantAddress[i].idAdress == idAddress){
+            $scope.costService  = $scope.ListTenantAddress[i].priceManagement;
+            $scope.costKey      = $scope.ListTenantAddress[i].priceUni;
+            $scope.costDelivery = $scope.ListTenantAddress[i].priceShipping;
+            break;
+        }
+      }else if(item==4){
+        if($scope.listOffice[i].idAdress == idAddress){
+            $scope.costService  = $scope.listOffice[i].priceManagement;
+            $scope.costKey      = $scope.listOffice[i].priceUni;
+            $scope.costDelivery = $scope.listOffice[i].priceShipping;
+            break;
+        }
+      }
+    }; 
+}
+/**************************************************/
 
 /**************************************************
 *                                                 *
@@ -2644,10 +2672,11 @@ $scope.newTicket = function(opt){
       case "up": // SOLOCITUD DE ALTA
                   $scope.tk.idTicket           = 1;
               if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
-                  $scope.tk.idOWnerKf          = $scope.sessionidTenantUser;
+                alert("")
+                  $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                   $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
               }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
-                  $scope.tk.idOWnerKf          = $scope.sessionidTenantUser;
+                  $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                   $scope.tk.idTenantKf         = $scope.idTenantKf;
               }
               if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -2687,10 +2716,10 @@ $scope.newTicket = function(opt){
       case "down": // SOLOCITUD DE BAJA
                   $scope.tk.idTicket           = 2;
               if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
-                  $scope.tk.idOWnerKf          = $scope.sessionidTenantUser;
+                  $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                   $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
               }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
-                  $scope.tk.idOWnerKf          = $scope.sessionidTenantUser;
+                  $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                   $scope.tk.idTenantKf         = $scope.idTenantKf;
               }
               if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -2813,7 +2842,6 @@ $scope._getData2AddKey = function () {
                             idTenantKf        : $scope.tk.idTenantKf,
                             idUserAdminKf     : $scope.tk.idUserAdminKf,
                             idOWnerKf         : $scope.tk.idOWnerKf,
-                            idProfileKf       : $scope.tk.idProfileKf,
                             numberItemes      : $scope.tk.numberItemes,
                             idTypeDeliveryKf  : $scope.tk.idTypeDeliveryKf,
                             description       : $scope.tk.description,

@@ -227,7 +227,7 @@ class Ticket_model extends CI_Model
 
 
 
-     // GET DE LISTADO BUSQUEDA DE INQUIILINO //
+     // GET DE LISTADO BUSQUEDA DE TICKETS //
     public function get($id = null, $searchFilter = null) {
         $quuery = null;
         $rs = null;
@@ -321,8 +321,12 @@ class Ticket_model extends CI_Model
 			$this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
             $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');                        
-            $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
-            
+           
+
+            if(@$searchFilter['idProfileKf'] != 1)
+            {
+                $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
+            }
 
 
             if(@$searchFilter['idCompanyKf'] > 0 && @$searchFilter['idProfileKf'] != 4)
