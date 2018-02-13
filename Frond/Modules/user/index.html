@@ -428,7 +428,7 @@
 			</div>
 		</div>
 	</div>
-	<main role="main" class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); ">
+	<main role="main" class="main_container" ng-if="Token" ng-init="sysLoadLStorage(); CallFilterFormT(); getAllAddress(); getParameter(); checkBefore2Load(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'view/formUser.html'"></div>
 			<div ng-if="userManage" ng-include="'view/formManageUser.html'"></div>

@@ -293,7 +293,7 @@
                                                 <button type="button" ng-if="item.idStatusKf<0" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                   ACTIVO &nbsp <span ng-if="sessionidProfile==1" class="caret"></span>
                                                 </button>
-                                                <ul ng-show="item.idStatusKf==0 || sessionidProfile!=3" class="dropdown-menu">
+                                                <ul ng-show="item.idStatusKf==0 || sessionidProfile==1" class="dropdown-menu">
                                                   <li><a ng-click="enabledTenant(item.idTenant)" ng-if="item.idStatusKf<1"><i title="Activar" class="glyphicon glyphicon-ok-circle"> </i> Activar</a></li>
                                                   <li><a ng-click="disabledTenant(item.idTenant)" ng-if="item.idStatusKf>0 && sessionidProfile!=3"><i title="desactivar" class="glyphicon glyphicon-ban-circle"></i> Desactivar</a></li>
                                                 </ul>

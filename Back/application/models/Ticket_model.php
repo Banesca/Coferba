@@ -152,6 +152,7 @@ class Ticket_model extends CI_Model
             'idOpcionLowTicketKf' => @$ticket['idOpcionLowTicketKf'],
             'idAttendantKf' => @$ticket['idAttendantKf'],
 
+            'idDepartmentKf'=> @$ticket['idDepartmentKf'],
             'idBranchKf' => @$ticket['idBranchKf'],
             'idCompanyKf' => @$ticket['idCompanyKf'],
             'totalService' => @$ticket['totalService'],
@@ -252,10 +253,13 @@ class Ticket_model extends CI_Model
         if ($idTenant > 0) 
         {
 
-            $this->db->select("*")->from("tb_tickets");
+            $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
             $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
-             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
+            $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
+            $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
+            $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
+            $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
             $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');      
 
@@ -293,7 +297,7 @@ class Ticket_model extends CI_Model
                         $quuery = $this->db->get();
                         
                 }else{
-                     $quuery = $this->db->where("tb_tenant.idTenant = ", $idTenant)->get();
+                        $quuery = $this->db->where("tb_tenant.idTenant = ", $idTenant)->get();
                 }
 
 
@@ -310,10 +314,15 @@ class Ticket_model extends CI_Model
             
             $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
             $this->db->join('tb_tenant', 'tb_tenant.idTenant = tb_tickets.idTenantKf', 'left');
+
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
             $this->db->join('tb_reason_disabled_item', 'tb_reason_disabled_item.idReasonDisabledItem = tb_tickets.idReasonDisabledItemKf', 'left');
+            $this->db->join('tb_attendant e', 'e.idAttendant = tb_tickets.idAttendantKf', 'left');
+            /*$this->db->join('tb_attendant f', 'f.idAttendant = tb_tickets.idOtherKf', 'left');*/
+            $this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = e.idTyepeAttendantKf', 'left');
+            $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user a', 'a.idUser = tb_tickets.idUserCompany', 'left');
             $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
@@ -323,7 +332,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');                        
            
 
-            if(@$searchFilter['idProfileKf'] != 1)
+            if(@$searchFilter['idProfileKf'] != 1 && @$searchFilter['idProfileKf'] != 4)
             {
                 $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant',  'left');            
             }

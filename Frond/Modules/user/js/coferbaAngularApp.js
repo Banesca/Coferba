@@ -2579,6 +2579,7 @@ $scope.mess2show="";
       if (confirm==0){
         $scope.mess2show="Desea Solicitar una nueva llave?";
         $('#confirmRequestModal').modal('toggle');
+        $scope.fnShowHide('home','open');
       }else if (confirm==1){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $('#m_pedidos').addClass('active');
@@ -2663,7 +2664,7 @@ $scope.mess2show="";
 }
 
 $scope.newTicket = function(opt){
-  $scope.tk.idUserAdminKf      = 0;     //ADMINISTRADOR COFERBA O ADMIN CONSORCIO
+  $scope.tk.idUserAdminKf      = 0;     //ADMINISTRADOR COFERBA
   $scope.tk.idTenantKf         = 0;    //INQUILINO
   $scope.tk.idOWnerKf          = 0;   //PROPIETARIO
   $scope.tk.idUserEnterpriceKf = 0;  //ADMIN. CONSORCIO
@@ -2683,7 +2684,7 @@ $scope.newTicket = function(opt){
                   $scope.tk.idUserEnterpriceKf = $scope.sessionIdUser;
                   $scope.tk.idCompanyKf        = $scope.sessionidCompany;
                 if ($scope.collap==1){
-                  $scope.tk.idTenantKf         = $scope.idTenantKf;
+                    $scope.tk.idTenantKf         = $scope.idTenantKf;
                 }else if ($scope.collap==2){
                   if ($scope.typeOption==3){
                     $scope.tk.idOtherKf        = $scope.other.idAttendant;
@@ -2700,6 +2701,7 @@ $scope.newTicket = function(opt){
                   }
                 }
               }
+                  $scope.tk.idDepartmentKf     = $scope.select.idDepartmentKf;
                   $scope.tk.idProfileKf        = $scope.sessionidProfile;
                   $scope.tk.description        = $scope.txt.sruTenant;
                   $scope.tk.idTypeDeliveryKf   = $scope.delivery.idTypeDeliveryKf;
@@ -2817,6 +2819,7 @@ $scope.requestUpKey = function ($http, $scope){
       .then(function (sucess, data) {
           closeAllDiv ();
           cleanForms();
+          $scope.fnShowHide('home','open');
        inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
     },function (error, status) {
         $scope.handleErrors={Error: error, Status: status};
@@ -2850,6 +2853,7 @@ $scope._getData2AddKey = function () {
                             idAddresKf        : $scope.tk.idAddresKf,
                             idBranchKf        : $scope.tk.idBranchKf,
                             idOtherKf         : $scope.tk.idOtherKf,
+                            idDepartmentKf    : $scope.tk.idDepartmentKf,
                             idCompanyKf       : $scope.tk.idCompanyKf
 
                         }
@@ -2869,8 +2873,7 @@ $scope.requestDownKey = function (){
   console.log($scope._getData2DelKey())
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getData2DelKey())
       .then(function (sucess, data) {
-          if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
-          closeAllDiv ();
+          closeAllDiv();
           cleanForms();
           inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
           //$scope.modificarUsuario($http, $scope);
@@ -2919,7 +2922,6 @@ $scope.requestService = function (){
   console.log($scope._getServiceData());
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket", $scope._getServiceData())
       .then(function (sucess, data) {
-          if($scope.allowUpdate==true){$scope.sysFunctionsTenant('update');}
           closeAllDiv ();
           cleanForms();
           inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
@@ -3477,7 +3479,7 @@ $scope.fnShowHide = function(divId, divAction) {
 }
 
 /*jorge*/
-$scope.listTickt;
+$scope.listTickt = 0;
 $scope.filters={idTypeTicketKf: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', idStatusKf: ''};
 
 $scope.dhboard = function(){
@@ -3492,16 +3494,17 @@ $scope.filters.idAddress     = !$scope.filters.idAddress ? 0 : $scope.filters.id
 var filterSearch     = $scope.filters.searchFilter,
     filterTop        = $scope.filters.topDH,
     filterProfile    = $scope.sessionidProfile,
-    filterTenantKf   = $scope.sessionidProfile == 3 ? $scope.sessionidTenantUser : null,
+    filterTenantKf   = $scope.sessionidProfile == 3 ? $scope.sessionidTenantUser : 0;
     filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf,
     filterTypeTicket = $scope.sessionidProfile !=2 ? $scope.filters.idTypeTicketKf : 3,
     filterAddress    = $scope.filters.idAddress,
     filterStatus     = $scope.filters.idStatusKf;
-    filterIdUser     = $scope.sessionidUser;
+    filterOwnerKf    = $scope.sessionidProfile == 3 ? $scope.sessionIdUser : $scope.sessionidTenantUser;
+    filterIdUser     = $scope.sessionIdUser;
   $searchFilter= 
   {
        idUserKf            : filterIdUser,
-       idOWnerKf           : filterTenantKf,
+       idOWnerKf           : filterOwnerKf,
        searchFilter        : filterSearch,
        topFilter           : filterTop, 
        idProfileKf         : filterProfile,
@@ -3511,6 +3514,8 @@ var filterSearch     = $scope.filters.searchFilter,
        idAdress            : filterAddress,
        idStatusTicketKf    : filterStatus
   }
+  console.log($scope.sessionIdUser);
+  console.log($searchFilter);
   $http.post($scope.serverHost+"Coferba/Back/index.php/Ticket/all", $searchFilter, setHeaderRequest)
   .then(function (sucess, data) {
          $scope.listTickt =  sucess.data.response;
@@ -3549,6 +3554,7 @@ $scope.cancelTicket = function(idTicket){
  
 }
 $scope.checkBefore2Load = function(){
+  $scope.sysLoadLStorage();
   if ($scope.sessionidProfile==3){
             $scope.getAllAddressByIdTenant();
   }
