@@ -172,7 +172,7 @@
     <div class="modal-body" style="margin-top: 9em;">
         <div style="background: #737373;">
             <div class="col-lg-12" 
-                ng-repeat="tk in listTickt"
+                ng-repeat="tk in listTickt;"
                 style="background-color: #ced3d6;
                 height: 82px;
                 border-radius: 5px;
@@ -181,27 +181,37 @@
                     <div class="col-lg-10">
                         <label>{{tk.codTicket}}</label>
                         <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding-left: 5px; padding-right: 5px; font-size: 11px;">
-                        <span ng-if="tk.idTypeTicket!=3"> {{tk.typeDelivery}}</span>
-                        <span ng-if="tk.idTypeTicket==3"></span>
+                            <span ng-if="tk.idTypeTicket!=3 && tk.isCancelTicket<=0"> {{tk.typeDelivery}}</span>
+                            <span ng-if="tk.idTypeTicket==3 && tk.isCancelTicket<=0">SERVICIO</span>
+                            <span ng-if="tk.idTypeTicket==4 && tk.isCancelTicket<=0">CONSULTA</span>
+                            <span ng-if="tk.idTypeTicket!=0 && tk.isCancelTicket==1">CANCELADO</span>
                         </label>
                         <br>
-                        <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}&nbsp<span class="label label-default">New</span></label> <br>
-                        <label>Creado: <span style="color:#14162B;">{{tk.dateCratedTicket | dateToISO | date:'dd/MM/yyyy'}}</span></label> - 
-                        <label>Aprobada: 
+                        <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}&nbsp
+                            <span ng-if="differentDays<=3 && tk.isCancelTicket<=0" class="label label-default">New</span>
+                        </label><br>
+                        <label>Creado: 
+                            <span ng-init="compareDaysIn2Dates(tk.dateCratedTicket);" style="color:#14162B;">{{tk.dateCratedTicket | dateToISO | date:'dd/MM/yyyy'}} - </span>
+                        </label>
+                        <label ng-if="tk.isCancelTicket<=0">Aprobada: 
                             <span ng-if="tk.dateRecibedAdmin">{{tk.dateRecibedAdmin}}</span>
                             <span ng-if="!tk.dateRecibedAdmin">{{tk.dateRecibedAdmin}}</span>
                         </label>
+                        <label ng-if="tk.isCancelTicket==1">Cancelado: 
+                            <span ng-if="tk.isCancelTicket==1">{{tk.dateCancel | dateToISO | date:'dd/MM/yyyy'}}</span>
+                        </label>
+                        <label ng-if="tk.isCancelTicket<=0">Cliente:</label>
                         <!-- OWNER -->
-                        <label>Cliente:</label>
-                        <label ng-if="tk.idTypeTicket!=3 && !tk.idDepartmentKf && tk.idTypeKf==1"> 
-                            <span>{{tk.fullNameTenant}} (Propietario) - </span>Tlf:
+                        <label ng-if="tk.idTypeTicket<=2 && !tk.idDepartmentKf && tk.idTypeKf==1 && tk.isCancelTicket<=0"> 
+                            <span ng-if="tk.idTypeTicket<=2">{{tk.fullNameTenant}} (Propietario) - </span>
+                            <span ng-if="tk.idTypeTicket==4">{{tk.fullNameUser}} (Propietario) - </span>Tlf:
                             <span ng-if="!tk.phoneNumberContactTenant || tk.phoneNumberTenant">{{tk.phoneNumberTenant}} - </span>
                             <span ng-if="!tk.phoneNumberTenant">{{tk.phoneNumberContactTenant}}</span> 
                             <span ng-if="tk.departmentFloor">Depto: {{tk.departmentFloor}}</span>
                             <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
                         </label> 
                          <!-- TENANT -->
-                        <label ng-if="tk.idTypeTicket!=3 && tk.idDepartmentKf && tk.idTypeKf==2"> 
+                        <label ng-if="tk.idTypeTicket<=2 && tk.idDepartmentKf && tk.idTypeKf==2 && tk.isCancelTicket<=0"> 
                             <span>{{tk.fullNameTenant}} (Inquilino) - </span>Tlf:
                             <span ng-if="!tk.phoneNumberContactTenant || tk.phoneNumberTenant">{{tk.phoneNumberTenant}} - </span>
                             <span ng-if="!tk.phoneNumberTenant">{{tk.phoneNumberContactTenant}}</span> 
@@ -209,18 +219,33 @@
                             <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
                         </label>
                         <!-- ADMIN CONSORCIO OR COMPANY -->
-                        <label ng-if="tk.idUserEnterpriceKf && tk.idTypeTicket==3 && !tk.idTypeKf"> 
+                        <label ng-if="tk.idUserEnterpriceKf && !tk.idDepartmentKf && tk.idTypeTicket==3 && !tk.idTypeKf && tk.isCancelTicket<=0"> 
                             <span>{{tk.fullNameUser}} (Admin Consorcio) - </span>Tlf:  
                             <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}}</span>
                             <span ng-if="!tk.phoneNumberUser">{{tk.phoneLocalNumberUser}}</span>
                             <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
                         </label>
-                        <!-- ATTENDANT -->
-                        <label ng-if="tk.idAttendantKf && tk.idTypeTicket!=3 && !tk.idDepartmentKf && !tk.idTypeKf && !idOtherKf"> 
+                        <!-- ANY ATTENDANT -->
+                        <label ng-if="tk.idAttendantKf && tk.idTypeTicket!=3 && !tk.idDepartmentKf && !tk.idTypeKf && tk.isCancelTicket<=0"> 
                             <span>{{tk.nameAttendant}} (Encargado - {{tk.nameTypeAttendant}}) </span>
                             <span ng-if="tk.idOtherKf!=0">Funcion: {{tk.descOther}}</span> - Tlf:
                             <span ng-if="!tk.phoneAttendant">{{tk.phoneLocalAttendant}}</span> 
                             <span ng-if="!tk.phoneLocalAttendant">{{tk.phoneAttendant}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label>
+                        <!-- BUILDING -->
+                        <!-- <label ng-if="tk.idAttendantKf && tk.idTypeTicket!=3 && !tk.idDepartmentKf && !tk.idTypeKf"> 
+                            <span>{{tk.nameAttendant}} (Encargado - {{tk.nameTypeAttendant}}) </span>
+                            <span ng-if="tk.idOtherKf!=0">Funcion: {{tk.descOther}}</span> - Tlf:
+                            <span ng-if="!tk.phoneAttendant">{{tk.phoneLocalAttendant}}</span> 
+                            <span ng-if="!tk.phoneLocalAttendant">{{tk.phoneAttendant}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label>-->
+                        <!-- OWNER -->
+                        <label ng-if="tk.idTypeTicket==4 && tk.isCancelTicket<=0"> 
+                            <span>{{tk.fullNameUser}} (Propietario) - </span>Tlf:
+                            <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}}</span>
+                            <span ng-if="!tk.phoneNumberUser">{{tk.phoneLocalNumberUser}}</span>
                             <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
                         </label>
 
@@ -228,13 +253,15 @@
                 
                     <div class="col-lg-2">
                             <!-- Split button -->
-                        <div class="btn-group">
-                        <button type="button" class="btn btn-success">{{tk.statusName}}</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
+                        <div  class="btn-group">
+
+                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-success">{{tk.statusName}}</button>
+                        <button ng-show="tk.isCancelTicket==1" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-success">{{tk.statusName}}</button>
+                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span  class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul ng-if="tk.idStatus>=2"  class="dropdown-menu">
                             <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
                         </ul>
                         </div>

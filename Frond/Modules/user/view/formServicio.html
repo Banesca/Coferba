@@ -35,7 +35,7 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-						  		<select name="idAddressKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressKf" autofocus >
+						  		<select name="idAddressKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 								    <option value="">Seleccione una opcion</option>
 							    	</select>
 						    </div>
@@ -47,7 +47,7 @@
 						  <div class="col-md-4">
 							  <div class="input-group">
 								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								  <input ng-show="sessionidProfile!=1"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" autofocus />
+								  <input ng-show="sessionidProfile!=1"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" readonly autofocus />
 								  <!-- ___________________________________________________________________ -->
 								  <select ng-show="sessionidProfile==1" name="namesAdmin" class="form-control"  ng-options="item.idUser as item.fullNameUser for item in listUser | filter:showCompanyUser" ng-required="sessionidProfile==1" ng-change="getUserCompanyData()" ng-model="select.namesAdmin" autofocus >
 									    <option value=""></option>
@@ -61,7 +61,7 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="localPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="$parent.localPhoneAdmin" type="text" required autofocus />
+							  		<input name="localPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="$parent.localPhoneAdmin" type="text" required autofocus readonly />
 						    </div>
 					  </div>
 					</div>
@@ -71,7 +71,7 @@
 					    <div class="col-md-4">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-						  		<input name="movilPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAdmin" type="text" required autofocus />
+						  		<input name="movilPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAdmin" type="text" required autofocus readonly />
 						    </div>
 					  </div>
 					</div>
@@ -81,14 +81,14 @@
 					   <div class="col-md-4">
 					    <div class="input-group">
 					    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-					  		<input name="emailAdmin" placeholder="E-Mail" class="form-control" ng-model="emailAdmin"  type="email" required autofocus />
+					  		<input name="emailAdmin" placeholder="E-Mail" class="form-control" ng-model="emailAdmin"  type="email" required autofocus readonly />
 					    </div>
 					  </div>
 					</div>
 				</fieldset>
 				<fieldset ng-switch-when="PASO 2: DATOS DEL SERVICIO">
 					<!-- Type of Tenant -->
-												<!-- Select Type of Service -->
+					<!-- Select Type of Service -->
 					   
 					<div class="form-group"> 
 					  <label class="col-md-4 control-label">Tipo de Servicio</label>
