@@ -29,7 +29,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" class="form-control" ng-change="getAllAttendant(); enabledNextBtn(); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null; getCompanyFromAdress();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
@@ -328,7 +328,7 @@
 									  <div class="col-md-3">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">
-											  <input data-toggle="popover" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
+											  <input id="inputService" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-3 ">
@@ -340,7 +340,7 @@
 									  <div class="col-md-3">
 									  	<label class="control-label">Envio</label> 
 										  <div class="input-group">
-											  <input data-toggle="tooltip" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
+											  <input id="inputDelivery" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-3 "> 

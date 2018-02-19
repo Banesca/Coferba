@@ -5,7 +5,9 @@
 <meta content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0" name="viewport">
 
 <!-- Default Style Sheets -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
 <!-- Bootstrap CSS -->
 
 <link rel="stylesheet" type="text/css" afrres="true" href="css/fa.min.css">
@@ -102,14 +104,14 @@
 			                	<li ng-show="sessionidProfile!=2" class="dropdown-header">Llaveros</li>
 			                    <li ng-show="sessionidProfile!=2"><a ng-click="fnShowHide('rukeyup', 'open')" href="#Alta" class="dropItemTitle"><i class="glyphicon glyphicon-upload"></i> Alta</a></li>
 			                    <li ng-show="sessionidProfile!=2"><a ng-click="fnShowHide('rukeydown', 'open')" href="#Baja" class="dropItemTitle"><i class="glyphicon glyphicon-download"></i> Baja</a></li>
-			                	<li class="divider"></li>
+			                	<li ng-show="sessionidProfile!=2" class="divider"></li>
 				                <li ng-show="sessionidProfile==1 || sessionidProfile==2 || sessionidProfile==4" class="cms">
 				                    <a ng-click="fnShowHide('ruservice', 'open')" href="#Servicio"><i class="glyphicon icon-wrench"></i> Servicio Tecnico</a>
 				                </li>
 				                <li ng-show="sessionidProfile!=1" class="cms"> <!--class="im active"-->
 				                    <a ng-click="fnShowHide('ruother', 'open')" href="#Consultas"><i class="glyphicon glyphicon-envelope"></i> Otras Consultas</a>
 				                </li>
-				                <li ng-show="sessionidProfile!=0" class="cms"> <!--class="im active"-->
+				                <li ng-show="sessionidProfile!=2" class="cms"> <!--class="im active"-->
 				                    <a ng-click="fnShowHide('frmcost', 'open')" href="#Costos"><i class="glyphicon icon-dollar"></i> Costos</a>
 				                </li>
 					        </ul>
@@ -265,7 +267,7 @@
 		</div>
 	</div>    
 
-    <!-- USER FORGOT PWD FORM -->
+    <!-- USER REGISTER FORM -->
 	<div id="RegisterModalUser" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">
@@ -273,7 +275,7 @@
               		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
                 	<h3 class="modal-title">NUEVO USUARIO</h3>
             	</div>
-        		<div class="modal-body"  style="overflow-y: scroll; height: 556px">
+        		<div class="modal-body"  style="overflow-y: scroll;">
 					<!-- FORM CONTAINER-->
     				<form class="form-horizontal" name="fNewUser" ng-init="CallFilterFormU();" ng-submit="sysFunctionsUser('register')">
 						<fieldset>
@@ -526,7 +528,7 @@
 								    <div class="col-md-4 selectContainer">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											    <select name="idTypeTenantKf" class="form-control" ng-blur="deptoHasOwner();" ng-options="item.idTypeTenant as item.typeTenantName for item in lisTypeTenant " ng-model="$parent.idTypeTenantKf" ng-required="sessionidProfile!=3" autofocus >
+											    <select name="idTypeTenantKf" class="form-control" ng-blur="!IsSystem == true ? deptoHasOwner() : null" ng-options="item.idTypeTenant as item.typeTenantName for item in lisTypeTenant " ng-model="$parent.idTypeTenantKf" ng-required="sessionidProfile!=3" autofocus >
 											    	<option value=""></option>
 										    	</select>
 									  	</div>
@@ -534,12 +536,12 @@
 								</div>
 								<!-- List Address-->
 								      
-								<div class="form-group" ng-show="!sessionidProfile">
+								<div class="form-group" ng-show="!sessionidProfile || IsSystem">
 								  <label class="col-md-4 control-label">Direcci&#243n</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressKf" class="form-control" ng-change="getAllDeparment()"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="!sessionidProfile" ng-model="$parent.idAddressKf" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getDeparment(0)"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="!sessionidProfile" ng-model="select.idAddressAtt" autofocus >
 											    	<option value=""></option>
 										    	</select>
 									    </div>
@@ -547,12 +549,12 @@
 								</div>
 								<!-- List Department by address-->
 								      
-								<div class="form-group" ng-show="!sessionidProfile">
+								<div class="form-group" ng-show="!sessionidProfile || IsSystem">
 								  <label class="col-md-4 control-label">Departamento</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-model="$parent.idDepartmentKf" ng-required="!sessionidProfile" autofocus >
+									  		<select name="idDepartmentKf" class="form-control"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-blur="IsSystem == true ? deptoHasOwner() : null" ng-model="select.idDepartmentKf" ng-required="!sessionidProfile" autofocus >
 											    	<option value=""> </option>
 										    	</select>
 									    </div>
@@ -602,7 +604,7 @@
 								  </div>
 								</div>
 								<div ng-show="ownerFound && sessionidProfile!=3" class="alert alert-danger" role="alert">
-				            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: </strong>El departamento ya posee un propietario. new
+				            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: </strong>El departamento ya posee un propietario.
 				        		</div>	
 								<!-- Actions Button -->
 								<div class="form-group">
@@ -1254,11 +1256,12 @@
 <script type="text/javascript" language="javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/inputMask.js"></script>
 
+<!--//JQUERY MODULES -->
 
-<!--JQUERY MODULES -->
+<script src="js/coferbaJsFunctions.js"></script> <!--  Coferba Jquery Functions -->
 <script src="js/coferbaConnect.js"></script> <!-- Coferba Angular App -->
 <script src="js/coferbaAngularApp.js"></script> <!-- Coferba Angular App -->
-<script src="js/coferbaJsFunctions.js"></script> <!--  Coferba Jquery Functions -->
+
 </body>
 </html>
 

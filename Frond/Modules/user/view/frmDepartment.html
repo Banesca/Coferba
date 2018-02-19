@@ -393,8 +393,8 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                               <li><a href="#" ng-click="select2EditAtt(item);"><i title="Modificar Datos" class="glyphicon glyphicon-edit"></i>  Editar</a></li>
-                              <li ng-if="item.idStatusKf<=0 "><a href="#" ng-click="sysFunctionsAtt('enabled',item.idUser)"><i title="Activar Usuario" class="glyphicon glyphicon-remove-circle"></i> Activar</a></li>
-                              <li ng-if="item.idStatusKf>0"><a href="#" ng-click="sysFunctionsAtt('disabled',item.idUser)"><i title="Desactivar Usuario" class="glyphicon glyphicon-remove-circle"></i> Desactivar</a></li>
+                              <li ng-if="item.idStatusKf<=0 "><a href="#" ng-click="sysFunctionsAtt('enabled',item.idAttendant)"><i title="Activar Inquilino" class="glyphicon glyphicon-remove-circle"></i> Activar</a></li>
+                              <li ng-if="item.idStatusKf>0"><a href="#" ng-click="sysFunctionsAtt('disabled',item.idAttendant)"><i title="Desactivar Inquilino" class="glyphicon glyphicon-remove-circle"></i> Desactivar</a></li>
                               <li ng-if="item.idStatusKf>0" role="presentation">
                               <div class="divider"></div>
                               </li>

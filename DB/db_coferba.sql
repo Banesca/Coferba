@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2018 a las 17:03:51
+-- Tiempo de generación: 16-02-2018 a las 12:49:14
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.10
 
@@ -28,14 +28,20 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `tb_addres`
 --
 
-CREATE TABLE `tb_addres` (
-  `idAdress` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_addres` (
+  `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nameAdress` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
   `priceUni` decimal(10,2) DEFAULT '0.00' COMMENT 'Precio por unidad',
   `priceManagement` decimal(10,2) DEFAULT '0.00' COMMENT 'Precio por Gestion',
-  `priceShipping` decimal(10,2) DEFAULT '0.00' COMMENT 'Precio por envio '
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `priceShipping` decimal(10,2) DEFAULT '0.00' COMMENT 'Precio por envio ',
+  PRIMARY KEY (`idAdress`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_addres`
+--
+
+TRUNCATE TABLE `tb_addres`;
 --
 -- Volcado de datos para la tabla `tb_addres`
 --
@@ -54,8 +60,8 @@ INSERT INTO `tb_addres` (`idAdress`, `nameAdress`, `priceUni`, `priceManagement`
 -- Estructura de tabla para la tabla `tb_attendant`
 --
 
-CREATE TABLE `tb_attendant` (
-  `idAttendant` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_attendant` (
+  `idAttendant` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nameAttendant` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
   `idAddresKf` int(11) DEFAULT NULL,
   `phoneAttendant` varchar(25) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -64,9 +70,16 @@ CREATE TABLE `tb_attendant` (
   `hoursWork` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL,
   `idTyepeAttendantKf` int(11) DEFAULT NULL,
   `idStatusKf` int(11) DEFAULT '1',
-  `descOther` text COLLATE utf8_swedish_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `descOther` text COLLATE utf8_swedish_ci,
+  PRIMARY KEY (`idAttendant`) USING BTREE,
+  KEY `idTyepeAttendantKf` (`idTyepeAttendantKf`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_attendant`
+--
+
+TRUNCATE TABLE `tb_attendant`;
 --
 -- Volcado de datos para la tabla `tb_attendant`
 --
@@ -76,24 +89,11 @@ INSERT INTO `tb_attendant` (`idAttendant`, `nameAttendant`, `idAddresKf`, `phone
 (2, 'DAVID', 1, '31221312321', '05491133455', 'adsaa@daas.djh', '', 2, 1, NULL),
 (3, 'MIGUEL MARTINEZ', 2, '312312312211', '054919329491', 'adsaa@daas.djh', '', 2, 1, NULL),
 (4, 'MARTINEZ JULO', 3, '12321321312', NULL, 'adsaa@daas.djh', NULL, 2, 1, NULL),
-(5, 'prueba EDITE 2', 1, '31321321321', NULL, 'prueba@pruba.com', '08:40', 4, 1, NULL),
-(6, 'prueba', 1, '31321321321', '05491124343', 'DFSD@SDDDS.DF', '09:00', 3, 1, NULL),
 (7, 'Francisco Ochoa', 1, '(054) 9 22 2222-2222', '(054) 9 11 1111-1111', 'fracisco.ochoa@gmail.com', '', 3, 1, NULL),
-(8, 'prueba', 1, '31321321321', NULL, 'prueba@pruba.com', '08:40', NULL, 1, NULL),
 (9, 'prueba EDITE', 1, '31321321321', NULL, 'prueba@pruba.com', '08:40', 5, 1, NULL),
-(10, 'Emilio Fanego', 1, '05491232132121', '05491232132131', 'emilio.fanego@gmail.com', '', 1, 1, 'Carpintero'),
-(11, 'Javier Mendoza', 1, '0549123213213', '0549123213213', 'javier.mendoza@yahoo.com', '', 1, 1, 'Plomero'),
-(12, 'Raul Medina', 1, '', '0549123213213', 'raul.medina@gmail.com', '', 1, 1, 'Plomero'),
-(13, 'Esteban Gervasi', 2, '054912321321321', '054921321321321', 'esteban.gervasi@gmail.com', '', 1, 1, 'Obrero'),
-(14, 'Wilmer Farias', 3, '054912321321321', '054912321321321', 'wilmer.farias@gmail.com', '', 1, 1, 'Techista'),
-(15, 'Romulo Gomez', 1, '05491123432432445', '05491112321321434', 'romulo.gomez@gmail.com', '', 1, 1, 'Albañil'),
-(16, 'Ricardo Cepeda', 1, '054912321321343', '054912321321321', 'ricardo.cepeda@gmail.com', '', 1, 1, 'Electricista'),
-(23, 'Saul Martinez', 1, '123213213213', '213213213213', 'saul.martinez@gmail.com', '', 3, 1, 'Inmobiliaria'),
-(24, 'Fernando Ramirez', 2, '213213214214214', '23432324323243', 'fernando.ramirez@gmail.com', '', 1, 1, 'Pintor'),
-(25, 'Jorge Jimenez', 2, '23432432432', '23432432432', 'jorge.jimenez@gmail.com', '', 1, 1, 'Seguridad'),
-(26, 'Roberto Rodriguez', 1, '2132132132134', '1232132131244', 'roberto.rodriguez@yahoo.com', '', 1, 1, 'Plomero'),
-(27, 'Ruben Malave', 1, '123213213213213213', '232143213213213212', 'ruben.malave@gmail.com', '', 1, 1, 'Pintor'),
-(30, 'Henry Gomez', 1, '', '05491123242424', 'henry.gomez@hotmail.com', '', 1, 1, 'Obrero');
+(31, 'Ernesto Miranda', 1, '054911324666666', '054911234345353', 'ernesto.miranda@gmail.com', '', 1, 1, 'Obrero'),
+(32, 'Raul Flores', 1, '', '0549113243243253223', 'raul.flores@hotmail.com', '', 1, 1, 'Techista'),
+(37, 'Hernan Araujo', 2, '', '054911324324325543', 'hernan.araujo@gmail.com', '', 1, 1, 'Carpintero');
 
 -- --------------------------------------------------------
 
@@ -101,13 +101,19 @@ INSERT INTO `tb_attendant` (`idAttendant`, `nameAttendant`, `idAddresKf`, `phone
 -- Estructura de tabla para la tabla `tb_branch`
 --
 
-CREATE TABLE `tb_branch` (
-  `idBranch` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_branch` (
+  `idBranch` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `branchName` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL,
   `idCompanyKf` int(11) DEFAULT NULL,
-  `idAdressKf` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `idAdressKf` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idBranch`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_branch`
+--
+
+TRUNCATE TABLE `tb_branch`;
 --
 -- Volcado de datos para la tabla `tb_branch`
 --
@@ -126,12 +132,18 @@ INSERT INTO `tb_branch` (`idBranch`, `branchName`, `idCompanyKf`, `idAdressKf`) 
 -- Estructura de tabla para la tabla `tb_clients_tickets`
 --
 
-CREATE TABLE `tb_clients_tickets` (
-  `idTicketsCliets` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_clients_tickets` (
+  `idTicketsCliets` int(11) NOT NULL AUTO_INCREMENT,
   `idTicketKf` int(11) DEFAULT NULL,
-  `idClientKf` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `idClientKf` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idTicketsCliets`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_clients_tickets`
+--
+
+TRUNCATE TABLE `tb_clients_tickets`;
 --
 -- Volcado de datos para la tabla `tb_clients_tickets`
 --
@@ -159,11 +171,17 @@ INSERT INTO `tb_clients_tickets` (`idTicketsCliets`, `idTicketKf`, `idClientKf`)
 -- Estructura de tabla para la tabla `tb_company`
 --
 
-CREATE TABLE `tb_company` (
-  `idCompany` int(11) UNSIGNED NOT NULL,
-  `nameCompany` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+CREATE TABLE IF NOT EXISTS `tb_company` (
+  `idCompany` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nameCompany` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`idCompany`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_company`
+--
+
+TRUNCATE TABLE `tb_company`;
 --
 -- Volcado de datos para la tabla `tb_company`
 --
@@ -179,8 +197,8 @@ INSERT INTO `tb_company` (`idCompany`, `nameCompany`) VALUES
 -- Estructura de tabla para la tabla `tb_department`
 --
 
-CREATE TABLE `tb_department` (
-  `idDepartment` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_department` (
+  `idDepartment` int(11) NOT NULL AUTO_INCREMENT,
   `idAdressKf` int(255) DEFAULT NULL,
   `departmentFloor` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `deparmentNumber` int(11) DEFAULT NULL,
@@ -190,9 +208,15 @@ CREATE TABLE `tb_department` (
   `idUserAdminPropietariKf` int(11) DEFAULT NULL,
   `idTenantKf` int(11) DEFAULT NULL,
   `isAprobatedAdmin` tinyint(4) DEFAULT '0',
-  `isRequesLowByProp` tinyint(4) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `isRequesLowByProp` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`idDepartment`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_department`
+--
+
+TRUNCATE TABLE `tb_department`;
 --
 -- Volcado de datos para la tabla `tb_department`
 --
@@ -224,11 +248,17 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 -- Estructura de tabla para la tabla `tb_opcion_low`
 --
 
-CREATE TABLE `tb_opcion_low` (
-  `idOpcionLowTicket` int(11) UNSIGNED NOT NULL,
-  `opcionLowTicket` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+CREATE TABLE IF NOT EXISTS `tb_opcion_low` (
+  `idOpcionLowTicket` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `opcionLowTicket` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`idOpcionLowTicket`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_opcion_low`
+--
+
+TRUNCATE TABLE `tb_opcion_low`;
 --
 -- Volcado de datos para la tabla `tb_opcion_low`
 --
@@ -243,11 +273,17 @@ INSERT INTO `tb_opcion_low` (`idOpcionLowTicket`, `opcionLowTicket`) VALUES
 -- Estructura de tabla para la tabla `tb_profile`
 --
 
-CREATE TABLE `tb_profile` (
+CREATE TABLE IF NOT EXISTS `tb_profile` (
   `idProfile` int(11) NOT NULL,
-  `nameProfile` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `nameProfile` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idProfile`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_profile`
+--
+
+TRUNCATE TABLE `tb_profile`;
 --
 -- Volcado de datos para la tabla `tb_profile`
 --
@@ -264,11 +300,17 @@ INSERT INTO `tb_profile` (`idProfile`, `nameProfile`) VALUES
 -- Estructura de tabla para la tabla `tb_reason_disabled_item`
 --
 
-CREATE TABLE `tb_reason_disabled_item` (
-  `idReasonDisabledItem` int(11) NOT NULL,
-  `reasonDisabledItem` varchar(100) COLLATE utf8_spanish2_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+CREATE TABLE IF NOT EXISTS `tb_reason_disabled_item` (
+  `idReasonDisabledItem` int(11) NOT NULL AUTO_INCREMENT,
+  `reasonDisabledItem` varchar(100) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idReasonDisabledItem`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_reason_disabled_item`
+--
+
+TRUNCATE TABLE `tb_reason_disabled_item`;
 --
 -- Volcado de datos para la tabla `tb_reason_disabled_item`
 --
@@ -284,23 +326,35 @@ INSERT INTO `tb_reason_disabled_item` (`idReasonDisabledItem`, `reasonDisabledIt
 -- Estructura de tabla para la tabla `tb_request`
 --
 
-CREATE TABLE `tb_request` (
+CREATE TABLE IF NOT EXISTS `tb_request` (
   `idRequest` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `RequestName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `idTypeTicketKf` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `idTypeTicketKf` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idRequest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_request`
+--
+
+TRUNCATE TABLE `tb_request`;
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_status`
 --
 
-CREATE TABLE `tb_status` (
+CREATE TABLE IF NOT EXISTS `tb_status` (
   `idStatusTenant` int(255) NOT NULL,
-  `statusTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `statusTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idStatusTenant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci ROW_FORMAT=COMPACT;
 
+--
+-- Truncar tablas antes de insertar `tb_status`
+--
+
+TRUNCATE TABLE `tb_status`;
 --
 -- Volcado de datos para la tabla `tb_status`
 --
@@ -316,12 +370,18 @@ INSERT INTO `tb_status` (`idStatusTenant`, `statusTenantName`) VALUES
 -- Estructura de tabla para la tabla `tb_statusticket`
 --
 
-CREATE TABLE `tb_statusticket` (
+CREATE TABLE IF NOT EXISTS `tb_statusticket` (
   `idStatus` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `statusName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `idTypeTicketKf` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `idTypeTicketKf` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idStatus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci ROW_FORMAT=COMPACT;
 
+--
+-- Truncar tablas antes de insertar `tb_statusticket`
+--
+
+TRUNCATE TABLE `tb_statusticket`;
 --
 -- Volcado de datos para la tabla `tb_statusticket`
 --
@@ -338,18 +398,23 @@ INSERT INTO `tb_statusticket` (`idStatus`, `statusName`, `idTypeTicketKf`) VALUE
 -- Estructura de tabla para la tabla `tb_sys_code`
 --
 
-CREATE TABLE `tb_sys_code` (
+CREATE TABLE IF NOT EXISTS `tb_sys_code` (
   `idCode` int(11) DEFAULT NULL,
   `code` varchar(200) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `description` varchar(3) COLLATE utf8_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
+-- Truncar tablas antes de insertar `tb_sys_code`
+--
+
+TRUNCATE TABLE `tb_sys_code`;
+--
 -- Volcado de datos para la tabla `tb_sys_code`
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '106', 'TK');
+(1, '135', 'TK');
 
 -- --------------------------------------------------------
 
@@ -357,19 +422,25 @@ INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_sys_param`
 --
 
-CREATE TABLE `tb_sys_param` (
-  `idParam` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_sys_param` (
+  `idParam` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `description` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`idParam`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_sys_param`
+--
+
+TRUNCATE TABLE `tb_sys_param`;
 --
 -- Volcado de datos para la tabla `tb_sys_param`
 --
 
 INSERT INTO `tb_sys_param` (`idParam`, `value`, `description`) VALUES
-(1, 'jorguti58@gmail.com', 'USUARIO SMT MAIL'),
-(2, '#*AdMg1210#*', 'CLAVE SMT MAIL'),
+(1, 'rexx84@gmail.com', 'USUARIO SMT MAIL'),
+(2, '..,:;\"david387504odrauderexx', 'CLAVE SMT MAIL'),
 (6, '20:00', 'HORA DE MAIL DE VERIFICACION DE MAIL PARA ADMINISTRADORES DE CONSORCIO'),
 (7, 'jorguti58@gmail.com', 'MAIL DE VENTAS'),
 (8, 'jorguti58@gmail.com', 'MAIL SERVICO TECNICO'),
@@ -381,8 +452,8 @@ INSERT INTO `tb_sys_param` (`idParam`, `value`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_tenant`
 --
 
-CREATE TABLE `tb_tenant` (
-  `idTenant` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_tenant` (
+  `idTenant` int(11) NOT NULL AUTO_INCREMENT,
   `fullNameTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `idTypeKf` int(11) DEFAULT NULL,
   `phoneNumberTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -390,9 +461,15 @@ CREATE TABLE `tb_tenant` (
   `emailTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `idStatusKf` int(11) DEFAULT NULL,
   `dateCrated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `phoneNumberContactTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `phoneNumberContactTenant` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idTenant`)
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_tenant`
+--
+
+TRUNCATE TABLE `tb_tenant`;
 --
 -- Volcado de datos para la tabla `tb_tenant`
 --
@@ -451,12 +528,12 @@ INSERT INTO `tb_tenant` (`idTenant`, `fullNameTenant`, `idTypeKf`, `phoneNumberT
 -- Estructura de tabla para la tabla `tb_tickets`
 --
 
-CREATE TABLE `tb_tickets` (
-  `idTicket` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_tickets` (
+  `idTicket` int(11) NOT NULL AUTO_INCREMENT,
   `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `dateRecibedAdmin` datetime DEFAULT NULL,
   `dateRecibeCompany` datetime DEFAULT NULL,
-  `idStatusTicketKf` int(11) DEFAULT '1',
+  `idStatusTicketKf` int(11) DEFAULT '2',
   `codTicket` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `idTypeTicketKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO DE TICKET',
   `description` text COLLATE utf8_spanish2_ci,
@@ -485,23 +562,39 @@ CREATE TABLE `tb_tickets` (
   `isAprobatedAdmin` tinyint(4) DEFAULT '0',
   `isCancelTicket` tinyint(4) DEFAULT '0',
   `dateCancel` timestamp NULL DEFAULT NULL,
+  `idTypeOfOptionKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO DE SOLICITUD -ENCARGADO/OTRO/EDIFICIO',
   `idDepartmentKf` int(11) DEFAULT NULL COMMENT 'ID DEL DEPARTAMENTO',
   `idAdressKf` int(11) DEFAULT NULL COMMENT 'DIRECCION DEL TICKET',
   `dateAprovatedAdmin` timestamp NULL DEFAULT NULL,
-  `idOtherKf` int(11) DEFAULT NULL COMMENT 'Id de encargado de typo "Otro"'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `idOtherKf` int(11) DEFAULT NULL COMMENT 'Id de encargado de typo "Otro"',
+  PRIMARY KEY (`idTicket`)
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_tickets`
+--
+
+TRUNCATE TABLE `tb_tickets`;
 --
 -- Volcado de datos para la tabla `tb_tickets`
 --
 
-INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `description`, `idRequestKf`, `idTenantKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `numberItemes`, `idTypeDeliveryKf`, `numberItemDisabled`, `idOWnerKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `idReasonDisabledItemKf`, `descriptionOrder`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idAttendantKf`, `idCompanyKf`, `idBranchKf`, `isAprobatedAdmin`, `isCancelTicket`, `dateCancel`, `idDepartmentKf`, `idAdressKf`, `dateAprovatedAdmin`, `idOtherKf`) VALUES
-(1, '2018-02-13 04:21:45', NULL, NULL, 1, 'TK-00000101', 1, '', NULL, 22, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, NULL, 1, 0, 0, NULL, 3, 1, NULL, 0),
-(2, '2018-02-13 04:32:41', NULL, NULL, 1, 'TK-00000102', 1, '', NULL, 33, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, NULL, 1, 0, 0, NULL, 2, 1, NULL, 0),
-(3, '2018-02-13 05:02:05', NULL, NULL, 1, 'TK-00000103', 3, '', NULL, NULL, 17, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Reemplazar camara de entrada principal del edificio', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, 1, NULL, NULL),
-(4, '2018-02-13 12:06:07', NULL, NULL, 1, 'TK-00000104', 1, '', NULL, 56, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 3, 1, 2, 0, 0, NULL, 13, NULL, NULL, 0),
-(5, '2018-02-13 12:13:29', NULL, NULL, 1, 'TK-00000105', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 3, 1, 2, 0, 0, NULL, 0, NULL, NULL, 0),
-(6, '2018-02-13 13:29:01', NULL, NULL, 1, 'TK-00000106', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 0, 1, 1, 0, 0, NULL, 0, NULL, NULL, 30);
+INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `description`, `idRequestKf`, `idTenantKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `numberItemes`, `idTypeDeliveryKf`, `numberItemDisabled`, `idOWnerKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `idReasonDisabledItemKf`, `descriptionOrder`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idAttendantKf`, `idCompanyKf`, `idBranchKf`, `isAprobatedAdmin`, `isCancelTicket`, `dateCancel`, `idTypeOfOptionKf`, `idDepartmentKf`, `idAdressKf`, `dateAprovatedAdmin`, `idOtherKf`) VALUES
+(1, '2018-02-14 04:46:44', NULL, NULL, 1, 'TK-00000117', 1, '', NULL, 22, 0, NULL, 0, 2, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '350.00', NULL, NULL, NULL, 1, 1, 1, 0, 0, NULL, NULL, 3, NULL, NULL, 0),
+(2, '2018-02-14 04:47:20', NULL, NULL, 1, 'TK-00000118', 1, '', NULL, 44, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 3, 1, 2, 0, 0, NULL, NULL, 12, NULL, NULL, 0),
+(4, '2018-02-14 04:58:16', NULL, NULL, 1, 'TK-00000120', 3, '', NULL, NULL, 0, 0, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Cambio de camara principal', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL),
+(6, '2018-02-14 05:17:15', NULL, NULL, 1, 'TK-00000122', 4, 'Solicito que me hagan llegar la factura con el encargado del edificio', NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 23, 4, 'carlos.villalobos@gmail.com', NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL),
+(7, '2018-02-14 13:36:36', NULL, NULL, 1, 'TK-00000123', 3, '', NULL, NULL, 30, 22, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Lector de Llave quemado.', NULL, NULL, NULL, NULL, NULL, NULL, 3, 5, 0, 0, NULL, NULL, NULL, 5, NULL, NULL),
+(8, '2018-02-15 14:21:18', NULL, NULL, 2, 'TK-00000124', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, 1, 1, 0, 0, NULL, 3, 0, 1, NULL, 31),
+(9, '2018-02-15 14:24:03', NULL, NULL, 2, 'TK-00000125', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, 1, 1, 0, 0, NULL, 1, 0, 1, NULL, 0),
+(10, '2018-02-15 18:57:15', NULL, NULL, 2, 'TK-00000126', 1, '', NULL, 0, 30, NULL, 0, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 3, 1, 2, 0, 0, NULL, 2, 0, 2, NULL, 0),
+(11, '2018-02-15 19:06:22', NULL, NULL, 2, 'TK-00000127', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, 1, 1, 0, 0, NULL, 3, 0, 1, NULL, 32),
+(12, '2018-02-15 20:25:41', NULL, NULL, 2, 'TK-00000128', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 3, 1, 2, 0, 0, NULL, 3, 0, 2, NULL, 37),
+(13, '2018-02-16 00:23:06', NULL, NULL, 2, 'TK-00000129', 1, '', NULL, 22, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, 0, 1, 0, 0, NULL, NULL, 2, 1, NULL, 0),
+(14, '2018-02-16 00:31:10', NULL, NULL, 2, 'TK-00000130', 1, '', NULL, 22, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 1, 1, 1, 0, 0, NULL, NULL, 3, 1, NULL, 0),
+(15, '2018-02-16 01:54:41', NULL, NULL, 2, 'TK-00000131', 3, '', NULL, NULL, 0, 22, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'CAmbio', NULL, NULL, NULL, NULL, NULL, NULL, 3, 6, 0, 0, NULL, NULL, NULL, 6, NULL, NULL),
+(16, '2018-02-16 05:29:59', NULL, NULL, 2, 'TK-00000132', 3, '', NULL, NULL, 0, 22, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Defectuoso', NULL, NULL, NULL, NULL, NULL, NULL, 3, 5, 0, 0, NULL, NULL, NULL, 5, NULL, NULL),
+(19, '2018-02-16 05:40:07', NULL, NULL, 2, 'TK-00000135', 4, 'Prueba', NULL, NULL, NULL, 22, 0, NULL, NULL, NULL, 0, 4, 'luis.carreno@coca-cola.com', NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, 3, 5, 0, 0, NULL, NULL, NULL, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -509,11 +602,17 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 -- Estructura de tabla para la tabla `tb_typetenant`
 --
 
-CREATE TABLE `tb_typetenant` (
+CREATE TABLE IF NOT EXISTS `tb_typetenant` (
   `idTypeTenant` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
-  `typeTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `typeTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idTypeTenant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_typetenant`
+--
+
+TRUNCATE TABLE `tb_typetenant`;
 --
 -- Volcado de datos para la tabla `tb_typetenant`
 --
@@ -528,11 +627,17 @@ INSERT INTO `tb_typetenant` (`idTypeTenant`, `typeTenantName`) VALUES
 -- Estructura de tabla para la tabla `tb_typeticket`
 --
 
-CREATE TABLE `tb_typeticket` (
-  `idTypeTicket` int(11) NOT NULL,
-  `TypeTicketName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+CREATE TABLE IF NOT EXISTS `tb_typeticket` (
+  `idTypeTicket` int(11) NOT NULL AUTO_INCREMENT,
+  `TypeTicketName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idTypeTicket`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_typeticket`
+--
+
+TRUNCATE TABLE `tb_typeticket`;
 --
 -- Volcado de datos para la tabla `tb_typeticket`
 --
@@ -549,11 +654,17 @@ INSERT INTO `tb_typeticket` (`idTypeTicket`, `TypeTicketName`) VALUES
 -- Estructura de tabla para la tabla `tb_type_attendant`
 --
 
-CREATE TABLE `tb_type_attendant` (
-  `idTyepeAttendant` int(11) UNSIGNED NOT NULL,
-  `nameTypeAttendant` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+CREATE TABLE IF NOT EXISTS `tb_type_attendant` (
+  `idTyepeAttendant` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nameTypeAttendant` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`idTyepeAttendant`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_type_attendant`
+--
+
+TRUNCATE TABLE `tb_type_attendant`;
 --
 -- Volcado de datos para la tabla `tb_type_attendant`
 --
@@ -571,12 +682,17 @@ INSERT INTO `tb_type_attendant` (`idTyepeAttendant`, `nameTypeAttendant`) VALUES
 -- Estructura de tabla para la tabla `tb_type_delivery`
 --
 
-CREATE TABLE `tb_type_delivery` (
+CREATE TABLE IF NOT EXISTS `tb_type_delivery` (
   `idTypeDelivery` int(11) DEFAULT NULL,
   `typeDelivery` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `amount` decimal(18,2) DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_type_delivery`
+--
+
+TRUNCATE TABLE `tb_type_delivery`;
 --
 -- Volcado de datos para la tabla `tb_type_delivery`
 --
@@ -591,11 +707,17 @@ INSERT INTO `tb_type_delivery` (`idTypeDelivery`, `typeDelivery`, `amount`) VALU
 -- Estructura de tabla para la tabla `tb_type_outher`
 --
 
-CREATE TABLE `tb_type_outher` (
+CREATE TABLE IF NOT EXISTS `tb_type_outher` (
   `idTypeOuther` int(11) NOT NULL,
-  `TypeOuther` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `TypeOuther` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idTypeOuther`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_type_outher`
+--
+
+TRUNCATE TABLE `tb_type_outher`;
 --
 -- Volcado de datos para la tabla `tb_type_outher`
 --
@@ -613,19 +735,25 @@ INSERT INTO `tb_type_outher` (`idTypeOuther`, `TypeOuther`) VALUES
 -- Estructura de tabla para la tabla `tb_type_services`
 --
 
-CREATE TABLE `tb_type_services` (
-  `idTypeServices` int(11) NOT NULL,
-  `typeServices` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
+CREATE TABLE IF NOT EXISTS `tb_type_services` (
+  `idTypeServices` int(11) NOT NULL AUTO_INCREMENT,
+  `typeServices` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  PRIMARY KEY (`idTypeServices`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_type_services`
+--
+
+TRUNCATE TABLE `tb_type_services`;
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_user`
 --
 
-CREATE TABLE `tb_user` (
-  `idUser` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_user` (
+  `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `fullNameUser` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `emailUser` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `phoneNumberUser` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -636,248 +764,29 @@ CREATE TABLE `tb_user` (
   `idStatusKf` int(11) DEFAULT NULL,
   `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `idCompanyKf` int(11) DEFAULT NULL,
-  `resetPasword` tinyint(4) DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `resetPasword` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`idUser`)
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Truncar tablas antes de insertar `tb_user`
+--
+
+TRUNCATE TABLE `tb_user`;
 --
 -- Volcado de datos para la tabla `tb_user`
 --
 
 INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `addresUser`, `passwordUser`, `idProfileKf`, `idStatusKf`, `dateCreated`, `idCompanyKf`, `resetPasword`) VALUES
-(24, 'prueba editada', 'prueba', 'prueba', '123', NULL, '32e7092ddccc9af07299d6e8dac6fe731c6572d2', 1, 1, '2017-11-23 05:36:20', NULL, 0),
+(24, 'prueba editada', 'prueba', 'prueba', '123', NULL, '32e7092ddccc9af07299d6e8dac6fe731c6572d2', 1, -1, '2017-11-23 05:36:20', NULL, 0),
 (17, 'David Rincón Luengo', 'rexx84@gmail.com', '112235667799', '112345664556', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 4, 1, '2017-10-26 02:16:00', 1, 0),
 (22, 'Luis Carreño', 'luis.carreno@coca-cola.com', '1199887766', '1144556677', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 2, 1, '2017-10-26 18:17:25', 3, 0),
-(23, 'Carlos Villalobos', 'carlos.villalobos@gmail.com', '(054) 9 11 2235-6388', '(054) 9 11 2669-4918', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 0, '2017-11-23 00:28:25', NULL, 0),
-(25, 'Jose Gomez', 'jose.gomez@gmail.com', '113443663346', '116678885464', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 0, '2017-11-24 17:47:25', NULL, 0),
+(23, 'Carlos Villalobos', 'carlos.villalobos@gmail.com', '(054) 9 11 2235-6388', '(054) 9 11 2669-4918', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 1, '2017-11-23 00:28:25', NULL, 0),
+(25, 'Jose Gomez', 'jose.gomez@gmail.com', '113443663346', '116678885464', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 1, '2017-11-24 17:47:25', NULL, 0),
 (27, 'prueba de registro', 'prueba@prueba.com.ar', '(154) 2 32 1321-3213', '(254) 1 31 3213-1322', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 1, '2018-01-26 03:26:01', NULL, 1),
 (28, 'Xavi Hernandez', 'xavi.hernandez@yahoo.es', '(454) 4 44 4444-4444', '(854) 8 88 8888-8888', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 4, 1, '2018-01-31 07:34:09', NULL, 0),
-(29, 'Humberto Moran', 'humberto.moran@gmail.com', '(054) 1 11 1111-1111', '(054) 2 22 2222-2222', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 0, '2018-01-31 20:35:07', NULL, 0),
+(29, 'Humberto Moran', 'humberto.moran@gmail.com', '(054) 1 11 1111-1111', '(054) 2 22 2222-2222', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, 1, '2018-01-31 20:35:07', NULL, 0),
 (30, 'developer 1', 'developer1@gmail.com', '(054) 9 12 3213-2323', '(054) 9 11 2231-2321', NULL, '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 1, 1, '2018-02-11 15:50:25', NULL, 0);
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `tb_addres`
---
-ALTER TABLE `tb_addres`
-  ADD PRIMARY KEY (`idAdress`);
-
---
--- Indices de la tabla `tb_attendant`
---
-ALTER TABLE `tb_attendant`
-  ADD PRIMARY KEY (`idAttendant`) USING BTREE,
-  ADD KEY `idTyepeAttendantKf` (`idTyepeAttendantKf`);
-
---
--- Indices de la tabla `tb_branch`
---
-ALTER TABLE `tb_branch`
-  ADD PRIMARY KEY (`idBranch`);
-
---
--- Indices de la tabla `tb_clients_tickets`
---
-ALTER TABLE `tb_clients_tickets`
-  ADD PRIMARY KEY (`idTicketsCliets`);
-
---
--- Indices de la tabla `tb_company`
---
-ALTER TABLE `tb_company`
-  ADD PRIMARY KEY (`idCompany`);
-
---
--- Indices de la tabla `tb_department`
---
-ALTER TABLE `tb_department`
-  ADD PRIMARY KEY (`idDepartment`);
-
---
--- Indices de la tabla `tb_opcion_low`
---
-ALTER TABLE `tb_opcion_low`
-  ADD PRIMARY KEY (`idOpcionLowTicket`);
-
---
--- Indices de la tabla `tb_profile`
---
-ALTER TABLE `tb_profile`
-  ADD PRIMARY KEY (`idProfile`);
-
---
--- Indices de la tabla `tb_reason_disabled_item`
---
-ALTER TABLE `tb_reason_disabled_item`
-  ADD PRIMARY KEY (`idReasonDisabledItem`);
-
---
--- Indices de la tabla `tb_request`
---
-ALTER TABLE `tb_request`
-  ADD PRIMARY KEY (`idRequest`);
-
---
--- Indices de la tabla `tb_status`
---
-ALTER TABLE `tb_status`
-  ADD PRIMARY KEY (`idStatusTenant`);
-
---
--- Indices de la tabla `tb_statusticket`
---
-ALTER TABLE `tb_statusticket`
-  ADD PRIMARY KEY (`idStatus`);
-
---
--- Indices de la tabla `tb_sys_param`
---
-ALTER TABLE `tb_sys_param`
-  ADD PRIMARY KEY (`idParam`);
-
---
--- Indices de la tabla `tb_tenant`
---
-ALTER TABLE `tb_tenant`
-  ADD PRIMARY KEY (`idTenant`);
-
---
--- Indices de la tabla `tb_tickets`
---
-ALTER TABLE `tb_tickets`
-  ADD PRIMARY KEY (`idTicket`);
-
---
--- Indices de la tabla `tb_typetenant`
---
-ALTER TABLE `tb_typetenant`
-  ADD PRIMARY KEY (`idTypeTenant`);
-
---
--- Indices de la tabla `tb_typeticket`
---
-ALTER TABLE `tb_typeticket`
-  ADD PRIMARY KEY (`idTypeTicket`);
-
---
--- Indices de la tabla `tb_type_attendant`
---
-ALTER TABLE `tb_type_attendant`
-  ADD PRIMARY KEY (`idTyepeAttendant`);
-
---
--- Indices de la tabla `tb_type_outher`
---
-ALTER TABLE `tb_type_outher`
-  ADD PRIMARY KEY (`idTypeOuther`);
-
---
--- Indices de la tabla `tb_type_services`
---
-ALTER TABLE `tb_type_services`
-  ADD PRIMARY KEY (`idTypeServices`);
-
---
--- Indices de la tabla `tb_user`
---
-ALTER TABLE `tb_user`
-  ADD PRIMARY KEY (`idUser`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `tb_addres`
---
-ALTER TABLE `tb_addres`
-  MODIFY `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `tb_attendant`
---
-ALTER TABLE `tb_attendant`
-  MODIFY `idAttendant` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT de la tabla `tb_branch`
---
-ALTER TABLE `tb_branch`
-  MODIFY `idBranch` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `tb_clients_tickets`
---
-ALTER TABLE `tb_clients_tickets`
-  MODIFY `idTicketsCliets` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT de la tabla `tb_company`
---
-ALTER TABLE `tb_company`
-  MODIFY `idCompany` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `tb_department`
---
-ALTER TABLE `tb_department`
-  MODIFY `idDepartment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT de la tabla `tb_opcion_low`
---
-ALTER TABLE `tb_opcion_low`
-  MODIFY `idOpcionLowTicket` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `tb_reason_disabled_item`
---
-ALTER TABLE `tb_reason_disabled_item`
-  MODIFY `idReasonDisabledItem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `tb_sys_param`
---
-ALTER TABLE `tb_sys_param`
-  MODIFY `idParam` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT de la tabla `tb_tenant`
---
-ALTER TABLE `tb_tenant`
-  MODIFY `idTenant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
-
---
--- AUTO_INCREMENT de la tabla `tb_tickets`
---
-ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `tb_typeticket`
---
-ALTER TABLE `tb_typeticket`
-  MODIFY `idTypeTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `tb_type_attendant`
---
-ALTER TABLE `tb_type_attendant`
-  MODIFY `idTyepeAttendant` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de la tabla `tb_type_services`
---
-ALTER TABLE `tb_type_services`
-  MODIFY `idTypeServices` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tb_user`
---
-ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

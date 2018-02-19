@@ -351,11 +351,17 @@
 								    <div class="col-md-4 selectContainer">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon icon-ban-circle"></i></span>
-											    <select name="idTypeLostKf" class="form-control" ng-change="getSelectedData()" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="select.idTypeLostKf" required autofocus >
+											    <select name="idTypeLostKf" class="form-control" ng-options="item.idReasonDisabledItem as item.reasonDisabledItem for item in listTypeLost" ng-model="select.idTypeLostKf" required autofocus >
 										    	</select>
 									  	</div>
 									</div>
 								</div>
+								<div style="margin-bottom: 10px;">
+				                  	<div style="text-align: center; width: 600px; margin: 0 auto;" ng-if="select.idTypeLostKf == 1" class="alert alert-danger" role="alert">
+				                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            						<strong>EN CASO DE NECESITAR UNA BAJA URGENTE POR BOBO <br>RECUERDE REALIZAR SU PEDIDO AL SISTEMA DE URGENCIAS.<br>LLAMANDO AL 5031-1207 </strong><br> <h5>LAS BAJAS SOLICITADAS POR SISTEMA SE REALIZARAN DENTRO DE LAS 48 HS HABILES</h5>
+	      							</div>
+	      						</div>
 								<!-- Form Special Request sru= Special Request Up -->
 								<div  class="form-group">
 								  <label class="col-md-4 control-label">Observaciones Adicionales</label> 

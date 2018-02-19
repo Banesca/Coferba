@@ -7,8 +7,8 @@ $(window).on('load', function() { // makes sure the whole site is loaded  #14162
 })
 /*JQUERY SHOW/HIDE FUNCTIONS */
 $(document).ready(function() {
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover('options');
+    $('body').tooltip({ selector: '[data-toggle="tooltip"]' });
+    $('body').popover({ selector: '[data-toggle="popover"]' });
 
   $('.input--tel').mask('(054) 9 99 9999-9999');
   
