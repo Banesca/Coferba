@@ -1,0 +1,181 @@
+
+.main_content{
+  width: 350px;
+  height: 700px;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex; 
+}
+.backbox {
+  background: rgba(108, 117, 125, .5);
+  width: 94%;
+  height: 100%;
+  position: absolute;
+  transform: translate(0, -50%);
+  top: 50%;
+  display: inline-flex;
+  margin-left: 3.2%;
+}
+
+.frontbox {
+  background-color: white;
+  height: 50%;
+  top: 4%;
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  transition: all .9s ease-in-out;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, .5);
+}
+
+.moving {
+  top: 46%;
+}
+
+.loginMsg,
+.signupMsg {
+  width: 100%;
+  height: 50%;
+  font-size: 15px;
+}
+
+.loginMsg .title,
+.signupMsg .title {
+  font-weight: 300;
+  width: 100%;
+  font-size: 23px;
+}
+
+.loginMsg p,
+.signupMsg p {
+  font-weight: 100;
+}
+
+.textcontent1 {
+  color: white;
+  margin-top: 55px;
+  width: 100%;
+  margin-left: 10%;
+}
+.textcontent2 {
+  color: white;
+  margin-top: 85px;
+  width: 100%;
+  margin-left: 10%;
+}
+
+
+/* front box content*/
+
+.login,
+.signup {
+  padding: 20px;
+  text-align: center;
+}
+
+.login h2,
+.signup h2 {
+  color: #35B729;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.inputbox {
+  margin-top: 30px;
+}
+
+
+
+/* Fade In & Out*/
+
+
+.textcontent1,
+.textcontent2 {
+  /*opacity: 1;*/
+ transition: opacity .9s ease-in-out;
+}
+
+.visibility {
+  opacity: 0;
+}
+
+.forgotpwd {
+  margin: 0px;
+  cursor: pointer;
+  color: rgba(20, 22, 43, .4);
+  font-size: 15px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.forgotpwd:hover, .forgotpwd:focus, .forgotpwd:active  {
+  font-weight: bold;
+  text-decoration: none;
+  color: rgba(20, 22, 43, 1);
+}
+
+.spacing {
+  padding-bottom: 60px;
+}
+
+.hide {
+  display: none;
+}
+/* enable absolute positioning */
+.glyphicon-share-alt{
+    webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+ }
+ .forgotPwdForm{
+    padding-top: 200px;
+ }
+.btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.btn-labeled {padding-top: 0;padding-bottom: 0;}
+.input-group { margin-bottom:10px; }
+.separator { border-right: 1px solid #dfdfe0; }
+
+.registerForm {
+    padding-top: 120px;
+
+}
+.newPwdForm {
+    padding-top: 120px;
+
+}
+
+.alert{cursor: pointer;}
+.hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px; }
+.alert .glyphicon { display: block; font-size: 76px; line-height: 76px; color: #229922; margin-bottom: 15px; text-align: center; }
+
+.hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
+.hero-widget label { font-size: 12px; }
+.hero-widget .options { margin-top: 10px; }
+.successRegister{
+  padding-top: 200px;
+}
+
+.btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.btn-labeled {padding-top: 0;padding-bottom: 0;}
+.separator { border-right: 1px solid #dfdfe0; }
+
+@media (max-width: 767px) {
+  .registerForm, .newPwdForm{
+    padding-top: 0;
+
+  }
+  .newPwdForm{
+    padding-top: 45px;
+
+  }
+  .main_content{
+  }
+  .frontbox{
+     margin-right: 0;
+  }
+
+}

@@ -1,0 +1,17 @@
+body{
+  background: url(http://coferba.com.ar/site/images/slideshow-4.jpg) no-repeat 0px center fixed;
+  font-family: 'sans-serif', sans-serif;
+  
+}
+
+.panel {
+
+    border: 0px solid transparent;
+    border-radius: 0px;
+
+}
+.panel-heading {
+
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px; 
+}

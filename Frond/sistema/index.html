@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="coferbaApp" lang="es">
+<head>
+<title>Sistema Coferba</title>
+<meta content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0" name="viewport">
+<!-- Default Style Sheets -->
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" afrres="true" href="lib/bootstrap/css/default/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" afrres="true" href="lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" afrres="true" href="lib/fa-min/css/fa.min.css">
+<link rel="stylesheet" type="text/css" afrres="true" href="lib/angular/angular-block-ui/css/angular-block-ui.css">
+<link rel="stylesheet" type="text/css" afrres="true" href="lib/angular/angular-inform/css/angular-inform.min.css">
+
+<!-- Default Style Sheets -->
+
+<!-- User Style Sheets -->
+<link href="css/style-init.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/form-controls.css" type="text/css" rel="stylesheet" media="all">
+<!-- User Style Sheets -->
+<link rel="shortcut icon" href="favicon.ico">
+</head>
+<body ng-controller="MainCtrl">
+	<div ng-view></div>
+<!-- Response Inform Meessage plugin -->
+<div inform class="inform-fixed inform-shadow inform-animate"></div>
+<!--JQUERY MODULES -->
+<script type="text/javascript" language="javascript" src="lib/jquery/jquery-lib/default/js/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="lib/bootstrap/js/default/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="lib/jquery/inputMask/js/inputMask.js"></script>
+
+<!--//JQUERY MODULES -->
+<!--ANGULAR MODULES -->
+<script src="lib/angular/angularjs/default/js/angular.js"></script>
+<script src="lib/angular/angular-route/js/angular-route.min.js"></script>
+<script src="lib/angular/underscore/js/underscore-min.js"></script>
+<script src="lib/angular/angular-block-ui/js/angular-block-ui.js"></script>
+<script src="lib/angular/angular-inform/js/angular-inform.min.js"></script>
+<script src="lib/angular/angular-showdown/js/angular-showdown.js"></script>
+<script src="lib/angular/angular-animate/js/angular-animate.min.js"></script>
+<script src="lib/angular/ui-bootstrap/js/ui-bootstrap.js"></script>
+
+<!-- AngularCSS library (from CDN) -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.8/angular-css.js"></script>
+
+<!--JQUERY FUNCTIONS -->
+<script src="lib/jquery/loginjs/coferbaJsLogin.js"></script>  <!-- Coferba Jquery Login Functions -->
+
+<!--ANGULAR APP -->
+<script src="coferbaApp.js"></script> <!-- Coferba Angular App -->
+
+<!--ANGULAR CONTROLLERS -->
+<script src="controllers/coferbaCtrlLogin.js"></script> <!--  Coferba Angular Login Functions -->
+<script src="controllers/coferbaCtrlRegister.js"></script> <!--  Coferba Angular Register Functions -->
+<script src="controllers/coferbaCtrlforgotPwd.js"></script> <!--  Coferba Angular ForgotPwd Functions -->
+<script src="controllers/coferbaCtrlNewPwd.js"></script> <!--  Coferba Angular New Password -->
+<script src="controllers/coferbaCtrlTenant.js"></script> <!--  Coferba Angular Tenant  -->
+<script src="common/services/coferbaServices.js"></script>
+</body>
+</html>
+
