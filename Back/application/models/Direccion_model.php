@@ -62,7 +62,7 @@ class Direccion_model extends CI_Model
             }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 
                 $this->db->where("tb_department.isAprobatedAdmin =", 0);
             }
-        $quuery =   $this->db->where("tb_department.idTenantKf =", $id)->get();
+        $quuery =   $this->db->where("tb_department.idUserKf =", $id)->get();
         
 
         if ($quuery->num_rows() > 0) {

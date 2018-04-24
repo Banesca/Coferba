@@ -106,7 +106,7 @@ class Department_model extends CI_Model
             }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 
                 $this->db->where("tb_department.isAprobatedAdmin =", 0);
             }
-            $this->db->where("tb_department.idTenantKf =", $idT);
+            $this->db->where("tb_department.idUserKf =", $idT);
             $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
             
             if ($quuery->num_rows() > 0) {
@@ -125,7 +125,7 @@ class Department_model extends CI_Model
         
             $this->db->select("*")->from("tb_department");
             $this->db->where("tb_department.idDepartment =", $id);
-            $quuery =  $this->db->where("tb_department.idTenantKf >", 0)->get();
+            $quuery =  $this->db->where("tb_department.idUserKf >", 0)->get();
 
             if ($quuery->num_rows() > 0) {
                 return true;
@@ -217,7 +217,7 @@ class Department_model extends CI_Model
 
         $this->db->set(
                 array(
-                    'idTenantKf'=>$department['idTenantKf'],
+                    'idUserKf'=>$department['idUserKf'],
                     'idDepartment'=>$department['idDepartment']
                 )
         )->where("idDepartment", $department['idDepartment'])->update("tb_department");
@@ -239,11 +239,11 @@ class Department_model extends CI_Model
         {
             $this->db->set(
                 array(
-                    'idTenantKf' => 0,
+                    'idUserKf' => 0,
                     'isAprobatedAdmin' => 0
                 )
             )
-            ->where("idTenantKf", $data['idTenant'])
+            ->where("idUserKf", $data['idUser'])
             ->where("idDepartment", $data['idDepartmentKf'])
             ->update("tb_department");
 
@@ -251,10 +251,10 @@ class Department_model extends CI_Model
             if ($this->db->affected_rows() === 1) {
 
                  /*MAIL*/
-                $this->db->select("*")->from("tb_tenant");
-                $this->db->join('tb_department', 'tb_department.idTenantKf = tb_tenant.idTenant', 'left');
+                $this->db->select("*")->from("tb_user");
+                $this->db->join('tb_department', 'tb_department.idUserKf = tb_user.idUser', 'left');
                 $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
-                $this->db->where("idTenant =", $data['idTenant']);
+                $this->db->where("idUserKf =", $data['idUser']);
                 $query =   $this->db->where("idDepartment", $data['idDepartmentKf'])->get();
                 if ($query->num_rows() > 0) {
                     $to = $query->row_array();
@@ -277,18 +277,18 @@ class Department_model extends CI_Model
                         'idDepartmentKf' => 0
                     )
                 )
-                ->where("idTenant", $data['idTenant'])
+                ->where("idUserKf", $data['idUser'])
                 ->where("idDepartmentKf", $data['idDepartmentKf'])
-                ->update("tb_tenant");
+                ->update("tb_user");
 
                 
                 if ($this->db->affected_rows() === 1) {
 
                      /*MAIL*/
-                    $this->db->select("*")->from("tb_tenant");
-                    $this->db->join('tb_department', 'tb_department.idDepartment = tb_tenant.idDepartmentKf', 'left');
+                    $this->db->select("*")->from("tb_user");
+                    $this->db->join('tb_department', 'tb_department.idDepartment = tb_user.idDepartmentKf', 'left');
                     $this->db->join('tb_addres', 'tb_addres.idAdress = tb_department.idAdressKf', 'left');
-                    $this->db->where("idTenant =", $data['idTenant']);
+                    $this->db->where("idUser =", $data['idUser']);
                     $query =   $this->db->where("idDepartment", $data['idDepartmentKf'])->get();
                     if ($query->num_rows() > 0) {
                         $to = $query->row_array();

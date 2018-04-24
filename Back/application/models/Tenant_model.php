@@ -18,11 +18,11 @@ class Tenant_model extends CI_Model
         if (!is_null($id)) 
         {
 
-            $this->db->select("*")->from("tb_tenant");
-            $this->db->join('tb_department', 'tb_department.idDepartment = tb_tenant.idDepartmentKf', 'left');
-            $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_tenant.idTypeKf', 'left');
-			$this->db->where("tb_tenant.idStatusKf !=", -1);
-            $quuery = $this->db->where("tb_tenant.idTenant = ", $id)->get();
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_department', 'tb_department.idDepartment = tb_user.idDepartmentKf', 'left');
+            $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTyepeAttendantKf', 'left');
+			$this->db->where("tb_user.idStatusKf !=", -1);
+            $quuery = $this->db->where("tb_user.idUser = ", $id)->get();
 
 
             if ($quuery->num_rows() === 1) {
@@ -33,10 +33,10 @@ class Tenant_model extends CI_Model
         else
          { 
 
-            $this->db->select("*")->from("tb_tenant");
-            $this->db->join('tb_department', 'tb_department.idDepartment = tb_tenant.idDepartmentKf', 'left');
-            $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_tenant.idTypeKf', 'left');
-			$this->db->where("tb_tenant.idStatusKf !=", -1);
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_department', 'tb_department.idDepartment = tb_user.idDepartmentKf', 'left');
+            $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTyepeAttendantKf', 'left');
+			$this->db->where("tb_user.idStatusKf !=", -1);
 
             // Si recibimos id de administrador de cnosorcio  //
             if (@$searchFilter['idAdminR'] > 0) {
@@ -44,23 +44,23 @@ class Tenant_model extends CI_Model
                 SELECT  idDepartment  FROM tb_department WHERE idUserAdminRKf = '.$searchFilter['idAdminR'].' )',NULL, FALSE);
             } 
 
-            if(@$searchFilter['idTypeKf'] > 0)
+            if(@$searchFilter['idTypeTenantKf'] > 0)
             {
-                 $this->db->where('tb_tenant.idTypeKf', $searchFilter['idTypeKf']);
+                 $this->db->where('tb_user.idTyepeAttendantKf', $searchFilter['idTypeTenantKf']);
             } 
 
             /* Busqueda por filtro */
             if (!is_null(@$searchFilter['searchFilter']) && @$searchFilter['searchFilter'] != "") 
             {
-            	$this->db->like('tb_tenant.fullNameTenant', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_tenant.phoneNumberTenant', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_tenant.emailTenant', $searchFilter['searchFilter']);
+            	$this->db->like('tb_user.fullNameUser', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
+                $this->db->or_like('tb_user.emailTenant', $searchFilter['searchFilter']);
 
 				
 				
 				if(@$searchFilter['idDepartmentKf'] > 0)
 				{
-					 $this->db->or_where('tb_tenant.idDepartmentKf', $searchFilter['idDepartmentKf']);
+					 $this->db->or_where('tb_user.idDepartmentKf', $searchFilter['idDepartmentKf']);
                 }
                 
                 
@@ -74,7 +74,7 @@ class Tenant_model extends CI_Model
                 $this->db->limit($searchFilter['topFilter']);
             } 
 
-            $quuery = $this->db->order_by("tb_tenant.idTenant", "DESC")->get();
+            $quuery = $this->db->order_by("tb_user.idUser", "DESC")->get();
 
 
             if ($quuery->num_rows() > 0) {
@@ -90,13 +90,13 @@ class Tenant_model extends CI_Model
     public function add($tenant) {
 
         /* CREAMOS UN USUARIO PARA ESE CLIENE */
-        $this->db->insert('tb_tenant', array(
-            'fullNameTenant' => $tenant['fullNameTenant'],
-            'idTypeKf' => $tenant['idTypeKf'],
-            'phoneNumberTenant' => $tenant['phoneNumberTenant'],
+        $this->db->insert('tb_user', array(
+            'fullNameUser' => $tenant['fullNameUser'],
+            'idTypeTenantKf' => $tenant['idTypeTenantKf'],
+            'phoneNumberUser' => $tenant['phoneNumberUser'],
             'idDepartmentKf' => $tenant['idDepartmentKf'],
             'emailTenant' => $tenant['emailTenant'],
-            'phoneNumberContactTenant' => $tenant['phoneNumberContactTenant'],
+            'phoneLocalNumberUser' => $tenant['phoneLocalNumberUser'],
             'idStatusKf' => 1
                 )
         );
@@ -146,14 +146,14 @@ class Tenant_model extends CI_Model
                
         
                 if (@$idType > 0){
-                    $this->db->select("*")->from("tb_tenant");
+                    $this->db->select("*")->from("tb_user");
                     
                     if (@$id > 0){
-                        $this->db->where("tb_tenant.idTypeKf =", $idType);
-                        $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
+                        $this->db->where("tb_user.idTyepeAttendantKf =", $idType);
+                        $query = $this->db->where("tb_user.idDepartmentKf =", $id)->get();
                         
                     }else{
-                        $query = $this->db->where("tb_tenant.idTypeKf =", $idType)->get();
+                        $query = $this->db->where("tb_user.idTyepeAttendantKf =", $idType)->get();
                     }
                    
                  }
@@ -161,11 +161,11 @@ class Tenant_model extends CI_Model
                  if (@$idType < 1){
                     
                     if (@$id > 0){
-                        $this->db->select("*")->from("tb_tenant");
-                        $query = $this->db->where("tb_tenant.idDepartmentKf =", $id)->get();
+                        $this->db->select("*")->from("tb_user");
+                        $query = $this->db->where("tb_user.idDepartmentKf =", $id)->get();
                         
                     }else{
-                        $query =  $this->db->select("*")->from("tb_tenant")->get();
+                        $query =  $this->db->select("*")->from("tb_user")->get();
                         
                     }
                  }
@@ -193,10 +193,10 @@ class Tenant_model extends CI_Model
                 $extrawheresubquery = "";
 
                 if($id > 0){
-                    $extrawhere = " where  t1.idDepartmentKf = ".$id."  or idTenant in (select idTenantKf from  tb_department where idDepartment = ".$id." ) ";
+                    $extrawhere = " where  t1.idDepartmentKf = ".$id."  or idUser in (select idUserKf from  tb_department where idDepartment = ".$id." ) ";
                 }
                 
-                $query = $query = $this->db->query(" select * from tb_tenant t1 ".$extrawhere);
+                $query = $query = $this->db->query(" select * from tb_user t1 ".$extrawhere);
 
 
     
@@ -217,8 +217,8 @@ class Tenant_model extends CI_Model
         
                 $tenant = null;
         
-                $this->db->select("*")->from("tb_tenant");
-                $query = $this->db->where("tb_tenant.emailTenant =", $mail)->get();
+                $this->db->select("*")->from("tb_user");
+                $query = $this->db->where("tb_user.emailTenant =", $mail)->get();
                 if ($query->num_rows() > 0) {
                     $tenant = $query->row_array();
                 }
@@ -255,14 +255,14 @@ class Tenant_model extends CI_Model
 
         $this->db->set(
                 array(
-                    'fullNameTenant' => $tenant['fullNameTenant'],
-		            'idTypeKf' => $tenant['idTypeKf'],
-		            'phoneNumberTenant' => $tenant['phoneNumberTenant'],
+                    'fullNameUser' => $tenant['fullNameUser'],
+		            'idTypeTenantKf' => $tenant['idTypeTenantKf'],
+		            'phoneNumberUser' => $tenant['phoneNumberUser'],
 		            'idDepartmentKf' => $tenant['idDepartmentKf'],
 		            'emailTenant' => $tenant['emailTenant'],
-                    'phoneNumberContactTenant' => $tenant['phoneNumberContactTenant']
+                    'phoneLocalNumberUser' => $tenant['phoneLocalNumberUser']
                 )
-        )->where("idTenant", $tenant['idTenant'])->update("tb_tenant");
+        )->where("idUser", $tenant['idUser'])->update("tb_user");
 
         
         if ($this->db->affected_rows() === 1) {
@@ -278,7 +278,7 @@ class Tenant_model extends CI_Model
                 array(
                     'idStatusKf' => $idStatus
                 )
-        )->where("idTenant", $id)->update("tb_tenant");
+        )->where("idUser", $id)->update("tb_user");
 
 
         if ($this->db->affected_rows() === 1) {

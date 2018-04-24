@@ -20,7 +20,7 @@ class User_model extends CI_Model
 		/* verificamos el usuario  */
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
-        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.addresUser', 'left');
+        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
         $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
         $this->db->where("passwordUser =",sha1(md5($user['passwordUser'])));
         $this->db->where("emailUser =",$user['fullNameUser']);
@@ -48,8 +48,7 @@ class User_model extends CI_Model
         if (!is_null($id)) 
         {
 
-            $this->db->select("*,(SELECT COUNT(*)as tk_complit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 1) as tk_complit,
-            (SELECT COUNT(*)as tk_incomplit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 2)as tk_incomplit")->from("tb_user");
+            $this->db->select("*")->from("tb_user");
             $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
             $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
@@ -64,8 +63,7 @@ class User_model extends CI_Model
         else
          { 
 
-            $this->db->select("*,(SELECT COUNT(*)as tk_complit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 1) as tk_complit,
-            (SELECT COUNT(*)as tk_incomplit from tb_tickets  where idTenantKf = tb_user.idUser and idStatusTicketKf= 2)as tk_incomplit")->from("tb_user");
+            $this->db->select("*")->from("tb_user");
             $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
             $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
@@ -78,7 +76,6 @@ class User_model extends CI_Model
                      $this->db->or_like('tb_user.emailUser', $searchFilter['searchFilter']);
                      $this->db->or_like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
                      $this->db->or_like('tb_user.phoneLocalNumberUser', $searchFilter['searchFilter']);
-                     $this->db->or_like('tb_user.rezonSocial', $searchFilter['searchFilter']);
                  }
 
 
@@ -99,7 +96,7 @@ class User_model extends CI_Model
 
 
 
-    /* AGRAGR NUEVO USUARIO EMPRESA */
+    /* AGRAGR NUEVO USUARIO DE CUALQUIER TIPO */
     public function add($user) {
 
         /* CREAMOS UN USUARIO */
@@ -108,11 +105,16 @@ class User_model extends CI_Model
             'emailUser' => $user['emailUser'],
             'phoneNumberUser' => $user['phoneNumberUser'],
             'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
-            'addresUser' => $user['addresUser'],
+            'idAddresKf' => $user['idAddresKf'],
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
             'idStatusKf' => 0,
             'idCompanyKf' => $user['idCompanyKf'],
+            'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
+            'descOther' => @$user['descOther'],
+            'idDepartmentKf' => @$user['idDepartmentKf'],
+            'isEdit' => @$user['isEdit'],
+            'requireAuthentication' => @$user['requireAuthentication'],
             'resetPasword' => 1
                 )
         );
@@ -126,30 +128,7 @@ class User_model extends CI_Model
     }
 
 
-    /* AGREGAR NUEVO ENCARGADO DE EDIFICIO */
-    public function addAttendant($user) {
-        
-                /* CREAMOS UN USUARIO */
-                $this->db->insert('tb_attendant', array(
-                    'nameAttendant' => $user['nameAttendant'],
-                    'idAddresKf' => $user['idAddresKf'],
-                    'phoneAttendant' => $user['phoneAttendant'],
-                    'phoneLocalAttendant' => $user['phoneLocalAttendant'],
-                    'mailAttendant' => $user['mailAttendant'],
-                    'hoursWork' => $user['hoursWork'],
-                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf'],
-                    'descOther'=> $user['descOther']
-
-                        )
-                );
-        
-                if ($this->db->affected_rows() === 1) {
-                    $idUser = $this->db->insert_id();
-                    return $idUser;
-                } else {
-                    return null;
-                }
-            }
+  
 
 
     /* EDITAR DATOS DE UN ENCARGADO */
@@ -157,36 +136,52 @@ class User_model extends CI_Model
 
         $this->db->set(
                 array(
-                    'nameAttendant' => $user['nameAttendant'],
+                    'fullNameUser' => $user['fullNameUser'],
+                    'emailUser' => $user['emailUser'],
+                    'phoneNumberUser' => $user['phoneNumberUser'],
+                    'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
                     'idAddresKf' => $user['idAddresKf'],
-                    'phoneAttendant' => $user['phoneAttendant'],
-                    'phoneLocalAttendant' => $user['phoneLocalAttendant'],
-                    'mailAttendant' => $user['mailAttendant'],
-                    'hoursWork' => $user['hoursWork'],
-                    'idTyepeAttendantKf' => $user['idTyepeAttendantKf'],
-                    'descOther'=> $user['descOther']
+                    'idProfileKf' => $user['idProfileKf'],
+                    'idCompanyKf' => $user['idCompanyKf'],
+                    'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
+                    'descOther' => @$user['descOther'],
+                    'idDepartmentKf' => @$user['idDepartmentKf'],
+                    'requireAuthentication' => @$user['requireAuthentication']
                 )
-        )->where("idAttendant", $user['idAttendant'])->update("tb_attendant");
+        )->where("idUser", $user['idUser'])->update("tb_user");
 
         
         if ($this->db->affected_rows() === 1) {
+
+            if (@$user['isEditUser']) {
+
+                $this->db->set(
+                        array(
+                            'passwordUser' => sha1(md5($user['passwordUser'])),
+                            'resetPasword' => 0
+                        )
+                )->where("idUser", $user['idUser'])->update("tb_user");
+            }
+
             return true;
         } else {
             return false;
         }
     }
-    /*BUSCAR ENCARGADO POR EL EMAIL*/
+
+
+    /*BUSCAR USUARIO POR EL EMAIL*/
     public function findAttByEmail($mail) {
     
-            $attendant = null;
+            $user = null;
     
-            $this->db->select("*")->from("tb_attendant");
-            $query = $this->db->where("tb_attendant.mailAttendant =", $mail)->get();
+            $this->db->select("*")->from("tb_user");
+            $query = $this->db->where("tb_user.emailUser =", $mail)->get();
             if ($query->num_rows() > 0) {
-                $attendant = $query->row_array();
+                $user = $query->row_array();
             }
 
-            return $attendant;
+            return $user;
     }
 
         
@@ -286,36 +281,7 @@ class User_model extends CI_Model
                 return $param;
             }
 
-    /* EDITAR DATOS DE UN EMPRESA */
-    public function update($user) {
-
-        $this->db->set(
-                array(
-                    'fullNameUser' => $user['fullNameUser'],
-                    'emailUser' => $user['emailUser'],
-                    'phoneNumberUser' => $user['phoneNumberUser'],
-                    'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
-                    'idProfileKf'=> $user['idProfileKf']
-                )
-        )->where("idUser", $user['idUser'])->update("tb_user");
-
-
-        if (@$user['isEditUser']) {
-
-            $this->db->set(
-                    array(
-                        'passwordUser' => sha1(md5($user['passwordUser'])),
-                        'resetPasword' => 0
-                    )
-            )->where("idUser", $user['idUser'])->update("tb_user");
-        }
-        
-        if ($this->db->affected_rows() === 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+   
 
 
      /* EDITAR CLAVES  */
@@ -421,13 +387,13 @@ public function updateMailSmtp($mail) {
 
 
 
-    /* ESTATUS DE UN ENCARGADO */
-    public function changueStatusAntendant($id, $idStatus) {
+    /* ESTATUS DE UN USUARIO */
+    public function changueStatusUser($id, $idStatus) {
         $this->db->set(
                 array(
                     'idStatusKf' => $idStatus
                 )
-        )->where("idAttendant", $id)->update("tb_attendant");
+        )->where("idUser", $id)->update("tb_user");
 
         if ($this->db->affected_rows() === 1) {
             return true;
@@ -444,10 +410,12 @@ public function updateMailSmtp($mail) {
         $rs = null;
 
         
-            $this->db->select("*")->from("tb_attendant");
-            $this->db->where("tb_attendant.idAddresKf =", $id);
+            $this->db->select("*")->from("tb_user");
+            $this->db->where("tb_user.idAddresKf =", $id);
+            $this->db->where("tb_user.idProfileKf =", 6);
 
-            $quuery = $this->db->order_by("tb_attendant.nameAttendant", "asc")->get();
+
+            $quuery = $this->db->order_by("tb_user.fullNameUser", "asc")->get();
 
 
             if ($quuery->num_rows() > 0) {
