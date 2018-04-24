@@ -1,0 +1,76 @@
+<!-- NEW PASWD FORM -->
+<div class="container" ng-if="!sysToken" ng-controller="NewPwdCtrl">
+	<div ng-if="!redirectSuccessfull">
+		<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+			<div class="newPwdForm">
+			  	<div class="panel panel-default panel-primary">
+			      	<div class="panel-heading">
+			      		<a href="#/login" class="close"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></a>
+			        	<h3 class="modal-title">Nueva Clave</h3>
+			    	</div>
+					<div class="panel-body">
+							<!-- FORM CONTAINER-->
+							<form name="frmNewPwd" class="form-horizontal" autocomplete="off" role="form" novalidate>
+								<div class="form-group" ng-class="{'has-error': frmNewPwd.currentpwd.$dirty && frmNewPwd.currentpwd.$invalid}">
+									<div class="col-md-12">
+										<div class="inner-addon right-addon">
+						  					<input type="password" required class="form-input" name="currentpwd" ng-model="newpwd.currentpwd">
+											<label>Clave Actual</label>
+						  					<i class="glyphicon glyphicon-lock"></i>
+						  					<span class="bar"></span>
+						  				</div>
+						  			</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': frmNewPwd.pwd1.$dirty && frmNewPwd.pwd1.$invalid}">
+									<div class="col-md-12">
+										<div class="inner-addon right-addon">
+						  					<input type="password" required class="form-input" name="pwd1" ng-model="newpwd.pwd1">
+						  					<label>Nueva clave</label>
+						  					<i class="glyphicon glyphicon-lock"></i>
+						  					<span class="bar"></span>
+						  				</div>
+						  			</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': frmNewPwd.pwd2.$dirty && frmNewPwd.pwd2.$invalid}">
+									<div class="col-md-12">
+										<div class="inner-addon right-addon">
+						  					<input type="password" required class="form-input" name="pwd2" ng-model="newpwd.pwd2">
+					  					 	<label>Confirme nueva clave</label>
+						  					<i class="glyphicon glyphicon-lock"></i>
+						  					<span class="bar"></span>
+						  				</div>
+						  			</div>
+								</div>
+			            	</form>
+						</div>
+			            <div class="panel-footer">
+			                <div class="row">
+			                    <div class="col-xs-12 col-sm-12 col-md-6">
+			                        <button type="submit" ng-click="sysPwdRequest()" ng-disabled="frmNewPwd.$invalid" class="btn btn-labeled btn-success">
+			                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i></span>Enviar</button>
+			                        <a href="#/login" type="button" class="btn btn-labeled btn-danger">
+			                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancel</a>
+			                    </div>
+			                </div>
+			            </div>
+
+		        </div>
+			</div>
+		</div>
+	</div>
+	<div ng-if="redirectSuccessfull" class="verticalAllign">
+		<div class="col-md-12">
+			<div class="hero-widget alert well-sm alert-success">
+				<div class="icon">
+	 				<i class="glyphicon glyphicon-ok"></i>
+				</div>
+				<div class="text">
+	    			<h2 class="text-success">Clave restablecida satisfactoriamente</h2>
+				</div>
+				<div class="options">
+	    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

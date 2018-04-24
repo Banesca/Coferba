@@ -1,0 +1,76 @@
+<div ng-controller="LoginCtrl" ng-if="!sysToken"  class="main_content">
+   <div class="backbox">
+      <div>
+      	<div class="loginMsg">
+        	<div class="textcontent1">
+		        <p class="title">Tenes cuenta de usuario?</p>
+		        <p>Ingresa con tu correo y clave.</p>
+		        <button ng-click="fnLoginToggle(2);"><i class="glyphicon glyphicon-log-in"></i> LOGIN</button>
+		    </div>
+        </div>
+        <div class="signupMsg">
+        	<div class="textcontent2">
+          		<p class="title">No estás registrado?</p>
+          		<p>Solo Clientes Autorizados</p>
+          		<button ng-click="fnLoginToggle(1);"><i class="glyphicon glyphicon-log-in"></i> REGISTRO</button>
+          	</div>
+        </div>
+      </div>
+    </div>
+    <!-- backbox -->
+
+    <div class="frontbox">
+	    <div  ng-show="loginUser && !forgotPass" class="login"><!-- USER LOGIN FORM -->
+	        <h2>COFERBA</h2>
+	        <h5>Usuarios Registrados</h5>
+	        <form name="frmLogin" id="frmLogin" ng-submit="validateUserLogin();">
+		        <div class="form-group">
+		        	<div class="inner-addon right-addon">
+		          		<input type="email" ng-model="login.email" class="form-input" name="email" autofocus required>
+		          		<label>Email</label>
+		          		<i class="glyphicon glyphicon-envelope"></i>
+		          		<span class="bar"></span>
+		          	</div>
+			    </div>
+			    <div class="form-group">
+		        	<div class="inner-addon right-addon">
+			          	<input type="password" ng-model="login.passwd" class="form-input" name="password" autofocus required>
+			          	<label>Password</label>
+		          		<i class="glyphicon glyphicon-lock"></i>
+		          		<span class="bar"></span>
+			        </div>
+		        </div>
+		        	<p id="forgotpwd" class="forgotpwd"><a href="#/forgotpwd">No recuerdo mi contraseña!</a></p>
+		        	<!--<a data-toggle="tooltip" href="#/register" data-placement="right" title="Nuevo Usuario" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-plus"></i> Registrate</a>-->
+		        	<button class="btn btn-primary pull-right">LOG IN <i class="glyphicon glyphicon-arrow-right"></i></button>
+          	</form>
+	    </div>
+	    <!-- ************************************************* -->
+      	<div ng-show="signupUser" class="signup"><!-- REGISTER FORM CHECK -->
+	        <h2>COFERBA</h2>
+	        <h5>Nuevo usuario</h5><br><br>
+	        <form name="frmSignUpCheck" id="frmSignUpCheck" ng-submit="sysSignUpCheck()">
+		        <div class="form-group">
+		        	<div class="inner-addon right-addon">
+		          		<input type="email" class="form-input" ng-model="signup.email" name="email" required>
+		          		<label>Email</label>
+		          		<i class="glyphicon glyphicon-envelope"></i>
+		          		<span class="bar"></span>
+		          	</div>
+		        </div>
+		        <div class="spacing"></div>
+		        <button type="submit" class="btn btn-primary pull-right">Siguiente <i class="glyphicon glyphicon-arrow-right"></i></button>
+
+		    </form>
+      	</div>
+      	<!-- ************************************************* -->
+    </div>
+    <!-- frontbox -->
+</div>
+<script type="text/javascript">
+	$(window, document, undefined).ready(function() {
+
+
+
+});
+</script>
