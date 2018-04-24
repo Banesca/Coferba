@@ -1,4 +1,4 @@
-app.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI, $timeout, tokenService, serverHost, inform, $window){
+app.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI, $timeout, tokenSystem, serverHost, inform, $window){
 
 $scope.forgot={email: ''};
 $scope.redirectSuccessfull = false;

@@ -1,7 +1,7 @@
 
-app.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, tokenService, loggedUser, serverHost, serverBackend, $window){
+app.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, tokenSystem, tokenLoggedUser, serverHost, serverBackend, $window){
 
-  $scope.sysToken = tokenService.getTokenStorage();
+  $scope.sysToken = tokenSystem.getTokenStorage();
   $scope.serverHost=serverHost;
   /**************************************************
   *                                                 *
@@ -39,9 +39,10 @@ function sysLoginUser($http,$scope,vOp){
            }else{
                $scope.rsJSON=data.data.response;
                console.log(data.data.response);
-               loggedUser.setStorageValues($scope.rsJSON);
+               tokenSystem.setStorageValues(true,$scope.rsJSON);
                $timeout(function() {
-                  console.log(loggedUser.getStorageValues());
+                  $scope.jsonTokenUser=tokenSystem.getStorageValues();
+                  console.log('retrievedObject: ', $scope.jsonTokenUser.fullNameUser);
                }, 1500);
                 if($scope.rsJSON.resetPasword==1){
                   inform.add('Recorda: '+ $scope.rsJSON.fullNameUser + ' que no podes usar la misma clave o claves anteriores.',{

@@ -1,4 +1,13 @@
-var app = angular.module('coferbaApp', ["blockUI", "ngRoute", "inform", "inform-exception", "showdown", "coferbaServices", "ngAnimate", "ui.bootstrap", "angularCSS"]);
+var app = angular.module('coferbaApp', ["blockUI",
+                                        "ngRoute", 
+                                         "inform", 
+                               "inform-exception", 
+                                       "showdown", 
+                             "coferbaTokenSystem",
+                         "coferbaTokenLoggedUser", 
+                                      "ngAnimate", 
+                                   "ui.bootstrap",
+                                    "angularCSS"]);
 
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -34,7 +43,7 @@ app.config(['$routeProvider', '$locationProvider',
 app.constant("serverHost","http://localhost/");
 app.constant("serverBackend","Coferba/Back/index.php/");
 
-app.controller('MainCtrl', function($scope, $rootScope, $location, $http, blockUI, $timeout, tokenService, inform, $window){
+app.controller('MainCtrl', function($scope, $rootScope, $location, $http, blockUI, $timeout, tokenSystem, inform, $window){
 	$scope.counT;
 	$scope.redirect;
 	
