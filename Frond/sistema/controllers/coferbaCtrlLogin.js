@@ -1,8 +1,28 @@
+var appUser = angular.module("coferbaApp.User", ["coferbaTokenSystem"]);
 
-app.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, tokenSystem, tokenLoggedUser, serverHost, serverBackend, $window){
+appUser.service("userServices",function(tokenSystem){
+      var consoleMsg;
+      return {
+          lunchAlert: function() {
+              consoleMsg = JSON.parse(localStorage.getItem("sysLoggedUser"));
+          },
+          setAlert: function(value) {
+              localStorage.setItem("sysLoggedUser", JSON.stringify(value));
+          },
+          sendConsoleLog: function() {
+              consoleMsg = tokenSystem.getTokenStorage(2);
+              return consoleMsg;
+          },
+      }
+});
+
+
+appUser.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, userServices, tokenSystem, tokenLoggedUser, serverHost, serverBackend, $window){
 
   $scope.sysToken = tokenSystem.getTokenStorage();
   $scope.serverHost=serverHost;
+  $scope.userS = userServices.sendConsoleLog();
+  console.log('USER SERVICE RETRIEVING DATA FROM THE TOKEN SERVICE :'+$scope.userS.fullNameUser);
   /**************************************************
   *                                                 *
   *               INGRESO DE USUARIO                *
@@ -39,9 +59,9 @@ function sysLoginUser($http,$scope,vOp){
            }else{
                $scope.rsJSON=data.data.response;
                console.log(data.data.response);
-               tokenSystem.setStorageValues(true,$scope.rsJSON);
+               tokenSystem.setTokenStorage(true,$scope.rsJSON);
                $timeout(function() {
-                  $scope.jsonTokenUser=tokenSystem.getStorageValues();
+                  $scope.jsonTokenUser=tokenSystem.getTokenStorage(2);
                   console.log('retrievedObject: ', $scope.jsonTokenUser.fullNameUser);
                }, 1500);
                 if($scope.rsJSON.resetPasword==1){
@@ -59,19 +79,6 @@ function sysLoginUser($http,$scope,vOp){
                     console.log($scope.tmp);
                     $('#PasswdModalUser').modal('toggle');
                 }else{
-                   localStorage.setItem("idUser", $scope.rsJSON.idUser);
-                   localStorage.setItem("Nombres", $scope.rsJSON.fullNameUser);
-                   localStorage.setItem("Email", $scope.rsJSON.emailUser);
-                   localStorage.setItem("idAddress", $scope.rsJSON.addresUser);
-                   localStorage.setItem("nameAddress", $scope.rsJSON.nameAdress);
-                   localStorage.setItem("TelefonoM", $scope.rsJSON.phoneNumberUser);
-                   localStorage.setItem("TelefonoL", $scope.rsJSON.phoneLocalNumberUser);
-                   localStorage.setItem("IdPerfil", $scope.rsJSON.idProfileKf);
-                   localStorage.setItem("nombrePerfil", $scope.rsJSON.nameProfile);
-                   localStorage.setItem("IdStatus", $scope.rsJSON.idStatusKf);
-                   localStorage.setItem("idCompany", $scope.rsJSON.idCompany);
-                   localStorage.setItem("nameCompany", $scope.rsJSON.nameCompany);
-                   localStorage.setItem("Token", true);
                    if($scope.rsJSON.idProfileKf==3){
                       mail2Search = $scope.rsJSON.emailUser;
                       $scope.searchTenantByMail();

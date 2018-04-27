@@ -1,4 +1,9 @@
 var tkSysService = angular.module("coferbaTokenSystem", []);
+/**************************************************
+*                                                 *
+*        TOKEN SERVICE FOR USER LOGGED IN         *
+*                                                 *
+**************************************************/ 
 tkSysService.service("tokenSystem",function(){
       var tokenStorageValue="";
       return {

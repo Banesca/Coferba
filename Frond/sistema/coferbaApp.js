@@ -1,13 +1,14 @@
-var app = angular.module('coferbaApp', ["blockUI",
-                                        "ngRoute", 
-                                         "inform", 
-                               "inform-exception", 
-                                       "showdown", 
-                             "coferbaTokenSystem",
-                         "coferbaTokenLoggedUser", 
-                                      "ngAnimate", 
-                                   "ui.bootstrap",
-                                    "angularCSS"]);
+var app = angular.module('coferbaApp', ["coferbaApp.User",
+                                                "blockUI",  
+                                                "ngRoute",   
+                                                 "inform", 
+                                       "inform-exception", 
+                                               "showdown", 
+                                     "coferbaTokenSystem",
+                                 "coferbaTokenLoggedUser", 
+                                              "ngAnimate", 
+                                           "ui.bootstrap",
+                                           "angularCSS"]);
 
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
