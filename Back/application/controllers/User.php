@@ -81,6 +81,21 @@ class User extends REST_Controller {
         }
     }
 
+    public function validate_get($token) {
+        if (!$token) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->validate($token);
+
+        if (!is_null($user)) {
+            $this->response("Usuario validado!", 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
 
 
     /* get param*/

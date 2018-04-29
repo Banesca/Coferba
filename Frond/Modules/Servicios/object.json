@@ -1,15 +1,17 @@
-
+---------------------- AGREGAR USUARIO -------------------
+http://127.0.0.1/Coferba/Back/index.php/User
+METODO : POST 
 {
   
-  "user":"2"
+  "user":
   {
-  "fullNameUser" : "prueba",
-"emailUser" : "prueba",
-"phoneNumberUser" : "prueba",
-"addresUser" : "prueba",
-"passwordUser" : "prueba",
-"idProfileKf" : "1",
-"rezonSocial" : "prueba"
+      "fullNameUser" : "prueba",
+    "emailUser" : "prueba",
+    "phoneNumberUser" : "prueba",
+    "addresUser" : "prueba",
+    "passwordUser" : "prueba",
+    "idProfileKf" : "1",
+    "rezonSocial" : "prueba"
   }
 }
 

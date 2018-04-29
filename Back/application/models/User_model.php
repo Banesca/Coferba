@@ -99,6 +99,8 @@ class User_model extends CI_Model
     /* AGRAGR NUEVO USUARIO DE CUALQUIER TIPO */
     public function add($user) {
 
+        $tokenMail = $this->generateRandomString();
+
         /* CREAMOS UN USUARIO */
         $this->db->insert('tb_user', array(
             'fullNameUser' => $user['fullNameUser'],
@@ -115,11 +117,31 @@ class User_model extends CI_Model
             'idDepartmentKf' => @$user['idDepartmentKf'],
             'isEdit' => @$user['isEdit'],
             'requireAuthentication' => @$user['requireAuthentication'],
-            'resetPasword' => 1
+            'resetPasword' => 1,
+            'tokenMail' => $tokenMail
                 )
         );
 
+
+       
+
+
         if ($this->db->affected_rows() === 1) {
+             // ENVIAMOS EL MAIL DE CONFIRMAR REGISTRO //
+            //*****************/
+            /*MAIL*/
+            $title ="Mail de confirmacion de COFERBA";
+
+            $currentURL = $this->get_the_current_url(); //for simple URL
+
+            $body =
+            "Usuario:".$user['emailUser']."<BR>".
+            "Clave:".$user['passwordUser']."<BR>"."
+            <a href=".$currentURL."/validate/".$tokenMail.">Pulse aqui para Confirmar mail</a>";
+
+            $this->mail_model->sendMail($title,$user['emailUser'],$body);
+            //*****************/
+
             $idUser = $this->db->insert_id();
             return $idUser;
         } else {
@@ -127,6 +149,26 @@ class User_model extends CI_Model
         }
     }
 
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+
+    public function get_the_current_url() {
+    
+        $protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+        $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'];
+        $complete_url =   $base_url . $_SERVER["REQUEST_URI"];
+        
+        return $complete_url;
+         
+    }
 
   
 
@@ -295,7 +337,7 @@ class User_model extends CI_Model
                 )->where("emailUser", $user['emailUser'])->update("tb_user");
         
                  /*MAIL*/
-                 $title ="Nuevo Clave de Acceso a Coferba";
+                 $title ="Mail de Clave de Acceso a Coferba";
                  $body = "Se Restablecio su clave de acceso!<br> Usuario: ".$user['emailUser']."<br> Clave: 12345 <br> Le Recomendamos luego de acceder cambie su clave!";
                  $m = $this->mail_model->sendMail($title,$user['emailUser'],$body);
 
@@ -348,6 +390,24 @@ public function updateMailSmtp($mail) {
                 return false;
             }
  }
+
+
+ public function validate($tokenMail) {
+    
+    $this->db->set(
+            array(
+                'isConfirmatedMail' => 1
+            )
+    )->where("tokenMail",$tokenMail)->update("tb_user");
+
+ 
+    if ($this->db->affected_rows() === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
     
 

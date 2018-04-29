@@ -40,6 +40,7 @@ class Mail_model extends CI_Model
              
 
                 if($rs){
+                    //print_r($rs);
                 //$this->response("Solicitud Enviada",200);
 
                 }else {

@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.35)
 # Base de datos: db_coferba
-# Tiempo de Generación: 2018-04-24 20:32:55 +0000
+# Tiempo de Generación: 2018-04-29 15:06:57 +0000
 # ************************************************************
 
 
@@ -376,8 +376,8 @@ LOCK TABLES `tb_sys_param` WRITE;
 
 INSERT INTO `tb_sys_param` (`idParam`, `value`, `description`)
 VALUES
-	(1,'rexx84@gmail.com','USUARIO SMT MAIL'),
-	(2,'..,:;\"david387504odrauderexx','CLAVE SMT MAIL'),
+	(1,'jorguti58@gmail.com','USUARIO SMT MAIL'),
+	(2,'#*AdMg1210#*','CLAVE SMT MAIL'),
 	(6,'20:00','HORA DE MAIL DE VERIFICACION DE MAIL PARA ADMINISTRADORES DE CONSORCIO'),
 	(7,'ventas@coferba.com.ar','MAIL DE VENTAS'),
 	(8,'tecnica@coferba.com.ar','MAIL SERVICO TECNICO'),
@@ -627,6 +627,8 @@ CREATE TABLE `tb_user` (
   `requireAuthentication` tinyint(11) DEFAULT '1',
   `idTypeTenantKf` int(11) DEFAULT NULL,
   `idStatusKf` int(11) unsigned DEFAULT NULL,
+  `tokenMail` varchar(300) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `isConfirmatedMail` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`idUser`),
   KEY `idProfileKf` (`idProfileKf`),
   CONSTRAINT `tb_user_ibfk_1` FOREIGN KEY (`idProfileKf`) REFERENCES `tb_profile` (`idProfile`) ON UPDATE NO ACTION
@@ -635,28 +637,39 @@ CREATE TABLE `tb_user` (
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
 
-INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `passwordUser`, `idProfileKf`, `dateCreated`, `idCompanyKf`, `resetPasword`, `idAddresKf`, `idTyepeAttendantKf`, `descOther`, `idDepartmentKf`, `isEdit`, `requireAuthentication`, `idTypeTenantKf`, `idStatusKf`)
+INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `passwordUser`, `idProfileKf`, `dateCreated`, `idCompanyKf`, `resetPasword`, `idAddresKf`, `idTyepeAttendantKf`, `descOther`, `idDepartmentKf`, `isEdit`, `requireAuthentication`, `idTypeTenantKf`, `idStatusKf`, `tokenMail`, `isConfirmatedMail`)
 VALUES
-	(17,'David Rincón Luengo','rexx84@gmail.com','112235667799','112345664556','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',4,'2017-10-26 02:16:00',1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(22,'Luis Carreño','luis.carreno@coca-cola.com','1199887766','1144556677','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',2,'2017-10-26 18:17:25',3,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(23,'Carlos Villalobos','carlos.villalobos@gmail.com','(054) 9 11 2235-6388','(054) 9 11 2669-4918','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2017-11-23 00:28:25',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(24,'prueba editada','prueba','prueba','123','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,'2017-11-23 05:36:20',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(25,'Jose Gomez','jose.gomez@gmail.com','113443663346','116678885464','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2017-11-24 17:47:25',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(27,'prueba de registro','prueba@prueba.com.ar','(154) 2 32 1321-3213','(254) 1 31 3213-1322','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-01-26 03:26:01',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(28,'Xavi Hernandez','xavi.hernandez@yahoo.es','(454) 4 44 4444-4444','(854) 8 88 8888-8888','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',4,'2018-01-31 07:34:09',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(29,'Humberto Moran','humberto.moran@gmail.com','(054) 1 11 1111-1111','(054) 2 22 2222-2222','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-01-31 20:35:07',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(30,'developer 1','developer1@gmail.com','(054) 9 12 3213-2323','(054) 9 11 2231-2321','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',1,'2018-02-11 15:50:25',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(31,'admin sistema','soporte@coferba.com.ar','(054) 9 11 2323-2323','(054) 9 11 2343-2324','fd8abdb9181ffaa820ac9b8c9fb97abca88c6c05',1,'2018-02-16 12:01:22',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(32,'8484845448841 65464848','4494989@hotmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','090efb3bde54c755c679f99e82a4c4863d93035b',3,'2018-03-20 13:14:06',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(33,'Gabriel Gamez','angelgabrielceballos@gmail.com','(154) 1 11 2251-8504','(154) 1 11 2251-8504','fe703d258c7ef5f50b71e06565a65aa07194907f',3,'2018-03-20 13:20:35',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(34,'654658464 654654654','angelgabrielceballos@gmail.com','(154) 1 11 2251-8504','(154) 1 11 2251-8504','fe703d258c7ef5f50b71e06565a65aa07194907f',3,'2018-03-20 18:30:38',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(35,'Dario Tejada','drotejada@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','2ae3d88f02f83ac3d4e5f74533e26d8cad86e4c5',4,'2018-03-21 17:26:03',2,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(36,'juan perez','unico@gmail.com','(154) 1 15 2251-8504','(154) 1 15 2251-8504','26cf693eaa24a8c39e5dc92e06085058a3714f53',3,'2018-04-10 14:32:12',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(37,'pablo marmol','marmol@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','4394a732285f1875b62bdb074d7fe33acb519ed9',3,'2018-04-10 14:46:15',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(38,'dario tejada','drotejada@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1122','2432c46a664bdc63e4b6dbca654c509fbae10a89',4,'2018-04-10 15:31:35',2,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
-	(39,'dario tejada','drotejada@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',4,'2018-04-10 15:50:26',1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(40,'leandro figueroa','leandro@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','b9ca47c97508bf3d22aed0d806d923c2917c3e6e',4,'2018-04-10 15:54:02',1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(41,'Luis Roca','luis.roca@gmail.com','(354) 3 33 3333-3333','(354) 3 33 3333-3333','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-04-11 13:06:33',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+	(17,'David Rincón Luengo','rexx84@gmail.com','112235667799','112345664556','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',4,'2017-10-26 02:16:00',1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(22,'Luis Carreño','luis.carreno@coca-cola.com','1199887766','1144556677','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',2,'2017-10-26 18:17:25',3,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(23,'Carlos Villalobos','carlos.villalobos@gmail.com','(054) 9 11 2235-6388','(054) 9 11 2669-4918','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2017-11-23 00:28:25',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(24,'prueba editada','prueba','prueba','123','32e7092ddccc9af07299d6e8dac6fe731c6572d2',1,'2017-11-23 05:36:20',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(25,'Jose Gomez','jose.gomez@gmail.com','113443663346','116678885464','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2017-11-24 17:47:25',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(27,'prueba de registro','prueba@prueba.com.ar','(154) 2 32 1321-3213','(254) 1 31 3213-1322','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-01-26 03:26:01',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(28,'Xavi Hernandez','xavi.hernandez@yahoo.es','(454) 4 44 4444-4444','(854) 8 88 8888-8888','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',4,'2018-01-31 07:34:09',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(29,'Humberto Moran','humberto.moran@gmail.com','(054) 1 11 1111-1111','(054) 2 22 2222-2222','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-01-31 20:35:07',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(30,'developer 1','developer1@gmail.com','(054) 9 12 3213-2323','(054) 9 11 2231-2321','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',1,'2018-02-11 15:50:25',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(31,'admin sistema','soporte@coferba.com.ar','(054) 9 11 2323-2323','(054) 9 11 2343-2324','fd8abdb9181ffaa820ac9b8c9fb97abca88c6c05',1,'2018-02-16 12:01:22',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(32,'8484845448841 65464848','4494989@hotmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','090efb3bde54c755c679f99e82a4c4863d93035b',3,'2018-03-20 13:14:06',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(33,'Gabriel Gamez','angelgabrielceballos@gmail.com','(154) 1 11 2251-8504','(154) 1 11 2251-8504','fe703d258c7ef5f50b71e06565a65aa07194907f',3,'2018-03-20 13:20:35',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(34,'654658464 654654654','angelgabrielceballos@gmail.com','(154) 1 11 2251-8504','(154) 1 11 2251-8504','fe703d258c7ef5f50b71e06565a65aa07194907f',3,'2018-03-20 18:30:38',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(35,'Dario Tejada','drotejada@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','2ae3d88f02f83ac3d4e5f74533e26d8cad86e4c5',4,'2018-03-21 17:26:03',2,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(36,'juan perez','unico@gmail.com','(154) 1 15 2251-8504','(154) 1 15 2251-8504','26cf693eaa24a8c39e5dc92e06085058a3714f53',3,'2018-04-10 14:32:12',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(37,'pablo marmol','marmol@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','4394a732285f1875b62bdb074d7fe33acb519ed9',3,'2018-04-10 14:46:15',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(38,'dario tejada','drotejada@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1122','2432c46a664bdc63e4b6dbca654c509fbae10a89',4,'2018-04-10 15:31:35',2,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0),
+	(39,'dario tejada','drotejada@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',4,'2018-04-10 15:50:26',1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(40,'leandro figueroa','leandro@gmail.com','(154) 1 11 1111-1111','(154) 1 11 1111-1111','b9ca47c97508bf3d22aed0d806d923c2917c3e6e',4,'2018-04-10 15:54:02',1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(41,'Luis Roca','luis.roca@gmail.com','(354) 3 33 3333-3333','(354) 3 33 3333-3333','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-04-11 13:06:33',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0),
+	(48,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:44:18',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(49,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:44:53',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(50,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:47:23',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(51,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:48:23',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(52,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:48:55',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(53,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:49:37',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(54,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:58:02',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(55,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:59:01',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(56,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 10:59:24',0,1,0,1,'',1,0,1,NULL,0,NULL,0),
+	(57,NULL,NULL,NULL,NULL,NULL,NULL,'2018-04-29 11:07:58',NULL,0,NULL,NULL,NULL,NULL,0,1,NULL,NULL,NULL,0),
+	(58,'prueba','prueba@mail.com','prueba','1136456765','63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1',1,'2018-04-29 11:08:37',0,1,0,1,'',1,0,1,NULL,0,'hn1zmrDzz2',1);
 
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
