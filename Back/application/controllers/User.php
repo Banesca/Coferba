@@ -35,7 +35,11 @@ class User extends REST_Controller {
         $user = $this->user_model->add($this->post('user'));
 
         if (!is_null($user)) {
-            $this->response(array('response' => "USUARIO SISTEMA AGREGADO "), 200);
+            if($user == -1){
+                $this->response(array('error' => "Mail ya se encuentra registrado"),203);
+            }else{
+                $this->response(array('response' => "USUARIO SISTEMA AGREGADO "), 200);
+            }
         } else {
             $this->response(array('error' => "ERROR INESPERADO"), 500);
         }
