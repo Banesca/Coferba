@@ -29,6 +29,58 @@ class Mail_model extends CI_Model
             $this->email->from($param['0']['value']);
             $this->email->subject($title);
 
+
+            $body = "
+            <!DOCTYPE html>
+            <html lang='es'>
+            <head>
+            </head>
+
+
+           
+            <body style='  text-align: center;'>
+
+
+          
+
+           <img width='1000' src='https://win-social.com/win_page/img/Asset_1.png'>
+           
+           <br>
+           <br>
+
+           <label style='
+           font-size: 25px;
+           width: 900x;
+
+           color: #acd063;
+           background-color: #14162b;
+           font-family: sans-serif;
+           padding: 18px;'>".$title."</label>
+           <br>
+           <br>
+
+
+            <div
+            
+            style=' font-size: 22px;
+            color: #656464;
+            font-family: sans-serif;'>
+           ".$body."
+           </div>
+           <br>
+
+            <img width='1000' src='https://win-social.com/win_page/img/Asset_2.png'> 
+           
+
+            </body>
+            </html>";
+
+            /**
+             * <img src='https://win-social.com/win_page/img/Asset_1.png'> 
+            <div>
+            ".$body."
+            </div>
+             */
           
                 $this->email->message($body);
 

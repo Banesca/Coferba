@@ -99,6 +99,7 @@ class User_model extends CI_Model
     /* AGRAGR NUEVO USUARIO DE CUALQUIER TIPO */
     public function add($user) {
 
+        if($this->findAttByEmail($user['emailUser']) != null){
         $tokenMail = $this->generateRandomString();
 
         /* CREAMOS UN USUARIO */
@@ -106,12 +107,12 @@ class User_model extends CI_Model
             'fullNameUser' => $user['fullNameUser'],
             'emailUser' => $user['emailUser'],
             'phoneNumberUser' => $user['phoneNumberUser'],
-            'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
-            'idAddresKf' => $user['idAddresKf'],
+            'phoneLocalNumberUser' => @$user['phoneLocalNumberUser'],
+            'idAddresKf' => @$user['idAddresKf'],
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
             'idStatusKf' => 0,
-            'idCompanyKf' => $user['idCompanyKf'],
+            'idCompanyKf' => @$user['idCompanyKf'],
             'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
             'descOther' => @$user['descOther'],
             'idDepartmentKf' => @$user['idDepartmentKf'],
@@ -128,16 +129,15 @@ class User_model extends CI_Model
 
         if ($this->db->affected_rows() === 1) {
              // ENVIAMOS EL MAIL DE CONFIRMAR REGISTRO //
-            //*****************/
             /*MAIL*/
             $title ="Mail de confirmacion de COFERBA";
 
             $currentURL = $this->get_the_current_url(); //for simple URL
 
-            $body =
-            "Usuario:".$user['emailUser']."<BR>".
-            "Clave:".$user['passwordUser']."<BR>"."
-            <a href=".$currentURL."/validate/".$tokenMail.">Pulse aqui para Confirmar mail</a>";
+            $body ='
+            Usuario:'.$user['emailUser'].'
+            <BR>'.'Clave:'.$user['passwordUser'].'<br>'.'
+            <a href='.$currentURL.'/validate/'.$tokenMail.'>Pulse aqui para Confirmar mail</a>';
 
             $this->mail_model->sendMail($title,$user['emailUser'],$body);
             //*****************/
@@ -147,6 +147,9 @@ class User_model extends CI_Model
         } else {
             return null;
         }
+     }else{
+         return -1;
+     }
     }
 
     function generateRandomString($length = 10) {
