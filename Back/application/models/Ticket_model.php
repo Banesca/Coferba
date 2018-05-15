@@ -508,7 +508,7 @@ class Ticket_model extends CI_Model
             $user = $query->result_array();
         }
          /* LISTADO DE INQUILINOS */
-        $query = $this->db->select("*")->from("tb_user")->where("idProfileKf",5)->order_by("tb_user.dateCrated", "DESC")->get();
+        $query = $this->db->select("*")->from("tb_user")->where("idProfileKf",5)->order_by("tb_user.dateCreated", "DESC")->get();
         if ($query->num_rows() > 0) {
             $tenant = $query->result_array();
         }

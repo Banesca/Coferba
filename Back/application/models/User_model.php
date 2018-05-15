@@ -174,7 +174,7 @@ class User_model extends CI_Model
 
 
     /* EDITAR DATOS DE UN ENCARGADO */
-    public function updateAttendant($user) {
+    public function update($user) {
 
         $this->db->set(
                 array(
@@ -213,17 +213,20 @@ class User_model extends CI_Model
 
 
     /*BUSCAR USUARIO POR EL EMAIL*/
-    public function findAttByEmail($mail) {
+    public function findUserByEmail($mail) {
     
             $user = null;
     
             $this->db->select("*")->from("tb_user");
             $query = $this->db->where("tb_user.emailUser =", $mail)->get();
-            if ($query->num_rows() > 0) {
+            if($query->num_rows() > 0){ 
                 $user = $query->row_array();
+                return $user;
+            } 
+            else
+            {
+                return null;
             }
-
-            return $user;
     }
 
         

@@ -46,6 +46,11 @@
       border: none;
       color: rgba(20, 22, 43, .9);
 }
+
+.form-horizontal .form-group {
+  margin-right:0px;
+  margin-left: 0px;
+}
 /*************************************/
 /*************************************
 *                                    *
@@ -75,27 +80,9 @@
 /* active */
 
 input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+select:focus ~ .bar:before, select:focus ~ .bar:after { width: 50%; }
 
 
-/* Class for login & signup buttons */
-.loginMsg button,
-.signupMsg button {
-  background-color: #404040;
-  border: 2px solid #404040;
-  border-radius: 0px;
-  color: white;
-  font-size: 12px;
-  font-weight: 300;
-  padding: 10px;
-  margin-top: 20px;
-}
-
-.loginMsg button:hover,
-.signupMsg button:hover {
-  background-color: #fff;
-  border: 2px solid #fff;
-  color: #404040;
-}
 
 
 
@@ -123,4 +110,6 @@ input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
 .form-input:focus ~ .glyphicon, .form-input:active ~ .glyphicon, .form-input.active ~ .glyphicon{
     color: rgba(20, 22, 43, 0.9);
 } 
+
+
 

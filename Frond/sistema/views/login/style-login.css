@@ -67,12 +67,30 @@
   margin-left: 10%;
 }
 
+.loginMsg button,
+.signupMsg button {
+  background-color: #404040;
+  border: 2px solid #404040;
+  border-radius: 0px;
+  color: white;
+  font-size: 12px;
+  font-weight: 300;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.loginMsg button:hover,
+.signupMsg button:hover {
+  background-color: #fff;
+  border: 2px solid #fff;
+  color: #404040;
+}
 
 /* front box content*/
 
 .login,
 .signup {
-  padding: 20px;
+  padding: 30px;
   text-align: center;
 }
 
@@ -87,7 +105,9 @@
   margin-top: 30px;
 }
 
-
+.newPwdForm {
+    padding-top: 120px;
+}
 
 /* Fade In & Out*/
 
@@ -105,16 +125,14 @@
 .forgotpwd {
   margin: 0px;
   cursor: pointer;
-  color: rgba(20, 22, 43, .4);
+  color: rgba(108, 117, 125, .5);
   font-size: 15px;
-  padding-top: 10px;
   padding-bottom: 30px;
 }
 
-.forgotpwd:hover, .forgotpwd:focus, .forgotpwd:active  {
+.forgotpwd:hover {
   font-weight: bold;
-  text-decoration: none;
-  color: rgba(20, 22, 43, 1);
+  color: rgba(108, 117, 125, 1);
 }
 
 .spacing {
@@ -124,14 +142,13 @@
 .hide {
   display: none;
 }
-/* enable absolute positioning */
 .glyphicon-share-alt{
     webkit-transform: rotate(-180deg);
     -moz-transform: rotate(-180deg);
     -ms-transform: rotate(-180deg);
     transform: rotate(-180deg);
  }
- .forgotPwdForm{
+ .verticalAllign{
     padding-top: 200px;
  }
 .btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
@@ -143,11 +160,9 @@
     padding-top: 120px;
 
 }
-.newPwdForm {
-    padding-top: 120px;
-
+.custom-title{
+    margin: 0;
 }
-
 .alert{cursor: pointer;}
 .hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px; }
 .alert .glyphicon { display: block; font-size: 76px; line-height: 76px; color: #229922; margin-bottom: 15px; text-align: center; }
@@ -158,18 +173,74 @@
 .successRegister{
   padding-top: 200px;
 }
+.popover-title {
+    padding: 0px;
+    font-size: 14px;
+    color: white;
+    background-color: #c9302c;
+    border-bottom: 1px solid #c9302c;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-radius: 0px;
+
+
+
+}
+.popover{
+    max-width: 20%; /* Max Width of the popover (depending on the container!) */
+    border-radius: 0px;
+    padding: 0px;
+}
+.popover-footer{
+    padding: 6px 14px;
+    background-color: #f7f7f7;
+    border-top: 1px solid #ebebeb;
+    text-align: right;
+}
+
+.panel-header{
+  border-top-left-radius: 0px;
+}
+/*******************************************************
+*                                                      *
+*             Booststrap custom CSS Class              *
+*                                                      *
+*******************************************************/
+
+.modal-header {
+    padding: 15px;
+    background-color: #c9302c;
+    color: white;
+    order-bottom: 1px solid #c9302c;
+}
+.modal-title{
+    font-weight: 400;
+}
+.modal-body p{
+  padding: 15px;
+  text-align: left;
+  font-size: 14px;
+}
+.modal-footer{
+  background-color: #f7f7f7;
+}
 
 .btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
 .btn-labeled {padding-top: 0;padding-bottom: 0;}
+.input-group { margin-bottom:10px; }
 .separator { border-right: 1px solid #dfdfe0; }
 
+.confirmModal, .modal-backdrop{
+  visibility: hidden;
+}
+
 @media (max-width: 767px) {
-  .registerForm, .newPwdForm{
+  .registerForm{
     padding-top: 0;
 
   }
   .newPwdForm{
-    padding-top: 45px;
+    padding-top: 75px;
 
   }
   .main_content{
@@ -177,5 +248,17 @@
   .frontbox{
      margin-right: 0;
   }
-
+  .popover {
+    visibility: hidden;
+  }
+  .modal{
+    visibility: visible;
+  }
+  .inform-fixed {
+    position: fixed;
+    top: 360px;
+  }
+  .verticalAllign{
+    padding-top: 70px;
+  }
 }

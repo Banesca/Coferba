@@ -1,23 +1,30 @@
 <!-- FORGOT PASWD FORM -->
-<div class="container" ng-if="!sysToken" >
+<div class="container" ng-show="!redirect2Register" ng-init="launchLoader();">
 	<div ng-if="!redirectSuccessfull">
 		<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-			<div class="forgotPwdForm">
+			<div class="verticalAllign">
 			  	<div class="panel panel-default panel-primary">
 			      	<div class="panel-heading">
 			      		<a href="#/login" class="close"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></a>
-			        	<h3 class="modal-title">RESTAURAR CONTRASEÑA</h3>
+			        	<h3 class="modal-title">SOPORTE COFERBA</h3>
 			    	</div>
 					<div class="panel-body">
 							<!-- FORM CONTAINER-->
 							<form name="frmForgotPwd" class="form-horizontal" autocomplete="off" role="form" novalidate>
-								<div class="form-group" ng-class="{'has-error': frmForgotPwd.email.$dirty && frmForgotPwd.email.$invalid}">
+								<div class="form-group login" ng-class="{'has-error': frmForgotPwd.email.$dirty && frmForgotPwd.email.$invalid}">
 									<div class="col-md-12">
 										<div class="inner-addon right-addon">
-						  					<input type="email" required class="form-input" name="email" ng-model="forgot.email">
-						  					<label>Email</label>
-						  					<i class="glyphicon glyphicon-envelope"></i>
-						  					<span class="bar"></span>
+						  					<input 
+						  					id="forgotemail"
+						  					type="email" 
+						  					ng-blur="inputCheckCss('forgotemail');"
+						  					data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de ingreso con el correo <bold>{{login.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
+						  					required class="form-input popover-large" 
+						  					name="forgotemail" 
+						  					ng-model="forgot.email" >
+  							          		<label>Email</label>
+							          		<i class="glyphicon glyphicon-envelope"></i>
+							          		<span class="bar"></span>
 						  				</div>
 						  			</div>
 								</div>
@@ -38,14 +45,14 @@
 			</div>
 		</div>
 	</div>
-	<div ng-if="redirectSuccessfull" class="forgotPwdForm">
+	<div ng-if="redirectSuccessfull" class="verticalAllign">
 		<div class="col-md-12">
 			<div class="hero-widget alert well-sm alert-success">
 				<div class="icon">
 	 				<i class="glyphicon glyphicon-ok"></i>
 				</div>
 				<div class="text">
-	    			<h2 class="text-success">Clave restablecida satisfactoriamente</h2>
+	    			<h2 class="text-success">Su Nueva Clave fue enviada a su direccion de correo!</h2>
 				</div>
 				<div class="options">
 	    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
@@ -54,3 +61,39 @@
 		</div>
 	</div>
 </div>
+<div ng-if="redirect2Register" class="verticalAllign">
+	<div class="col-md-12">
+		<div class="hero-widget alert well-sm alert-success">
+			<div class="icon">
+ 				<i class="glyphicon glyphicon-lock"></i>
+			</div>
+			<div class="text">
+    			<h2 ng-if="redirect2NewPwd" class="text-success">Estas siendo redireccionado para generar una nueva clave.</h2>
+    			<h2 ng-if="redirect2RestorePwd" class="text-success">Estas siendo redireccionado para resteblecer tu cuenta.</h2>
+    			<h2 ng-if="redirect2Register" class="text-success">Estas siendo redireccionado para crear tu cuenta de usuario.</h2>
+			</div>
+			<div class="options">
+    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Confirmation -->
+<div class="confirmModal modal fade" id="confirmRequestModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Soporte coferba </h5>
+      </div>
+      <div class="modal-body">
+        <p>{{msg1}}</p>
+        <p>{{msg2}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="modalConfirmation('{{swOption}}')" class="btn btn-success">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- //Modal Confirmation -->

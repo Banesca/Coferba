@@ -1,49 +1,116 @@
-app.controller('ForgotPwdCtrl', function($scope, $rootScope, $location, $http, blockUI, $timeout, tokenSystem, serverHost, inform, $window){
+var moduleForgotPwd = angular.module("coferbaApp.ForgotPwd", ["coferbaTokenSystem", "coferbaServices.User"]);
 
-$scope.forgot={email: ''};
-$scope.redirectSuccessfull = false;
-$scope.counT 	=5;
-$scope.redirect ="#/login";
-$scope.serverHost=serverHost;
-$scope.sysToken = tokenService.getTokenStorage();
+moduleForgotPwd.controller('ForgotPwdCtrl', function($scope, $rootScope, $location, $http, blockUI, inputService, userServices, $timeout, tokenSystem, serverHost, inform, $window){
 
-/**************************************************
-*                                                 *
-*                LOST PWD USER                    *
-*                                                 *
-**************************************************/
-$scope.sysPwdRequest = function(){
-	$scope.chgPwdUser($http, $scope);
-}
-/**************************************************
-*                                                 *
-*             REQUEST PWD FUNCTION                *
-*                                                 *
-**************************************************/
+  $scope.forgot={email: ''};
+  $scope.redirectSuccessfull = false;
+  $scope.counT  =5;
+  $scope.redirect ="#/login";
+  tokenSystem.destroyTokenStorage(2);
+  $scope.sysToken = tokenSystem.getTokenStorage(1);
+  $scope.sysRsTmpUser = tokenSystem.getTokenStorage(3);
+  /**************************************************
+  *                                                 *
+  *                LOST PWD USER                    *
+  *                                                 *
+  **************************************************/
+  $scope.sysPwdRequest = function(){
+    if($scope.forgot.email == $scope.sysRsTmpUser.emailUser){
+      $scope.recoverPwdUser();
+    }else{
+      $scope.sysCheckEmail();
+    }
 
-$scope.chgPwdUser = function ($http, $scope){
-  console.log($scope.requestNewPwd());
-  $http.post($scope.serverHost+"Coferba/Back/index.php/User/updatePass", $scope.requestNewPwd(),$scope.setHeaderRequest())
-      .then(function (sucess, data) {
-      		$scope.redirectSuccessfull = true;
+  }
+  /**************************************************
+  *                                                 *
+  *             REQUEST PWD FUNCTION                *
+  *                                                 *
+  **************************************************/
+  $scope.recoverPwdUser = function (){
+      userServices.recoverPwd($scope.requestNewPwd()).then(function(data){
+        $scope.recovPwdResult = data;
+        if($scope.recovPwdResult){
+          $scope.redirectSuccessfull = true;
+          $scope.countDownRedirect($scope.redirect, $scope.counT);
+        }
 
-          	$scope.countDownRedirect($scope.redirect, $scope.counT);
-    },function (error,status) {
-            if(status == 404){alert("!Informacion "+status+data.error+"info");}
-            else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-            else{alert("Error Modificacion de Usuario !"+status+" Contacte a Soporte"+"error");}
-           
-    });
-};
-
-$scope.requestNewPwd = function () {
+      });
+  }
+  $scope.sysCheckEmail = function(){
+    if($scope.forgot.email){
+      userServices.checkUserMail($scope.forgot.email, "forgotPwd").then(function(data) {
+        $scope.mailCheckResult= data; 
+          if(!$scope.mailCheckResult){
+            var attempsToken = JSON.parse(localStorage.getItem("attempsToken"));
+            $scope.mailCheckCount = attempsToken.attempsCount;
+            if($scope.mailCheckCount==3){
+              $scope.checkEmailLogin = 1;
+              $scope.msg1="Ha realizado "+$scope.mailCheckCount+" intentos fallidos de ingreso con el correo "+$scope.forgot.email;
+              $scope.msg2="Desea realizar el registro de usuario?";
+              $('#confirmRequestModal').modal('show');
+                    $scope.mailCheckCount++;
+                    $("#forgotemail").popover({
+                      container: 'body',
+                      placement:'auto right',
+                      trigger: 'manual',
+                      title: '<div>Soporte coferba</div>',
+                      template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
+                      html: true
+              }); 
+              $("#forgotemail").popover('show');
+            }else{
+              inform.add('El Correo: '+ $scope.forgot.email + ', no se encuentra registrado, verifique los datos ingresados.',{
+                ttl:4000, type: 'warning'
+              });
+              console.log("Email No registrado / "+ $scope.forgot.email);
+            }
+          }else{
+            $scope.recoverPwdUser();
+          }
+      });
+    }
+  }
+  $scope.requestNewPwd = function () {
   var user =
           {
-                user:{
-                            emailUser           : $scope.forgot.email
-                      }
+            user:{
+                    emailUser: $scope.forgot.email
+                  }
           };
-  return user;
-};
+    return user;
+  };
+  /**************************************************
+  *                                                 *
+  *            Modal de confirmacion                *
+  *                                                 *
+  **************************************************/
+  $(document).on("click", ".popover-footer .modalYes" , function(){
+    $("#forgotemail").popover('hide');
+    $scope.modalConfirmation("register");
+  });
+  $(document).on("click", ".popover-footer .modalNo" , function(){
+    $("#forgotemail").popover('hide');
+    $scope.modalConfirmation("login");
+  });
+  $scope.modalConfirmation = function(value){
+      switch (value){
+        case 'register':
+          $scope.redirect2Register = true;
+          $scope.countDownRedirect("#/register", 3);
+        break;
+        case 'login':
+          $scope.countDownRedirect("#/login", 3);
+        break;
 
+        default:
+      }
+  }
+  /**************************************************/
+  $scope.inputCheckCss = function (obj) {
+    var $this      = $('input[name*='+obj+']');
+    var inputObj   = $this
+    var inputValue = $this.val();
+    inputService.setClass(inputValue, inputObj);
+  }
 });

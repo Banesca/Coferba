@@ -22,9 +22,19 @@
 <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body ng-controller="MainCtrl">
+
+<div id="wLoader" ng-if="wLoader">
+  <div id="loader">&nbsp;</div>
+  <div class="companyName"></div>
+</div>
+<!-- ng-view div -->
 <div ng-view></div>
+
+
 <!-- Response Inform Meessage plugin -->
 <div inform class="inform-fixed inform-shadow inform-animate"></div>
+
+
 <!--JQUERY MODULES -->
 <script type="text/javascript" language="javascript" src="lib/jquery/jquery-lib/default/js/jquery.min.js"></script>
 <script type="text/javascript" language="javascript" src="lib/bootstrap/js/default/bootstrap.min.js"></script>
@@ -41,23 +51,23 @@
 <script src="lib/angular/angular-animate/js/angular-animate.min.js"></script>
 <script src="lib/angular/ui-bootstrap/js/ui-bootstrap.js"></script>
 
+
 <!-- AngularCSS library (from CDN) -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.8/angular-css.js"></script>
+<!--ANGULAR MODULES -->
 
-<!--JQUERY FUNCTIONS -->
-<script src="lib/jquery/loginjs/coferbaJsLogin.js"></script>  <!-- Coferba Jquery Login Functions -->
-
-<!--ANGULAR APP -->
 <script src="coferbaApp.js"></script> <!-- Coferba Angular App -->
 
-<!--ANGULAR CONTROLLERS -->
+<script src="common/services/tokenSystem.js"></script>
+<script src="common/services/coferbaUserServices.js"></script>
+
+<script src="lib/jquery/loginjs/coferbaJsLogin.js"></script>  <!-- Coferba Jquery Login Functions -->
 <script src="controllers/coferbaCtrlLogin.js"></script> <!--  Coferba Angular Login Functions -->
 <script src="controllers/coferbaCtrlRegister.js"></script> <!--  Coferba Angular Register Functions -->
 <script src="controllers/coferbaCtrlforgotPwd.js"></script> <!--  Coferba Angular ForgotPwd Functions -->
-<script src="controllers/coferbaCtrlNewPwd.js"></script> <!--  Coferba Angular New Password -->
-<script src="controllers/coferbaCtrlTenant.js"></script> <!--  Coferba Angular Tenant  -->
-<script src="common/services/tokenSystem.js"></script>
-<script src="common/services/tokenUserLogged.js"></script>
+<script src="controllers/coferbaCtrlNewPwd.js"></script> <!--  Coferba Angular Tenant Functions -->
+
+
 </body>
 </html>
 

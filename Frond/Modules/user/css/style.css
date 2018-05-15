@@ -61,7 +61,7 @@
     bottom: 5px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #ADFF00;;
+    border-top-color: #ADFF00;
     -webkit-animation: spin 3s linear infinite;
     animation: spin 3s linear infinite;
 }

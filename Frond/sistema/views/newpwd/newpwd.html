@@ -1,75 +1,77 @@
 <!-- NEW PASWD FORM -->
-<div class="container" ng-if="!sysToken">
-	<div ng-if="!redirectSuccessfull">
-		<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
-			<div class="newPwdForm">
-			  	<div class="panel panel-default panel-primary">
-			      	<div class="panel-heading">
-			      		<a href="#/login" class="close"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></a>
-			        	<h3 class="modal-title">Nueva Clave</h3>
-			    	</div>
-					<div class="panel-body">
-							<!-- FORM CONTAINER-->
-							<form name="frmNewPwd" class="form-horizontal" autocomplete="off" role="form" novalidate>
-								<div class="form-group" ng-class="{'has-error': frmNewPwd.currentpwd.$dirty && frmNewPwd.currentpwd.$invalid}">
-									<div class="col-md-12">
-										<div class="inner-addon right-addon">
-						  					<input type="password" required class="form-input" name="currentpwd" ng-model="newpwd.currentpwd">
-											<label>Clave Actual</label>
-						  					<i class="glyphicon glyphicon-lock"></i>
-						  					<span class="bar"></span>
-						  				</div>
-						  			</div>
-								</div>
-								<div class="form-group" ng-class="{'has-error': frmNewPwd.pwd1.$dirty && frmNewPwd.pwd1.$invalid}">
-									<div class="col-md-12">
-										<div class="inner-addon right-addon">
-						  					<input type="password" required class="form-input" name="pwd1" ng-model="newpwd.pwd1">
-						  					<label>Nueva clave</label>
-						  					<i class="glyphicon glyphicon-lock"></i>
-						  					<span class="bar"></span>
-						  				</div>
-						  			</div>
-								</div>
-								<div class="form-group" ng-class="{'has-error': frmNewPwd.pwd2.$dirty && frmNewPwd.pwd2.$invalid}">
-									<div class="col-md-12">
-										<div class="inner-addon right-addon">
-						  					<input type="password" required class="form-input" name="pwd2" ng-model="newpwd.pwd2">
-					  					 	<label>Confirme nueva clave</label>
-						  					<i class="glyphicon glyphicon-lock"></i>
-						  					<span class="bar"></span>
-						  				</div>
-						  			</div>
-								</div>
-			            	</form>
-						</div>
-			            <div class="panel-footer">
-			                <div class="row">
-			                    <div class="col-xs-12 col-sm-12 col-md-6">
-			                        <button type="submit" ng-click="sysPwdRequest()" ng-disabled="frmNewPwd.$invalid" class="btn btn-labeled btn-success">
-			                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i></span>Enviar</button>
-			                        <a href="#/login" type="button" class="btn btn-labeled btn-danger">
-			                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancel</a>
-			                    </div>
-			                </div>
-			            </div>
+<div class="container" ng-show="!redirectSuccessfull" ng-init="launchLoader();">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+		<div class="newPwdForm">
+		  	<div class="panel panel-default panel-primary">
+		      	<div class="panel-heading">
+		      		<a href="#/login" class="close"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></a>
+		        	<h3 class="modal-title">Nueva Clave</h3>
+		    	</div>
+				<div class="panel-body">
+						<!-- FORM CONTAINER-->
+						<form name="frmNewPwd" class="form-horizontal" autocomplete="off" role="form" novalidate>
+							<div class="form-group" ng-class="{'has-error': frmNewPwd.pwd1.$dirty && frmNewPwd.pwd1.$invalid}">
+								<div class="col-md-12">
+									<div class="inner-addon right-addon">
+								  		<input id="pwd1" name="pwd1" aria-describedby="passwordHelpBlock1" class="form-input" ng-blur="inputCheckCss('pwd1', 'i');" ng-model="new.pwd1" ng-minlength="8" type="password" password-confirm match-target="new.pwd2" required autofocus />
+								  		<label>Contrase&#241a nueva</label> 
+								  		<i ng-if="!frmNewPwd.pwd1.$valid && !frmNewPwd.pwd2.$valid" class="glyphicon glyphicon-lock"></i>
+								  		<i ng-if="frmNewPwd.pwd1.$valid && frmNewPwd.pwd2.$valid" class="glyphicon glyphicon-ok"></i>
+										<span class="bar"></span>
+								    </div>
+								    <small id="passwordHelpBlock1" class="form-text text-muted">
+										<span ng-if="!new.pwd1 && !frmNewPwd.pwd1.$error.minlength" class="text-info">La clave debe contener minimo 8 caracteres alfanumericos.</span> 
+										<span class="bg-warning" ng-if="frmNewPwd.pwd1.$error.minlength">Su clave no cumple con el minimo requerido</span>
+										<span class="bg-success" ng-if="new.pwd1 && !frmNewPwd.pwd1.$error.minlength && frmNewPwd.pwd2.$error.match">Confirma la clave en el proximo campo</span>
+									</small>
+					  			</div>
+							</div>
+							<div class="form-group" ng-class="{'has-error': frmNewPwd.pwd2.$dirty && frmNewPwd.pwd2.$invalid}">
+								<div class="col-md-12">
+									<div class="inner-addon right-addon">
+								  		<input id="pwd2" name="pwd2" aria-describedby="passwordHelpBlock2" class="form-input" ng-blur="inputCheckCss('pwd2', 'i');" ng-minlength="8" ng-model="new.pwd2" type="password" password-confirm match-target="new.pwd1"  required autofocus />
+								  		<label>Confirme su Contrase&#241a</label> 
+								  		<i ng-if="!frmNewPwd.pwd1.$valid && !frmNewPwd.pwd2.$valid" class="glyphicon glyphicon-lock"></i>
+								  		<i ng-if="frmNewPwd.pwd1.$valid && frmNewPwd.pwd2.$valid" class="glyphicon glyphicon-ok"></i>
+								  		<span class="bar"></span>
+								    </div>
+								    <small  id="passwordHelpBlock2" class="form-text text-muted">
+											<span ng-if="!new.pwd2 && !frmNewPwd.pwd2.$error.minlength" class="text-info">La clave debe contener minimo 8 caracteres alfanumericos.</span> 
+											<span class="bg-warning" ng-if="frmNewPwd.pwd2.$error.minlength">Su clave no cumple con el minimo requerido</span>
+											<span ng-if="frmNewPwd.password1.$valid && frmNewPwd.pwd2.$valid"><i class="glyphicon glyphicon-ok"></i></span>
+										<span class="bg-danger" ng-show="frmNewPwd.pwd2.$error.match && !frmNewPwd.pwd2.$error.minlength && pwd2">Las claves no coinciden, por favor verificar.</span>
+									</small>
+					  			</div>
+							</div>
+		            	</form>
+					</div>
+					<br>
+		            <div class="panel-footer">
+		                <div class="row">
+		                    <div class="col-xs-12 col-sm-12 col-md-6">
+		                        <button type="submit" ng-click="sysRequestNewPwd()" ng-disabled="frmNewPwd.$invalid" class="btn btn-labeled btn-success">
+		                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i></span>Enviar</button>
+		                        <a href="#/login" type="button" class="btn btn-labeled btn-danger">
+		                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancel</a>
+		                    </div>
+		                </div>
+		            </div>
 
-		        </div>
-			</div>
+	        </div>
 		</div>
 	</div>
-	<div ng-if="redirectSuccessfull" class="verticalAllign">
-		<div class="col-md-12">
-			<div class="hero-widget alert well-sm alert-success">
-				<div class="icon">
-	 				<i class="glyphicon glyphicon-ok"></i>
-				</div>
-				<div class="text">
-	    			<h2 class="text-success">Clave restablecida satisfactoriamente</h2>
-				</div>
-				<div class="options">
-	    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
-				</div>
+</div>
+<div ng-if="redirectSuccessfull" class="verticalAllign">
+	<div class="col-md-12">
+		<div class="hero-widget alert well-sm alert-success">
+			<div class="icon">
+ 				<i class="glyphicon glyphicon-ok"></i>
+			</div>
+			<div class="text">
+    			<h2 class="text-success">Su clave ha sido cambiada satisfactoriamente</h2>
+			</div>
+			<div class="options">
+    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
 			</div>
 		</div>
 	</div>

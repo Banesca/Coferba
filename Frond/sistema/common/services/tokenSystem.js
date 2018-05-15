@@ -10,10 +10,13 @@ tkSysService.service("tokenSystem",function(){
           getTokenStorage: function(value) {
             switch (value){
               case 1:
-                tokenStorageValue = localStorage.getItem("sysToken");
+                tokenStorageValue = !localStorage.getItem("sysToken") ? false : localStorage.getItem("sysToken");
               break;
               case 2:
-                tokenStorageValue = JSON.parse(localStorage.getItem("sysLoggedUser"));
+                tokenStorageValue = !JSON.parse(localStorage.getItem("sysLoggedUser")) ? false : JSON.parse(localStorage.getItem("sysLoggedUser"));
+              break;
+              case 3:
+                tokenStorageValue = !JSON.parse(localStorage.getItem("sysTmpUser")) ? false : JSON.parse(localStorage.getItem("sysTmpUser"));
               break;
               default:
 
@@ -24,9 +27,31 @@ tkSysService.service("tokenSystem",function(){
               localStorage.setItem("sysToken", tksSystem);
               localStorage.setItem("sysLoggedUser", JSON.stringify(tkLoggedUser));
           },
-          destroyTokenStorage: function() {
-              localStorage.removeItem("sysToken");
-              localStorage.removeItem("sysLoggedUser");
+          temporalStorage: function(tkTmpUser) {
+              localStorage.setItem("sysTmpUser", JSON.stringify(tkTmpUser));
+          },
+          destroyTokenStorage: function(value) {
+            switch (value){
+              case 1:
+                localStorage.removeItem("sysToken");
+                localStorage.removeItem("sysLoggedUser");
+              break;
+              case 2:
+                localStorage.removeItem("attempsToken");
+              break;
+              case 3:
+                localStorage.removeItem("sysTmpUser");
+              break;
+              case 4:
+                localStorage.removeItem("attempsToken");
+                localStorage.removeItem("sysTmpUser");
+              break;
+              default:
+
+            }
+
+              
+              
           },
       }
 });

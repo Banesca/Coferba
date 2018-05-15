@@ -1,158 +1,287 @@
-var appUser = angular.module("coferbaApp.User", ["coferbaTokenSystem"]);
-
-appUser.service("userServices",function(tokenSystem){
-      var consoleMsg;
-      return {
-          lunchAlert: function() {
-              consoleMsg = JSON.parse(localStorage.getItem("sysLoggedUser"));
-          },
-          setAlert: function(value) {
-              localStorage.setItem("sysLoggedUser", JSON.stringify(value));
-          },
-          sendConsoleLog: function() {
-              consoleMsg = tokenSystem.getTokenStorage(2);
-              return consoleMsg;
-          },
-      }
-});
+var moduleLoginUser = angular.module("coferbaApp.LoginUser", ["coferbaTokenSystem", "coferbaServices.User"]);
 
 
-appUser.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, userServices, tokenSystem, tokenLoggedUser, serverHost, serverBackend, $window){
+moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, inputService, userServices, tokenSystem, serverHost, serverBackend, $window){
 
-  $scope.sysToken = tokenSystem.getTokenStorage();
-  $scope.serverHost=serverHost;
-  $scope.userS = userServices.sendConsoleLog();
-  console.log('USER SERVICE RETRIEVING DATA FROM THE TOKEN SERVICE :'+$scope.userS.fullNameUser);
+  $scope.sysToken            = tokenSystem.getTokenStorage(1);
+  $scope.login               = {email:'', passwd:''};
+  $scope.signup              = {email:''};
+  $scope.signupUser          = false;
+  $scope.loginUser           = true;
+  $scope.mailCheckResult     = 0;
+  $scope.loginResult         = 0;
+  $scope.mailCheckCount      = 0;
+  $scope.redirect2NewPwd     = false;
+  $scope.redirect2RestorePwd = false;
+  $scope.redirect2Register   = false;
+  $scope.swOption            = "";
+  tokenSystem.destroyTokenStorage(4);
+
   /**************************************************
   *                                                 *
-  *               INGRESO DE USUARIO                *
+  *       VALIDACION DE EMAIL ANTES DEL LOGIN       *
   *                                                 *
   **************************************************/
-  $scope.login = {email:'', passwd:''};
-  $scope.forgotPass       = false;
-  $scope.noRegisteredUser = false;
-  $scope.loginUser        = true;
-
-$scope.validateUserLogin = function(){
-  if ($scope.login.email && $scope.login.passwd){
-      //location.href = "../user/";
-      //$state.go('../user/');
-      console.log($scope._getLoginData());
-      sysLoginUser($http,$scope);
-  }
-}  
-
-/**************************************************
-*                                                 *
-*               INGRESO DE USUARIO                *
-*                                                 *
-**************************************************/
-$scope.tmp={fullNameUser:'',emailUser : '', phoneNumberUser : '', phoneLocalNumberUser : '', idProfileKf : '', idUser : ''}
-function sysLoginUser($http,$scope,vOp){  
-    $http.post(serverHost+serverBackend+"User/auth",$scope._getLoginData())
-        .then(function(data) {
-         if (typeof(data.data.response) === "undefined"){
-             inform.add('El Correo: '+ $scope.login.email + ', no se encuentra registrado o ha colocado una clave errada verifique sus datos.',{
-                        ttl:3000, type: 'warning'
-             }); 
-             
-           }else{
-               $scope.rsJSON=data.data.response;
-               console.log(data.data.response);
-               tokenSystem.setTokenStorage(true,$scope.rsJSON);
-               $timeout(function() {
-                  $scope.jsonTokenUser=tokenSystem.getTokenStorage(2);
-                  console.log('retrievedObject: ', $scope.jsonTokenUser.fullNameUser);
-               }, 1500);
-                if($scope.rsJSON.resetPasword==1){
-                  inform.add('Recorda: '+ $scope.rsJSON.fullNameUser + ' que no podes usar la misma clave o claves anteriores.',{
-                        ttl:3000, type: 'info'
-                  });
-                } 
-                /*
-                    $scope.tmp.fullNameUser         = $scope.rsJSON.fullNameUser,
-                    $scope.tmp.emailUser            = $scope.rsJSON.emailUser,
-                    $scope.tmp.phoneNumberUser      = $scope.rsJSON.phoneNumberUser,
-                    $scope.tmp.phoneLocalNumberUser = $scope.rsJSON.phoneLocalNumberUser,
-                    $scope.tmp.idProfileKf          = $scope.rsJSON.idProfileKf,
-                    $scope.tmp.idUser               = $scope.rsJSON.idUser,
-                    console.log($scope.tmp);
-                    $('#PasswdModalUser').modal('toggle');
-                }else{
-                   if($scope.rsJSON.idProfileKf==3){
-                      mail2Search = $scope.rsJSON.emailUser;
-                      $scope.searchTenantByMail();
-                    }else{location.href = "index.html";}
-                }  */
-
+  $scope.sysCheckEmailLogin = function(){
+    if($scope.login.email){
+      userServices.checkUserMail($scope.login.email, "login").then(function(data) {
+        $scope.mailCheckResult= data; 
+          if(!$scope.mailCheckResult){
+            var attempsToken = JSON.parse(localStorage.getItem("attempsToken"));
+            $scope.mailCheckCount = attempsToken.attempsCount;
+            if($scope.mailCheckCount==3){
+              $scope.checkEmailLogin = 1;
+              console.log($scope.mailCheckCount);
+              $scope.swOption = "register";
+              $scope.msg1="Ha realizado "+$scope.mailCheckCount+" intentos fallidos de ingreso con el correo "+$scope.login.email;
+              $scope.msg2="Desea realizar el registro de usuario?";
+              $('#confirmRequestModal').modal('show');
+                    $scope.mailCheckCount++;
+                    $("#loginEmail").popover({
+                      container: 'body',
+                      placement:'auto right',
+                      trigger: 'manual',
+                      title: '<div>Soporte coferba</div>',
+                      template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
+                      html: true
+              }); 
+              $("#loginEmail").popover('show');
+            }else{
+              inform.add('El Correo: '+ $scope.login.email + ', no se encuentra registrado, verifique los datos ingresados.',{
+                ttl:4000, type: 'warning'
+              });
+              console.log("Email No registrado / "+ $scope.login.email);
+            }
           }
-        },function (error, data, status) {
-            if(status == 404 || status == 203){
-              console.log("!Informacion: "+error.data.error+"info");
-              inform.add(error.data.error,{
-                ttl:5000, type: 'warning'
-              }); 
-            }
-            else{
-              console.log("!Informacion: "+error.data.error+"info");
-              inform.add(error.data.error,{
-                ttl:5000, type: 'warning'
-              }); 
-            }
-           
-        });   
-        
+      });
+    }
+  }  
+  /**************************************************/
+
+  /**************************************************
+  *                                                 *
+  *        VALIDACION DE PWD ANTES DEL LOGIN        *
+  *                                                 *
+  **************************************************/
+  $scope.sysCheckPasswordLogin = function(){
+    var attempsToken = JSON.parse(localStorage.getItem("attempsToken"));
+      $scope.mailCheckCount = attempsToken.attempsCount;
+      if($scope.mailCheckCount==3){
+        $scope.checkPasswdLogin = 1;
+        console.log($scope.mailCheckCount);
+        $scope.msg1="Ha ingresado en "+$scope.mailCheckCount+" oportunidades la clave incorrecta. ";
+        $scope.msg2="Desea restablecer la Contrase&#241a de su cuenta?";
+        $('#confirmRequestModal').modal('show');
+              $scope.mailCheckCount++;
+              $("#loginpassword").popover({
+                container: 'body',
+                placement:'auto right',
+                trigger: 'manual',
+                title: '<div>Soporte coferba</div>',
+                template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
+                html: true
+        }); 
+        $("#loginpassword").popover('show');
+      }else{
+        inform.add('Ha ingresado una Contrasena incorrecta, verifique los datos ingresados.',{
+          ttl:4000, type: 'warning'
+        });
+        console.log("Email No registrado / "+ $scope.login.email);
+      }
+  }
+  /**************************************************/
+  /**************************************************
+  *                                                 *
+  *                LOGIN DE USUARIO                 *
+  *                                                 *
+  **************************************************/
+  $scope.sysLoginUser = function(){
+    $scope.checkEmailLogin    = 0;
+    $scope.checkPasswdLogin = 0;
+    if($scope.mailCheckResult){
+      userServices.letLogin($scope._getLoginData()).then(function(data){
+      $scope.loginResult = data;
+      console.log("Value returned by the LoginService: "+$scope.loginResult);
+      switch ($scope.loginResult){
+        case 1:
+          $scope.redirect2Register = true;
+          $scope.countDownRedirect("#/mainapp", 3);
+        break;
+        case 2:
+          $scope.redirect2NewPwd = true;
+          $scope.countDownRedirect("#/newpwd", 3);
+        break;
+        case 3:
+          $scope.redirect2ResendEmail = true;
+          $scope.countDownRedirect("#/resendemail", 3);
+        break;
+        case 4:
+          var rsTmpUser = tokenSystem.getTokenStorage(3);
+
+          $scope.msg1="Disculpa "+rsTmpUser.fullNameUser+" su cuenta se encuentra inactiva.";
+          $scope.msg2="Comunicate con el area de soporte o el administrador."
+          $('#notificationModal').modal('show');
+            /*$timeout(function() {
+              $('#notificationModal').modal('hide');
+            }, 3000);*/
+        break;
+        case 5:
+          $scope.sysCheckPasswordLogin();
+        break;
+          
+        default:
+      }
+      });
+    }else{
+      $scope.sysCheckEmailLogin();
+    }
+          
   };
-/****** Get Data from the Login Form ****/
+  /**************************************************/
+  /**************************************************
+  *                                                 *
+  *         RECOLECCIONDE DATOS DE USUARIO          *
+  *                                                 *
+  **************************************************/
+  $scope._getLoginData = function () {
+    var dataUser =
+            {
+                 user: { 
+                          fullNameUser : $scope.login.email,
+                          passwordUser : $scope.login.passwd
+                        }
+            };
+    return dataUser;
+  };
+  /**************************************************/
+  /**************************************************
+  *                                                 *
+  *    VALIDACION DE EMAIL ANTES DEL REGISTRARSE    *
+  *                                                 *
+  **************************************************/
+  $scope.sysCheckBeforeSignup = function(){
+    userServices.checkUserMail($scope.signup.email, "register").then(function(data) {
+      $scope.mailCheckResult= data; 
+        if($scope.mailCheckResult){
+          console.log($scope.mailCheckCount);
+          $scope.swOption = "forgotpwd";
+          $scope.msg1="El correo "+$scope.signup.email+", se encuentra registrado en nuestro sistema.";
+          $scope.msg2="Desea restablacer su clave?";
+          $('#confirmRequestModal').modal('show');
+            $("#signupemail").popover({
+              container: 'body',
+              placement:'auto right',
+              trigger: 'manual',
+              title: '<div>Soporte coferba</div>',
+              template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
+              html: true
+          }); 
+          $("#signupemail").popover('show');
+          inform.add('El correo: '+ $scope.signup.email + ', se encuentra registrado, puede ingresar con su clave o restablecerla si no la recuerda.',{
+            ttl:4000, type: 'success'
+          });
+          console.log("Email registrado / "+ $scope.signup.email);
+        }else{
+          $scope.redirect2Register = true;
+        $scope.countDownRedirect("#/register", 3);
 
-$scope._getLoginData = function () {
-  var dataUser =
-          {
-               user: { 
-                        fullNameUser : $scope.login.email,
-                        passwordUser : $scope.login.passwd
-                      }
-          };
-  return dataUser;
-};
-
-$scope.systemFunctionUser = function(){
-  location.href = "../register/";
-}
-
-
-var $loginMsg = $('.textcontent1'),
-    $signupMsg = $('.textcontent2'),
-    $frontbox = $('.frontbox');
-
-$scope.fnLoginToggle = function(swLogin){
-  switch (swLogin){
-    case 1:
-      $frontbox.addClass("moving");
-      $scope.signupUser=true; 
-       $scope.loginUser=false;
-      $scope.forgotPass=false;
-    break;
-    case 2:
-      $frontbox.removeClass("moving");
-      $scope.signupUser=false; 
-       $scope.loginUser=true;
-      $scope.forgotPass=false;
-    break;
-    default:
-
-  }
-}
-$scope.checkUserAdd = function(){ 
-  $scope.$on('message', function(event, response) {
-      console.log(response);
-  });
-  if($scope.mensajeTest){       
-    inform.add('Usuario registrado con exito. ',{
-                ttl:2000, type: 'success'
+        }
     });
+  } 
+
+  /**************************************************
+  *                                                 *
+  *            Modal de confirmacion                *
+  *                                                 *
+  **************************************************/
+  $(document).on("click", ".popover-footer .modalYes" , function(){
+        if($scope.login.email && $scope.checkEmailLogin){
+          $("#loginEmail").popover('hide');
+          $scope.modalConfirmation("register");
+        }else if($scope.login.email && $scope.checkPasswdLogin){
+          $("#loginpassword").popover('hide');
+          $scope.modalConfirmation("forgotpwd");
+        }else if($scope.signup.email){
+          $("#signupemail").popover('hide');
+          $scope.modalConfirmation("forgotpwd");
+        }
+  });
+  $(document).on("click", ".popover-footer .modalNo" , function(){
+          $("#loginEmail").popover('hide');
+          $("#signupemail").popover('hide');
+          $("#loginpassword").popover('hide');
+  });
+  $scope.modalConfirmation = function(value){
+      switch (value){
+        case 'register':
+          $scope.redirect2Register = true;
+          $scope.countDownRedirect("#/register", 3);
+        break;
+        case 'forgotpwd':
+          $scope.redirect2RestorePwd = true;
+          $scope.countDownRedirect("#/forgotpwd", 3);
+        break;
+
+        default:
+      }
   }
-  //console.log($scope.mensajeTest);
-}
+  /**************************************************/
+
+
+
+  /**************************************************
+  *                                                 *
+  *         TRANSICIÓN DE LOGIN A REGISTRO          *
+  *                                                 *
+  **************************************************/
+  var $loginMsg  = $('.textcontent1'),
+      $signupMsg = $('.textcontent2'),
+      $frontbox  = $('.frontbox');
+
+  $scope.fnLoginToggle = function(swLogin){
+    switch (swLogin){
+      case 1:
+        $frontbox.addClass('moving');
+        $scope.signupUser=true; 
+        $scope.loginUser=false;
+        $scope.signup  = {email:''};
+        $scope.login   = {email:'', passwd:''};
+        $("#loginEmail").popover('hide');
+        $("#signupemail").popover('hide');
+      break;
+      case 2:
+        $frontbox.removeClass("moving");
+        $scope.signupUser=false; 
+        $scope.loginUser=true;
+        $scope.signup  = {email:''};
+        $scope.login   = {email:'', passwd:''};
+        $("#loginEmail").popover('hide');
+        $("#signupemail").popover('hide');
+      break;
+      default:
+
+    }
+  }
+  /**************************************************/
+  $scope.checkUserAdd = function(){ 
+    $scope.$on('message', function(event, response) {
+        console.log(response);
+    });
+    if($scope.mensajeTest){       
+      inform.add('Usuario registrado con exito. ',{
+                  ttl:2000, type: 'success'
+      });
+    }
+    //console.log($scope.mensajeTest);
+  }
+
+  $scope.inputCheckCss = function (obj) {
+      var $this      = $('input[name*='+obj+']');
+      //console.log($this)
+      var inputObj   = $this
+      var inputValue = $this.val();
+      inputService.setClass(inputValue, inputObj);
+  }
 
 });
+
