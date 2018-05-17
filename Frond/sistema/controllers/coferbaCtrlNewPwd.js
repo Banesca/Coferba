@@ -62,7 +62,7 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   }
 
   if ($scope.sysToken || $scope.sysLoggedUser || $scope.sysRsTmpUser){
-      data2update.user.isEditUser=true;
+      data2update.user.isEditUser='true';
       $scope.sysRequestInit();
   }else{
       location.href = "#/login";

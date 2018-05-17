@@ -1,0 +1,144 @@
+<!-- USER REQUEST SERVICE  ruservice=Register Request User Service-->
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		<h3 class="panel-title" ng-show="sessionidProfile==2">SERVICIO - {{mySwitch}} DE LA EMPRESA</h3>
+		<h3 class="panel-title" ng-show="sessionidProfile==4">SERVICIO - {{mySwitch}} DE LA ADMINISTRACION</h3>
+		<h3 class="panel-title" ng-show="sessionidProfile==1">SERVICIOS - EMPRESAS O ADMINISTRACION</h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" name="fservice" ng-submit="newTicket('srvs')" >
+			<div ng-switch on="mySwitch">
+				<fieldset ng-switch-when="PASO 1: DATOS">
+					<!-- Company Name-->    
+					<div class="form-group">
+					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Empresa</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Empresa / Administracion</label>
+					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Administracion</label>
+					    <div class="col-md-4">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+						  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+
+						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+								    	<option value="">Seleccione una Empresa o Administracion</option>
+							    </select>
+						    </div>
+					  	</div>
+					</div>
+					<!-- List Address-->
+					      
+					<div class="form-group" ng-show="sessionidProfile!=3">
+					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Direccion Sucursal</label>
+					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion Sucursal o Consorcio</label>
+					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Direccion de Consorcio</label>   
+					    <div class="col-md-4">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+						  		<select name="idAddressKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+								    <option value="">Seleccione una opcion</option>
+							    	</select>
+						    </div>
+					  </div>
+					</div>
+					<!-- Encargado First Name & Lastname -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Nombre y Apellido</label>  
+						  <div class="col-md-4">
+							  <div class="input-group">
+								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								  <input ng-show="sessionidProfile!=1"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" readonly autofocus />
+								  <!-- ___________________________________________________________________ -->
+								  <select ng-show="sessionidProfile==1" name="namesAdmin" class="form-control"  ng-options="item.idUser as item.fullNameUser for item in listUser | filter:showCompanyUser" ng-required="sessionidProfile==1" ng-change="getUserCompanyData()" ng-model="select.namesAdmin" autofocus >
+									    <option value=""></option>
+								    </select>
+							  </div>
+						  </div>
+					</div>
+					<!-- Text Local Phone -->       
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Telefono fijo</label>  
+					    <div class="col-md-4">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+							  		<input name="localPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="$parent.localPhoneAdmin" type="text" required autofocus readonly />
+						    </div>
+					  </div>
+					</div>
+					<!-- Text Phone 2 -->       
+					<div class="form-group">
+					  <label class="col-md-4 control-label">Telefono Celular</label>  
+					    <div class="col-md-4">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+						  		<input name="movilPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAdmin" type="text" required autofocus readonly />
+						    </div>
+					  </div>
+					</div>
+					<!-- Text Mail-->
+					<div class="form-group">
+					 <label class="col-md-4 control-label">E-Mail</label>
+					   <div class="col-md-4">
+					    <div class="input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+					  		<input name="emailAdmin" placeholder="E-Mail" class="form-control" ng-model="emailAdmin"  type="email" required autofocus readonly />
+					    </div>
+					  </div>
+					</div>
+				</fieldset>
+				<fieldset ng-switch-when="PASO 2: DATOS DEL SERVICIO">
+					<!-- Type of Tenant -->
+					<!-- Select Type of Service -->
+					   
+					<div class="form-group"> 
+					  <label class="col-md-4 control-label">Tipo de Servicio</label>
+					    <div class="col-md-4 selectContainer">
+						    <div class="input-group">
+						        <span class="input-group-addon"><i class="glyphicon glyphicon-wrench"></i></span>
+								    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="select.idTypeServiceKf" required autofocus >
+								    <option value=""></option>
+								    <option value="1">Cambio de Lector de llave HID</option>
+								    <option value="2">Cambio de Camara</option>
+								    <option value="3">Cambio de Cerradura Electromagnetica</option>
+								    <option value="4">Cambio de Lector de llave HID</option>
+								    <option ng-show="sessionidProfile==1 || sessionidProfile==2" value="5">Cambio de Molinete</option>
+								    <option ng-show="sessionidProfile==1 || sessionidProfile==2" value="6">Cambio de Control de Acceso</option>
+							    	</select>
+						  	</div>
+						</div>
+					</div>
+					<!-- Form service description -->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label" >Descripci&#243n</label> 
+					  	<div class="col-md-4">
+							<div class="input-group">
+						  		<textarea name="detailSv" rows="10" cols="50" style="resize: vertical;" placeholder="Especifique aqui el servicio a solicitar." class="form-control" ng-model="txt.detailSv"  required autofocus ></textarea>
+							</div>
+					  	</div>
+					</div>
+					<!-- Form Special Request sru= Special Request Up -->
+
+					<div class="form-group">
+					  <label class="col-md-4 control-label" >Observaciones Adicionales</label> 
+					  	<div class="col-md-4">
+							<div class="input-group">
+						  		<textarea name="sruSv" rows="10" cols="50" style="resize: vertical;" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruSv" ></textarea>
+							</div>
+					  	</div>
+					</div>
+				</fieldset>
+			</div>
+			<!-- Actions Button -->
+			<div class="form-group">
+			  <label class="col-md-4"></label>
+			  <div class="col-md-4">
+			  	<input type="button" ng-click="decrementStep()" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
+		  		<input type="button" ng-click="incrementStep()" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
+		  		<button type="submit" ng-show="!hasNextStep()" class="btn btn-primary" >Enviar</button>
+			  </div>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

@@ -3,6 +3,7 @@ var app = angular.module('coferbaApp', ["coferbaApp.LoginUser",
                                            "coferbaApp.NewPwd",
                                         "coferbaApp.ForgotPwd",
                                         "coferbaServices.User",
+                                          "coferbaApp.MainApp",
                                                      "blockUI",  
                                                      "ngRoute",   
                                                       "inform", 
@@ -31,6 +32,12 @@ app.service("inputService",function(){
           },
       }
 });
+app.config(function(blockUIConfig) {
+      // Tell blockUI not to mark the body element as the main block scope.
+      blockUIConfig.autoInjectBodyBlock = true;  
+      blockUIConfig.autoBlock = true;
+});
+
 
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -57,10 +64,15 @@ app.config(['$routeProvider', '$locationProvider',
             controller: 'NewPwdCtrl',
             css: 'views/login/style-login.css'
         })
-        .when('/mainApp', {
-            templateUrl: 'views/newpwd/mainapp.html',
+        .when('/mainapp', {
+            templateUrl: 'views/mainapp/mainapp.html',
             controller: 'MainAppCtrl',
-            css: 'views/login/style-login.css'
+            css: 'views/mainapp/style.css'
+        })
+        .when('/alta', {
+            templateUrl: 'views/tickets/altaLlave.html',
+            controller: 'MainAppCtrl',
+            css: 'views/mainapp/style.css'
         })
         .otherwise({
             redirectTo: '/login/'
@@ -68,7 +80,7 @@ app.config(['$routeProvider', '$locationProvider',
 }]);
 
 
-app.constant("serverHost","http://192.168.0.6/");
+app.constant("serverHost","http://coferba.com.ar/");
 app.constant("serverBackend","Coferba/Back/index.php/");
 app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8' }});
 
@@ -100,7 +112,8 @@ app.controller('MainCtrl', function($scope, $rootScope, $location, serverHost, s
     $scope.counT;
     $scope.redirect;
     $scope.wLoader  = false;
-    $scope.sysToken = false;
+    $scope.sysToken    = tokenSystem.getTokenStorage(1);
+    $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
    $scope.launchLoader = function(){
      $scope.wLoader  = true;
       $timeout(function() {
@@ -110,37 +123,37 @@ app.controller('MainCtrl', function($scope, $rootScope, $location, serverHost, s
       }, 1500);
       
     }   
-/**************************************************
-*                                                 *
-*         SET THE JSON CONTENT TYPE HEADER        *
-*                                                 *
-**************************************************/ 
-    $scope.setHeaderRequest = function(){
-       return  { headers: { 'Content-Type': 'application/json; charset=utf-8' }}
-    }
-
-/**************************************************
-*                                                 *
-*         COUNT DOWN FUNCTION TO REDIRECT         *
-*                                                 *
-**************************************************/ 
-    $scope.countDownRedirect = function(redirect, count){
-        
-        if(count > 0){
-            count--;
-
-            $scope.time2Redirect = count;
-              $timeout(function() {
-                    
-                    $scope.countDownRedirect(redirect, count);  
-                }, 1000);
-              //console.log(count+1)
-            
-        }else{
-            $scope.redirectSuccessfull = false;
-            location.href = redirect;
+    /**************************************************
+    *                                                 *
+    *         SET THE JSON CONTENT TYPE HEADER        *
+    *                                                 *
+    **************************************************/ 
+        $scope.setHeaderRequest = function(){
+           return  { headers: { 'Content-Type': 'application/json; charset=utf-8' }}
         }
-    }
+
+    /**************************************************
+    *                                                 *
+    *         COUNT DOWN FUNCTION TO REDIRECT         *
+    *                                                 *
+    **************************************************/ 
+        $scope.countDownRedirect = function(redirect, count){
+            
+            if(count > 0){
+                count--;
+
+                $scope.time2Redirect = count;
+                  $timeout(function() {
+                        
+                        $scope.countDownRedirect(redirect, count);  
+                    }, 1000);
+                  //console.log(count+1)
+                
+            }else{
+                $scope.redirectSuccessfull = false;
+                location.href = redirect;
+            }
+        }
 
 
 });

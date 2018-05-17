@@ -1,0 +1,276 @@
+
+    <style>
+    .blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+    </style>
+    
+<div ng-init="" class="container-fluid" >
+    <div class="row" >
+        <div class="col-lg-12" style="background-color: #f1f1f1; ">
+            <div class="row" style="position: fixed;z-index: 100;width: 100%;background: #ebf3da; padding-top: 15px;margin-top: -0.4em;">
+                <div  class="row" style="margin-left: 10px;" >
+                    <div ng-show="sessionidProfile!=3" class="form-group col-lg-2">
+                        <label ng-show="sessionidProfile==2">Empresa</label>
+                      <label ng-show="sessionidProfile==1">Empresa o Administracion</label>
+                      <label ng-show="sessionidProfile==4">Administracion</label>   
+                        <div class="col-xl-12">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+                              <input ng-show="sessionidProfile!=3 && sessionidProfile!=1" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
+
+                              <select ng-show="sessionidProfile==1" name="idCompany" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); dhboard();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- List Address-->
+                    <div ng-if="sessionidProfile!=3" ng-disable="sessionidProfile==3" class="form-group col-lg-2">
+                      <label ng-show="sessionidProfile==2">Sucursal</label>
+                      <label ng-show="sessionidProfile==1">Sucursal o Consorcio</label>
+                      <label ng-show="sessionidProfile==4">Consorcio</label>   
+                        <div class="col-xs-12 selectContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
+                                <select name="idAddress" class="form-control" ng-change="dhboard()"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-model="filters.idAddress" autofocus >
+                                    <option value="">Todos</option>
+                                    </select>
+                            </div>
+                      </div>
+                    </div>
+                    <!-- Address for Onwers-->      
+                    <div class="form-group col-lg-2" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
+                        <label>Consorcio</label>
+                            <div class="col-xl-12 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <select name="idAddres" class="form-control" ng-change="dhboard()"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-model="filters.idAddress" autofocus >
+                                        <option value="">Seleccione un consorcio</option>
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                    <!-- Filter Top -->
+                    <div ng-if="sessionidProfile" class="form-group col-lg-1">
+                      <label>Top</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-align-justify"></i></span>
+                              <select class="form-control" ng-change="dhboard()" ng-model="filters.topDH">
+                                <option value="">Todos</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="100">50</option>
+                            </select>
+                          </div>
+                        </div>
+                    </div>
+                    <!-- Filter Type of Ticket for Company User-->
+                    <div ng-if="sessionidProfile==2" class="form-group col-lg-2">
+                      <label>Tipo de Ticket</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  | filter: greaterThan('idTypeTicket', 2)" ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
+                        </div>
+                    </div>
+                    <!-- Filter Type of Ticket for Onwer User-->
+                    <div ng-if="sessionidProfile==3" class="form-group col-lg-2">
+                      <label>Tipo de Ticket</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket  " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
+                        </div>
+                    </div>
+                    <!-- Filter Type of Ticket for Onwer User-->
+                    <div ng-if="sessionidProfile!=2 && sessionidProfile!=3" class="form-group col-lg-2">
+                      <label>Tipo de Ticket</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idTypeTicketKf" class="form-control" ng-change="dhboard()"  ng-options="item.idTypeTicket as item.TypeTicketName for item in listTypeTicket " ng-required="sessionidProfile==1" ng-model="filters.idTypeTicketKf"  >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
+                        </div>
+                    </div>
+                    <!-- Filter Type of Status-->
+                    <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
+                      <label>Tipo de Estatus</label>
+                        <div class="col-xl-12 selectContainer">
+                          <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <select name="idStatusKf" class="form-control" ng-change="dhboard()"  ng-options="item.idStatus as item.statusName for item in listStatusTicket " ng-model="filters.idStatusKf" >
+                                  <option value="">Todos</option>
+                                </select>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                    <label>Buscar</label>
+                      <div class="col-xl-12">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                          <input type="text" class="form-control" ng-blur="dhboard()" ng-model="filters.searchFilter" placeholder="Buscar...">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <div class="col-xl-12"><br>
+                            <div class="btn-group">
+                                <button type="button" ng-click="dhboard()" class="btn btn-md btn-info">
+                                    <i title="Actualizar" class="glyphicon glyphicon-refresh"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+                    <div ng-show="noStatus" class="col-lg-3">
+                        <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+                        <label>Total Ticket Finalizados</label>
+                        <label style="color: #39af24;font-size: 20px;">0</label>
+                    </div>
+                    <div ng-show="noStatus" class="col-lg-3">
+                        <span class="glyphicon glyphicon-remove-sign " aria-hidden="true"></span>
+                        <label>Total Ticket Cancelados</label>
+                        <label style="color: #af2424;font-size: 20px;">0</label>
+                    </div>
+                    <div  ng-show="noStatus" class="col-lg-3">
+                        <span class="glyphicon glyphicon-ok-sign " aria-hidden="true"></span>
+                        <label>Total Ticket Pendientes</label>
+                        <label  style="color: #af8424;font-size: 20px;">0</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <label>Total</label>
+                        <label style="font-size: 20px;">{{totalTickets}}</label>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body" style="margin-top: 9em;">
+        <div style="background: #737373;">
+            <div class="col-lg-12" 
+                ng-repeat="tk in listTickt;"
+                style="background-color: #ced3d6;
+                height: 82px;
+                border-radius: 5px;
+                padding: 10px;
+                margin-bottom: 5px;">
+                    <div ng-init="compareDaysIn2Dates(tk.dateCratedTicket);" class="col-lg-10">
+                        <label>{{tk.codTicket}}</label>
+                        <label class="blink" style="color:rgb(250, 107, 107);background: #fff;border-radius: 10px;padding-left: 5px; padding-right: 5px; font-size: 11px;">
+                            <span ng-if="tk.idTypeTicket!=3 && tk.isCancelTicket<=0"> {{tk.typeDelivery}}</span>
+                            <span ng-if="tk.idTypeTicket==3 && tk.isCancelTicket<=0">SERVICIO</span>
+                            <span ng-if="tk.idTypeTicket==4 && tk.isCancelTicket<=0">CONSULTA</span>
+                            <span ng-if="tk.idTypeTicket!=0 && tk.isCancelTicket==1">CANCELADO</span>
+                        </label>
+                        <br>
+                        <label  style="color:rgb(0, 113, 0)">{{tk.TypeTicketName}}&nbsp
+                            <span ng-if="differentDays[$index]<=2 && tk.isCancelTicket<=0" class="label label-default">Nuevo</span>
+                        </label><br>
+                        <label>Creado: 
+                            <span style="color:#14162B;">{{tk.dateCratedTicket | dateToISO | date:'dd/MM/yyyy'}} - </span>
+                        </label>
+                        <label ng-if="tk.isCancelTicket<=0">Aprobada: 
+                            <span ng-if="tk.dateRecibedAdmin">{{tk.dateRecibedAdmin}}</span>
+                            <span ng-if="!tk.dateRecibedAdmin">{{tk.dateRecibedAdmin}}</span>
+                        </label>
+                        <label ng-if="tk.isCancelTicket==1">Cancelado: 
+                            <span ng-if="tk.isCancelTicket==1">{{tk.dateCancel | dateToISO | date:'dd/MM/yyyy'}}</span>
+                        </label>
+                        <label ng-if="tk.isCancelTicket<=0">Cliente:</label>
+                        <!-- OWNER -->
+                        <label ng-if="tk.idTypeTicket<=2 && !tk.idDepartmentKf && tk.idTypeKf==1 && tk.isCancelTicket<=0"> 
+                            <span ng-if="tk.idTypeTicket<=2">{{tk.fullNameTenant}} (Propietario) - </span>
+                            <span ng-if="tk.idTypeTicket==4">{{tk.fullNameUser}} (Propietario) - </span>Tlf:
+                            <span ng-if="!tk.phoneNumberContactTenant || tk.phoneNumberTenant">{{tk.phoneNumberTenant}} - </span>
+                            <span ng-if="!tk.phoneNumberTenant">{{tk.phoneNumberContactTenant}}</span> 
+                            <span ng-if="tk.departmentFloor">Depto: {{tk.departmentFloor}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label> 
+                         <!-- TENANT -->
+                        <label ng-if="tk.idTypeTicket<=2 && tk.idDepartmentKf && tk.idTypeKf==2 && tk.isCancelTicket<=0"> 
+                            <span>{{tk.fullNameTenant}} (Inquilino) - </span>Tlf:
+                            <span ng-if="!tk.phoneNumberContactTenant || tk.phoneNumberTenant">{{tk.phoneNumberTenant}} - </span>
+                            <span ng-if="!tk.phoneNumberTenant">{{tk.phoneNumberContactTenant}}</span> 
+                            <span ng-if="tk.departmentFloor">Depto: {{tk.departmentFloor}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label>
+                        <!-- ADMIN CONSORCIO OR COMPANY -->
+                        <label ng-if="(tk.idUserEnterpriceKf || tk.idUserCompany) && !tk.idDepartmentKf && tk.idTypeTicket==3 && !tk.idTypeKf && tk.isCancelTicket<=0"> 
+                            <span >{{tk.fullNameUser}} 
+                                <span ng-if="tk.idUserCompany">(Empresa)</span>
+                                <span ng-if="tk.idUserEnterpriceKf">(Admin Consorcio)</span> - </span>Tlf:  
+                            <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}}</span>
+                            <span ng-if="!tk.phoneNumberUser">{{tk.phoneLocalNumberUser}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label>
+                        <!-- ANY ATTENDANT -->
+                        <label ng-if="(tk.idAttendantKf || tk.idOtherKf) && tk.idTypeTicket!=3 && (tk.idTypeOfOptionKf==1 || tk.idTypeOfOptionKf==3) && tk.isCancelTicket<=0"> 
+                            <span>{{tk.nameAttendant}} (Encargado - {{tk.nameTypeAttendant}}) </span>
+                            <span ng-if="tk.idOtherKf!=0 && tk.idTypeOfOptionKf==3">Funcion: {{tk.descOther}}</span> - Tlf:
+                            <span ng-if="!tk.phoneAttendant">{{tk.phoneLocalAttendant}}</span> 
+                            <span ng-if="!tk.phoneLocalAttendant">{{tk.phoneAttendant}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label>
+                        <!-- BUILDING -->
+                         <label ng-if="tk.idAttendantKf && tk.idTypeTicket!=0 && (tk.idTypeOfOptionKf==2) && tk.isCancelTicket<=0"> 
+                            <span>{{tk.nameAdress}} - (Edificio) - </span>
+                            {{tk.nameAttendant}} (Encargado - {{tk.nameTypeAttendant}}) </span> - Tlf:
+                            <span ng-if="!tk.phoneAttendant">{{tk.phoneLocalAttendant}}</span> 
+                            <span ng-if="!tk.phoneLocalAttendant">{{tk.phoneAttendant}}</span>
+                        </label>
+                        <!-- CONSULT -->
+                        <label ng-if="tk.idTypeTicket==4 && tk.isCancelTicket<=0"> 
+                            <span>{{tk.fullNameUser}} (Propietario) - </span>Tlf:
+                            <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}}</span>
+                            <span ng-if="!tk.phoneNumberUser">{{tk.phoneLocalNumberUser}}</span>
+                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                        </label>
+
+                    </div>
+                
+                    <div class="col-lg-2 pull-right">
+                            <!-- Split button -->
+                        <div  class="btn-group">
+
+                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-sm btn-success">{{tk.statusName}}</button>
+                        <button ng-show="tk.isCancelTicket==1" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-sm btn-success">{{tk.statusName}}</button>
+                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span  class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul ng-if="tk.idStatus>=2"  class="dropdown-menu">
+                            <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
+                        </ul>
+                        </div>
+                    </div>              
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+   

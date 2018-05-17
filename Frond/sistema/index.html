@@ -27,6 +27,8 @@
   <div id="loader">&nbsp;</div>
   <div class="companyName"></div>
 </div>
+
+
 <!-- ng-view div -->
 <div ng-view></div>
 
@@ -43,6 +45,7 @@
 <!--//JQUERY MODULES -->
 <!--ANGULAR MODULES -->
 <script src="lib/angular/angularjs/default/js/angular.js"></script>
+<script src="lib/angular/angular-css/js/angular-css.js"></script>
 <script src="lib/angular/angular-route/js/angular-route.min.js"></script>
 <script src="lib/angular/underscore/js/underscore-min.js"></script>
 <script src="lib/angular/angular-block-ui/js/angular-block-ui.js"></script>
@@ -51,9 +54,6 @@
 <script src="lib/angular/angular-animate/js/angular-animate.min.js"></script>
 <script src="lib/angular/ui-bootstrap/js/ui-bootstrap.js"></script>
 
-
-<!-- AngularCSS library (from CDN) -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.8/angular-css.js"></script>
 <!--ANGULAR MODULES -->
 
 <script src="coferbaApp.js"></script> <!-- Coferba Angular App -->
@@ -61,7 +61,8 @@
 <script src="common/services/tokenSystem.js"></script>
 <script src="common/services/coferbaUserServices.js"></script>
 
-<script src="lib/jquery/loginjs/coferbaJsLogin.js"></script>  <!-- Coferba Jquery Login Functions -->
+<script src="lib/jquery/mainAppJs/coferbaJsMainApp.js"></script>  <!-- Coferba Jquery Login Functions -->
+<script src="controllers/coferbaCtrlMainApp.js"></script> <!--  Coferba Angular Main System Functions -->
 <script src="controllers/coferbaCtrlLogin.js"></script> <!--  Coferba Angular Login Functions -->
 <script src="controllers/coferbaCtrlRegister.js"></script> <!--  Coferba Angular Register Functions -->
 <script src="controllers/coferbaCtrlforgotPwd.js"></script> <!--  Coferba Angular ForgotPwd Functions -->

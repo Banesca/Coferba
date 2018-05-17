@@ -13,7 +13,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
             console.log("Email a verificar: "+userMail);
               return $http({
                     method : "GET",
-                    url : serverHost+serverBackend+"user/findUserByEmail/"+mail2Search
+                    url : serverHost+serverBackend+"user/findAttByEmail/"+mail2Search
                   }).then(function mySuccess(response) {
                       checkResult = 1;
                       //console.log("Email registrado: "+response.data.emailUser);
@@ -62,13 +62,27 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
               });
           },
           /* UPDATE AN USER AND CHANGE PASSWORD */
-          updateUser: function(userPwd2Change) {
+          updateUser: function(userData2Change) {
             var data2update = {};
-            var user =userPwd2Change;
+            var user =userData2Change;
              data2update ={ user }; 
             //console.log(serverHeaders);
             console.log(data2update);
-              return $http.post(serverHost+serverBackend+"User/update",userPwd2Change, serverHeaders)
+              return $http.post(serverHost+serverBackend+"User/update",data2update)
+                .then(function mySucess(response, status, data) {
+                  checkResult = 1;
+                  return checkResult;
+              },function myError(response, error) { 
+                console.log("Error: "+response.data); 
+                checkResult = 0;
+                return checkResult;
+              });
+          },
+          /* ADD AN USER */
+          addUser: function(userData2Add) {
+            //console.log(serverHeaders);
+              console.log(userData2Add);
+              return $http.post(serverHost+serverBackend+"User/", userData2Add)
                 .then(function mySucess(response, status, data) {
                   checkResult = 1;
                   return checkResult;
@@ -89,20 +103,20 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                     switch (response.status){
                       case 200:
                         localStorage.removeItem("attempsToken");
-                        if(rsJSON.resetPasword==1){
-                          console.log('Change Password Required');
-                          tokenSystem.temporalStorage(rsJSON);
-                          loginResult = 2;
-                          return loginResult;
-                        }else if(rsJSON.isConfirmatedMail==0){
+                        if(rsJSON.isConfirmatedMail==0){
                           console.log('Confirm Email Required');
                           tokenSystem.temporalStorage(rsJSON);
                           loginResult = 3;
                           return loginResult;
-                        }else if(rsJSON.idStatusKf==0){ 
+                        }else if(rsJSON.isConfirmatedMail==1 && rsJSON.idStatusKf==0){ 
                           console.log('Account Inactive, please contact support');
                           tokenSystem.temporalStorage(rsJSON);
                           loginResult = 4;
+                          return loginResult;
+                        }else if(rsJSON.isConfirmatedMail==1 && rsJSON.idStatusKf==1 && rsJSON.resetPasword==1){
+                          console.log('Change Password Required');
+                          tokenSystem.temporalStorage(rsJSON);
+                          loginResult = 2;
                           return loginResult;
                         }else  if(rsJSON.resetPasword==0 && rsJSON.idStatusKf==1){
                         tokenSystem.destroyTokenStorage(4);

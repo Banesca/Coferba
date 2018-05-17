@@ -3,7 +3,6 @@ var moduleLoginUser = angular.module("coferbaApp.LoginUser", ["coferbaTokenSyste
 
 moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, inputService, userServices, tokenSystem, serverHost, serverBackend, $window){
 
-  $scope.sysToken            = tokenSystem.getTokenStorage(1);
   $scope.login               = {email:'', passwd:''};
   $scope.signup              = {email:''};
   $scope.signupUser          = false;
@@ -14,8 +13,16 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
   $scope.redirect2NewPwd     = false;
   $scope.redirect2RestorePwd = false;
   $scope.redirect2Register   = false;
+  $scope.redirect2MainApp    = false;
   $scope.swOption            = "";
   tokenSystem.destroyTokenStorage(4);
+  $scope.counT  =5;
+  $scope.redirect ="#/mainapp";
+  $scope.sysToken      = tokenSystem.getTokenStorage(1);
+  $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
+  if ($scope.sysToken || $scope.sysLoggedUser ){
+      location.href = $scope.redirect;      
+  }
 
   /**************************************************
   *                                                 *
@@ -104,7 +111,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
       console.log("Value returned by the LoginService: "+$scope.loginResult);
       switch ($scope.loginResult){
         case 1:
-          $scope.redirect2Register = true;
+          $scope.redirect2MainApp = true;
           $scope.countDownRedirect("#/mainapp", 3);
         break;
         case 2:
@@ -112,8 +119,12 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
           $scope.countDownRedirect("#/newpwd", 3);
         break;
         case 3:
-          $scope.redirect2ResendEmail = true;
-          $scope.countDownRedirect("#/resendemail", 3);
+          //$scope.redirect2ResendEmail = true;
+          //$scope.countDownRedirect("#/resendemail", 3);
+          var rsTmpUser = tokenSystem.getTokenStorage(3);
+          $scope.msg1="Disculpa, "+rsTmpUser.fullNameUser+", para continuar debe confirmar su correo electronico.";
+          $scope.msg2="Verifica tu casilla de correo."
+          $('#notificationModal').modal('show');
         break;
         case 4:
           var rsTmpUser = tokenSystem.getTokenStorage(3);
@@ -183,7 +194,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
           console.log("Email registrado / "+ $scope.signup.email);
         }else{
           $scope.redirect2Register = true;
-        $scope.countDownRedirect("#/register", 3);
+        $scope.countDownRedirect("#/register", 10);
 
         }
     });

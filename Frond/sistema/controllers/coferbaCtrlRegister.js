@@ -1,102 +1,73 @@
-var moduleRegisterUser = angular.module("coferbaApp.RegisterUser", ["coferbaTokenSystem"]);
+var moduleRegisterUser = angular.module("coferbaApp.RegisterUser", ["coferbaTokenSystem", "coferbaServices.User"]);
 
 
 
-moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $location, $http, blockUI, inputService, $timeout, tokenSystem, serverHost, $window){
-  /**************************************************
-  *                                                 *
-  *               INGRESO DE USUARIO                *
-  *                                                 *
-  **************************************************/
-  $scope.login = {email:'', passwd:''};
-  $scope.forgotPass       = false;
-  $scope.noRegisteredUser = false;
+moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $location, $http, blockUI, inputService, userServices, $timeout, tokenSystem, serverHost, serverBackend, $window){
+
+  $scope.register = {idProfileKf:'', fname:'', lname:'', email:'', password1:'', password2:'', phonelocalNumberUser:'', phoneMovilNumberUser: ''};
+  $scope.redirectSuccessfull = false;
   $scope.counT  =5;
   $scope.redirect ="#/login";
-  $scope.serverHost = serverHost;
-  $scope.validateUserLogin = function(){
-    if ($scope.login.email && $scope.login.passwd){
-        //location.href = "../user/";
-        //$state.go('../user/');
-    }
-  }
-
-  $scope.sysRegisterFn = function(){
-      console.log($scope._setuser());
-      //$scope.mensajeTest=true;
-      //location.href = "#/login";
-      //console.log($scope.mensajeTest)
-      //$location.path('/nlogin');
-      //$scope.addUser($http, $scope);
-      $scope.redirectSuccessfull=true;
-      $scope.countDownRedirect($scope.redirect, $scope.counT);
-  }
+  tokenSystem.destroyTokenStorage(2);
+  $scope.sysToken      = tokenSystem.getTokenStorage(1);
+  $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
 
   /**************************************************
   *                                                 *
   *               REGISTRO DE USUARIO               *
   *                                                 *
   **************************************************/
-  $scope.addUser = function ($http, $scope){
-    $http.post($scope.serverHost+"Coferba/Back/index.php/User/", $scope._setuser())
-        .then(function (sucess, data) {
-          //alert($scope.idProfileTmp)
-          /*if ($scope.idProfileTmp==3){
-              $scope.t.fullNameTenant           = $scope.fname+' '+$scope.lname;
-              $scope.t.idTypeKf                 = 1;
-              $scope.t.phoneNumberTenant        = $scope.phoneNumberUser;
-              $scope.t.phoneNumberContactTenant = $scope.phonelocalNumberUser;
-              $scope.t.emailTenant              = $scope.emailUser;
-              $scope.sysFunctionsTenant('search'); //CHECK THE TENANT TABLE IF THERE IS ALREADY REGISTERED
-              $scope.IsTenant=true;
-          }*/
-          inform.add('Usuario registrado con exito. ',{
-                  ttl:2000, type: 'success'
-          });
-          location.href = "../";
+  $scope.sysRegisterFn = function(){
+    console.log($scope.userData2Add());
+      userServices.addUser($scope.userData2Add()).then(function(data){
+      $scope.addUserResult = data;
+        if($scope.addUserResult){
+          $scope.redirectSuccessfull = true;
+          $scope.countDownRedirect($scope.redirect, $scope.counT);
+        }
 
-      },function (error, data,status) {
-              if(status == 404){alert("!Informacion "+status+data.error+"info");}
-              else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-              else{alert("Error Registro de Usuario !"+status+" Contacte a Soporte"+"error");}
-             
       });
-  };
-
-  $scope._setuser = function () {
-     $scope.idProfileTmp=!$scope.Token ? 3 : $scope.idProfileKf
+ 
+  }
+  $scope.userData2Add = function () {
     var user =
-            {
-                  user:{
-                              fullNameUser        : $scope.fname+' '+$scope.lname,
-                              emailUser           : $scope.emailUser,
-                              phoneNumberUser     : $scope.phoneNumberUser,
-                              phoneLocalNumberUser: $scope.phonelocalNumberUser,
-                              passwordUser        : $scope.password1,
-                              idProfileKf         : $scope.idProfileTmp,
-                              idCompanyKf         : $scope.idCompanyKf
-                        }
-            };
+          {
+            user:{
+                        fullNameUser            : $scope.register.fname+' '+$scope.register.lname,
+                        emailUser               : $scope.register.email,
+                        phoneNumberUser         : $scope.register.phoneMovilNumberUser,
+                        phoneLocalNumberUser    : $scope.register.phonelocalNumberUser,
+                        passwordUser            : $scope.register.password2,
+                        idProfileKf             : $scope.register.idProfileKf,
+                        idCompanyKf             : $scope.register.idCompanyKf,
+                        /*-----------------------------------------*/
+                        idAddresKf              : $scope.register.idAddrAttKf,
+                        idTyepeAttendantKf      : $scope.register.idTypeAttKf,
+                        descOther               : $scope.register.typeOtherAtt,
+                        //idDepartmentKf          : $scope.register.
+                        //isEdit                  : $scope.register.
+                        requireAuthentication   : $scope.register.isRequireAuthentication
+                  }
+          };
     return user;
   };
+  $scope.evalIsRequiredPwd = function(){
+      if($scope.register.idProfileKf!== 6 && !$scope.register.idTypeAttKf){
+        $scope.pwdRequired = true;
+      }else if ($scope.register.idProfileKf == 6 && $scope.register.idTypeAttKf && !$scope.register.isRequireAuthentication){
+        $scope.pwdRequired = false;
+      }else if ($scope.register.idProfileKf == 6 && $scope.register.idTypeAttKf==2 && $scope.register.isRequireAuthentication==1){
+        $scope.pwdRequired = true;
+      }
+      return $scope.pwdRequired;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//**************************************************************
+//**************************************************************
 
 
   $scope.fnLoadPhoneMask = function(){
-     /**********************************************
+    /**********************************************
     *               INPUT PHONE MASK              *
     **********************************************/
     $('.input--tel').mask('(054) 9 99 9999-9999');
@@ -147,7 +118,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
   $scope.CallFilterFormU = function(){
      $http({
         method : "GET",
-        url : $scope.serverHost+"Coferba/Back/index.php/User/filterForm"
+        url : serverHost+"Coferba/Back/index.php/User/filterForm"
       }).then(function mySuccess(response) {
           $scope.listProfile      = response.data.profile;
           $scope.lisTypeTenant    = response.data.type;
@@ -168,7 +139,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
     $scope.listUser = "";
      $http({
         method : "GET",
-        url : $scope.serverHost+"Coferba/Back/index.php/Ticket/filter"
+        url : serverHost+"Coferba/Back/index.php/Ticket/filter"
       }).then(function mySuccess(response) {
           $scope.listTypeDelivery = response.data.typedelivery;
           $scope.listTypeLost     = response.data.reason_disabled_item;
@@ -198,7 +169,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
   $scope.getTypeAttendant = function(){
      $http({
         method : "GET",
-        url : $scope.serverHost+"Coferba/Back/index.php/Ticket/typeAttendant"
+        url : serverHost+"Coferba/Back/index.php/Ticket/typeAttendant"
       }).then(function mySuccess(response) {
             $scope.listTypeAttendant = response.data;
              $scope.attendantTypeFound=true;
@@ -206,5 +177,21 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
           $scope.listTypeAttendant ="";
            $scope.attendantTypeFound=false;
       });
+  }
+
+  /**************************************************
+  *                                                 *
+  *                  ADDRESS LIST                   *
+  *                                                 *
+  **************************************************/
+  $scope.getAllAddress = function (){
+    $http({
+        method : "GET",
+        url : serverHost+"Coferba/Back/index.php/Direccion"
+      }).then(function mySuccess(response){
+          $scope.ListAddress = response.data;
+      }, function myError (response){
+        
+    });
   }
 });

@@ -1,107 +1,109 @@
-<div ng-show="!redirect2NewPwd && !redirect2RestorePwd && !redirect2Register && !sysToken" ng-init="launchLoader();">
-	<div class="main_content">
-	   <div class="backbox">
-		      <div>
-		      	<div class="loginMsg">
-		        	<div class="textcontent1">
-				        <p class="title">Tenes cuenta de usuario?</p>
-				        <p>Ingresa con tu correo y clave.</p>
-				        <button ng-click="fnLoginToggle(2);"><i class="glyphicon glyphicon-log-in"></i> LOGIN</button>
-				    </div>
-		        </div>
-		        <div class="signupMsg">
-		        	<div class="textcontent2">
-		          		<p class="title">No estás registrado?</p>
-		          		<p>Solo Clientes Autorizados</p>
-		          		<button ng-click="fnLoginToggle(1);"><i class="glyphicon glyphicon-log-in"></i> REGISTRO</button>
-		          	</div>
-		        </div>
-		      </div>
-	   </div>
-	    <!-- backbox -->
-	    <div class="frontbox">
-			    <div  ng-show="loginUser" class="login"><!-- USER LOGIN FORM -->
-			        <h2>COFERBA</h2>
-			        <h5>Usuarios Registrados</h5>
-			        <form name="frmLogin" class="form-horizontal" id="frmLogin" autocomplete="off" ng-submit="sysLoginUser();">
-				        <div class="form-group">
-				        	<div class="inner-addon right-addon">
-				          		<input 
-				          			id="loginEmail" 
-				          			type="email" 
-				          			ng-model="login.email" 
-				          			data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de ingreso con el correo <bold>{{login.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
-				          			class="form-input popover-large" 
-				          			ng-blur="inputCheckCss('loginemail'); sysCheckEmailLogin();" 
-				          			name="loginemail" autofocus required>
-				          		<label>Email</label>
-				          		<i class="glyphicon glyphicon-envelope"></i>
-				          		<span class="bar"></span>
-				          	</div>
+<div class="container">
+	<div ng-show="!redirect2NewPwd && !redirect2RestorePwd && !redirect2Register && !redirect2MainApp && !sysToken" ng-init="launchLoader();">
+		<div class="main_content">
+		   <div class="backbox">
+			      <div>
+			      	<div class="loginMsg">
+			        	<div class="textcontent1">
+					        <p class="title">Tenes cuenta de usuario?</p>
+					        <p>Ingresa con tu correo y clave.</p>
+					        <button ng-click="fnLoginToggle(2);"><i class="glyphicon glyphicon-log-in"></i> LOGIN</button>
 					    </div>
-					    <div class="form-group">
-				        	<div class="inner-addon right-addon">
-					          	<input 
-					          	id="loginpassword"
-					          	type="password" 
-					          	ng-model="login.passwd" 
-					          	data-content="<p>Ha ingresado en {{mailCheckCount+1}} oportunidades la clave incorrecta.<br><br> Desea restablecer la Contrase&#241a de su cuenta? </p>"
-					          	ng-blur="inputCheckCss('loginpassword')" 
-					          	class="form-input popover-large" 
-					          	name="loginpassword" autofocus required>
-					          	<label>Contrase&#241a</label>
-				          		<i class="glyphicon glyphicon-lock"></i>
-				          		<span class="bar"></span>
+			        </div>
+			        <div class="signupMsg">
+			        	<div class="textcontent2">
+			          		<p class="title">No estás registrado?</p>
+			          		<p>Solo Clientes Autorizados</p>
+			          		<button ng-click="fnLoginToggle(1);"><i class="glyphicon glyphicon-log-in"></i> REGISTRO</button>
+			          	</div>
+			        </div>
+			      </div>
+		   </div>
+		    <!-- backbox -->
+		    <div class="frontbox">
+				    <div  ng-show="loginUser" class="login"><!-- USER LOGIN FORM -->
+				        <h2>COFERBA</h2>
+				        <h5>Usuarios Registrados</h5>
+				        <form name="frmLogin" class="form-horizontal" id="frmLogin" autocomplete="off" ng-submit="sysLoginUser();">
+					        <div class="form-group">
+					        	<div class="inner-addon right-addon">
+					          		<input 
+					          			id="loginEmail" 
+					          			type="email" 
+					          			ng-model="login.email" 
+					          			data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de ingreso con el correo <bold>{{login.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
+					          			class="form-input popover-large" 
+					          			ng-blur="inputCheckCss('loginemail'); sysCheckEmailLogin();" 
+					          			name="loginemail" autofocus required>
+					          		<label>Email</label>
+					          		<i class="glyphicon glyphicon-envelope"></i>
+					          		<span class="bar"></span>
+					          	</div>
+						    </div>
+						    <div class="form-group">
+					        	<div class="inner-addon right-addon">
+						          	<input 
+						          	id="loginpassword"
+						          	type="password" 
+						          	ng-model="login.passwd" 
+						          	data-content="<p>Ha ingresado en {{mailCheckCount+1}} oportunidades la clave incorrecta.<br><br> Desea restablecer la Contrase&#241a de su cuenta? </p>"
+						          	ng-blur="inputCheckCss('loginpassword')" 
+						          	class="form-input popover-large" 
+						          	name="loginpassword" autofocus required>
+						          	<label>Contrase&#241a</label>
+					          		<i class="glyphicon glyphicon-lock"></i>
+					          		<span class="bar"></span>
+						        </div>
 					        </div>
-				        </div>
-				        	<p id="forgotpwd" class="forgotpwd"><a href="#/forgotpwd">Olvidastes tu clave?</a></p>
-				        	<button class="btn btn-primary pull-right"  >LOG IN <i class="glyphicon glyphicon-arrow-right"></i></button>
-		          	</form>
-			    </div>
-		    	<!-- ************************************************* -->
-		      	<div ng-show="signupUser" class="signup"><!-- REGISTER FORM CHECK -->
-			        <h2>COFERBA</h2>
-			        <h5>Nuevo usuario</h5><br><br>
-			        <form name="frmSignUpCheck" class="form-horizontal" id="frmSignUpCheck" ng-submit="sysCheckBeforeSignup()">
-				        <div class="form-group">
-				        	<div class="inner-addon right-addon">
-				          		<input 
-				          		id="signupemail" 
-				          		type="email" 
-			          			data-content="<p>El correo <bold>{{signup.email}}</bold> se encuentra registrado en nuestro sistema.<br><br> Desea restablacer su clave? </p>"
-			          			class="form-input popover-large"
-				          		ng-blur="inputCheckCss('signupemail')" 
-				          		required 
-				          		ng-model="signup.email" 
-				          		name="signupemail" 
-				          		autofocus required>
-				          		<label>Email</label>
-				          		<i class="glyphicon glyphicon-envelope"></i>
-				          		<span class="bar"></span>
-				          	</div>
-				        </div>
-				        <div class="spacing"></div>
-				        <button type="submit" class="btn btn-primary pull-right">Siguiente <i class="glyphicon glyphicon-arrow-right"></i></button>
-				    </form>
-		      	</div>
-	      		<!-- ************************************************* -->
-	    </div>
-	    <!-- frontbox -->
+					        	<p id="forgotpwd" class="forgotpwd"><a href="#/forgotpwd">Olvidastes tu clave?</a></p>
+					        	<button class="btn btn-primary pull-right"  >LOG IN <i class="glyphicon glyphicon-arrow-right"></i></button>
+			          	</form>
+				    </div>
+			    	<!-- ************************************************* -->
+			      	<div ng-show="signupUser" class="signup"><!-- REGISTER FORM CHECK -->
+				        <h2>COFERBA</h2>
+				        <h5>Nuevo usuario</h5><br><br>
+				        <form name="frmSignUpCheck" class="form-horizontal" id="frmSignUpCheck" ng-submit="sysCheckBeforeSignup()">
+					        <div class="form-group">
+					        	<div class="inner-addon right-addon">
+					          		<input 
+					          		id="signupemail" 
+					          		type="email" 
+				          			data-content="<p>El correo <bold>{{signup.email}}</bold> se encuentra registrado en nuestro sistema.<br><br> Desea restablacer su clave? </p>"
+				          			class="form-input popover-large"
+					          		ng-blur="inputCheckCss('signupemail')" 
+					          		required 
+					          		ng-model="signup.email" 
+					          		name="signupemail" 
+					          		autofocus required>
+					          		<label>Email</label>
+					          		<i class="glyphicon glyphicon-envelope"></i>
+					          		<span class="bar"></span>
+					          	</div>
+					        </div>
+					        <div class="spacing"></div>
+					        <button type="submit" class="btn btn-primary pull-right">Siguiente <i class="glyphicon glyphicon-arrow-right"></i></button>
+					    </form>
+			      	</div>
+		      		<!-- ************************************************* -->
+		    </div>
+		    <!-- frontbox -->
+		</div>
 	</div>
-</div>
-<div ng-if="redirect2NewPwd || redirect2RestorePwd || redirect2Register" class="verticalAllign">
-	<div class="col-md-12">
-		<div class="hero-widget alert well-sm alert-success">
-			<div class="icon">
- 				<i class="glyphicon glyphicon-lock"></i>
-			</div>
-			<div class="text">
-    			<h2 ng-if="redirect2NewPwd" class="text-success">Estas siendo redireccionado para generar una nueva clave.</h2>
-    			<h2 ng-if="redirect2RestorePwd" class="text-success">Estas siendo redireccionado para resteblecer tu cuenta.</h2>
-    			<h2 ng-if="redirect2Register" class="text-success">Estas siendo redireccionado para crear tu cuenta de usuario.</h2>
-			</div>
-			<div class="options">
-    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
+	<div ng-if="redirect2NewPwd || redirect2RestorePwd || redirect2Register" class="verticalAllign">
+		<div class="col-md-12">
+			<div class="hero-widget alert well-sm alert-success">
+				<div class="icon">
+	 				<i class="glyphicon glyphicon-lock"></i>
+				</div>
+				<div class="text">
+	    			<h2 ng-if="redirect2NewPwd" class="text-success">Estas siendo redireccionado para generar una nueva clave.</h2>
+	    			<h2 ng-if="redirect2RestorePwd" class="text-success">Estas siendo redireccionado para resteblecer tu cuenta.</h2>
+	    			<h2 ng-if="redirect2Register" class="text-success">Estas siendo redireccionado para crear tu cuenta de usuario.</h2>
+				</div>
+				<div class="options">
+	    			<p data-toggle="tooltip" data-placement="bottom" title="{{time2Redirect+1}}" class="btn btn-primary btn-sm">Redireccionando en <span class="badge badge-light"> {{time2Redirect+1}}</span></p>
+				</div>
 			</div>
 		</div>
 	</div>

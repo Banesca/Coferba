@@ -1,0 +1,91 @@
+    <!-- USER PROFILE FORM -->
+	<div id="ProfileModalUser" style="top: 130px;" class="modal fade bd-example-modal-lg" role="dialog">
+	  	<div class="modal-dialog modal-lg" >
+		    <div class="modal-content">
+              	<div class="modal-header">
+                	<h3 class="modal-title">PERFIL USUARIO<a data-dismiss="modal" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+            	</div>
+        		<div class="modal-body">
+					<!-- FORM CONTAINER-->
+    				<form class="form-horizontal" name="fUserProfile" ng-init="" ng-submit="sysFunctionsUser('updprofile')">
+						<fieldset>
+						<!-- Select profile -->
+						   
+						<div class="form-group"> 
+						  <label class="col-md-4 control-label">Perfil</label>
+						    <div class="col-md-4 selectContainer">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									    <span class="form-control disabled">{{sessionProfileName}}</span>
+							  	</div>
+							</div>
+						</div>
+						<!-- Company List-->
+						      
+						<div ng-show="sessionidProfile==2 || sessionidProfile==4" class="form-group">
+						  <label class="col-md-4 control-label">Empresa</label>  
+						    <div class="col-md-4">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+							  		<span class="form-control disabled">{{sessionNameCompany}}</span>
+							    </div>
+						  </div>
+						</div>
+						<!-- Form First Name -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Nombres</label>  
+							  <div class="col-md-4">
+								  <div class="input-group">
+									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									  <input  name="profileNames" autofocus="true" placeholder="Nombre" class="form-control" ng-model="profile.Names"  type="text" autofocus/>
+								  </div>
+							  </div>
+						</div>
+						<!-- Text Mail-->
+
+						<div class="form-group">
+						 <label class="col-md-4 control-label">E-Mail</label>  
+						   <div class="col-md-4">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						  		<input name="profileEmail" placeholder="E-Mail" class="form-control" ng-model="profile.Email"  type="email" autofocus />
+						    </div>
+						  </div>
+						</div>
+						<!-- Text Phone-->
+						       
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Telefono Fijo</label>  
+						    <div class="col-md-4">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+							  		<input name="phoneLocal" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="profile.PhonelocalNumber"  type="text"  autofocus />
+							    </div>
+						  </div>
+						</div>
+						<!-- Text Phone-->
+						       
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Telefono Movil</label>  
+						    <div class="col-md-4">
+							    <div class="input-group">
+							        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+							  		<input name="MovilPhoneNumber" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="profile.MovilPhoneNumber"  type="text"  autofocus />
+							    </div>
+						  </div>
+						</div>
+
+						<!-- Actions Button -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label"></label>
+						  <div class="col-md-4">
+						    <button type="submit" class="btn btn-primary" >Actualizar</button>
+						  </div>
+						</div>
+
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

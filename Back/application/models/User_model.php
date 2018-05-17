@@ -99,7 +99,7 @@ class User_model extends CI_Model
     /* AGRAGR NUEVO USUARIO DE CUALQUIER TIPO */
     public function add($user) {
 
-        if($this->findAttByEmail($user['emailUser']) != null){
+        if($this->findAttByEmail($user['emailUser']) == null){
         $tokenMail = $this->generateRandomString();
 
         /* CREAMOS UN USUARIO */
@@ -216,7 +216,7 @@ class User_model extends CI_Model
 
 
     /*BUSCAR USUARIO POR EL EMAIL*/
-    public function findUserByEmail($mail) {
+    public function findAttByEmail($mail) {
     
             $user = null;
     
