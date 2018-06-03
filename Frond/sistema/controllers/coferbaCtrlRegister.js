@@ -8,6 +8,8 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
   $scope.redirectSuccessfull = false;
   $scope.counT  =5;
   $scope.redirect ="#/login";
+  $scope.pwdRequired = false;
+  console.log($scope.pwdRequired)
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
@@ -30,6 +32,11 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
  
   }
   $scope.userData2Add = function () {
+    if($scope.register.idProfileKf==3){
+      $scope.register.idTypeTenantKf ="1";
+    }else if ($scope.register.idProfileKf==5){
+      $scope.register.idTypeTenantKf ="2";
+    }
     var user =
           {
             user:{
@@ -43,6 +50,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
                         /*-----------------------------------------*/
                         idAddresKf              : $scope.register.idAddrAttKf,
                         idTyepeAttendantKf      : $scope.register.idTypeAttKf,
+                        idTypeTenantKf          : $scope.register.idTypeTenantKf,
                         descOther               : $scope.register.typeOtherAtt,
                         //idDepartmentKf          : $scope.register.
                         //isEdit                  : $scope.register.
@@ -52,13 +60,20 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
     return user;
   };
   $scope.evalIsRequiredPwd = function(){
-      if($scope.register.idProfileKf!== 6 && !$scope.register.idTypeAttKf){
+      if($scope.register.idProfileKf!==6 && !$scope.register.idTypeAttKf){
         $scope.pwdRequired = true;
-      }else if ($scope.register.idProfileKf == 6 && $scope.register.idTypeAttKf && !$scope.register.isRequireAuthentication){
+        console.log("entro al primer true: "+$scope.register.idProfileKf)
+      }else if ($scope.register.idProfileKf == 6 && !$scope.register.idTypeAttKf){
         $scope.pwdRequired = false;
-      }else if ($scope.register.idProfileKf == 6 && $scope.register.idTypeAttKf==2 && $scope.register.isRequireAuthentication==1){
+        console.log("entro al false")
+      }else if ($scope.register.idProfileKf == 6 && $scope.register.idTypeAttKf==2){
         $scope.pwdRequired = true;
+        console.log("entro al true")
+      }else if ($scope.register.idProfileKf == 6 && $scope.register.idTypeAttKf!=2){
+        $scope.pwdRequired = false;
+        console.log("entro al false")
       }
+      console.log($scope.pwdRequired)
       return $scope.pwdRequired;
   }
 
@@ -70,7 +85,8 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
     /**********************************************
     *               INPUT PHONE MASK              *
     **********************************************/
-    $('.input--tel').mask('(054) 9 99 9999-9999');
+    $('.input--movil').mask('99999999999');
+    $('.input--local').mask('9999999999');
     $('.input--tel').on('focus', function () {
        if ($(this).val().length === 0) {
          $(this).val();
@@ -145,11 +161,8 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
           $scope.listTypeLost     = response.data.reason_disabled_item;
           $scope.listTypeQuery    = response.data.typeouther;
           $scope.listUser         = response.data.user;
-          $scope.listAllTenant    = response.data.tenant;
-          $scope.listAllTAtt      = response.data.attendant;
           $scope.listTypeTicket   = response.data.typeticket;
           $scope.listStatusTicket = response.data.statusticket;
-          $scope.lengthUser = $scope.listUser.length;
         }, function myError(response) {
           $scope.listTypeDelivery = "";
           $scope.listTypeLost     = "";
@@ -194,4 +207,18 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, $rootScope, $
         
     });
   }
+
+  $scope.getCompanyFromAdress = function(){
+    var idAddrr = $scope.select.idAddressAtt;
+    /* Recorrer el Json Attendant para obtener datos */
+    var length = $scope.ListTenantAddress.length;
+    for (i = 0; i < length; i++) {
+        if($scope.ListTenantAddress[i].idAdress == idAddrr){
+            
+            $scope.tmp.idCompanyKf = $scope.ListTenantAddress[i].idCompanyKf;
+            console.log($scope.ListTenantAddress[i].idCompanyKf);
+            break;
+        }
+    }; 
+}
 });

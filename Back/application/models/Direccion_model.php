@@ -47,23 +47,28 @@ class Direccion_model extends CI_Model
     }
 
 
-     public function byidTenant($id, $idStatus) {
+     public function byidTenant($id, $idDpto, $idStatus) {
         $quuery = null;
         $rs = null;
-
         $this->db->select("*")->from("tb_addres");
         $this->db->join('tb_department', 'tb_department.idAdressKf = tb_addres.idAdress', 'inner');
         $this->db->join('tb_branch', 'tb_branch.idAdressKf = tb_department.idAdressKf', 'left');
         $this->db->join('tb_company', 'tb_company.idCompany = tb_branch.idCompanyKf', 'left');
+        if($idDpto){
+            $this->db->join('tb_user', 'tb_user.idDepartmentKf = tb_department.idDepartment', 'left');
+        }
         $this->db->group_by('tb_addres.idAdress');
         
-        if($idStatus == 1){ // si le mandas 1 te retorna los APROBADOS 
-                $this->db->where("tb_department.isAprobatedAdmin =", 1);
-            }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 
-                $this->db->where("tb_department.isAprobatedAdmin =", 0);
+        if(!$idDpto){
+            if($idStatus == 1){ // si le mandas 1 te retorna los APROBADOS 
+                    $this->db->where("tb_department.isAprobatedAdmin =", 1);
+                }else if($idStatus == 0){// SI LE MANDAS 0 LOS NO APROBADOS 
+                    $this->db->where("tb_department.isAprobatedAdmin =", 0);
             }
-        $quuery =   $this->db->where("tb_department.idUserKf =", $id)->get();
-        
+            $quuery =   $this->db->where("tb_department.idUserKf =", $id)->get();
+        }else if($idDpto){
+            $quuery =   $this->db->where("tb_user.idUser=".$id." and tb_user.idDepartmentKf=".$idDpto)->get();
+        }
 
         if ($quuery->num_rows() > 0) {
             $rs = $quuery->result_array();

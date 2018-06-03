@@ -103,7 +103,12 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                     switch (response.status){
                       case 200:
                         localStorage.removeItem("attempsToken");
-                        if(rsJSON.isConfirmatedMail==0){
+                        if(rsJSON.idProfileKf==6 && rsJSON.requireAuthentication==0){
+                           console.log('is an Attendant without login premission');
+                          tokenSystem.temporalStorage(rsJSON);
+                          loginResult = 10;
+                          return loginResult; 
+                        }else if(rsJSON.isConfirmatedMail==0){
                           console.log('Confirm Email Required');
                           tokenSystem.temporalStorage(rsJSON);
                           loginResult = 3;

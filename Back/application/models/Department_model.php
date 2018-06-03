@@ -217,8 +217,8 @@ class Department_model extends CI_Model
 
         $this->db->set(
                 array(
-                    'idUserKf'=>$department['idUserKf'],
-                    'idDepartment'=>$department['idDepartment']
+                    'idUserKf'=>$department['idUserKf']
+                    //'idDepartment'=>$department['idDepartment']
                 )
         )->where("idDepartment", $department['idDepartment'])->update("tb_department");
 

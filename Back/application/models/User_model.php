@@ -111,6 +111,7 @@ class User_model extends CI_Model
             'idAddresKf' => @$user['idAddresKf'],
             'passwordUser' => sha1(md5($user['passwordUser'])),
             'idProfileKf' => $user['idProfileKf'],
+            'idTypeTenantKf' => $user['idTypeTenantKf'],
             'idStatusKf' => 0,
             'idCompanyKf' => @$user['idCompanyKf'],
             'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
@@ -191,7 +192,9 @@ class User_model extends CI_Model
                     'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
                     'descOther' => @$user['descOther'],
                     'idDepartmentKf' => @$user['idDepartmentKf'],
-                    'requireAuthentication' => @$user['requireAuthentication']
+                    'idTypeTenantKf' => $user['idTypeTenantKf'],
+                    'requireAuthentication' => @$user['requireAuthentication'],
+                    'isEdit' => @$user['isEdit']
                 )
         )->where("idUser", $user['idUser'])->update("tb_user");
 
@@ -477,6 +480,7 @@ public function updateMailSmtp($mail) {
 
         
             $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
             $this->db->where("tb_user.idAddresKf =", $id);
             $this->db->where("tb_user.idProfileKf =", 6);
 

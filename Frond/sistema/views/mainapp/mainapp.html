@@ -7,18 +7,18 @@
 	            <div>
 	            	<ul class="nav navbar-nav navbar-right">
 	            		<li class="dropdown gray">
-	            			<h3><i class="icon-tag"></i> {{sessionProfileName}}</h3>
+	            			<h3><i class="fas fa-id-card-alt"></i> {{sessionProfileName}}</h3>
 	            		</li>
 	                    <li class="dropdown gray">
 	                        <a class="dropdown-toggle" data-toggle="dropdown" >
-	                            <i class="icon-2x icon-user"></i> {{sessionNames}} <i class="icon-caret-down"></i>
+	                            <i class="fas fa-user-circle fa-2x"></i> {{sessionNames}} <i class="icon-caret-down"></i>
 	                        </a>
 	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 	                          <li role="presentation">
-	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="icon-user"></i> Perfil</a>
+	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="fas fa-address-card"></i> Perfil</a>
 	                            </li>
 	                            <li role="presentation">
-	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruchpwd', 'open')" tabindex="-1" role="menuitem"><i class="icon-key"></i> Cambiar clave</a>
+	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruchpwd', 'open')" tabindex="-1" role="menuitem"><i class="fas fa-user-lock"></i> Cambiar clave</a>
 	                            </li>
 	                            <li role="presentation">
 	                                <div class="divider"></div>
@@ -156,17 +156,17 @@
 					                        </tr>
 					                    </thead>
 					                    <tbody ng-show="manageDepto==0">
-					                        <tr ng-show="manageDepto==0" style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter: {idTypeKf:typeTenant} ">
+					                        <tr ng-show="manageDepto==0" style="align-content: center; cursor: pointer;" data-ng-repeat="item in listTenant | filter: {idTypeTenantKf:typeTenant} ">
 					                        
-					                        	<td ng-show="manageDepto==0"><button ng-click="selectTenant(item); enabledNextBtn();" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-check">&nbsp</i>{{item.idTenant}}</button></td>
-						                        <td>{{item.fullNameTenant}}</td>
-						                        <!--<td>{{item.phoneNumberTenant}}</td>
-						                        <td>{{item.phoneNumberContactTenant}}</td>-->
-						                        <td>{{item.emailTenant}}</td>
-						                        <td ng-if="item.idTypeKf==1">Propietario</td>
-						                        <td ng-if="item.idTypeKf==2">Inquilino</td>
+					                        	<td ng-show="manageDepto==0"><button ng-click="selectTenant(item); enabledNextBtn();" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-check">&nbsp</i>{{item.idUser}}</button></td>
+						                        <td>{{item.fullNameUser}}</td>
+						                        <!--<td>{{item.phoneNumberUser}}</td>
+						                        <td>{{item.phoneLocalNumberUser}}</td>-->
+						                        <td>{{item.emailUser}}</td>
+						                        <td ng-if="item.idTypeTenantKf==1">Propietario</td>
+						                        <td ng-if="item.idTypeTenantKf==2">Inquilino</td>
 						                        <td ng-if="item.idStatusKf==1">Activo</td>
-						                        <td ng-if="item.idStatusKf==2">Inactivo</td>
+						                        <td ng-if="item.idStatusKf==0">Inactivo</td>
 						                    </tr>
 						                </tbody>
 						                <tbody ng-show="manageDepto==1">
@@ -201,11 +201,11 @@
 				    <div class="modal-content">
 		              	<div class="modal-header">
 		              		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-		                	<h3 class="modal-title">NUEVO INQUILINO</h3>
+		                	<h3 class="modal-title">NUEVO <span ng-if="idTypeTenantKf==1">PROPIETARIO</span><span ng-if="idTypeTenantKf==2">INQUILINO</span></h3>
 		            	</div>
 	            		<div class="modal-body" style="overflow-y: scroll; scroll;" >
 							<!-- FORM CONTAINER-->
-		    				<form class="form-horizontal" name="fNewTenant" ng-submit="sysFunctionsTenant('search', 'add');">
+		    				<form class="form-horizontal" name="fNewTenant" ng-init="fnLoadPhoneMask();" ng-submit="sysFunctionsTenant('search', 'add');">
 								<fieldset>
 								<!-- Select profile -->
 								   
@@ -213,7 +213,7 @@
 								  <label class="col-md-4 control-label">Perfil</label>
 								    <div class="col-md-4 selectContainer">
 									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									        <span class="input-group-addon"><i class="fas fa-id-card-alt"></i></span>
 											    <select name="idTypeTenantKf" class="form-control" ng-blur="!IsSystem == true ? deptoHasOwner() : null" ng-options="item.idTypeTenant as item.typeTenantName for item in lisTypeTenant " ng-model="$parent.idTypeTenantKf" ng-required="sessionidProfile!=3" autofocus >
 											    	<option value=""></option>
 										    	</select>
@@ -222,12 +222,12 @@
 								</div>
 								<!-- List Address-->
 								      
-								<div class="form-group" ng-show="!sessionidProfile || IsSystem">
+								<div class="form-group" ng-show="sessionidProfile && IsSystem">
 								  <label class="col-md-4 control-label">Direcci&#243n</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getDeparment(0)"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="!sessionidProfile" ng-model="select.idAddressAtt" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getDeparment(0)"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile && IsSystem" ng-model="select.idAddressAtt" autofocus >
 											    	<option value=""></option>
 										    	</select>
 									    </div>
@@ -252,7 +252,7 @@
 									  <div class="col-md-4">
 										  <div class="input-group">
 											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											  <input  name="fullNameTenant" autofocus="true" placeholder="Nombre" class="form-control" ng-model="$parent.fullNameTenant"  type="text" required autofocus/>
+											  <input  name="fullNameTenant" placeholder="Nombre" class="form-control" ng-model="$parent.fullNameTenant"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
@@ -274,7 +274,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="phoneLocalT" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phonelocalT"  type="text" autofocus />
+									  		<input name="phoneLocalT" ng-keydown="fnLoadPhoneMask()" placeholder="1112345678" class="form-control input--local" ng-model="$parent.phonelocalT"  type="text" ng-required="phoneMovilT==''" autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -285,7 +285,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-									  		<input name="phoneMovil" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="$parent.phoneMovilT"  type="text" autofocus />
+									  		<input name="phoneMovil" ng-keydown="fnLoadPhoneMask()" placeholder="91112345678" class="form-control input--movil" ng-model="$parent.phoneMovilT"  type="text" ng-required="phonelocalT==''" autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -361,7 +361,7 @@
 					              <div class="col-md-4">
 					                <div class="input-group">
 					                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					                  <input  name="namesTenant" autofocus="true" placeholder="Nombre" class="form-control" ng-model="tenant.namesTenant"  type="text" required autofocus/>
+					                  <input  name="namesTenant" placeholder="Nombre" class="form-control" ng-model="tenant.namesTenant"  type="text" required autofocus/>
 					                </div>
 					              </div>
 					          </div>
@@ -466,25 +466,58 @@
 									    </div>
 								  </div>
 								</div>
+					            <!-- Other Attendant Function -->
+					            <div ng-show="tmp.idTypeAttTmp!=1 && tmp.idTypeAttTmp" class="form-group">
+					              <label class="col-md-4 control-label">Es propietario:</label>  
+					                <div class="col-md-4">
+					                  <div class="input-group">
+									    <label class="col-xs-6">
+									  		<input type="radio" name="typeOption" ng-click="att.idDepartmentKf=null" value="1" ng-model="confirmOption" required autofocus>
+										  		<code >Si</code>
+								  		</label> 
+								  		<label class="col-xs-6">
+									  		<input type="radio" name="typeOption" ng-click="att.idDepartmentKf=null" value="2" ng-model="confirmOption" required autofocus>
+										  		<code>No</code>
+								  		</label> 
+					                    
+					                  </div>
+					                </div>
+					            </div>
 								  <!-- Select Department -->
-								<div ng-show="sessionidProfile!=3 && tmp.idTypeAttTmp==2" class="form-group"> 
+								<div ng-show="sessionidProfile!=3 && tmp.idTypeAttTmp!=1 && tmp.idTypeAttTmp && confirmOption==1" class="form-group"> 
 								  <label class="col-md-4 control-label">Departamento</label>
 								    <div class="col-md-4 selectContainer">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									        <select ng-model="att.idDepartmentKf" ng-blur="deptoHasOwner();" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto | filter: {departmentFloor: 'Porteria'} " ng-required="tmp.idTypeAttTmp==2" autofocus >
+									        <select 
+									        	ng-model="att.idDepartmentKf" 
+									        	ng-change="deptoHasOwner();" 
+									        	class="form-control" 
+									        	ng-options="x.idDepartment as x.departmentFloor for x in ListDpto" 
+									        	ng-required="tmp.idTypeAttTmp!=1 && confirmOption==1" 
+									        	autofocus >
 									        	<option value="" >Seleccione una opcion</option>
 										    </select>
 									  	</div>
 									</div>
 								</div>
+					            <!-- Other Attendant Function -->
+					            <div ng-show="tmp.idTypeAttTmp==1" class="form-group">
+					              <label class="col-md-4 control-label">Función</label>  
+					                <div class="col-md-4">
+					                  <div class="input-group">
+					                    <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+					                    <input  name="descOther" placeholder="Funcion que realiza" class="form-control" ng-model="att.descOther"  type="text" ng-required="tmp.idTypeAttTmp==1" autofocus/>
+					                  </div>
+					                </div>
+					            </div>
 								<!-- Form First Name -->
 								<div class="form-group">
 								  <label class="col-md-4 control-label">Nombres</label>  
 									  <div class="col-md-4">
 										  <div class="input-group">
 											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											  <input  name="fullNamesAtt" autofocus="true" placeholder="Nombre" class="form-control" ng-model="att.fullNamesAtt"  type="text" required autofocus/>
+											  <input  name="fullNamesAtt" ng-blur="confirmOption!=2 ? deptoHasOwner() : null;" placeholder="Nombre" class="form-control" ng-model="att.fullNamesAtt"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
@@ -495,7 +528,7 @@
 								   <div class="col-md-4">
 								    <div class="input-group">
 								    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								  		<input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="att.emailAtt" type="email" required autofocus />
+								  		<input name="emailAtt" placeholder="E-Mail" class="form-control" ng-model="att.emailAtt" type="email" ng-required="(tmp.idTypeAttTmp!=1 && confirmOption) || att.idDepartmentKf" autofocus />
 								    </div>
 								  </div>
 								</div>
@@ -506,7 +539,7 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="phoneLocalAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="att.phonelocalAtt"  type="text" autofocus />
+									  		<input name="phoneLocalAtt" placeholder="1112345678" ng-keydown="fnLoadPhoneMask()" class="form-control input--local" ng-model="att.phonelocalAtt" ng-required="!att.phoneMovilAtt"  type="text" autofocus />
 									    </div>
 								  </div>
 								</div>
@@ -517,12 +550,12 @@
 								    <div class="col-md-4">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="phoneMovilAtt" placeholder="(___) _ __ - ____-____" class="form-control input--tel" ng-model="att.phoneMovilAtt"  type="text" autofocus />
+									  		<input name="phoneMovilAtt" placeholder="91112345678" ng-keydown="fnLoadPhoneMask()" class="form-control input--movil" ng-model="att.phoneMovilAtt" ng-required="!att.phonelocalAtt"  type="text" autofocus />
 									    </div>
 								  </div>
 								</div>
 								<!-- Text Phone-->    
-								<div class="form-group">
+								<!--<div class="form-group">
 								  <label class="col-md-4 control-label">Hora de Trabajo</label>  
 								    <div class="col-md-4">
 									    <div class="input-group">
@@ -530,15 +563,15 @@
 											<input type="time"  name="att.hoursWork" placeholder="HH:mm" min="00:00" max="23:00" class="form-control" ng-model="att.hoursWork" aria-showingpicker="false" tabindex="0">
 									    </div>
 								  </div>
-								</div>
-								<div ng-show="ownerFound && sessionidProfile!=3 && IsAttendant && tmp.idTypeAttTmp==2" class="alert alert-danger" role="alert">
-			            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: 	</strong>La conserjeria ya posee un Encargado Titular.
+								</div>-->
+								<div ng-show="ownerFound && sessionidProfile!=3 && IsAttendant && tmp.idTypeAttTmp!=1 && confirmOption!=2" class="alert alert-danger" role="alert">
+			            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: 	</strong>La conserjeria o departamento, ya posee un Propietario/Encargado Titular.
 				        		</div>		
 								<!-- Actions Button -->
 								<div class="form-group">
 								  <label class="col-md-4 control-label"></label>
 								  <div class="col-md-4">
-								    <button type="submit" ng-disabled="ownerFound && tmp.idTypeAttTmp==2" class="btn btn-primary" >Registrar </button>
+								    <button type="submit" ng-disabled="ownerFound && tmp.idTypeAttTmp!=1 && confirmOption!=2" class="btn btn-primary" >Registrar </button>
 									<button data-dismiss="modal" class="btn btn-primary" >Cancelar </button>
 								  </div>
 								</div>
@@ -609,13 +642,23 @@
 			                  </div>
 			              </div>
 			            </div>
+			            <!-- Other Attendant Function -->
+			            <div ng-show="att.idTypeAttKf==1" class="form-group">
+			              <label class="col-md-4 control-label">Función</label>  
+			                <div class="col-md-4">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+			                    <input  name="descOther" placeholder="Nombre" class="form-control" ng-model="att.descOther"  type="text" ng-required="att.idTypeAttKf==1" autofocus/>
+			                  </div>
+			                </div>
+			            </div>
 			            <!-- Form First Name -->
 			            <div class="form-group">
 			              <label class="col-md-4 control-label">Nombres</label>  
 			                <div class="col-md-4">
 			                  <div class="input-group">
 			                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-			                    <input  name="fullNamesAtt" autofocus="true" placeholder="Nombre" class="form-control" ng-model="att.fullNamesAtt"  type="text" required autofocus/>
+			                    <input  name="fullNamesAtt" placeholder="Nombre" class="form-control" ng-model="att.fullNamesAtt"  type="text" required autofocus/>
 			                  </div>
 			                </div>
 			            </div>
@@ -653,7 +696,7 @@
 			              </div>
 			            </div>
 			            <!-- Text Phone-->    
-			            <div class="form-group">
+			            <!--<div class="form-group">
 			              <label class="col-md-4 control-label">Hora de Trabajo</label>  
 			                <div class="col-md-4">
 			                  <div class="input-group">
@@ -661,7 +704,7 @@
 			                  <input type="time"  name="att.hoursWork" placeholder="HH:mm" min="00:00" max="23:00" class="form-control" ng-model="att.hoursWork" aria-showingpicker="false" tabindex="0">
 			                  </div>
 			              </div>
-			            </div>
+			            </div>-->
 			            <div ng-show="ownerFound && sessionidProfile!=3 && IsAttendant && att.idTypeAttKf==2" class="alert alert-danger" role="alert">
 			            		<strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>ATENCION: 	</strong>La conserjeria ya posee un Encargado Titular.
 				        </div>  
@@ -778,7 +821,7 @@
 								  <label class="col-md-4 control-label">Perfil</label>
 								    <div class="col-md-4 selectContainer">
 									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									        <span class="input-group-addon"><i class="fas fa-id-card-alt"></i></span>
 											    <select name="idProfileKf" class="form-control"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:hideProfiles" ng-model="user.idProfileKf"  required autofocus >
 											    	<option value=""></option>
 										    	</select>
@@ -805,7 +848,7 @@
 									  <div class="col-md-4">
 										  <div class="input-group">
 											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-											  <input  name="namesUser" autofocus="true" placeholder="Nombre" class="form-control" ng-model="user.namesUser"  type="text" required autofocus/>
+											  <input  name="namesUser" placeholder="Nombre" class="form-control" ng-model="user.namesUser"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>

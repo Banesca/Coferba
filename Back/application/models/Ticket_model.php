@@ -157,9 +157,13 @@ class Ticket_model extends CI_Model
             'idCompanyKf' => @$ticket['idCompanyKf'],
             'totalService' => @$ticket['totalService'],
             'idAdressKf' => @$ticket['idAdressKf'],
-            'idOtherKf' => @$ticket['idOtherKf']
-            
-        
+            'idOtherKf' => @$ticket['idOtherKf'],
+
+            'thirdPersonNames' => @$ticket['thirdPersonNames'],
+            'thirdPersonPhone' => @$ticket['thirdPersonPhone'],
+            'thirdPersonId' => @$ticket['thirdPersonId'],
+
+            'idUserAttendantKfDelivery' => @$ticket['idUserAttKfDelive']
 		)
         );
 
@@ -309,7 +313,7 @@ class Ticket_model extends CI_Model
                         $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
                 else{
-                          $this->db->where("tb_user.idUser = ", $idUser)->get();
+                          $this->db->where("tb_user.idUser = ", $idUser);
                           $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
 

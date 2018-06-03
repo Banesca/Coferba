@@ -85,7 +85,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
                 placement:'auto right',
                 trigger: 'manual',
                 title: '<div>Soporte coferba</div>',
-                template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
+                template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title pop-warning"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
                 html: true
         }); 
         $("#loginpassword").popover('show');
@@ -139,7 +139,16 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
         case 5:
           $scope.sysCheckPasswordLogin();
         break;
-          
+        case 10:
+          var rsTmpUser = tokenSystem.getTokenStorage(3);
+
+          $scope.msg1="Disculpa "+rsTmpUser.fullNameUser+" no esta habilitado como usuario del sistema .";
+          $scope.msg2="Comunicate con el area de soporte o el administrador."
+          $('#notificationModal').modal('show');
+            /*$timeout(function() {
+              $('#notificationModal').modal('hide');
+            }, 3000);*/
+        break;  
         default:
       }
       });
@@ -194,7 +203,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
           console.log("Email registrado / "+ $scope.signup.email);
         }else{
           $scope.redirect2Register = true;
-        $scope.countDownRedirect("#/register", 10);
+        $scope.countDownRedirect("#/register", 5);
 
         }
     });

@@ -80,7 +80,7 @@ app.config(['$routeProvider', '$locationProvider',
 }]);
 
 
-app.constant("serverHost","http://coferba.com.ar/");
+app.constant("serverHost","http://localhost/");
 app.constant("serverBackend","Coferba/Back/index.php/");
 app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8' }});
 

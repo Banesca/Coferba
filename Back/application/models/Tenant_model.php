@@ -149,7 +149,7 @@ class Tenant_model extends CI_Model
                     $this->db->select("*")->from("tb_user");
                     
                     if (@$id > 0){
-                        $this->db->where("tb_user.idTyepeAttendantKf =", $idType);
+                        $this->db->where("tb_user.idTypeTenantKf =", $idType);
                         $query = $this->db->where("tb_user.idDepartmentKf =", $id)->get();
                         
                     }else{
@@ -218,7 +218,7 @@ class Tenant_model extends CI_Model
                 $tenant = null;
         
                 $this->db->select("*")->from("tb_user");
-                $query = $this->db->where("tb_user.emailTenant =", $mail)->get();
+                $query = $this->db->where("tb_user.emailUser =", $mail)->get();
                 if ($query->num_rows() > 0) {
                     $tenant = $query->row_array();
                 }

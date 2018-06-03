@@ -22,11 +22,11 @@ class Direccion extends REST_Controller {
         }
     }
 
-    public function byidTenant_get($id, $idStatus) {
+    public function byidTenant_get($id, $idDpto, $idStatus) {
         
   
           $rs = null;
-          $rs = $this->direccion_model->byidTenant($id, $idStatus);
+          $rs = $this->direccion_model->byidTenant($id, $idDpto, $idStatus);
   
           if (!is_null($rs)) {
               $this->response($rs, 200);
