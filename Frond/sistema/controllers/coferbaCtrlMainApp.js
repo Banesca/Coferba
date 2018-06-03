@@ -1992,7 +1992,7 @@ if($scope.idProfileTmp == 3 || $scope.sessionidProfile==3){
 /*VERIFICAMOS SI EL INQUILINO ES DE TIPO PROPIETARIO PARA NO LLENAR LA VARIABLE CON EL idDeparmentKf */
 if($scope.t.idTypeKf==1 && $scope.sessionidProfile != 3){
   $scope.t.idDepartmentKf =null;
-}else if($scope.t.idTypeKf==2 && $scope.sessionidProfile != 3){
+}else if($scope.t.idTypeKf==2 && $scope.sessionidProfile != 3){ 
   $scope.t.idDepartmentKf =!$scope.select.idDepartmentKf?$scope.idDeptoKf : $scope.select.idDepartmentKf;
 }
  $scope.t.password = "12345";
