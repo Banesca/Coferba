@@ -305,18 +305,27 @@ class Ticket_model extends CI_Model
 
              if(@$searchFilter['idProfileKf'] == 3) // propietario 
                 {
-                    // $this->db->where("tb_user.idUser =", @$searchFilter['idOWnerKf']);
-                    // $this->db->or_where("tb_tickets.idOWnerKf =", @$searchFilter['idOWnerKf']);
-
-
-                        $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idOWnerKf =".@$searchFilter['idOWnerKf'].")",null,false);
-                        $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
+                    $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idOWnerKf =".@$searchFilter['idOWnerKf'].")",null,false);
+                    $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
+                }
+                else if(@$searchFilter['idProfileKf'] == 5) // Inquilino 
+                {
+                    $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idUserTenantKf =".@$searchFilter['idUserTenantKf'].")",null,false);
+                    $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
+                }
+                else if(@$searchFilter['idProfileKf'] == 6) // Encargado 
+                {
+                    $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idUserAttendantKf =".@$searchFilter['idUserAttendantKf'].")",null,false);
+                    $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
                 else{
-                          $this->db->where("tb_user.idUser = ", $idUser);
-                          $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
+                    $this->db->where("tb_user.idUser = ", $idUser);
+                    $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
 
+
+
+                
 
 
               
