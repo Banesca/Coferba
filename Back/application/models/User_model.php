@@ -177,7 +177,7 @@ class User_model extends CI_Model
   
 
 
-    /* EDITAR DATOS DE UN ENCARGADO */
+    /* EDITAR DATOS DE UN USUARIO */
     public function update($user) {
 
         $this->db->set(

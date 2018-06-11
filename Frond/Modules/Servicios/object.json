@@ -24,16 +24,25 @@ METODO : POST
   
   "user":
   {
-    "fullNameUser"         : "David Eduardo Rincon",
-    "emailUser"            : "rexx84@gmail.com",
-    "phoneNumberUser"      : "22222222222",
-    "phoneLocalNumberUser" : "11111111111",
-    "addresUser"           : null,
-    "idProfileKf"          : "2",
-    "rezonSocial"          : "prueba",
-    "idUser"               : 17
+    "fullNameUser" : "ejempllo",
+    "emailUser" : "ejempllo",
+    "phoneNumberUser" : "ejempllo",
+    "phoneLocalNumberUser" : "ejempllo",
+    "idAddresKf" : 1,
+    "idProfileKf" : 1,
+    "idCompanyKf" : 0,
+    "idTyepeAttendantKf" : 0,
+    "descOther" : "",
+    "idDepartmentKf" :1,
+    "idTypeTenantKf" : 0,
+    "requireAuthentication" : 1,
+    "idUser"               : 17,
+    "isEditUser":true,// solo si es para cambia clave envialo en true
+    "passwordUser":"1234"
   }
 }
+
+
 
 
 ---------------------- EDITAR USUARIO  Y CAMBIAR CLAVE -------------------
@@ -180,10 +189,13 @@ http://localhost/Coferba/Back/index.php/Ticket/all
     "topFilter"  : "5",
     "idCompanyKf" : 1,// SOLO PARA EMPRESA O ADMIN CONSORCIO
     "idProfileKf" : 1,
-    "idTenantKf": 1, // solo si  es propietario
     "idTypeTicketKf" : 2,
     "idAdress" :1,
-    "idStatusTicketKf" : 1
+    "idStatusTicketKf" : 1,
+    "idUserTenantKf":1,// solo si es inquilino
+    "idUserAttendantKf":2, //solo si es encargafo
+    "idTenantKf": 1 // solo si  es propietario
+
     }
 
  
