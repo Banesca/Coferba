@@ -1,5 +1,5 @@
 <!--ANGULAR MODULE -->
-<div>
+<div ng-init="launchLoader();">
 	<!-- nav bar start -->
 	<nav ng-if="sysToken" class="navbar navbar-inverse navbar-custom navbar-fixed-top" role="navigation">
 		<div class="navbar-inverse navbar-inner m-h-30">
@@ -116,7 +116,7 @@
 		</div>
 	</nav>
 	<!-- //nav bar end -->
-	<main role="main" class="main_container" ng-if="sysToken" ng-init="sysLoadLStorage(); CallFilterFormU(); CallFilterFormT(); getAllAddress(); getParameter(); checkBefore2Load(); ">
+	<main role="main" class="main_container" ng-if="sysToken" ng-init="sysLoadLStorage(); CallFilterFormU(); CallFilterFormT(); getAllAddress(); getParameter(); checkBefore2Load(); listUserDepto(1) ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'views/user/profileUser.html'"></div>
 			<div ng-if="userManage" ng-include="'views/user/manageUser.html'"></div>
