@@ -4,7 +4,8 @@
       	<div class="panel-heading">
         	<h3 class="panel-title">ALTA DE LLAVE - {{mySwitch}}</h3>
     	</div>
-    		<div class="panel-body">
+		<div class="panel-body">
+			<div ng-if="sessionidProfile!=5">
 			    <form class="form-horizontal" name="fkeyup" ng-submit="newTicket('up');" novalidate>
 			    	<div ng-switch on="mySwitch">
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
@@ -22,8 +23,19 @@
 					                  </div>
 					                </div>
 					            </div>     
+    
 								<!-- Address for Onwers-->      
- vb
+								<div class="form-group" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
+								  	<label class="col-md-4 control-label">Direcci&#243n del Consorcio</label>
+									    <div class="col-md-4">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null; getCompanyFromAdress();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+												    <option value="">Seleccione un consorcio</option>
+											    </select>
+										    </div>
+									  	</div>
+								</div>
 								<!-- Address for Admins Consorcios-->      
 					            <div class="form-group" ng-disable="sessionidProfile!=4" ng-show="sessionidProfile==4">
 					                <label class="col-md-4 control-label">Direcci&#243n del Consorcio</label>
@@ -470,5 +482,201 @@
 					</div>
 				</form>
 			</div>
+			<div ng-if="sessionidProfile==5">
+			    <form class="form-horizontal" name="fkeyup" ng-submit="newTicket('up');" novalidate>
+			    	<div ng-switch on="mySwitch">
+						<fieldset ng-init="getServicesValues(sessionidAddress); enabledNextBtn(); " ng-switch-when="PASO 1: DATOS PERSONALES">
+								<legend style="visibility: hidden;"></legend>
+							    <!-- Company Name-->    
+					            <div class="form-group col-md-6">
+					              <label class="col-xs-12 col-md-offset-1" >Administracion</label>
+					                <div class="col-md-10 col-md-offset-1 input-group">
+					                    <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+					                    <input name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
+					                </div>
+					            </div>     
+    
+								<!-- Address for tenant-->      
+								<div class="form-group col-md-6">
+								  	<label class="col-xs-12 col-md-offset-1" >Direcci&#243n del Consorcio</label>
+									    <div class="col-md-10 col-md-offset-1 input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										    <input name="idAddressAtt"  disabled class="form-control" ng-model="$parent.idAddressAtt" />
+									    </div>
+								</div>
+								<!-- Address for tenant-->      
+								<div class="form-group col-md-6">
+								  	<label class="col-xs-12 col-md-offset-1" >Habitante</label>
+									    <div class="col-md-10 col-md-offset-1 input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										    <input name="namesTenant"  disabled class="form-control" ng-model="$parent.namesTenant" />
+									    </div>
+								</div>
+								<!-- departmento for tenant-->      
+								<div class="form-group col-md-6">
+								  	<label class="col-xs-12 col-md-offset-1" >Departamento</label>
+									    <div class="col-md-10 col-md-offset-1 input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										    <input name="deptoTenant"  disabled class="form-control" ng-model="$parent.deptoTenant" />
+									    </div>
+								</div>
+						</fieldset>
+						<fieldset ng-init="btnClose=false" ng-switch-when="PASO 2: DATOS DE LA SOLICITUD">
+							<div class="container-fluid justify-content-md-center">
+								<!-- Form Key Quantity qku = Quantity Keys Up-->
+								<div class="form-group col-md-6">
+								  <label class="col-xs-10 col-md-offset-0" >Cantidad de llaves</label> 
+									<div class="col-md-10 col-md-offset-0 input-group">
+							  		  <span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+							  			<select name="qkuTenant" ng-change="getTotalService(); getAllAttendant();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
+											    <option value=""></option>
+											    <option value="1">1</option>
+											    <option value="2">2</option>
+											    <option value="3">3</option>
+											    <option value="4">4</option>
+											    <option value="5">5</option>
+								    	</select>
+							    	</div>
+								</div>
+								<!-- Select Type of Delivery -->   
+								<div class="form-group col-md-6"> 
+								  <label class="col-xs-12 col-md-offset-2">Tipo de Entrega</label>
+								    <div class="col-md-11 col-md-offset-2 input-group">
+								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
+										    <select name="idTypeDeliveryKf" ng-change="getTotalService(); getAllAttendant(); delivery.nameAtt=null; select.whoPickUp=Null" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
+										    <option value=""></option>
+									    	</select>
+								  	</div>
+								</div>
+							</div>
+							<div class="container-fluid">
+								<div ng-show="delivery.idTypeDeliveryKf">
+									<div class="form-group col-md-10" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
+									  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-8">Quien retira</label>
+									  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-8">Quien recibe</label>  
+									    <div class="col-md-7 col-md-offset-8">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+										  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
+												    <option value=""></option>
+											    	<option ng-if="delivery.idTypeDeliveryKf==1" value="1">Titular</option>
+											    	<option ng-if="delivery.idTypeDeliveryKf==2" value="2">Encargado</option>
+											    	<option value="3">Tercera persona</option>
+											    </select>
+										    </div>
+									  	</div>
+									</div>
+								</div>
+								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
+								<div ng-if="delivery.idTypeDeliveryKf!=0 && select.whoPickUp>0 && select.whoPickUp<3"  class="form-group col-md-10">
+									    <div class="col-md-7 col-md-offset-8">
+										    <div class="alert alert-success" role="alert">
+							                 	<span style="text-align: center;">La solicitud sera
+								                 	<span ng-if="delivery.idTypeDeliveryKf==1">retirada por titular: </span>
+								                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada al</span>
+						                 			<span ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2">encargado: </span>
+							                 		<span ng-if="delivery.idTypeDeliveryKf==1 && select.whoPickUp==1" style="font-weight: bold;">{{sessionNames}}</span>
+
+							                 	</span>
+             									<!-- Attendant Info -->
+											    <div ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && !delivery.nameAtt && !btnClose" class="input-group col-md-12">
+											  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idUser as combined(item) for item in listAttendant" ng-required="select.whoPickUp==2" ng-change="getAttData('delivery'); btnClose=true; enabledNextBtn();" ng-model="delivery.nameAtt" autofocus >
+													    <option value="">Seleccione un encargado</option>
+												    </select>
+											    </div>
+											    <span ng-if="delivery.nameAtt" style="font-weight: bold;">{{delivery.fullNamesAtt}}
+												    <span ng-if="delivery.nameAtt" style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Seleccionar otro encargado" ng-click="selectAnotherAtt()" ><i class="glyphicon glyphicon-remove-circle"></i></span>
+												</span>
+							             	</div>
+									  </div>
+									</div>
+								<!-- **********************************************************************************************-->
+
+								<!-- **********************************************************************************************-->
+								<!-- Third Person -->
+								<div ng-show="delivery.idTypeDeliveryKf && select.whoPickUp==3">
+									<!-- Names Third Person -->       
+									<div class="form-group col-md-10">
+									  <label class="col-xs-12 col-md-offset-8">Nombres</label>  
+									    <div class="col-md-6 col-md-offset-8">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											  		<input name="namesthird" class="form-control" ng-blur="enabledNextBtn();" ng-model="third.names" type="text" ng-required="select.whoPickUp==3" autofocus />
+										    </div>
+									  </div>
+									</div>
+									<!-- Contact Phone Third Person -->       
+									<div class="form-group col-md-10">
+									  <label class="col-xs-12 col-md-offset-8">Telefono contacto</label>  
+									    <div class="col-md-6 col-md-offset-8">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+										  		<input name="movilPhonethird" placeholder="91112345678" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" class="form-control input--movil"  ng-model="third.movilPhone" type="text" ng-required="select.whoPickUp==3" autofocus />
+										    </div>
+									  </div>
+									</div>
+									<!-- Email Third Person-->
+									<div class="form-group col-md-10">
+									 <label class="col-xs-12 col-md-offset-8">Documento N°: </label>
+									   <div class="col-md-6 col-md-offset-8">
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
+									  		<input name="dnithird" placeholder="99.999.999" class="form-control input--dni" ng-minlength="8" ng-maxlength="8" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" ng-model="third.dni" type="text" ng-required="select.whoPickUp==3" autofocus />
+									    </div>
+									  </div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<!-- Form Special Request sru= Special Request Up -->
+								<div style="margin-left: 15px; padding-right: 40px;" class="form-group col-md-12">
+								  <label class="col-xs-12" >Observaciones Adicionales</label> 
+									<div class="col-md-12 input-group">
+								  		<textarea style="resize: vertical;" name="sruTenant" rows="9" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruTenant" ></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row" style="margin-left: 25px;">
+								<div class="form-group col-md-12 "> 
+									<legend>Costos de Servicios</legend>
+									  <div class="col-md-3">
+									  	<label class="control-label">Gestion</label> 
+										  <div class=" input-group">
+											  <input id="inputService" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
+										  </div>
+									  </div>
+									  <div class="col-md-3 ">
+									  	<label class="control-label">Llave</label> 
+										  <div class="input-group">
+											  <input disabled  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.key"  type="text" required autofocus/>
+										  </div>
+									  </div>
+									  <div class="col-md-3">
+									  	<label class="control-label">Envio</label> 
+										  <div class="input-group">
+											  <input id="inputDelivery" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
+										  </div>
+									  </div>
+									  <div class="col-md-3 "> 
+									  	<label class="control-label">Total</label> 
+										  <div class="input-group">
+											  <input disabled style="text-align: right"; name="cost.total"placeholder="$0,00" class="form-control" ng-model="cost.total"  type="text" required autofocus/>
+										  </div>
+									  </div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<!-- Actions Button -->
+					<div class="form-group pull-right">
+					  <div class="col-md-12">
+					  	<input type="button" ng-click="decrementStep();" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
+				  		<input type="button" ng-click="incrementStep(); enabledNextBtn();" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
+				  		<button type="submit" ng-show="!hasNextStep()" ng-disabled="fkeyup.$invalid" class="btn btn-primary" >Enviar</button>
+					  </div><!--  -->
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

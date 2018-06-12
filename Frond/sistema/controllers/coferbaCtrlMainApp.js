@@ -173,6 +173,10 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                 'PASO 1: DATOS',
                 'PASO 2: DATOS DEL SERVICIO'
                  ];
+  $scope.pasos3= [
+                'PASO 1: DATOS PERSONALES',
+                'PASO 2: DATOS DE LA SOLICITUD'
+                 ];
   $scope.fSwitch = "";
   function selectSwitch(valor){
       $scope.fSwitch = valor;
@@ -180,8 +184,11 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
       $scope.pasos= $scope.pasos1;
     }else if ($scope.fSwitch=="s"){
       $scope.pasos=$scope.pasos2;
+    }else if ($scope.fSwitch=="i"){
+      $scope.pasos=$scope.pasos3;
     }
     $scope.mySwitch = $scope.pasos[0];
+    console.log($scope.mySwitch);
   }               
   $scope.mySwitch = {};        
   $scope.btnShow=true;
@@ -240,6 +247,13 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         //alert("ENTRO CASE 0");
         if ($scope.fSwitch=="t" && $scope.sessionidProfile!=0){
           if (!$scope.select.idAddressAtt){
+              $scope.formValidated=false; 
+          }else{
+            $scope.formValidated=true;
+          }
+
+        }else if ($scope.fSwitch=="i" && $scope.sessionidProfile!=0){
+          if (!$scope.deptoTenant){
               $scope.formValidated=false; 
           }else{
             $scope.formValidated=true;
@@ -565,7 +579,7 @@ $scope.getAllAddressByIdTenant = function (){
     }
     $scope.select.idDepartmentKf = "";
     var typeOfMessage="";
-    var idAddressAttKf=$scope.select.idAddressAtt;
+    var idAddressAttKf=!$scope.select.idAddressAtt ? $scope.sessionidAddress : $scope.select.idAddressAtt;
     var informMessage="";
      $http({
         method : "GET",
@@ -670,6 +684,22 @@ $scope.getData = function (n){
 }
 /**************************************************/
 
+$scope.getDeptoFloor = function(){
+  var idAddrr = $scope.sessionidAddress;
+  /* Recorrer el Json para obtener datos */
+  var length = $scope.ListDptoByTenant.length;
+  //console.log($scope.deptoLength)
+  var rsJSON = {depto: {}};
+  for (i = 0; i < length; i++) {
+      if($scope.ListDptoByTenant[i].idAdressKf == idAddrr){
+          rsJSON.depto = $scope.ListDptoByTenant[i];
+          //console.log(rsJSON);
+          break;
+      }
+  }; 
+  return rsJSON.depto.departmentFloor;
+}
+
 /**************************************************
 *                                                 *
 *LIST THE DEPARTMENT ASSIGNED TO THE OWNER TENANT *
@@ -678,11 +708,11 @@ $scope.getData = function (n){
 
 $scope.listUserDepto = function(value){
   //$scope.manageDepto=value;
-  var idAddressTmp=$scope.select.idAddressAtt;
+  var idAddressTmp=!$scope.select.idAddressAtt ? $scope.sessionidAddress : $scope.select.idAddressAtt;
   var idTenantTmp = 0;
   var urlT="";
-  idTenantTmp = $scope.sessionidProfile==3 ? $scope.sessionidTenantUser : $scope.idTenantKf;
-   if ($scope.sessionidProfile==3){
+  idTenantTmp = $scope.sessionidProfile==3 || $scope.sessionidProfile==6 ? $scope.sessionidTenantUser : $scope.idTenantKf;
+   if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
         urlT=serverHost+serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'-1';
       }else{
         urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
@@ -712,6 +742,7 @@ $scope.listUserDepto = function(value){
   });
 }
 /**************************************************/
+
 /**************************************************
 *                                                 *
 *   ASSIGN DEPARTMENT TO THE CURRENT OWNER USER   *
@@ -1992,7 +2023,7 @@ if($scope.idProfileTmp == 3 || $scope.sessionidProfile==3){
 /*VERIFICAMOS SI EL INQUILINO ES DE TIPO PROPIETARIO PARA NO LLENAR LA VARIABLE CON EL idDeparmentKf */
 if($scope.t.idTypeKf==1 && $scope.sessionidProfile != 3){
   $scope.t.idDepartmentKf =null;
-}else if($scope.t.idTypeKf==2 && $scope.sessionidProfile != 3){
+}else if($scope.t.idTypeKf==2 && $scope.sessionidProfile != 3){ 
   $scope.t.idDepartmentKf =!$scope.select.idDepartmentKf?$scope.idDeptoKf : $scope.select.idDepartmentKf;
 }
  $scope.t.password = "12345";
@@ -2652,6 +2683,12 @@ $scope.switchOption = function (){
 
 }
 
+$scope.selectAnotherAtt = function(){
+  $scope.btnClose=false;
+  $scope.delivery.nameAtt=null;
+  $scope.delivery.fullNamesAtt = "";
+  //alert($scope.btnClose);
+}
 
 /**************************************************
 *                                                 *
@@ -2956,15 +2993,19 @@ $scope.newTicket = function(opt){
     switch (opt) {
       case "up": // SOLOCITUD DE ALTA
                   $scope.tk.idTicket           = 1;
-              if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
+              if(($scope.sessionidProfile==3||$scope.sessionidProfile==6) && $scope.typeOfTenant == 1){
                   $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                   $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
                   $scope.tk.idCompanyKf        =$scope.tmp.idCompanyKf;
                   
-              }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
+              }else if(($scope.sessionidProfile==3||$scope.sessionidProfile==6) && $scope.typeOfTenant == 2){
                   $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                   $scope.tk.idTenantKf         = $scope.idTenantKf;
                   $scope.tk.idCompanyKf        = $scope.tmp.idCompanyKf;
+
+              }else if($scope.sessionidProfile==5){
+                  $scope.tk.idTenantKf         = $scope.sessionIdUser;
+                  $scope.tk.idCompanyKf        = $scope.sessionidCompany;
 
               }
               if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -3026,14 +3067,14 @@ $scope.newTicket = function(opt){
                     }
                 }
               }
-                  $scope.tk.idDepartmentKf     = $scope.select.idDepartmentKf;
+                  $scope.tk.idDepartmentKf     = $scope.sessionidProfile==5 ? $scope.sessionIdDeparmentKf : $scope.select.idDepartmentKf;
                   $scope.tk.description        = $scope.txt.sruTenant;
                   $scope.tk.idTypeDeliveryKf   = $scope.delivery.idTypeDeliveryKf;
                   
                   $scope.tk.idUserAttDelivery  = $scope.delivery.nameAtt;
                   $scope.tk.numberItemes       = $scope.quantity.qkuTenant;
-                  $scope.tk.idAddresKf         = $scope.select.idAddressAtt;
-                  $scope.tk.idBranchKf         = $scope.select.idAddressAtt;
+                  $scope.tk.idAddresKf         = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.select.idAddressAtt;
+                  $scope.tk.idBranchKf         = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.select.idAddressAtt;
                   $scope.tk.totalService       = $scope.cost.total;
                   $scope.tk.thirdNames         = $scope.third.names;
                   $scope.tk.thirdPhone         = $scope.third.movilPhone;
@@ -3893,10 +3934,18 @@ $scope.fnShowHide = function(divId, divAction) {
             $scope.manageDepto = 0;
           if(divAction=="open"){
             if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;}
-            if ($scope.sessionidProfile==3 || $scope.sessionidProfile==5 || $scope.sessionidProfile==6){
+            if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
               $scope.getAllAddressByIdTenant();
-            }else {$scope.rukeyup = true;}
-            selectSwitch ('t');
+              selectSwitch ('t');
+            }else if ($scope.sessionidProfile==5){ 
+              selectSwitch ('i');
+              $scope.rukeyup = true;
+              $scope.idAddressAtt=$scope.sessionNameAdress;
+              $scope.namesTenant=$scope.sessionNames;
+              
+              $scope.deptoTenant=$scope.getDeptoFloor();
+            }else{$scope.rukeyup = true; selectSwitch ('t');}
+              
           }else{
             closeAllDiv();
           }
@@ -3972,7 +4021,7 @@ $scope.fnShowHide = function(divId, divAction) {
           if ($scope.sessionidProfile==3){
             $scope.getAllAddressByIdTenant();
           }else {$scope.home = true; $scope.dhboard();}
-          selectSwitch ('t');
+          //selectSwitch ('t');
         }else{
           closeAllDiv();
         }        

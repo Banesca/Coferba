@@ -284,6 +284,10 @@
       font-weight: 700;
       transform: none;
 }
+.form-input.error, .form-input:active ~ label.alert-error , .form-input.active ~ label.alert-error{
+      color: red;
+      font-weight: 800;
+}
 .form-input {
     display: block;
     width: 100%;
@@ -320,7 +324,9 @@
     display: block;
     width: 100%;
 }
-
+.bar-red {
+    border-bottom: 1.5px solid red;
+}
 .bar:before, .bar:after {
     content: '';
     border-bottom: 1.1px solid #14162b; 
