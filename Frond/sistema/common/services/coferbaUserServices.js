@@ -13,7 +13,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
             console.log("Email a verificar: "+userMail);
               return $http({
                     method : "GET",
-                    url : serverHost+serverBackend+"user/findAttByEmail/"+mail2Search
+                    url : serverHost+serverBackend+"user/findUserByEmail/"+mail2Search
                   }).then(function mySuccess(response) {
                       checkResult = 1;
                       //console.log("Email registrado: "+response.data.emailUser);

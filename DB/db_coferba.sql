@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2018 a las 23:14:51
+-- Tiempo de generación: 14-06-2018 a las 21:13:29
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.10
 
@@ -188,24 +188,24 @@ CREATE TABLE `tb_department` (
 --
 
 INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `deparmentNumber`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`, `idUserKf`, `isAprobatedAdmin`, `isRequesLowByProp`) VALUES
-(1, 1, 'Porteria', 0, '', 1, 1, NULL, 17, 1, 0),
-(2, 1, '1-A', 0, '', 1, 1, NULL, 17, 1, 0),
+(1, 1, 'Porteria', 0, '', 1, 1, NULL, 60, 1, 0),
+(2, 1, '1-A', 0, '', 1, 1, NULL, 22, 1, 0),
 (3, 1, '1-B', 0, '', 1, 1, NULL, 22, 1, 0),
-(4, 1, '2-A', 0, '', 1, 1, NULL, 63, 1, 0),
-(5, 1, '2-B', 0, '', 1, 1, NULL, 65, 1, 0),
+(4, 1, '2-A', 0, '', 1, 1, NULL, 64, 1, 0),
+(5, 1, '2-B', 0, '', 1, 1, NULL, NULL, 0, 0),
 (6, 1, '3-A', 0, '', 1, 1, NULL, NULL, 0, 0),
-(7, 1, '3-B', 0, '', 1, 1, NULL, 80, 1, 0),
-(8, 1, '4-A', 0, '', 1, 1, NULL, NULL, 1, 0),
-(9, 1, '4-B', 0, '', 1, 1, NULL, 81, 1, 0),
-(10, 1, '5-A', 0, '', 1, 1, NULL, 86, 1, 0),
+(7, 1, '3-B', 0, '', 1, 1, NULL, NULL, 0, 0),
+(8, 1, '4-A', 0, '', 1, 1, NULL, NULL, 0, 0),
+(9, 1, '4-B', 0, '', 1, 1, NULL, NULL, 0, 0),
+(10, 1, '5-A', 0, '', 1, 1, NULL, NULL, 0, 0),
 (11, 1, '5-B', 0, '', 1, 1, NULL, NULL, 0, 0),
 (12, 2, '6-A', 0, '', 1, 1, NULL, 22, 1, 0),
 (13, 2, '6-B', 0, '', 1, 1, NULL, 52, 1, 0),
-(14, 2, '7-A', 0, '', 1, 1, NULL, 87, 1, 0),
-(15, 2, '7-B', 0, '', 1, 1, NULL, 88, 1, 0),
-(16, 2, '8-A', 0, '', 1, 1, NULL, 89, 1, 0),
+(14, 2, '7-A', 0, '', 1, 1, NULL, 0, 0, 0),
+(15, 2, '7-B', 0, '', 1, 1, NULL, NULL, 0, 0),
+(16, 2, '8-A', 0, '', 1, 1, NULL, 53, 1, 0),
 (17, 3, '8-B', 0, '', 1, 1, NULL, 60, 1, 0),
-(18, 2, 'Porteria', 0, NULL, 1, 1, NULL, 90, 1, 0),
+(18, 2, 'Porteria', 0, NULL, 1, 1, NULL, 43, 1, 0),
 (19, 3, 'Porteria', 0, NULL, 1, 1, NULL, 64, 1, 0);
 
 -- --------------------------------------------------------
@@ -348,7 +348,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '148', 'TK');
+(1, '142', 'TK');
 
 -- --------------------------------------------------------
 
@@ -490,27 +490,27 @@ CREATE TABLE `tb_tickets` (
   `idProfileKf` int(11) DEFAULT NULL,
   `idOpcionLowTicketKf` int(11) DEFAULT NULL,
   `idUserAttendantKf` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO',
-  `idCompanyKf` int(11) DEFAULT NULL COMMENT 'ID DE LA EMPRESA',
-  `idBranchKf` int(11) DEFAULT NULL COMMENT 'ID DE LA SUCURSAL',
+  `idCompanyKf` int(11) DEFAULT NULL,
+  `idBranchKf` int(11) DEFAULT NULL,
   `isAprobatedAdmin` tinyint(4) DEFAULT '0',
   `isCancelTicket` tinyint(4) DEFAULT '0',
   `dateCancel` timestamp NULL DEFAULT NULL,
-  `idTypeOfOptionKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO DE SOLICITUD -ENCARGADO/OTRO/ADMINISTRACION',
+  `idTypeOfOptionKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO DE SOLICITUD -ENCARGADO/OTRO/EDIFICIO',
   `idDepartmentKf` int(11) DEFAULT NULL COMMENT 'ID DEL DEPARTAMENTO',
   `idAdressKf` int(11) DEFAULT NULL COMMENT 'DIRECCION DEL TICKET',
   `dateAprovatedAdmin` timestamp NULL DEFAULT NULL,
   `idOtherKf` int(11) DEFAULT NULL COMMENT 'Id de encargado de typo "Otro"',
-  `thirdPersonNames` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'Nombre de la tercera persona que retira o recibe',
-  `thirdPersonPhone` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'Telefono de la tercera persona que retira o recibe',
-  `thirdPersonId` int(11) DEFAULT NULL COMMENT 'DNI de la tercera persona que retira o recibe',
-  `idUserAttendantKfDelivery` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO QUE RECIBE O RETIRA'
+  `idUserAttendantKfDelivery` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO QUE RECIBE LA LLAVE',
+  `thirdPersonNames` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'NOMBRE DE LA TERCERA PERSONA QUE RECIBE O RETIRA',
+  `thirdPersonPhone` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'TELEFONO DE LA TERCERA PERSONA',
+  `thirdPersonId` int(11) DEFAULT NULL COMMENT 'DNI DE LA TERCERA PERSONA'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `tb_tickets`
 --
 
-INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `description`, `idRequestKf`, `idUserTenantKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `numberItemes`, `idTypeDeliveryKf`, `numberItemDisabled`, `idOWnerKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `idReasonDisabledItemKf`, `descriptionOrder`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idUserAttendantKf`, `idCompanyKf`, `idBranchKf`, `isAprobatedAdmin`, `isCancelTicket`, `dateCancel`, `idTypeOfOptionKf`, `idDepartmentKf`, `idAdressKf`, `dateAprovatedAdmin`, `idOtherKf`, `thirdPersonNames`, `thirdPersonPhone`, `thirdPersonId`, `idUserAttendantKfDelivery`) VALUES
+INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `description`, `idRequestKf`, `idUserTenantKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `numberItemes`, `idTypeDeliveryKf`, `numberItemDisabled`, `idOWnerKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `idReasonDisabledItemKf`, `descriptionOrder`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idUserAttendantKf`, `idCompanyKf`, `idBranchKf`, `isAprobatedAdmin`, `isCancelTicket`, `dateCancel`, `idTypeOfOptionKf`, `idDepartmentKf`, `idAdressKf`, `dateAprovatedAdmin`, `idOtherKf`, `idUserAttendantKfDelivery`, `thirdPersonNames`, `thirdPersonPhone`, `thirdPersonId`) VALUES
 (1, '2018-02-14 07:46:44', NULL, NULL, 1, 'TK-00000117', 1, '', NULL, 22, 0, NULL, 0, 2, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '350.00', NULL, NULL, NULL, 1, 1, 1, 0, 0, NULL, NULL, 3, NULL, NULL, 0, NULL, NULL, NULL, NULL),
 (2, '2018-02-14 07:47:20', NULL, NULL, 1, 'TK-00000118', 1, '', NULL, 44, 0, NULL, 0, 1, 2, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 3, 1, 2, 0, 0, NULL, NULL, 12, NULL, NULL, 0, NULL, NULL, NULL, NULL),
 (4, '2018-02-14 07:58:16', NULL, NULL, 1, 'TK-00000120', 3, '', NULL, NULL, 0, 0, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Cambio de camara principal', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -531,12 +531,7 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 (22, '2018-04-10 23:09:47', NULL, NULL, 2, 'TK-00000138', 2, 'robo', NULL, 63, 0, NULL, 40, 1, NULL, '456666', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (23, '2018-04-10 23:13:04', NULL, NULL, 2, 'TK-00000139', 3, 'ohjklñjklñ', NULL, NULL, 31, 39, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'hkblñhj', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (24, '2018-04-10 23:17:06', NULL, NULL, 2, 'TK-00000140', 4, 'consulta', NULL, NULL, NULL, NULL, 40, NULL, NULL, NULL, 0, 3, 'leandro@gmail.com', NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(25, '2018-05-17 10:50:29', NULL, NULL, 2, 'TK-00000141', 3, '', NULL, NULL, 17, 22, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Probando', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(29, '2018-05-31 04:31:01', NULL, NULL, 2, 'TK-00000145', 1, 'Prueba', NULL, 0, 0, NULL, 17, 2, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '200.00', NULL, NULL, NULL, 22, 1, 1, 0, 0, NULL, 1, 0, 1, NULL, NULL, 'Pedro Briceño', '91134832843', 95847589, NULL),
-(28, '2018-05-31 04:29:57', NULL, NULL, 2, 'TK-00000144', 1, '', NULL, 73, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 0, 1, 1, 0, 0, NULL, NULL, 0, 1, NULL, 0, '', '', 0, 86),
-(30, '2018-05-31 04:33:36', NULL, NULL, 2, 'TK-00000146', 1, '', NULL, 0, 0, NULL, 17, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, 1, 0, 1, NULL, 82, '', '', 0, 86),
-(31, '2018-05-31 05:03:47', NULL, NULL, 2, 'TK-00000147', 1, '', NULL, 73, 0, NULL, 0, 1, 1, NULL, 17, NULL, NULL, NULL, NULL, NULL, NULL, '100.00', NULL, NULL, NULL, 0, 1, 1, 0, 0, NULL, NULL, 0, 1, NULL, 0, '', '', 0, NULL),
-(32, '2018-05-31 05:09:32', NULL, NULL, 2, 'TK-00000148', 1, '', NULL, 95, 0, NULL, 0, 1, 2, NULL, 17, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 0, 1, 1, 0, 0, NULL, NULL, 0, 1, NULL, 0, '', '', 0, 86);
+(25, '2018-06-13 01:54:58', NULL, NULL, 2, 'TK-00000142', 1, '', NULL, 60, 31, NULL, 0, 1, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '250.00', NULL, NULL, NULL, 0, 1, 1, 0, 0, NULL, NULL, 0, 1, NULL, 0, 60, '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -689,19 +684,16 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `passwordUser`, `idProfileKf`, `dateCreated`, `idCompanyKf`, `resetPasword`, `idAddresKf`, `idTyepeAttendantKf`, `descOther`, `idDepartmentKf`, `isEdit`, `requireAuthentication`, `idTypeTenantKf`, `idStatusKf`, `tokenMail`, `isConfirmatedMail`) VALUES
-(17, 'David Eduardo Rincon', 'rexx84@gmail.com', '91123995858', '91126694918', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2017-10-26 05:16:00', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, 1),
-(22, 'Luis Carreño', 'luis.carreno@coca-cola.com', '91126949184', '11224444444', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 6, '2017-10-26 21:17:25', 1, 0, 1, 2, NULL, NULL, NULL, NULL, 1, 1, NULL, 1),
-(23, 'Carlos Villalobos', 'carlos.villalobos@gmail.com', '(054) 9 11 2235-6388', '(054) 9 11 2669-4918', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 1, '2017-11-23 03:28:25', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 1),
+(22, 'Luis Carreño', 'luis.carreno@coca-cola.com', '1199887766', '1144556677', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2017-10-26 21:17:25', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, 0),
+(23, 'Carlos Villalobos', 'carlos.villalobos@gmail.com', '(054) 9 11 2235-6388', '(054) 9 11 2669-4918', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2017-11-23 03:28:25', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (24, 'prueba editada', 'prueba', 'prueba', '123', '32e7092ddccc9af07299d6e8dac6fe731c6572d2', 1, '2017-11-23 08:36:20', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0),
 (25, 'Jose Gomez', 'jose.gomez@gmail.com', '113443663346', '116678885464', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2017-11-24 20:47:25', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (27, 'prueba de registro', 'prueba@prueba.com.ar', '(154) 2 32 1321-3213', '(254) 1 31 3213-1322', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2018-01-26 06:26:01', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (28, 'Xavi Hernandez', 'xavi.hernandez@yahoo.es', '(454) 4 44 4444-4444', '(854) 8 88 8888-8888', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 4, '2018-01-31 10:34:09', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (29, 'Humberto Moran', 'humberto.moran@gmail.com', '(054) 1 11 1111-1111', '(054) 2 22 2222-2222', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2018-01-31 23:35:07', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (30, 'developer 1', 'developer1@gmail.com', '(054) 9 12 3213-2323', '(054) 9 11 2231-2321', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 1, '2018-02-11 18:50:25', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
-(31, 'admin sistema', 'soporte@coferba.com.ar', '(054) 9 11 2323-2323', '(054) 9 11 2343-2324', 'fd8abdb9181ffaa820ac9b8c9fb97abca88c6c05', 1, '2018-02-16 15:01:22', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
-(32, '8484845448841 65464848', '4494989@hotmail.com', '(154) 1 11 1111-1111', '(154) 1 11 1111-1111', '090efb3bde54c755c679f99e82a4c4863d93035b', 3, '2018-03-20 16:14:06', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0),
+(31, 'admin sistema', 'soporte@coferba.com.ar', '(054) 9 11 2323-2323', '(054) 9 11 2343-2324', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 1, '2018-02-16 15:01:22', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 1),
 (33, 'Gabriel Gamez', 'angelgabrielceballos@gmail.com', '(154) 1 11 2251-8504', '(154) 1 11 2251-8504', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-03-20 16:20:35', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
-(34, '654658464 654654654', 'angelgabrielceballos@gmail.com', '(154) 1 11 2251-8504', '(154) 1 11 2251-8504', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-03-20 21:30:38', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0),
 (35, 'Dario Tejada', 'drotejada@gmail.com', '(154) 1 11 1111-1111', '(154) 1 11 1111-1111', '2ae3d88f02f83ac3d4e5f74533e26d8cad86e4c5', 4, '2018-03-21 20:26:03', 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0),
 (36, 'juan perez', 'unico@gmail.com', '(154) 1 15 2251-8504', '(154) 1 15 2251-8504', '26cf693eaa24a8c39e5dc92e06085058a3714f53', 3, '2018-04-10 17:32:12', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0),
 (37, 'pablo marmol', 'marmol@gmail.com', '(154) 1 11 1111-1111', '(154) 1 11 1111-1111', '4394a732285f1875b62bdb074d7fe33acb519ed9', 3, '2018-04-10 17:46:15', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0),
@@ -709,49 +701,13 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 (39, 'dario tejada', 'drotejada@gmail.com', '(154) 1 11 1111-1111', '(154) 1 11 1111-1111', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 4, '2018-04-10 18:50:26', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (40, 'leandro figueroa', 'leandro@gmail.com', '(154) 1 11 1111-1111', '(154) 1 11 1111-1111', 'b9ca47c97508bf3d22aed0d806d923c2917c3e6e', 4, '2018-04-10 18:54:02', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
 (41, 'Luis Roca', 'luis.roca@gmail.com', '(354) 3 33 3333-3333', '(354) 3 33 3333-3333', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2018-04-11 16:06:33', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0),
-(48, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:44:18', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(49, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:44:53', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(50, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:47:23', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(51, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:48:23', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(52, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:48:55', 0, 1, 0, 1, '', NULL, 0, 1, 1, 0, NULL, 0),
-(53, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:49:37', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(54, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:58:02', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(55, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:59:01', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(56, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 13:59:24', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, NULL, 0),
-(57, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-29 14:07:58', NULL, 0, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, 0),
-(58, 'prueba', 'prueba@mail.com', 'prueba', '1136456765', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, '2018-04-29 14:08:37', 0, 1, 0, 1, '', NULL, 0, 1, NULL, 0, 'hn1zmrDzz2', 1),
-(59, NULL, NULL, NULL, NULL, '67a74306b06d0c01624fe0d0249a570f4d093747', 1, '2018-05-17 02:07:05', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'XZxZ7768ks', 0),
-(60, NULL, NULL, NULL, NULL, '67a74306b06d0c01624fe0d0249a570f4d093747', 1, '2018-05-17 02:19:33', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'iaMYiQm6CV', 0),
-(61, NULL, NULL, NULL, NULL, '67a74306b06d0c01624fe0d0249a570f4d093747', 1, '2018-05-17 02:20:46', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'B8fw58W7hq', 0),
-(62, NULL, NULL, NULL, NULL, '67a74306b06d0c01624fe0d0249a570f4d093747', 1, '2018-05-17 02:24:44', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'bkJj480NuF', 0),
-(63, NULL, NULL, NULL, NULL, '67a74306b06d0c01624fe0d0249a570f4d093747', 1, '2018-05-17 02:34:07', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'z9fAuDQJbv', 0),
-(64, NULL, NULL, NULL, NULL, '67a74306b06d0c01624fe0d0249a570f4d093747', 1, '2018-05-17 02:45:23', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'sXi8nEvYjf', 0),
-(67, 'David Eduardo Rincon', 'usuariouno@gmail.com', '22222222222', '11111111111', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 2, '2018-05-17 03:47:55', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'U3zd625yUP', 0),
-(68, 'Usuario Dos', 'usuariodos@gmail.com', '(154) 2 32 1312-3213', '(154) 2 32 1321-3213', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 1, '2018-05-17 03:50:39', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'oodoMIB955', 1),
-(69, 'Prueb Prueba2', 'prueba2@gmail.com', '', '(154) 2 32 1321-3213', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 1, '2018-05-17 09:53:33', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'EeD6ySt0du', 0),
-(73, 'Fernando Chacon', 'fernando.chacon@gmail.com', '91123234343', '1133434535', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-05-21 04:44:48', NULL, 1, 1, NULL, NULL, 2, 1, NULL, 2, 0, '1dX9FQUzGN', 0),
-(74, 'Edward Naguit', 'enaguit@gmail.com', '21321321313211', '11232323232333', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-21 18:08:07', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'NC2IRRXtZb', 0),
-(75, 'Jose Ferrara', 'jferrara@gmail.com', '', '(154) 2 31 2321-3213', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-21 21:20:11', NULL, 1, NULL, NULL, NULL, 0, NULL, NULL, 2, 0, 'htM3YYqnl1', 0),
-(76, 'Lucia Figueroa', 'lfigueroa@gmail.com', '91123435645', '91123232243', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-21 22:07:22', NULL, 1, NULL, NULL, NULL, 2, NULL, NULL, 2, 0, 'F4AszMha3w', 0),
-(77, 'Thais Ramirez', 'tramirez@gmail.com', '(154) 2 32 3213-12', NULL, 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-21 22:21:39', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'NiDqbOI04n', 0),
-(78, 'Maria Barrios', 'mbarrios@gmail.com', '(154) 2 32 1321-3213', '1111111111111111111', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-21 22:24:04', NULL, 1, NULL, NULL, NULL, 8, NULL, NULL, 2, 0, 'nQ0XV6jNug', 0),
-(79, 'Prueba', 'pruebaprueba@gmail.com', '', '(254) 1 32 1321-3213', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-21 22:27:38', NULL, 1, NULL, NULL, NULL, 9, NULL, NULL, 2, 0, 'j3msEbXeCU', 0),
-(80, 'Kiko Flores', 'kiko@gmail.com', '', '(154) 2 31 2313-1322', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-21 22:29:54', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '1L0ldpzkwo', 0),
-(81, 'Felicidad Garcia', 'fgarcia@gmail.com', '91135453535', '1124345359', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-21 22:40:58', NULL, 1, 1, NULL, NULL, NULL, 1, NULL, 1, 0, '64pUjQUnrh', 0),
-(82, 'Carlos Alvarez', 'calvarez@gmail.com', '91124545566', '11244335555', '67a74306b06d0c01624fe0d0249a570f4d093747', 6, '2018-05-28 00:48:05', 1, 1, 1, 1, 'Plomero', NULL, 1, NULL, NULL, 0, 'r2W673XHUN', 0),
-(83, 'Roberto Perez', 'rperez@gmail.com', '91127438473', '11748483734', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 6, '2018-05-28 03:44:12', 1, 1, 1, 3, NULL, NULL, NULL, NULL, NULL, 0, '6Kfmht4c7q', 0),
-(84, 'Rosario Tijera', 'rtijera@gmail.com', '91188888880', '1144444443', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 6, '2018-05-28 04:10:49', 1, 1, 1, 3, NULL, 8, 1, 1, 1, 0, '16RL3fAQVf', 0),
-(85, 'Horacio Finol', 'hfinol@gmail.com', '91123782737', '1128373855', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 6, '2018-05-29 14:48:30', 1, 1, 1, 2, NULL, 6, 1, 1, 1, 0, 'iDrhAJbxKe', 0),
-(86, 'Gabriel Garcia', 'ggarcia@gmail.com', '91134343434', '1127382482', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 6, '2018-05-29 15:55:57', 1, 1, 1, 2, NULL, 10, 1, 1, 1, 0, 'W8xaxnF8az', 0),
-(87, 'Tania Perez', 'tperez@gmail.com', '', '11123232432432', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-29 16:22:37', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'YGn29XqL1t', 0),
-(88, 'Victor Moreno', 'vmoreno@gmail.com', '9113273748237', '11827374847', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-29 16:42:47', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 'ia0fUEbBrK', 0),
-(89, 'Rita Nuñez', 'rnunez@gmail.com', '91137374827448', '1122783748457', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-05-29 17:02:31', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '8yVR47jbMe', 0),
-(90, 'Mabel Pestana', 'mpestana@gmail.com', '91123747483', '1182374375', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 6, '2018-05-30 01:46:07', 1, 1, 2, 2, NULL, 18, 1, 1, 1, 0, 'cH82sdV5sG', 0),
-(91, 'Esteban Nuñez', 'enunez@gmail.com', '91132432432', '', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-30 02:13:33', NULL, 1, NULL, NULL, NULL, 16, NULL, NULL, 2, 0, 'MfoIK1WMa7', 0),
-(92, 'Hernan Araujo', 'haraujo@gmail.com', '91123343435', '', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-30 02:16:42', NULL, 1, NULL, NULL, NULL, 12, NULL, NULL, 2, 0, '2A890co92F', 0),
-(93, 'Javier Aguirre', 'jaguirre@gmail.com', '91122565654', '1123432432', '67a74306b06d0c01624fe0d0249a570f4d093747', 6, '2018-05-30 04:04:33', 1, 1, 1, 5, NULL, NULL, 1, 0, 0, 0, 'kLj0eqaizG', 0),
-(94, 'Jaimito Palotes', 'jpalotes@gmail.com', '91137585939', '1122485838', '67a74306b06d0c01624fe0d0249a570f4d093747', 6, '2018-05-30 09:03:24', 1, 1, 1, 3, NULL, NULL, 1, 0, 0, 0, '20kAuT36Qv', 0),
-(95, 'Wilson Alvarez', 'davideduardo.luengo@hotmail.com', '', '1129233932', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-05-31 05:08:23', NULL, 0, NULL, NULL, NULL, 1, NULL, NULL, 2, 1, 'pY23AvJRqX', 1);
+(59, 'David Rincon', 'rexx84@gmail.com', '91122343243', '1123432432', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-06-13 01:40:52', 0, 0, 1, NULL, NULL, 10, 1, NULL, 2, 1, '27UHl1IEJS', 1),
+(60, 'Alberto Ramirez', 'aramirez@gmail.com', '91132483284', '1132832828', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 6, '2018-06-13 01:49:30', 1, 0, 1, 2, NULL, 1, 1, 1, 1, 0, 'cmMSoqouKR', 0),
+(62, 'Eduardo Rincon Luengo', 'davideduardo.luengo@hotmail.com', '00000000000', '1111111111', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-06-13 02:57:41', 1, 0, 2, NULL, NULL, 13, 1, NULL, 2, 1, 'BheFrB8hfP', 1),
+(63, 'Luis Ochoa', 'lochoa@asdsadsad.com', '91123432432', '1123324324', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-06-14 06:31:08', 1, 1, NULL, NULL, NULL, 1, 1, NULL, 2, 0, 'AJxBPluqqW', 0),
+(64, 'Jose Gomez', 'jgomez@asdsadasda.com', '91231231232', '1123424324', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 3, '2018-06-14 15:03:58', 1, 1, NULL, NULL, NULL, NULL, 1, NULL, 1, 0, 'Eb8XX9rcdd', 0),
+(65, 'Horacio Alcantara', 'halcantara@sadsad.com', '91132432432', '1121324324', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 5, '2018-06-14 15:16:37', 1, 1, NULL, NULL, NULL, 14, 1, NULL, 2, 0, 'c2nV3lzEWr', 0),
+(66, 'Juan Lopez', 'jlopez@dsfdfs.com', '', '7647657657', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-06-14 18:15:32', 1, 1, 1, NULL, NULL, 2, 1, NULL, 2, 0, 'E7bnE5SWNv', 0);
 
 --
 -- Índices para tablas volcadas
@@ -953,7 +909,7 @@ ALTER TABLE `tb_tenant`
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
@@ -977,7 +933,7 @@ ALTER TABLE `tb_type_services`
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- Restricciones para tablas volcadas

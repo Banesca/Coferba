@@ -310,7 +310,7 @@
       background-color: #2e353d;
       position: fixed;
       top: 13.2em;
-      width: 16.6%;
+      width: 16.1%;
       height: 100%;
       color: #e1ffff;
     }
@@ -449,6 +449,9 @@
         width: 100%;
         margin-bottom: 10px;
         top: -0.4em;
+      }
+      .padding-panel {
+          margin-top: 70px;
       }
       .nav-side-menu .toggle-btn {
         display: block;

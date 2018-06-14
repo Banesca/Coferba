@@ -27,6 +27,9 @@ tkSysService.service("tokenSystem",function(){
               localStorage.setItem("sysToken", tksSystem);
               localStorage.setItem("sysLoggedUser", JSON.stringify(tkLoggedUser));
           },
+          setLoggedUserStorage: function(tkLoggedUser) {
+              localStorage.setItem("sysLoggedUser", JSON.stringify(tkLoggedUser));
+          },
           temporalStorage: function(tkTmpUser) {
               localStorage.setItem("sysTmpUser", JSON.stringify(tkTmpUser));
           },
@@ -45,6 +48,9 @@ tkSysService.service("tokenSystem",function(){
               case 4:
                 localStorage.removeItem("attempsToken");
                 localStorage.removeItem("sysTmpUser");
+              break;
+              case 5:
+                localStorage.removeItem("sysLoggedUser");
               break;
               default:
 

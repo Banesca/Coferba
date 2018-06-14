@@ -516,7 +516,11 @@ class Ticket_model extends CI_Model
         
 
         /* LISTADO DE USUARIOS */
-        $query = $this->db->select("*")->from("tb_user")->order_by("tb_user.dateCreated", "DESC")->get();
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $query = $this->db->order_by("tb_user.dateCreated", "DESC")->get();
         if ($query->num_rows() > 0) {
             $user = $query->result_array();
         }

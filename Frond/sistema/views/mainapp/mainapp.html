@@ -140,7 +140,7 @@
 					        <h4 class="modal-title" ng-show="typeTenant==1">Propietarios &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" ng-disabled="ownerFound==true" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 						    <h4 class="modal-title" ng-show="typeTenant==2">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
 						    <h4 class="modal-title"  ng-show="sessionidProfile!=3 && typeTenant<0">Propietarios / Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open','add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
-						    <h4 class="modal-title" ng-show="sessionidProfile==3 && typeTenant<0">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Nuevo</button></h4>
+						    <h4 class="modal-title" ng-show="(sessionidProfile==3 || sessionidProfile==6) && typeTenant<0">Inquilinos &nbsp<button ng-click="sysFunctionsTenant('open', 'add')" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Nuevo</button></h4>
 				      	</div>
 				      	<div class="modal-body pre-scrollable">
 	                				<table class="table  table-striped ">
@@ -636,7 +636,7 @@
 			                <div class="col-md-4 selectContainer">
 			                  <div class="input-group">
 			                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-			                      <select ng-model="att.idDepartmentKf" ng-blur="deptoHasOwner();" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto | filter: {departmentFloor: 'Porteria'} " autofocus >
+			                      <select ng-model="att.idDepartmentKf" ng-blur="deptoHasOwner();" class="form-control" ng-options="x.idDepartment as x.departmentFloor for x in ListDpto " autofocus >
 			                        <option value="" >Seleccione una opcion</option>
 			                    </select>
 			                  </div>
