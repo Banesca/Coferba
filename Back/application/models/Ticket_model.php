@@ -31,8 +31,7 @@ class Ticket_model extends CI_Model
         $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
         $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
         $this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
-        $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
-        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');                        
+        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
         $this->db->join('tb_department', 'tb_department.idUserTenantKf = tb_user.idUser',  'left');            
         $query = $this->db->where("tb_tickets.idTicket =", @$id)->get();
 
@@ -260,8 +259,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'inner');
             $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
-            $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
-            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');      
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
 
             if(@$searchFilter['idAdress'] > 0)
             {
@@ -400,8 +398,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
             $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
 			$this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
-            $this->db->join('tb_branch', 'tb_branch.idBranch = tb_tickets.idBranchKf',  'left');     
-            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf',  'left');                        
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
            
 
             if(@$searchFilter['idProfileKf'] != 1 && @$searchFilter['idProfileKf'] != 4 && @$searchFilter['idProfileKf'] != 2)
@@ -454,13 +451,13 @@ class Ticket_model extends CI_Model
 
                 if(@$searchFilter['idProfileKf'] == 4 ) // admin consorcio 
                 {
-                    $this->db->where("tb_branch.idAdressKf  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
-                    
+                    $this->db->where("tb_addres.idAdress  IN (select idAdress from tb_addres where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
+
                 }
 
                 if( @$searchFilter['idProfileKf'] == 2) // empresa
                 {
-                    $this->db->where("tb_branch.idAdressKf  IN (select idAdressKf from tb_branch where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
+                    $this->db->where("tb_addres.idAdress  IN (select idAdress from tb_addres where idCompanyKf = ".@$searchFilter['idCompanyKf'].")", NULL, FALSE);
                     
                 }
             }
