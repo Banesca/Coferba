@@ -749,7 +749,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                   $scope.recordsFound=false;
                   $scope.noRecordsFound=true;
                   
-              }else if ($scope.sessionidProfile==3){
+              }else if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
                   console.log("<<<NO TIENE DEPARTAMENTO ASOCIADO>>>");
                   $scope.recordsFound=false;
                   $scope.noRecordsFound=true;
@@ -901,6 +901,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
               $scope.ListDpto = response.data;
               $scope.manageDepto = $scope.manageDeptoTmp;
               console.log("Manage depto: "+$scope.manageDepto)
+              //if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){$scope.isCollapsed=!$scope.isCollapsed};
               //console.log(response.data);
         }, function myError (response){
             if (response.status=="404" || response.status=="500"){
@@ -912,7 +913,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                               ttl:5000, type: 'info'
                 }); 
               }else if ($scope.sessionidProfile==3 && $scope.manageDepto==1 && !idAddressTmp){
-                inform.add('Debe seleccionar una dirección para ver los departamentos asociados..',{
+                inform.add('Debe seleccionar una direccion para ver los departamentos asociados..',{
                               ttl:5000, type: 'warning'
                 }); 
                 $scope.dptoNotFound=true;
@@ -1303,8 +1304,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         break;
         case "updprofile":                            //Update Profile and LocalStorage Variable Module
             var isEditUser=0;
-            console.log("==========================================")
-
+            console.log("==========================================");
                 $scope.sysLoggedUser.fullNameUser         = $scope.profile.Names;
                 $scope.sysLoggedUser.emailUser            = $scope.profile.Email;
                 $scope.sysLoggedUser.phoneNumberUser      = $scope.profile.MovilPhoneNumber;
@@ -1315,7 +1315,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                 var user2Update={user:{}};
                 user2Update.user=$scope.sysLoggedUser;
             console.log(user2Update)
-            console.log("==========================================")
+            console.log("==========================================");
             $scope.modificarUsuario($http, $scope, isEditUser, user2Update);
             setTimeout(function() {
               tokenSystem.destroyTokenStorage(5);
@@ -1340,17 +1340,15 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
             $scope.chgPwdUser($http, $scope);
         break;
         case "chgPwdUser":                          //Change PWD User Module
-          var isChPwd = $scope.sysToken ? 1 : 2;
-          console.log('OPCION: '+isChPwd);
-              if ($scope.tagPwd==1){
-                  inform.add('La clave no coincide debe verificar para completar su registro.',{
-                  ttl:3000, type: 'error'
-                   }); 
-              }else{
-                console.log($scope._getData2Update(isChPwd));
-                $scope.modificarUsuario($http, $scope, isChPwd);
-              }
-
+          var isEditUser=1;
+            console.log("==========================================");
+              var pwd2Update={user:{}};
+                $scope.sysLoggedUser.isEditUser   =1;
+                $scope.sysLoggedUser.passwordUser =$scope.chg.newPwd2;
+                pwd2Update.user=$scope.sysLoggedUser;
+                console.log(pwd2Update);
+            console.log("==========================================");
+            $scope.modificarUsuario($http, $scope, isEditUser, pwd2Update);
             
         break;
         default:
@@ -1467,8 +1465,8 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                
         });
     };
-      $scope.idProfileTmp = "";
-      $scope._setuser = function () {
+    $scope.idProfileTmp = "";
+    $scope._setuser = function () {
          $scope.idProfileTmp=!$scope.sysToken ? 3 : $scope.idProfileKf
         var user =
                 {
@@ -1483,7 +1481,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                             }
                 };
         return user;
-      };
+    };
     /**************************************************/
 
     /**************************************************
@@ -1493,7 +1491,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
     **************************************************/
     $scope.modificarUsuario = function ($http, $scope, itemOp, rsJSON){
       $scope.isPwdCh=itemOp;
-      console.log($scope._getData2Update($scope.isPwdCh));
+      //console.log($scope._getData2Update($scope.isPwdCh));
       $http.post(serverHost+serverBackend+"User/update", rsJSON)
           .then(function (sucess, data) {
              if ($scope.isPwdCh==0){
@@ -1520,10 +1518,25 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                 $scope.CallFilterFormT();
 
 
-        },function (error,status) {
-                if(status == 404){alert("!Informacion "+status+error+"info");}
-                else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-                else{alert("Error Modificacion de Usuario !"+error+" Contacte a Soporte"+"error");}
+        },function (response, error,status) {
+                if(response.status == 404){
+                  inform.add('Mensaje [' +response.status+ ']:'+response.data.error,{
+                        ttl:3000, type: 'danger'
+                  }); 
+                  console.log(response);
+                }
+                else if(status == 500){
+                  inform.add('Mensaje [' +response.status+ ']:'+response.data.error,{
+                        ttl:3000, type: 'danger'
+                  }); 
+                  console.log(response);
+                }
+                else{
+                  inform.add('Mensaje [' +response.status+ ']: Ponete en contacto con el area de soporte',{
+                        ttl:3000, type: 'danger'
+                  }); 
+                  console.log(response);
+                }
                
         });
     };
@@ -3198,7 +3211,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                       $scope.tk.idBranchKf             = $scope.select.idAddressAtt;
                   console.log("DATOS DE LA SOLICITUD DE BAJA DE LLAVE");
                   console.log($scope._getData2DelKey());
-                  $scope.modalConfirmation('tdown',0);
+                  //$scope.modalConfirmation('tdown',0);
                   //$scope.requestDownKey($http, $scope);
                 
           break;
@@ -3837,6 +3850,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         $scope.movilPhoneAdmin            ="";
         $scope.localPhoneAdmin            ="";
         $scope.emailAdmin                 ="";
+        $scope.chg                        = {newPwd1:'', newPwd2:''}
         $scope.cost                       ={};
         $scope.dptoNotFound               = true;
         $scope.companyFound               = false;
@@ -3985,6 +3999,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
             break; //
           case "ruchpwd":
               if(divAction=="open"){
+                $scope.chg = {newPwd1:'', newPwd2:''}
                 $('#PasswdModalUser').modal('toggle');
               }else{
                 closeAllDiv();
@@ -4023,10 +4038,17 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
               $scope.manageDepto = 0;
             if(divAction=="open"){
               if($scope.sessionidProfile==4) {$scope.CompanyName=$scope.sessionNameCompany;}
-              if ($scope.sessionidProfile==3 || $scope.sessionidProfile==5 || $scope.sessionidProfile==6){
-                $scope.getAllAddressByIdTenant();
-              }else {$scope.rukeydown = true;}
-              selectSwitch ('t');
+              if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
+                  $scope.getAllAddressByIdTenant();
+                  selectSwitch ('t');
+                }else if ($scope.sessionidProfile==5){ 
+                  selectSwitch ('i');
+                  $scope.rukeydown = true;
+                  $scope.idAddressAtt=$scope.sessionNameAdress;
+                  $scope.namesTenant=$scope.sessionNames;
+                  
+                  $scope.deptoTenant=$scope.getDeptoFloor();
+                }else{$scope.rukeydown = true; selectSwitch ('t');}
             }else{
               closeAllDiv();
             }

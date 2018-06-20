@@ -165,7 +165,7 @@ class User extends REST_Controller {
     public function update_post() {
 
         if (!$this->post('user')) {
-            $this->response(NULL, 404);
+            $this->response(array('error' => "PARAMETROS NO RECIBIDOS"), 404);
         }
 
         $rs = $this->user_model->update($this->post('user'));

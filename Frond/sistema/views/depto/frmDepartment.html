@@ -21,12 +21,12 @@
                   </div>
               </div>
               <!-- Address for Owner-->      
-              <div ng-show="sessionidProfile==3" class="form-group col-lg-4">
+              <div ng-show="sessionidProfile==3 || sessionidProfile==6" class="form-group col-lg-4">
                  <label style="padding-left: 15px;">Consorcio</label>
                     <div class="col-xs-12">
                       <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                        <select name="idAddressAtt" class="form-control" ng-change="getDeparment(1); listUserDepto(1); collap=1;"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+                        <select name="idAddressAtt" class="form-control" ng-change="getDeparment(1); listUserDepto(1); collap=1; isCollapsed = false;";  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
                           <option value="">Seleccione</option>
                         </select>
                         <span ng-show="select.idAddressAtt!=0" style="cursor: pointer;" class="input-group-addon"><i ng-click="getDeparment(1); listUserDepto(1);" class="glyphicon glyphicon-refresh"></i></span>
@@ -47,7 +47,7 @@
                     </div>
               </div>
               <!-- Select Department -->
-                    <div ng-show="sessionidProfile==3" class="form-group col-lg-2">
+                    <div ng-show="sessionidProfile==3 || sessionidProfile==6" class="form-group col-lg-2">
                       <label style="padding-left: 15px;">Departamento</label>
                         <div class="col-xs-12 selectContainer">
                           <div class="input-group">
@@ -68,21 +68,23 @@
             </fieldset>
       </form>
       <div class="clearfix"></div> 
-      <div ng-if="select.idAddressAtt && sessionidProfile!=3 && !noRecordsFound && !dptoNotFound" class="col-lg-12">
-         <button type="button" ng-model="collap1"  ng-class="!isCollapsed && collap==1 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-1 btn " ng-click="isCollapsed = !isCollapsed; switchTab(1); listUserDepto(1);">DEPARTAMENTOS</button>&nbsp
-         <button type="button" ng-model="collap2" ng-class="!isCollapsed && collap==2 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-2 btn " ng-click="isCollapsed = !isCollapsed; switchTab(2); getAllAttendant();">ENCARGADOS</button>
+      <div class="col-lg-12">
+        <div ng-show="noRecordsFound && (sessionidProfile==3 || sessionidProfile==6)" class="alert alert-info" role="alert">
+          <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No existen departamentos asociados a la direccion seleccionada.
+        </div>
+        <div ng-show="noRecordsFound && sessionidProfile!=3 && sessionidProfile==6 && select.idAddressAtt" class="alert alert-info" role="alert">
+          <strong>INFO: </strong>No hay departamentos registrados en la direccion seleccionada.
+        </div>
+         <button ng-show="select.idAddressAtt && sessionidProfile!=3 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap1"  ng-class="!isCollapsed && collap==1 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-1 btn " ng-click="isCollapsed = !isCollapsed; switchTab(1); listUserDepto(1);">DEPARTAMENTOS</button>&nbsp
+         <button ng-show="select.idAddressAtt && sessionidProfile!=3 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap2" ng-class="!isCollapsed && collap==2 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-2 btn " ng-click="isCollapsed = !isCollapsed; switchTab(2); getAllAttendant();">ENCARGADOS</button>
           <hr>
           <div uib-collapse="isCollapsed">
             <!--*********************DEPARTAMENTOS *******************************-->
+            
             <div ng-if="!isCollapsed && collap==1 && sessionidProfile>0 && recordsFound" class="panel panel-default">
+            
               <div class="panel-body">
                 <div class="row">
-                  <div ng-show="noRecordsFound && (sessionidProfile==3 || sessionidProfile==6)" class="alert alert-info" role="alert">
-                        <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No existen departamentos asociados a la direccion seleccionada.
-                  </div>
-                  <div ng-show="noRecordsFound && sessionidProfile!=3 && sessionidProfile==6 && select.idAddressAtt" class="alert alert-info" role="alert">
-                        <strong>INFO: </strong>No hay departamentos registrados en la direccion seleccionada.
-                  </div>
                    <!-- Filter Department For Admins -->
                   <div ng-show="sessionidProfile!=3" class="form-group col-lg-2">
                     <label style="padding-left: 15px;">Departamento</label>
@@ -289,9 +291,10 @@
                                                   </span>
                                                 </td>-->
                                                 <!--<td>{{item.emailTenant}}</td>-->
-                                                <td ng-if="item.idTypeTenantKf==1 && isAllowed==null" >Propietario <span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp &nbsp No Autorizado</span></td>
-                                                <td ng-if="item.idTypeTenantKf==1 && item.idUser==isAllowed" >Propietario</td>
-                                                <td ng-if="item.idTypeTenantKf==2">Inquilino</td>
+                                                <td ng-if="item.idProfileKf==3 && item.idTypeTenantKf==1 && isAllowed==null" >Propietario <span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp No Autorizado</span></td>
+                                                <td ng-if="item.idProfileKf==3 && item.idTypeTenantKf==1 && item.idUser==isAllowed" >Propietario</td>
+                                                <td ng-if="item.idProfileKf==5 && item.idTypeTenantKf==2">Inquilino</td>
+                                                <td ng-if="item.idProfileKf==6 && item.idTypeTenantKf==1">Encargado (Propietario)</td>
                                                 <td> <!-- TD to Admins -->
                                                     <span  ng-if="item.idStatusKf==1" class="label label-success">
                                                       ACTIVO

@@ -299,6 +299,12 @@
         background-color: #14162b;
         opacity: .7;
 }
+
+.btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.btn-labeled {padding-top: 0;padding-bottom: 0;}
+.alert-width{
+  width: 600px;
+}
 .popover-content {
     padding: 2px 4px;
 }
@@ -487,5 +493,10 @@
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color: #fff;
     }
-
+    .alert-width{
+      width: 350px;
+    }
+    .radio-custom {
+      padding-left: 5px;   
+    }
 }

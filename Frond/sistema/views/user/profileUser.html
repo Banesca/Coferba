@@ -3,12 +3,11 @@
 	  	<div class="modal-dialog modal-lg" >
 		    <div class="modal-content">
               	<div class="modal-header">
-                	<h3 class="modal-title">PERFIL USUARIO<a data-dismiss="modal" title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
+                	<h3 class="modal-title">PERFIL USUARIO<a data-dismiss="modal" data-toggle="tooltip" data-placement="top"  title="Cerrar" class="close"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
             	</div>
         		<div class="modal-body">
 					<!-- FORM CONTAINER-->
-    				<form class="form-horizontal" name="fUserProfile" ng-init="" ng-submit="sysFunctionsUser('updprofile')">
-						<fieldset>
+    				<form class="form-horizontal" name="fUserProfile"  autocomplete="off" novalidate>
 						<!-- Select profile -->
 						   
 						<div class="form-group"> 
@@ -37,7 +36,7 @@
 							  <div class="col-md-4">
 								  <div class="input-group">
 									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									  <input  name="profileNames" autofocus="true" placeholder="Nombre" class="form-control" ng-model="profile.Names"  type="text" autofocus/>
+									  <input  name="profileNames" autofocus="true" placeholder="Nombre" class="form-control" ng-model="profile.Names"  type="text" autofocus required />
 								  </div>
 							  </div>
 						</div>
@@ -48,7 +47,7 @@
 						   <div class="col-md-4">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-						  		<input name="profileEmail" placeholder="E-Mail" class="form-control" ng-model="profile.Email"  type="email" autofocus />
+						  		<input name="profileEmail" placeholder="E-Mail" class="form-control" ng-model="profile.Email"  type="email" autofocus readonly />
 						    </div>
 						  </div>
 						</div>
@@ -59,7 +58,7 @@
 						    <div class="col-md-4">
 							    <div class="input-group">
 							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="phoneLocal" ng-keydown="fnLoadPhoneMask()" placeholder="1112345678" class="form-control input--local" ng-model="profile.PhonelocalNumber"  type="text"  autofocus />
+							  		<input name="phoneLocal" ng-keydown="fnLoadPhoneMask()" placeholder="1112345678" class="form-control input--local" ng-model="profile.PhonelocalNumber"  type="text" ng-required="profile.MovilPhoneNumber==''"  autofocus />
 							    </div>
 						  </div>
 						</div>
@@ -70,22 +69,23 @@
 						    <div class="col-md-4">
 							    <div class="input-group">
 							        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-							  		<input name="MovilPhoneNumber" ng-keydown="fnLoadPhoneMask()" placeholder="91112345678" class="form-control input--movil" ng-model="profile.MovilPhoneNumber"  type="text"  autofocus />
+							  		<input name="MovilPhoneNumber" ng-keydown="fnLoadPhoneMask()" placeholder="91112345678" class="form-control input--movil" ng-model="profile.MovilPhoneNumber"  type="text" ng-required="profile.PhonelocalNumber==''"  autofocus />
 							    </div>
 						  </div>
 						</div>
-
-						<!-- Actions Button -->
-						<div class="form-group">
-						  <label class="col-md-4 control-label"></label>
-						  <div class="col-md-4">
-						    <button type="submit" class="btn btn-primary" >Actualizar</button>
-						  </div>
-						</div>
-
-						</fieldset>
 					</form>
 				</div>
+				<!-- Actions Button -->
+	            <div class="modal-footer">
+	                <div class="row">
+	                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+	                        <button type="submit" ng-click="sysFunctionsUser('updprofile')" ng-disabled="fUserProfile.$invalid" class="btn btn-labeled btn-success">
+	                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
+	                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+	                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+	                    </div>
+	                </div>
+	            </div>
 			</div>
 		</div>
 	</div>
