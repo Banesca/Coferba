@@ -30,16 +30,20 @@ class Direccion_model extends CI_Model
         $rs = null;
 
         
-            $this->db->select("*")->from("tb_branch");
-            $this->db->join('tb_company', 'tb_company.idCompany = tb_branch.idCompanyKf', 'left');
-            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_branch.idAdressKf', 'left');
+            $this->db->select("*")->from("tb_addres");
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_addres.idCompanyKf', 'left');
             $this->db->where("tb_company.idCompany =", $id);
 
 
-            $quuery = $this->db->order_by("tb_branch.branchName", "asc")->get();
+            $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
 
 
             if ($quuery->num_rows() > 0) {
+                $query1 =  $this->db->select("*")->from("tb_company_type_keychains")->where("idCompanyKf", $id)->get();
+                if ($query1->num_rows() > 0) {
+                    $companykeychains = $query->result_array();
+                    $quuery["companykeychains"] = $companykeychains;
+                }
                 return $quuery->result_array();
             }
             return null;
@@ -52,8 +56,7 @@ class Direccion_model extends CI_Model
         $rs = null;
         $this->db->select("*")->from("tb_addres");
         $this->db->join('tb_department', 'tb_department.idAdressKf = tb_addres.idAdress', 'inner');
-        $this->db->join('tb_branch', 'tb_branch.idAdressKf = tb_department.idAdressKf', 'left');
-        $this->db->join('tb_company', 'tb_company.idCompany = tb_branch.idCompanyKf', 'left');
+        $this->db->join('tb_company', 'tb_company.idCompany = tb_addres.idCompanyKf', 'left');
         if($idDpto){
             $this->db->join('tb_user', 'tb_user.idDepartmentKf = tb_department.idDepartment', 'left');
         }

@@ -174,6 +174,27 @@ class User_model extends CI_Model
          
     }
 
+
+    public function updatecompany($user) {
+
+        $this->db->set(
+                array(
+                    'nameCompany' => $user['nameCompany'],
+                    'mail_services' => $user['mail_services'],
+                    'mail_request' => $user['mail_request'],
+                    'mail_admin' => $user['mail_admin'],
+                    'isEdit' => $user['isEdit']
+                )
+        )->where("idCompany", $user['idCompany'])->update("tb_company");
+
+        
+        if ($this->db->affected_rows() === 1) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
   
 
 
@@ -268,7 +289,21 @@ class User_model extends CI_Model
         $query =  $this->db->select("*")->from("tb_company")->get();
         if ($query->num_rows() > 0) {
             $company = $query->result_array();
+
+            $i = 0;
+            foreach ($company as $value) {
+                $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idCompanyKf", $value['idCompany'])->get();
+                if ($query->num_rows() > 0) {
+                    $companykeychains = $query->result_array();
+                    $company[$i] = $companykeychains;
+                }
+                $i++;
+            }
+
+           
         }
+
+        
 
 
 
@@ -281,6 +316,36 @@ class User_model extends CI_Model
 
         return $filter;
     }
+
+
+
+    /* LISTADO DE PARAMETROS */
+    public function getCompany() {
+    
+        $query = null;
+        $company = null;
+
+        $query =  $this->db->select("*")->from("tb_company")->get();
+        if ($query->num_rows() > 0) {
+            $company = $query->result_array();
+
+            $i = 0;
+            foreach ($company as $value) {
+                $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idCompanyKf", $value['idCompany'])->get();
+                if ($query->num_rows() > 0) {
+                    $companykeychains = $query->result_array();
+                    $company[$i]["companykeychains"] = $companykeychains;
+                }
+                $i++;
+            }
+
+           
+        }
+
+        return $company;
+}
+
+
 
 
     
@@ -497,6 +562,9 @@ public function updateMailSmtp($mail) {
             return null;
         
     }
+
+
+    
 
 
 }
