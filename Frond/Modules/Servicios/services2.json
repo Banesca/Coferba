@@ -50,3 +50,24 @@ http://localhost/Coferba/Back/index.php/Ticket/find/1
 
 ----------------------  GET verificat tickets activos por idTenan--------------
 http://localhost/Coferba/Back/index.php/Ticket/verificateTicketByIdTenant/22
+
+
+----------------------  GET TODAS LAS EMPRESAS  --------------
+http://localhost/Coferba/Back/index.php/User/getCompany
+
+
+----------------------   POST  EDITAR EMPRESA --------------
+http://localhost/Coferba/Back/index.php/User/updateAtt
+{
+  
+    "company":
+    {
+      "nameCompany":"PRUEBA",
+"mail_services":"PRUEBA",
+"mail_request":"PRUEBA",
+"mail_admin":"PRUEBA",
+"isEdit":"1",
+"idCompany":1,
+
+    }
+  }

@@ -370,7 +370,38 @@ class User extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }
+
+/*
+empresa
+*/
+    public function updatecompany_post() {
+
+        if (!$this->post('company')) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = $this->user_model->updatecompany($this->post('company'));
+
+        if (!is_null($rs)) {
+            $this->response(array('response' => "EMPRESA EDITADA"), 200);
+        } else {
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+        }
+    }
     
+
+    
+
+
+    public function getCompany_get() {
+        $filters = $this->user_model->getCompany();
+
+        if (!is_null($filters)) {
+            $this->response($filters, 200);
+        } else {
+            $this->response(array('response' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 
 }
 ?>
