@@ -30,8 +30,8 @@ class Direccion_model extends CI_Model
         $rs = null;
 
         
-            $this->db->select("*")->from("tb_addres");
-            $this->db->join('tb_company', 'tb_company.idCompany = tb_addres.idCompanyKf', 'left');
+            $this->db->select("*")->from("tb_company");
+            $this->db->join('tb_addres', 'tb_addres.idCompanyKf = tb_company.idCompany', 'left');
             $this->db->where("tb_company.idCompany =", $id);
 
 
@@ -40,11 +40,13 @@ class Direccion_model extends CI_Model
 
             if ($quuery->num_rows() > 0) {
                 $query1 =  $this->db->select("*")->from("tb_company_type_keychains")->where("idCompanyKf", $id)->get();
+                
+                $rs =$quuery->result_array();
                 if ($query1->num_rows() > 0) {
-                    $companykeychains = $query->result_array();
-                    $quuery["companykeychains"] = $companykeychains;
+                    $companykeychains = $query1->result_array();
+                    $rs["companykeychains"] = $companykeychains;
                 }
-                return $quuery->result_array();
+                return $rs;
             }
             return null;
         
