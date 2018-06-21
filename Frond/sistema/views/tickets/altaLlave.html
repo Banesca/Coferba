@@ -286,7 +286,7 @@
 								<div class="form-group col-md-6">
 								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
 									<div class="col-md-10 col-md-offset-1 input-group">
-							  		  <span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
 							  			<select name="qkuTenant" ng-change="getTotalService(); getAllAttendant();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
 											    <option value=""></option>
 											    <option value="1">1</option>
@@ -309,22 +309,33 @@
 								</div>
 							</div>
 							<div class="container-fluid">
-								<div ng-show="delivery.idTypeDeliveryKf">
-									<div class="form-group col-md-10" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
-									  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-8">Quien retira</label>
-									  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-8">Quien recibe</label>  
-									    <div class="col-md-6 col-md-offset-8">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
-												    <option value=""></option>
-											    	<option ng-if="delivery.idTypeDeliveryKf==1" value="1">Titular</option>
-											    	<option ng-if="delivery.idTypeDeliveryKf==2" value="2">Encargado</option>
-											    	<option value="3">Tercera persona</option>
-											    </select>
-										    </div>
-									  	</div>
-									</div>
+							<!-- Select Type of key -->   
+								<div class="form-group col-md-6"> 
+								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
+								    <div class="col-md-10 col-md-offset-1 input-group">
+								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
+										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
+    									    <option value="">Seleccione un tipo</option>
+									    	<option value="1">Llaveros</option>
+									    	<option value="2">Sticker Vehicular</option>
+									    	<option value="3">Credencial Mobile</option>
+									    	</select>
+								  	</div>
+								</div>
+								<div class="form-group col-md-6" ng-disable="sessionidProfile!=2" ng-show="delivery.idTypeDeliveryKf && sessionidProfile!=2">
+								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-2">Quien retira</label>
+								  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-2">Quien recibe</label>  
+								    <div class="col-md-10 col-md-offset-2 input-group">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
+											    <option value=""></option>
+										    	<option ng-if="delivery.idTypeDeliveryKf==1" value="1">Titular</option>
+										    	<option ng-if="delivery.idTypeDeliveryKf==2" value="2">Encargado</option>
+										    	<option value="3">Tercera persona</option>
+										    </select>
+									    </div>
+								  	</div>
 								</div>
 								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
 								<div ng-if="delivery.idTypeDeliveryKf!=0 && select.whoPickUp!=0"  class="form-group col-md-10">
@@ -522,12 +533,12 @@
 								</div>
 						</fieldset>
 						<fieldset ng-init="btnClose=false" ng-switch-when="PASO 2: DATOS DE LA SOLICITUD">
-							<div class="container-fluid justify-content-md-center">
+							<div class="container-fluid">
 								<!-- Form Key Quantity qku = Quantity Keys Up-->
 								<div class="form-group col-md-6">
-								  <label class="col-xs-10 col-md-offset-0" >Cantidad de llaves</label> 
-									<div class="col-md-10 col-md-offset-0 input-group">
-							  		  <span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
+									<div class="col-md-10 col-md-offset-1 input-group">
+							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
 							  			<select name="qkuTenant" ng-change="getTotalService(); getAllAttendant();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
 											    <option value=""></option>
 											    <option value="1">1</option>
@@ -541,7 +552,7 @@
 								<!-- Select Type of Delivery -->   
 								<div class="form-group col-md-6"> 
 								  <label class="col-xs-12 col-md-offset-2">Tipo de Entrega</label>
-								    <div class="col-md-11 col-md-offset-2 input-group">
+								    <div class="col-md-10 col-md-offset-2 input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
 										    <select name="idTypeDeliveryKf" ng-change="getTotalService(); getAllAttendant(); delivery.nameAtt=null; select.whoPickUp=Null" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
 										    <option value=""></option>
@@ -550,28 +561,38 @@
 								</div>
 							</div>
 							<div class="container-fluid">
-								<div ng-show="delivery.idTypeDeliveryKf">
-									<div class="form-group col-md-10" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
-									  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-8">Quien retira</label>
-									  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-8">Quien recibe</label>  
-									    <div class="col-md-7 col-md-offset-8">
-										    <div class="input-group">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
-												    <option value=""></option>
-											    	<option ng-if="delivery.idTypeDeliveryKf==1" value="1">Titular</option>
-											    	<option ng-if="delivery.idTypeDeliveryKf==2" value="2">Encargado</option>
-											    	<option value="3">Tercera persona</option>
-											    </select>
-										    </div>
-									  	</div>
-									</div>
+							<!-- Select Type of key -->   
+								<div class="form-group col-md-6"> 
+								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
+								    <div class="col-md-10 col-md-offset-1 input-group">
+								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
+										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
+    									    <option value="">Seleccione un tipo</option>
+									    	<option value="1">Llaveros</option>
+									    	<option value="2">Sticker Vehicular</option>
+									    	<option value="3">Credencial Mobile</option>
+									    	</select>
+								  	</div>
+								</div>
+	
+								<div class="form-group col-md-6" ng-disable="sessionidProfile!=2" ng-show="delivery.idTypeDeliveryKf && sessionidProfile!=2">
+								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-2">Quien retira</label>
+								  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-2">Quien recibe</label>  
+								    <div class="col-md-10 col-md-offset-2 input-group">
+								        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
+										    <option value=""></option>
+									    	<option ng-if="delivery.idTypeDeliveryKf==1" value="1">Titular</option>
+									    	<option ng-if="delivery.idTypeDeliveryKf==2" value="2">Encargado</option>
+									    	<option value="3">Tercera persona</option>
+									    </select>
+								  	</div>
 								</div>
 								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
 								<div ng-if="delivery.idTypeDeliveryKf!=0 && select.whoPickUp>0 && select.whoPickUp<3"  class="form-group col-md-10">
-									    <div class="col-md-7 col-md-offset-8">
+									    <div class="col-md-6 col-md-offset-8">
 										    <div class="alert alert-success" role="alert">
-							                 	<span style="text-align: center;">La solicitud sera
+							                 	<span style="text-align: center;">Solicitud sera
 								                 	<span ng-if="delivery.idTypeDeliveryKf==1">retirada por titular: </span>
 								                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada al</span>
 						                 			<span ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2">encargado: </span>
@@ -579,7 +600,7 @@
 
 							                 	</span>
              									<!-- Attendant Info -->
-											    <div ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && !delivery.nameAtt && !btnClose" class="input-group col-md-12">
+											    <div ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && !delivery.nameAtt && !btnClose" class="input-group col-md-10">
 											  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idUser as combined(item) for item in listAttendant" ng-required="select.whoPickUp==2" ng-change="getAttData('delivery'); btnClose=true; enabledNextBtn();" ng-model="delivery.nameAtt" autofocus >
 													    <option value="">Seleccione un encargado</option>
 												    </select>
@@ -642,7 +663,7 @@
 									  <div class="col-md-3">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">
-											  <input id="inputService" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
+											  <input id="inputService" title="Gestion Sin Costo" data-placement="top" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-3 ">
