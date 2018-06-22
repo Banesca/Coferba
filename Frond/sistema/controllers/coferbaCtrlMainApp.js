@@ -428,7 +428,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
 
        $http({
           method : "GET",
-          url : serverHost+serverBackend+"Direccion/companyByid/"+idCompanytmp
+          url : serverHost+serverBackend+"Direccion/addressListByCompanyid/"+idCompanytmp
         }).then(function mySuccess(response) {
             $scope.listOffice   = response.data
             $scope.companyFound=true;
@@ -438,6 +438,28 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         });
     }
 
+    /**************************************************
+    *                                                 *
+    *    LISTADO DE SUCURSALES POR ID DE EMPRESA      *
+    *                                                 *
+    **************************************************/
+    $scope.select = {idCompanyKf:''};
+    $scope.companyInfoByCompnayID = function(){
+      var idCompanytmp;
+      if ($scope.sessionidProfile==2 || $scope.sessionidProfile==4)
+        {idCompanytmp=$scope.sessionidCompany;}else if($scope.sessionidProfile==1 && $scope.select.idCompanyKf!=0){ idCompanytmp=$scope.select.idCompanyKf;}
+
+       $http({
+          method : "GET",
+          url : serverHost+serverBackend+"Direccion/companyByid/"+idCompanytmp
+        }).then(function mySuccess(response) {
+            $scope.listOffice   = response.data
+            $scope.companyFound=true;
+          }, function myError(response) {
+            $scope.companyFound=false;
+            $scope.listOffice = "";
+        });
+    }
     /**************************************************
     *                                                 *
     *               REQUEST SELECT LIST               *
@@ -2122,7 +2144,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
               $scope.searchTenant('listTenant', $scope.idDeptoKf);
               $('#EditModalTenant').modal('hide');
             }
-            $scope.getAllAttendant();
+            //$scope.getAllAttendant();
         },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
             else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -2278,16 +2300,17 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                 if ($scope.manageDepto==1 && $scope.IsFnRemove==true){
 
                 }
-                  if ($scope.sessionidProfile==3 && $scope.typeTenantKf==1){
+                  if (($scope.sessionidProfile==3 || $scope.sessionidProfile==6) && $scope.typeTenantKf==1){
                     inform.add('Se ha dado de baja satisfactoriamente.',{
                       ttl:3000, type: 'success'
                     });
                       $scope.listUserDepto(1);
-                  }else if ($scope.sessionidProfile==3 && $scope.typeTenantKf==2 || $scope.sessionidProfile!=3 && $scope.typeTenantKf!=0 ){
+                  }else if (($scope.sessionidProfile==3 || $scope.sessionidProfile==6) && $scope.typeTenantKf==2 || $scope.sessionidProfile!=3 && $scope.typeTenantKf!=0 ){
                     inform.add('El Inquilino ha sido dado de baja satisfactoriamente.',{
                       ttl:3000, type: 'success'
                     });
                     $scope.searchTenant('listTenant', $scope.idDeptoKf);
+                    $scope.listUserDepto(1);
                   }
             },function (error, data, status) {
                 if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -2299,8 +2322,8 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
     $scope._getData2RemoveTenant = function () {
       var tenant =
               {
-                   data: { 
-                                idTenant            : $scope.idTenantKf,
+                   info: { 
+                                idUser              : $scope.idTenantKf,
                                 idDepartmentKf      : $scope.idDeparmentKf,
                                 idTypeTenant        : $scope.typeTenantKf
                          }

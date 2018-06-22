@@ -39,7 +39,7 @@
                     <div class="col-xs-12">
                       <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                        <select name="idAddressAtt" class="form-control" ng-disabled="sessionidProfile==1 && select.idCompanyKf==''" ng-change="getDeparment(0);listUserDepto(1); getAllAttendant(); idDepartmentKf=''; "  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+                        <select name="idAddressAtt" class="form-control" ng-disabled="sessionidProfile==1 && select.idCompanyKf==''" ng-change="getDeparment(0);listUserDepto(1); getAllAttendant(); idDepartmentKf=''; "  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
                           <option value="">Seleccione direccion</option>
                         </select>
                         <span ng-show="select.idAddressAtt!=0 && sessionidProfile==3" style="cursor: pointer;" class="input-group-addon"><i ng-click="listUserDepto(1); getAllAttendant();" class="glyphicon glyphicon-refresh"></i></span>
@@ -291,7 +291,7 @@
                                                   </span>
                                                 </td>-->
                                                 <!--<td>{{item.emailTenant}}</td>-->
-                                                <td ng-if="item.idProfileKf==3 && item.idTypeTenantKf==1 && isAllowed==null" >Propietario <span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp No Autorizado</span></td>
+                                                <td ng-if="item.idProfileKf==3 && item.idTypeTenantKf==1 && isAllowed==null" >Propietario <span style="padding-top: 10px; margin-top: 10px; text-align: center;" class="alert alert-warning"><i class="fas fa-lock"></i> No Autorizado</span></td>
                                                 <td ng-if="item.idProfileKf==3 && item.idTypeTenantKf==1 && item.idUser==isAllowed" >Propietario</td>
                                                 <td ng-if="item.idProfileKf==5 && item.idTypeTenantKf==2">Inquilino</td>
                                                 <td ng-if="item.idProfileKf==6 && item.idTypeTenantKf==1">Encargado (Propietario)</td>

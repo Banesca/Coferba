@@ -49,6 +49,26 @@ class Direccion_model extends CI_Model
             return null;
         
     }
+          // GET listado de direcciones por el ID de la Empresa //
+      public function addressListByCompanyid($id) {
+        $quuery = null;
+        $rs = null;
+
+        
+            $this->db->select("*")->from("tb_addres");
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_addres.idCompanyKf', 'left');
+            $this->db->where("tb_company.idCompany =", $id);
+
+
+            $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
+
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            } 
+                return null;
+        
+    }
 
 
      public function byidTenant($id, $idDpto, $idStatus) {

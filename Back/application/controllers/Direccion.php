@@ -36,11 +36,11 @@ class Direccion extends REST_Controller {
       }
 
 
-      public function companyByid_get($id) {
+      public function addressListByCompanyid_get($id) {
         
   
           $rs = null;
-          $rs = $this->direccion_model->companyByid($id);
+          $rs = $this->direccion_model->addressListByCompanyid($id);
   
           if (!is_null($rs)) {
               $this->response($rs, 200);

@@ -42,7 +42,7 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getDeparment(0); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+					                      <select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getDeparment(0); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 					                        <option value="" >Seleccione un consorcio</option>
 					                      </select>
 					                    </div>
@@ -54,7 +54,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change=" enabledNextBtn();getServicesValues(select.idAddressAtt);select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change=" enabledNextBtn();getServicesValues(select.idAddressAtt);select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
 												    <option value="">Seleccione un consorcio</option>
 											    </select>
 										    </div>
@@ -282,20 +282,18 @@
 						</fieldset>
 						<fieldset ng-switch-when="PASO 3: DATOS DE LA SOLICITUD">
 							<div class="container-fluid justify-content-md-center">
-								<!-- Form Key Quantity qku = Quantity Keys Up-->
-								<div class="form-group col-md-6">
-								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
-									<div class="col-md-10 col-md-offset-1 input-group">
-							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
-							  			<select name="qkuTenant" ng-change="getTotalService(); getAllAttendant();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
-											    <option value=""></option>
-											    <option value="1">1</option>
-											    <option value="2">2</option>
-											    <option value="3">3</option>
-											    <option value="4">4</option>
-											    <option value="5">5</option>
-								    	</select>
-							    	</div>
+								<!-- Select Type of key -->   
+								<div class="form-group col-md-6"> 
+								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
+								    <div class="col-md-10 col-md-offset-1 input-group">
+								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
+										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
+    									    <option value="">Seleccione un tipo</option>
+									    	<option value="1">Llaveros</option>
+									    	<option value="2">Sticker Vehicular</option>
+									    	<option value="3">Credencial Mobile</option>
+									    	</select>
+								  	</div>
 								</div>
 								<!-- Select Type of Delivery -->   
 								<div class="form-group col-md-6"> 
@@ -309,18 +307,20 @@
 								</div>
 							</div>
 							<div class="container-fluid">
-							<!-- Select Type of key -->   
-								<div class="form-group col-md-6"> 
-								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
-								    <div class="col-md-10 col-md-offset-1 input-group">
-								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
-										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
-    									    <option value="">Seleccione un tipo</option>
-									    	<option value="1">Llaveros</option>
-									    	<option value="2">Sticker Vehicular</option>
-									    	<option value="3">Credencial Mobile</option>
-									    	</select>
-								  	</div>
+								<!-- Form Key Quantity qku = Quantity Keys Up-->
+								<div class="form-group col-md-6">
+								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
+									<div class="col-md-10 col-md-offset-1 input-group">
+							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
+							  			<select name="qkuTenant" ng-change="getTotalService();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
+											    <option value=""></option>
+											    <option value="1">1</option>
+											    <option value="2">2</option>
+											    <option value="3">3</option>
+											    <option value="4">4</option>
+											    <option value="5">5</option>
+								    	</select>
+							    	</div>
 								</div>
 								<div class="form-group col-md-6" ng-disable="sessionidProfile!=2" ng-show="delivery.idTypeDeliveryKf && sessionidProfile!=2">
 								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-2">Quien retira</label>
@@ -534,20 +534,18 @@
 						</fieldset>
 						<fieldset ng-init="btnClose=false" ng-switch-when="PASO 2: DATOS DE LA SOLICITUD">
 							<div class="container-fluid">
-								<!-- Form Key Quantity qku = Quantity Keys Up-->
-								<div class="form-group col-md-6">
-								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
-									<div class="col-md-10 col-md-offset-1 input-group">
-							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
-							  			<select name="qkuTenant" ng-change="getTotalService(); getAllAttendant();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
-											    <option value=""></option>
-											    <option value="1">1</option>
-											    <option value="2">2</option>
-											    <option value="3">3</option>
-											    <option value="4">4</option>
-											    <option value="5">5</option>
-								    	</select>
-							    	</div>
+								<!-- Select Type of key -->   
+								<div class="form-group col-md-6"> 
+								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
+								    <div class="col-md-10 col-md-offset-1 input-group">
+								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
+										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
+    									    <option value="">Seleccione un tipo</option>
+									    	<option value="1">Llaveros</option>
+									    	<option value="2">Sticker Vehicular</option>
+									    	<option value="3">Credencial Mobile</option>
+									    	</select>
+								  	</div>
 								</div>
 								<!-- Select Type of Delivery -->   
 								<div class="form-group col-md-6"> 
@@ -561,20 +559,21 @@
 								</div>
 							</div>
 							<div class="container-fluid">
-							<!-- Select Type of key -->   
-								<div class="form-group col-md-6"> 
-								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
-								    <div class="col-md-10 col-md-offset-1 input-group">
-								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
-										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
-    									    <option value="">Seleccione un tipo</option>
-									    	<option value="1">Llaveros</option>
-									    	<option value="2">Sticker Vehicular</option>
-									    	<option value="3">Credencial Mobile</option>
-									    	</select>
-								  	</div>
+								<!-- Form Key Quantity qku = Quantity Keys Up-->
+								<div class="form-group col-md-6">
+								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
+									<div class="col-md-10 col-md-offset-1 input-group">
+							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
+							  			<select name="qkuTenant" ng-change="getTotalService();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
+											    <option value=""></option>
+											    <option value="1">1</option>
+											    <option value="2">2</option>
+											    <option value="3">3</option>
+											    <option value="4">4</option>
+											    <option value="5">5</option>
+								    	</select>
+							    	</div>
 								</div>
-	
 								<div class="form-group col-md-6" ng-disable="sessionidProfile!=2" ng-show="delivery.idTypeDeliveryKf && sessionidProfile!=2">
 								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-2">Quien retira</label>
 								  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-2">Quien recibe</label>  

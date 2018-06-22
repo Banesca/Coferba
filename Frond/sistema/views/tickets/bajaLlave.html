@@ -42,7 +42,7 @@
 						                  <div class="col-md-4">
 						                    <div class="input-group">
 						                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-						                      <select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getDeparment(0); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+						                      <select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getDeparment(0); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 						                        <option value="" >Seleccione un consorcio</option>
 						                      </select>
 						                    </div>
@@ -54,7 +54,7 @@
 										    <div class="col-md-4">
 											    <div class="input-group">
 											        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-											  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change=" enabledNextBtn();getServicesValues(select.idAddressAtt);select.idDepartmentKf=null;"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
+											  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change=" enabledNextBtn();getServicesValues(select.idAddressAtt);select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
 													    <option value="">Seleccione un consorcio</option>
 												    </select>
 											    </div>
@@ -283,22 +283,33 @@
 							<fieldset ng-switch-when="PASO 3: DATOS DE LA SOLICITUD">
 									<!-- Select If know the keys to delete or not-->
 									<div class="form-group">
-									 <label class="col-md-4 control-label"></label>  
-									   <div class="col-md-4">
-										   	<div class="input-group">
-											    <span class="input-group-addon">
-											        <input type="radio" name="knowsKeys" value="1" ng-model="knowsKeys" aria-label="Radio button for following text input" required autofocus>
-											    </span>
-											    <input type="text" class="form-control" readonly="true" value="Conozco las llaves a dar de baja." aria-label="Text input with radio button">
-											</div>
-											<div class="input-group">
-											    <span class="input-group-addon">
-											        <input type="radio" name="knowsKeys" ng-model="knowsKeys" value="2" aria-label="Radio button for following text input" required autofocus>
-											    </span>
-											    <input type="text" class="form-control" readonly="true" value="Conozco las llaves que tengo en mi poder." aria-label="Text input with radio button">
-											</div>
+										<div class="form-check form-check-inline">
+											<div class="col-md-9 col-md-offset-2">
+												<div class="col-md-6">
+											  		<input id="ratio1" class="radio-custom" type="radio" name="knowsKeys"  ng-model="knowsKeys" value="1"  required autofocus>
+											  		<label for="ratio1" class="radio-custom-label">
+												  		<span>Conozco las llaves a dar de baja.</span>
+										  			</label>
+										  		</div>
+										  		<div class="col-md-6">
+											  		<input id="ratio2" class="radio-custom"  type="radio" name="knowsKeys" ng-model="knowsKeys" value="2" required autofocus>
+											  		<label for="ratio2" class="radio-custom-label">
+												  		<span>Conozco las llaves que tengo en mi poder</span>
+										  			</label> 
+										  		</div>
+										 	</div>
 										</div>
 									</div>
+									<div ng-if="knowsKeys!=0" class="form-group" style="margin-bottom: 10px;">
+					                  	<div style="text-align: left; margin: 0 auto;" ng-if="knowsKeys==1" class="alert alert-info alert-width" role="alert">
+					                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		            						<span class="pull-left" style="font-size:1.2em;"><i class="fas fa-info-circle">&nbsp&nbsp </i></span><strong> Recorda, </strong> que debes de indicar los codigos de el/los llavero/s a dar de baja.
+		      							</div>
+		      							<div style="text-align: left; margin: 0 auto;" ng-if="knowsKeys==2" class="alert alert-info alert-width" role="alert">
+					                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		            						<span class="pull-left" style="font-size:1.2em;"><i class="fas fa-info-circle">&nbsp&nbsp </i></span><strong> Recorda, </strong> que debes de indicar los codigos de el/los llavero/s que tenes en tu poder.
+		      							</div>
+	      							</div>
 									<!-- Form Key Quantity qku = Quantity Keys Up-->
 									<div class="form-group">
 									  	<label class="col-md-4 control-label" >Cantidad de llaves</label> 
@@ -323,22 +334,138 @@
 									</div>
 									<!-- Text Owner Phone 1 -->      
 									<div class="form-group" ng-show="quantity.qkuTenant>=1">
-									  <label class="col-md-4 control-label">Codigos de llaves:</label>  
-									    <div class="col-md-4">
-										    <div class="input-group  col">
-										        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-										  		<input name="n1" placeholder="1375" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n1" type="text" autofocus />
-										  		<input name="n2" placeholder="1375" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n2" type="text" autofocus />
-										  		<input name="n3" placeholder="1375" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n3" type="text" autofocus />
-										  		<input name="n4" placeholder="1375" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n4" type="text" autofocus />
-										  		<input name="n5" placeholder="1375" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n5" type="text" autofocus />
-										  		<input name="n6" placeholder="1375" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n6" type="text" autofocus />
-										  		<input name="n7" placeholder="1375" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n7" type="text" autofocus />
-										  		<input name="n8" placeholder="1375" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n8" type="text" autofocus />
-										  		<input name="n9" placeholder="1375" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n9" type="text" autofocus />
-										  		<input name="n10" placeholder="1375" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n10" type="text" autofocus />
-										    </div>
-									  </div>
+									  <label class="col-xs-12 col-md-offset-4">Codigos de llaves  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp/ &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tipo de llaves</label>  
+										    <div class="input-group  col-md-offset-4">
+
+    										    <div class="col-md-4">
+											  		<input id="n1" name="n1" placeholder="1375" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n1" type="text" autofocus />
+											  	</div>
+											  	 <div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+											    </div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+											    <div class="col-md-4">
+											  		<input name="n2" placeholder="1375" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n2" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+											  	</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+											  	<div class="col-md-4">
+											  		<input name="n3" placeholder="1375" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n3" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n4" placeholder="1375" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n4" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n5" placeholder="1375" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n5" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n6" placeholder="1375" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n6" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n7" placeholder="1375" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n7" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n8" placeholder="1375" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n8" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n9" placeholder="1375" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n9" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+												</div>
+											</div>
+											<div class="input-group  col-md-offset-4">
+												<div class="col-md-4">
+											  		<input name="n10" placeholder="1375" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n10" type="text" autofocus />
+											  	</div>
+											  	<div class="col-md-6 col-md-offset-1">
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" required autofocus >
+			    									    <option value="">Seleccione un tipo</option>
+												    	<option value="1">Llaveros</option>
+												    	<option value="2">Sticker Vehicular</option>
+												    	<option value="3">Credencial Mobile</option>
+												    	</select>
+										    	</div>
+								  			</div>
 									</div>
 									<!-- Select Type of Lost -->  
 									<div class="form-group"> 
@@ -351,8 +478,8 @@
 										  	</div>
 										</div>
 									</div>
-									<div style="margin-bottom: 10px;">
-					                  	<div style="text-align: center; width: 600px; margin: 0 auto;" ng-if="select.idTypeLostKf == 1" class="alert alert-danger" role="alert">
+									<div class="form-group" style="margin-bottom: 10px;">
+					                  	<div style="text-align: center; margin: 0 auto;" ng-if="select.idTypeLostKf == 1" class="alert alert-danger alert-width" role="alert">
 					                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		            						<strong>EN CASO DE NECESITAR UNA BAJA URGENTE POR BOBO <br>RECUERDE REALIZAR SU PEDIDO AL SISTEMA DE URGENCIAS.<br>LLAMANDO AL 5031-1207 </strong><br> <h5>LAS BAJAS SOLICITADAS POR SISTEMA SE REALIZARAN DENTRO DE LAS 48 HS HABILES</h5>
 		      							</div>
@@ -476,6 +603,7 @@
 									    <div class="input-group  col">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
 									  		<input name="n1" placeholder="1375" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n1" type="text" autofocus />
+
 									  		<input name="n2" placeholder="1375" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n2" type="text" autofocus />
 									  		<input name="n3" placeholder="1375" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n3" type="text" autofocus />
 									  		<input name="n4" placeholder="1375" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n4" type="text" autofocus />
