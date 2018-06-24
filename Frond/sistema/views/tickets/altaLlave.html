@@ -368,9 +368,9 @@
 												    <option value="">Seleccione un encargado</option>
 											    </select>
 											    <!--BUTTONS -->
-											    <span ng-show="attendantFound==true && sessionidProfile!=3 && delivery.nameAtt && !saveAttendant" style="cursor: pointer;" ng-click="editAttendant=true; saveAttendant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i> Editar</a></span>
-											    <span ng-show="attendantFound==true && sessionidProfile!=3 && delivery.nameAtt && editAttendant" style="cursor: pointer;" ng-click="editAttendant=false; sysFunctionsAtt('update','delivery'); saveAttendant=false;" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i> Guardar</a></span>
-											    <span ng-show="(!attendantFound || attendantFound) && sessionidProfile!=3 && !delivery.nameAtt && select.idAddressAtt" style="cursor: pointer;" ng-click="sysFunctionsAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i> Registrar</a>
+											    <span data-toggle="tooltip" data-placement="top" title="Modificar" ng-show="attendantFound==true && sessionidProfile!=3 && delivery.nameAtt && !saveAttendant" style="cursor: pointer;" ng-click="editAttendant=true; saveAttendant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i></a></span>
+											    <span data-toggle="tooltip" data-placement="top" title="Guardar" ng-show="attendantFound==true && sessionidProfile!=3 && delivery.nameAtt && editAttendant" style="cursor: pointer;" ng-click="editAttendant=false; sysFunctionsAtt('update','delivery'); saveAttendant=false;" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i></a></span>
+											    <span data-toggle="tooltip" data-placement="top" title="Registrar" ng-show="(!attendantFound || attendantFound) && sessionidProfile!=3 && !delivery.nameAtt && select.idAddressAtt" style="cursor: pointer;" ng-click="sysFunctionsAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i></a>
 											    </span>
 											    <!-- //BUTTONS -->
 										    </div>

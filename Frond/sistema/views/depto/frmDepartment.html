@@ -81,7 +81,7 @@
           <div uib-collapse="isCollapsed">
             <!--*********************DEPARTAMENTOS *******************************-->
             
-            <div ng-if="!isCollapsed && collap==1 && sessionidProfile>0 && recordsFound" class="panel panel-default">
+            <div ng-if="!isCollapsed && collap==1 && sessionidProfile>0 && recordsFound && !noRecordsFound && !dptoNotFound"" class="panel panel-default">
             
               <div class="panel-body">
                 <div class="row">
@@ -148,7 +148,7 @@
                                   
                                 </ul>
                               </div>
-                              <div ng-if="item.idUserKf==null" class="btn-group">
+                              <div ng-if="item.idUserKf==null || item.idUserKf==0" class="btn-group">
                                 <button type="button" class="btn btn-info btn-sm"><i title="Registrar" class="glyphicon glyphicon-plus"></i> Registrar</button>
                                 <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
                                   <span class="caret"></span>
@@ -199,16 +199,6 @@
                             <td colspan="4" >
                                 <div ng-show="tenantNotFound && sessionidProfile!=0 && select.idAddressAtt" class="alert alert-info" role="alert">
                                     <strong>INFO: </strong>No hay Inquilinos registrados en el departamento seleccionada.
-                                    <div class="btn-group">
-                                      <button type="button" class="btn btn-info btn-sm"><i title="Registrar" class="glyphicon glyphicon-plus"></i> Registrar</button>
-                                      <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu" role="menu">
-                                        <li><a href="" ng-click="sysFunctionsTenant('open', 'add'); "><i title="Registrar Inquilinos" class="glyphicon glyphicon-edit"></i> Inquilinos</a></li>
-                                        <li ng-if="item.departmentFloor=='Porteria'"><a href="" ng-click="sysFunctionsAtt('open')"><i title="Registrar Encargados" class="glyphicon glyphicon-edit"></i> Encargados</a></li>
-                                        </ul>
-                                    </div>
                                 </div>
                                 <div ng-if="tenantNotFound!=true && sessionidProfile!=0" class="panel panel-default">
                                   <div class="panel-heading">
@@ -326,7 +316,7 @@
               </div>
             </div>
             <!--*********************ENCARGADOS ***********************************-->
-            <div ng-if="!isCollapsed && collap==2 && sessionidProfile!=3 && attendantFound" class="panel panel-default">
+            <div ng-if="!isCollapsed && collap==2 && sessionidProfile!=3 && attendantFound && !noRecordsFound && !dptoNotFound"" class="panel panel-default">
                 <div class="panel-body">
                     <div  class="row" >
                         <!-- Filter Type of Tenant For Admins -->
@@ -423,7 +413,7 @@
                               <td>{{item.emailUser}}</td>
                               <td ng-if="!item.idTyepeAttendantKf"><label ng-if="item.idStatusKf==1" class="label label-warning">No Asignado
                                 </label></td>
-                              <td ng-if="item.idTyepeAttendantKf==1">Otros</td>
+                              <td ng-if="item.idTyepeAttendantKf==1">Otros ({{item.descOther}})</td>
                               <td ng-if="item.idTyepeAttendantKf==2">Titular</td>
                               <td ng-if="item.idTyepeAttendantKf==3">Suplente</td>
                               <td ng-if="item.idTyepeAttendantKf==4">Ayudante</td>

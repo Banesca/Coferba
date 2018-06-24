@@ -614,7 +614,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         }
         $scope.select.idDepartmentKf = "";
         var typeOfMessage="";
-        var idAddressAttKf=!$scope.select.idAddressAtt ? $scope.sessionidAddress : $scope.select.idAddressAtt;
+        var idAddressAttKf=$scope.manageDepto>=0 ? $scope.select.idAddressAtt : null ;
         var informMessage="";
          $http({
             method : "GET",
@@ -926,6 +926,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
               //if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){$scope.isCollapsed=!$scope.isCollapsed};
               //console.log(response.data);
         }, function myError (response){
+            $scope.ListDpto ="";
             if (response.status=="404" || response.status=="500"){
               $scope.ListDpto ="";
               if ($scope.sessionidProfile!=0 && $scope.manageDepto>=0 && idAddressTmp){
@@ -1839,8 +1840,9 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
       var fnActionTenant= fnAction;
         switch (value) {
           case "open": //Opcion Utilizada para registrar un inquilino de cualquier tipo. 
+            console.log("Departamento ID: "+$scope.idDeptoKf)
             $scope.IsTenant                 =true;
-            $scope.idDeptoKf                = obj.idDepartment;
+            $scope.idDeptoKf                = !$scope.idDeptoKf ? obj.idDepartment: $scope.idDeptoKf;
             $scope.IsAttendant              =false;
             mail2Search                     = "";
             $scope.ownerFound               =false;
@@ -1927,7 +1929,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
           /*------------------------------------------------------------------------------*/
           case "addT": //Opcion Usada para registrar los datos de un usuarios [propietario] en la tabla tenant o un inquilino normal.
                 console.log(getTenantData2Add());
-                $scope.addTenant($http, $scope);
+                //$scope.addTenant($http, $scope);
                 if ($scope.IsTenant==true){
                   $('#RegisterModalTenant').modal('hide'); //Hide the modal windows
                   if($scope.t.idTypeKf==1){
@@ -2070,22 +2072,22 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
     function getTenantData2Add () {
     if($scope.idProfileTmp == 3 || $scope.sessionidProfile==3){
       if (!$scope.sysToken){
-        $scope.t.idTypeKf=1;
+        $scope.t.idTypeKf       = 1;
       }else if($scope.sysToken && $scope.manageDepto>=0){
-        $scope.t.idTypeKf=2
-        $scope.t.idProfileKf = 5;
+        $scope.t.idTypeKf       = 2
+        $scope.t.idProfileKf    = 5;
         $scope.t.idDepartmentKf =!$scope.select.idDepartmentKf?$scope.idDeptoKf : $scope.select.idDepartmentKf;
-        $scope.t.idAddressKf    =$scope.select.idAddressAtt;
-        $scope.t.companyKf      ="";
+        $scope.t.idAddressKf    = $scope.select.idAddressAtt;
+        $scope.t.companyKf      = "";
       }
     }else if($scope.sessionidProfile!=3 && $scope.manageDepto>=0 && !$scope.IsAttendant){
-      $scope.t.idTypeKf=!$scope.idTypeTenantKf ? $scope.typeTenant : $scope.idTypeTenantKf;
-      $scope.t.idProfileKf = $scope.t.idTypeKf==1 ? 3 : 5;
-      $scope.t.idAddressKf =$scope.select.idAddressAtt;
-      $scope.t.companyKf =!$scope.select.idCompanyKf?$scope.sessionidCompany:$scope.select.idCompanyKf;
+      $scope.t.idTypeKf         =!$scope.idTypeTenantKf ? $scope.typeTenant : $scope.idTypeTenantKf;
+      $scope.t.idProfileKf      = $scope.t.idTypeKf==1 ? 3 : 5;
+      $scope.t.idAddressKf      = $scope.select.idAddressAtt;
+      $scope.t.companyKf        =!$scope.select.idCompanyKf?$scope.sessionidCompany:$scope.select.idCompanyKf;
     }else if($scope.sessionidProfile!=3 && $scope.manageDepto>=0 && $scope.IsAttendant){
-      $scope.t.idProfileKf = 6;
-      $scope.t.idTypeKf=1;
+      $scope.t.idProfileKf      = 6;
+      $scope.t.idTypeKf         = 1;
     }
     /*VERIFICAMOS SI EL INQUILINO ES DE TIPO PROPIETARIO PARA NO LLENAR LA VARIABLE CON EL idDeparmentKf */
     if($scope.t.idTypeKf==1 && $scope.sessionidProfile != 3){
@@ -2112,7 +2114,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                       idProfileKf             : $scope.t.idProfileKf,
                       idCompanyKf             : $scope.t.idCompanyKf,
                       /*-----------------------------------------*/
-                      idAddresKf              : $scope.t.idAddrAttKf,
+                      idAddresKf              : $scope.t.idAddressKf,
                       //idTyepeAttendantKf      : $scope.register.idTypeAttKf,
                       idTypeTenantKf          : $scope.t.idTypeKf,
                       //descOther               : $scope.register.typeOtherAtt,
@@ -2143,7 +2145,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
             if($scope.manageDepto==1 && $scope.IsTenant==true){
               $scope.searchTenant('listTenant', $scope.idDeptoKf);
               $('#EditModalTenant').modal('hide');
-            }
+            } 
             //$scope.getAllAttendant();
         },function (error, data,status) {
             if(status == 404){alert("!Informacion "+status+data.error+"info");}
@@ -2270,7 +2272,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
     $scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTenant: '', typeTenant: ''};
       $scope.select2EditTenant = function (obj){
           $scope.isEditTenantByAdmin     =  true;
-          $scope.idDepto                 =  !obj.idDepartmentKf ? $scope.select.idDeparmentKf : obj.idDepartmentKf;
+          //$scope.idDepto                 =  !obj.idDepartmentKf ? $scope.select.idDeparmentKf : obj.idDepartmentKf;
           $scope.idTenantKf              =  obj.idUser;
           $scope.tenant.namesTenant      =  obj.fullNameUser;
           $scope.tenant.localPhoneTenant =  obj.phoneLocalNumberUser;
@@ -2513,6 +2515,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
     *                MENU DE OPCIONES                 *
     *                                                 *
     **************************************************/
+    $scope.userAtt = {attendant:{}};
     $scope.sysFunctionsAtt = function(value, option){
       switch (value){
         case "open":
@@ -2594,6 +2597,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
               $scope.userAtt.attendant.descOther            =$scope.userAtt.attendant.idTyepeAttendantKf==1 ? $scope.tmp.descOther : null;
             }else if(option=="delivery"){
               console.log("=>DELIVERY");
+              console.log($scope.deliveryAtt);
               $scope.userAtt.attendant=$scope.deliveryAtt;
               $scope.userAtt.attendant.emailUser            =$scope.delivery.emailAtt;
               $scope.userAtt.attendant.phoneNumberUser      =$scope.delivery.movilPhoneAtt;
@@ -2834,9 +2838,6 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                   $scope.delivery.fullNamesAtt  = $scope.listAttendant[i].fullNameUser;
                   $scope.delivery.idAddressAtt  = $scope.listAttendant[i].idAddresKf;
                   $scope.delivery.descOther     = $scope.listAttendant[i].descOther;
-
-
-                  //console.log($scope.userAtt);
                   break;
               }
           };
