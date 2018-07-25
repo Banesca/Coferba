@@ -253,6 +253,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         }
       };
       $scope.enabledNextBtn=function(item){
+      console.clear();
       $scope.formValidated=false;
       //alert($scope.stepIndexTmp);
         switch ($scope.stepIndexTmp){
@@ -614,7 +615,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         }
         $scope.select.idDepartmentKf = "";
         var typeOfMessage="";
-        var idAddressAttKf=$scope.manageDepto>=0 ? $scope.select.idAddressAtt : null ;
+        var idAddressAttKf=$scope.manageDepto>=0 && $scope.sessionidProfile!=5 ? $scope.select.idAddressAtt : $scope.sessionidAddress;
         var informMessage="";
          $http({
             method : "GET",
@@ -3214,8 +3215,16 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                         }
                     }
                   }
-
-                  if ($scope.quantity.qkuTenant==1){$scope.codekeys=$scope.code.n1}
+                  //console.log($scope.key);
+                  console.log("---------------------------------------");
+                  var elem = document.getElementsByClassName("key-codes");
+                   var keyCodeType = [];
+                  for (var i = 0; i < elem.length; ++i) {
+                    if (typeof elem[i].attributes.class !== "undfined" && elem[i].value !="" ) {
+                       keyCodeType.push(elem[i].value);
+                    }
+                  }
+                  /*if ($scope.quantity.qkuTenant==1){$scope.codekeys=$scope.code.n1}
                   if ($scope.quantity.qkuTenant==2){$scope.codekeys=$scope.code.n1+','+$scope.code.n2}
                   if ($scope.quantity.qkuTenant==3){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3}
                   if ($scope.quantity.qkuTenant==4){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4}
@@ -3224,19 +3233,19 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                   if ($scope.quantity.qkuTenant==7){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7}
                   if ($scope.quantity.qkuTenant==8){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8}
                   if ($scope.quantity.qkuTenant==9){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8+','+$scope.code.n9}
-                  if ($scope.quantity.qkuTenant==10){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8+','+$scope.code.n9+','+$scope.code.n10}
+                  if ($scope.quantity.qkuTenant==10){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8+','+$scope.code.n9+','+$scope.code.n10}]*/
 
                       $scope.tk.idReasonDisabledItemKf = $scope.select.idTypeLostKf;
                       $scope.tk.idAttendantKf          = $scope.select.nameAtt;
                       $scope.tk.description            = $scope.txt.sruTenant;
-                      $scope.tk.numberItemDisabled     = $scope.codekeys;
+                      $scope.tk.itemToDisabled         = $scope.key;
                       $scope.tk.numberItemes           = $scope.quantity.qkuTenant;
                       $scope.tk.idAddresKf             = $scope.select.idAddressAtt;
-                      $scope.tk.idBranchKf             = $scope.select.idAddressAtt;
-                  console.log("DATOS DE LA SOLICITUD DE BAJA DE LLAVE");
+                  console.log("| DATOS DE LA SOLICITUD DE BAJA DE LLAVE |");
+                  console.log("---------------------------------------");
                   console.log($scope._getData2DelKey());
                   //$scope.modalConfirmation('tdown',0);
-                  //$scope.requestDownKey($http, $scope);
+                  $scope.requestDownKey($http, $scope);
                 
           break;
           case "srvs": // SOLOCITUD DE SERVICIOS
@@ -3278,7 +3287,6 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                     $scope.tk.description        = $scope.o.detail;
                     $scope.tk.addressConsul      = $scope.select.idAddressAtt;
                     $scope.tk.idAddresKf         = $scope.select.idAddressAtt;
-                    $scope.tk.idBranchKf         = $scope.select.idAddressAtt;
                 console.log("DATOS DE LA SOLICITUD DE CONSULTA");
                 console.log($scope._getData2RequestOther());
                 $scope.otherRequest($http, $scope);
@@ -3359,7 +3367,6 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                                 idUserAttendantKf : $scope.tk.idAttendantKf,
                                 totalService      : $scope.tk.totalService,
                                 idAdressKf        : $scope.tk.idAddresKf,
-                                idBranchKf        : $scope.tk.idBranchKf,
                                 idOtherKf         : $scope.tk.idOtherKf,
                                 idDepartmentKf    : $scope.tk.idDepartmentKf,
                                 idCompanyKf       : $scope.tk.idCompanyKf,
@@ -3399,7 +3406,6 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
     };
     $scope.select={idTypeLostKf: ''};
     $scope._getData2DelKey={};
-    $scope.code={n1: '', n2: '', n3: '', n4: '', n5: ''};
     $scope._getData2DelKey = function () {
 
       var delKey =
@@ -3415,9 +3421,8 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                                 description           : $scope.tk.description,
                                 idAttendantKf         : $scope.tk.idAttendantKf,
                                 idReasonDisabledItemKf: $scope.tk.idReasonDisabledItemKf,
-                                numberItemDisabled    : $scope.tk.numberItemDisabled,
+                                itemToDisabled    : $scope.tk.itemToDisabled,
                                 idAdressKf            : $scope.tk.idAddresKf,
-                                idBranchKf            : $scope.tk.idBranchKf,
                                 idCompanyKf           : $scope.tk.idCompanyKf,
                                 idTypeOfOptionKf      : $scope.tk.idTypeOfOptionKf
                             }
@@ -3463,7 +3468,6 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                                 descriptionOrder  : $scope.tk.descriptionOrder,
                                 description       : $scope.tk.description,
                                 idAdressKf        : $scope.tk.idAddresKf,
-                                idBranchKf        : $scope.tk.idBranchKf,
                                 idCompanyKf       : $scope.tk.idCompanyKf,
                                 idTypeServices    : $scope.tk.idTypeServices
                             }
@@ -3508,7 +3512,6 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
                                 mailContactConsult  : $scope.tk.mailContactConsult,
                                 addressConsul       : $scope.tk.addressConsul,
                                 idAdressKf          : $scope.tk.idAddresKf,
-                                idBranchKf          : $scope.tk.idBranchKf,
                                 idCompanyKf         : $scope.tk.idCompanyKf,
                                 description         : $scope.tk.description
                             }
@@ -3926,6 +3929,7 @@ moduleMainApp.controller('MainAppCtrl', function($scope, $location, $http, block
         $scope.t    ={idTenant:'', fullNameTenant:'', idTypeKf:'', phoneNumberTenant:'', phoneNumberContactTenant:'', idDepartmentKf: '', emailTenant:''};
         $scope.tk   ={idTypeTicketKf:'', idUserEnterpriceKf:'', idTenantKf:'', idUserAdminKf:'', idOWnerKf:'', idProfileKf:'', numberItemes:'', idTypeDeliveryKf: '', description:'', TotalService:'', idBranchKf:'', idOtherKf:'',idReasonDisabledItemKf:''  };
         $scope.dh = {filterSearch:'',filterTop:'',filterProfile:'',filterTenantKf: '',filterCompany: '',filterTypeTicket:'',filterAddress:'',filterStatus:'',filterOwnerKf:'',filterIdUser:''};
+        $scope.key = {};
 
         /******Config Var*******/
         $scope.contentUser                = false;

@@ -131,7 +131,8 @@ class Ticket_model extends CI_Model
             'idTypeTicketKf' => @$ticket['idTypeTicketKf'],
             'idUserTenantKf' => @$ticket['idUserTenantKf'],
             'numberItemes' => @$ticket['numberItemes'],
-			'numberItemDisabled' => @$ticket['numberItemDisabled'],
+			'itemToDisabled' => @json_encode($ticket['itemToDisabled']),
+            'idTypeOfKeysKf' => @json_encode($ticket['idTypeOfKeysKf']),
 			'idReasonDisabledItemKf' => @$ticket['idReasonDisabledItemKf'],
 
             'idTypeDeliveryKf' => @$ticket['idTypeDeliveryKf'],
@@ -152,7 +153,6 @@ class Ticket_model extends CI_Model
             'idUserAttendantKf' => @$ticket['idUserAttendantKf'],
             'idTypeOfOptionKf' => @$ticket['idTypeOfOptionKf'],
             'idDepartmentKf'=> @$ticket['idDepartmentKf'],
-            'idBranchKf' => @$ticket['idBranchKf'],
             'idCompanyKf' => @$ticket['idCompanyKf'],
             'totalService' => @$ticket['totalService'],
             'idAdressKf' => @$ticket['idAdressKf'],

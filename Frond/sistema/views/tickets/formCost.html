@@ -1,0 +1,115 @@
+<!-- SETUP SERVICES COST -->
+<div class="container">
+	<div class="panel panel-default padding-panel">
+		<div class="panel-heading">
+			<h3 class="panel-title">COSTOS DE SERVICIOS</h3>
+		</div>
+		<div class="panel-body">
+			<!-- FORM CONTAINER-->
+				<form class="form-horizontal" name="frmCost">
+					<fieldset>
+						<!-- Company Name-->    
+						<div class="container-fluid" ng-show="sessionidProfile!=3"> 
+							<div class="row">   
+								<div class="col-md-8 col-md-offset-4">
+								  <label class="col-xs-12">Administracion</label>
+								    <div class="col-md-6">
+									    <div class="input-group">
+									        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+									  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
+
+									  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); select.idAddressAtt=null"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  ><option value="">Seleccione una opcion</option>
+										    </select>
+									    </div>
+								  	</div>
+								</div>
+							</div>
+						</div>
+						<!-- Address for Admins -->
+						<div class="container-fluid" ng-show="sessionidProfile!=3"> 
+							<div class="row">   
+								<div class="col-md-8 col-md-offset-4">
+								  	<label class="col-xs-12">Direcci&#243n del Consorcio</label>
+									    <div class="col-md-6">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<select name="idAddressKf" ng-disabled="!select.idCompanyKf && sessionidProfile==1" class="form-control" ng-change="getCostServiceData(4);"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+												    <option value="">Seleccione un consorcio</option>
+											    </select>
+										    </div>
+									  	</div>
+								</div>
+							</div>
+						</div>
+						<!-- Address for Onwers-->
+						<div class="container-fluid" ng-show="sessionidProfile==3"> 
+							<div class="row">   
+								<div class="col-md-8 col-md-offset-4">
+								  	<label class="col-xs-12">Direcci&#243n del Consorcio</label>
+									    <div class="col-md-6">
+										    <div class="input-group">
+										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+										  		<select name="idAddressAtt" class="form-control" ng-change="getCostServiceData(3);"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+												    <option value="">Seleccione un consorcio</option>
+											    </select>
+										    </div>
+									  	</div>
+								</div>
+							</div>
+						</div>
+						<div><ul><i class="divider"></li></ul></div>
+						<div ng-if="!select.idAddressAtt">
+							<div class="alert alert-info alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<i class="glyphicon glyphicon-info-sign"></i><span> <strong>INFO: </strong>Selecciona una dieccion de un consorcio para conocer los costos.</span>
+							</div>
+						</div>
+						<div ng-if="select.idAddressAtt">
+							<!-- Service-->
+							<div class="container-fluid">
+								<div class="row">
+				  				    <div class="col-md-6 col-md-offset-3">
+									    <div ng-if="costService!=0" class="alert alert-info" role="alert">
+											<strong>Costo Gestion (Alta / Baja): </strong><span class="pull-right">{{costService}} <i class="glyphicon glyphicon-edit"></i></span>
+
+										</div>
+										<div ng-if="costService==0" class="alert alert-warning" role="alert">
+											<strong>Costo Servicio: </strong><span class="pull-right">Valor No Asignado. <i class="glyphicon glyphicon-exclamation-sign"></i></span>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Key-->
+							<div class="container-fluid"> 
+								<div class="row"> 
+								    <div class="col-md-6 col-md-offset-3">
+									    <div ng-if="costKey!=0" class="alert alert-info" role="alert">
+											<strong>Costo de Llave: </strong><span class="pull-right">{{costKey}} <i class="glyphicon icon-key"></i></span>
+										</div>
+										<div ng-if="costKey==0" class="alert alert-warning" role="alert">
+											<strong>Costo Llave: </strong><span class="pull-right">Valor No Asignado. <i class="glyphicon glyphicon-exclamation-sign"></i></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Delivery-->
+							<div class="container-fluid">
+								<div class="row">
+								   	<div class="col-md-6 col-md-offset-3">
+									    <div ng-if="costDelivery!=0" class="alert alert-info" role="alert">
+											<strong>Costo de Envio: </strong><span class="pull-right">{{costDelivery}} <i class="glyphicon icon-truck"></i></span>
+										</div>
+										<div ng-if="costDelivery==0" class="alert alert-warning" role="alert">
+											<strong>Costo Envio: </strong><span class="pull-right">Valor No Asignado. <i class="glyphicon glyphicon-exclamation-sign"></i></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			<div class="clearfix"> </div> 
+		</div>
+	</div>
+</div>

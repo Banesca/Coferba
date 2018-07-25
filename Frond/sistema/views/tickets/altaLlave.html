@@ -338,10 +338,10 @@
 								  	</div>
 								</div>
 								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
-								<div ng-if="delivery.idTypeDeliveryKf!=0 && select.whoPickUp!=0"  class="form-group col-md-10">
+								<div ng-if="(sessionidProfile!=3 && sessionidProfile!=6) && delivery.idTypeDeliveryKf!=0 && select.whoPickUp!=0"  class="form-group col-md-10">
 									    <div class="col-md-6 col-md-offset-8">
 										    <div ng-if="(select.whoPickUp==1 && select.nameAtt!= delivery.nameAtt && collap==2 ) || (select.whoPickUp==2 && select.nameAtt == delivery.nameAtt && collap==2) || (select.whoPickUp==1 && collap==1)" class="alert alert-success" role="alert">
-							                 <span style="text-align: center;">La solicitud sera
+							                 <span style="text-align: center;">Solicitud sera
 							                 	<span ng-if="delivery.idTypeDeliveryKf==1">retirada por el</span>
 							                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada al</span>
 							                 	<span ng-if="collap==2 && typeOption==1"> encargado titular</span>
@@ -353,10 +353,33 @@
 							                 </span>
 							             	</div>
 									  </div>
-									</div>
+								</div>
+								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
+								<div ng-if="(sessionidProfile==3 || sessionidProfile==6) && delivery.idTypeDeliveryKf!=0 && select.whoPickUp>0 && select.whoPickUp<3"  class="form-group col-md-10">
+									    <div class="col-md-6 col-md-offset-8">
+										    <div class="alert alert-success" role="alert">
+							                 	<span style="text-align: center;">Solicitud sera
+								                 	<span ng-if="delivery.idTypeDeliveryKf==1">retirada por titular: </span>
+								                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada al</span>
+						                 			<span ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2">encargado: </span>
+							                 		<span ng-if="delivery.idTypeDeliveryKf==1 && select.whoPickUp==1" style="font-weight: bold;">{{sessionNames}}</span>
+
+							                 	</span>
+             									<!-- Attendant Info -->
+											    <div ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && !delivery.nameAtt && !btnClose" class="input-group col-md-10">
+											  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idUser as combined(item) for item in listAttendant" ng-required="select.whoPickUp==2" ng-change="getAttData('delivery'); btnClose=true; enabledNextBtn();" ng-model="delivery.nameAtt" autofocus >
+													    <option value="">Seleccione un encargado</option>
+												    </select>
+											    </div>
+											    <span ng-if="delivery.nameAtt" style="font-weight: bold;">{{delivery.fullNamesAtt}}
+												    <span ng-if="delivery.nameAtt" style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Seleccionar otro encargado" ng-click="selectAnotherAtt()" ><i class="glyphicon glyphicon-remove-circle"></i></span>
+												</span>
+							             	</div>
+									  </div>
+								</div>
 								<!-- **********************************************************************************************-->
 								<!-- Attendant Info -->
-								<div ng-show="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && select.nameAtt != delivery.nameAtt"><br>
+								<div ng-if="(sessionidProfile!=3 && sessionidProfile!=6) && delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && select.nameAtt != delivery.nameAtt"><br>
 									<div class="col-md-4 col-md-offset-7"><legend style="text-align: center;">DATOS DEL ENCARGADO</legend></div>
 									<!-- Encargado First Name & Lastname -->
 									<div class="form-group col-md-10" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
@@ -410,7 +433,7 @@
 
 								<!-- **********************************************************************************************-->
 								<!-- Third Person -->
-								<div ng-show="delivery.idTypeDeliveryKf && select.whoPickUp==3">
+								<div ng-if="delivery.idTypeDeliveryKf && select.whoPickUp==3">
 									<!-- Names Third Person -->       
 									<div class="form-group col-md-10">
 									  <label class="col-xs-12 col-md-offset-8">Nombres</label>  
