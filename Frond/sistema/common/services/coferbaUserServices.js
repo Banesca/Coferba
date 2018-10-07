@@ -63,9 +63,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           },
           /* UPDATE AN USER AND CHANGE PASSWORD */
           updateUser: function(userData2Change) {
-            var data2update = {};
-            var user =userData2Change;
-             data2update ={ user }; 
+            var data2update = userData2Change;
             //console.log(serverHeaders);
             console.log(data2update);
               return $http.post(serverHost+serverBackend+"User/update",data2update)
@@ -177,5 +175,95 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
               })   
           },
           /*/LOGIN SERVICE*/
+          /* ADD AN USER */
+          approveDepto: function(idDepto) {
+            //console.log(serverHeaders);
+              console.log("[Service][approveDepto]---> idDepto: "+idDepto);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Department/aprobated/"+idDepto
+                  }).then(function mySuccess(response) {
+                      console.log("[Service][approveDepto]---> idDepto: "+idDepto+" (Successfully Approved)");
+                      return response;
+
+                  },function myError(response, error) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  });
+          },
+          approveOwnerDepto: function(idDepto) {
+            //console.log(serverHeaders);
+              console.log("[Service][approveOwnerDepto]---> idDepto: "+idDepto);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Department/aprobated/"+idDepto
+                  }).then(function mySuccess(response) {
+                      console.log("[Service][approveOwnerDepto]---> idDepto: "+idDepto+" (Successfully Approved)");
+                      return response;
+
+                  },function myError(response, error) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  });
+          },
+          approveTenantDepto: function(idUser, idStatus) {
+            //console.log(serverHeaders);
+              console.log("[Service][approveTenantDepto]---> idDepto: "+idUser+' / idStatus: '+idStatus);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Department/deptoTenantStatus/"+idUser+"/"+idStatus
+                  }).then(function mySuccess(response) {
+                      console.log("[Service][approveTenantDepto]---> idDepto: "+idUser+" (Successfully Approved)");
+                      return response;
+
+                  },function myError(response, error) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  });
+          },
+          assignDepto: function(userData2Assign) {
+              console.log("[Service][assignDepto]---> Department to Assign: "+userData2Assign.department.idDepartment);
+              return $http.post(serverHost+serverBackend+"Department/update",userData2Assign)
+                .then(function mySucess(response) {
+                  console.log("[Service][assignDepto]---> Department N°: "+userData2Assign.department.idDepartment+" (Successfully Assigned)");
+                  return response;
+              },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response
+              });
+          },
+          /*GET OFFICES BY COMPANY ID*/
+          officeList: function(idCompany) {
+              var rsData = {};
+              console.log("[Service][officeList]---> idCompany: "+idCompany);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Direccion/addressListByCompanyid/"+idCompany
+                  }).then(function mySuccess(response) {
+                      rsData = response.data;
+                      //console.log(rsData);
+                      return rsData;
+
+                  },function myError(response, error) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  });
+          },
+          /*/GET OFFICES BY COMPANY ID*/
+          /*UPDATE COMPANY*/
+          updateCompany: function(companyData2Update) {
+              var rsData = {};
+              console.log("[Service][updateCompany]---> idCompany: "+companyData2Update.company.idCompany);
+              return $http.post(serverHost+serverBackend+"user/updatecompany",companyData2Update)
+                .then(function mySuccess(response) {
+                    checkResult = 1;
+                    return checkResult;
+
+                },function myError(response, error) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+                });
+          },
+          /*/GET OFFICES BY COMPANY ID*/
       }
 }]);

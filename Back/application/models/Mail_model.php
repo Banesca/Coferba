@@ -14,7 +14,7 @@ class Mail_model extends CI_Model
             $param = $this->getMailSmtp();
             $config = array(
                 'protocol' => 'smtp',
-                'smtp_host' => 'smtp.googlemail.com',
+                'smtp_host' => 'coferba.com.ar',
                 'smtp_user' => $param['0']['value'], 
                 'smtp_pass' => $param['1']['value'], 
                 'smtp_port' => '465',

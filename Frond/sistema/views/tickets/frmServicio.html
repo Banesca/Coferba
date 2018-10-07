@@ -1,6 +1,6 @@
 <!-- USER REQUEST SERVICE  ruservice=Register Request User Service-->
 <div class="container">
-	<div class="panel panel-default">
+	<div class="panel panel-default padding-panel">
 		<div class="panel-heading">
 		<h3 class="panel-title" ng-show="sessionidProfile==2">SERVICIO - {{mySwitch}} DE LA EMPRESA</h3>
 		<h3 class="panel-title" ng-show="sessionidProfile==4">SERVICIO - {{mySwitch}} DE LA ADMINISTRACION</h3>
@@ -15,16 +15,19 @@
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Empresa</label>
 					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Empresa / Administracion</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Administracion</label>
-					    <div class="col-md-4">
-						    <div class="input-group">
-						        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-						  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
-
-						  		<select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-								    	<option value="">Seleccione una Empresa o Administracion</option>
-							    </select>
-						    </div>
-					  	</div>
+					    <div class="col-md-6">
+		                  	<div class="input-group">
+			                      <span ng-show="sessionidProfile!=3 && sessionidProfile!=5" class="input-group-addon"><i class="icon-suitcase"></i></span>
+			                    <input ng-show="sessionidProfile==2 || sessionidProfile==4" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
+			                    <ui-select name="idCompanyKf" ng-show="sessionidProfile==1" ng-required="sessionidProfile==1" ng-model="selectIdCompanyKf.selected" on-select="onSelectCallback()" ng-change="officeListByCompnayID(selectIdCompanyKf.selected.idCompany); ">
+		                          	<ui-select-match allow-clear="true" placeholder="Seleccione una administracion">{{$select.selected.nameCompany}}</ui-select-match>
+		                            	<ui-select-choices repeat="item in listCompany | filter: $select.search">
+		                              		<div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
+		                                		<small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
+		                            	</ui-select-choices>
+		                        </ui-select>
+		                  	</div>
+			  			</div>
 					</div>
 					<!-- List Address-->
 					      
@@ -32,25 +35,29 @@
 					  <label ng-show="sessionidProfile==2" class="col-md-4 control-label">Direccion Sucursal</label>
 					  <label ng-show="sessionidProfile==1" class="col-md-4 control-label">Direccion Sucursal o Consorcio</label>
 					  <label ng-show="sessionidProfile==4" class="col-md-4 control-label">Direccion de Consorcio</label>   
-					    <div class="col-md-4">
+					    <div class="col-md-6">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-						  		<select name="idAddressKf" class="form-control" ng-change="enabledNextBtn();"  ng-options="item.idAdressKf as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-								    <option value="">Seleccione una opcion</option>
-							    	</select>
+	                            <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="enabledNextBtn();getServicesValues(selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress);" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+				                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
+				                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
+				                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+				                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+				                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+				                    </ui-select-choices>
+				                </ui-select>
 						    </div>
-					  </div>
+					  	</div>
 					</div>
 					<!-- Encargado First Name & Lastname -->
 					<div class="form-group">
 					  <label class="col-md-4 control-label">Nombre y Apellido</label>  
-						  <div class="col-md-4">
+						  <div class="col-md-6">
 							  <div class="input-group">
 								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 								  <input ng-show="sessionidProfile!=1"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" readonly autofocus />
 								  <!-- ___________________________________________________________________ -->
-								  <select ng-show="sessionidProfile==1" name="namesAdmin" class="form-control"  ng-options="item.idUser as item.fullNameUser for item in listUser | filter:showCompanyUser" ng-required="sessionidProfile==1" ng-change="getUserCompanyData()" ng-model="select.namesAdmin" autofocus >
-									    <option value=""></option>
+								  <select ng-show="sessionidProfile==1" ng-disabled="!companyFound" name="namesAdmin" class="form-control"  ng-options="item.idUser as item.fullNameUser for item in listUserCompany" ng-required="sessionidProfile==1" ng-change="getUserCompanyData(); enabledNextBtn();" ng-model="select.namesAdmin" autofocus >
 								    </select>
 							  </div>
 						  </div>
@@ -58,27 +65,27 @@
 					<!-- Text Local Phone -->       
 					<div class="form-group">
 					  <label class="col-md-4 control-label">Telefono fijo</label>  
-					    <div class="col-md-4">
+					    <div class="col-md-6">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-							  		<input name="localPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="$parent.localPhoneAdmin" type="text" required autofocus readonly />
+							  		<input name="localPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--local"  ng-model="$parent.localPhoneAdmin" type="text" required autofocus readonly />
 						    </div>
 					  </div>
 					</div>
 					<!-- Text Phone 2 -->       
 					<div class="form-group">
 					  <label class="col-md-4 control-label">Telefono Celular</label>  
-					    <div class="col-md-4">
+					    <div class="col-md-6">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-						  		<input name="movilPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--tel"  ng-model="movilPhoneAdmin" type="text" required autofocus readonly />
+						  		<input name="movilPhoneAdmin" placeholder="(___) _ __ - ____-____" class="form-control input--movil"  ng-model="movilPhoneAdmin" type="text" required autofocus readonly />
 						    </div>
 					  </div>
 					</div>
 					<!-- Text Mail-->
 					<div class="form-group">
 					 <label class="col-md-4 control-label">E-Mail</label>
-					   <div class="col-md-4">
+					   <div class="col-md-6">
 					    <div class="input-group">
 					    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 					  		<input name="emailAdmin" placeholder="E-Mail" class="form-control" ng-model="emailAdmin"  type="email" required autofocus readonly />

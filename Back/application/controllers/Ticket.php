@@ -73,13 +73,13 @@ class Ticket extends REST_Controller {
         }
     }
 
-    public function verificateTicketByIdTenant_get($id) {
+    public function verificateTicketByIdUser_get($id) {
         if (!$id) {
             $this->response(NULL, 404);
         }
 
         $rs = null;
-        $rs = $this->ticket_model->verificateTicketByIdTenant($id);
+        $rs = $this->ticket_model->verificateTicketByidUser($id);
 
         if (!is_null($rs)) {
             $this->response($rs, 200);

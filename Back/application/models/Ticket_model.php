@@ -257,7 +257,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
-            $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'inner');
+            $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
             $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
 
@@ -345,6 +345,7 @@ class Ticket_model extends CI_Model
                   WHEN idOWnerKf > 0 THEN b.fullNameUser
                   WHEN idUserEnterpriceKf > 0 THEN c.fullNameUser
                   WHEN idUserAdminKf > 0 THEN d.fullNameUser
+                  WHEN idUserTenantKf > 0 THEN g.fullNameUser
                   ELSE '' 
                 END as fullNameUser,
                 CASE  
@@ -352,6 +353,7 @@ class Ticket_model extends CI_Model
                   WHEN idOWnerKf > 0 THEN b.phoneNumberUser
                   WHEN idUserEnterpriceKf > 0 THEN c.phoneNumberUser
                   WHEN idUserAdminKf > 0 THEN d.phoneNumberUser
+                  WHEN idUserTenantKf > 0 THEN g.phoneNumberUser
                   ELSE '' 
                 END as phoneNumberUser,
                 CASE  
@@ -360,8 +362,8 @@ class Ticket_model extends CI_Model
                   ELSE ''
                 END as nameAttendant,
                 CASE  
-                  WHEN idOtherKf > 0 THEN f.phoneAttendant
-                  WHEN idOtherKf < 1 THEN e.phoneAttendant
+                  WHEN idOtherKf > 0 THEN f.phoneNumberUser
+                  WHEN idOtherKf < 1 THEN e.phoneNumberUser
                   ELSE '' 
                 END as phoneAttendant,
                 CASE  
@@ -371,7 +373,7 @@ class Ticket_model extends CI_Model
                 END as nameTypeAttendant
 
             ,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
-            $this->db->join('tb_user', 'tb_user.idUser = tb_tickets.idUserTenantKf', 'left');
+            $this->db->join('tb_user g', 'g.idUser = tb_tickets.idUserTenantKf', 'left');
 
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
@@ -382,7 +384,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_type_attendant auxTypeA', 'auxTypeA.idTyepeAttendant = f.idTyepeAttendantKf', 'left');
             $this->db->join('tb_type_attendant auxTypeB', 'auxTypeB.idTyepeAttendant = e.idTyepeAttendantKf', 'left');
 
-            $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
+            $this->db->join('tb_department tid', 'tid.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user a', 'a.idUser = tb_tickets.idUserCompany', 'left');
 
             if(@$searchFilter['idProfileKf']  == 1 || @$searchFilter['idProfileKf']  == 4 ||  @$searchFilter['idProfileKf']  == 2)
@@ -403,7 +405,7 @@ class Ticket_model extends CI_Model
 
             if(@$searchFilter['idProfileKf'] != 1 && @$searchFilter['idProfileKf'] != 4 && @$searchFilter['idProfileKf'] != 2)
             {
-                $this->db->join('tb_department', 'tb_department.idUserTenantKf = tb_user.idUser',  'left');            
+                $this->db->join('tb_department tidu', 'tidu.idUserKf = g.idUser',  'left');            
             }
 
 
@@ -510,24 +512,39 @@ class Ticket_model extends CI_Model
         $typeticket = null;
         $tipeOpcion = null;
         $statusticket = null;
+        $typeattendant = null;
         
 
         /* LISTADO DE USUARIOS */
             $this->db->select("*")->from("tb_user");
             $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
-            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
             $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
             $query = $this->db->order_by("tb_user.dateCreated", "DESC")->get();
         if ($query->num_rows() > 0) {
             $user = $query->result_array();
         }
          /* LISTADO DE INQUILINOS */
-        $query = $this->db->select("*")->from("tb_user")->where("idProfileKf",5)->order_by("tb_user.dateCreated", "DESC")->get();
+           
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+            $this->db->where("idProfileKf",3);
+            $this->db->or_where("idProfileKf",5);
+            $query = $this->db->order_by("tb_user.idUser", "DESC")->get();
         if ($query->num_rows() > 0) {
             $tenant = $query->result_array();
         }
          /* LISTADO DE ENCARGADOS */
-        $query = $this->db->select("*")->from("tb_user")->where("idProfileKf",6)->order_by("tb_user.idUser", "ASC")->get();
+        $this->db->select("*")->from("tb_user");
+        $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+        $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+        $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+        $this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
+        $query = $this->db->where("idProfileKf",6)->order_by("tb_user.idUser", "ASC")->get();
         if ($query->num_rows() > 0) {
             $attendant = $query->result_array();
         }
@@ -548,6 +565,11 @@ class Ticket_model extends CI_Model
         $query = $this->db->select("*")->from("tb_type_outher")->get();
         if ($query->num_rows() > 0) {
             $typeouther = $query->result_array();
+        }
+        /* LISTADO DE TIPOS DE ENCARGADOS */
+        $query = $this->db->select("*")->from("tb_type_attendant")->get();
+        if ($query->num_rows() > 0) {
+            $typeattendant = $query->result_array();
         }
 
          /* LISTADO DE TIPOS DE TICKETS*/
@@ -580,7 +602,8 @@ class Ticket_model extends CI_Model
             'typeouther' => $typeouther,
             'typeticket'  => $typeticket,
             'tipeOpcion' => $tipeOpcion,
-            'statusticket' => $statusticket
+            'statusticket' => $statusticket,
+            'typeattendant' => $typeattendant
 
         );
 

@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('body').tooltip({ selector: '[data-toggle="tooltip"]' });
   $('body').popover({ selector: '[data-toggle="popover"]' });
   $('.input--tel').mask('(054) 9 99 9999-9999');
-  
+
   $('.input--tel.only--numbers').on('focus', function () {
      if ($(this).val().length === 0) {
        $(this).val();

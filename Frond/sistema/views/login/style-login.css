@@ -277,7 +277,7 @@
     transition: all .2s ease-in-out;
 }
 
-.form-input:focus ~ label, .form-input:active ~ label , .form-input.active ~ label{
+.form-input:focus ~ label, .form-input:active ~ label , .form-input.active ~ label, .input-temp:focus ~ label, .input-temp:active ~ label , .input-temp.active ~ label{
       color: rgba(20, 22, 43, .9);
       font-size: 11px;
       top: -10px;
@@ -301,7 +301,25 @@
     border: none;
     border-bottom: 1.2px solid #ddd;
 }
-.form-input:focus, .form-input:active {
+.form-input > .selectize-control > .selectize-input {
+  color: rgba(20, 22, 43, .5);
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+
+}
+.form-input > .selectize-control > .selectize-dropdown {
+  width: 105%;
+  margin: -11px -11px 0;
+}
+.selectize-dropdown .active {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+
+.form-input:focus, .form-input:active, .input-temp:focus, .input-temp:active {
       outline: none;
       box-shadow: none;
       border: none;
@@ -344,6 +362,7 @@
 
 input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
 select:focus ~ .bar:before, select:focus ~ .bar:after { width: 50%; }
+
 
 
 

@@ -16,7 +16,7 @@
 }
     </style>
     
-<div ng-init="" class="container-fluid" >
+<div ng-init="dhboard();" class="container-fluid" >
     <div class="row" >
         <div class="col-lg-12" style="background-color: #f1f1f1; ">
             <div class="row" style="position: fixed;z-index: 100;width: 100%;background: #ebf3da; padding-top: 15px;margin-top: -0.4em;">
@@ -24,11 +24,12 @@
                     <div ng-show="sessionidProfile!=3" class="form-group col-lg-2">
                         <label ng-show="sessionidProfile==2">Empresa</label>
                       <label ng-show="sessionidProfile==1">Empresa o Administracion</label>
-                      <label ng-show="sessionidProfile==4">Administracion</label>   
+                      <label ng-show="sessionidProfile==4">Administracion</label>
+                      <label ng-show="sessionidProfile==3 || sessionidProfile==5">Administracion</label>    
                         <div class="col-xl-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-                              <input ng-show="sessionidProfile!=3 && sessionidProfile!=1" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
+                              <input ng-show="sessionidProfile!=1" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
 
                               <select ng-show="sessionidProfile==1" name="idCompany" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); dhboard();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
                                   <option value="">Todos</option>
@@ -37,10 +38,11 @@
                         </div>
                     </div>
                     <!-- List Address-->
-                    <div ng-if="sessionidProfile!=3" ng-disable="sessionidProfile==3" class="form-group col-lg-2">
+                    <div ng-if="sessionidProfile!=3 && sessionidProfile!=5" ng-disable="sessionidProfile==3 || sessionidProfile==5" class="form-group col-lg-2">
                       <label ng-show="sessionidProfile==2">Sucursal</label>
                       <label ng-show="sessionidProfile==1">Sucursal o Consorcio</label>
-                      <label ng-show="sessionidProfile==4">Consorcio</label>   
+                      <label ng-show="sessionidProfile==4">Consorcio</label>
+                      <label ng-show="sessionidProfile==3 || sessionidProfile==5">Consorcio</label>   
                         <div class="col-xs-12 selectContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
@@ -51,7 +53,7 @@
                       </div>
                     </div>
                     <!-- Address for Onwers-->      
-                    <div class="form-group col-lg-2" ng-disable="sessionidProfile!=3" ng-show="sessionidProfile==3">
+                    <div class="form-group col-lg-2" ng-disable="sessionidProfile!=3 && sessionidProfile!=5" ng-show="sessionidProfile==3 || sessionidProfile==5">
                         <label>Consorcio</label>
                             <div class="col-xl-12 selectContainer">
                                 <div class="input-group">
@@ -195,28 +197,27 @@
                         </label>
                         <label ng-if="tk.isCancelTicket<=0">Aprobada: 
                             <span ng-if="tk.dateRecibedAdmin">{{tk.dateRecibedAdmin}}</span>
-                            <span ng-if="!tk.dateRecibedAdmin">{{tk.dateRecibedAdmin}}</span>
+                            <span ng-if="!tk.dateRecibedAdmin">-  </span>
                         </label>
                         <label ng-if="tk.isCancelTicket==1">Cancelado: 
                             <span ng-if="tk.isCancelTicket==1">{{tk.dateCancel | dateToISO | date:'dd/MM/yyyy'}}</span>
                         </label>
                         <label ng-if="tk.isCancelTicket<=0">Cliente:</label>
                         <!-- OWNER -->
-                        <label ng-if="tk.idTypeTicket<=2 && !tk.idDepartmentKf && tk.idTypeKf==1 && tk.isCancelTicket<=0"> 
-                            <span ng-if="tk.idTypeTicket<=2">{{tk.fullNameTenant}} (Propietario) - </span>
-                            <span ng-if="tk.idTypeTicket==4">{{tk.fullNameUser}} (Propietario) - </span>Tlf:
-                            <span ng-if="!tk.phoneNumberContactTenant || tk.phoneNumberTenant">{{tk.phoneNumberTenant}} - </span>
-                            <span ng-if="!tk.phoneNumberTenant">{{tk.phoneNumberContactTenant}}</span> 
+                        <label ng-if="tk.idTypeTicket<=2 && (tk.idDepartmentKf||tk.idDepartment) && tk.isCancelTicket<=0"> 
+                            <span ng-if="tk.idTypeTicket<=2">{{tk.fullNameUser}} (Propietario) - </span>Tlf:
+                            <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}} - </span>
+                            <span ng-if="!tk.phoneLocalNumberUser">{{tk.phoneLocalNumberUser}}</span> 
                             <span ng-if="tk.departmentFloor">Depto: {{tk.departmentFloor}}</span>
-                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                            <span ng-if="filters.idAddress==0"> - Consorcio: {{tk.nameAdress}}</span>
                         </label> 
                          <!-- TENANT -->
-                        <label ng-if="tk.idTypeTicket<=2 && tk.idDepartmentKf && tk.idTypeKf==2 && tk.isCancelTicket<=0"> 
-                            <span>{{tk.fullNameTenant}} (Inquilino) - </span>Tlf:
-                            <span ng-if="!tk.phoneNumberContactTenant || tk.phoneNumberTenant">{{tk.phoneNumberTenant}} - </span>
-                            <span ng-if="!tk.phoneNumberTenant">{{tk.phoneNumberContactTenant}}</span> 
+                        <label ng-if="tk.idTypeTicket<=2 && (tk.idDepartmentKf||tk.idDepartment) && tk.isCancelTicket<=0"> 
+                            <span>{{tk.fullNameUser}} (Inquilino) - </span>Tlf:
+                            <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}} - </span>
+                            <span ng-if="!tk.phoneLocalNumberUser">{{tk.phoneLocalNumberUser}}</span> 
                             <span ng-if="tk.departmentFloor">Depto: {{tk.departmentFloor}}</span>
-                            <span ng-if="filters.idAddress==0"> - Sucursal: {{tk.nameAdress}}</span>
+                            <span ng-if="filters.idAddress==0"> - Consorcio: {{tk.nameAdress}}</span>
                         </label>
                         <!-- ADMIN CONSORCIO OR COMPANY -->
                         <label ng-if="(tk.idUserEnterpriceKf || tk.idUserCompany) && !tk.idDepartmentKf && tk.idTypeTicket==3 && !tk.idTypeKf && tk.isCancelTicket<=0"> 

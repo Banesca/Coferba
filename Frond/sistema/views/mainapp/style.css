@@ -109,6 +109,18 @@
 .radio-custom:focus + .radio-custom-label {
   outline: 0px solid #ddd; /* focus style */
 }
+/**************************/
+.badge-notify{
+   background-color:#ffc107;
+   color: black;
+   position:relative;
+   top: -0.4em;
+   left: -10%;
+   cursor: pointer;
+   z-index: 999;
+}
+
+/**************************/
 
 /***********************************/
 .icon-size
@@ -315,7 +327,7 @@
       font-weight: 200;
       background-color: #2e353d;
       position: fixed;
-      top: 13.2em;
+      top: 13.8em;
       width: 16.1%;
       height: 100%;
       color: #e1ffff;
@@ -418,6 +430,53 @@
     -ms-transform: rotate(-180deg);
     transform: rotate(-180deg);
  }
+ .form-control.bg-success{
+    background-color: #28a745!important;
+    color: #fff bold;
+ }
+ .form-control.bg-default{
+    background-color: #fff!important;
+    color: inherit;
+ }
+ .form-horizontal .form-group {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  /* CSS PARA SCROLLEAR LAS TABLAS SIN PAGINACION*/
+        .systemUserTable {
+            width: 100%;
+        }
+
+        .systemUserTable thead, .systemUserTable tbody, .systemUserTable tr, .systemUserTable td, .systemUserTable th { display: block; }
+
+        .systemUserTable tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .systemUserTable tbody {
+            height: 320px;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+
+        .systemUserTable tbody td, .systemUserTable thead th {
+            width: 16.6%;
+            float: left;
+        }
+        .systemUserTable table>thead>tr>th {
+          vertical-align: bottom;
+          border-bottom: 0px;
+        }
+    .sys_content{
+      top:0.3em;
+    }
+
+
+  /**********************************************/
  ::-webkit-scrollbar {
         width: 12px;
  }
@@ -450,11 +509,18 @@
          }
     }
     @media (max-width: 767px) {
+      .sys_content{
+        top:3.1em;
+      }
       .nav-side-menu {
         position: relative;
         width: 100%;
         margin-bottom: 10px;
-        top: -0.4em;
+        top: 5.1em;
+        z-index: 1;
+      }
+      .form-control.formWidth{
+        width: 100%;
       }
       .padding-panel {
           margin-top: 70px;
@@ -495,6 +561,15 @@
     }
     .alert-width{
       width: 350px;
+    }
+    .dropdown{
+      padding-left: 1.5em;
+    }
+    .dropdown-select{
+      padding-left: 0em;
+    }
+    .dropdown>li>a{
+      padding: 0px 0px;
     }
     .padding-custom {
       padding-left: 5px;   

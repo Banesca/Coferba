@@ -18,6 +18,9 @@ tkSysService.service("tokenSystem",function(){
               case 3:
                 tokenStorageValue = !JSON.parse(localStorage.getItem("sysTmpUser")) ? false : JSON.parse(localStorage.getItem("sysTmpUser"));
               break;
+              case 4:
+                tokenStorageValue = JSON.parse(localStorage.getItem("attempsToken"));
+              break;
               default:
 
             }

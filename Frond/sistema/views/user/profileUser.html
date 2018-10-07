@@ -12,7 +12,7 @@
 						   
 						<div class="form-group"> 
 						  <label class="col-md-4 control-label">Perfil</label>
-						    <div class="col-md-4 selectContainer">
+						    <div class="col-md-6 selectContainer">
 							    <div class="input-group">
 							        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 									    <span class="form-control disabled">{{sessionProfileName}}</span>
@@ -23,7 +23,7 @@
 						      
 						<div ng-show="sessionidProfile==2 || sessionidProfile==4" class="form-group">
 						  <label class="col-md-4 control-label">Empresa</label>  
-						    <div class="col-md-4">
+						    <div class="col-md-6">
 							    <div class="input-group">
 							        <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
 							  		<span class="form-control disabled">{{sessionNameCompany}}</span>
@@ -33,7 +33,7 @@
 						<!-- Form First Name -->
 						<div class="form-group">
 						  <label class="col-md-4 control-label">Nombres</label>  
-							  <div class="col-md-4">
+							  <div class="col-md-6">
 								  <div class="input-group">
 									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 									  <input  name="profileNames" autofocus="true" placeholder="Nombre" class="form-control" ng-model="profile.Names"  type="text" autofocus required />
@@ -44,7 +44,7 @@
 
 						<div class="form-group">
 						 <label class="col-md-4 control-label">E-Mail</label>  
-						   <div class="col-md-4">
+						   <div class="col-md-6">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 						  		<input name="profileEmail" placeholder="E-Mail" class="form-control" ng-model="profile.Email"  type="email" autofocus readonly />
@@ -55,7 +55,7 @@
 						       
 						<div class="form-group">
 						  <label class="col-md-4 control-label">Telefono Fijo</label>  
-						    <div class="col-md-4">
+						    <div class="col-md-6">
 							    <div class="input-group">
 							        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
 							  		<input name="phoneLocal" ng-keydown="fnLoadPhoneMask()" placeholder="1112345678" class="form-control input--local" ng-model="profile.PhonelocalNumber"  type="text" ng-required="profile.MovilPhoneNumber==''"  autofocus />
@@ -66,7 +66,7 @@
 						       
 						<div class="form-group">
 						  <label class="col-md-4 control-label">Telefono Movil</label>  
-						    <div class="col-md-4">
+						    <div class="col-md-6">
 							    <div class="input-group">
 							        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 							  		<input name="MovilPhoneNumber" ng-keydown="fnLoadPhoneMask()" placeholder="91112345678" class="form-control input--movil" ng-model="profile.MovilPhoneNumber"  type="text" ng-required="profile.PhonelocalNumber==''"  autofocus />

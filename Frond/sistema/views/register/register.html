@@ -7,12 +7,12 @@
 	        	<h3 class="modal-title">NUEVO USUARIO</h3>
 	    	</div>
 			<div class="panel-body" ng-init="fnLoadPhoneMask();">
-				<!-- FORM CONTAINER-->
+				<!-- FORM CONTAINER -->
 				<form class="form-horizontal" name="fNewUser" autocomplete="off" role="form" ng-init="CallFilterFormU(); CallFilterFormT(); getTypeAttendant(); getAllAddress();" novalidate>
 						<!-- Select profile -->					  
 						<div class="form-group col-md-12" ng-class="{'has-error': fNewUser.idProfileKf.$dirty && fNewUser.idProfileKf.$invalid, 'has-error': fNewUser.idProfileKf.$invalid && !fNewUser.idProfileKf.$pristine}">
 					    	<div class="inner-addon right-addon">
-					    		<select name="idProfileKf" class="form-input" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; register.idAddrAttKf=null; register.idDepartmentKf=null;"  ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="register.idProfileKf"  required autofocus />
+					    		<select name="idProfileKf" class="form-input" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null;"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " ng-model="register.idProfileKf"  required autofocus />
 								<label>Perfil</label> 
 								<span class="bar"></span>
 					    	</div>
@@ -34,27 +34,33 @@
 					    	</div>
 						</div>
 						<!-- Select Attendant Address-->					  
-						<div ng-if="(register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group "  ng-class="(register.idTypeAttKf!=1 && register.idTypeAttKf!=2) || (register.idTypeAttKf==0)  ? 'col-md-6' : 'col-md-3' " ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
-					    	<div class="inner-addon right-addon">
-					    		<select name="idAddrAttKf" class="form-input" ng-blur="inputCheckCss('idAddrAttKf', 's');"  ng-options="item.idAdress as item.nameAdress for item in ListAddress" ng-change="getDeptoListByAddress(); register.idDepartmentKf=null; ListDpto=''" ng-model="register.idAddrAttKf" ng-required="(register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" autofocus >
-					    			<option value=""></option>
-					    		</select>
-								<label>Direccion: </label> 
-								<span class="bar"></span>
+						<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6"   ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
+					    	<div class="form-input inner-addon right-addon">
+					    		<ui-select id="idAddressKf" class="input-temp" theme="selectize" ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" ng-change="getDeptoListByAddress(selectIdAddressKf.selected.idAdress); register.idDepartmentKf=null; ListDpto=''; inputCheckCss('idAddressKf', 'ui'); ownerFound=false;" ng-required="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" autofocus ng-model="selectIdAddressKf.selected" theme="bootstrap" autofocus>
+		                          <ui-select-match>{{$select.selected.nameAdress}}</ui-select-match>
+		                            <ui-select-choices repeat="item in ListAddress | filter: $select.search">
+		                              <div id="idAddressKf" ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+		                            </ui-select-choices>
+		                            <ui-select-no-choice>
+									    No hay resultados, contacte are de soporte.
+								  	</ui-select-no-choice>
+		                        </ui-select>
+		                        <label>Direcci&#243n</label> 
+		                        <span class="bar"></span>
 					    	</div>
 						</div> 
 						<!-- Select Department -->
-						<div ng-if="(register.idProfileKf==5 && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" class="form-group" ng-class="(register.idTypeAttKf!=1 && register.idTypeAttKf!=2) || (register.idTypeAttKf==0)  ? 'col-md-6' : 'col-md-3' " ng-class="{'has-error': fNewUser.idDepartmentKf.$dirty && fNewUser.idDepartmentKf.$invalid, 'has-error': fNewUser.idDepartmentKf.$invalid && !fNewUser.idDepartmentKf.$pristine}">
-				  		 	<div ng-if="!ownerFound && sessionidProfile!=0" class="inner-addon right-addon">
-					    		<select name="idDepartmentKf" class="form-input" ng-blur="inputCheckCss('idDepartmentKf', 's');" ng-options="item.idDepartment as item.departmentFloor for item in ListDpto | filter:hideDeptoByProfile()" ng-model="register.idDepartmentKf" ng-required="(register.idProfileKf==5 && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus >
+						<div ng-if="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" class="form-group" ng-class="(register.idTypeAttKf!=1 && register.idTypeAttKf!=2) || (register.idTypeAttKf==0)  ? 'col-md-6' : 'col-md-3' " ng-class="{'has-error': fNewUser.idDepartmentKf.$dirty && fNewUser.idDepartmentKf.$invalid, 'has-error': fNewUser.idDepartmentKf.$invalid && !fNewUser.idDepartmentKf.$pristine}">
+				  		 	<div class="inner-addon right-addon">
+					    		<select name="idDepartmentKf" ng-disabled="selectIdAddressKf.selected==undefined" ng-change="deptoHasOwner(register.idDepartmentKf)" class="form-input" ng-blur="deptoHasOwner(register.idDepartmentKf); inputCheckCss('idDepartmentKf', 's');" ng-options="item.idDepartment as item.departmentFloor for item in ListDpto | filter:hideDeptoByProfile()" ng-model="register.idDepartmentKf" ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus >
 						    		<option value=""></option>
 						    	</select>
 								<label>Departamento</label> 
 								<span class="bar"></span>
 					    	</div>
-							<div ng-if="ownerFound && sessionidProfile!=0" class="alert alert-warning" role="alert">
+							<!--<div ng-if="ownerFound && sessionidProfile!=0" class="alert alert-warning" role="alert">
 			            		<strong><i class="fas fa-exclamation-triangle">&nbsp </i>ATENCION: </strong>Departamento no disponible, contacte con el administrador.
-			        		</div>
+			        		</div>-->
 						</div>
 	
 						<!-- Other Attendant Type Functions -->
@@ -105,7 +111,7 @@
   								</button>
 			        		</div>
 						</div>
-						<!-- Text Password-->
+						<!-- Text Password--><!--
 						<div ng-if="(register.idProfileKf!=6 && !register.idTypeAttKf) || (register.idProfileKf==6 && register.idTypeAttKf==2) " class="form-group col-md-6 " ng-class="{'has-error': fNewUser.password1.$dirty && fNewUser.password1.$invalid, 'has-success':fNewUser.password2.$dirty && fNewUser.password2.$valid}">
 						    <div class="inner-addon right-addon">
 						  		<input id="password1" name="password1" aria-describedby="passwordHelpBlock1" class="form-input" ng-blur="inputCheckCss('password1', 'i');" ng-model="register.password1" ng-minlength="8" type="password" password-confirm match-target="register.password2" ng-required="(register.idProfileKf!=6 && !register.idTypeAttKf) || (register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus />
@@ -122,8 +128,8 @@
 								<span class="bg-success" ng-if="password1 && !fNewUser.password1.$error.minlength && fNewUser.password2.$error.match">Confirma la clave en el proximo campo</span>
 								<span ></span>
 							</small>
-						</div>
-						<!-- Text Password Check-->
+						</div>-->
+						<!-- Text Password Check--><!--
 						<div ng-if="(register.idProfileKf!=6 && !register.idTypeAttKf) || (register.idProfileKf==6 && register.idTypeAttKf==2) " class="form-group col-md-6 " ng-class="{'has-error':fNewUser.password1.$dirty && fNewUser.password1.$invalid, 'has-success':fNewUser.password1.$valid}">
 						    <div class="inner-addon right-addon">
 						  		<input id="password2" name="password2" aria-describedby="passwordHelpBlock2" class="form-input" ng-blur="inputCheckCss('password2', 'i');" ng-minlength="8" ng-model="register.password2" type="password" password-confirm match-target="register.password1" ng-required="(register.idProfileKf!=6 && !register.idTypeAttKf) || (register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus />
@@ -139,7 +145,7 @@
 								<span class="bg-warning" ng-if="fNewUser.password2.$error.minlength">Su clave no cumple con el minimo requerido</span>
 								<span class="bg-danger" ng-show="fNewUser.password2.$error.match && !fNewUser.password2.$error.minlength && register.password2">Las claves no coinciden, por favor verificar.</span>
 							</small>
-						</div>
+						</div>-->
 						<!-- Text Phone-->						       
 						<div class="form-group col-md-6 " ng-class="{'has-error':fNewUser.phoneLocal.$dirty && fNewUser.phoneLocal.$invalid, 'has-success':fNewUser.phoneLocal.$valid}">
 						    <div class="inner-addon right-addon">
@@ -151,13 +157,12 @@
 						</div>
 						<!-- Text Phone-->						       
 						<div class="form-group col-md-6 " ng-class="{'has-error':fNewUser.phoneMovil.$dirty && fNewUser.phoneMovil.$invalid, 'has-success':fNewUser.phoneMovil.$valid}">
-						   
-							    <div class="inner-addon right-addon">
-							  		<input name="phoneMovil" ng-minlength="11" class="form-input input--movil" ng-blur="inputCheckCss('phoneMovil', 'i');" ng-model="register.phoneMovilNumberUser"  type="text" ng-required="register.phonelocalNumberUser==''" autofocus />
-							  		<label>Telefono Movil</label> 
-							  		<i class="glyphicon glyphicon-phone"></i>
-							  		<span class="bar"></span>	
-							    </div>
+						    <div class="inner-addon right-addon">
+						  		<input name="phoneMovil" ng-minlength="11" class="form-input input--movil" ng-blur="inputCheckCss('phoneMovil', 'i');" ng-model="register.phoneMovilNumberUser"  type="text" ng-required="register.phonelocalNumberUser==''" autofocus />
+						  		<label>Telefono Movil</label> 
+						  		<i class="glyphicon glyphicon-phone"></i>
+						  		<span class="bar"></span>	
+						    </div>
 						</div>
 			</div>
             <div class="panel-footer">

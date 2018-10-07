@@ -17,9 +17,13 @@
 					                  <div class="input-group">
 					                      <span ng-show="sessionidProfile!=3 && sessionidProfile!=5" class="input-group-addon"><i class="icon-suitcase"></i></span>
 					                    <input ng-show="sessionidProfile==4" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
-					                    <select ng-show="sessionidProfile==1" name="idCompanyKf" class="form-control" ng-change="officeListByCompnayID(); CallFilterFormT(); enabledNextBtn();"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-required="sessionidProfile==1" ng-model="select.idCompanyKf"  >
-					                        <option value="">Seleccione una Administracion</option>
-					                      </select>
+					                    <ui-select name="idCompanyKf" ng-show="sessionidProfile==1" ng-required="sessionidProfile==1" ng-model="selectIdCompanyKf.selected" on-select="onSelectCallback()" ng-change="officeListByCompnayID(selectIdCompanyKf.selected.idCompany); CallFilterFormT(); enabledNextBtn();">
+				                          	<ui-select-match allow-clear="true" placeholder="Seleccione una administracion">{{$select.selected.nameCompany}}</ui-select-match>
+				                            	<ui-select-choices repeat="item in listCompany | filter: $select.search">
+				                              		<div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
+				                                		<small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
+				                            	</ui-select-choices>
+				                        </ui-select>
 					                  </div>
 					                </div>
 					            </div>     
@@ -30,9 +34,14 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null; getCompanyFromAdress();"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-												    <option value="">Seleccione un consorcio</option>
-											    </select>
+    					                      	<ui-select name="idAddressAtt" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn(); getKeyChains(selectIdAddressKf.selected.idAdress); getServicesValues(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile==3" ng-model="selectIdAddressKf.selected" autofocus>
+								                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
+								                    <ui-select-choices repeat="item in ListTenantAddress | filter: $select.search">
+								                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+								                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+								                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+								                    </ui-select-choices>
+							                	</ui-select>
 										    </div>
 									  	</div>
 								</div>
@@ -42,9 +51,14 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <select name="idAddressAtt" class="form-control" ng-change="enabledNextBtn(); getDeparment(0); getServicesValues(select.idAddressAtt); select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-					                        <option value="" >Seleccione un consorcio</option>
-					                      </select>
+					                      <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn(); getKeyChains(selectIdAddressKf.selected.idAdress); getServicesValues(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+								                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
+								                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
+								                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+								                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+								                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+								                    </ui-select-choices>
+							                </ui-select>
 					                    </div>
 					                  </div>
 					            </div>
@@ -54,9 +68,14 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="idAddressAtt" ng-disabled="companyFound!=true" class="form-control" ng-change=" enabledNextBtn();getServicesValues(select.idAddressAtt);select.idDepartmentKf=null;"  ng-options="item.idAdress as item.nameAdress for item in listOffice" ng-required="sessionidProfile!=4" ng-model="select.idAddressAtt" autofocus >
-												    <option value="">Seleccione un consorcio</option>
-											    </select>
+					                            <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn();getServicesValues(selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+								                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
+								                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
+								                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+								                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+								                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+								                    </ui-select-choices>
+								                </ui-select>
 										    </div>
 									  	</div>
 								</div>
@@ -184,7 +203,7 @@
 												<div class="form-check form-check-inline">
 														<div class="col-md-12 col-md-offset-2">
 															<div class="col-md-6">
-														  		<input id="typeOption1" type="radio" class="radio-custom" ng-click="enabledNextBtn(1); editAttendant=false; typeOption=1; getAllAttendant(); switchOption(); select.nameAtt=null" name="typeOption" value="1" ng-model="typeOption" required autofocus>
+														  		<input id="typeOption1" type="radio" class="radio-custom" ng-click="enabledNextBtn(1); editAttendant=false; typeOption=1; getAllAttendant(select.idAddressAtt); switchOption(); select.nameAtt=null" name="typeOption" value="1" ng-model="typeOption" required autofocus>
 														  		<label for="typeOption1" class="radio-custom-label">
 															  		<span >Encargado titular / Otros</span>
 													  			</label> 
@@ -281,51 +300,86 @@
 						    </div>
 						</fieldset>
 						<fieldset ng-switch-when="PASO 3: DATOS DE LA SOLICITUD">
+							<div class="container-fluid justify-content-md-center col-md-12">
+								<!-- Form Key Quantity qku = Quantity Keys Up ng-class="!keyChek1? 'bg-default':'bg-success'" -->
+								<legend style="text-align: center;">Llaves disponibles</legend>
+								<div class="form-group col-md-6">
+									<div ng-repeat="dataK in keyChains track by $index+1">
+							  		  	<div class="col-xs-12 col-md-offset-8 input-group">
+							  		  		<span class="input-group-addon">
+							  		  		<input type="checkbox" id="keyChek[$index]" ng-model="keyChek[$index]"></span>
+							  		  		<input type="text"  class="form-control" value="{{dataK.item}} (${{dataK.value}})">
+							  		  		<div class="col-xs-2"></div>
+							  		  		<span class="input-group-addon"><i class="fas fa-key"></i></span>
+									    	<input id="quantity[$index]" type="number" ng-change="getTotalCostOfKeys(dataK, $index); getTotalService();" ng-disabled="!keyChek[$index]" min="1" max="5" style="width: 50%" class="form-control " ng-model="quantity[$index]" ng-required="keyChek[$index]">
+									    </div>	
+								    </div>
+									<!-- Select Type of key -->   
+									<!--<div ng-show="keyChains.quantity>=2">				     
+							  		  	<div class="col-xs-12 col-md-offset-8 input-group">
+							  		  		<span class="input-group-addon">
+							  		  		<input type="checkbox" id="keyChek2" ng-click="getTotalCostOfKeys();" ng-model="keyChek2"></span>
+							  		  		<input type="text" readonly class="form-control" ng-model="keyName2">
+							  		  		<input type="text" ng-model="key.keyId" hidden="true">
+					  		  				<input type="text" ng-model="keyValue2" hidden="true">
+							  		  		<div class="col-xs-2"></div>
+							  		  		<span class="input-group-addon"><i class="fas fa-key"></i></span>
+									    	<input type="number" ng-change="getTotalCostOfKeys(); getTotalService();" ng-disabled="!keyChek2" min="1" max="5" style="width: 50%" class="form-control " ng-model="key.quantity2" ng-required="keyChek2">
+							    		</div>
+							    	</div>
+									<div ng-show="keyChains.quantity>=3">				     
+							  		  	<div class="col-xs-12 col-md-offset-8 input-group">
+							  		  		<span class="input-group-addon">
+							  		  		<input type="checkbox" id="keyChek3" ng-click="getTotalCostOfKeys();" ng-model="keyChek3"></span>
+							  		  		<input type="text" readonly class="form-control" ng-model="keyName3">
+							  		  		<input type="text" ng-model="key.keyId" hidden="true">
+					  		  				<input type="text" ng-model="keyValue3" hidden="true">
+							  		  		<div class="col-xs-2"></div>
+							  		  		<span class="input-group-addon"><i class="fas fa-key"></i></span>
+									    	<input type="number" ng-change="getTotalCostOfKeys(); getTotalService();" ng-disabled="!keyChek3" min="1" max="5" style="width: 50%" class="form-control " ng-model="key.quantity3" ng-required="keyChek3">
+							    		</div>
+							    	</div>
+									<div ng-show="keyChains.quantity>=4">  
+							  		  	<div class="col-xs-12 col-md-offset-8 input-group">
+							  		  		<span class="input-group-addon">
+							  		  		<input type="checkbox" id="keyChek4" ng-click="getTotalCostOfKeys();" ng-model="keyChek4"></span>
+							  		  		<input type="text" readonly class="form-control" ng-model="keyName4">
+							  		  		<input type="text" ng-model="key.keyId" hidden="true">
+					  		  				<input type="text" ng-model="keyValue4" hidden="true">
+							  		  		<div class="col-xs-2"></div>
+							  		  		<span class="input-group-addon"><i class="fas fa-key"></i></span>
+									    	<input type="number" ng-change="getTotalCostOfKeys(); getTotalService();" ng-disabled="!keyChek4" min="1" max="5" style="width: 50%" class="form-control " ng-model="key.quantity4" ng-required="keyChek4">
+							    		</div>
+							    	</div>
+							    	<div ng-show="keyChains.quantity>=5">
+							  		  	<div class="col-xs-12 col-md-offset-8 input-group">
+							  		  		<span class="input-group-addon">
+							  		  		<input type="checkbox" id="keyChek5" ng-click="getTotalCostOfKeys();" ng-model="keyChek5"></span>
+							  		  		<input type="text" readonly class="form-control" ng-model="keyName5">
+							  		  		<input type="text" ng-model="key.keyId5" hidden="true">
+					  		  				<input type="text" ng-model="keyValue5" hidden="true">
+							  		  		<div class="col-xs-2"></div>
+							  		  		<span class="input-group-addon"><i class="fas fa-key"></i></span>
+									    	<input type="number" ng-change="getTotalCostOfKeys(); getTotalService();" ng-disabled="!keyChek5" min="1" max="5" style="width: 50%" class="form-control " ng-model="key.quantity5" ng-required="keyChek5">
+							    		</div>
+							    	</div>-->
+							    </div>
+							</div>
 							<div class="container-fluid justify-content-md-center">
-								<!-- Select Type of key -->   
-								<div class="form-group col-md-6"> 
-								  <label class="col-xs-12 col-md-offset-1">Tipo de Llave</label>
-								    <div class="col-md-10 col-md-offset-1 input-group">
-								        <span class="input-group-addon"><i class="fas fa-key"></i></span>
-										    <select name="idTypeOfKeyKf" ng-model="idTypeOfKeyKf" class="form-control" ng-change="" required autofocus >
-    									    <option value="">Seleccione un tipo</option>
-									    	<option value="1">Llaveros</option>
-									    	<option value="2">Sticker Vehicular</option>
-									    	<option value="3">Credencial Mobile</option>
-									    	</select>
-								  	</div>
-								</div>
 								<!-- Select Type of Delivery -->   
 								<div class="form-group col-md-6"> 
-								  <label class="col-xs-12 col-md-offset-2">Tipo de Entrega</label>
-								    <div class="col-md-10 col-md-offset-2 input-group">
+								  <label class="col-xs-12 col-md-offset-1">Tipo de Entrega</label>
+								    <div class="col-md-10 col-md-offset-1 input-group">
 								        <span class="input-group-addon"><i class="glyphicon icon-truck"></i></span>
-										    <select name="idTypeDeliveryKf" ng-change="getTotalService(); getAllAttendant(); delivery.nameAtt=null; select.whoPickUp=Null" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
+										    <select name="idTypeDeliveryKf" ng-change="getTotalService(); getAllAttendant(selectIdAddressKf.selected.idAdress); delivery.nameAtt=null; select.whoPickUp=Null" class="form-control" ng-change=""  ng-options="item.idTypeDelivery as item.typeDelivery for item in listTypeDelivery" ng-model="delivery.idTypeDeliveryKf" required autofocus >
 										    <option value=""></option>
 									    	</select>
 								  	</div>
 								</div>
-							</div>
-							<div class="container-fluid">
-								<!-- Form Key Quantity qku = Quantity Keys Up-->
-								<div class="form-group col-md-6">
-								  <label class="col-xs-12 col-md-offset-1" >Cantidad de llaves</label> 
-									<div class="col-md-10 col-md-offset-1 input-group">
-							  		  <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
-							  			<select name="qkuTenant" ng-change="getTotalService();" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
-											    <option value=""></option>
-											    <option value="1">1</option>
-											    <option value="2">2</option>
-											    <option value="3">3</option>
-											    <option value="4">4</option>
-											    <option value="5">5</option>
-								    	</select>
-							    	</div>
-								</div>
 								<div class="form-group col-md-6" ng-disable="sessionidProfile!=2" ng-show="delivery.idTypeDeliveryKf && sessionidProfile!=2">
-								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-2">Quien retira</label>
-								  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-2">Quien recibe</label>  
-								    <div class="col-md-10 col-md-offset-2 input-group">
+								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-1">Quien retira</label>
+								  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-1">Quien recibe</label> 
+								    <div class="col-md-10 col-md-offset-1 input-group">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 									  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
@@ -338,37 +392,38 @@
 								  	</div>
 								</div>
 								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
-								<div ng-if="(sessionidProfile!=3 && sessionidProfile!=6) && delivery.idTypeDeliveryKf!=0 && select.whoPickUp!=0"  class="form-group col-md-10">
-									    <div class="col-md-6 col-md-offset-8">
-										    <div ng-if="(select.whoPickUp==1 && select.nameAtt!= delivery.nameAtt && collap==2 ) || (select.whoPickUp==2 && select.nameAtt == delivery.nameAtt && collap==2) || (select.whoPickUp==1 && collap==1)" class="alert alert-success" role="alert">
-							                 <span style="text-align: center;">Solicitud sera
+								<div ng-if="(sessionidProfile!=3 && sessionidProfile!=6) && delivery.idTypeDeliveryKf==1 && select.whoPickUp==1"  class="form-group col-md-12">
+									    <div class="col-md-10 col-md-offset-1">
+										    <div ng-if="(select.whoPickUp==1 && (select.nameAtt!= delivery.nameAtt || !select.nameAtt)  && collap==2 ) || (select.whoPickUp==2 && select.nameAtt == delivery.nameAtt && collap==2) || (select.whoPickUp==1 && collap==1)" class="alert alert-success" role="alert">
+							                 <span style="text-align: center;">Solicitud
 							                 	<span ng-if="delivery.idTypeDeliveryKf==1">retirada por el</span>
-							                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada al</span>
+							                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada a</span>
 							                 	<span ng-if="collap==2 && typeOption==1"> encargado titular</span>
 							                 	<span ng-if="collap==1 && typeTenant==1"> propietario</span>
 							                 	<span ng-if="collap==1 && typeTenant==2"> inquilino</span>
-							                 	: <br>
-							                 	<span ng-if="collap==2 && typeOption==1" style="font-weight: bold;">{{userAtt.attendant.fullNameUser}}</span>
+							                 	:
+							                 	<span ng-if="collap==2 && typeOption==2" style="font-weight: bold;">{{userAtt.attendant.fullNameUser}}</span>
+             									<span ng-if="collap==2 && typeOption>=1" style="font-weight: bold;">{{sessionNames}}</span>
 							                 	<span ng-if="collap==1 && typeTenant!=0" style="font-weight: bold;">{{tenant.namesTenant}}</span>
 							                 </span>
 							             	</div>
 									  </div>
 								</div>
 								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
-								<div ng-if="(sessionidProfile==3 || sessionidProfile==6) && delivery.idTypeDeliveryKf!=0 && select.whoPickUp>0 && select.whoPickUp<3"  class="form-group col-md-10">
-									    <div class="col-md-6 col-md-offset-8">
+								<div ng-if="(sessionidProfile==3 || sessionidProfile==6) && delivery.idTypeDeliveryKf!=0 && select.whoPickUp>0 && select.whoPickUp<3"  class="form-group col-md-12">
+									    <div class="col-md-10 col-md-offset-1">
 										    <div class="alert alert-success" role="alert">
-							                 	<span style="text-align: center;">Solicitud sera
+							                 	<span style="text-align: center;">Solicitud
 								                 	<span ng-if="delivery.idTypeDeliveryKf==1">retirada por titular: </span>
-								                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada al</span>
-						                 			<span ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2">encargado: </span>
+								                 	<span ng-if="delivery.idTypeDeliveryKf==2">entregada a</span>
+						                 			<span ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2">: </span>
 							                 		<span ng-if="delivery.idTypeDeliveryKf==1 && select.whoPickUp==1" style="font-weight: bold;">{{sessionNames}}</span>
 
 							                 	</span>
              									<!-- Attendant Info -->
-											    <div ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && !delivery.nameAtt && !btnClose" class="input-group col-md-10">
+											    <div ng-if="delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && !delivery.nameAtt && !btnClose" class="input-group col-md-12">
 											  		<select name="nameAtt" class="form-control" ng-disabled="attendantFound!=true"  ng-options="item.idUser as combined(item) for item in listAttendant" ng-required="select.whoPickUp==2" ng-change="getAttData('delivery'); btnClose=true; enabledNextBtn();" ng-model="delivery.nameAtt" autofocus >
-													    <option value="">Seleccione un encargado</option>
+													    <option value="">Selecciona el encargado</option>
 												    </select>
 											    </div>
 											    <span ng-if="delivery.nameAtt" style="font-weight: bold;">{{delivery.fullNamesAtt}}
@@ -379,7 +434,7 @@
 								</div>
 								<!-- **********************************************************************************************-->
 								<!-- Attendant Info -->
-								<div ng-if="(sessionidProfile!=3 && sessionidProfile!=6) && delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && select.nameAtt != delivery.nameAtt"><br>
+								<div ng-if="(sessionidProfile!=3 && sessionidProfile!=6) && delivery.idTypeDeliveryKf==2 && select.whoPickUp==2 && (select.nameAtt == delivery.nameAtt || !select.nameAtt || select.nameAtt)"><br>
 									<div class="col-md-4 col-md-offset-7"><legend style="text-align: center;">DATOS DEL ENCARGADO</legend></div>
 									<!-- Encargado First Name & Lastname -->
 									<div class="form-group col-md-10" ng-disable="sessionidProfile!=2" ng-show="sessionidProfile!=2">
@@ -481,25 +536,25 @@
 									  <div class="col-md-3">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">
-											  <input id="inputService" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" ng-model="cost.service"  type="text" required autofocus/>
+											  <input id="inputService" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" value="{{cost.service  | number : 2}}"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-3 ">
 									  	<label class="control-label">Llave</label> 
 										  <div class="input-group">
-											  <input disabled  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control" ng-model="cost.key"  type="text" required autofocus/>
+											  <input disabled  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control"  value="{{cost.key  | number : 2}}"  type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-3">
 									  	<label class="control-label">Envio</label> 
 										  <div class="input-group">
-											  <input id="inputDelivery" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" ng-model="cost.delivery"  type="text" required autofocus/>
+											  <input id="inputDelivery" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" value="{{cost.delivery  | number : 2}}"type="text" required autofocus/>
 										  </div>
 									  </div>
 									  <div class="col-md-3 "> 
 									  	<label class="control-label">Total</label> 
 										  <div class="input-group">
-											  <input disabled style="text-align: right"; name="cost.total"placeholder="$0,00" class="form-control" ng-model="cost.total"  type="text" required autofocus/>
+											  <input disabled style="text-align: right"; name="cost.total"placeholder="$0,00" class="form-control" value="{{cost.total  | number : 2}}"  type="text" required autofocus/>
 										  </div>
 									  </div>
 								</div>
@@ -610,7 +665,7 @@
 									    </select>
 								  	</div>
 								</div>
-								<!-- SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY -->
+								<!-- **********************SHOW THE OWNER WHOM PICKUP OR RECEIVED THE KEY************************* -->
 								<div ng-if="delivery.idTypeDeliveryKf!=0 && select.whoPickUp>0 && select.whoPickUp<3"  class="form-group col-md-10">
 									    <div class="col-md-6 col-md-offset-8">
 										    <div class="alert alert-success" role="alert">

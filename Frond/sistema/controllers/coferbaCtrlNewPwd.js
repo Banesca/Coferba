@@ -13,6 +13,7 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   $scope.sysRsTmpUser  = tokenSystem.getTokenStorage(3);
   var data2update = {};
   var user = !$scope.sysToken ? $scope.sysRsTmpUser : $scope.sysLoggedUser;
+  //console.log(user);
   var data2update = {
                       user
                     };
@@ -36,7 +37,7 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   **************************************************/
 
   $scope.sysSendPwd2change= function (){
-      userServices.updateUser(data2update.user).then(function(data){
+      userServices.updateUser(data2update).then(function(data){
         $scope.changePwdResult = data;
         if($scope.changePwdResult){
           $scope.redirectSuccessfull = true;

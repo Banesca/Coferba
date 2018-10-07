@@ -66,7 +66,7 @@ class Department_model extends CI_Model
 
 
      // GET DE LISTADO BUSQUEDA DE INQUIILINO //
-     public function byIdDireccion($id,$idStatus) {
+    public function byIdDireccion($id,$idStatus) {
         $quuery = null;
         $rs = null;
 
@@ -84,6 +84,34 @@ class Department_model extends CI_Model
 
             $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
 
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            }
+            return null;
+        
+    }
+    //type_keychains
+    public function keyChainsByIdAddress($id) {
+        $quuery = null;
+        $rs = null;
+
+        
+            $this->db->select("*")->from("tb_company_type_keychains");
+            $this->db->where("tb_company_type_keychains.idAddressKf =", $id);
+            $quuery = $this->db->order_by("tb_company_type_keychains.id", "asc")->get();
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            }
+            return null;
+        
+    }
+    public function getAllDepartment() {
+        $quuery = null;
+        $rs = null;
+
+            $quuery = $this->db->select("*")->from("tb_department")->order_by("tb_department.idDepartment", "asc")->get();
 
             if ($quuery->num_rows() > 0) {
                 return $quuery->result_array();
@@ -150,7 +178,20 @@ class Department_model extends CI_Model
             return false;
         }
     }
+    /* AUTORIZAR DEPTO A UN INQUILINO */
+    public function deptoTenantStatus($id, $idStatus) {
+        $this->db->set(
+                array(
+                    'isDepartmentApproved' => $idStatus
+                )
+        )->where("idUser", $id)->update("tb_user");
 
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function desaprobated($id) {
         $this->db->set(
                 array(
@@ -274,10 +315,13 @@ class Department_model extends CI_Model
             
                 $this->db->set(
                     array(
-                        'idDepartmentKf' => 0
+                        'idDepartmentKf' => null,
+                        'isDepartmentApproved' => null,
+                        'idAddresKf' => null,
+                        'idCompanyKf' => null
                     )
                 )
-                ->where("idUserKf", $data['idUser'])
+                ->where("idUser", $data['idUser'])
                 ->where("idDepartmentKf", $data['idDepartmentKf'])
                 ->update("tb_user");
 

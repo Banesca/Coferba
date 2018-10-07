@@ -138,6 +138,29 @@ class Department extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }
+    public function keyChainsByIdAddress_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $keyChainAddress = null;
+        $keyChainAddress = $this->department_model->keyChainsByIdAddress($id);
+
+        if (!is_null($keyChainAddress)) {
+            $this->response($keyChainAddress, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+    public function allDepartment_get() {
+
+                $deparments = $this->department_model->getAllDepartment();
+                if (!is_null($deparments)) {
+                    $this->response($deparments, 200);
+                } else {
+                    $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+                }
+            }
     /* SERVICIO GET QUE RETORNA LOS DEPARTAMENTO SEGUN EL ID DE DIRECION Y ID DEL INQUILINO */
     public function byIdTenantYDireccion_get($id, $idT, $idStatus) {
         if (!$id || !$idT) {
@@ -167,7 +190,21 @@ class Department extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }
+    /* SERVICIO APRUEBA INQUILINO A UN DEPARTAMENTO */
+    public function deptoTenantStatus_get($id, $idStatus) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
 
+        $rs = null;
+        $rs = $this->department_model->deptoTenantStatus($id, $idStatus);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
     /* SERVICIO INACTIVA  UN USUARIOS POR ID */
     public function aprobated_get($id) {
         if (!$id) {

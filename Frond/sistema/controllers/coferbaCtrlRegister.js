@@ -1,4 +1,4 @@
-var moduleRegisterUser = angular.module("coferbaApp.RegisterUser", ["coferbaTokenSystem", "coferbaServices.User"]);
+var moduleRegisterUser = angular.module("coferbaApp.RegisterUser", ["coferbaTokenSystem", "coferbaServices.User" , "ngSanitize", "ui.select"]);
 
 
 
@@ -8,6 +8,13 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   $scope.redirectSuccessfull = false;
   $scope.counT  =5;
   $scope.redirect ="#/login";
+  $scope.email2Register = {};
+  $scope.selectIdAddressKf = {};
+  $scope.sysRegisteredUser = {};
+  $scope.tmp               = {};
+  $scope.email2Register = tokenSystem.getTokenStorage(4);
+  //console.log($scope.email2Register.emailAttempted)
+  $scope.register.email = !$scope.email2Register?'':$scope.email2Register.emailAttempted;
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
@@ -18,14 +25,34 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   *                                                 *
   **************************************************/
   $scope.sysRegisterFn = function(){
+    $scope.tmp.idDepartmentKf=$scope.register.idDepartmentKf;
+    $scope.register.idAddrAttKf=$scope.selectIdAddressKf.selected.idAdress;
+    console.log($scope.selectIdAddressKf.selected.idAdress);
     console.log($scope.userData2Add());
       userServices.addUser($scope.userData2Add()).then(function(data){
-      $scope.addUserResult = data;
-        if($scope.addUserResult){
-          $scope.redirectSuccessfull = true;
-          $scope.countDownRedirect($scope.redirect, $scope.counT);
-        }
-
+        $scope.addUserResult = data;
+          if($scope.addUserResult){
+            console.log("REGISTERED SUCCESSFULLY");
+              if($scope.register.idProfileKf==3){
+                userServices.checkUserMail($scope.register.email, "").then(function(data) {
+                  $scope.mailCheckResult= data;
+                  if($scope.mailCheckResult){
+                      $scope.sysRegisteredUser = $scope.sysLoggedUser = tokenSystem.getTokenStorage(3);
+                            var dpto =
+                                      {
+                                           department: { 
+                                                        idDepartment      : $scope.tmp.idDepartmentKf,
+                                                        idUserKf          : $scope.sysRegisteredUser.idUser
+                                                       }
+                                      }; 
+                      $scope.fnAssignDepto(dpto);
+                  }
+                });
+              }else{
+                  $scope.redirectSuccessfull = true;
+                  $scope.countDownRedirect($scope.redirect, $scope.counT);
+              }
+          }
       });
  
   }
@@ -35,6 +62,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
       $scope.register.idDepartmentKf=null;
     }else if ($scope.register.idProfileKf==5){
       $scope.register.idTypeTenantKf ="2";
+      $scope.register.isDepartmentApproved = 0;
     }else if($scope.register.idProfileKf==6 && $scope.register.idTypeAttKf==2){
       $scope.register.idTypeTenantKf=1;
       $scope.register.isRequireAuthentication=1;
@@ -42,8 +70,9 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
       $scope.register.idTypeTenantKf=null;
       $scope.register.isRequireAuthentication=0;
       $scope.register.idDepartmentKf=null;
+      $scope.register.isDepartmentApproved = null;
     }
-    if($scope.register.idProfileKf!=2 && $scope.register.idProfileKf!=4 && $scope.register.idAddrAttKf){
+    if($scope.register.idProfileKf!=2 && $scope.register.idProfileKf!=4 && $scope.register.idProfileKf!=4 && $scope.register.idAddrAttKf){
       $scope.register.idCompanyKf = $scope.getCompanyFromAddress();
     }
     var user =
@@ -62,7 +91,8 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
                         idTypeTenantKf          : $scope.register.idTypeTenantKf,
                         descOther               : $scope.register.typeOtherAtt,
                         idDepartmentKf          : $scope.register.idDepartmentKf,
-                        isEdit                 : 1,
+                        isEdit                  : 1,
+                        isDepartmentApproved    : $scope.register.isDepartmentApproved,
                         requireAuthentication   : $scope.register.isRequireAuthentication
                   }
           };
@@ -84,12 +114,31 @@ $scope.sysCheckEmail = function(){
     });
   }
 }
-
-  /**************************************************
-  *                                                 *
-  *               REQUEST SELECT LIST               *
-  *     (status, profile, typeTenant, company)      *
-  **************************************************/
+/**************************************************
+*                                                 *
+*   ASSIGN DEPARTMENT TO THE CURRENT OWNER USER   *
+*                                                 *
+**************************************************/
+  $scope.fnAssignDepto = function(userData){
+    $http.post(serverHost+serverBackend+"Department/update",userData)
+          .then(function(success, data) {
+                  inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
+                    ttl:3000, type: 'success'
+                  });
+                $scope.redirectSuccessfull = true;
+                $scope.countDownRedirect($scope.redirect, $scope.counT);
+          },function (error, data, status) {
+              if(status == 404){alert("!Informacion "+status+data.error+"info");}
+              else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+              else{alert("Error ! "+status+" Contacte a Soporte");}
+             
+          }); 
+  }
+/**************************************************
+*                                                 *
+*               REQUEST SELECT LIST               *
+*     (status, profile, typeTenant, company)      *
+**************************************************/
   $scope.CallFilterFormU = function(){
      $http({
         method : "GET",
@@ -138,7 +187,7 @@ $scope.getCompanyFromAddress = function(){
     var companyKf = "";
     var length = $scope.listCompany.length;
     for (i = 0; i < length; i++) {
-        if($scope.listCompany[i].idCompany == rsJSONAddress.address.SA_ID_COMPANY){
+        if($scope.listCompany[i].idCompany == rsJSONAddress.address.idCompanyKf){
             
             companyKf = $scope.listCompany[i].idCompany;
             //console.log($scope.listCompany[i]);
@@ -157,8 +206,8 @@ $scope.getCompanyFromAddress = function(){
     /**********************************************
     *               INPUT PHONE MASK              *
     **********************************************/
-    $('.input--movil').mask('99999999999');
-    $('.input--local').mask('9999999999');
+    $('.input--movil').mask('99999999999999999999');
+    $('.input--local').mask('99999999999999999999');
     $('.input--tel').on('focus', function () {
        if ($(this).val().length === 0) {
          $(this).val();
@@ -189,15 +238,20 @@ $scope.getCompanyFromAddress = function(){
       break;
       case 's':
         $this      = $('select[name*='+obj+']');
-      break
+      break;
+      case 'ui':
+
+        $this      = $('#'+obj);
+        console.log($this)
+      break;
     }
       
       //console.log($this)
       var inputObj   = $this
-      var inputValue = $this.val();
+      var inputValue = !$this.val()?$this[0].innerText:$this.val();
+      console.log(inputValue);
       inputService.setClass(inputValue, inputObj);
   }
-
   /**************************************************
   *                                                 *
   *             REQUEST SELECT LIST                 *
@@ -250,45 +304,69 @@ $scope.getCompanyFromAddress = function(){
 *                                                 *
 **************************************************/
 $scope.ownerFound=false;
-$scope.deptoHasOwner = function () {
-  if($scope.register.idProfileKf==6 && $scope.register.idTypeAttKf!=1){
-    $scope.idDepartment= $scope.register.idDepartmentKf;
+$scope.deptoHasOwner = function (idDeparment) {
+    var idDepto = idDeparment;
+    if(idDepto){
       $http({
         method : "GET",
-        url : serverHost+serverBackend+"Department/chekDepartamenteOwner/"+$scope.idDepartment
+        url : serverHost+serverBackend+"Department/chekDepartamenteOwner/"+idDepto
       }).then(function mySuccess(response) {
             if (response.data=="true"){
               $scope.ownerFound=true;
-              $scope.register.idDepartmentKf=null;
-              console.log("EL DEPTO: "+$scope.idDepartment+" Ya tiene un propietario Asignado");
+              idDepto=null;
+              console.log("EL DEPTO: "+idDepto+" Ya tiene un propietario Asignado");
+              inform.add('Contacte con la administracion del consorcio.',{
+                    ttl:6000, type: 'warning'
+              });
             }else if(response.data=="false"){
               $scope.ownerFound=false;
-              console.log("EL DEPTO: "+$scope.idDepartment+" No tiene un propietario Asignado");
+              console.log("EL DEPTO: "+idDepto+" No tiene un propietario Asignado");
             }
               
         }, function myError(response) {
-            if (!$scope.idDepartment){
-              inform.add('El Consorcio no ha cargado el departamento correspondiente a la porteria, por lo que no es posible asignar un Encargado.',{
+            if (!idDepto){
+              inform.add('Contacte con la administracion del consorcio.',{
                     ttl:6000, type: 'danger'
               });
             }
           
       });
-  }
+    }else{
+      inform.add('Debe seleccionar un departamento para continuar con el registro de usuario.',{
+          ttl:6000, type: 'danger'
+      });
+    }
 };
 /**************************************************/
+
+/**************************************************
+*            HIDE PROFILES FUNCTION               *
+*         USED IN THE USER REGISTER FORM          *
+**************************************************/
+$scope.filterProfileUser = function(item){
+  //alert($scope.select.idCompanyKf);
+  //console.log(item);
+  return item.idProfile == 3 ||  item.idProfile == 5;
+};
+/**************************************************/ 
 /**************************************************
 *                                                 *
 * DEPARTMENT LIST BY SELECTED ADDRESS AND TENANT  *
 *                                                 *
 **************************************************/
-$scope.getDeptoListByAddress = function (){
+$scope.getDeptoListByAddress = function (idAddress){
   console.clear();
   $scope.ListDpto="";
-  if(($scope.register.idProfileKf==5 && !$scope.register.idTypeAttKf) || ($scope.register.idProfileKf==6 && $scope.register.idTypeAttKf!=1)){
-     var idAddressTmp=$scope.register.idAddrAttKf;
+  console.log("idProfileKf: "+$scope.register.idProfileKf);
+  if((($scope.register.idProfileKf==3 || $scope.register.idProfileKf==5) && !$scope.register.idTypeAttKf) || ($scope.register.idProfileKf==6 && $scope.register.idTypeAttKf!=1)){
+     var idAddressTmp=idAddress;
+     console.log("idAddressTmp: "+idAddressTmp);
      var urlT="";
-      urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+      if($scope.register.idProfileKf==3){
+        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
+      }else{
+        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+      }
 
     $http({
         method : "GET",
@@ -342,7 +420,7 @@ $scope.getDeptoListByAddress = function (){
         //console.log("ownerFound2: "+$scope.ownerFound+"item.idUserKf: "+item.idUserKf)
         return true;
       }
-      else if($scope.register.idProfileKf==5 && (item.departmentFloor!="Porteria" && item.departmentFloor!="porteria")){
+      else if(($scope.register.idProfileKf==3 || $scope.register.idProfileKf==5) && (item.departmentFloor!="Porteria" && item.departmentFloor!="porteria")){
         return true;
       }
         

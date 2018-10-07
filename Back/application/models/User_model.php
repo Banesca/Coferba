@@ -101,7 +101,11 @@ class User_model extends CI_Model
 
         if($this->findUserByEmail($user['emailUser']) == null){
         $tokenMail = $this->generateRandomString();
-
+        $ramdonPwd = $this->get_random_password();
+        $isDepartmentApproved = null;
+        $idStatusKfByAdmin = null;
+        if (@$user['idTypeTenantKf']!=1 && @$user['idDepartmentKf'] && (@$user['isCreateByAdmin'] || @$user['isCreateByOwner'])){$isDepartmentApproved=1;}else{$isDepartmentApproved=null;}
+        if (@$user['idTyepeAttendantKf']!=0 && @$user['isCreateByAdmin']){$idStatusKfByAdmin=1;}else{$idStatusKfByAdmin=0;}
         /* CREAMOS UN USUARIO */
         $this->db->insert('tb_user', array(
             'fullNameUser' => $user['fullNameUser'],
@@ -109,7 +113,7 @@ class User_model extends CI_Model
             'phoneNumberUser' => $user['phoneNumberUser'],
             'phoneLocalNumberUser' => @$user['phoneLocalNumberUser'],
             'idAddresKf' => @$user['idAddresKf'],
-            'passwordUser' => sha1(md5($user['passwordUser'])),
+            'passwordUser' => sha1(md5($ramdonPwd)),
             'idProfileKf' => $user['idProfileKf'],
             'idTypeTenantKf' => $user['idTypeTenantKf'],
             'idStatusKf' => 0,
@@ -117,18 +121,27 @@ class User_model extends CI_Model
             'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
             'descOther' => @$user['descOther'],
             'idDepartmentKf' => @$user['idDepartmentKf'],
+            'isDepartmentApproved' => $isDepartmentApproved,
             'isEdit' => @$user['isEdit'],
             'requireAuthentication' => @$user['requireAuthentication'],
             'resetPasword' => 1,
             'tokenMail' => $tokenMail
                 )
         );
-
-
        
 
 
         if ($this->db->affected_rows() === 1) {
+            // VALIDAMOS SI EL USER ESTA SIENDO CREADO POR UN ADMIN //
+            if (@$user['isCreateByAdmin']) {
+
+                $this->db->set(
+                        array(
+                            'isConfirmatedMail' => 1,
+                            'idStatusKf' => 1
+                        )
+                )->where("emailUser", $user['emailUser'])->update("tb_user");
+            }
              // ENVIAMOS EL MAIL DE CONFIRMAR REGISTRO //
             /*MAIL*/
             $title ="Mail de confirmacion de COFERBA";
@@ -137,8 +150,8 @@ class User_model extends CI_Model
 
             $body ='
             Usuario:'.$user['emailUser'].'
-            <BR>'.'Clave:'.$user['passwordUser'].'<br>'.'
-            <a href='.$currentURL.'/validate/'.$tokenMail.'>Pulse aqui para Confirmar mail</a>';
+            <BR>'.'Clave:'.$ramdonPwd.'<br>'.'
+            <a href='.$currentURL.'validate/'.$tokenMail.'>Pulse aqui para Confirmar mail</a>';
 
             $this->mail_model->sendMail($title,$user['emailUser'],$body);
             //*****************/
@@ -152,7 +165,25 @@ class User_model extends CI_Model
          return -1;
      }
     }
-
+    function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=yes, $include_special_chars=false)
+    {
+        $length = rand($chars_min, $chars_max);
+        $selection = 'aeuoyibcdfghjklmnpqrstvwxz';
+        if($include_numbers) {
+            $selection .= "1234567890";
+        }
+        if($include_special_chars) {
+            $selection .= "!@\"#$%&[]{}?|";
+        }
+                                
+        $password = "";
+        for($i=0; $i<$length; $i++) {
+            $current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];            
+            $password .=  $current_letter;
+        }                
+        
+      return $password;
+    }
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -209,18 +240,19 @@ class User_model extends CI_Model
                     'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
                     'idAddresKf' => $user['idAddresKf'],
                     'idProfileKf' => $user['idProfileKf'],
-                    'idCompanyKf' => $user['idCompanyKf'],
+                    'idCompanyKf' => (!$user['idCompanyKf'])?$user['idCompany']:$user['idCompanyKf'],
                     'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
                     'descOther' => @$user['descOther'],
                     'idDepartmentKf' => @$user['idDepartmentKf'],
                     'idTypeTenantKf' => $user['idTypeTenantKf'],
                     'requireAuthentication' => @$user['requireAuthentication'],
+                    'isDepartmentApproved' => @$user['isDepartmentApproved'],
                     'isEdit' => @$user['isEdit']
                 )
         )->where("idUser", $user['idUser'])->update("tb_user");
 
         
-        if ($this->db->affected_rows() === 1) {
+        if ($this->db->affected_rows() >=0) {
 
             if (@$user['isEditUser']) {
 
@@ -269,6 +301,7 @@ class User_model extends CI_Model
         $status = null;
         $type = null;
         $company = null;
+        $companykeychains = null;
 
 
         $query =  $this->db->select("*")->from("tb_profile")->get();
@@ -289,17 +322,6 @@ class User_model extends CI_Model
         $query =  $this->db->select("*")->from("tb_company")->get();
         if ($query->num_rows() > 0) {
             $company = $query->result_array();
-
-            $i = 0;
-            foreach ($company as $value) {
-                $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idCompanyKf", $value['idCompany'])->get();
-                if ($query->num_rows() > 0) {
-                    $companykeychains = $query->result_array();
-                    $company[$i] = $companykeychains;
-                }
-                $i++;
-            }
-
            
         }
 
@@ -327,19 +349,7 @@ class User_model extends CI_Model
 
         $query =  $this->db->select("*")->from("tb_company")->get();
         if ($query->num_rows() > 0) {
-            $company = $query->result_array();
-
-            $i = 0;
-            foreach ($company as $value) {
-                $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idCompanyKf", $value['idCompany'])->get();
-                if ($query->num_rows() > 0) {
-                    $companykeychains = $query->result_array();
-                    $company[$i]["companykeychains"] = $companykeychains;
-                }
-                $i++;
-            }
-
-           
+            $company = $query->result_array();          
         }
 
         return $company;
@@ -473,7 +483,8 @@ public function updateMailSmtp($mail) {
     
     $this->db->set(
             array(
-                'isConfirmatedMail' => 1
+                'isConfirmatedMail' => 1,
+                'idStatusKf' => 1
             )
     )->where("tokenMail",$tokenMail)->update("tb_user");
 

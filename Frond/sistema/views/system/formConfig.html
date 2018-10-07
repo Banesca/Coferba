@@ -7,7 +7,7 @@
                 <ul id="menu-content" class="menu-content collapse out">
                     <li ng-click="sysConfig('sys','dash')">
                       <a href="">
-                      <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                      <i class="fas fa-sitemap fa-lg"></i> Dashboard
                       </a>
                     </li>
     
@@ -16,8 +16,8 @@
                     </li>
                     <ul class="sub-menu collapse" id="accounts">
                         <li ng-click="sysConfig('user','dash')"><a href="">Usuarios</a></li>
-                        <!--<li ng-click="sysConfig('att','dash')"><a href="">Encargados</a></li>
-                        <li ng-click="sysConfig('tenant','dash')"><a href="">Inquilinos</a></li>-->
+                        <li ng-click="sysConfig('att','dash')"><a href="">Encargados</a></li>
+                        <li ng-click="sysConfig('tenant','dash')"><a href="">Habitantes</a></li>
                     </ul>
     
     
@@ -43,27 +43,28 @@
     	</div>
     </div>
     <!-- CONTENT -->
-    <div style="background-color: white;" class="col-sm-9 col-md-10">
-		<div class="page-header">
-			<h3 style="color: black;">&nbsp <span class="glyphicon icon-cogs icon-2x"></span> Administracion del Sistema &nbsp <span style="cursor: pointer;" data-toggle="tooltip" data-placement="right" title="Volver al dashboard" ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att'" ng-click="sysConfig('sys','dash')" ><i class="glyphicon glyphicon-share-alt"></i></span></h3> 
+    <div style="background-color: white;" class=" sys_content col-sm-9 col-md-10">
+		<div class="">
+			<h3 style="color: black;">&nbsp <span class="glyphicon icon-cogs icon-2x"></span> Administracion del Sistema &nbsp <span style="cursor: pointer;" data-toggle="tooltip" data-placement="right" title="Volver al dashboard" ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att' || sysContent=='company'" ng-click="sysConfig('sys','dash')" ><i class="glyphicon glyphicon-share-alt"></i></span></h3> 
 		</div>
-		<div ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att'" class="pull-left col-md-10">
+		<div ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att' || sysContent=='company'" class="pull-left col-md-12">
 		    <div  class="panel panel-default">
 		        <div class="panel-heading">
-		          <h3 ng-if="sysContent=='user'" class="panel-title">GESTION DE USUARIOS</h3>
-		          <h3 ng-if="sysContent=='tenant'" class="panel-title">GESTION DE INQUILINOS</h3>
-		          <h3 ng-if="sysContent=='att'" class="panel-title">GESTION DE INQUILINOS</h3>
+		          <h3 ng-if="sysContent=='user'" class="panel-title">USUARIOS</h3>
+		          <h3 ng-if="sysContent=='tenant'" class="panel-title">HABITANTES</h3>
+		          <h3 ng-if="sysContent=='att'" class="panel-title">ENCARGADOS</h3>
+		          <h3 ng-if="sysContent=='company'" class="panel-title">EMPRESAS</h3>
 		        </div>
 		          	<div class="panel-body">
 			          	<!-- ROW WITH THE FILTERS USED TO DISPLAY DATA IN THE TABLE -->
-			            <div  class="row" >
+			            <div  class="row">
 			                <!-- Filter Type of User For Admins -->
-			                <div ng-if="sysContent=='user'" class="form-group col-lg-2">
+			                <div ng-if="sysContent=='user'" class="form-group col-md-6">
 		                          <label ng-if="sysContent=='user'" style="padding-left: 15px;">Tipo de Usuarios</label>
 		                            <div class="col-xs-12 selectContainer">
 		                              <div class="input-group">
 		                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-		                                    <select  name="filterUserProfile" ng-options="item.idProfile as item.nameProfile for item in listProfile" class="form-control" ng-model="$parent.filterUserProfile" >
+		                                    <select  name="filterUserProfile" ng-change="search(filterUserProfile.nameProfile, true)" ng-options="item.nameProfile for item in listProfile" class="form-control" ng-model="$parent.filterUserProfile" >
 		                                      <option value="" >Todos</option>
 		                                    </select>
 
@@ -71,246 +72,138 @@
 		                            </div>
 		                    </div>
 		                    <!-- Filter Type of Tenant For Admins -->
-			                <div ng-if="sysContent=='tenant'" class="form-group col-lg-2">
-		                          <label style="padding-left: 15px;">Tipo de Inquilino</label>
+			                <div ng-if="sysContent=='tenant'" class="form-group col-md-6">
+		                          <label style="padding-left: 15px;">Tipo de Habitante</label>
 		                            <div class="col-xs-12 selectContainer">
 		                              <div class="input-group">
 		                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-		                                    <select  name="filterTenantProfile" ng-options="item.idTypeTenant as item.typeTenantName for item in listTypeOfTenant" class="form-control" ng-model="$parent.filterTenantProfile" >
-		                                      <option value="" >Todos</option>
+		                                    <select  name="filterTenantProfile" ng-change="search(filterTenantProfile.typeTenantName, true)" ng-options="item.typeTenantName for item in lisTypeTenant" class="form-control" ng-model="$parent.filterTenantProfile" >
+                                                <option value="" >Todos</option>
 		                                    </select>
 
 		                              </div>
 		                            </div>
 		                    </div>
+		                    <!-- Company Name-->    
+			              	<div ng-if="sysContent=='att' || sysContent=='company'" class="form-group" ng-class="sysContent=='company'? 'col-md-4':'col-md-6'">
+				                <label ng-if="sysContent=='att'" style="padding-left: 15px;">Administracion</label>
+				                <label ng-if="sysContent=='company'" style="padding-left: 15px;">Empresas</label>
+			                  	<div class="col-xs-12">
+				                    <div class="input-group">
+				                      <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+				                        <ui-select class="dropdown-select" ng-model="$parent.filterCompanyKf.selected" ng-change="search(filterCompanyKf.selected.nameCompany, true); officeListByCompnayID(filterCompanyKf.selected.idCompany);" on-select="onSelectCallback()">
+				                          <ui-select-match allow-clear="true" placeholder="Todos" >{{$select.selected.nameCompany}}</ui-select-match>
+				                            <ui-select-choices repeat="item in listCompany | filter: $select.search">
+				                              <div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
+				                                <small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
+				                            </ui-select-choices>
+				                            <ui-select-no-choice>
+											    No hay resultados, contacte area de soporte.
+										  	</ui-select-no-choice>
+				                        </ui-select>
+				                    </div>
+			                  	</div>
+			              	</div>
+							<!-- Address for Admins Consorcios-->      
+				            <div class="form-group col-md-6" ng-if="sysContent=='att'">
+				                <label style="padding-left: 15px;">Direcci&#243n del Consorcio</label>
+			                  	<div class="col-xs-12">
+				                    <div class="input-group">
+				                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                      <ui-select class="dropdown-select" name="filterAddressKf" ng-disabled="!companyFound" ng-change="search(filterAddressKf.selected.nameAdress, true)"  ng-model="$parent.filterAddressKf.selected" autofocus>
+				                          <ui-select-match allow-clear="true" placeholder="Todos">{{$select.selected.nameAdress}}</ui-select-match>
+				                            <ui-select-choices repeat="item in listOffice | filter: $select.search">
+				                              <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+				                                <!--<small>Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+				                                <small>Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+				                            </ui-select-choices>
+				                            <ui-select-no-choice>
+											    No hay resultados, contacte area de soporte.
+										  	</ui-select-no-choice>
+				                        </ui-select>
+				                    </div>
+			                  	</div>
+				            </div>
 		                    <!-- Filter Type of Attendants For Admins -->
-                            <div ng-if="sysContent=='att'" class="form-group col-lg-2">
+                            <div ng-if="sysContent=='att'" class="form-group col-md-6">
                             	<label style="padding-left: 15px;">Tipo de Encargados</label>
                               <div class="col-xs-12 selectContainer">
                                 <div class="input-group">
                                       <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                      <select name="filteroAttProfile" class="form-control" ng-model="$parent.filteroAttProfile" >
+                                      <select name="filteroAttProfile" ng-change="search(filteroAttProfile.nameTypeAttendant, true)" ng-options="item.nameTypeAttendant for item in listTypeAttendant" class="form-control" ng-model="$parent.filteroAttProfile" >
                                           <option value="" >Todos</option>
-                                          <option value="1" >Otros</option>
-                                          <option value="2" >Titular</option>
-                                          <option value="3" >Suplente</option>
-                                          <option value="4" >Intendente</option>
                                       </select>
                                 </div>
                               </div>
                       		</div>
 		                    <!-- Filter Type of Status For Admins -->
-			                <div ng-if="sessionidProfile!=0" class="form-group col-lg-2">
+			                <div ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att'" class="form-group col-md-6">
 		                          <label style="padding-left: 15px;">Estatus</label>
 		                            <div class="col-xs-12 selectContainer">
 		                              <div class="input-group">
 		                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-		                                    <select name="filterUserStatus" ng-options="item.idStatusTenant as item.statusTenantName for item in listStatus"  class="form-control" ng-model="$parent.filterUserStatus" >
+		                                    <select name="filterUserStatus" ng-change="search(filterUserStatus.statusTenantName, true)" ng-options="item.statusTenantName for item in listStatus"  class="form-control" ng-model="$parent.filterUserStatus" >
 		                                  	    <option value="" >Todos</option>
 		                                    </select>
 		                              </div>
 		                            </div>
 		                    </div>
-			                <div class="form-group col-lg-2">
+			                <div class="form-group" ng-class="sysContent=='company'?'col-md-4':'col-md-6'">
 			                	<label style="padding-left: 15px;">Buscar</label>
-			                  <div class="col-xs-12">
-			                    <div class="input-group">
-			                      <span class="input-group-addon"><i class="glyphicon glyphicon-search "></i></span>
-			                      <input type="text" class="form-control" ng-model="searchboxfilter" placeholder="Buscar...">
+			                 	<div class="col-xs-12">
+			                    	<div class="input-group">
+			                      	<span class="input-group-addon"><i class="glyphicon glyphicon-search "></i></span>
+			                      	<input type="text" class="form-control" ng-change="search(searchboxfilter, false)"  ng-model="searchboxfilter" placeholder="Buscar...">
 			                    </div>
 			                  </div>
 			                </div>
-			                <div class="form-group">
-			            		<div class="col-xs-4"><br>
-			                		<div>
-			                    		<button type="button" ng-click="CallFilterFormT()" class="btn btn-info">
-			                        		<i title="Actualizar" class="glyphicon glyphicon-refresh"></i>
-			                    		</button>&nbsp
-			                    		<button ng-if="sysContent=='user'" type="button" ng-click="sysConfig('user','openW')" class="btn btn-info">
-			                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Nuevo
-			                        	</button>
-			                        	<button ng-if="sysContent=='tenant'" type="button" ng-click="sysFunctionsTenant('open', 'add');" class="btn btn-info">
-			                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Nuevo
-			                        	</button>
-			                        	<button ng-if="sysContent=='att'" type="button" ng-click="sysConfig('att','openW')" class="btn btn-info">
-			                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Nuevo
-			                        	</button>
-			                		</div>
-			            		</div>
-			        		</div>	
-			            </div><br><br>
-			            <div>
-				            <!-- TABLE LIST WHERE IS DISPLAYED THE USER DATA REQUESTED -->
-				            <table id="tableUser" ng-if="sysContent=='user'"  class="table  table-striped table-responsive">
-				                <thead style=" background: #4d5d6f; color: white;">
-				                  <tr style="text-align: center;">
-				                      <th>ID</th>
-				                      <!--<th><i class="glyphicon glyphicon-user"> </i> Nombres</th>-->
-				                      <!--<th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
-				                      <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>-->
-				                      <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
-				                      <th><i class="glyphicon glyphicon-user"> </i>Perfil</th>
-				                      <th><i class="glyphicon icon-flag"> </i> Status</th>
-				                      <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
-				                  </tr>
-				                </thead>
-				                <tbody>
-				                  <tr style="align-content: center;" ng-repeat="item in listUser.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter: (!!filterUserProfile || undefined) && {idProfileKf:filterUserProfile} | filter: (!!filterUserStatus || undefined) && {idStatusKf:filterUserStatus} | filter: searchboxfilter">
-				                      <td>
-				                      	<div class="btn-group">
-										  <button type="button" class="btn btn-info btn-sm">{{item.idUser}}</button>
-										  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-										    <span class="caret"></span>
-										  </button>
-										  <ul class="dropdown-menu" role="menu">
-										    <li><a href="#" ng-click="updateUser(item);"><i title="Modificar Datos" class="glyphicon glyphicon-edit"></i>  Editar</a></li>
-										    <li ng-if="item.idStatusKf<=0 "><a href="#" ng-click="sysFunctionsUser('enabled',item.idUser)"><i title="Activar Usuario" class="glyphicon glyphicon-remove-circle"></i> Activar</a></li>
-										    <li ng-if="item.idStatusKf>0"><a href="#" ng-click="sysFunctionsUser('disabled',item.idUser)"><i title="Desactivar Usuario" class="glyphicon glyphicon-remove-circle"></i> Desactivar</a></li>
-										    <li ng-if="item.idStatusKf>0" role="presentation">
-					                                <div class="divider"></div>
-					                        </li>
-										    <li ng-if="item.idStatusKf>0"><a href="#" ng-click="modalConfirmation('removeu', 0, item)"><i title="Eliminar Usuario" class="glyphicon glyphicon-trash"></i> Eliminar</a></li>
-										  </ul>
-										</div>
-				                      </td>
-				                      <!--<td>{{item.fullNameUser}}</td>-->
-				                      <!--<td ng-if="item.phoneLocalNumberUser">{{item.phoneLocalNumberUser}}</td>
-				                      <td ng-if="!item.phoneLocalNumberUser"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span></td>
-				                      <td ng-if="item.phoneNumberUser">{{item.phoneNumberUser}}</td>
-				                      <td ng-if="!item.phoneNumberUser"><span style="padding-top: 4px; margin-top: 10px; text-align: center;" class="alert alert-warning"> &nbsp &nbsp n/a</span>
-				                      </td>-->
-				                      <td>{{item.emailUser}}</td>
-				                      <td ng-if="item.idProfileKf==1">Coferba</td>
-				                      <td ng-if="item.idProfileKf==2">Empresa</td>
-				                      <td ng-if="item.idProfileKf==3">Propietario</td>
-				                      <td ng-if="item.idProfileKf==4">Admin. Consorcio</td>
-				                      <td> <!-- TD to Admins -->
-				                          <label ng-if="item.idStatusKf==1" class="label label-success">ACTIVO
-				                          </label>
-				                          <label ng-if="item.idStatusKf==0" class="label label-warning">INACTIVO
-				                          </label>
-				                          <label ng-if="item.idStatusKf==-1" class="label label-danger"><del>ELIMINADO</del>
-				                          </label>
-				                      </td>
-				                      <td>{{item.dateCreated | dateToISO | date:'MM/dd/yyyy'}}</td>
-				                  </tr>
-				                </tbody>
-				            </table>
-				            <!-- TABLE LIST WHERE IS DISPLAYED THE TENANT DATA REQUESTED -->
-				            <table  id="tableTenant" ng-if="sysContent=='tenant'"  class="table  table-striped table-responsive">
-				                <thead style=" background: #4d5d6f; color: white;">
-				                  <tr style="text-align: center;">
-				                      <th>ID</th>
-				                      <!--<th><i class="glyphicon glyphicon-user"> </i> Nombres</th>-->
-				                      <!--<th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
-				                      <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>-->
-				                      <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
-				                      <th><i class="glyphicon glyphicon-user"> </i>Perfil</th>
-				                      <th><i class="glyphicon icon-flag"> </i> Status</th>
-				                      <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
-				                  </tr>
-				                </thead>
-				                <tbody>
-				                  <tr style="align-content: center;" ng-repeat="item in listAllTenant.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter: (!!filterTenantProfile || undefined) && {idTypeKf:filterTenantProfile} | filter: (!!filterUserStatus || undefined) && {idStatusKf:filterUserStatus} | filter: searchboxfilter">
-				                      <td>
-				                      	<div class="btn-group">
-										  <button type="button" class="btn btn-info btn-sm">{{item.idTenant}}</button>
-										  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-										    <span class="caret"></span>
-										  </button>
-										  <ul class="dropdown-menu" role="menu">
-										    <li><a href="#" ng-click="fnShowHide('managedepto', 'open')"><i title="Modificar Datos" class="glyphicon glyphicon-edit"></i>  Editar</a></li>
-
-										    <li ng-if="item.idStatusKf<=0 "><a href="#" ng-click="sysFunctionsUser('enabled',item.idTenant)"><i title="Activar Inquilino" class="glyphicon glyphicon-remove-circle"></i> Activar</a></li>
-										    
-										    <li ng-if="item.idStatusKf>0" role="presentation">
-					                                <div class="divider"></div>
-					                        </li>
-										    <li ng-if="item.idStatusKf>0"><a href="#" ng-click="modalConfirmation('removet', 0, item)"><i title="Eliminar Inquilino" class="glyphicon glyphicon-trash"></i> Eliminar</a></li>
-										  </ul>
-										</div>
-				                      </td>
-				                      <td>{{item.emailTenant}}</td>
-				                      <td ng-if="item.idTypeKf==0"><label class="label label-warning">Debe ser Asignado</label></td>
-				                      <td ng-if="item.idTypeKf==1">Propietario</td>
-				                      <td ng-if="item.idTypeKf==2">Inquilino</td>
-				                      <td> <!-- TD to Admins -->
-				                          <label ng-if="item.idStatusKf==1" class="label label-success">ACTIVO
-				                          </label>
-				                          <label ng-if="item.idStatusKf==0" class="label label-warning">INACTIVO
-				                          </label>
-				                          <label ng-if="item.idStatusKf==-1" class="label label-danger"><del>ELIMINADO</del>
-				                          </label>
-				                      </td>
-				                      <td>{{item.dateCrated | dateToISO | date:'MM/dd/yyyy'}}</td>
-				                  </tr>
-				                </tbody>
-				            </table>
-				            <!-- TABLE LIST WHERE IS DISPLAYED THE ATTENDANT DATA REQUESTED -->
-				            <table  id="tableAtt" ng-if="sysContent=='att'"  class="table  table-striped table-responsive">
-				                <thead style=" background: #4d5d6f; color: white;">
-				                  <tr style="text-align: center;">
-				                      <th>ID</th>
-				                      <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
-				                      <!--<th><i class="glyphicon glyphicon-phone"> </i> Tlf Movil</th>
-				                      <th><i class="glyphicon glyphicon-earphone"> </i> Tlf Fijo</th>-->
-				                      <th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>
-				                      <th><i class="glyphicon glyphicon-user"> </i>Perfil</th>
-				                      <th><i class="glyphicon icon-flag"> </i> Status</th>
-				                  </tr>
-				                </thead>
-				                <tbody>
-				                  <tr style="align-content: center;" ng-repeat="item in listAllTAtt.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter: (!!filteroAttProfile || undefined) && {idTyepeAttendantKf:filteroAttProfile} | filter: (!!filterUserStatus || undefined) && {idStatusKf:filterUserStatus} | filter: searchboxfilter">
-				                      <td>
-				                      	<div class="btn-group">
-										  <button type="button" class="btn btn-info btn-sm">{{item.idAttendant}}</button>
-										  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-										    <span class="caret"></span>
-										  </button>
-										  <ul class="dropdown-menu" role="menu">
-										    <li><a href="#" ng-click="select2EditAtt(item);"><i title="Modificar Datos" class="glyphicon glyphicon-edit"></i>  Editar</a></li>
-										    <li ng-if="item.idStatusKf<=0 "><a href="#" ng-click="sysFunctionsAtt('enabled',item.idAttendant)"><i title="Activar Encargado" class="glyphicon glyphicon-remove-circle"></i> Activar</a></li>
-										    <li ng-if="item.idStatusKf>0"><a href="#" ng-click="sysFunctionsAtt('disabled',item.idAttendant)"><i title="Desactivar Encargado" class="glyphicon glyphicon-remove-circle"></i> Desactivar</a></li>
-										    <li ng-if="item.idStatusKf>0" role="presentation">
-					                                <div class="divider"></div>
-					                        </li>
-										    <li ng-if="item.idStatusKf>0"><a href="#" ng-click="modalConfirmation('removeu', 0, item)"><i title="Eliminar Usuario" class="glyphicon glyphicon-trash"></i> Eliminar</a></li>
-										  </ul>
-										</div>
-				                      </td>
-				                      <td>{{item.nameAttendant}}</td>
-				                      <td>{{item.mailAttendant}}</td>
-                                      <td ng-if="!item.idTyepeAttendantKf"><label ng-if="item.idStatusKf==1" class="label label-warning">No Asignado
-                            		  </label></td>
-                      				  <td ng-if="item.idTyepeAttendantKf==1">Otros</td>
-                      				  <td ng-if="item.idTyepeAttendantKf==2">Titular</td>
-                      				  <td ng-if="item.idTyepeAttendantKf==3">Suplente</td>
-                      				  <td ng-if="item.idTyepeAttendantKf==4">Ayudante</td>
-                      				  <td ng-if="item.idTyepeAttendantKf==5">Intendente</td>
-				                      <td> <!-- TD to Admins -->
-				                          <label ng-if="item.idStatusKf==1" class="label label-success">ACTIVO
-				                          </label>
-				                          <label ng-if="item.idStatusKf==0" class="label label-warning">INACTIVO
-				                          </label>
-				                          <label ng-if="item.idStatusKf==-1" class="label label-danger"><del>ELIMINADO</del>
-				                          </label>
-				                      </td>
-				                  </tr>
-				                </tbody>
-				            </table>
-				        </div>
-				        <!-- PAGINATION -->
-				            <div>
-								<pagination 
-							      total-items="totalItems" 
-							      ng-model="currentPage" 
-							      ng-change="pageChanged()" 
-							      class="pagination-sm" 
-							      items-per-page="itemsPerPage"
-							      max-size="maxSize"
-							      boundary-links="true">
-							    </pagination>
+			                <div class="form-group" ng-class="sysContent=='company'?'col-md-4 pull-right':'col-md-6 pull-right'">
+			                	<br>
+			            		<div class="col-xs-1">
+		                    		<button  type="button" ng-click="refresRowsInList();" class="btn btn-info">
+		                        		<i title="Actualizar" class="glyphicon glyphicon-refresh"></i>
+		                    		</button>
+		                    	</div>
+		                    	<div class="col-xs-3">
+		                    		<button ng-if="sysContent=='user'" type="button" ng-click="sysConfig('user','openW')" class="btn btn-info">
+		                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Nuevo
+		                        	</button>
+		                        	<button ng-if="sysContent=='tenant'" type="button" ng-click="sysConfig('user', 'openW');" class="btn btn-info">
+		                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Nuevo
+		                        	</button>
+		                        	<button ng-if="sysContent=='att'" type="button" ng-click="sysConfig('att','openW')" class="btn btn-info">
+		                          		<i title="Agregar Inquilino" class="glyphicon glyphicon-plus"></i> Nuevo
+		                        	</button>
+		                		</div>
 			        		</div>
+			        	</div>
+			            <div>
+			            	<!-- TABLE LIST WHERE IS DISPLAYED THE USER DATA REQUESTED -->
+				            <div ng-if="sysContent=='user'" ng-include="'views/system/listUser.html'"></div>
+				            <!-- TABLE LIST WHERE IS DISPLAYED THE TENANT DATA REQUESTED -->
+				            <div ng-if="sysContent=='tenant'" ng-include="'views/system/listTenant.html'"></div>
+				            <!-- TABLE LIST WHERE IS DISPLAYED THE ATTENDANT DATA REQUESTED -->
+				            <div ng-if="sysContent=='att'" ng-include="'views/system/listAtten.html'"></div>
+				            <!-- TABLE LIST WHERE IS DISPLAYED THE COMPANIES DATA REQUESTED -->
+				            <div ng-if="sysContent=='company'" ng-include="'views/system/listCompanies.html'"></div>
+    				        <!-- PAGINATION -->
+				            <div>
+            	              	<ul class="pager">
+					                <li ng-class="{disabled: currentPage == 0}">
+					                  <a href ng-click="prevPage()">« Anterior</a>
+					                </li>
+					                <!--<li ng-repeat="n in range(pagedItems.length)[currentPage]"
+					                    ng-class="{active: n == currentPage}"
+					                    ng-click="setPage()">
+					                  <a href ng-bind="n + 1">1</a>
+					                </li>-->
+					                <span style="margin-top:-5px" class="badge badge-success">{{currentPage+1}} / {{pagedItems.length}}</span>
+					                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+					                  <a href ng-click="nextPage()">Siguiente »</a>
+					                </li>
+					            </ul>
+			        		</div>
+			        	</div>
 		        	</div>
 		    </div>
 		</div>
@@ -325,7 +218,7 @@
 		                	<h2 class="text-muted">Usuarios</h2>
 		            	</div>
 		            	<div class="options">
-		                <a data-toggle="tooltip" data-placement="bottom" title="Usuarios Registrados" ng-click="sysConfig('user','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{totalUser}}</span> </a>
+		                <a data-toggle="tooltip" data-placement="bottom" title="Usuarios Registrados" ng-click="sysConfig('user','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{listUser.length}}</span> </a>
 		            	</div>
 		        	</div>
 		        </div>
@@ -335,10 +228,10 @@
 		                 	<i class="icon-user"></i>
 		            	</div>
 		            	<div class="text">
-		                	<h2 class="text-muted">Inquilinos</h2>
+		                	<h2 class="text-muted">Habitantes</h2>
 		            	</div>
 		            	<div class="options">
-		                <a  data-toggle="tooltip" data-placement="bottom" title="Inquilinos Registrados" ng-click="sysConfig('tenant','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{totalTenant}}</span></a>
+		                <a  data-toggle="tooltip" data-placement="bottom" title="Habitantes Registrados" ng-click="sysConfig('tenant','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{sysListTenant.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
@@ -351,12 +244,12 @@
 		                	<h2 class="text-muted">Encargados</h2>
 		            	</div>
 		            	<div class="options">
-		                <a data-toggle="tooltip" data-placement="bottom" title="Encargados Registrados" ng-click="sysConfig('att','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{totalAttendant}}</span></a>
+		                <a data-toggle="tooltip" data-placement="bottom" title="Encargados Registrados" ng-click="sysConfig('att','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{sysListAttendant.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
 				<div class="col-md-2">
-					<div g-click="sysConfig('copmany','dash')" class="hero-widget well well-sm">
+					<div ng-click="sysConfig('company','dash')" class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-suitcase"></i>
 		            	</div>
@@ -364,7 +257,7 @@
 		                	<h2 class="text-muted">Empresas</h2>
 		            	</div>
 		            	<div class="options">
-		                <a data-toggle="tooltip" data-placement="bottom" title="Empresas Registradas" ng-click="sysConfig('copmany','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{totalCompanies}}</span></a>
+		                <a data-toggle="tooltip" data-placement="bottom" title="Empresas Registradas" ng-click="sysConfig('company','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{listCompany.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
@@ -377,7 +270,7 @@
 		                	<h2 class="text-muted">Solicitudes</h2>
 		            	</div>
 		            	<div class="options">
-		                <a data-toggle="tooltip" data-placement="bottom" title="Solicitudes Registradas" ng-click="fnShowHide('home', 'open')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{totalTicket}}</span></a>
+		                <a data-toggle="tooltip" data-placement="bottom" title="Solicitudes Registradas" ng-click="fnShowHide('home', 'open')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{listTickt.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
