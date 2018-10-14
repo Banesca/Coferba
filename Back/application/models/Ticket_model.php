@@ -161,8 +161,8 @@ class Ticket_model extends CI_Model
             'thirdPersonNames' => @$ticket['thirdPersonNames'],
             'thirdPersonPhone' => @$ticket['thirdPersonPhone'],
             'thirdPersonId' => @$ticket['thirdPersonId'],
-
-            'idUserAttendantKfDelivery' => @$ticket['idUserAttKfDelive']
+            'idUserAttendantKfDelivery' => @$ticket['idUserAttKfDelive'],
+            'sendUserNotification' => @$ticket['sendNotify']
 		)
         );
 

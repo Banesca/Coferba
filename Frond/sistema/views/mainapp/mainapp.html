@@ -119,7 +119,7 @@
 		</div>
 	</nav>
 	<!-- //nav bar end -->
-	<main role="main" class="main_container" ng-if="sysToken" ng-init="sysLoadLStorage(); CallFilterFormU(); CallFilterFormT(); getAllAddress(sessionIdAddress); getParameter(); checkBefore2Load(); listUserDepto(null, sessionIdAddress); getAllDeparment(); fnLoadPhoneMask(); ">
+	<main role="main" class="main_container" ng-if="sysToken" ng-init="sysLoadLStorage(); CallFilterFormU(); CallFilterFormT(); getAllAddress(sessionIdAddress); getParameter(); checkBefore2Load(); listUserDepto(null, sessionIdAddress); getAllDeparment(sessionIdAddress); fnLoadPhoneMask(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'views/user/profileUser.html'"></div>
 			<div ng-if="userManage" ng-include="'views/user/manageUser.html'"></div>

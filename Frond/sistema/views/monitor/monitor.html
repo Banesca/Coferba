@@ -205,7 +205,7 @@
                         <label ng-if="tk.isCancelTicket<=0">Cliente:</label>
                         <!-- OWNER -->
                         <label ng-if="tk.idTypeTicket<=2 && (tk.idDepartmentKf||tk.idDepartment) && tk.isCancelTicket<=0"> 
-                            <span ng-if="tk.idTypeTicket<=2">{{tk.fullNameUser}} (Propietario) - </span>Tlf:
+                            <span ng-if="(tk.idProfileKf==3 || tk.idProfile==3)">{{tk.fullNameUser}} (Propietario) - </span>Tlf:
                             <span ng-if="!tk.phoneLocalNumberUser || tk.phoneNumberUser">{{tk.phoneNumberUser}} - </span>
                             <span ng-if="!tk.phoneLocalNumberUser">{{tk.phoneLocalNumberUser}}</span> 
                             <span ng-if="tk.departmentFloor">Depto: {{tk.departmentFloor}}</span>
@@ -257,13 +257,13 @@
                             <!-- Split button -->
                         <div  class="btn-group">
 
-                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-sm btn-success">{{tk.statusName}}</button>
-                        <button ng-show="tk.isCancelTicket==1" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-sm btn-success">{{tk.statusName}}</button>
-                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatus<=1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatusTicketKf<=1" type="button" class="btn btn-sm btn-success">{{tk.statusName}}</button>
+                        <button ng-show="tk.isCancelTicket==1" ng-disabled="tk.idStatusTicketKf<=1" type="button" class="btn btn-sm btn-success">{{tk.statusName}}</button>
+                        <button ng-show="tk.isCancelTicket<=0" ng-disabled="tk.idStatusTicketKf<=1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span  class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul ng-if="tk.idStatus>=2"  class="dropdown-menu">
+                        <ul ng-if="tk.idStatusTicketKf>=2"  class="dropdown-menu">
                             <li><a ng-click="cancelTicket(tk.idTicket)">Cancelar</a></li>
                         </ul>
                         </div>

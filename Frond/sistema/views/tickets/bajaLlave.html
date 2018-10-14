@@ -6,7 +6,7 @@
     	</div>
     		<div class="panel-body">
     			<div ng-if="sessionidProfile!=5">
-				    <form class="form-horizontal" name="fkeydown" ng-submit="newTicket('down')" >
+				    <form class="form-horizontal" name="fkeydown"  novalidate>
 				    		<div ng-switch on="mySwitch">
 						<fieldset ng-switch-when="PASO 1: DIRECCION">
 								<legend style="visibility: hidden;"></legend>
@@ -356,15 +356,12 @@
 									  <label class="col-xs-12 col-md-offset-4">Codigos de llaves  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp/ &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tipo de llaves</label>  
 										    <div class="input-group  col-md-offset-4">
 
-    										    <div class="col-md-5 col-xs-5">
+											    <div class="col-md-5 col-xs-5">
 											  		<input id="n1" name="n1" placeholder="1375" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n1" type="text" autofocus />
 											  	</div>
 											  	 <div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk1" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control key-types" required autofocus >
+										  				<select name="tk1" ng-model="key.tk1" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" ng-options="data.idKey as data.item for data in keyChains"  class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 											    </div>
 											</div>
@@ -373,11 +370,8 @@
 											  		<input name="n2" placeholder="1375" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n2" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk2" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk2" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" ng-options="data.idKey as data.item for data in keyChains" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 											  	</div>
 											</div>
@@ -386,102 +380,78 @@
 											  		<input name="n3" placeholder="1375" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n3" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk3" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk3" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n4" placeholder="1375" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n4" type="text" autofocus />
+											  		<input name="n4" placeholder="1375" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n4" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk4" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk4" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n5" placeholder="1375" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n5" type="text" autofocus />
+											  		<input name="n5" placeholder="1375" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n5" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk5" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk5" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n6" placeholder="1375" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n6" type="text" autofocus />
+											  		<input name="n6" placeholder="1375" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n6" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk6" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk6" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n7" placeholder="1375" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n7" type="text" autofocus />
+											  		<input name="n7" placeholder="1375" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n7" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk7" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk7" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n8" placeholder="1375" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n8" type="text" autofocus />
+											  		<input name="n8" placeholder="1375" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n8" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk8" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk8" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n9" placeholder="1375" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n9" type="text" autofocus />
+											  		<input name="n9" placeholder="1375" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n9" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk9" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk9" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
 											<div class="input-group  col-md-offset-4">
 												<div class="col-md-5 col-xs-5">
-											  		<input name="n10" placeholder="1375" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n10" type="text" autofocus />
+											  		<input name="n10" placeholder="1375" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control key-codes" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="key.n10" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="key.tk10" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="key.tk10" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" ng-options="data.idKey as data.item for data in keyChains" class="form-control key-id" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 										    	</div>
 								  			</div>
@@ -512,6 +482,27 @@
 											</div>
 									  	</div>
 									</div>
+									<div ng-if="sessionidProfile==1 && select.idTypeLostKf" class="container-fluid justify-content-md-center col-md-offset-3 col-md-6">
+									    <div class="panel panel-warning">
+									      <div class="panel-heading"><span class="blink">Notificar al usuario</span></div>
+									      	<div class="panel-body">
+									      		<div class="form-check form-check-inline">
+													<div class="col-md-3 col-md-offset-3">
+												  		<input id="sendnotify1" class="radio-custom" ng-model="userNotify" ng-click="getNotify(1)" type="radio" value="1" required autofocus>
+												  		<label for="sendnotify1" class="radio-custom-label">
+													  		<span>SI</span>
+											  			</label>
+											  		</div>
+											  		<div class="col-md-3">
+												  		<input id="sendnotify2" class="radio-custom" ng-model="userNotify" ng-click="getNotify(0)" type="radio" value="0" required autofocus>
+												  		<label for="sendnotify2" class="radio-custom-label">
+													  		<span>NO</span>
+											  			</label> 
+											  		</div>
+											  	</div>
+									      	</div>
+									    </div>
+									</div>
 							</fieldset>
 							</div>
 							<!-- Actions Button -->
@@ -519,13 +510,13 @@
 						  <div class="col-md-12">
 						  	<input type="button" ng-click="decrementStep();" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
 					  		<input type="button" ng-click="incrementStep(); enabledNextBtn();" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
-					  		<button type="submit" ng-show="!hasNextStep()" ng-disabled="fkeyup.$invalid" class="btn btn-primary" >Enviar</button>
+					  		<button type="submit" ng-show="!hasNextStep()" ng-click="newTicket('down')" ng-disabled="fkeydown.$invalid" class="btn btn-primary" >Enviar</button>
 						  </div><!--  -->
 						</div>
 					</form>
 				</div>
 				<div ng-if="sessionidProfile==5">
-				    <form class="form-horizontal" name="fkeyup" ng-submit="newTicket('down');" novalidate>
+				    <form class="form-horizontal" name="fkeydown" novalidate>
 				    	<div ng-switch on="mySwitch">
 							<fieldset ng-init="getServicesValues(sessionidAddress); enabledNextBtn(); " ng-switch-when="PASO 1: DATOS PERSONALES">
 									<legend style="visibility: hidden;"></legend>
@@ -624,11 +615,8 @@
 											  		<input id="n1" name="n1" placeholder="1375" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n1" type="text" autofocus />
 											  	</div>
 											  	 <div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=1" ng-required="quantity.qkuTenant>=1" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 											    </div>
 											</div>
@@ -637,11 +625,8 @@
 											  		<input name="n2" placeholder="1375" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n2" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=2" ng-required="quantity.qkuTenant>=2" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 											  	</div>
 											</div>
@@ -650,11 +635,8 @@
 											  		<input name="n3" placeholder="1375" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n3" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=3" ng-required="quantity.qkuTenant>=3" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -663,11 +645,8 @@
 											  		<input name="n4" placeholder="1375" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n4" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=4" ng-required="quantity.qkuTenant>=4" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -676,11 +655,8 @@
 											  		<input name="n5" placeholder="1375" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n5" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=5" ng-required="quantity.qkuTenant>=5" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -689,11 +665,8 @@
 											  		<input name="n6" placeholder="1375" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n6" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=6" ng-required="quantity.qkuTenant>=6" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -702,11 +675,8 @@
 											  		<input name="n7" placeholder="1375" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n7" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=7" ng-required="quantity.qkuTenant>=7" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -715,11 +685,8 @@
 											  		<input name="n8" placeholder="1375" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n8" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=8" ng-required="quantity.qkuTenant>=8" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -728,11 +695,8 @@
 											  		<input name="n9" placeholder="1375" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n9" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=9" ng-required="quantity.qkuTenant>=9" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 												</div>
 											</div>
@@ -741,11 +705,8 @@
 											  		<input name="n10" placeholder="1375" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" maxlength="12" ng-model="code.n10" type="text" autofocus />
 											  	</div>
 											  	<div class="col-md-6 col-xs-7 col-md-offset-0">
-										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" class="form-control" required autofocus >
+										  				<select name="tk1" ng-model="type.tk1" ng-if="quantity.qkuTenant>=10" ng-required="quantity.qkuTenant>=10" ng-options="data.idKey as data.item for data in keyChains" class="form-control" required autofocus >
 			    									    <option value="">Seleccione un tipo</option>
-												    	<option value="1">Llaveros</option>
-												    	<option value="2">Sticker Vehicular</option>
-												    	<option value="3">Credencial Mobile</option>
 												    	</select>
 										    	</div>
 								  			</div>
@@ -783,7 +744,7 @@
 						  <div class="col-md-12">
 						  	<input type="button" ng-click="decrementStep();" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
 					  		<input type="button" ng-click="incrementStep(); enabledNextBtn();" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
-					  		<button type="submit" ng-show="!hasNextStep()" ng-disabled="fkeyup.$invalid" class="btn btn-primary" >Enviar</button>
+					  		<button type="submit" ng-show="!hasNextStep()" ng-click="newTicket('down')" ng-disabled="fkeydown.$invalid" class="btn btn-primary" >Enviar</button>
 						  </div><!--  -->
 						</div>
 					</form>

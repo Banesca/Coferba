@@ -731,7 +731,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           $scope.tmp.emailAtt       = "";
           $scope.select.nameAtt     = "";
         }
-        $scope.select.idDepartmentKf = "";
+        //$scope.select.idDepartmentKf = "";
         var typeOfMessage="";
         var idAddressAttKf=idValue;
         var informMessage="";
@@ -3681,7 +3681,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.modalConfirmation=function(opt, confirm, obj){
     $scope.swMenu = opt;
     var tmpOpt=$scope.div2Open;
-    console.log(tmpOpt)
+    //console.log(tmpOpt);
     $scope.mess2show="";
       switch ($scope.swMenu){
         case "tdown":
@@ -3799,12 +3799,16 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     }
     /**************************************************/
     $scope.newTicket = function(opt){
+      console.log("$scope.select.idDepartmentKf: "+$scope.select.idDepartmentKf);
       $scope.tk.idUserAdminKf      = 0;     //ADMINISTRADOR COFERBA
       $scope.tk.idTenantKf         = 0;    //INQUILINO
       $scope.tk.idOWnerKf          = 0;   //PROPIETARIO
       $scope.tk.idUserEnterpriceKf = 0;  //ADMIN. CONSORCIO
       $scope.tk.idAttendantKf      = 0; //ENCARGADO
       $scope.tk.idCompanyKf        = 0;//USUARIO EMPRESA
+      $scope.tk.idTypeOfKeysKf     = {};
+      var elem                     = '';
+      $scope.keyItems={keyId:'', keyCode:''};
         switch (opt) {
           case "up": // SOLOCITUD DE ALTA
                       $scope.tk.idTicket           = 1;
@@ -3820,7 +3824,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
 
                   }else if($scope.sessionidProfile==5){
                       $scope.tk.idTenantKf         = $scope.sessionIdUser;
-                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.sessionidAddress);
 
                   }
                   if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -3882,29 +3886,30 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                         }
                     }
                   }
+                   if($scope.select.whoPickUp==3){
+                      $scope.tk.thirdNames         = $scope.third.names;
+                      $scope.tk.thirdPhone         = $scope.third.movilPhone;
+                      $scope.tk.thirdId            = $scope.third.dni;
+                    }
                       $scope.tk.idDepartmentKf     = $scope.sessionidProfile==5 ? $scope.sessionIdDeparmentKf : $scope.select.idDepartmentKf;
                       $scope.tk.description        = $scope.txt.sruTenant;
                       $scope.tk.idTypeDeliveryKf   = $scope.delivery.idTypeDeliveryKf;
-                      
                       $scope.tk.idUserAttDelivery  = $scope.delivery.nameAtt;
                       $scope.tk.numberItemes       = $scope.quantity.qkuTenant;
                       $scope.tk.idAddresKf         = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
                       $scope.tk.idBranchKf         = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
                       $scope.tk.totalService       = $scope.cost.total;
-                    if($scope.select.whoPickUp==3){
-                      $scope.tk.thirdNames         = $scope.third.names;
-                      $scope.tk.thirdPhone         = $scope.third.movilPhone;
-                      $scope.tk.thirdId            = $scope.third.dni;
-                    }
-                      $scope.tk.idTypeOfKeysKf     = $scope.key;
+                      $scope.tk.idTypeOfKeysKf     = $scope.dataK;
+                      $scope.tk.sendNotify         = $scope.sessionidProfile==1 ? $scope.sendNotify : null;
+                      console.log("[newTicket]-->$scope.sendNotify: "+$scope.sendNotify);
                       
                   console.log("---------------------------------------");
                   console.log("DATOS DE LA SOLICITUD DE ALTA DE LLAVE");
                   console.log("---------------------------------------");
-                  console.log('[newTicket]-->$scope.tk.idTypeOfKeysKf :'+$scope.tk.idTypeOfKeysKf.length);
-                  console.log($scope.tk);
-                  //console.log($scope._getData2AddKey());
-                  //$scope.requestUpKey($http, $scope);
+                  console.log('[newTicket]-->$scope.tk.idTypeOfKeysKf :'+$scope.dataK.length);
+                  //console.log($scope.tk);
+                  console.log($scope._getData2AddKey());
+                  $scope.requestUpKey($http, $scope);
           break;
           case "down": // SOLOCITUD DE BAJA
                       $scope.tk.idTicket           = 2;
@@ -3959,14 +3964,20 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     }
                   }
                   //console.log($scope.key);
-                  console.log("---------------------------------------");
-                  var elem = document.getElementsByClassName("key-codes");
-                   var keyCodeType = [];
-                  for (var i = 0; i < elem.length; ++i) {
-                    if (typeof elem[i].attributes.class !== "undfined" && elem[i].value !="" ) {
-                       keyCodeType.push(elem[i].value);
-                    }
+                  
+                  var elem_input  = $("div.form-group").find(".key-codes");
+                  var elem_select = $("div.form-group").find(".key-id");
+                  console.log(elem_input.length);
+
+                  for (var i = 0; i < elem_input.length; ++i) {
+                       $scope.keyItems[i].keyCode=elem_input[i].value;
+                       $scope.keyItems[i].keyId=elem_input[i].value;
+                       //elem_select[i].val();
                   }
+                  $scope.itemsK={keys:[]};
+                  $scope.itemsK.keys.push($scope.keyItems),
+                  console.log($scope.itemsK);
+                  console.log("---------------------------------------");
                   /*if ($scope.quantity.qkuTenant==1){$scope.codekeys=$scope.code.n1}
                   if ($scope.quantity.qkuTenant==2){$scope.codekeys=$scope.code.n1+','+$scope.code.n2}
                   if ($scope.quantity.qkuTenant==3){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3}
@@ -3987,8 +3998,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   console.log("| DATOS DE LA SOLICITUD DE BAJA DE LLAVE |");
                   console.log("---------------------------------------");
                   console.log($scope._getData2DelKey());
-                  $scope.modalConfirmation('tdown',0);
-                  $scope.requestDownKey($http, $scope);
+                  //$scope.modalConfirmation('tdown',0);
+                  //$scope.requestDownKey($http, $scope);
                 
           break;
           case "srvs": // SOLOCITUD DE SERVICIOS
@@ -4040,6 +4051,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
 
 
     }
+    $scope.getNotify = function(value){
+      $scope.sendNotify=value;
+    }
+
     $scope.keyChains = {};
     $scope.getKeyChains = function(idAddressTmp){
       console.log("[getKeyChains]-> idAddressTmp: "+idAddressTmp);
@@ -4050,11 +4065,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           url : urlT
         }).then(function mySuccess(response){
               $scope.keyChains=response.data;
-              $scope.bindKeyChainData();
-
+              if($scope.rukeyup){
+                $scope.bindKeyChainData();
+                $scope.keyChains.quantity=response.data.length;
+              }
               console.log("[getKeyChains] -> Data: ");
               console.log(response.data);
-              $scope.keyChains.quantity=response.data.length;
               console.log("Total keys: "+$scope.keyChains.quantity);
               $scope.keyChainsFound=true;
         }, function myError (response){
@@ -4067,39 +4083,112 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.bindKeyChainData = function(){
         /* Recorrer el Json Parameter para obtener datos*/
         var length = $scope.keyChains.length;
-        /*for (var i = 0; i < length; i++){
-
-              $scope.key.nameK[i]=$scope.keyChains[i].item+'('+$scope.keyChains[i].value+')';
-              $scope.key.Value[i]=$scope.keyChains[i].value;
-              $scope.key.keyId[i]=$scope.keyChains[i].id;
+        for (var i = 0; i < length; i++){
+          switch(i){
+            case 0:
+              $scope.keyName1=$scope.keyChains[i].item+'('+$scope.keyChains[i].value+')';
+              $scope.keyValue1=$scope.keyChains[i].value;
+              $scope.key.keyId1=$scope.keyChains[i].idKey;
+            break;
+            case 1:
+              $scope.keyName2=$scope.keyChains[i].item+'('+$scope.keyChains[i].value+')';
+              $scope.keyValue2=$scope.keyChains[i].value;
+              $scope.key.keyId2=$scope.keyChains[i].idKey;
+            break;
+            case 2:
+              $scope.keyName3=$scope.keyChains[i].item+'('+$scope.keyChains[i].value+')';
+              $scope.keyValue3=$scope.keyChains[i].value;
+              $scope.key.keyId3=$scope.keyChains[i].idKey;
+            break;
+            case 3:
+              $scope.keyName4=$scope.keyChains[i].item+'('+$scope.keyChains[i].value+')';
+              $scope.keyValue4=$scope.keyChains[i].value;
+              $scope.key.keyId4=$scope.keyChains[i].idKey;
+            break;
+            case 4:
+              $scope.keyName5=$scope.keyChains[i].item+'('+$scope.keyChains[i].value+')';
+              $scope.keyValue5=$scope.keyChains[i].value;
+              $scope.key.keyId5=$scope.keyChains[i].idKey;
+            break;
+          }
               
-        }*/
+        }
     }
+    $scope.dataK={keys:[]}; 
+    var dataK={idKeyKf:'', keyQty:''};
+    $scope.fnCheckKeys2 = function(idKey, keyQTY, ckBoxCheck){
+      dataK={idKeyKf:'', keyQty:''};
+      $scope.itemNotFound=true;
+      console.log("$scope.dataK.keys.length: "+$scope.dataK.keys.length);
+      console.log("$scope.checkBoxCheck: "+ckBoxCheck);
+      console.log("keyQTY: "+keyQTY);
+      console.log("idKey: "+idKey);
+      if(ckBoxCheck==true && (keyQTY>0 || !keyQTY)){
+        for (var i = 0; i < $scope.dataK.keys.length; i++){
+            if(idKey==$scope.dataK.keys[i].idKeyKf){
+              console.log("updating...");
+              $scope.dataK.keys[i].keyQty=keyQTY;
+              $scope.itemNotFound=false;
+              break;
+            }else{
+              $scope.itemNotFound=true;
+            }
+        }
+        if($scope.itemNotFound){
+          dataK.idKeyKf=idKey;
+          dataK.keyQty=keyQTY;
+          console.log("pushing...");
+          $scope.dataK.keys.push(dataK);
+        }
+        console.log($scope.dataK.keys);
+      }else{
+          for (var i = 0; i < $scope.dataK.keys.length; i++){
+            if(idKey==$scope.dataK.keys[i].idKeyKf){
+              $scope.dataK.keys.splice(i);
+              console.log("item deleted");
+              console.log($scope.dataK.keys);
+              break;
+            }
+          }
+      }
+    }
+
     function NaN2Zero(n){
         return isNaN( n ) ? 0 : n; 
     }
-    $scope.dataK = {};
-    $scope.quantity=0;
-    $scope.getTotalCostOfKeys = function(obj, vIndex){
-      //$scope.quantity[vIndex];
-      console.log(obj);
-      /*var totalKeyCost=0;
+    $scope.checkBoxCheck1=false;$scope.checkBoxCheck2=false;$scope.checkBoxCheck3=false;$scope.checkBoxCheck4=false;$scope.checkBoxCheck5=false;
+    $scope.getTotalCostOfKeys = function(){
+      var totalKeyCost=0;
       var totalKey1, totalKey2, totalKey3, totalKey4, totalKey5;
-        if($("#keyChek1").prop('checked')){totalKey1 = NaN2Zero($scope.keyValue1)*NaN2Zero($scope.key.quantity1);
-        }else{totalKey1=0;}
-        if($("#keyChek2").prop('checked')){totalKey2 = NaN2Zero($scope.keyValue2)*NaN2Zero($scope.key.quantity2);
-        }else{totalKey2=0;}
-        if($("#keyChek3").prop('checked')){totalKey3 = NaN2Zero($scope.keyValue3)*NaN2Zero($scope.key.quantity3);
-        }else{totalKey3=0;}
-        if($("#keyChek4").prop('checked')){totalKey4 = NaN2Zero($scope.keyValue4)*NaN2Zero($scope.key.quantity4);
-        }else{totalKey4=0;}
-        if($("#keyChek5").prop('checked')){totalKey5 = NaN2Zero($scope.keyValue5)*NaN2Zero($scope.key.quantity5);
-        }else{totalKey5=0;}
+        if($("#keyChek1").prop('checked')){
+          console.log("check1");
+          totalKey1 = NaN2Zero($scope.keyValue1)*NaN2Zero($scope.key.qty1);
+          $scope.checkBoxCheck1=true; 
+          $scope.fnCheckKeys2($scope.key.keyId1, $scope.key.qty1,  $scope.checkBoxCheck1);
+        }else{totalKey1=0;$scope.key.qty1='';$scope.checkBoxCheck1=false; $scope.fnCheckKeys2($scope.key.keyId1, $scope.key.qty1,  $scope.checkBoxCheck1);}
+        if($("#keyChek2").prop('checked')){
+          console.log("check2");
+          totalKey2 = NaN2Zero($scope.keyValue2)*NaN2Zero($scope.key.qty2);
+          $scope.checkBoxCheck2=true; 
+          $scope.fnCheckKeys2($scope.key.keyId2, $scope.key.qty2,  $scope.checkBoxCheck2);
+        }else{totalKey2=0;$scope.key.qty2='';$scope.checkBoxCheck2=false; $scope.fnCheckKeys2($scope.key.keyId2, $scope.key.qty2,  $scope.checkBoxCheck2);}
+        if($("#keyChek3").prop('checked')){
+          totalKey3 = NaN2Zero($scope.keyValue3)*NaN2Zero($scope.key.qty3);
+          $scope.checkBoxCheck3=true;
+          $scope.fnCheckKeys2($scope.key.keyId3, $scope.key.qty3,  $scope.checkBoxCheck2);
+        }else{totalKey3=0;$scope.key.qty3='';$scope.key.qty3='';$scope.checkBoxCheck3=false;}
+        if($("#keyChek4").prop('checked')){totalKey4 = NaN2Zero($scope.keyValue4)*NaN2Zero($scope.key.qty4);
+          $scope.checkBoxCheck4=true;
+          $scope.fnCheckKeys2($scope.key.keyId4, $scope.key.qty4,  $scope.checkBoxCheck2);
+        }else{totalKey4=0;$scope.key.qty4='';$scope.checkBoxCheck4=false;}
+        if($("#keyChek5").prop('checked')){totalKey5 = NaN2Zero($scope.keyValue5)*NaN2Zero($scope.key.qty5);
+          $scope.checkBoxCheck5=true; $scope.fnCheckKeys2($scope.key.keyId5, $scope.key.qty5,  $scope.checkBoxCheck2);
+        }else{totalKey5=0;$scope.key.qty5='';$scope.checkBoxCheck5=false;}
         totalKeyCost = totalKey1+totalKey2+totalKey3+totalKey4+totalKey5;
-        $scope.quantity.qkuTenant = NaN2Zero($scope.key.quantity1)+NaN2Zero($scope.key.quantity2)+NaN2Zero($scope.key.quantity3)+NaN2Zero($scope.key.quantity4)+NaN2Zero($scope.key.quantity5);
+        $scope.quantity.qkuTenant = NaN2Zero($scope.key.qty1)+NaN2Zero($scope.key.qty2)+NaN2Zero($scope.key.qty3)+NaN2Zero($scope.key.qty4)+NaN2Zero($scope.key.qty5);
             console.log("TOTAL KEY COST: "+totalKeyCost);
             $scope.cost.key = totalKeyCost;
-      return totalKeyCost;*/
+      return totalKeyCost;
     }
 
     /**************************************************
@@ -4204,7 +4293,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 thirdPersonPhone  : $scope.tk.thirdPhone,
                                 thirdPersonId     : $scope.tk.thirdId,
                                 idTypeOfKeysKf    : $scope.tk.idTypeOfKeysKf,
-                                idUserAttKfDelive : $scope.tk.idUserAttDelivery
+                                idUserAttKfDelive : $scope.tk.idUserAttDelivery,
+                                sendNotify        : $scope.tk.sendNotify
 
                             }
               };
@@ -4251,10 +4341,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 description           : $scope.tk.description,
                                 idAttendantKf         : $scope.tk.idAttendantKf,
                                 idReasonDisabledItemKf: $scope.tk.idReasonDisabledItemKf,
-                                itemToDisabled    : $scope.tk.itemToDisabled,
+                                itemToDisabled        : $scope.tk.itemToDisabled,
                                 idAdressKf            : $scope.tk.idAddresKf,
                                 idCompanyKf           : $scope.tk.idCompanyKf,
-                                idTypeOfOptionKf      : $scope.tk.idTypeOfOptionKf
+                                idTypeOfOptionKf      : $scope.tk.idTypeOfOptionKf,
+                                sendNotify            : $scope.tk.sendNotify
                             }
               };
       return delKey;
@@ -4299,7 +4390,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 description       : $scope.tk.description,
                                 idAdressKf        : $scope.tk.idAddresKf,
                                 idCompanyKf       : $scope.tk.idCompanyKf,
-                                idTypeServices    : $scope.tk.idTypeServices
+                                idTypeServices    : $scope.tk.idTypeServices,
+                                sendNotify        : $scope.tk.sendNotify
                             }
               };
       return reqService;
@@ -4731,6 +4823,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         $scope.isCollapsed                = true;
         $scope.typeOption                 = 0;
         $scope.emailFound                 = false;
+        $scope.sendNotify                 = "";
         $scope.companykeychains = {};
         $scope.sysRegidCompanyKf = {};
         $scope.sysReg={};
@@ -4868,8 +4961,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   $scope.rukeyup = true;
                   $scope.idAddressAtt=$scope.sessionNameAdress;
                   $scope.namesTenant=$scope.sessionNames;
-                  
-                  $scope.deptoTenant=$scope.getDeptoFloor();
+                  $scope.getKeyChains($scope.sessionidAddress); 
+                  $scope.getServicesValues($scope.sessionidAddress);
+                  $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
                 }else{$scope.rukeyup = true; selectSwitch ('t');}
                   
               }else{
@@ -4892,7 +4986,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   $scope.idAddressAtt=$scope.sessionNameAdress;
                   $scope.namesTenant=$scope.sessionNames;
                   
-                  $scope.deptoTenant=$scope.getDeptoFloor();
+                  $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
                 }else{$scope.rukeydown = true; selectSwitch ('t');}
             }else{
               closeAllDiv();
@@ -5052,7 +5146,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
            searchFilter        : $scope.dh.filterSearch,
            topFilter           : $scope.dh.filterTop, 
            idProfileKf         : $scope.dh.filterProfile,
-           idTenant            : $scope.dh.filterTenantKf,  
+           idUserTenantKf      : $scope.dh.filterTenantKf,  
            idCompanyKf         : $scope.dh.filterCompany,
            idTypeTicketKf      : $scope.dh.filterTypeTicket,
            idAdress            : $scope.dh.filterAddress,

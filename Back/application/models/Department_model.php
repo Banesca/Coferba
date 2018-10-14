@@ -99,7 +99,7 @@ class Department_model extends CI_Model
         
             $this->db->select("*")->from("tb_company_type_keychains");
             $this->db->where("tb_company_type_keychains.idAddressKf =", $id);
-            $quuery = $this->db->order_by("tb_company_type_keychains.id", "asc")->get();
+            $quuery = $this->db->order_by("tb_company_type_keychains.idKey", "asc")->get();
 
             if ($quuery->num_rows() > 0) {
                 return $quuery->result_array();
