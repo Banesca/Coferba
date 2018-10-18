@@ -76,7 +76,7 @@
 								<i class="glyphicon glyphicon-info-sign"></i><span> <strong>INFO: </strong>Selecciona una dieccion de un consorcio para conocer los costos.</span>
 							</div>
 						</div>
-						<div ng-if="selectIdAddressKf.selected.idAdress || select.idAddressAtt">
+						<div ng-if="sssselectIdAddressKf.selected.idAdress || ssssselect.idAddressAtt">
 							<!-- Service-->
 							<div class="container-fluid">
 								<div class="row">
@@ -113,12 +113,53 @@
 											<strong>Costo de Envio: </strong><span class="pull-right">{{costDelivery}} <i class="glyphicon icon-truck"></i></span>
 										</div>
 										<div ng-if="costDelivery==0" class="alert alert-warning" role="alert">
-											<strong>Costo Envio: </strong><span class="pull-right">Valor No Asignado. <i class="glyphicon glyphicon-exclamation-sign"></i></span>
+											<strong>Costo Envio: </strong><span class="pull-right">Valor No Asignado. <i class="fas fa-ban"></i></span>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<div ng-if="selectIdAddressKf.selected.idAdress || select.idAddressAtt" class="container-fluid justify-content-md-center col-md-10 col-md-offset-2">
+							<div class="col-md-3">    	    
+								<div class="hero-widget well well-sm">
+					            	<div class="icon">
+					                 	<i class="fas fa-edit"></i>
+					            	</div>
+					            	<div class="text">
+					                	<h4 class="text-muted">Costo Gestion</h4>
+					            	</div>
+					            	<div class="options">
+					                <span data-toggle="tooltip" data-placement="bottom" title="Costo de gestion" class="badge badge-light">{{costService}}</span>
+					            	</div>
+					        	</div>
+					        </div>
+							<div class="col-md-3">    	    
+								<div class="hero-widget well well-sm">
+					            	<div class="icon">
+					                 	<i class="fas fa-key"></i>
+					            	</div>
+					            	<div class="text">
+					                	<h4 class="text-muted">Costo de Llave</h4>
+					            	</div>
+					            	<div class="options">
+					                <span data-toggle="tooltip" data-placement="bottom" title="Costo de Llave" class="badge badge-light">{{costKey}}</span>
+					            	</div>
+					        	</div>
+					        </div>
+							<div class="col-md-3">    	    
+								<div class="hero-widget well well-sm">
+					            	<div class="icon">
+					                 	<i class="fas fa-truck"></i>
+					            	</div>
+					            	<div class="text">
+					                	<h4 class="text-muted">Costo de Envio</h4>
+					            	</div>
+					            	<div class="options">
+					                	<span data-toggle="tooltip" data-placement="bottom" title="Costo de envio" class="badge badge-light">{{costDelivery}}</span>
+					            	</div>
+					        	</div>
+					        </div>
+					    </div>
 					</fieldset>
 				</form>
 			<div class="clearfix"> </div> 

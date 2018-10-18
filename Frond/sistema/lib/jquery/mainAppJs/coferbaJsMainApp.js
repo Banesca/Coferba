@@ -21,7 +21,7 @@ $(document).ready(function() {
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
             e.preventDefault();
         }
-    });
+  });
 
 
 /* MENU ICONS*/
@@ -31,8 +31,7 @@ $(document).ready(function() {
     });
     $('#m_monitor').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
-        $(this).addClass('active');
-        
+        $(this).addClass('active');   
     });
     $('#m_depto').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');

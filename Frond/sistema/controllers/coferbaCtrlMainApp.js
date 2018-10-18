@@ -2890,6 +2890,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTenant: ''};
       $scope.selectTenant = function (obj){
           $scope.tenantData = obj;
+          $scope.selectedTenant = obj;
           $scope.idDepto                 =  !obj.idDepartmentKf ? $scope.select.idDeparmentKf : obj.idDepartmentKf;
           $scope.idTenantKf              =  obj.idUser;
           $scope.tenant.namesTenant      =  obj.fullNameUser;
@@ -3680,18 +3681,16 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     **************************************************/
     $scope.modalConfirmation=function(opt, confirm, obj){
     $scope.swMenu = opt;
+    $scope.vConfirm = confirm;
     var tmpOpt=$scope.div2Open;
     //console.log(tmpOpt);
     $scope.mess2show="";
       switch ($scope.swMenu){
         case "tdown":
           if (confirm==0){
+            console.log(confirm);
             $scope.mess2show="Desea Solicitar una nueva llave?";
             $('#confirmRequestModal').modal('toggle');
-            $('#confirmRequestModal').on('hidden.bs.modal', function (e) {
-              $scope.fnShowHide('home','open');
-            });
-            
           }else if (confirm==1){
             $('.jumbotron [id^="m_"]').removeClass('active');
             $('#m_pedidos').addClass('active');
@@ -3699,6 +3698,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             $scope.fnShowHide('rukeyup', 'open');
             $('#confirmRequestModal').modal('hide');
           }
+          $('#confirmRequestModal').on('hide.bs.modal', function (e) {
+            $scope.dhboard();
+            $scope.fnShowHide('home','open');
+          });
         break;
         case "removet":
           if (confirm==0){
@@ -3807,8 +3810,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       $scope.tk.idAttendantKf      = 0; //ENCARGADO
       $scope.tk.idCompanyKf        = 0;//USUARIO EMPRESA
       $scope.tk.idTypeOfKeysKf     = {};
-      var elem                     = '';
-      $scope.keyItems={keyId:'', keyCode:''};
+      var elem_input               = '';
+      $scope.kItems={keys:[]}; 
         switch (opt) {
           case "up": // SOLOCITUD DE ALTA
                       $scope.tk.idTicket           = 1;
@@ -3816,15 +3819,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                       $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                       $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
                       $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
                       
                   }else if(($scope.sessionidProfile==3||$scope.sessionidProfile==6) && $scope.typeOfTenant == 2){
                       $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                       $scope.tk.idTenantKf         = $scope.idTenantKf;
                       $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
 
                   }else if($scope.sessionidProfile==5){
                       $scope.tk.idTenantKf         = $scope.sessionIdUser;
                       $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.sessionidAddress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
 
                   }
                   if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
@@ -3833,6 +3839,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     if ($scope.collap==1){
                         //alert($scope.collap)
                         $scope.tk.idTenantKf       = $scope.idTenantKf;
+                        $scope.tk.idProfileKf      = $scope.sessionidProfile;
                     }else if ($scope.collap==2){
                       //alert($scope.typeOption)
                         switch ($scope.typeOption){
@@ -3861,7 +3868,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     }
                   }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
                       $scope.tk.idUserAdminKf      = $scope.sessionIdUser;
-                      $scope.tk.idCompanyKf        = $scope.select.idCompanyKf;
+                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
                       if ($scope.collap==1){
                         $scope.tk.idTenantKf       = $scope.idTenantKf;
                       }else if ($scope.collap==2){
@@ -3900,7 +3907,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                       $scope.tk.idBranchKf         = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
                       $scope.tk.totalService       = $scope.cost.total;
                       $scope.tk.idTypeOfKeysKf     = $scope.dataK;
-                      $scope.tk.sendNotify         = $scope.sessionidProfile==1 ? $scope.sendNotify : null;
+                      $scope.tk.sendNotify         = $scope.sessionidProfile!=1 ? null : $scope.sendNotify;
+                      $scope.tk.isNew              = 1;
                       console.log("[newTicket]-->$scope.sendNotify: "+$scope.sendNotify);
                       
                   console.log("---------------------------------------");
@@ -3913,18 +3921,26 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           break;
           case "down": // SOLOCITUD DE BAJA
                       $scope.tk.idTicket           = 2;
-                  if($scope.sessionidProfile==3 && $scope.typeOfTenant == 1){
+                  if(($scope.sessionidProfile==3||$scope.sessionidProfile==6) && $scope.typeOfTenant == 1){
                       $scope.tk.idOWnerKf          = $scope.sessionIdUser;
                       $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
-                      $scope.tk.idCompanyKf        = $scope.tmp.idCompanyKf;
-                  }else if($scope.sessionidProfile==3 && $scope.typeOfTenant == 2){
+                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
+                  }else if(($scope.sessionidProfile==3||$scope.sessionidProfile==6) && $scope.typeOfTenant == 2){
                       $scope.tk.idOWnerKf          = $scope.sessionIdUser;
-                      $scope.tk.idTenantKf         = $scope.idTenantKf;
-                      $scope.tk.idCompanyKf        = $scope.tmp.idCompanyKf;
+                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
+                  }else if($scope.sessionidProfile==5){
+                      $scope.tk.idOWnerKf          = $scope.sessionIdUser;
+                      $scope.tk.idTenantKf         = $scope.sessionidTenantUser;
+                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.sessionidAddress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
+
                   }
                   if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
                       $scope.tk.idUserEnterpriceKf = $scope.sessionIdUser;
                       $scope.tk.idCompanyKf        = $scope.sessionidCompany;
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
                     if ($scope.collap==1){
                       $scope.tk.idTenantKf         = $scope.idTenantKf;
                     }else if ($scope.collap==2){
@@ -3944,7 +3960,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     }
                   }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
                       $scope.tk.idUserAdminKf      = $scope.sessionIdUser;
-                      $scope.tk.idCompanyKf        = $scope.select.idCompanyKf;
+                      $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
                       if ($scope.collap==1){
                         $scope.tk.idTenantKf       = $scope.idTenantKf;
                       }else if ($scope.collap==2){
@@ -3963,43 +3980,42 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                         }
                     }
                   }
-                  //console.log($scope.key);
-                  
-                  var elem_input  = $("div.form-group").find(".key-codes");
-                  var elem_select = $("div.form-group").find(".key-id");
-                  console.log(elem_input.length);
-
-                  for (var i = 0; i < elem_input.length; ++i) {
-                       $scope.keyItems[i].keyCode=elem_input[i].value;
-                       $scope.keyItems[i].keyId=elem_input[i].value;
-                       //elem_select[i].val();
-                  }
-                  $scope.itemsK={keys:[]};
-                  $scope.itemsK.keys.push($scope.keyItems),
-                  console.log($scope.itemsK);
-                  console.log("---------------------------------------");
-                  /*if ($scope.quantity.qkuTenant==1){$scope.codekeys=$scope.code.n1}
-                  if ($scope.quantity.qkuTenant==2){$scope.codekeys=$scope.code.n1+','+$scope.code.n2}
-                  if ($scope.quantity.qkuTenant==3){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3}
-                  if ($scope.quantity.qkuTenant==4){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4}
-                  if ($scope.quantity.qkuTenant==5){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5}
-                  if ($scope.quantity.qkuTenant==6){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6}
-                  if ($scope.quantity.qkuTenant==7){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7}
-                  if ($scope.quantity.qkuTenant==8){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8}
-                  if ($scope.quantity.qkuTenant==9){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8+','+$scope.code.n9}
-                  if ($scope.quantity.qkuTenant==10){$scope.codekeys=$scope.code.n1+','+$scope.code.n2+','+$scope.code.n3+','+$scope.code.n4+','+$scope.code.n5+','+$scope.code.n6+','+$scope.code.n7+','+$scope.code.n8+','+$scope.code.n9+','+$scope.code.n10}]*/
-
+                  elem_input  = $("div.form-group").find(".key-codes");
+                  for (var i = 0; i < $scope.quantity.qkuTenant; i++){
+                          var kItems={idKeyKf:'', keyCode:''};
+                          kItems.keyCode=elem_input[i].value;
+                          switch (i){
+                            case 0:kItems.idKeyKf=$scope.key.tk1;break;
+                            case 1:kItems.idKeyKf=$scope.key.tk2;break;
+                            case 2:kItems.idKeyKf=$scope.key.tk3;break;
+                            case 3:kItems.idKeyKf=$scope.key.tk4;break;
+                            case 4:kItems.idKeyKf=$scope.key.tk5;break;
+                            case 5:kItems.idKeyKf=$scope.key.tk6;break;
+                            case 6:kItems.idKeyKf=$scope.key.tk7;break;
+                            case 7:kItems.idKeyKf=$scope.key.tk8;break;
+                            case 8:kItems.idKeyKf=$scope.key.tk9;break;
+                            case 9:kItems.idKeyKf=$scope.key.tk10;break;
+                          }
+                          $scope.kItems.keys.push(kItems);
+                          
+                          //console.log($scope.kItems.keys);
+                  };
+                      $scope.tk.idDepartmentKf         = $scope.sessionidProfile==5 ? $scope.sessionIdDeparmentKf : $scope.select.idDepartmentKf;
                       $scope.tk.idReasonDisabledItemKf = $scope.select.idTypeLostKf;
                       $scope.tk.idAttendantKf          = $scope.select.nameAtt;
                       $scope.tk.description            = $scope.txt.sruTenant;
-                      $scope.tk.itemToDisabled         = $scope.key;
+                      $scope.tk.itemToDisabled         = $scope.kItems;
                       $scope.tk.numberItemes           = $scope.quantity.qkuTenant;
-                      $scope.tk.idAddresKf             = $scope.select.idAddressAtt;
+                      $scope.tk.idAddresKf             = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                      $scope.tk.idBranchKf             = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                      $scope.tk.idTypeOfOptionKf       = null;
+                      $scope.tk.sendNotify             = $scope.sessionidProfile!=1 ? null : $scope.sendNotify;
+                      $scope.tk.isNew                  =  1;
+                  console.log("------------------------------------------");
                   console.log("| DATOS DE LA SOLICITUD DE BAJA DE LLAVE |");
-                  console.log("---------------------------------------");
+                  console.log("------------------------------------------");
                   console.log($scope._getData2DelKey());
-                  //$scope.modalConfirmation('tdown',0);
-                  //$scope.requestDownKey($http, $scope);
+                  $scope.requestDownKey($http, $scope);
                 
           break;
           case "srvs": // SOLOCITUD DE SERVICIOS
@@ -4007,7 +4023,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   if($scope.sessionidProfile==1){
                     $scope.tk.idUserAdminKf      = $scope.sessionIdUser;
                     $scope.tk.idUserCompany      = $scope.select.namesAdmin;
-                    $scope.tk.idCompanyKf        = $scope.select.idCompanyKf;
+                    $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
                   }else if($scope.sessionidProfile==2){
                     $scope.tk.idUserCompany      = $scope.sessionIdUser;
                     $scope.tk.idCompanyKf        = $scope.sessionidCompany;
@@ -4018,8 +4034,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     $scope.tk.idTypeServices     = $scope.select.idTypeServiceKf;
                     $scope.tk.descriptionOrder   = $scope.txt.detailSv;
                     $scope.tk.description        = $scope.txt.sruSv;
-                    $scope.tk.idAddresKf         = $scope.select.idAddressAtt;
-                    $scope.tk.idBranchKf         = $scope.select.idAddressAtt;
+                    $scope.tk.idAddresKf         = $scope.sessionidProfile!=1 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                    $scope.tk.idBranchKf         = $scope.sessionidProfile!=1 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                    $scope.tk.sendNotify         = $scope.sessionidProfile!=1 ? null : $scope.sendNotify;
+                    $scope.tk.isNew              = 1;
                 console.log("DATOS DE LA SOLICITUD DEL SERVICIO");
                 console.log($scope._getServiceData());
                 $scope.requestService($http, $scope);
@@ -4028,7 +4046,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     $scope.tk.idTicket           = 4;
                   if($scope.sessionidProfile==3){
                       $scope.tk.idOWnerKf        = $scope.sessionIdUser;
-                      $scope.tk.idCompanyKf      = $scope.tmp.idCompanyKf;
+                      $scope.tk.idCompanyKf      = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
                   }else if($scope.sessionidProfile==2){
                     $scope.tk.idUserCompany      = $scope.sessionIdUser;
                     $scope.tk.idCompanyKf        = $scope.sessionidCompany;
@@ -4039,8 +4057,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     $scope.tk.idTypeOuther       = $scope.o.idTypeOutherKf;
                     $scope.tk.mailContactConsult = $scope.sessionMail;
                     $scope.tk.description        = $scope.o.detail;
-                    $scope.tk.addressConsul      = $scope.select.idAddressAtt;
-                    $scope.tk.idAddresKf         = $scope.select.idAddressAtt;
+                    $scope.tk.addressConsul      = $scope.sessionidProfile!=1 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                    $scope.tk.idAddresKf         = $scope.sessionidProfile!=1 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                    $scope.tk.isNew              = 1;
                 console.log("DATOS DE LA SOLICITUD DE CONSULTA");
                 console.log($scope._getData2RequestOther());
                 $scope.otherRequest($http, $scope);
@@ -4119,10 +4138,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.fnCheckKeys2 = function(idKey, keyQTY, ckBoxCheck){
       dataK={idKeyKf:'', keyQty:''};
       $scope.itemNotFound=true;
-      console.log("$scope.dataK.keys.length: "+$scope.dataK.keys.length);
+      /*console.log("$scope.dataK.keys.length: "+$scope.dataK.keys.length);
       console.log("$scope.checkBoxCheck: "+ckBoxCheck);
       console.log("keyQTY: "+keyQTY);
-      console.log("idKey: "+idKey);
+      console.log("idKey: "+idKey);*/
       if(ckBoxCheck==true && (keyQTY>0 || !keyQTY)){
         for (var i = 0; i < $scope.dataK.keys.length; i++){
             if(idKey==$scope.dataK.keys[i].idKeyKf){
@@ -4145,8 +4164,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           for (var i = 0; i < $scope.dataK.keys.length; i++){
             if(idKey==$scope.dataK.keys[i].idKeyKf){
               $scope.dataK.keys.splice(i);
-              console.log("item deleted");
-              console.log($scope.dataK.keys);
+              //console.log("item deleted");
+              //console.log($scope.dataK.keys);
               break;
             }
           }
@@ -4161,13 +4180,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       var totalKeyCost=0;
       var totalKey1, totalKey2, totalKey3, totalKey4, totalKey5;
         if($("#keyChek1").prop('checked')){
-          console.log("check1");
           totalKey1 = NaN2Zero($scope.keyValue1)*NaN2Zero($scope.key.qty1);
           $scope.checkBoxCheck1=true; 
           $scope.fnCheckKeys2($scope.key.keyId1, $scope.key.qty1,  $scope.checkBoxCheck1);
         }else{totalKey1=0;$scope.key.qty1='';$scope.checkBoxCheck1=false; $scope.fnCheckKeys2($scope.key.keyId1, $scope.key.qty1,  $scope.checkBoxCheck1);}
         if($("#keyChek2").prop('checked')){
-          console.log("check2");
           totalKey2 = NaN2Zero($scope.keyValue2)*NaN2Zero($scope.key.qty2);
           $scope.checkBoxCheck2=true; 
           $scope.fnCheckKeys2($scope.key.keyId2, $scope.key.qty2,  $scope.checkBoxCheck2);
@@ -4175,18 +4192,22 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         if($("#keyChek3").prop('checked')){
           totalKey3 = NaN2Zero($scope.keyValue3)*NaN2Zero($scope.key.qty3);
           $scope.checkBoxCheck3=true;
-          $scope.fnCheckKeys2($scope.key.keyId3, $scope.key.qty3,  $scope.checkBoxCheck2);
-        }else{totalKey3=0;$scope.key.qty3='';$scope.key.qty3='';$scope.checkBoxCheck3=false;}
-        if($("#keyChek4").prop('checked')){totalKey4 = NaN2Zero($scope.keyValue4)*NaN2Zero($scope.key.qty4);
+          $scope.fnCheckKeys2($scope.key.keyId3, $scope.key.qty3,  $scope.checkBoxCheck3);
+        }else{totalKey3=0;$scope.key.qty3='';$scope.checkBoxCheck3=false; $scope.fnCheckKeys2($scope.key.keyId3, $scope.key.qty3,  $scope.checkBoxCheck3);}
+        if($("#keyChek4").prop('checked')){
+          totalKey4 = NaN2Zero($scope.keyValue4)*NaN2Zero($scope.key.qty4);
           $scope.checkBoxCheck4=true;
-          $scope.fnCheckKeys2($scope.key.keyId4, $scope.key.qty4,  $scope.checkBoxCheck2);
-        }else{totalKey4=0;$scope.key.qty4='';$scope.checkBoxCheck4=false;}
-        if($("#keyChek5").prop('checked')){totalKey5 = NaN2Zero($scope.keyValue5)*NaN2Zero($scope.key.qty5);
-          $scope.checkBoxCheck5=true; $scope.fnCheckKeys2($scope.key.keyId5, $scope.key.qty5,  $scope.checkBoxCheck2);
-        }else{totalKey5=0;$scope.key.qty5='';$scope.checkBoxCheck5=false;}
+          $scope.fnCheckKeys2($scope.key.keyId4, $scope.key.qty4,  $scope.checkBoxCheck4);
+        }else{totalKey4=0;$scope.key.qty4='';$scope.checkBoxCheck4=false; $scope.fnCheckKeys2($scope.key.keyId4, $scope.key.qty4,  $scope.checkBoxCheck4);}
+        if($("#keyChek5").prop('checked')){
+          totalKey5 = NaN2Zero($scope.keyValue5)*NaN2Zero($scope.key.qty5);
+          $scope.checkBoxCheck5=true; 
+          $scope.fnCheckKeys2($scope.key.keyId5, $scope.key.qty5,  $scope.checkBoxCheck5);
+        }else{totalKey5=0;$scope.key.qty5='';$scope.checkBoxCheck5=false; $scope.fnCheckKeys2($scope.key.keyId5, $scope.key.qty5,  $scope.checkBoxCheck5);}
+        /*==============================================================*/
         totalKeyCost = totalKey1+totalKey2+totalKey3+totalKey4+totalKey5;
         $scope.quantity.qkuTenant = NaN2Zero($scope.key.qty1)+NaN2Zero($scope.key.qty2)+NaN2Zero($scope.key.qty3)+NaN2Zero($scope.key.qty4)+NaN2Zero($scope.key.qty5);
-            console.log("TOTAL KEY COST: "+totalKeyCost);
+            //console.log("TOTAL KEY COST: "+totalKeyCost);
             $scope.cost.key = totalKeyCost;
       return totalKeyCost;
     }
@@ -4254,6 +4275,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               closeAllDiv ();
               cleanForms();
            inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
+           $scope.dhboard();
            $scope.fnShowHide('home','open');
         },function (error, status) {
             $scope.handleErrors={Error: error, Status: status};
@@ -4279,6 +4301,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 idUserTenantKf    : $scope.tk.idTenantKf,
                                 idUserAdminKf     : $scope.tk.idUserAdminKf,
                                 idOWnerKf         : $scope.tk.idOWnerKf,
+                                idProfileKf       : $scope.tk.idProfileKf,
                                 numberItemes      : $scope.tk.numberItemes,
                                 idTypeDeliveryKf  : $scope.tk.idTypeDeliveryKf,
                                 description       : $scope.tk.description,
@@ -4294,7 +4317,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 thirdPersonId     : $scope.tk.thirdId,
                                 idTypeOfKeysKf    : $scope.tk.idTypeOfKeysKf,
                                 idUserAttKfDelive : $scope.tk.idUserAttDelivery,
-                                sendNotify        : $scope.tk.sendNotify
+                                sendNotify        : $scope.tk.sendNotify,
+                                isNew             : $scope.tk.isNew
 
                             }
               };
@@ -4313,10 +4337,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       //console.log($scope._getData2DelKey())
       $http.post(serverHost+serverBackend+"Ticket", $scope._getData2DelKey())
           .then(function (sucess, data) {
-              closeAllDiv();
-              cleanForms();
+                closeAllDiv();
+                cleanForms();
               inform.add('Solicitud realizada con exito. ',{ttl:2000, type: 'success'});
-              $scope.fnShowHide('home','open');
+              $scope.modalConfirmation('tdown',0);
+
         },function (error, data,status) {
                 if(status == 404){alert("!Informacion "+status+data.error+"info");}
                 else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -4334,10 +4359,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                             {
                                 idTypeTicketKf        : $scope.tk.idTicket,
                                 idUserEnterpriceKf    : $scope.tk.idUserEnterpriceKf,
-                                idTenantKf            : $scope.tk.idTenantKf,
+                                idUserTenantKf        : $scope.tk.idTenantKf,
                                 idUserAdminKf         : $scope.tk.idUserAdminKf,
                                 idOWnerKf             : $scope.tk.idOWnerKf,
+                                idProfileKf           : $scope.tk.idProfileKf,
                                 numberItemes          : $scope.tk.numberItemes,
+                                idDepartmentKf        : $scope.tk.idDepartmentKf,
                                 description           : $scope.tk.description,
                                 idAttendantKf         : $scope.tk.idAttendantKf,
                                 idReasonDisabledItemKf: $scope.tk.idReasonDisabledItemKf,
@@ -4345,7 +4372,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 idAdressKf            : $scope.tk.idAddresKf,
                                 idCompanyKf           : $scope.tk.idCompanyKf,
                                 idTypeOfOptionKf      : $scope.tk.idTypeOfOptionKf,
-                                sendNotify            : $scope.tk.sendNotify
+                                sendNotify            : $scope.tk.sendNotify,
+                                isNew                 : $scope.tk.isNew
                             }
               };
       return delKey;
@@ -4391,7 +4419,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 idAdressKf        : $scope.tk.idAddresKf,
                                 idCompanyKf       : $scope.tk.idCompanyKf,
                                 idTypeServices    : $scope.tk.idTypeServices,
-                                sendNotify        : $scope.tk.sendNotify
+                                sendNotify        : $scope.tk.sendNotify,
+                                isNew             : $scope.tk.isNew
                             }
               };
       return reqService;
@@ -4435,7 +4464,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 addressConsul       : $scope.tk.addressConsul,
                                 idAdressKf          : $scope.tk.idAddresKf,
                                 idCompanyKf         : $scope.tk.idCompanyKf,
-                                description         : $scope.tk.description
+                                description         : $scope.tk.description,
+                                isNew               : $scope.tk.isNew
                             }
               };
       return otherReq;
@@ -4837,6 +4867,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         $scope.tk   ={idTypeTicketKf:'', idUserEnterpriceKf:'', idTenantKf:'', idUserAdminKf:'', idOWnerKf:'', idProfileKf:'', numberItemes:'', idTypeDeliveryKf: '', description:'', TotalService:'', idBranchKf:'', idOtherKf:'',idReasonDisabledItemKf:''  };
         $scope.dh = {filterSearch:'',filterTop:'',filterProfile:'',filterTenantKf: '',filterCompany: '',filterTypeTicket:'',filterAddress:'',filterStatus:'',filterOwnerKf:'',filterIdUser:''};
         $scope.key = {};
+        $scope.dataK={keys:[]}; 
+        $scope.kItems={keys:[]}; 
 
         /******Config Var*******/
         $scope.contentUser                = false;
@@ -4949,10 +4981,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                 $scope.IsTicket = true;
                 $scope.manageDepto = 0;
               if(divAction=="open"){
-                if($scope.sessionidProfile!=1) {
-                  $scope.CompanyName=$scope.sessionNameCompany;
-                  $scope.officeListByCompnayID($scope.sessionidCompany);
-                }
+                if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany}
+                if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
                 if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
                   $scope.getAllAddressByIdTenant();
                   selectSwitch ('t');
@@ -4977,6 +5007,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               $scope.manageDepto = 0;
             if(divAction=="open"){
               if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
+              if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
               if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
                   $scope.getAllAddressByIdTenant();
                   selectSwitch ('t');
@@ -4985,7 +5016,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   $scope.rukeydown = true;
                   $scope.idAddressAtt=$scope.sessionNameAdress;
                   $scope.namesTenant=$scope.sessionNames;
-                  
+                  $scope.getKeyChains($scope.sessionidAddress); 
+                  $scope.getServicesValues($scope.sessionidAddress);
                   $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
                 }else{$scope.rukeydown = true; selectSwitch ('t');}
             }else{
@@ -5060,7 +5092,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               closeAllDiv();
               cleanForms();
             if(divAction=="open"){
-              if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
+              if($scope.sessionidProfile!=1) {
+                $scope.CompanyName=$scope.sessionNameCompany;
+                $scope.officeListByCompnayID($scope.sessionidCompany);
+              }
               $scope.rucost = true;
             }else{
               closeAllDiv();
