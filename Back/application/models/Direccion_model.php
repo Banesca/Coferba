@@ -52,7 +52,7 @@ class Direccion_model extends CI_Model
         
     }
           // GET listado de direcciones por el ID de la Empresa //
-      public function addressListByCompanyid($id) {
+    public function addressListByCompanyid($id) {
         $quuery = null;
         $rs = null;
 
@@ -71,7 +71,25 @@ class Direccion_model extends CI_Model
                 return null;
         
     }
+          // Obtener Direccion  por el Codigo de Seguridad //
+    public function getTheAddressBySecurityCode($id) {
+        $quuery = null;
+        $rs = null;
 
+        
+            $this->db->select("*")->from("tb_addres");
+            $this->db->where("tb_addres.IdSecurityCode =", $id);
+
+
+            $quuery = $this->db->order_by("tb_addres.nameAdress", "asc")->get();
+
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            } 
+                return null;
+        
+    }
 
      public function byidTenant($id, $idDpto, $idStatus) {
         $quuery = null;

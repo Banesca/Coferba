@@ -423,7 +423,7 @@
     .well:hover .icon:hover { display: block; font-size: 66px; line-height: 66px; color: #229922; margin-bottom: 15px; text-align: center; }
     .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
     .hero-widget label { font-size: 12px; }
-    .hero-widget .options { margin-top: 10px; }
+    .hero-widget .options, .text { margin-top: 10px; text-align: left;}
  .glyphicon-share-alt{
     webkit-transform: rotate(-180deg);
     -moz-transform: rotate(-180deg);

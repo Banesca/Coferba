@@ -33,7 +33,7 @@
 					          			ng-model="login.email" 
 					          			data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de ingreso con el correo <bold>{{login.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
 					          			class="form-input popover-large" 
-					          			ng-blur="inputCheckCss('loginemail'); sysCheckEmailLogin();" 
+					          			ng-blur="inputCheckCss('loginemail');" 
 					          			name="loginemail" autofocus required>
 					          		<label>Email</label>
 					          		<i class="glyphicon glyphicon-envelope"></i>
@@ -47,7 +47,7 @@
 						          	type="password" 
 						          	ng-model="login.passwd" 
 						          	data-content="<p>Ha ingresado en {{mailCheckCount+1}} oportunidades la clave incorrecta.<br><br> Desea restablecer la Contrase&#241a de su cuenta? </p>"
-						          	ng-blur="inputCheckCss('loginpassword')" 
+						          	ng-blur="inputCheckCss('loginpassword'); sysCheckEmailLogin();" 
 						          	class="form-input popover-large" 
 						          	name="loginpassword" autofocus required>
 						          	<label>Contrase&#241a</label>

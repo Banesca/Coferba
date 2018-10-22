@@ -265,5 +265,20 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                 });
           },
           /*/GET OFFICES BY COMPANY ID*/
+          addressByCode: function(codeSecurity) {
+            //console.log(serverHeaders);
+              console.log("[Service][addressByCode]---> codeSecurity: "+codeSecurity);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Direccion/getTheAddressBySecurityCode/"+codeSecurity
+                  }).then(function mySuccess(response) {
+                      console.log("[Service][addressByCode]---> codeSecurity: "+codeSecurity+" (Successfully Confirmed)");
+                      return response;
+
+                  },function myError(response, error) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  });
+          },
       }
 }]);

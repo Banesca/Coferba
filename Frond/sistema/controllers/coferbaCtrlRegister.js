@@ -15,6 +15,15 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   $scope.email2Register = tokenSystem.getTokenStorage(4);
   //console.log($scope.email2Register.emailAttempted)
   $scope.register.email = !$scope.email2Register?'':$scope.email2Register.emailAttempted;
+
+  if($scope.register.email){
+    setTimeout(function() {
+        $('#emailRegister').addClass('active');
+        $('#idProfileKf').focus();
+    }, 100);
+
+  }
+
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
@@ -26,7 +35,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   **************************************************/
   $scope.sysRegisterFn = function(){
     $scope.tmp.idDepartmentKf=$scope.register.idDepartmentKf;
-    $scope.register.idAddrAttKf=$scope.selectIdAddressKf.selected.idAdress;
+    $scope.register.idAddrAttKf=!$scope.register.idAddrAttKf?$scope.selectIdAddressKf.selected.idAdress:$scope.register.idAddrAttKf;
     console.log($scope.selectIdAddressKf.selected.idAdress);
     console.log($scope.userData2Add());
       userServices.addUser($scope.userData2Add()).then(function(data){
@@ -114,6 +123,39 @@ $scope.sysCheckEmail = function(){
     });
   }
 }
+$scope.modalConfirmation = function(){
+  $('#confirmCodeModal').modal({backdrop: 'static', keyboard: false});
+  $('#confirmCodeModal').modal('show');
+}
+$scope.sysCheckCode = function(){
+  $scope.sysSecurityCode='';
+  if($scope.register.securityCode){
+    userServices.addressByCode($scope.register.securityCode).then(function(data) {
+      $scope.sysSecurityCode= data;
+      console.log($scope.sysSecurityCode.data);
+      if(!$scope.sysSecurityCode.data.error){
+        console.log($scope.sysSecurityCode.data[0].idAdress);
+        $scope.register.idAddrName = $scope.sysSecurityCode.data[0].nameAdress;
+        $scope.register.idAddrAttKf = $scope.sysSecurityCode.data[0].idAdress;
+        $scope.getDeptoListByAddress($scope.register.idAddrAttKf);
+        $('#confirmCodeModal').modal('hide');
+        $('#idAddrAttKf').addClass('active');
+        $('#idDepartmentKf').focus();
+      }else{
+        $scope.sysSecurityCode={};
+        inform.add('Codigo de seguridad invalido por favor valida nuevamente o comunicate con el area de soporte.',{
+                    ttl:3000, type: 'danger'
+        });
+        $scope.register.securityCode="";
+        $('#checkCode').focus();
+      }
+    });
+  }
+}
+$('#confirmCodeModal').on('hide.bs.modal', function (e) {
+    
+
+});
 /**************************************************
 *                                                 *
 *   ASSIGN DEPARTMENT TO THE CURRENT OWNER USER   *

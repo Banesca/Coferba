@@ -12,7 +12,7 @@
 						<!-- Select profile -->					  
 						<div class="form-group col-md-12" ng-class="{'has-error': fNewUser.idProfileKf.$dirty && fNewUser.idProfileKf.$invalid, 'has-error': fNewUser.idProfileKf.$invalid && !fNewUser.idProfileKf.$pristine}">
 					    	<div class="inner-addon right-addon">
-					    		<select name="idProfileKf" class="form-input" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null;"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " ng-model="register.idProfileKf"  required autofocus />
+					    		<select id="idProfileKf" name="idProfileKf" class="form-input" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null; modalConfirmation();"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " ng-model="register.idProfileKf"  required autofocus />
 								<label>Perfil</label> 
 								<span class="bar"></span>
 					    	</div>
@@ -34,7 +34,7 @@
 					    	</div>
 						</div>
 						<!-- Select Attendant Address-->					  
-						<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6"   ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
+						<!--<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6"   ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
 					    	<div class="form-input inner-addon right-addon">
 					    		<ui-select id="idAddressKf" class="input-temp" theme="selectize" ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" ng-change="getDeptoListByAddress(selectIdAddressKf.selected.idAdress); register.idDepartmentKf=null; ListDpto=''; inputCheckCss('idAddressKf', 'ui'); ownerFound=false;" ng-required="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" autofocus ng-model="selectIdAddressKf.selected" theme="bootstrap" autofocus>
 		                          <ui-select-match>{{$select.selected.nameAdress}}</ui-select-match>
@@ -48,11 +48,22 @@
 		                        <label>Direcci&#243n</label> 
 		                        <span class="bar"></span>
 					    	</div>
-						</div> 
+						</div>-->
+						<!-- Form Input Address -->
+						<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6"   ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
+						  	<div class="inner-addon right-addon">
+							  	<input id="idAddrAttKf" name="idAddrAttKf" readonly="true" value="{{register.idAddrName}}" class="form-input" ng-blur="inputCheckCss('idAddrAttKf', 'i');" type="text" required autofocus/>
+							  	<label>Direcci&#243n</label>  
+					  			<i ng-show="fNewUser.idAddrAttKf.$valid && !fNewUser.idAddrAttKf.$pristine" class="glyphicon icon-building"></i>
+						  		<i ng-show="fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$dirty" class="glyphicon icon-building"></i>
+						  		<i style="color: red;" ng-show="fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine" class="glyphicon glyphicon-remove"></i>
+						  		<span class="bar"></span>
+						  	</div>
+						</div>
 						<!-- Select Department -->
 						<div ng-if="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" class="form-group" ng-class="(register.idTypeAttKf!=1 && register.idTypeAttKf!=2) || (register.idTypeAttKf==0)  ? 'col-md-6' : 'col-md-3' " ng-class="{'has-error': fNewUser.idDepartmentKf.$dirty && fNewUser.idDepartmentKf.$invalid, 'has-error': fNewUser.idDepartmentKf.$invalid && !fNewUser.idDepartmentKf.$pristine}">
 				  		 	<div class="inner-addon right-addon">
-					    		<select name="idDepartmentKf" ng-disabled="selectIdAddressKf.selected==undefined" ng-change="deptoHasOwner(register.idDepartmentKf)" class="form-input" ng-blur="deptoHasOwner(register.idDepartmentKf); inputCheckCss('idDepartmentKf', 's');" ng-options="item.idDepartment as item.departmentFloor for item in ListDpto | filter:hideDeptoByProfile()" ng-model="register.idDepartmentKf" ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus >
+					    		<select id="idDepartmentKf" name="idDepartmentKf" ng-change="deptoHasOwner(register.idDepartmentKf)" class="form-input" ng-blur="deptoHasOwner(register.idDepartmentKf); inputCheckCss('idDepartmentKf', 's');" ng-options="item.idDepartment as item.departmentFloor for item in ListDpto | filter:hideDeptoByProfile()" ng-model="register.idDepartmentKf" ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus >
 						    		<option value=""></option>
 						    	</select>
 								<label>Departamento</label> 
@@ -77,7 +88,7 @@
 						<!-- Form First Name -->
 						<div class="form-group col-md-6" ng-class="{'has-error': fNewUser.fname.$dirty && fNewUser.fname.$invalid, 'has-error': fNewUser.fname.$invalid && !fNewUser.fname.$pristine}">
 						  	<div class="inner-addon right-addon">
-							  	<input  name="fname" autofocus="true" ng-minlength="3" class="form-input" ng-blur="inputCheckCss('fname', 'i');" ng-model="register.fname"  type="text" required autofocus/>
+							  	<input  name="fname" ng-minlength="3" class="form-input" ng-blur="inputCheckCss('fname', 'i');" ng-model="register.fname"  type="text" required autofocus/>
 							  	<label>Nombre</label>  
 					  			<i ng-show="fNewUser.fname.$valid && !fNewUser.fname.$pristine" class="glyphicon glyphicon-user"></i>
 						  		<i ng-show="fNewUser.fname.$invalid && !fNewUser.fname.$dirty" class="glyphicon glyphicon-user"></i>
@@ -99,7 +110,7 @@
 						<!-- Text Mail-->
 						<div class="form-group col-lg-12" ng-class="{'has-error': fNewUser.emailUser.$dirty && fNewUser.emailUser.$invalid}">
 						    <div class="inner-addon right-addon">
-						  		<input  name="emailUser" class="form-input" ng-blur="inputCheckCss('emailUser', 'i'); sysCheckEmail();" ng-model="register.email"  type="email" required autofocus autocomplete="off" />
+						  		<input id="emailRegister"  name="emailUser" value="{{register.email}}" class="form-input" ng-blur="inputCheckCss('emailUser', 'i'); sysCheckEmail();" ng-model="register.email"  type="email" required autofocus autocomplete="off" />
 						  		<label>E-Mail</label> 
 						  		<i class="glyphicon glyphicon-envelope"></i>
 						  		<span class="bar"></span>
@@ -193,4 +204,34 @@
 			</div>
 		</div>
 	</div>
+<!-- Modal Confirmation -->
+<div class="modal fade" id="confirmCodeModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Soporte coferba </h5>
+      </div>
+      <div class="modal-body">
+			<form name="frmSecCode" class="form-horizontal" autocomplete="off" role="form" novalidate>
+				<div class="form-group" ng-class="{'has-error': frmSecCode.checkCode.$dirty && frmSecCode.checkCode.$invalid}">
+					<div class="col-md-12">
+						<div class="inner-addon right-addon">
+					  		<input id="checkCode" name="checkCode" class="form-input" ng-blur="inputCheckCss('checkCode', 'i');" ng-model="register.securityCode" type="password" required autofocus />
+					  		<label>Codigo de Validacion</label> 
+					  		<i class="glyphicon glyphicon-lock"></i>
+							<span class="bar"></span>
+					    </div>
+		  			</div>
+				</div>
+	        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="sysCheckCode()" class="btn btn-success">Validar</button>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- //Modal Confirmation -->
+</div>
+
+

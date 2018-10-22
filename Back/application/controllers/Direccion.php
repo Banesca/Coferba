@@ -48,5 +48,17 @@ class Direccion extends REST_Controller {
               $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
           }
       }
+      public function getTheAddressBySecurityCode_get($id) {
+        
+  
+          $rs = null;
+          $rs = $this->direccion_model->getTheAddressBySecurityCode($id);
+  
+          if (!is_null($rs)) {
+              $this->response($rs, 200);
+          } else {
+              $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+          }
+      }
 }
 ?>
