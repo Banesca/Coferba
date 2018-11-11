@@ -364,19 +364,41 @@
     }
     .well{cursor: pointer;}
     .well-static{cursor: none;}
-    .hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px; }
-    .well .icon { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center; }
-    .well-static .icon-static { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center; }
-    .well:hover .icon:hover { display: block; font-size: 66px; line-height: 66px; color: #229922; margin-bottom: 15px; text-align: center; }
-    .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
+    .hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px;}
+    .well .icon { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center;}
+    .well-static .icon-static { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center;}
+    .well:hover .icon:hover { display: block; font-size: 66px; line-height: 66px; color: #229922; margin-bottom: 15px; text-align: center;}
+    .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal;}
     .hero-widget label { font-size: 12px; }
     .hero-widget .options { margin-top: 10px; }
- .glyphicon-share-alt{
-    webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    transform: rotate(-180deg);
- }
+    .depto-widget { text-align: left; padding-top: 20px; padding-bottom: 20px;}
+    .well .depto-icon { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center;}
+    .depto-widget:hover .well:hover { background-color: #007bff; }
+    .depto-widget .text{text-align: center;}
+    .depto-warning {
+      color: #ffc107!important;
+    }
+    .depto-success {
+      color: #28a745!important;
+    }
+    .depto-primary {
+      color: #007bff!important;
+    }
+    .badge-warning {
+      color: #212529;
+      border-color: #ffc107;
+      background-color: #ffc107;
+    }
+    .badge-success {
+      color: #fff;
+      background-color: #28a745;
+    }
+    .glyphicon-share-alt{
+      webkit-transform: rotate(-180deg);
+      -moz-transform: rotate(-180deg);
+      -ms-transform: rotate(-180deg);
+      transform: rotate(-180deg);
+    }
  ::-webkit-scrollbar {
         width: 12px;
  }

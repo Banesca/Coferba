@@ -62,7 +62,7 @@
 								    <div class="col-md-8">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getCostServiceData(3, select.idAddressAtt); getKeyChains(selectIdAddressKf.selected.idAdress);"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
+									  		<select name="idAddressAtt" class="form-control" ng-change="getCostServiceData(3, select.idAddressAtt); getKeyChains(select.idAddressAtt);"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
 											    <option value="">Seleccione un consorcio</option>
 										    </select>
 									    </div>
@@ -122,8 +122,8 @@
 					</div>
 					<div ng-if="selectIdAddressKf.selected.idAdress || select.idAddressAtt" class="container-fluid justify-content-md-center col-md-12 col-md-offset-3">
 						<div class="col-md-3">    	    
-							<div class="hero-widget well well-sm">
-				            	<div class="icon">
+							<div class="cost-widget well well-sm">
+				            	<div class="cost-icon">
 				                 	<i class="fas fa-edit"></i>
 				            	</div>
 				            	<div class="text">
@@ -148,8 +148,8 @@
 				        	</div>
 				        </div>-->
 						<div class="col-md-3">    	    
-							<div class="hero-widget well well-sm">
-				            	<div class="icon">
+							<div class="cost-widget well well-sm">
+				            	<div class="cost-icon">
 				                 	<i class="fas fa-truck"></i>
 				            	</div>
 				            	<div class="text">

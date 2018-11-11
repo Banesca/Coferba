@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2018 a las 04:30:01
+-- Tiempo de generación: 11-11-2018 a las 23:42:16
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.0.31
 
@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `tb_addres`
 --
 
-DROP TABLE IF EXISTS `tb_addres`;
 CREATE TABLE `tb_addres` (
   `idAdress` int(11) UNSIGNED NOT NULL,
   `nameAdress` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -45,14 +44,14 @@ CREATE TABLE `tb_addres` (
 --
 
 INSERT INTO `tb_addres` (`idAdress`, `nameAdress`, `idCompanyKf`, `priceUni`, `priceManagement`, `priceShipping`, `IdSecurityCode`, `SA_ID_COMPANY`) VALUES
-(1, 'Cramer 1275', 1, '100.00', '0.00', '150.00', NULL, NULL),
-(2, 'Blanco Encalada 2355', 1, '0.00', '0.00', '0.00', NULL, NULL),
-(3, 'Cabildo 3510', 2, '0.00', '0.00', '0.00', NULL, NULL),
-(4, 'Gral. La valle 1920', 2, '0.00', '0.00', '0.00', NULL, NULL),
-(5, 'Parana 2568', 3, '0.00', '0.00', '0.00', NULL, NULL),
-(6, 'Rivadavia 4530', 3, '0.00', '0.00', '0.00', NULL, NULL),
+(1, 'Cramer 1275', 1, '100.00', '0.00', '150.00', '', NULL),
+(2, 'Blanco Encalada 2355', 1, '0.00', '0.00', '0.00', '1234533', NULL),
+(3, 'Cabildo 3510', 2, '0.00', '0.00', '0.00', '12359', NULL),
+(4, 'Gral. La valle 1920', 2, '0.00', '0.00', '0.00', '123522', NULL),
+(5, 'Parana 2568', 3, '0.00', '0.00', '0.00', '12345211', NULL),
+(6, 'Rivadavia 4530', 3, '0.00', '0.00', '0.00', '1235667', NULL),
 (11, 'DIRECCION DE PRUEBA', 5, '110.00', '260.00', '170.00', '1234123', 595),
-(12, 'DIRECCION DE PRUEBA 2', 5, '260.00', '0.00', '310.00', NULL, 596);
+(12, 'DIRECCION DE PRUEBA 2', 5, '260.00', '0.00', '310.00', '1231223', 596);
 
 -- --------------------------------------------------------
 
@@ -60,7 +59,6 @@ INSERT INTO `tb_addres` (`idAdress`, `nameAdress`, `idCompanyKf`, `priceUni`, `p
 -- Estructura de tabla para la tabla `tb_clients_tickets`
 --
 
-DROP TABLE IF EXISTS `tb_clients_tickets`;
 CREATE TABLE `tb_clients_tickets` (
   `idTicketsCliets` int(11) NOT NULL,
   `idTicketKf` int(11) DEFAULT NULL,
@@ -94,7 +92,6 @@ INSERT INTO `tb_clients_tickets` (`idTicketsCliets`, `idTicketKf`, `idClientKf`)
 -- Estructura de tabla para la tabla `tb_company`
 --
 
-DROP TABLE IF EXISTS `tb_company`;
 CREATE TABLE `tb_company` (
   `idCompany` int(11) UNSIGNED NOT NULL,
   `nameCompany` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -121,7 +118,6 @@ INSERT INTO `tb_company` (`idCompany`, `nameCompany`, `SA_ID_COMPANY`, `mail_ser
 -- Estructura de tabla para la tabla `tb_company_type_keychains`
 --
 
-DROP TABLE IF EXISTS `tb_company_type_keychains`;
 CREATE TABLE `tb_company_type_keychains` (
   `idKey` int(11) UNSIGNED NOT NULL,
   `idAddressKf` int(11) DEFAULT NULL,
@@ -148,7 +144,6 @@ INSERT INTO `tb_company_type_keychains` (`idKey`, `idAddressKf`, `item`, `value`
 -- Estructura de tabla para la tabla `tb_department`
 --
 
-DROP TABLE IF EXISTS `tb_department`;
 CREATE TABLE `tb_department` (
   `idDepartment` int(11) NOT NULL,
   `idAdressKf` int(255) DEFAULT NULL,
@@ -170,7 +165,7 @@ CREATE TABLE `tb_department` (
 
 INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `deparmentNumber`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`, `idUserKf`, `isAprobatedAdmin`, `isRequesLowByProp`, `SA_ID_DEPARMENT`) VALUES
 (1, 1, 'Porteria', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
-(2, 1, '1-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
+(2, 1, '1-A', 0, '', 1, 1, NULL, 75, 1, 0, NULL),
 (3, 1, '1-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (4, 1, '2-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (5, 1, '2-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
@@ -204,9 +199,9 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 (113, 11, '05-B', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14156),
 (114, 11, '05-C', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14157),
 (115, 11, 'PB-A', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14158),
-(116, 12, 'PB-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14159),
-(117, 12, 'PB-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14160),
-(118, 12, '01-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14161),
+(116, 12, 'PB-01', NULL, NULL, NULL, NULL, NULL, 72, 1, 0, 14159),
+(117, 12, 'PB-02', NULL, NULL, NULL, NULL, NULL, 72, 1, 0, 14160),
+(118, 12, '01-01', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 14161),
 (119, 12, '01-02', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14162),
 (120, 12, '02-01', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14163),
 (121, 12, '02-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14164),
@@ -235,7 +230,6 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 -- Estructura de tabla para la tabla `tb_opcion_low`
 --
 
-DROP TABLE IF EXISTS `tb_opcion_low`;
 CREATE TABLE `tb_opcion_low` (
   `idOpcionLowTicket` int(11) UNSIGNED NOT NULL,
   `opcionLowTicket` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL
@@ -255,7 +249,6 @@ INSERT INTO `tb_opcion_low` (`idOpcionLowTicket`, `opcionLowTicket`) VALUES
 -- Estructura de tabla para la tabla `tb_profile`
 --
 
-DROP TABLE IF EXISTS `tb_profile`;
 CREATE TABLE `tb_profile` (
   `idProfile` int(11) UNSIGNED NOT NULL,
   `nameProfile` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -279,7 +272,6 @@ INSERT INTO `tb_profile` (`idProfile`, `nameProfile`) VALUES
 -- Estructura de tabla para la tabla `tb_reason_disabled_item`
 --
 
-DROP TABLE IF EXISTS `tb_reason_disabled_item`;
 CREATE TABLE `tb_reason_disabled_item` (
   `idReasonDisabledItem` int(11) NOT NULL,
   `reasonDisabledItem` varchar(100) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -300,7 +292,6 @@ INSERT INTO `tb_reason_disabled_item` (`idReasonDisabledItem`, `reasonDisabledIt
 -- Estructura de tabla para la tabla `tb_request`
 --
 
-DROP TABLE IF EXISTS `tb_request`;
 CREATE TABLE `tb_request` (
   `idRequest` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `RequestName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -313,7 +304,6 @@ CREATE TABLE `tb_request` (
 -- Estructura de tabla para la tabla `tb_status`
 --
 
-DROP TABLE IF EXISTS `tb_status`;
 CREATE TABLE `tb_status` (
   `idStatusTenant` int(255) NOT NULL,
   `statusTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -334,7 +324,6 @@ INSERT INTO `tb_status` (`idStatusTenant`, `statusTenantName`) VALUES
 -- Estructura de tabla para la tabla `tb_statusticket`
 --
 
-DROP TABLE IF EXISTS `tb_statusticket`;
 CREATE TABLE `tb_statusticket` (
   `idStatus` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `statusName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -364,7 +353,6 @@ INSERT INTO `tb_statusticket` (`idStatus`, `statusName`, `idTypeTicketKf`) VALUE
 -- Estructura de tabla para la tabla `tb_sys_code`
 --
 
-DROP TABLE IF EXISTS `tb_sys_code`;
 CREATE TABLE `tb_sys_code` (
   `idCode` int(11) DEFAULT NULL,
   `code` varchar(200) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -376,7 +364,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '198', 'TK');
+(1, '202', 'TK');
 
 -- --------------------------------------------------------
 
@@ -384,7 +372,6 @@ INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_sys_param`
 --
 
-DROP TABLE IF EXISTS `tb_sys_param`;
 CREATE TABLE `tb_sys_param` (
   `idParam` int(11) UNSIGNED NOT NULL,
   `value` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -411,7 +398,6 @@ INSERT INTO `tb_sys_param` (`idParam`, `value`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_tickets`
 --
 
-DROP TABLE IF EXISTS `tb_tickets`;
 CREATE TABLE `tb_tickets` (
   `idTicket` int(11) NOT NULL,
   `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -510,7 +496,11 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 (42, '2018-10-18 03:31:14', NULL, NULL, 2, 'TK-00000195', 1, '', NULL, 51, 0, NULL, 57, 1, '{\"keys\":[]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '360.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 101, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
 (43, '2018-10-18 03:33:11', NULL, NULL, 2, 'TK-00000196', 1, '', NULL, 70, 0, NULL, 57, 1, '{\"keys\":[{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '100.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 123, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
 (44, '2018-10-18 03:41:16', NULL, NULL, 2, 'TK-00000197', 1, '', NULL, 53, 0, NULL, 57, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '310.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 101, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(45, '2018-10-18 03:42:40', NULL, NULL, 2, 'TK-00000198', 1, '', NULL, 61, 0, NULL, 57, 12, '{\"keys\":[{\"idKeyKf\":\"3\",\"keyQty\":2},{\"idKeyKf\":\"2\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '535.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL);
+(45, '2018-10-18 03:42:40', NULL, NULL, 2, 'TK-00000198', 1, '', NULL, 61, 0, NULL, 57, 12, '{\"keys\":[{\"idKeyKf\":\"3\",\"keyQty\":2},{\"idKeyKf\":\"2\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '535.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(46, '2018-10-25 03:26:24', NULL, NULL, 2, 'TK-00000199', 1, '', NULL, 71, 0, NULL, 0, 2, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"2\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '385.00', NULL, 5, NULL, 0, 5, 0, 0, NULL, NULL, 102, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(47, '2018-10-25 03:27:07', NULL, NULL, 2, 'TK-00000200', 2, '', NULL, 71, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345\"}]}', 71, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 5, NULL, NULL, 5, 0, 0, NULL, NULL, 102, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(48, '2018-11-09 21:10:56', NULL, NULL, 2, 'TK-00000201', 3, NULL, NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Prueba de Servicio', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0),
+(49, '2018-11-11 20:14:15', NULL, NULL, 2, 'TK-00000202', 3, NULL, NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'sdsadsadsad', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -518,7 +508,6 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRe
 -- Estructura de tabla para la tabla `tb_typetenant`
 --
 
-DROP TABLE IF EXISTS `tb_typetenant`;
 CREATE TABLE `tb_typetenant` (
   `idTypeTenant` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `typeTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -538,7 +527,6 @@ INSERT INTO `tb_typetenant` (`idTypeTenant`, `typeTenantName`) VALUES
 -- Estructura de tabla para la tabla `tb_typeticket`
 --
 
-DROP TABLE IF EXISTS `tb_typeticket`;
 CREATE TABLE `tb_typeticket` (
   `idTypeTicket` int(11) NOT NULL,
   `TypeTicketName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -560,7 +548,6 @@ INSERT INTO `tb_typeticket` (`idTypeTicket`, `TypeTicketName`) VALUES
 -- Estructura de tabla para la tabla `tb_type_attendant`
 --
 
-DROP TABLE IF EXISTS `tb_type_attendant`;
 CREATE TABLE `tb_type_attendant` (
   `idTyepeAttendant` int(11) UNSIGNED NOT NULL,
   `nameTypeAttendant` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL
@@ -583,7 +570,6 @@ INSERT INTO `tb_type_attendant` (`idTyepeAttendant`, `nameTypeAttendant`) VALUES
 -- Estructura de tabla para la tabla `tb_type_delivery`
 --
 
-DROP TABLE IF EXISTS `tb_type_delivery`;
 CREATE TABLE `tb_type_delivery` (
   `idTypeDelivery` int(11) DEFAULT NULL,
   `typeDelivery` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -604,7 +590,6 @@ INSERT INTO `tb_type_delivery` (`idTypeDelivery`, `typeDelivery`, `amount`) VALU
 -- Estructura de tabla para la tabla `tb_type_outher`
 --
 
-DROP TABLE IF EXISTS `tb_type_outher`;
 CREATE TABLE `tb_type_outher` (
   `idTypeOuther` int(11) NOT NULL,
   `TypeOuther` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -617,10 +602,9 @@ CREATE TABLE `tb_type_outher` (
 INSERT INTO `tb_type_outher` (`idTypeOuther`, `TypeOuther`) VALUES
 (1, 'VENTA'),
 (2, 'LLAVEROS'),
-(3, 'SERVICIOS TECNICOS'),
-(4, 'FACTURACION'),
-(5, 'ADMINISTRATIVAS'),
-(6, 'SEGURIDAD');
+(3, 'FACTURACION'),
+(4, 'ADMINISTRATIVAS'),
+(5, 'SEGURIDAD');
 
 -- --------------------------------------------------------
 
@@ -628,7 +612,6 @@ INSERT INTO `tb_type_outher` (`idTypeOuther`, `TypeOuther`) VALUES
 -- Estructura de tabla para la tabla `tb_type_services`
 --
 
-DROP TABLE IF EXISTS `tb_type_services`;
 CREATE TABLE `tb_type_services` (
   `idTypeServices` int(11) NOT NULL,
   `typeServices` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -641,7 +624,6 @@ CREATE TABLE `tb_type_services` (
 -- Estructura de tabla para la tabla `tb_user`
 --
 
-DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user` (
   `idUser` int(11) NOT NULL,
   `fullNameUser` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -679,7 +661,7 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 (54, 'Emiliano Kasieri', 'emiliano@dadsdsad.com', '11111111111111111', '1231232133', '2865258e4c3c988ffd09ace858c1ff259e7c8ce3', 2, '2018-09-29 00:25:00', 5, 1, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, '3V0ruqQUKq', 1, NULL),
 (55, 'Roberto Caceres', 'roberto@dadasd.com', '111111111111', '12321321321312', 'f4bb4469fe14e2a95692d771c985fe90ee887888', 2, '2018-09-29 03:16:16', 5, 1, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'NCW12A3TBf', 1, NULL),
 (56, 'Alejandro Garcia', 'alejandro@dadasds.com', '22222222222222', '111111111111111', '1a3fd04aed13f43b0b7f34452b819d6c5ccad7fe', 6, '2018-09-29 03:41:38', 5, 1, 12, 3, NULL, 133, 1, 1, 1, 2, 1, 'BnXuX7nAwW', 1, NULL),
-(57, 'David Rincon', 'davideduardo.luengo@hotmail.com', '112222223433', '112322332323', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2018-10-01 19:12:54', 5, 0, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'PED8IQpNow', 1, NULL),
+(57, 'David Rincon', 'davideduardo.luengoooo@hotmail.com', '112222223433', '112322332323', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2018-10-01 19:12:54', 5, 0, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'PED8IQpNow', 1, NULL),
 (58, 'Jorgasdasd', 'sdasds@asdas', '2123213131232213213232132', '213213213', 'eaa07189e6e7c4bf1897a69c5d0e6a1e1931173e', 3, '2018-10-01 19:17:31', 5, 1, 11, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'LYPCjjCble', 1, NULL),
 (59, 'sadsadasdsa', 'asdasdsad@qwdeasd.com', '', '213213123231233123123123', '6a5e737ea7866e8562e8cc7e2789a70878479420', 5, '2018-10-01 19:18:36', NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, 2, 1, 'hxXbHUK7CI', 1, NULL),
 (60, 'Veronica Calelo', 'rexx84213231@gmail.com', '1212322121322132132132132', '2132132133', '6036284a14eb3dee8a6335c906afc3426d8d9b50', 3, '2018-10-01 19:22:07', 5, 1, 11, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, '0PHfV4Szaa', 1, NULL),
@@ -692,7 +674,13 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 (67, 'Gabriel Vasquez', 'gvasquez@asdsadad.com', '11111111111111111', '123123213213213', '75c67600afe762574121e418bf9456761a17b7d9', 6, '2018-10-01 22:31:25', 5, 1, 11, 2, NULL, NULL, NULL, 1, 0, 0, 1, 'pF2rzYLAWl', 1, NULL),
 (68, 'Alfonzo Marquez', 'amarquez@asdsadsad.com', '11111111111111111111', '1123213213213213', 'b403c087637dabe8b511636784292052e4698f88', 6, '2018-10-02 01:45:08', 5, 1, 11, 3, NULL, 112, 1, 1, NULL, 2, 1, '20ymbCMJOn', 1, NULL),
 (69, 'Fernando Carrasco', 'fcarrasco@dasdsadasd.com', '1231232132132132132133213', '1232132132132132132132132', 'edd928aca114215182458cd67203e7b150bf1fbe', 5, '2018-10-09 18:02:39', 5, 1, 11, NULL, NULL, 100, 1, 1, NULL, 2, 1, 'xKG0pux1CM', 0, NULL),
-(70, 'Jairo Gomez', 'jgomez@dasdsadasdsa.com', '123283823232939233', '112112112123213213', '9b0c7294db056f5e097fbe88533101d3d2bb6ce0', 3, '2018-10-18 02:13:33', 5, 1, 12, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'X9o4Esy9Fj', 1, NULL);
+(70, 'Jairo Gomez', 'jgomez@dasdsadasdsa.com', '123283823232939233', '112112112123213213', '9b0c7294db056f5e097fbe88533101d3d2bb6ce0', 3, '2018-10-18 02:13:33', 5, 1, 12, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'X9o4Esy9Fj', 1, NULL),
+(71, 'Lucia Finol', 'david.rincon.oracle@gmail.com', '111111111111111', '1123213214444', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-10-24 02:41:20', 5, 0, 11, NULL, NULL, 102, 1, 1, NULL, 2, 1, 'wia3HATd4Y', 1, NULL),
+(72, 'David Rincon', 'davideduardo.luengo2@hotmail.com', NULL, '1122326388', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-10-25 12:54:01', 5, 0, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, '4Pl5A7eVtM', 1, NULL),
+(73, 'Daniel Mendez', 'dmendez@sadsadsa.com', '', '12321321321321', 'c3cb755b6cfc2c3459f8e7605fdaf55fa29df05e', 5, '2018-10-29 02:44:53', 5, 1, 12, NULL, NULL, 116, 1, 1, NULL, 2, 1, '8qo5QrIVyp', 0, NULL),
+(74, 'Humberto Moran', 'davideduardo.luengo@hotmail.com', NULL, '1212323244555', '67a74306b06d0c01624fe0d0249a570f4d093747', 4, '2018-10-29 15:24:56', 5, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1, 'TG6slDmwua', 1, NULL),
+(75, 'asdsad sadsad', 'sadsadsad@asdsada', '', '12321321321321', '8f65a5cc8f86a94842ac2808dd5ca6ff0fa48695', 3, '2018-10-29 16:28:59', 1, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, 1, 0, 'X7nAwW5GRx', 0, NULL),
+(76, 'David Rincon', 'davideduardo.luego@hotmail.com', '', '11223344555545', '9b1554ee3a3fd5af4099ff3689519155d89b0e95', 3, '2018-11-07 01:23:26', 5, 1, 12, NULL, NULL, NULL, NULL, 1, NULL, 1, 0, 'Y9Ma7JmyO0', 0, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -869,7 +857,7 @@ ALTER TABLE `tb_sys_param`
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
@@ -893,7 +881,7 @@ ALTER TABLE `tb_type_services`
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- Restricciones para tablas volcadas

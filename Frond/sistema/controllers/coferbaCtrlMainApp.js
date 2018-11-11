@@ -81,6 +81,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       tokenSystem.destroyTokenStorage(2);
       $scope.sysToken      = tokenSystem.getTokenStorage(1);
       $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
+      $scope.counterInformShow = 0;
       $('.modal-backdrop').hide();
       /* VALIDAMOS SI SE EFECTUO EL LOGIN Y MOSTRAMOS MENSAJE DE BIENVENIDA AL SISTEMA*/
       if (!$scope.sysToken || !$scope.sysLoggedUser ){
@@ -89,9 +90,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         //console.log($scope.sysLoggedUser)
         $timeout(function() {
           inform.add('Bienvenido Sr/a '+ $scope.sysLoggedUser.fullNameUser,{
-        ttl:3000, type: 'success'
-      });
-    }, 620);
+              ttl:3000, type: 'success'
+          });
+        }, 620);
       }
     /**************************************************
     *                                                 *
@@ -260,8 +261,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         }
 
     /**************************************************/
-
-
     /**************************************************
     *                                                 *
     *         NG-SWITCH STEP FORM FUNCTIONS           *
@@ -281,7 +280,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     'PASO 1: DATOS PERSONALES',
                     'PASO 2: DATOS DE LA SOLICITUD'
                      ];
-      $scope.fSwitch = "";
+        $scope.fSwitch = "";
       function selectSwitch(valor){
           $scope.fSwitch = valor;
         if ($scope.fSwitch=="t"){ 
@@ -344,10 +343,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         }
       };
       $scope.enabledNextBtn=function(item){
-      console.clear();
-      $scope.select.idAddressAtt = !$scope.select.idAddressAtt?$scope.selectIdAddressKf.selected:$scope.select.idAddressAtt;
-      $scope.formValidated=false;
-      //alert($scope.stepIndexTmp);
+        //console.clear();
+        $scope.select.idAddressAtt = !$scope.select.idAddressAtt?$scope.selectIdAddressKf.selected:$scope.select.idAddressAtt;
+        $scope.formValidated=false;
+          //alert($scope.stepIndexTmp);
         switch ($scope.stepIndexTmp){
           case 0:
             //alert("ENTRO CASE 0");
@@ -359,7 +358,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               }
 
             }else if ($scope.fSwitch=="i" && $scope.sessionidProfile!=0){
-              if (!$scope.deptoTenant){
+              if (!$scope.sessionIdDeparmentKf || !$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved==0){
                   $scope.formValidated=false; 
               }else{
                 $scope.formValidated=true;
@@ -423,23 +422,27 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     **************************************************/
          $scope.rsJSON = [ ];
     $scope.sysLoadLStorage = function (){
-         $scope.sessionIdUser       = $scope.sysLoggedUser.idUser;
-         $scope.sessionNames        = $scope.sysLoggedUser.fullNameUser;
-         $scope.sessionMail         = $scope.sysLoggedUser.emailUser;
-         $scope.sessionidAddress    = !$scope.sysLoggedUser.idAddresKf?$scope.sysLoggedUser.idAdress:$scope.sysLoggedUser.idAddresKf;
-         $scope.sessionNameAdress   = $scope.sysLoggedUser.nameAdress;
-         $scope.sessionMovilPhone   = $scope.sysLoggedUser.phoneNumberUser;
-         $scope.sessionLocalPhone   = $scope.sysLoggedUser.phoneLocalNumberUser;
-         $scope.sessionidProfile    = $scope.sysLoggedUser.idProfileKf;
-         $scope.sessionProfileName  = $scope.sysLoggedUser.nameProfile;
-         $scope.sessionidStatus     = $scope.sysLoggedUser.idStatusKf;
-         $scope.sessionidCompany    = !$scope.sysLoggedUser.idCompanyKf?$scope.sysLoggedUser.idCompany:$scope.sysLoggedUser.idCompanyKf;
-         $scope.sessionNameCompany  = $scope.sysLoggedUser.nameCompany;
-         $scope.sessionIdDeparmentKf= $scope.sysLoggedUser.idDepartmentKf;
-         $scope.sessionidTenantUser = $scope.sysLoggedUser.idUser;
-         $scope.sessionidTypeTenant = $scope.sysLoggedUser.idTypeTenantKf;
+         $scope.sessionIdUser               = $scope.sysLoggedUser.idUser;
+         $scope.sessionNames                = $scope.sysLoggedUser.fullNameUser;
+         $scope.sessionMail                 = $scope.sysLoggedUser.emailUser;
+         $scope.sessionidAddress            = !$scope.sysLoggedUser.idAddresKf?$scope.sysLoggedUser.idAdress:$scope.sysLoggedUser.idAddresKf;
+         $scope.sessionNameAdress           = $scope.sysLoggedUser.nameAdress;
+         $scope.sessionMovilPhone           = $scope.sysLoggedUser.phoneNumberUser;
+         $scope.sessionLocalPhone           = $scope.sysLoggedUser.phoneLocalNumberUser;
+         $scope.sessionidProfile            = $scope.sysLoggedUser.idProfileKf;
+         $scope.sessionProfileName          = $scope.sysLoggedUser.nameProfile;
+         $scope.sessionidStatus             = $scope.sysLoggedUser.idStatusKf;
+         $scope.sessionidCompany            = !$scope.sysLoggedUser.idCompanyKf?$scope.sysLoggedUser.idCompany:$scope.sysLoggedUser.idCompanyKf;
+         $scope.sessionNameCompany          = $scope.sysLoggedUser.nameCompany;
+         $scope.sessionIdDeparmentKf        = $scope.sysLoggedUser.idDepartmentKf;
+         $scope.sessionidTenantUser         = $scope.sysLoggedUser.idUser;
+         $scope.sessionidTypeTenant         = $scope.sysLoggedUser.idTypeTenantKf;
+         $scope.sessionisDepartmentApproved = $scope.sysLoggedUser.isDepartmentApproved;
          //$scope.sysParameterVar     = localStorage.getItem("sysParameters");
          //if($scope.sessionidProfile==3){$scope.getAllAddressByIdTenant();}
+          /*if($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+            $scope.listUserDepto(null, $scope.sessionIdAddress);
+          }*/
          /*VALIDAMOS QUE EL USUARIO SEA DIFERENTE DE USUARIO PROPIETARIO Y QUE ESTE ASIGNADO A UNA COMPAÑIA Y CARGAMOS LA LISTA DE COMPAÑIAS*/
           if(($scope.sessionidProfile==4 || $scope.sessionidProfile==2)&& $scope.sessionidCompany){
             $scope.officeListByCompnayID($scope.sessionidCompany);
@@ -515,6 +518,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               url : serverHost+serverBackend+"Direccion/addressListByCompanyid/"+idCompanytmp
             }).then(function mySuccess(response) {
                 $scope.listOffice   = response.data
+
                 $scope.companyFound=true;
                 if($scope.ruservice){$scope.companyUserByIdCompany(idCompanytmp);}
               }, function myError(response) {
@@ -531,6 +535,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       $scope.onSelectCallback = function(){
         $scope.selectIdAddressKf.selected=undefined;
         $scope.filterAddressKf.selected=undefined;
+    }
+    $scope.getSecurityCodeFromAddress = function(obj){
+      $scope.addressCodeSecurity=!obj.IdSecurityCode?"Codigo No asignado":obj.IdSecurityCode;
     }
     /**************************************************
     *                                                 *
@@ -680,7 +687,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.getAllAddressByIdTenant = function (){
       var url1="Direccion/byidTenant/"+$scope.sessionidTenantUser+"/"+$scope.sessionIdDeparmentKf+"/"+1;
       var url2="Direccion/byidTenant/"+$scope.sessionidTenantUser+"/"+0+"/"+1;
-      var urlF=$scope.sessionidProfile==5 ? url1 : url2;
+      var urlF=$scope.sessionidProfile==5 || ($scope.sessionidProfile==5 && $scope.sessionidTypeTenant==2) ? url1 : url2;
       $http({
           method : "GET",
           url : serverHost+serverBackend+urlF,
@@ -926,20 +933,27 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       console.log($scope._getData2AssignDepto(item1, item2));
       $http.post(serverHost+serverBackend+"Department/update",$scope._getData2AssignDepto(item1, item2),setHeaderRequest())
             .then(function(success, data) {
-                if ($scope.sessionidProfile==3 && fnAction==0){
+                if ($scope.sessionidTypeTenant>0 && fnAction==0){
                     inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
                       ttl:3000, type: 'success'
                     });
+                    if($scope.sessionidProfile==3){
+                      $scope.getAllAddressByIdTenant();
+                      $scope.newDeparment=false;
+                      $scope.sysCheckResult = false;
+                      //$scope.viewOwnerDeptos(false);
+                    }
                 }
                 if ($scope.sessionidProfile!=3 && fnAction==1){
-                   
                     $scope.approveDepto(item1);
                 }else if ($scope.sessionidProfile!=3 && fnAction==2){
                     inform.add('Cancelada solicitud satisfactoriamente.',{
                       ttl:3000, type: 'success'
                     });
                 }
-                    $scope.listUserDepto(1, $scope.tmp.idAdressKf);  
+                if (!$scope.sessionidTypeTenant>0){
+                    $scope.listUserDepto(1, $scope.tmp.idAdressKf);
+                }
             },function (error, data, status) {
                 if(status == 404){alert("!Informacion "+status+data.error+"info");}
                 else if(status == 203){alert("!Informacion "+status,data.error+"info");}
@@ -948,13 +962,50 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }); 
     }
     $scope._getData2AssignDepto = function (item1, item2) {
-      var idTenantUsertmp =$scope.sessionidProfile==3 ? $scope.sessionidTenantUser : $scope.idTenantKf
+      var idTenantUsertmp =$scope.sessionidTypeTenant>0 ? $scope.sessionidTenantUser : $scope.idTenantKf
       var idDepartmentKf  = item1;
       var dpto =
               {
                    department: { 
                                 idDepartment      : idDepartmentKf,
                                 idUserKf          : idTenantUsertmp
+                               }
+              };
+      return dpto;
+    };
+    /**************************************************/
+    /**************************************************
+    *                                                 *
+    *   CANCEL DEPARTMENT REQUEST TO AN OWNER USER    *
+    *                                                 *
+    **************************************************/
+    $scope.fnUnAssignDepto = function (item1, item2) {
+      var fnAction= $scope.sessionidProfile==3 ? 0 : item2;
+      console.log($scope.data2CancelDepto(item1));
+      $http.post(serverHost+serverBackend+"Department/update",$scope.data2CancelDepto(item1),setHeaderRequest())
+            .then(function(success, data) {
+                if ($scope.sessionidProfile!=3 && fnAction==2){
+                    inform.add('Cancelada solicitud satisfactoriamente.',{
+                      ttl:3000, type: 'success'
+                    });
+                }
+                if (!$scope.sessionidTypeTenant>0){
+                    $scope.listUserDepto(1, $scope.selectIdAddressKf.selected.idAdress);
+                }
+            },function (error, data, status) {
+                if(status == 404){alert("!Informacion "+status+data.error+"info");}
+                else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+                else{alert("Error ! "+status+" Contacte a Soporte");}
+               
+            }); 
+    }
+    $scope.data2CancelDepto = function (item1) {
+      var idDepartmentKf  = item1;
+      var dpto =
+              {
+                   department: { 
+                                idDepartment      : idDepartmentKf,
+                                idUserKf          : null
                                }
               };
       return dpto;
@@ -1271,7 +1322,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             /*---------------------------------*/
           break;
           case "fservice":
-            if ($scope.sessionidProfile==2 || $scope.sessionidProfile==4){
+            if ($scope.sessionidProfile!=0){
               $scope.namesAdmin      = "";
               $scope.movilPhoneAdmin = "";
               $scope.localPhoneAdmin = "";
@@ -1389,9 +1440,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           }).then(function mySuccess(response) {
               $scope.isHasTicket = true;
               console.log("POSEE TICKETS")
-              msg1="Posee solicitudes pendientes, debes esperar a que finalice o cancelar para darte de baja.";
+
+              msg1="Tenes solicitudes pendientes, debes esperar a que finalice o cancelar para darte de baja.";
               msg2="El Habitante presenta solicitudes pendientes, se deben finalizar o cancelar para poder dar de baja.";
-              $scope.messageInform = $scope.sessionidProfile==3 ? msg1 : msg2;
+              $scope.messageInform = $scope.sessionidProfile!=1 && $scope.sessionidProfile!=4 ? msg1 : msg2;
                  inform.add($scope.messageInform,{
                             ttl:5000, type: 'warning'
                  });
@@ -2493,6 +2545,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             $scope.phoneMovilT              = "";
             $scope.phonelocalT              = "";
             $scope.fullNameTenant           = "";
+            $scope.idTypeTenantKf           = $scope.sessionidProfile==3?2:$scope.idTypeTenantKf;
             $scope.tenant= {namesTenant:'',localPhoneTenant: '',movilPhoneTenant: '',emailTenant: '', typeTenant: ''};
             $('#RegisterModalTenant').modal('toggle');
             $('#ModalListTenant').modal('hide');
@@ -2940,7 +2993,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     *                                                 *
     **************************************************/
     $scope.fnRemoveTenant = function(){
-      
       console.log($scope._getData2RemoveTenant());
       $http.post(serverHost+serverBackend+"Department/removeTenant",$scope._getData2RemoveTenant(),setHeaderRequest())
             .then(function(success, data) {
@@ -2966,7 +3018,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                
             });
     } 
+    $scope.remove = {};
     $scope._getData2RemoveTenant = function () {
+      $scope.remove.idUser         = $scope.idTenantKf;
+      $scope.remove.idDeparmentKf  = $scope.idDeparmentKf;
+      $scope.remove.typeTenantKf   = $scope.typeTenantKf;
+
       var tenant =
               {
                    info: { 
@@ -3140,26 +3197,34 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       $('#confirmCodeModal').modal({backdrop: 'static', keyboard: false});
       $('#confirmCodeModal').modal('show');
     }
+    $scope.input  = {securityCode:''};
+    $scope.manage = {};
+    $scope.sysCheckResult=false;
     $scope.sysCheckCode = function(){
+      $scope.manage = {};
       $scope.sysSecurityCode='';
-      if($scope.register.securityCode){
-        userServices.addressByCode($scope.register.securityCode).then(function(data) {
+      $scope.sysCheckResult=false;
+      if($scope.input.securityCode){
+        userServices.addressByCode($scope.input.securityCode).then(function(data) {
           $scope.sysSecurityCode= data;
           console.log($scope.sysSecurityCode.data);
           if(!$scope.sysSecurityCode.data.error){
             console.log($scope.sysSecurityCode.data[0].idAdress);
-            $scope.register.idAddrName = $scope.sysSecurityCode.data[0].nameAdress;
-            $scope.register.idAddrAttKf = $scope.sysSecurityCode.data[0].idAdress;
-            $scope.getDeptoListByAddress($scope.register.idAddrAttKf);
+            $scope.manage.idAddrName = $scope.sysSecurityCode.data[0].nameAdress;
+            $scope.manage.idAddrAttKf = $scope.sysSecurityCode.data[0].idAdress;
+            $scope.getDeparment(1,$scope.manage.idAddrAttKf);
+            $scope.sysCheckResult=true;
             $('#confirmCodeModal').modal('hide');
-            $('#idAddrAttKf').addClass('active');
             $('#idDepartmentKf').focus();
+            $scope.newDeparment=true;
           }else{
             $scope.sysSecurityCode={};
             inform.add('Codigo de seguridad invalido por favor valida nuevamente o comunicate con el area de soporte.',{
                         ttl:3000, type: 'danger'
             });
-            $scope.register.securityCode="";
+            $scope.input.securityCode="";
+            $scope.sysCheckResult=false;
+            $scope.newDeparment=false;
             $('#checkCode').focus();
           }
         });
@@ -3217,7 +3282,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     *                                                 *
     **************************************************/
     $scope.userAtt = {attendant:{}};
-    $scope.sysFunctionsAtt = function(value, option){
+    $scope.sysFunctionsAtt = function(value, obj){
       switch (value){
         case "open":
           $scope.getTypeAttendant();
@@ -3229,7 +3294,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             $scope.select.idCompanyKf  = !$scope.selectIdCompanyKf.selected?$scope.sessionidCompany:$scope.selectIdCompanyKf.selected.idCompany;
             $scope.select.idAddressAtt = $scope.selectIdAddressKf.selected.idAdress;
             console.log("idCompanyKf: "+$scope.select.idCompanyKf);
-            console.log("idDepartmentKf: "+$scope.select.idAddressAtt);
+            console.log("idAddressAtt: "+$scope.select.idAddressAtt);
+            if($scope.collap==1){console.log("idDepartmentKf: "+obj.idDepartment);};
             console.log($scope.IsSystem);
             if (!$scope.selectIdAddressKf.selected.idAdress && !$scope.IsSystem && !$scope.select.idAddressAtt ) {
               inform.add('Debe seleccionar una direccion antes de registrar un nuevo encargado',{
@@ -3249,6 +3315,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   $scope.att={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther: '' };
                   $scope.select.idCompanyKf  = !$scope.selectIdCompanyKf.selected?$scope.sessionidCompany:$scope.selectIdCompanyKf.selected.idCompany;
                   $scope.select.idAddressAtt = $scope.selectIdAddressKf.selected.idAdress;
+                  $scope.att.idDepartmentKf  = $scope.collap==1?obj.idDepartment:null;
                   $('#RegisterModalAtt').modal('toggle');
             }
           }
@@ -3698,6 +3765,123 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     +
     +
     */
+  /**************************************************
+  *                                                 *
+  *        ASSIGN DEPARMENT TO A TENANT USER        *
+  *                                                 *
+  **************************************************/
+  $scope.tmpDpto = {idCompanyKf:'', idAddresKf:'',idDepartmentKf:''}
+  $scope.sysAssignDep2Tenant = function(){
+    console.clear();
+    $scope.sysLoggedUser.idDepartmentKf       = $scope.select.idDepartmentKf;
+    $scope.sysLoggedUser.idAddresKf           = $scope.manage.idAddrAttKf;
+    $scope.sysLoggedUser.idCompanyKf          = $scope.getCompanyFromAddress($scope.manage.idAddrAttKf);
+    $scope.sysLoggedUser.isDepartmentApproved = 0;
+    var tmpLogged = {user:{}};
+    tmpLogged.user=$scope.sysLoggedUser;
+    console.log(tmpLogged);
+    $scope.sysFnUserUpdateDepto(tmpLogged, 1);
+    $scope.input.securityCode="";
+    $scope.select.idDepartmentKf = null;
+
+  }
+  /**************************************************
+  *                                                 *
+  *       UASSIGN DEPARMENT TO A TENANT USER        *
+  *                                                 *
+  **************************************************/
+  $scope.tmpDpto = {idCompanyKf:'', idAddresKf:'',idDepartmentKf:''}
+  $scope.sysUnAssignDep2Tenant = function(){
+    console.clear();
+    $scope.sysLoggedUser.idDepartmentKf       = null;
+    $scope.sysLoggedUser.idAddresKf           = null;
+    $scope.sysLoggedUser.idCompanyKf          = null;
+    $scope.sysLoggedUser.isDepartmentApproved = null;
+    var tmpLogged = {user:{}};
+    tmpLogged.user=$scope.sysLoggedUser;
+    console.log(tmpLogged);
+    $scope.sysFnUserUpdateDepto(tmpLogged, 2);
+    $scope.sysCheckResult = false;
+    $scope.deptoTenant = '';
+    $scope.input.securityCode="";
+    $scope.select.idDepartmentKf = null;
+
+  }
+  /**************************************************
+  *                                                 *
+  *     UPDATE THE DEPARTMENT TENANT USER FIELDS    *
+  *                                                 *
+  **************************************************/
+  $scope.sysFnUserUpdateDepto = function(tmpLogged, opt){
+      userServices.updateUser(tmpLogged).then(function(data){
+       $scope.updateUserResult = data;
+        if($scope.updateUserResult){
+          
+          $scope.refresSession($scope.sessionMail);
+          if(opt==1){
+            console.log("DEPARMENT ASSIGNED SUCCESSFULLY");
+            inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
+              ttl:3000, type: 'success'
+            });
+          }else if(opt==2){
+            console.log("DEPARMENT UNASSIGNED SUCCESSFULLY");
+            inform.add('Ha sido dado de baja del departamento de forma satisfactoria.',{
+              ttl:3000, type: 'success'
+            });
+          }
+        }
+      });
+  }
+    /**************************************************
+    *                                                 *
+    *        REFRESH USER SESSION LOCAL STORAGE       *
+    *                                                 *
+    **************************************************/
+    $scope.refresSession = function (sessionEmail) {
+      $scope.sessionRefreshed = false;
+      var emil2Check = sessionEmail;
+      userServices.checkUserMail(emil2Check, "updatesession").then(function(data) {
+        if(data){
+          $scope.sysLoggedUser    = tokenSystem.getTokenStorage(2);
+          $scope.sysLoadLStorage();
+          //$scope.deptoTenant=!$scope.sessionidAddress?'':$scope.getDeptoName($scope.sessionIdDeparmentKf);
+          $scope.sessionRefreshed=true;
+        }
+      });
+    }
+
+    /************************************************/
+
+    $scope.viewOwnerDeptos = function(value){
+      $scope.searchMyDeptos = value;
+      $scope.newDeparment   = value;
+      $scope.recordsFound   = false;
+      $scope.select.idDepartmentKf = null;
+      $scope.input.securityCode = "";
+      $scope.selectIdAddressKf.selected = undefined;
+      $scope.sysCheckResult = false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /********************************************************************************************************************************************
     *                                                                                                                                           *
     *                                                                                                                                           *
@@ -3751,9 +3935,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   console.log(obj)
                   $scope.checkTicketTenant($scope.idTenantKf);
               }else if($scope.sessionidProfile==3 || $scope.sessionidProfile==6 || $scope.sessionidProfile==5){
+                  console.log("::::::: REMOVE AN DEPTO OWNER :::::::");
                   $scope.idTenantKf     = $scope.sessionidTenantUser;
-                  $scope.idDeparmentKf  = $scope.idDeptoKf;
-                  $scope.typeTenantKf   = obj.idTypeTenantKf;1;
+                  $scope.idDeparmentKf  = obj.idDepartment;
+                  $scope.typeTenantKf   = $scope.sessionidTypeTenant;
                   console.log("Manage Depto: "+$scope.manageDepto);
                   console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO TENANT: '+$scope.typeTenantKf);
                   console.log("DATOS DEL INQUILINO O PROPIETARIO A DAR DE BAJA");
@@ -3762,7 +3947,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               }
           }else if (confirm==1){
             $scope.IsFnRemove=true;
+            if($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+              $scope.sysUnAssignDep2Tenant()
+            }else{
                 $scope.fnRemoveTenant($http, $scope);
+            }
             $('#confirmRequestModal').modal('hide');
           }
         break;
@@ -3777,10 +3966,28 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           }else if(confirm==0 && $scope.addrNoFound==0 && $scope.sessionidProfile!=0){ 
               if(tmpOpt=="rukeyup"){
                 $scope.rukeyup = true;
+                if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+                  $scope.refresSession($scope.sessionMail);
+                  $scope.idAddressAtt=$scope.sessionNameAdress;
+                  $scope.namesTenant=$scope.sessionNames;
+                  if($scope.sessionidAddress){
+                    $scope.getKeyChains($scope.sessionidAddress); 
+                    $scope.getServicesValues($scope.sessionidAddress);
+                  }else{
+                     $scope.idAddressAtt="Consorcio no asignado";
+                  }
+                  if($scope.sessionidAddress && (!$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved>=0)){
+                    $scope.deptoTenant   =($scope.sessionidAddress && !$scope.sessionisDepartmentApproved) || ($scope.sessionidAddress && $scope.sessionisDepartmentApproved==0)?$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (No aprobado)":$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (Aprobado)";
+                  }else{
+                    $scope.deptoTenant = "Departamento no ha sido asignado."
+                  }
+                }
               }else if(tmpOpt=="rukeydown"){
                 $scope.rukeydown = true;
               }else if(tmpOpt=="home"){
                 $scope.home = true;
+              }else if(tmpOpt=="rucost"){
+                $scope.rucost=true;
               }
           }else if (confirm==1){
             $('.jumbotron [id^="m_"]').removeClass('active');
@@ -4088,8 +4295,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     $scope.tk.idTypeOuther       = $scope.o.idTypeOutherKf;
                     $scope.tk.mailContactConsult = $scope.sessionMail;
                     $scope.tk.description        = $scope.o.detail;
-                    $scope.tk.addressConsul      = $scope.sessionidProfile!=1 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
-                    $scope.tk.idAddresKf         = $scope.sessionidProfile!=1 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                    $scope.tk.addressConsul      = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
+                    $scope.tk.idAddresKf         = $scope.sessionidProfile==5 ? $scope.sessionidAddress : $scope.selectIdAddressKf.selected.idAdress;
                     $scope.tk.isNew              = 1;
                 console.log("DATOS DE LA SOLICITUD DE CONSULTA");
                 console.log($scope._getData2RequestOther());
@@ -4117,11 +4324,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               $scope.keyChains=response.data;
               if($scope.rukeyup){
                 $scope.bindKeyChainData();
-                $scope.keyChains.quantity=response.data.length;
+                $scope.keyChainsQty=$scope.keyChains.length;
               }
               console.log("[getKeyChains] -> Data: ");
               console.log(response.data);
-              console.log("Total keys: "+$scope.keyChains.quantity);
+              console.log("Total keys: "+$scope.keyChains.length);
               $scope.keyChainsFound=true;
         }, function myError (response){
             if (response.status=="404" || response.status=="500"){
@@ -4818,7 +5025,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         $scope.select.idAddressAtt        = "";
         $scope.select.idAddressKf         = "";
         $scope.select.nameAtt             = "";
-        $scope.tmp={};
+        $scope.tmp                        = {};
         $scope.select.idDepartmentKf      = "";
         $scope.typeTenant                 = 0;
         $scope.tenant.namesTenant         = "";
@@ -4836,14 +5043,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         $scope.localPhoneAdmin            ="";
         $scope.emailAdmin                 ="";
         $scope.chg                        = {newPwd1:'', newPwd2:''}
-        $scope.cost                       ={};
-
+        $scope.cost                       = {};
+        $scope.txt                        = {};
         $scope.filterAddressKf            = {};
         $scope.filterCompanyKf            = {};
         $scope.selectIdAddressKf          = {};
         $scope.sysRegIdAddressKf          = {};
         $scope.selectIdCompanyKf          = {};
-
+        $scope.select                     = {};
         $scope.dptoNotFound               = true;
         $scope.companyFound               = false;
         $scope.recordsFound               = false;
@@ -4900,6 +5107,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         $scope.key = {};
         $scope.dataK={keys:[]}; 
         $scope.kItems={keys:[]}; 
+        $scope.sysCheckResult = false;
+        $scope.searchMyDeptos = false;
+        $scope.newDeparment   = false;
 
         /******Config Var*******/
         $scope.contentUser                = false;
@@ -4921,6 +5131,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
       $scope.rucontact    = false;
       $scope.rudepto      = false;
       $scope.rusysconfig  = false;
+      $scope.rucompany    = false;
       /* Variables usadas en las solicitudes */
       $scope.btnBack=false;
       $scope.btnShow=true;
@@ -4964,6 +5175,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.div2Open="";
     $scope.fnShowHide = function(divId, divAction) {
       $scope.div2Open=divId;
+      $('.jumbotron [id^="m_"]').removeClass('active');
       if (divId==null){
           cleanForms();
           closeAllDiv();
@@ -5003,10 +5215,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                 closeAllDiv();
               }
           break;
-          case "uRegister":
-                $('#RegisterModalUser').modal('toggle');
+          case "rucompany":
+              if(divAction=="open"){
+                $('#ProfileModalCompany').modal('toggle');
+                $scope.rucompany = true;
+              }
           break;
           case "rukeyup":
+                $('#m_pedidos').addClass('active');
                 closeAllDiv();
                 cleanForms();
                 $scope.IsTicket = true;
@@ -5019,12 +5235,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   selectSwitch ('t');
                 }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
                   selectSwitch ('i');
-                  $scope.rukeyup = true;
-                  $scope.idAddressAtt=$scope.sessionNameAdress;
-                  $scope.namesTenant=$scope.sessionNames;
-                  $scope.getKeyChains($scope.sessionidAddress); 
-                  $scope.getServicesValues($scope.sessionidAddress);
-                  $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
+                  $scope.refresSession($scope.sessionMail);
+                  $scope.getAllAddressByIdTenant();
                 }else{$scope.rukeyup = true; selectSwitch ('t');}
                   
               }else{
@@ -5032,6 +5244,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               }
           break;
           case "rukeydown":
+              $('#m_pedidos').addClass('active');
               closeAllDiv();
               cleanForms();
               $scope.IsTicket = true;
@@ -5044,18 +5257,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   selectSwitch ('t');
                 }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
                   selectSwitch ('i');
-                  $scope.rukeydown = true;
-                  $scope.idAddressAtt=$scope.sessionNameAdress;
-                  $scope.namesTenant=$scope.sessionNames;
-                  $scope.getKeyChains($scope.sessionidAddress); 
-                  $scope.getServicesValues($scope.sessionidAddress);
-                  $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
+                  $scope.refresSession($scope.sessionMail);
+                  $scope.getAllAddressByIdTenant();
                 }else{$scope.rukeydown = true; selectSwitch ('t');}
             }else{
               closeAllDiv();
             }
           break;
           case "ruservice":
+              $('#m_pedidos').addClass('active');
               closeAllDiv();
               cleanForms();
               $scope.IsTicket = true;
@@ -5070,6 +5280,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }
           break;
           case "ruother":
+              $('#m_pedidos').addClass('active');
               closeAllDiv();
               cleanForms();
               $scope.IsTicket = true;
@@ -5083,6 +5294,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }
           break;
           case "frmcontact":
+              $('#m_contact').addClass('active');
               closeAllDiv();
             if(divAction=="open"){
               $scope.rucontact = true;
@@ -5092,6 +5304,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }
           break;
           case "managedepto":
+              $('#m_depto').addClass('active');
               closeAllDiv();
               cleanForms();
               $scope.manageDepto = 1;
@@ -5103,6 +5316,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                 $scope.rudepto = true;
               }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
                 $scope.rudepto = true;
+                $scope.refresSession($scope.sessionMail);
                 $scope.idAddressAtt=$scope.sessionNameAdress;
                 $scope.namesTenant=$scope.sessionNames;
                 $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
@@ -5113,6 +5327,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }
           break;
           case "home":
+              $('#m_monitor').addClass('active');
               closeAllDiv();
               cleanForms();
             if(divAction=="open"){
@@ -5126,6 +5341,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }        
           break;
           case "frmcost":
+              $('#m_pedidos').addClass('active');
               closeAllDiv();
               cleanForms();
             if(divAction=="open"){
@@ -5133,6 +5349,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
               if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
                   $scope.getAllAddressByIdTenant();
+                  $scope.rucost = true;
                   selectSwitch ('t');
                 }else if ($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
                   selectSwitch ('i');
@@ -5147,6 +5364,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
             }
           break;
           case "sysConfig":
+              $('#m_config').addClass('active');
               closeAllDiv();
               cleanForms();
               $scope.IsSystem=true;
@@ -5240,7 +5458,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
 
         },function (error, data,status) {
             if(error.status == 203 || error.status == 404){
-              console.log("!Informacion: "+error.status+" info");
+              console.log("Error Codigo["+error.status+"] - "+error.data.error);
               $scope.listTickt =  "";
               $scope.totalTickets = 0;
             }else if(error.status==500){
@@ -5249,9 +5467,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               $scope.listTickt =  "";
               $scope.totalTickets = 0;
             }
-            inform.add('['+error.status+']: '+error.data.error,{
-                    ttl:5000, type: 'warning'
-            }); 
+            if($scope.counterInformShow==1){
+              inform.add('['+error.status+']: '+error.data.error,{
+                      ttl:5000, type: 'warning'
+              });
+            }
+            $scope.counterInformShow=1;
         });
     }
 
@@ -5276,7 +5497,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     }
 
     $scope.checkBefore2Load = function(){
-      $scope.sysLoadLStorage();
+      $scope.refresSession($scope.sessionMail);
       cleanForms();
       if ($scope.sessionidProfile==3 || $scope.sessionidProfile==5 || $scope.sessionidProfile==6){
                 $scope.getAllAddressByIdTenant();

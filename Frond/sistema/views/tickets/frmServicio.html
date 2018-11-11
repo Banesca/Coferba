@@ -55,10 +55,7 @@
 						  <div class="col-md-6">
 							  <div class="input-group">
 								  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								  <input ng-show="sessionidProfile!=1"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" readonly autofocus />
-								  <!-- ___________________________________________________________________ -->
-								  <select ng-show="sessionidProfile==1" ng-disabled="!companyFound" name="namesAdmin" class="form-control"  ng-options="item.idUser as item.fullNameUser for item in listUserCompany" ng-required="sessionidProfile==1" ng-change="getUserCompanyData(); enabledNextBtn();" ng-model="select.namesAdmin" autofocus >
-								    </select>
+								  <input ng-show="sessionidProfile!=0"  name="namesAdmin" autofocus="true" placeholder="Nombre y Apellido" class="form-control" ng-model="namesAdmin"  type="text" ng-required="sessionidProfile!=1" readonly autofocus />
 							  </div>
 						  </div>
 					</div>
@@ -136,13 +133,34 @@
 					</div>
 				</fieldset>
 			</div>
+			<div ng-if="sessionidProfile==1 && txt.detailSv.length>0" class="container-fluid justify-content-md-center col-md-offset-3 col-md-6">
+			    <div class="panel panel-warning">
+			      <div class="panel-heading"><span class="blink">Notificar al usuario</span></div>
+			      	<div class="panel-body">
+			      		<div class="form-check form-check-inline">
+							<div class="col-md-3 col-md-offset-3">
+						  		<input id="sendnotify1" name="userNotify" class="radio-custom" ng-model="userNotify" ng-click="getNotify(1)" type="radio" value="1" required autofocus>
+						  		<label for="sendnotify1" class="radio-custom-label">
+							  		<span>SI</span>
+					  			</label>
+					  		</div>
+					  		<div class="col-md-3">
+						  		<input id="sendnotify2" name="userNotify" class="radio-custom" ng-model="userNotify" ng-click="getNotify(0)" type="radio" value="2" required autofocus>
+						  		<label for="sendnotify2" class="radio-custom-label">
+							  		<span>NO</span>
+					  			</label> 
+					  		</div>
+					  	</div>
+			      	</div>
+			    </div>
+			</div>
 			<!-- Actions Button -->
 			<div class="form-group">
 			  <label class="col-md-4"></label>
 			  <div class="col-md-4">
 			  	<input type="button" ng-click="decrementStep()" ng-show="btnBack" class="btn btn-primary" value="Atras" />	
 		  		<input type="button" ng-click="incrementStep()" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-primary" value="Siguiente"/>
-		  		<button type="submit" ng-show="!hasNextStep()" class="btn btn-primary" >Enviar</button>
+		  		<button type="submit" ng-show="!hasNextStep()" ng-disabled="fservice.$invalid" class="btn btn-primary" >Enviar</button>
 			  </div>
 			</div>
 		</form>

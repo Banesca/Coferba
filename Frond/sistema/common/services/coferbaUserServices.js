@@ -17,7 +17,14 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                   }).then(function mySuccess(response) {
                       checkResult = 1;
                       //console.log("Email registrado: "+response.data.emailUser);
-                      tokenSystem.temporalStorage(response.data);
+                      if(typeOfCheck!="updatesession"){
+                        tokenSystem.destroyTokenStorage(3)
+                        tokenSystem.temporalStorage(response.data);
+                      }
+                      if(typeOfCheck=="updatesession"){
+                        tokenSystem.destroyTokenStorage(5);
+                        tokenSystem.setLoggedUserStorage(response.data);
+                      }
                       return checkResult;
                       //console.log(response.data)
                   },function myError(response) { 

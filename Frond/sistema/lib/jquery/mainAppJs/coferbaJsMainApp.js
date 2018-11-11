@@ -24,7 +24,7 @@ $(document).ready(function() {
   });
 
 
-/* MENU ICONS*/
+/* MENU ICONS
     $('#m_pedidos').click(function(){
         $('.jumbotron [id^="m_"]').removeClass('active');
         $(this).addClass('active');

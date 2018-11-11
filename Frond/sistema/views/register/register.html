@@ -160,7 +160,7 @@
 						<!-- Text Phone-->						       
 						<div class="form-group col-md-6 " ng-class="{'has-error':fNewUser.phoneLocal.$dirty && fNewUser.phoneLocal.$invalid, 'has-success':fNewUser.phoneLocal.$valid}">
 						    <div class="inner-addon right-addon">
-						  		<input name="phoneLocal" ng-minlength="10" class="form-input input--local" ng-blur="inputCheckCss('phoneLocal', 'i');" ng-model="register.phonelocalNumberUser" type="text" autofocus ng-required="register.phoneMovilNumberUser==''" />
+						  		<input name="phoneLocal" ng-minlength="8" class="form-input input--local" ng-blur="inputCheckCss('phoneLocal', 'i');" ng-model="register.phonelocalNumberUser" type="text" autofocus ng-required="register.phoneMovilNumberUser==''" />
 						  		<label>Telefono Fijo</label>  
 						  		<i class="glyphicon glyphicon-earphone"></i>
 						  		<span class="bar"></span>	
@@ -169,7 +169,7 @@
 						<!-- Text Phone-->						       
 						<div class="form-group col-md-6 " ng-class="{'has-error':fNewUser.phoneMovil.$dirty && fNewUser.phoneMovil.$invalid, 'has-success':fNewUser.phoneMovil.$valid}">
 						    <div class="inner-addon right-addon">
-						  		<input name="phoneMovil" ng-minlength="11" class="form-input input--movil" ng-blur="inputCheckCss('phoneMovil', 'i');" ng-model="register.phoneMovilNumberUser"  type="text" ng-required="register.phonelocalNumberUser==''" autofocus />
+						  		<input name="phoneMovil" ng-minlength="8" class="form-input input--movil" ng-blur="inputCheckCss('phoneMovil', 'i');" ng-model="register.phoneMovilNumberUser"  type="text" ng-required="register.phonelocalNumberUser==''" autofocus />
 						  		<label>Telefono Movil</label> 
 						  		<i class="glyphicon glyphicon-phone"></i>
 						  		<span class="bar"></span>	

@@ -18,7 +18,7 @@
 	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="windows.print();fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="fas fa-address-card"></i> Perfil</a>
 	                            </li>
 	                            <li ng-if="sessionidProfile==2 || sessionidProfile==4" role="presentation">
-	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('rcprofile', 'open')" tabindex="-1" role="menuitem"><i class="icon-building"></i> Datos de la empresa</a>
+	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('rucompany', 'open')" tabindex="-1" role="menuitem"><i class="icon-building"></i> Datos de la empresa</a>
 	                            </li>
 	                            <li role="presentation">
 	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="fnShowHide('ruchpwd', 'open')" tabindex="-1" role="menuitem"><i class="fas fa-user-lock"></i> Cambiar clave</a>
@@ -119,9 +119,10 @@
 		</div>
 	</nav>
 	<!-- //nav bar end -->
-	<main role="main" class="main_container" ng-if="sysToken" ng-init="sysLoadLStorage(); CallFilterFormU(); CallFilterFormT(); getAllAddress(sessionIdAddress); getParameter(); checkBefore2Load(); listUserDepto(null, sessionIdAddress); getAllDeparment(sessionIdAddress); fnLoadPhoneMask(); ">
+	<main role="main" class="main_container" ng-if="sysToken" ng-init="sysLoadLStorage(); CallFilterFormU(); CallFilterFormT(); getAllAddress(); getParameter();  getAllDeparment(sessionIdAddress); checkBefore2Load();  fnLoadPhoneMask(); ">
 			<!--REQUEST FORM FOR REGISTERED USERS -->
 			<div ng-show="ruprofile" ng-include="'views/user/profileUser.html'"></div>
+			<div ng-show="rucompany" ng-include="'views/company/frmcompany.html'"></div>
 			<div ng-if="userManage" ng-include="'views/user/manageUser.html'"></div>
 			<div ng-if="rudepto" ng-include="'views/depto/frmDepartment.html'"></div>
 			<div ng-if="rukeyup" ng-include="'views/tickets/altaLlave.html'"></div>
@@ -763,7 +764,9 @@
 				    <div class="modal-content">
 		              	<div class="modal-header">
 		              		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-		                	<h3 class="modal-title">NUEVO <span ng-if="idTypeTenantKf==1">PROPIETARIO</span><span ng-if="idTypeTenantKf==2">HABITANTE</span></h3>
+		                	<h3 class="modal-title">NUEVO 
+		                		<span ng-if="sessionidProfile!=3 && idTypeTenantKf==1">PROPIETARIO</span>
+		                		<span ng-if="sessionidProfile>0 && idTypeTenantKf==2">HABITANTE</span></h3>
 		            	</div>
 	            		<div class="modal-body" style="overflow-y: scroll; scroll;" >
 							<!-- FORM CONTAINER-->
@@ -1093,10 +1096,11 @@
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 									        <select 
 									        	ng-model="att.idDepartmentKf" 
+									        	name="idDepartmentKf" 
 									        	ng-change="att.ownerOption==1?deptoHasOwner(null, tmp.idTypeAttTmp,att.idDepartmentKf):'';" 
 									        	class="form-control" 
 									        	ng-options="x.idDepartment as x.departmentFloor for x in ListDpto" 
-									        	ng-required="tmp.idTypeAttTmp!=1 && att.ownerOption==1" 
+									        	ng-required="tmp.idTypeAttTmp!=1 && att.ownerOption!=3" 
 									        	autofocus >
 									        	<option value="" >Seleccione una opcion</option>
 										    </select>
@@ -1180,7 +1184,7 @@
 				            <div class="modal-footer">
 				                <div class="row">
 				                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-				                        <button type="submit" ng-click="sysFunctionsAtt('add')" ng-disabled="(fNewAtt.$invalid || ownerFound || emailFound) && tmp.idTypeAttTmp!=1 && att.ownerOption!=2" class="btn btn-labeled btn-success">
+				                        <button type="submit" ng-click="sysFunctionsAtt('add')" ng-disabled="(fNewAtt.$invalid || ownerFound || emailFound)" class="btn btn-labeled btn-success">
 				                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Registrar</button>
 				                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
 				                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
@@ -1515,6 +1519,7 @@
 					                            <th>Direccion</th>
 					                            <th>Costo Gestion</th>
 					                            <th>Costo Envio</th>
+					                            <th>Codigo de Seguridad</th>
 					                    </thead>
 					                    <tbody >
 					                        <tr style="align-content: center;" ng-repeat="iAddress in companyAddress">
@@ -1523,6 +1528,7 @@
 						                        <td>{{iAddress.nameAdress}}</td>
 						                        <td>{{iAddress.priceManagement}}</td>
 						                        <td>{{iAddress.priceShipping}}</td>
+						                        <td>{{iAddress.IdSecurityCode}}</td>
 						                    </tr>
 						                </tbody>
 		            				</table>

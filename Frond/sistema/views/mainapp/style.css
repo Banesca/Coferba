@@ -418,18 +418,45 @@
       transition: all 1s ease;
     }
     .well{cursor: pointer;}
-    .hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px; }
-    .well .icon { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center; }
-    .well:hover .icon:hover { display: block; font-size: 66px; line-height: 66px; color: #229922; margin-bottom: 15px; text-align: center; }
-    .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
-    .hero-widget label { font-size: 12px; }
-    .hero-widget .options, .text { margin-top: 10px; text-align: left;}
- .glyphicon-share-alt{
-    webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    transform: rotate(-180deg);
- }
+    .hero-widget { text-align: center; padding-top: 20px; padding-bottom: 20px;}
+    .well .icon { display: block; font-size: 76px; line-height: 76px; color: #ccc; margin-bottom: 15px; text-align: center;}
+    .well:hover .icon:hover { display: block; font-size: 66px; line-height: 66px; color: #229922; margin-bottom: 15px; text-align: center;}
+    .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal;}
+    .hero-widget label { font-size: 12px;}
+    .hero-widget .options, .text {margin-top: 10px;}
+    .well .cost-icon i{ display: block; font-size: 76px; line-height: 76px; color: #777; margin-bottom: 15px; text-align: center;}
+    .cost-widget { text-align: left; padding-top: 20px; padding-bottom: 20px;}
+    .cost-widget .options, .text {text-align: center; margin-top: 10px;}
+    .depto-widget { text-align: left; padding-top: 20px; padding-bottom: 20px;}
+    .well .depto-icon i{ display: block; font-size: 76px; line-height: 76px; color: #28a745; margin-bottom: 15px; text-align: center;}
+    .well:hover .depto-icon i {display: block; font-size: 66px; line-height: 66px; color: #f5f5f5; margin-bottom: 15px; text-align: center;}
+    .well-bg:hover { background-color: #28a745;}
+    .depto-widget .text{text-align: center;}
+    /*  */
+    .depto-warning {
+      color: #ffc107!important;
+    }
+    .depto-success {
+      color: #28a745!important;
+    }
+    .depto-primary {
+      color: #007bff!important;
+    }
+    .badge-warning {
+      color: #212529;
+      border-color: #ffc107;
+      background-color: #ffc107;
+    }
+    .badge-success {
+      color: #fff;
+      background-color: #28a745;
+    }
+    .glyphicon-share-alt{
+      webkit-transform: rotate(-180deg);
+      -moz-transform: rotate(-180deg);
+      -ms-transform: rotate(-180deg);
+      transform: rotate(-180deg);
+    }
  .form-control.bg-success{
     background-color: #28a745!important;
     color: #fff bold;

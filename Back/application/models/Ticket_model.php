@@ -337,9 +337,7 @@ class Ticket_model extends CI_Model
             }
         } 
         else
-         { 
-
-            
+        { 
             $this->db->select("*,
                 CASE  
                   WHEN idUserCompany > 0 THEN a.fullNameUser
