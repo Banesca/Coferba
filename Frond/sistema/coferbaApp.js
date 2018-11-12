@@ -80,7 +80,7 @@ app.config(['$routeProvider', '$locationProvider',
 }]);
 
 
-app.constant("serverHost","http://localhost/");
+app.constant("serverHost","http://127.0.0.1:8888/");
 app.constant("serverBackend","Coferba/Back/index.php/");
 app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8' }});
 

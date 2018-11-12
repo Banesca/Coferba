@@ -163,7 +163,8 @@ class Ticket_model extends CI_Model
             'thirdPersonId' => @$ticket['thirdPersonId'],
             'idUserAttendantKfDelivery' => @$ticket['idUserAttKfDelive'],
             'sendUserNotification' => @$ticket['sendNotify'],
-            'isNew' => @$ticket['isNew']
+            'isNew' => @$ticket['isNew'],
+            'idStatusTicketKf' => 2
 		)
         );
 
@@ -254,7 +255,7 @@ class Ticket_model extends CI_Model
         {
 
             $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
-            $this->db->join('tb_user', 'tb_user.idUser = tb_tickets.idUserTenantKf', 'left');
+            $this->db->join('tb_user as userTenant', 'tb_user.idUser = tb_tickets.idUserTenantKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
@@ -323,15 +324,6 @@ class Ticket_model extends CI_Model
                 }
 
 
-
-                
-
-
-              
-
-           
-
-
           if ($quuery->num_rows() > 0) {
                 return $quuery->result_array();
             }
@@ -349,6 +341,11 @@ class Ticket_model extends CI_Model
                   WHEN idUserTenantKf > 0 THEN g.fullNameUser
                   ELSE '' 
                 END as fullNameUser,
+                 a.fullNameUser as FullNameUserCompany,
+                 b.fullNameUser as FullNameUserOwner,
+                 c.fullNameUser as FullNameUserEnterprice,
+                 d.fullNameUser as FullNameUserAdmin,
+                 g.fullNameUser as FullUserTenant,
                 CASE  
                   WHEN idUserCompany > 0 THEN a.phoneNumberUser
                   WHEN idOWnerKf > 0 THEN b.phoneNumberUser
@@ -494,6 +491,49 @@ class Ticket_model extends CI_Model
 
 
             if ($quuery->num_rows() > 0) {
+
+               
+                foreach ($quuery->result() as &$row){
+
+                    if($row->idTypeOfKeysKf != null){
+                        if(isset(json_decode(@$row->idTypeOfKeysKf)->keys)){
+                            foreach (json_decode(@$row->idTypeOfKeysKf)->keys as $row1){
+                                if(isset($row1->idKeyKf)){
+                                    $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idKey =", @$row1->idKeyKf)->get();
+                                    
+                                    if ($query->num_rows() > 0) {
+                                        $row->listidTypeOfKeysKf = $query->result_array();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    if($row->itemToDisabled != null){
+                        if(isset(json_decode(@$row->itemToDisabled)->keys)){
+                            foreach (json_decode(@$row->itemToDisabled)->keys as $row1){
+                                if(isset($row1->idKeyKf)){
+                                    $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idKey =", @$row1->idKeyKf)->get();
+                                    
+                                    if ($query->num_rows() > 0) {
+                                        $row->listitemToDisabled =  $query->result_array();
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+
+                 
+
+                }
+
+               
+
+                
+                  
+
                 return $quuery->result_array();
             }
             return null;
