@@ -84,6 +84,56 @@ class Ticket_model extends CI_Model
         }
     }
 
+    public function updateAll($ticket) {
+        $this->db->set(
+                array(
+                    'idTypeTicketKf' =>  $ticket['idTypeTicketKf'],
+                    'description' =>  $ticket['description'],
+                    'idRequestKf' =>  $ticket['idRequestKf'],
+                    'idUserTenantKf' =>  $ticket['idUserTenantKf'],
+                    'idUserAdminKf' =>  $ticket['idUserAdminKf'],
+                    'idUserCompany' =>  $ticket['idUserCompany'],
+                    'idUserEnterpriceKf' =>  $ticket['idUserEnterpriceKf'],
+                    'numberItemes' =>  $ticket['numberItemes'],
+                    'idTypeOfKeysKf' =>  $ticket['idTypeOfKeysKf'],
+                    'idTypeDeliveryKf' =>  $ticket['idTypeDeliveryKf'],
+                    'itemToDisabled' =>  $ticket['itemToDisabled'],
+                    'idOWnerKf' =>  $ticket['idOWnerKf'],
+                    'idTypeOuther' =>  $ticket['idTypeOuther'],
+                    'mailContactConsult' =>  $ticket['mailContactConsult'],
+                    'idReasonDisabledItemKf' =>  $ticket['idReasonDisabledItemKf'],
+                    'descriptionOrder' =>  $ticket['descriptionOrder'],
+                    'idTypeServicesKf' =>  $ticket['idTypeServicesKf'],
+                    'totalService' =>  $ticket['totalService'],
+                    'addressConsul' =>  $ticket['addressConsul'],
+                    'idProfileKf' =>  $ticket['idProfileKf'],
+                    'idOpcionLowTicketKf' =>  $ticket['idOpcionLowTicketKf'],
+                    'idUserAttendantKf' =>  $ticket['idUserAttendantKf'],
+                    'isAprobatedAdmin' =>  $ticket['isAprobatedAdmin'],
+                    'isCancelTicket' =>  $ticket['isCancelTicket'],
+                    'dateCancel' =>  $ticket['dateCancel'],
+                    'idTypeOfOptionKf' =>  $ticket['idTypeOfOptionKf'],
+                    'idDepartmentKf' =>  $ticket['idDepartmentKf'],
+                    'idAdressKf' =>  $ticket['idAdressKf'],
+                    'dateAprovatedAdmin' =>  $ticket['dateAprovatedAdmin'],
+                    'idOtherKf' =>  $ticket['idOtherKf'],
+                    'idUserAttendantKfDelivery' =>  $ticket['idUserAttendantKfDelivery'],
+                    'thirdPersonNames' =>  $ticket['thirdPersonNames'],
+                    'thirdPersonPhone' =>  $ticket['thirdPersonPhone'],
+                    'thirdPersonId' =>  $ticket['thirdPersonId'],
+                    'isChangueTypeSend' =>  $ticket['isChangueTypeSend'],
+                    'sendUserNotification' =>  $ticket['sendUserNotification']
+                )
+        )->where("idTicket", $ticket['idTicket'])->update("tb_tickets");
+
+
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function changueStatus($id, $idStatus) {
         $this->db->set(

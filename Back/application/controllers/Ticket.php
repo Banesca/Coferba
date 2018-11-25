@@ -131,5 +131,17 @@ class Ticket extends REST_Controller {
                 }
             }
 
+            public function update_post() {
+
+                $rs = $this->ticket_model->updateAll($this->post('ticket'));
+                if (!is_null($rs)) {
+                    $this->response("Actualizado", 200);
+                } else {
+                    $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+                }
+            }
+
+            
+
 }
 ?>
