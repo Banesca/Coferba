@@ -91,23 +91,15 @@
 					</div>
 				</fieldset>
 				<fieldset ng-switch-when="PASO 2: DATOS DEL SERVICIO">
-					<!-- Type of Tenant -->
-					<!-- Select Type of Service -->
-					   
+					<!-- Select Type of Service -->	   
 					<div class="form-group"> 
 					  <label class="col-md-4 control-label">Tipo de Servicio</label>
 					    <div class="col-md-4 selectContainer">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon glyphicon-wrench"></i></span>
-								    <select name="idTypeServiceKf" class="form-control" placeholder="Tipo de Servicio"  ng-model="select.idTypeServiceKf" required autofocus >
-								    <option value=""></option>
-								    <option value="1">Cambio de Lector de llave HID</option>
-								    <option value="2">Cambio de Camara</option>
-								    <option value="3">Cambio de Cerradura Electromagnetica</option>
-								    <option value="4">Cambio de Lector de llave HID</option>
-								    <option ng-show="sessionidProfile==1 || sessionidProfile==2" value="5">Cambio de Molinete</option>
-								    <option ng-show="sessionidProfile==1 || sessionidProfile==2" value="6">Cambio de Control de Acceso</option>
-							    	</select>
+								    <select name="idTypeServiceKf" class="form-control" ng-model="select.idTypeServiceKf" ng-options="item.idTypeServices as item.typeServices for item in listTypeServices" required autofocus >
+                                    <option value="">Tipo de Servicio</option>
+                                    </select>
 						  	</div>
 						</div>
 					</div>

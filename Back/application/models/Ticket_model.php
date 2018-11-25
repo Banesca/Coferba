@@ -2,12 +2,12 @@
 
 class Ticket_model extends CI_Model
 {
-	
-	public function __construct()
-	{
+    
+    public function __construct()
+    {
         parent::__construct();
          /*MAIL*/ $this->load->model('mail_model');
-	}
+    }
 
 
     private function formatCode($value) {
@@ -17,7 +17,7 @@ class Ticket_model extends CI_Model
 
 
     public function find($id)
-	{
+    {
         
 
         $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
@@ -35,18 +35,18 @@ class Ticket_model extends CI_Model
         $this->db->join('tb_department', 'tb_department.idUserTenantKf = tb_user.idUser',  'left');            
         $query = $this->db->where("tb_tickets.idTicket =", @$id)->get();
 
-		 
-		
-		if($query->num_rows() == 1){ 
+         
+        
+        if($query->num_rows() == 1){ 
 
-			$user = $query->row_array();
+            $user = $query->row_array();
             return $user;
         } 
         else
         {
             return null;
         }
-	}
+    }
 
 
     
@@ -106,9 +106,9 @@ class Ticket_model extends CI_Model
 
 
 
-    	 /* BUSCVAMOS UN CODIGO PARA ASIGNARLO */
-    	 $codTicket ="";
-    	 $getCodeSys = null;
+         /* BUSCVAMOS UN CODIGO PARA ASIGNARLO */
+         $codTicket ="";
+         $getCodeSys = null;
             $query = $this->db->select("*")->from("tb_sys_code")
             ->where("idCode =", 1)->get();
 
@@ -131,22 +131,22 @@ class Ticket_model extends CI_Model
             'idTypeTicketKf' => @$ticket['idTypeTicketKf'],
             'idUserTenantKf' => @$ticket['idUserTenantKf'],
             'numberItemes' => @$ticket['numberItemes'],
-			'itemToDisabled' => @json_encode($ticket['itemToDisabled']),
+            'itemToDisabled' => @json_encode($ticket['itemToDisabled']),
             'idTypeOfKeysKf' => @json_encode($ticket['idTypeOfKeysKf']),
-			'idReasonDisabledItemKf' => @$ticket['idReasonDisabledItemKf'],
+            'idReasonDisabledItemKf' => @$ticket['idReasonDisabledItemKf'],
 
             'idTypeDeliveryKf' => @$ticket['idTypeDeliveryKf'],
-			'description' => @$ticket['description'],
-			'idUserEnterpriceKf' => @$ticket['idUserEnterpriceKf'],
-			'idTypeOuther' => @$ticket['idTypeOuther'],
-			'mailContactConsult'  => @$ticket['mailContactConsult'],
-			'idUserCompany'  =>  @$ticket['idUserCompany'],
-			'idOWnerKf'  => @$ticket['idOWnerKf'],
-			'idUserAdminKf'  => @$ticket['idUserAdminKf'],
-			'descriptionOrder' => @$ticket['descriptionOrder'],
-			'idTypeServicesKf'  => @$ticket['idTypeServicesKf'],
+            'description' => @$ticket['description'],
+            'idUserEnterpriceKf' => @$ticket['idUserEnterpriceKf'],
+            'idTypeOuther' => @$ticket['idTypeOuther'],
+            'mailContactConsult'  => @$ticket['mailContactConsult'],
+            'idUserCompany'  =>  @$ticket['idUserCompany'],
+            'idOWnerKf'  => @$ticket['idOWnerKf'],
+            'idUserAdminKf'  => @$ticket['idUserAdminKf'],
+            'descriptionOrder' => @$ticket['descriptionOrder'],
+            'idTypeServicesKf'  => @$ticket['idTypeServicesKf'],
 
-			'addressConsul'=> @$ticket['addressConsul'],
+            'addressConsul'=> @$ticket['addressConsul'],
             'idProfileKf' => @$ticket['idProfileKf'],
             
             'idOpcionLowTicketKf' => @$ticket['idOpcionLowTicketKf'],
@@ -165,7 +165,7 @@ class Ticket_model extends CI_Model
             'sendUserNotification' => @$ticket['sendNotify'],
             'isNew' => @$ticket['isNew'],
             'idStatusTicketKf' => 2
-		)
+        )
         );
 
 
@@ -180,13 +180,13 @@ class Ticket_model extends CI_Model
 
             if(count(@$ticket['list_id_clients']) > 0)///para admnistradores
             {
-            	foreach ($ticket['list_id_clients'] as $valor) {
-				    
-				    $this->db->insert('tb_clients_tickets', array(
-		            'idTicketKf' => $idTicketKf,
-		            'idClientKf' => $valor
-				));
-				}
+                foreach ($ticket['list_id_clients'] as $valor) {
+                    
+                    $this->db->insert('tb_clients_tickets', array(
+                    'idTicketKf' => $idTicketKf,
+                    'idClientKf' => $valor
+                ));
+                }
             }
 
 
@@ -255,8 +255,8 @@ class Ticket_model extends CI_Model
         {
 
             $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
-            $this->db->join('tb_user as userTenant', 'tb_user.idUser = tb_tickets.idUserTenantKf', 'left');
-            $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
+            $this->db->join('tb_user', 'tb_user.idUser = tb_tickets.idUserTenantKf', 'left');
+            $this->db->join('tb_statusticket', 'tb_statusticket.idStatus = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
@@ -370,18 +370,18 @@ class Ticket_model extends CI_Model
 
             ,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
             $this->db->join('tb_user g', 'g.idUser = tb_tickets.idUserTenantKf', 'left');
-
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
-            $this->db->join('tb_statusticket', 'tb_statusticket.idTypeTicketKf = tb_tickets.idStatusTicketKf', 'left');
+            $this->db->join('tb_statusticket', 'tb_statusticket.idStatus = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
             $this->db->join('tb_reason_disabled_item', 'tb_reason_disabled_item.idReasonDisabledItem = tb_tickets.idReasonDisabledItemKf', 'left');
             $this->db->join('tb_user e', 'e.idUser = tb_tickets.idUserAttendantKf', 'left');
             $this->db->join('tb_user f', 'f.idUser = tb_tickets.idOtherKf', 'left');
             $this->db->join('tb_type_attendant auxTypeA', 'auxTypeA.idTyepeAttendant = f.idTyepeAttendantKf', 'left');
             $this->db->join('tb_type_attendant auxTypeB', 'auxTypeB.idTyepeAttendant = e.idTyepeAttendantKf', 'left');
-
             $this->db->join('tb_department tid', 'tid.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user a', 'a.idUser = tb_tickets.idUserCompany', 'left');
+            $this->db->join('tb_company comp', 'comp.idCompany = tb_tickets.idCompanyKf', 'left');
+            $this->db->join('tb_profile prof', 'prof.idProfile = tb_tickets.idProfileKf', 'left');
 
             if(@$searchFilter['idProfileKf']  == 1 || @$searchFilter['idProfileKf']  == 4 ||  @$searchFilter['idProfileKf']  == 2)
             {
@@ -395,7 +395,7 @@ class Ticket_model extends CI_Model
 
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
             $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
-			$this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
+            $this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
            
 
@@ -465,7 +465,7 @@ class Ticket_model extends CI_Model
             /* Busqueda por filtro */
             if (!is_null($searchFilter['searchFilter']) &&  strlen($searchFilter['searchFilter']) > 0) 
             {
-            	
+                
                  $this->db->where("
                             ( tb_user.fullNameUser like  '%".$searchFilter['searchFilter']."%'
                             or tb_user.phoneNumberUser like  '%".$searchFilter['searchFilter']."%'
@@ -599,7 +599,11 @@ class Ticket_model extends CI_Model
         if ($query->num_rows() > 0) {
             $typedelivery = $query->result_array();
         }
-
+        /* LISTADO DE TIPOS DE SERVICIOS */
+        $query = $this->db->select("*")->from("tb_type_services")->get();
+        if ($query->num_rows() > 0) {
+            $typeservices = $query->result_array();
+        }
         /* LISTADO DE TIPOS DE CONSULTAS */
         $query = $this->db->select("*")->from("tb_type_outher")->get();
         if ($query->num_rows() > 0) {
@@ -638,6 +642,7 @@ class Ticket_model extends CI_Model
             'attendant'         => $attendant,
             'reason_disabled_item'      => $reason_disabled_item,
             'typedelivery' => $typedelivery,
+            'typeservices' => $typeservices,
             'typeouther' => $typeouther,
             'typeticket'  => $typeticket,
             'tipeOpcion' => $tipeOpcion,

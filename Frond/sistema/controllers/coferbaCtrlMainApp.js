@@ -600,6 +600,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           url : serverHost+serverBackend+"Ticket/filter"
         }).then(function mySuccess(response) {
             $scope.listTypeDelivery = response.data.typedelivery;
+            $scope.listTypeServices = response.data.typeservices;
             $scope.listTypeLost     = response.data.reason_disabled_item;
             $scope.listTypeQuery    = response.data.typeouther;
             $scope.listUser         = response.data.user;
@@ -4074,6 +4075,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   if($scope.sessionidProfile==4 && $scope.typeOfTenant!=0){
                       $scope.tk.idUserEnterpriceKf = $scope.sessionIdUser;
                       $scope.tk.idCompanyKf        = $scope.sessionidCompany;
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
                     if ($scope.collap==1){
                         //alert($scope.collap)
                         $scope.tk.idTenantKf       = $scope.idTenantKf;
@@ -4107,6 +4109,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   }else if($scope.sessionidProfile==1 && $scope.typeOfTenant!=0){
                       $scope.tk.idUserAdminKf      = $scope.sessionIdUser;
                       $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
                       if ($scope.collap==1){
                         $scope.tk.idTenantKf       = $scope.idTenantKf;
                       }else if ($scope.collap==2){
@@ -4261,13 +4264,16 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                   if($scope.sessionidProfile==1){
                     $scope.tk.idUserAdminKf      = $scope.sessionIdUser;
                     $scope.tk.idUserCompany      = $scope.select.namesAdmin;
+                    $scope.tk.idProfileKf        = $scope.sessionidProfile;
                     $scope.tk.idCompanyKf        = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
                   }else if($scope.sessionidProfile==2){
                     $scope.tk.idUserCompany      = $scope.sessionIdUser;
                     $scope.tk.idCompanyKf        = $scope.sessionidCompany;
+                    $scope.tk.idProfileKf        = $scope.sessionidProfile;
                   }else if($scope.sessionidProfile==4){
                     $scope.tk.idUserEnterpriceKf = $scope.sessionIdUser;
                     $scope.tk.idCompanyKf        = $scope.sessionidCompany;
+                    $scope.tk.idProfileKf        = $scope.sessionidProfile;
                   }
                     $scope.tk.idTypeServices     = $scope.select.idTypeServiceKf;
                     $scope.tk.descriptionOrder   = $scope.txt.detailSv;
@@ -4284,12 +4290,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     $scope.tk.idTicket           = 4;
                   if($scope.sessionidProfile==3){
                       $scope.tk.idOWnerKf        = $scope.sessionIdUser;
+                      $scope.tk.idProfileKf        = $scope.sessionidProfile;
                       $scope.tk.idCompanyKf      = $scope.getCompanyFromAddress($scope.selectIdAddressKf.selected.idAdress);
                   }else if($scope.sessionidProfile==2){
                     $scope.tk.idUserCompany      = $scope.sessionIdUser;
+                    $scope.tk.idProfileKf        = $scope.sessionidProfile;
                     $scope.tk.idCompanyKf        = $scope.sessionidCompany;
                   }else if($scope.sessionidProfile==4){
                     $scope.tk.idUserEnterpriceKf = $scope.sessionIdUser;
+                    $scope.tk.idProfileKf        = $scope.sessionidProfile;
                     $scope.tk.idCompanyKf        = $scope.sessionidCompany;
                   }
                     $scope.tk.idTypeOuther       = $scope.o.idTypeOutherKf;
@@ -4656,7 +4665,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                                 description       : $scope.tk.description,
                                 idAdressKf        : $scope.tk.idAddresKf,
                                 idCompanyKf       : $scope.tk.idCompanyKf,
-                                idTypeServices    : $scope.tk.idTypeServices,
+                                idTypeServicesKf  : $scope.tk.idTypeServices,
                                 sendNotify        : $scope.tk.sendNotify,
                                 isNew             : $scope.tk.isNew
                             }
@@ -5430,12 +5439,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
     $scope.dh.filterSearch     = $scope.filters.searchFilter;
     $scope.dh.filterTop        = $scope.filters.topDH;
     $scope.dh.filterProfile    = $scope.sessionidProfile;
-    $scope.dh.filterTenantKf   = $scope.sessionidProfile!=1?$scope.sessionIdUser:'';
+    $scope.dh.filterTenantKf   = $scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2) ?$scope.sessionIdUser:'';
     $scope.dh.filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.select.idCompanyKf;
     $scope.dh.filterTypeTicket = $scope.filters.idTypeTicketKf;
     $scope.dh.filterStatus     = $scope.filters.idStatusKf;
-    $scope.dh.filterOwnerKf    = $scope.sessionidProfile!=1?$scope.sessionIdUser:'';
-    $scope.dh.filterIdUser     = $scope.sessionidProfile!=1?$scope.sessionIdUser:'';
+    $scope.dh.filterOwnerKf    = $scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)?$scope.sessionIdUser:'';
+    $scope.dh.filterIdUser     = $scope.sessionidProfile!=1 && $scope.sessionidProfile!=2 && $scope.sessionidProfile!=4?$scope.sessionIdUser:'';
       $searchFilter= 
       {
            idUser            : $scope.dh.filterIdUser,
@@ -5543,6 +5552,19 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
               }
           });
       }
+    var open = $('.open-nav'),
+        close = $('.close'),
+        overlay = $('.overlay');
+
+    open.click(function() {
+        overlay.show();
+        $('#wrapper').addClass('toggled');
+    });
+
+    close.click(function() {
+        overlay.hide();
+        $('#wrapper').removeClass('toggled');
+    });
 
 
 
