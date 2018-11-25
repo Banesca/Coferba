@@ -557,10 +557,16 @@ class Ticket_model extends CI_Model
                             foreach (json_decode(@$row->idTypeOfKeysKf)->keys as $row1){
                                
                                 if(isset($row1->idKeyKf)){
-                                    $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idKey =", @$row1->idKeyKf)->get();
+                                    $query =  $this->db->select("*")->from("tb_company_type_keychains")
+                                    ->where("idKey =", @$row1->idKeyKf)->get();
                                     
                                     if ($query->num_rows() > 0) {
-                                        array_push($listidTypeOfKeysKf, $query->row_array());
+                                        $item = array(
+                                            'data'=>$query->row_array(),
+                                            'keyQty'=>@$row1->keyQty
+                                        );
+
+                                        array_push($listidTypeOfKeysKf, $item);
                                     }
                                 }
                             }
@@ -575,7 +581,9 @@ class Ticket_model extends CI_Model
                             $listitemToDisabled =  array();
                             foreach (json_decode(@$row->itemToDisabled)->keys as $row1){
                                 if(isset($row1->idKeyKf)){
-                                    $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idKey =", @$row1->idKeyKf)->get();
+                                    $query =  $this->db->select("*")->
+                                    from("tb_company_type_keychains")->
+                                    where("idKey =", @$row1->idKeyKf)->get();
                                     
                                     if ($query->num_rows() > 0) {
                                         array_push($listitemToDisabled, $query->row_array());
