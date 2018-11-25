@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2018 a las 23:42:16
+-- Tiempo de generación: 25-11-2018 a las 18:24:17
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.0.31
 
@@ -185,7 +185,7 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 (19, 3, 'Porteria', 0, NULL, 1, 1, NULL, NULL, 0, 0, NULL),
 (100, 11, '01-A', NULL, NULL, NULL, NULL, NULL, 52, 1, 0, 14143),
 (101, 11, '01-B', NULL, NULL, NULL, NULL, NULL, 51, 1, 0, 14144),
-(102, 11, '01-C', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 14145),
+(102, 11, '01-C', NULL, NULL, NULL, NULL, NULL, 76, 1, 0, 14145),
 (103, 11, '02-A', NULL, NULL, NULL, NULL, NULL, 60, 1, 0, 14146),
 (104, 11, '02-B', NULL, NULL, NULL, NULL, NULL, 51, 1, 0, 14147),
 (105, 11, '02-C', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14148),
@@ -204,7 +204,7 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 (118, 12, '01-01', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 14161),
 (119, 12, '01-02', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14162),
 (120, 12, '02-01', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14163),
-(121, 12, '02-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14164),
+(121, 12, '02-02', NULL, NULL, NULL, NULL, NULL, 76, 1, 0, 14164),
 (122, 12, '03-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14165),
 (123, 12, '03-02', NULL, NULL, NULL, NULL, NULL, 70, 1, 0, 14166),
 (124, 12, '04-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14167),
@@ -364,7 +364,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '202', 'TK');
+(1, '215', 'TK');
 
 -- --------------------------------------------------------
 
@@ -452,55 +452,19 @@ CREATE TABLE `tb_tickets` (
 --
 
 INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `description`, `idRequestKf`, `idUserTenantKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `numberItemes`, `idTypeOfKeysKf`, `idTypeDeliveryKf`, `itemToDisabled`, `idOWnerKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `idReasonDisabledItemKf`, `descriptionOrder`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idUserAttendantKf`, `idCompanyKf`, `isAprobatedAdmin`, `isCancelTicket`, `dateCancel`, `idTypeOfOptionKf`, `idDepartmentKf`, `idAdressKf`, `dateAprovatedAdmin`, `idOtherKf`, `idUserAttendantKfDelivery`, `thirdPersonNames`, `thirdPersonPhone`, `thirdPersonId`, `isNew`, `isChangueTypeSend`, `isAplicate`, `sendUserNotification`) VALUES
-(1, '2018-08-23 12:16:48', NULL, NULL, 2, 'TK-00000151', 1, '', NULL, 38, 0, NULL, 0, 0, '[]', 1, 'null', 38, NULL, NULL, NULL, NULL, NULL, NULL, '260.00', NULL, NULL, NULL, 0, NULL, 0, 0, NULL, NULL, 0, 11, NULL, 0, NULL, '', '', 0, NULL, NULL, NULL, NULL),
-(2, '2018-08-23 23:05:05', NULL, NULL, 2, 'TK-00000152', 1, 'prueba de observaciones', NULL, 36, 31, NULL, 0, 0, '[]', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '260.00', NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, 0, 11, NULL, 0, NULL, 'prueba retiro por oficina', '1122334455', 33333333, NULL, NULL, NULL, NULL),
-(3, '2018-08-30 09:13:24', NULL, NULL, 2, 'TK-00000153', 1, '', NULL, 36, 31, NULL, 0, 3, '{\"keyId1\":\"1\",\"keyId2\":\"2\",\"keyId3\":\"3\",\"quantity1\":3}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '410.00', NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, 0, 11, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '2018-09-17 01:52:26', NULL, NULL, 2, 'TK-00000154', 3, 'Prueba', NULL, NULL, 0, 43, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Camara de Pasillo', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '2018-10-02 01:47:32', NULL, NULL, 2, 'TK-00000155', 1, '', NULL, 53, 0, NULL, 57, 1, '{\"keyId1\":\"1\",\"keyId2\":\"2\",\"keyId3\":\"3\",\"quantity1\":1}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '310.00', NULL, NULL, NULL, 0, 5, 0, 0, NULL, NULL, 0, 11, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, '2018-10-03 03:56:16', NULL, NULL, 2, 'TK-00000156', 1, '', NULL, 52, 0, NULL, 0, 1, '{\"keyId1\":\"1\",\"keyId2\":\"2\",\"keyId3\":\"3\",\"quantity1\":1}', 2, 'null', 52, NULL, NULL, NULL, NULL, NULL, NULL, '480.00', NULL, NULL, NULL, 0, NULL, 0, 0, NULL, NULL, 100, 11, NULL, 0, 67, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, '2018-10-06 00:40:25', NULL, NULL, 2, 'TK-00000157', 1, '', NULL, 56, 31, NULL, 0, 1, '{\"keyId1\":\"4\",\"keyId2\":\"5\",\"quantity2\":1}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '410.00', NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, 0, 12, NULL, 0, 56, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, '2018-10-09 18:28:19', NULL, NULL, 2, 'TK-00000158', 1, '', NULL, 52, 0, NULL, 0, 1, '[]', 1, 'null', 52, NULL, NULL, NULL, NULL, NULL, NULL, '360.00', NULL, NULL, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, '2018-10-09 19:00:35', NULL, NULL, 2, 'TK-00000159', 1, '', NULL, 52, 0, NULL, 0, 1, '{\"keys\":[{\"keyId\":\"2\",\"keyQty\":1}]}', 1, 'null', 52, NULL, NULL, NULL, NULL, NULL, NULL, '335.00', NULL, NULL, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, '2018-10-10 02:33:52', NULL, NULL, 2, 'TK-00000160', 1, '', NULL, 53, 0, NULL, 0, 1, '{\"keys\":[{\"keyId\":\"1\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '310.00', NULL, NULL, NULL, 0, 5, 0, 0, NULL, NULL, 101, 11, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, '2018-10-12 02:07:36', NULL, NULL, 2, 'TK-00000161', 1, '', NULL, 56, 31, NULL, 0, 0, '{\"keys\":[]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, 120, 12, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, '2018-10-12 16:42:01', NULL, NULL, 2, 'TK-00000162', 2, '', NULL, NULL, 31, NULL, 0, 1, 'null', NULL, '{\"keyId1\":\"4\",\"keyId2\":\"5\",\"n1\":\"122334\",\"tk1\":\"1\"}', 0, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, '2018-10-14 13:44:27', NULL, NULL, 2, 'TK-00000163', 1, '', NULL, 56, 31, NULL, 0, 2, '{\"keys\":[{\"keyId\":\"4\",\"keyQty\":1},{\"keyId\":\"5\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '180.00', NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, 120, 12, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, '2018-10-14 14:17:04', NULL, NULL, 2, 'TK-00000167', 1, '', NULL, 56, 31, NULL, 0, 3, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1},{\"idKeyKf\":\"5\",\"keyQty\":2}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '280.00', NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, 120, 12, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(15, '2018-10-16 04:13:44', NULL, NULL, 2, 'TK-00000168', 2, '', NULL, NULL, 31, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"121245432\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(16, '2018-10-17 20:30:53', NULL, NULL, 2, 'TK-00000169', 2, '', NULL, NULL, 31, NULL, 0, 2, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyCode\":\"12345\"},{\"idKeyKf\":\"5\",\"keyCode\":\"54321\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, '2018-10-17 20:40:52', NULL, NULL, 2, 'TK-00000170', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"3\",\"keyCode\":\"12345\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(18, '2018-10-17 21:05:50', NULL, NULL, 2, 'TK-00000171', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(19, '2018-10-17 21:10:47', NULL, NULL, 2, 'TK-00000172', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(20, '2018-10-17 21:12:43', NULL, NULL, 2, 'TK-00000173', 2, '', NULL, NULL, 0, NULL, 0, 2, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"1234556\"},{\"idKeyKf\":\"2\",\"keyCode\":\"12121212\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(21, '2018-10-17 21:14:45', NULL, NULL, 2, 'TK-00000174', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(22, '2018-10-17 21:28:37', NULL, NULL, 2, 'TK-00000175', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"1232133\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(23, '2018-10-17 22:26:45', NULL, NULL, 2, 'TK-00000176', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123132321\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(24, '2018-10-17 22:27:52', NULL, NULL, 2, 'TK-00000177', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(25, '2018-10-17 22:29:01', NULL, NULL, 2, 'TK-00000178', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345555\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(26, '2018-10-17 23:03:04', NULL, NULL, 2, 'TK-00000179', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"1234555\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(27, '2018-10-17 23:08:05', NULL, NULL, 2, 'TK-00000180', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"2\",\"keyCode\":\"12345\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(28, '2018-10-17 23:48:06', NULL, NULL, 2, 'TK-00000181', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"1235446556\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(29, '2018-10-18 00:14:11', NULL, NULL, 2, 'TK-00000182', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123214214\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(30, '2018-10-18 00:16:42', NULL, NULL, 2, 'TK-00000183', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123312321\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(31, '2018-10-18 00:18:24', NULL, NULL, 2, 'TK-00000184', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"1232132131\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(32, '2018-10-18 00:19:45', NULL, NULL, 2, 'TK-00000185', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123213213213\"}]}', 52, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(33, '2018-10-18 00:24:40', NULL, NULL, 2, 'TK-00000186', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"1232144\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(34, '2018-10-18 00:28:07', NULL, NULL, 2, 'TK-00000187', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"2\",\"keyCode\":\"12321521\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(35, '2018-10-18 01:18:56', NULL, NULL, 2, 'TK-00000188', 2, '', NULL, NULL, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123213213\"}]}', 53, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(36, '2018-10-18 01:37:12', NULL, NULL, 2, 'TK-00000189', 2, '', NULL, 53, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123213213\"}]}', 53, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(37, '2018-10-18 01:51:14', NULL, NULL, 2, 'TK-00000190', 2, '', NULL, 53, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"123213213\"}]}', 53, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 5, NULL, NULL, 5, 0, 0, NULL, NULL, 101, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(38, '2018-10-18 02:08:18', NULL, NULL, 2, 'TK-00000191', 2, '', NULL, 56, 31, NULL, 0, 2, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyCode\":\"123213213\"},{\"idKeyKf\":\"5\",\"keyCode\":\"1214455555\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, 5, 0, 0, NULL, NULL, 120, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(39, '2018-10-18 02:14:18', NULL, NULL, 2, 'TK-00000192', 2, '', NULL, 70, 31, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyCode\":\"123213123\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, 5, 0, 0, NULL, NULL, 123, 12, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1),
-(40, '2018-10-18 02:20:29', NULL, NULL, 2, 'TK-00000193', 1, '', NULL, 56, 0, NULL, 57, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '80.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 119, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(41, '2018-10-18 03:30:17', NULL, NULL, 2, 'TK-00000194', 2, '', NULL, 56, 0, NULL, 57, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyCode\":\"123213213\"}]}', 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 4, NULL, NULL, 5, 0, 0, NULL, NULL, 120, 12, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(42, '2018-10-18 03:31:14', NULL, NULL, 2, 'TK-00000195', 1, '', NULL, 51, 0, NULL, 57, 1, '{\"keys\":[]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '360.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 101, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(43, '2018-10-18 03:33:11', NULL, NULL, 2, 'TK-00000196', 1, '', NULL, 70, 0, NULL, 57, 1, '{\"keys\":[{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '100.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 123, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(44, '2018-10-18 03:41:16', NULL, NULL, 2, 'TK-00000197', 1, '', NULL, 53, 0, NULL, 57, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '310.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 101, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(45, '2018-10-18 03:42:40', NULL, NULL, 2, 'TK-00000198', 1, '', NULL, 61, 0, NULL, 57, 12, '{\"keys\":[{\"idKeyKf\":\"3\",\"keyQty\":2},{\"idKeyKf\":\"2\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '535.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(46, '2018-10-25 03:26:24', NULL, NULL, 2, 'TK-00000199', 1, '', NULL, 71, 0, NULL, 0, 2, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"2\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '385.00', NULL, 5, NULL, 0, 5, 0, 0, NULL, NULL, 102, 11, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(47, '2018-10-25 03:27:07', NULL, NULL, 2, 'TK-00000200', 2, '', NULL, 71, 0, NULL, 0, 1, 'null', NULL, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyCode\":\"12345\"}]}', 71, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 5, NULL, NULL, 5, 0, 0, NULL, NULL, 102, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(48, '2018-11-09 21:10:56', NULL, NULL, 2, 'TK-00000201', 3, NULL, NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Prueba de Servicio', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0),
-(49, '2018-11-11 20:14:15', NULL, NULL, 2, 'TK-00000202', 3, NULL, NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'sdsadsadsad', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0);
+(51, '2018-11-17 01:55:17', NULL, NULL, 2, 'TK-00000204', 1, NULL, NULL, 72, 31, NULL, 0, 2, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1},{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '180.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, NULL, 116, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0),
+(52, '2018-11-19 02:56:43', NULL, NULL, 2, 'TK-00000205', 3, 'adadsdsa', NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1),
+(53, '2018-11-19 03:01:46', NULL, NULL, 2, 'TK-00000206', 3, 'Prueba', NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Prueba', 2, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1),
+(54, '2018-11-19 04:15:29', NULL, NULL, 2, 'TK-00000207', 1, NULL, NULL, 76, 0, NULL, 0, 2, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1},{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 1, 'null', 76, NULL, NULL, NULL, NULL, NULL, NULL, '180.00', NULL, 3, NULL, 0, 5, 0, 0, NULL, NULL, 121, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(55, '2018-11-22 01:15:43', NULL, NULL, 2, 'TK-00000208', 1, NULL, NULL, 61, 31, NULL, 0, 11, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"3\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '580.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, 51, NULL, NULL, NULL, 1, NULL, NULL, 1),
+(56, '2018-11-22 02:30:21', NULL, NULL, 2, 'TK-00000209', 1, NULL, NULL, 70, 31, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '390.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, NULL, 123, 12, NULL, 0, NULL, 'Gabriel Gomez', '91123343434', 30945888, 1, NULL, NULL, 1),
+(57, '2018-11-22 02:49:09', NULL, NULL, 2, 'TK-00000210', 1, NULL, NULL, 73, 0, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '390.00', NULL, 5, NULL, 0, 5, 0, 0, NULL, NULL, 116, 12, NULL, 0, 64, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(58, '2018-11-22 03:17:29', NULL, NULL, 2, 'TK-00000211', 1, NULL, NULL, 71, 0, NULL, 0, 11, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"3\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '580.00', NULL, 5, NULL, 0, 5, 0, 0, NULL, NULL, 102, 11, NULL, 0, 67, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(59, '2018-11-24 02:57:26', NULL, NULL, 2, 'TK-00000212', 1, NULL, NULL, 0, 31, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '480.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, 2, 0, 11, NULL, 0, 68, NULL, NULL, NULL, 1, NULL, NULL, 0),
+(60, '2018-11-24 03:05:42', NULL, NULL, 2, 'TK-00000213', 1, NULL, NULL, 0, 31, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '80.00', NULL, 1, NULL, 0, 5, 0, 0, NULL, 2, 0, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0),
+(61, '2018-11-24 03:08:21', NULL, NULL, 2, 'TK-00000214', 1, NULL, NULL, 0, 0, NULL, 74, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '390.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, 2, 0, 12, NULL, 0, 64, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(62, '2018-11-24 03:13:18', NULL, NULL, 2, 'TK-00000215', 1, NULL, NULL, 0, 0, NULL, 74, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '310.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, 2, 0, 11, NULL, 0, NULL, 'Fran Marquez', '91293213213', 95490931, 1, NULL, NULL, NULL),
+(50, '2018-11-17 00:30:47', NULL, NULL, 2, 'TK-00000203', 3, NULL, NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Por favor cambiar camara de entrada al edificio', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -618,6 +582,18 @@ CREATE TABLE `tb_type_services` (
   `SA_ID_TYPE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `tb_type_services`
+--
+
+INSERT INTO `tb_type_services` (`idTypeServices`, `typeServices`, `SA_ID_TYPE`) VALUES
+(1, 'Cambio de Camara', NULL),
+(2, 'Cambio de Lector de llave HID', NULL),
+(3, 'Cambio de Cerradura Electromagnetica', NULL),
+(4, 'Cambio de Lector de llave HID', NULL),
+(5, 'Cambio de Molinete', NULL),
+(6, 'Cambio de Control de Acceso', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -660,7 +636,7 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 (53, 'Fernando Chacon', 'fchacon@asdasddsa.com', '1111111111111111', '12321321313', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-09-26 21:02:24', 5, 0, 11, NULL, NULL, 101, 1, 0, NULL, 2, 1, 'oBIkWeeWA1', 1, NULL),
 (54, 'Emiliano Kasieri', 'emiliano@dadsdsad.com', '11111111111111111', '1231232133', '2865258e4c3c988ffd09ace858c1ff259e7c8ce3', 2, '2018-09-29 00:25:00', 5, 1, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, '3V0ruqQUKq', 1, NULL),
 (55, 'Roberto Caceres', 'roberto@dadasd.com', '111111111111', '12321321321312', 'f4bb4469fe14e2a95692d771c985fe90ee887888', 2, '2018-09-29 03:16:16', 5, 1, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'NCW12A3TBf', 1, NULL),
-(56, 'Alejandro Garcia', 'alejandro@dadasds.com', '22222222222222', '111111111111111', '1a3fd04aed13f43b0b7f34452b819d6c5ccad7fe', 6, '2018-09-29 03:41:38', 5, 1, 12, 3, NULL, 133, 1, 1, 1, 2, 1, 'BnXuX7nAwW', 1, NULL),
+(56, 'Alejandro Garcia', 'alejandro@dadasds.com', '22222222222222', '111111111111111', '1a3fd04aed13f43b0b7f34452b819d6c5ccad7fe', 6, '2018-09-29 03:41:38', 5, 1, 12, 3, NULL, 133, 1, 1, NULL, 2, 1, 'BnXuX7nAwW', 1, NULL),
 (57, 'David Rincon', 'davideduardo.luengoooo@hotmail.com', '112222223433', '112322332323', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2018-10-01 19:12:54', 5, 0, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'PED8IQpNow', 1, NULL),
 (58, 'Jorgasdasd', 'sdasds@asdas', '2123213131232213213232132', '213213213', 'eaa07189e6e7c4bf1897a69c5d0e6a1e1931173e', 3, '2018-10-01 19:17:31', 5, 1, 11, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'LYPCjjCble', 1, NULL),
 (59, 'sadsadasdsa', 'asdasdsad@qwdeasd.com', '', '213213123231233123123123', '6a5e737ea7866e8562e8cc7e2789a70878479420', 5, '2018-10-01 19:18:36', NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, 2, 1, 'hxXbHUK7CI', 1, NULL),
@@ -677,10 +653,11 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 (70, 'Jairo Gomez', 'jgomez@dasdsadasdsa.com', '123283823232939233', '112112112123213213', '9b0c7294db056f5e097fbe88533101d3d2bb6ce0', 3, '2018-10-18 02:13:33', 5, 1, 12, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'X9o4Esy9Fj', 1, NULL),
 (71, 'Lucia Finol', 'david.rincon.oracle@gmail.com', '111111111111111', '1123213214444', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-10-24 02:41:20', 5, 0, 11, NULL, NULL, 102, 1, 1, NULL, 2, 1, 'wia3HATd4Y', 1, NULL),
 (72, 'David Rincon', 'davideduardo.luengo2@hotmail.com', NULL, '1122326388', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-10-25 12:54:01', 5, 0, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, '4Pl5A7eVtM', 1, NULL),
-(73, 'Daniel Mendez', 'dmendez@sadsadsa.com', '', '12321321321321', 'c3cb755b6cfc2c3459f8e7605fdaf55fa29df05e', 5, '2018-10-29 02:44:53', 5, 1, 12, NULL, NULL, 116, 1, 1, NULL, 2, 1, '8qo5QrIVyp', 0, NULL),
-(74, 'Humberto Moran', 'davideduardo.luengo@hotmail.com', NULL, '1212323244555', '67a74306b06d0c01624fe0d0249a570f4d093747', 4, '2018-10-29 15:24:56', 5, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1, 'TG6slDmwua', 1, NULL),
+(73, 'Daniel Mendez', 'dmendez@sadsadsa.com', '', '12321321321321', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-10-29 02:44:53', 5, 0, 12, NULL, NULL, 116, 1, 0, NULL, 2, 1, '8qo5QrIVyp', 1, NULL),
+(74, 'Humberto Moran', 'davideduardo.luengo@hotmail.com', NULL, '1212323244555', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2018-10-29 15:24:56', 5, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1, 'TG6slDmwua', 1, NULL),
 (75, 'asdsad sadsad', 'sadsadsad@asdsada', '', '12321321321321', '8f65a5cc8f86a94842ac2808dd5ca6ff0fa48695', 3, '2018-10-29 16:28:59', 1, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, 1, 0, 'X7nAwW5GRx', 0, NULL),
-(76, 'David Rincon', 'davideduardo.luego@hotmail.com', '', '11223344555545', '9b1554ee3a3fd5af4099ff3689519155d89b0e95', 3, '2018-11-07 01:23:26', 5, 1, 12, NULL, NULL, NULL, NULL, 1, NULL, 1, 0, 'Y9Ma7JmyO0', 0, NULL);
+(76, 'David Rincon', 'davideduardo.luego@hotmail.com', '', '11223344555545', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-11-07 01:23:26', 5, 0, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, 'Y9Ma7JmyO0', 1, NULL),
+(78, 'Sandra Vilchez', 'svilchez@asdsad.com', '11232323234', '11232323232', '227d5094b8a76a8ac0680126d996350df33200eb', 5, '2018-11-22 03:20:50', 5, 1, 12, NULL, NULL, 121, 1, 1, NULL, 2, 0, 'pgP7mhaYX5', 0, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -857,7 +834,7 @@ ALTER TABLE `tb_sys_param`
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
@@ -875,13 +852,13 @@ ALTER TABLE `tb_type_attendant`
 -- AUTO_INCREMENT de la tabla `tb_type_services`
 --
 ALTER TABLE `tb_type_services`
-  MODIFY `idTypeServices` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTypeServices` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- Restricciones para tablas volcadas
