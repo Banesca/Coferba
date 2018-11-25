@@ -552,31 +552,40 @@ class Ticket_model extends CI_Model
 
                     if($row->idTypeOfKeysKf != null){
                         if(isset(json_decode(@$row->idTypeOfKeysKf)->keys)){
+                          
+                            $listidTypeOfKeysKf =  array();
                             foreach (json_decode(@$row->idTypeOfKeysKf)->keys as $row1){
+                               
                                 if(isset($row1->idKeyKf)){
                                     $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idKey =", @$row1->idKeyKf)->get();
                                     
                                     if ($query->num_rows() > 0) {
-                                        $row->listidTypeOfKeysKf = $query->result_array();
+                                        array_push($listidTypeOfKeysKf, $query->row_array());
                                     }
                                 }
                             }
+                            $row->listidTypeOfKeysKf = $listidTypeOfKeysKf;
+
                         }
                     }
 
 
                     if($row->itemToDisabled != null){
                         if(isset(json_decode(@$row->itemToDisabled)->keys)){
+                            $listitemToDisabled =  array();
                             foreach (json_decode(@$row->itemToDisabled)->keys as $row1){
                                 if(isset($row1->idKeyKf)){
                                     $query =  $this->db->select("*")->from("tb_company_type_keychains")->where("idKey =", @$row1->idKeyKf)->get();
                                     
                                     if ($query->num_rows() > 0) {
-                                        $row->listitemToDisabled =  $query->result_array();
+                                        array_push($listitemToDisabled, $query->row_array());
+
                                     }
                                     
                                 }
                             }
+                            $row->listitemToDisabled = $listidTypeOfKeysKf;
+
                         }
                     }
 
