@@ -254,14 +254,59 @@ class Ticket_model extends CI_Model
         if ($idUser > 0) 
         {
 
-            $this->db->select("*,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
-            $this->db->join('tb_user', 'tb_user.idUser = tb_tickets.idUserTenantKf', 'left');
+            $this->db->select("*,
+            CASE  
+                  WHEN idUserCompany > 0 THEN a.fullNameUser
+                  WHEN idOWnerKf > 0 THEN b.fullNameUser
+                  WHEN idUserEnterpriceKf > 0 THEN c.fullNameUser
+                  WHEN idUserAdminKf > 0 THEN d.fullNameUser
+                  WHEN idUserTenantKf > 0 THEN g.fullNameUser
+                  ELSE '' 
+                END as fullNameUser,
+                 a.fullNameUser as FullNameUserCompany,
+                 b.fullNameUser as FullNameUserOwner,
+                 c.fullNameUser as FullNameUserEnterprice,
+                 d.fullNameUser as FullNameUserAdmin,
+                 g.fullNameUser as FullUserTenant,
+                CASE  
+                  WHEN idUserCompany > 0 THEN a.phoneNumberUser
+                  WHEN idOWnerKf > 0 THEN b.phoneNumberUser
+                  WHEN idUserEnterpriceKf > 0 THEN c.phoneNumberUser
+                  WHEN idUserAdminKf > 0 THEN d.phoneNumberUser
+                  WHEN idUserTenantKf > 0 THEN g.phoneNumberUser
+                  ELSE '' 
+                END as phoneNumberUser,
+                CASE  
+                  WHEN idOtherKf > 0 THEN f.fullNameUser
+                  WHEN idOtherKf < 1 THEN e.fullNameUser
+                  ELSE ''
+                END as nameAttendant,
+                CASE  
+                  WHEN idOtherKf > 0 THEN f.phoneNumberUser
+                  WHEN idOtherKf < 1 THEN e.phoneNumberUser
+                  ELSE '' 
+                END as phoneAttendant,
+                CASE  
+                  WHEN idOtherKf > 0 THEN auxTypeA.nameTypeAttendant
+                  WHEN idOtherKf < 1 THEN auxTypeB.nameTypeAttendant
+                  ELSE '' 
+                END as nameTypeAttendant,
+            DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
+            $this->db->join('tb_user a', 'a.idUser = tb_tickets.idUserTenantKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idStatus = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
             $this->db->join('tb_type_delivery', 'tb_type_delivery.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
+            $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
+            $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
+            $this->db->join('tb_user g', 'g.idUser = tb_tickets.idUserTenantKf', 'left');
+            $this->db->join('tb_user f', 'f.idUser = tb_tickets.idOtherKf', 'left');
+            $this->db->join('tb_user e', 'e.idUser = tb_tickets.idUserAttendantKf', 'left');
+            $this->db->join('tb_type_attendant auxTypeA', 'auxTypeA.idTyepeAttendant = f.idTyepeAttendantKf', 'left');
+            $this->db->join('tb_type_attendant auxTypeB', 'auxTypeB.idTyepeAttendant = e.idTyepeAttendantKf', 'left');
+
 
             if(@$searchFilter['idAdress'] > 0)
             {
@@ -305,21 +350,21 @@ class Ticket_model extends CI_Model
 
              if(@$searchFilter['idProfileKf'] == 3) // propietario 
                 {
-                    $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idOWnerKf =".@$searchFilter['idOWnerKf'].")",null,false);
+                    $this->db->where("(b.idUser = ".$idUser." or tb_tickets.idOWnerKf =".@$searchFilter['idOWnerKf'].")",null,false);
                     $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
                 else if(@$searchFilter['idProfileKf'] == 5) // Inquilino 
                 {
-                    $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idUserTenantKf =".@$searchFilter['idUserTenantKf'].")",null,false);
+                    $this->db->where("(g.idUser = ".$idUser." or tb_tickets.idUserTenantKf =".@$searchFilter['idUserTenantKf'].")",null,false);
                     $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
                 else if(@$searchFilter['idProfileKf'] == 6) // Encargado 
                 {
-                    $this->db->where("(tb_user.idUser = ".$idUser." or tb_tickets.idUserAttendantKf =".@$searchFilter['idUserAttendantKf'].")",null,false);
+                    $this->db->where("(e.idUser = ".$idUser." or tb_tickets.idUserAttendantKf =".@$searchFilter['idUserAttendantKf'].")",null,false);
                     $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
                 else{
-                    $this->db->where("tb_user.idUser = ", $idUser);
+                    $this->db->where("a.idUser = ", $idUser);
                     $quuery = $this->db->order_by("tb_tickets.idTicket", "DESC")->get();
                 }
 
