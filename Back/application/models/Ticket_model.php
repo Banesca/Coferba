@@ -417,7 +417,12 @@ class Ticket_model extends CI_Model
                   WHEN idOtherKf > 0 THEN auxTypeA.nameTypeAttendant
                   WHEN idOtherKf < 1 THEN auxTypeB.nameTypeAttendant
                   ELSE '' 
-                END as nameTypeAttendant
+                END as nameTypeAttendant,
+                CASE  
+                WHEN idUserAttendantKfDelivery > 0 THEN h.fullNameUser
+                WHEN idUserAttendantKfDelivery < 1 THEN 'Sin delivery'
+                ELSE '' 
+              END as nameAttendantDelivery
 
             ,DATEDIFF(ifnull(tb_tickets.dateAprovatedAdmin,now()),tb_tickets.dateCreated) as dayDif ,tb_tickets.dateCreated as dateCratedTicket")->from("tb_tickets");
             $this->db->join('tb_user g', 'g.idUser = tb_tickets.idUserTenantKf', 'left');
@@ -448,7 +453,8 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
             $this->db->join('tb_type_services', 'tb_type_services.idTypeServices = tb_tickets.idTypeServicesKf', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
-           
+            $this->db->join('tb_user h', 'h.idUser = tb_tickets.idUserAttendantKfDelivery', 'left');
+
 
             if(@$searchFilter['idProfileKf'] != 1 && @$searchFilter['idProfileKf'] != 4 && @$searchFilter['idProfileKf'] != 2)
             {
