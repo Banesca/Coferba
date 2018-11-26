@@ -379,8 +379,8 @@ class Ticket_model extends CI_Model
               /* Busqueda por filtro */
             if (!is_null($searchFilter['searchFilter']) &&  strlen($searchFilter['searchFilter']) > 0) 
             {
-                $this->db->like('tb_user.fullNameUser', $searchFilter['searchFilter']);
-                $this->db->or_like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
+               // $this->db->like('tb_user.fullNameUser', $searchFilter['searchFilter']);
+                $this->db->like('tb_user.phoneNumberUser', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_user.emailUser', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_tickets.codTicket', $searchFilter['searchFilter']);
                 $this->db->or_like('tb_addres.nameAdress', $searchFilter['searchFilter']);          
@@ -574,9 +574,9 @@ class Ticket_model extends CI_Model
             {
                 
                  $this->db->where("
-                            ( tb_user.fullNameUser like  '%".$searchFilter['searchFilter']."%'
-                            or tb_user.phoneNumberUser like  '%".$searchFilter['searchFilter']."%'
-                             or tb_user.emailUser like  '%".$searchFilter['searchFilter']."%'
+                            ( a.fullNameUser like  '%".$searchFilter['searchFilter']."%'
+                            or a.phoneNumberUser like  '%".$searchFilter['searchFilter']."%'
+                             or a.emailUser like  '%".$searchFilter['searchFilter']."%'
                               or tb_tickets.codTicket like  '%".$searchFilter['searchFilter']."%'
                                or tb_addres.nameAdress like  '%".$searchFilter['searchFilter']."%'
                    ) ");
