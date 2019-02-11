@@ -32,7 +32,8 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
   $scope.sysCheckEmailLogin = function(){
     if($scope.login.email){
       userServices.checkUserMail($scope.login.email, "login").then(function(data) {
-        $scope.mailCheckResult= data; 
+        $scope.mailCheckResult= data;
+        console.log("[sysCheckEmailLogin] --> mailCheckResult: "+$scope.mailCheckResult); 
           if(!$scope.mailCheckResult){
             var attempsToken = JSON.parse(localStorage.getItem("attempsToken"));
             $scope.mailCheckCount = attempsToken.attempsCount;
@@ -59,6 +60,9 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
               });
               console.log("Email No registrado / "+ $scope.login.email);
             }
+          }else{
+            var sysCheckEmailLogin=true;
+            $scope.sysLoginUser();
           }
       });
     }

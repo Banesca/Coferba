@@ -38,7 +38,15 @@
 					    <div class="col-md-6">
 						    <div class="input-group">
 						        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-	                            <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="enabledNextBtn();getServicesValues(selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress);" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+	                            <ui-select ng-if="sessionidProfile==4 || sessionidProfile==2" name="idAddressAtt" ng-disabled="!companyFound && (sessionidProfile!=4 || sessionidProfile!=2)" ng-change="sysCheckAddrIsInDebt(selectIdAddressKf.selected);" ng-required="sessionidProfile!=1" ng-model="selectIdAddressKf.selected" autofocus>
+				                  	<ui-select-match placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
+				                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
+				                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+				                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+				                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+				                    </ui-select-choices>
+				                </ui-select>
+	                            <ui-select ng-if="sessionidProfile!=4 && sessionidProfile!=2"name="idAddressAtt" ng-disabled="!companyFound && (sessionidProfile==4 && sessionidProfile==2)" ng-change="enabledNextBtn();getServicesValues(selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress);"  ng-required="sessionidProfile!=4 && sessionidProfile!=2" ng-model="selectIdAddressKf.selected" autofocus>
 				                  	<ui-select-match placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
 				                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
 				                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>

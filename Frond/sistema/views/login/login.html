@@ -24,7 +24,7 @@
 				    <div  ng-show="loginUser" class="login"><!-- USER LOGIN FORM -->
 				        <h2>COFERBA</h2>
 				        <h5>Usuarios Registrados</h5>
-				        <form name="frmLogin" class="form-horizontal" id="frmLogin" autocomplete="off" ng-submit="sysLoginUser();">
+				        <form name="frmLogin" class="form-horizontal" id="frmLogin" autocomplete="off" ng-submit="sysCheckEmailLogin();">
 					        <div class="form-group">
 					        	<div class="inner-addon right-addon">
 					          		<input 
@@ -47,7 +47,7 @@
 						          	type="password" 
 						          	ng-model="login.passwd" 
 						          	data-content="<p>Ha ingresado en {{mailCheckCount+1}} oportunidades la clave incorrecta.<br><br> Desea restablecer la Contrase&#241a de su cuenta? </p>"
-						          	ng-blur="inputCheckCss('loginpassword'); sysCheckEmailLogin();" 
+						          	ng-blur="inputCheckCss('loginpassword');" 
 						          	class="form-input popover-large" 
 						          	name="loginpassword" autofocus required>
 						          	<label>Contrase&#241a</label>

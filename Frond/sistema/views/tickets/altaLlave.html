@@ -17,7 +17,7 @@
 					                  <div class="input-group">
 					                      <span ng-show="sessionidProfile!=3 && sessionidProfile!=5" class="input-group-addon"><i class="icon-suitcase"></i></span>
 					                    <input ng-show="sessionidProfile==4" name="companyN"  disabled class="form-control" ng-model="$parent.companyN" />
-					                    <ui-select name="idCompanyKf" ng-show="sessionidProfile==1" ng-required="sessionidProfile==1" ng-model="selectIdCompanyKf.selected" on-select="onSelectCallback()" ng-change="officeListByCompnayID(selectIdCompanyKf.selected.idCompany); CallFilterFormT(); enabledNextBtn();">
+					                    <ui-select name="idCompanyKf" class="dropdown-select" ng-show="sessionidProfile==1" ng-required="sessionidProfile==1" ng-model="selectIdCompanyKf.selected" on-select="onSelectCallback()" ng-change="officeListByCompnayID(selectIdCompanyKf.selected.idCompany); CallFilterFormT(); enabledNextBtn();">
 				                          	<ui-select-match allow-clear="true" placeholder="Seleccione una administracion">{{$select.selected.nameCompany}}</ui-select-match>
 				                            	<ui-select-choices repeat="item in listCompany | filter: $select.search">
 				                              		<div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
@@ -34,7 +34,9 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-    					                      	<ui-select name="idAddressAtt" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn(); getKeyChains(selectIdAddressKf.selected.idAdress); getServicesValues(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile==3" ng-model="selectIdAddressKf.selected" autofocus>
+    					                      	<ui-select name="idAddressAtt" class="dropdown-select" ng-change="
+    					                      	sysCheckAddrIsInDebt(selectIdAddressKf.selected);
+    					                      	select.idDepartmentKf=null;" ng-required="sessionidProfile==3" ng-model="selectIdAddressKf.selected" autofocus>
 								                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
 								                    <ui-select-choices repeat="item in ListTenantAddress | filter: $select.search">
 								                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
@@ -51,7 +53,7 @@
 					                  <div class="col-md-4">
 					                    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                      <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn(); getKeyChains(selectIdAddressKf.selected.idAdress); getServicesValues(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+					                      <ui-select name="idAddressAtt" class="dropdown-select" ng-disabled="!companyFound" ng-change="sysCheckAddrIsInDebt(selectIdAddressKf.selected); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
 								                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
 								                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
 								                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
@@ -68,7 +70,7 @@
 									    <div class="col-md-4">
 										    <div class="input-group">
 										        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-					                            <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn();getServicesValues(selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+					                            <ui-select name="idAddressAtt" class="dropdown-select" ng-disabled="!companyFound" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn();getServicesValues(selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress);select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
 								                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
 								                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
 								                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
@@ -114,15 +116,15 @@
 					                    		<!--*********DEPARTAMENTOS ***********-->
 												<div ng-if="sessionidProfile">
 													<div class="form-check form-check-inline">
-														<div ng-class="sessionidProfile==3 || sessionidProfile==6 ? 'col-md-12 col-md-offset-2': 'col-md-9 col-md-offset-3'">
-															<div class="col-md-6">
+														<div ng-class="sessionidProfile==3 || sessionidProfile==6 ? 'col-md-12 col-md-offset-2': 'col-md-9 col-md-offset-2'">
+															<div class="col-md-6 col-xs-5 col-xs-offset-1">
 														  		<input id="typeTenant1" class="radio-custom" type="radio" ng-click="getData(1); saveTenant=false; enabledNextBtn();" name="typeTenant" value="1" ng-model="typeTenant" required autofocus>
 														  		<label for="typeTenant1" ng-if="sessionidProfile!=5" class="radio-custom-label">
 															  		<span ng-show="sessionidProfile==3 || sessionidProfile==6">{{sessionNames}}</span>
 															  		<span ng-show="sessionidProfile!=3 && sessionidProfile!=6">Propietario</span>
 													  			</label>
 													  		</div>
-													  		<div class="col-md-6">
+													  		<div class="col-md-3 col-xs-5">
 														  		<input id="typeTenant2" class="radio-custom" ng-click="getData(2); saveTenant=false; enabledNextBtn();" type="radio" name="typeTenant" value="2" ng-model="typeTenant" required autofocus>
 														  		<label for="typeTenant2" class="radio-custom-label">
 															  		<span ng-show="sessionidProfile==5">{{sessionNames}}</span>
@@ -203,7 +205,7 @@
 												<div class="form-check form-check-inline">
 														<div class="col-md-12 col-md-offset-2">
 															<div class="col-md-6">
-														  		<input id="typeOption1" type="radio" class="radio-custom" ng-click="enabledNextBtn(1); editAttendant=false; typeOption=1; getAllAttendant(select.idAddressAtt); switchOption(); select.nameAtt=null" name="typeOption" value="1" ng-model="typeOption" required autofocus>
+														  		<input id="typeOption1" type="radio" class="radio-custom" ng-click="enabledNextBtn(1); editAttendant=false; typeOption=1; getAllAttendant(selectIdAddressKf.selected.idAdress); switchOption(); select.nameAtt=null" name="typeOption" value="1" ng-model="typeOption" required autofocus>
 														  		<label for="typeOption1" class="radio-custom-label">
 															  		<span >Encargado titular / Otros</span>
 													  			</label> 
@@ -288,7 +290,7 @@
 													<div  class="row">
 														<div class="col-md-8 col-md-offset-2">
 														    <div class="alert alert-success" role="alert">
-											                 <span style="text-align: center;"> La solicitud sera asignada a la Administracion del consorcio. <span style="font-weight: bold;">{{companyN}}</span></span>
+											                 <span style="text-align: center;"> La solicitud sera asignada a la Administracion del consorcio. <span style="font-weight: bold;">{{selectIdCompanyKf.selected.nameCompany}}</span></span>
 											             	</div>
 											            </div>
 													</div>
@@ -378,10 +380,11 @@
 									    	</select>
 								  	</div>
 								</div>
+								<!-- Select of Who pick up the request -->
 								<div class="form-group col-md-6" ng-disable="sessionidProfile!=2" ng-show="delivery.idTypeDeliveryKf && sessionidProfile!=2">
 								  	<label ng-if="delivery.idTypeDeliveryKf==1" class="col-xs-12 col-md-offset-1">Quien retira</label>
 								  	<label ng-if="delivery.idTypeDeliveryKf==2" class="col-xs-12 col-md-offset-1">Quien recibe</label> 
-								    <div class="col-md-10 col-md-offset-1 input-group">
+								    <div class="col-md-10 col-md-offset-1 col-xs-12 input-group">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 									  		<select name="whoPickUp" class="form-control" required ng-change=" enabledNextBtn(); delivery.nameAtt=null" ng-model="select.whoPickUp" autofocus >
@@ -450,7 +453,7 @@
 											    <!--BUTTONS -->
 											    <span data-toggle="tooltip" data-placement="top" title="Modificar" ng-show="attendantFound==true && sessionidProfile!=3 && delivery.nameAtt && !saveAttendant" style="cursor: pointer;" ng-click="editAttendant=true; saveAttendant=true;" class="input-group-addon"><a><i class="glyphicon glyphicon-edit"></i></a></span>
 											    <span data-toggle="tooltip" data-placement="top" title="Guardar" ng-show="attendantFound==true && sessionidProfile!=3 && delivery.nameAtt && editAttendant" style="cursor: pointer;" ng-click="editAttendant=false; sysFunctionsAtt('update','delivery'); saveAttendant=false;" class="input-group-addon"><a><i class="glyphicon glyphicon-save"></i></a></span>
-											    <span data-toggle="tooltip" data-placement="top" title="Registrar" ng-show="(!attendantFound || attendantFound) && sessionidProfile!=3 && !delivery.nameAtt && select.idAddressAtt" style="cursor: pointer;" ng-click="sysFunctionsAtt('open')" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i></a>
+											    <span data-toggle="tooltip" data-placement="top" title="Registrar" ng-show="(!attendantFound || attendantFound) && sessionidProfile!=3 && !delivery.nameAtt && select.idAddressAtt" style="cursor: pointer;" ng-click="sysFunctionsAtt('open','',select.idDepartmentKf)" class="input-group-addon"><a><i class="glyphicon glyphicon-plus"></i></a>
 											    </span>
 											    <!-- //BUTTONS -->
 										    </div>
@@ -528,34 +531,34 @@
 								<!-- Form Special Request sru= Special Request Up -->
 								<div style="margin-left: 15px; padding-right: 40px;" class="form-group col-md-12">
 								  <label class="col-xs-12" >Observaciones Adicionales</label> 
-									<div class="col-md-12 input-group">
+									<div class="col-md-12 col-xs-12 input-group">
 								  		<textarea style="resize: vertical;" name="sruTenant" rows="9" placeholder="Describa aqui si desea realizar una solicitud especial." class="form-control" ng-model="txt.sruTenant" ></textarea>
 									</div>
 								</div>
 							</div>
 							<!-- Linea de costos de servicios y total del pedido -->
-							<div class="row" style="margin-left: 25px;">
-								<div class="form-group col-md-12 "> 
-									<legend>Costos de Servicios</legend>
-									  <div class="col-md-3">
+							<div class="row" >
+								<div class="col-md-12 "> 
+									<legend style="text-align: center;">Costos de Servicios</legend>
+									  <div class="col-md-3 col-xs-3">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">
 											  <input id="inputService" title="Gestion Sin Costo" data-placement="bottom" data-content="El costo esta incluido en el Abono del Mantenimiento." disabled style="text-align: right;"  name="cost.service" placeholder="$0,00" class="form-control" value="{{cost.service  | number : 2}}"  type="text" required autofocus/>
 										  </div>
 									  </div>
-									  <div class="col-md-3 ">
+									  <div class="col-md-3  col-xs-3">
 									  	<label class="control-label">Llave</label> 
 										  <div class="input-group">
 											  <input disabled  style="text-align: right;"" name="cost.key" autofocus="true" placeholder="$0,00" class="form-control"  value="{{cost.key  | number : 2}}"  type="text" required autofocus/>
 										  </div>
 									  </div>
-									  <div class="col-md-3">
+									  <div class="col-md-3 col-xs-3">
 									  	<label class="control-label">Envio</label> 
 										  <div class="input-group">
 											  <input id="inputDelivery" title="Envio sin Costo" disabled style="text-align: right;"" name="cost.delivery" placeholder="$0,00" class="form-control" value="{{cost.delivery  | number : 2}}"type="text" required autofocus/>
 										  </div>
 									  </div>
-									  <div class="col-md-3 "> 
+									  <div class="col-md-3  col-xs-3"> 
 									  	<label class="control-label">Total</label> 
 										  <div class="input-group">
 											  <input disabled style="text-align: right"; name="cost.total"placeholder="$0,00" class="form-control" value="{{cost.total  | number : 2}}"  type="text" required autofocus/>
@@ -569,13 +572,13 @@
 							      <div class="panel-heading"><span class="blink">Notificar al usuario</span></div>
 							      	<div class="panel-body">
 							      		<div class="form-check form-check-inline">
-											<div class="col-md-3 col-md-offset-4">
+											<div class="col-md-3 col-md-offset-4 col-xs-3 col-xs-offset-3">
 										  		<input id="sendnotify1" class="radio-custom" ng-model="userNotify" ng-click="getNotify(1)" type="radio" value="1" required autofocus>
 										  		<label for="sendnotify1" class="radio-custom-label">
 											  		<span>SI</span>
 									  			</label>
 									  		</div>
-									  		<div class="col-md-3">
+									  		<div class="col-md-3 col-xs-3">
 										  		<input id="sendnotify2" class="radio-custom" ng-model="userNotify" ng-click="getNotify(0)" type="radio" value="0" required autofocus>
 										  		<label for="sendnotify2" class="radio-custom-label">
 											  		<span>NO</span>
@@ -816,9 +819,9 @@
 								</div>
 							</div>
 							<!-- Linea de costos de servicios y total del pedido -->
-							<div class="row" style="margin-left: 25px;">
-								<div class="form-group col-md-12 "> 
-									<legend>Costos de Servicios</legend>
+							<div class="row">
+								<div class="col-md-12 "> 
+									<legend style="text-align: center;">Costos de Servicios</legend>
 									  <div class="col-md-3">
 									  	<label class="control-label">Gestion</label> 
 										  <div class=" input-group">

@@ -34,7 +34,7 @@
 											    <div class="col-md-4">
 												    <div class="input-group">
 												        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-		    					                      	<ui-select name="idAddressAtt" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn(); getKeyChains(selectIdAddressKf.selected.idAdress); getServicesValues(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile==3" ng-model="selectIdAddressKf.selected" autofocus>
+		    					                      	<ui-select name="idAddressAtt" ng-change="sysCheckAddrIsInDebt(selectIdAddressKf.selected);select.idDepartmentKf=null;" ng-required="sessionidProfile==3" ng-model="selectIdAddressKf.selected" autofocus>
 										                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
 										                    <ui-select-choices repeat="item in ListTenantAddress | filter: $select.search">
 										                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
@@ -51,7 +51,7 @@
 							                  <div class="col-md-4">
 							                    <div class="input-group">
 							                      <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-							                      <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="getDeparment(0,selectIdAddressKf.selected.idAdress); enabledNextBtn(); getKeyChains(selectIdAddressKf.selected.idAdress); getServicesValues(selectIdAddressKf.selected.idAdress); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
+							                      <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="sysCheckAddrIsInDebt(selectIdAddressKf.selected); select.idDepartmentKf=null;" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
 										                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
 										                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
 										                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
@@ -203,7 +203,7 @@
 														<div class="form-check form-check-inline">
 																<div class="col-md-12 col-md-offset-2">
 																	<div class="col-md-6">
-																  		<input id="typeOption1" type="radio" class="radio-custom" ng-click="enabledNextBtn(1); editAttendant=false; typeOption=1; getAllAttendant(); switchOption(); select.nameAtt=null" name="typeOption" value="1" ng-model="typeOption" required autofocus>
+																  		<input id="typeOption1" type="radio" class="radio-custom" ng-click="enabledNextBtn(1); editAttendant=false; typeOption=1; getAllAttendant(selectIdAddressKf.selected.idAdress); switchOption(); select.nameAtt=null" name="typeOption" value="1" ng-model="typeOption" required autofocus>
 																  		<label for="typeOption1" class="radio-custom-label">
 																	  		<span >Encargado titular / Otros</span>
 															  			</label> 
@@ -288,7 +288,7 @@
 															<div  class="row">
 																<div class="col-md-8 col-md-offset-2">
 																    <div class="alert alert-success" role="alert">
-													                 <span style="text-align: center;"> La solicitud sera asignada a la Administracion del consorcio. <span style="font-weight: bold;">{{companyN}}</span></span>
+													                 <span style="text-align: center;"> La solicitud sera asignada a la Administracion del consorcio. <span style="font-weight: bold;">{{selectIdCompanyKf.selected.nameCompany}}</span></span>
 													             	</div>
 													            </div>
 															</div>
@@ -305,13 +305,13 @@
 											<div class="form-check form-check-inline">
 												<div class="col-md-9 col-md-offset-2">
 													<div class="col-md-6">
-												  		<input id="ratio1" class="radio-custom" type="radio" name="knowsKeys"  ng-model="knowsKeys" value="1"  required autofocus>
+												  		<input id="ratio1" class="radio-custom" type="radio" name="idOpcionLowTicketKf1"  ng-model="$parent.idOpcionLowTicketKf" value="1" ng-click="sendOpcion(1)"  required autofocus>
 												  		<label for="ratio1" class="radio-custom-label">
 													  		<span>Conozco las llaves a dar de baja.</span>
 											  			</label>
 											  		</div>
 											  		<div class="col-md-6">
-												  		<input id="ratio2" class="radio-custom"  type="radio" name="knowsKeys" ng-model="knowsKeys" value="2" required autofocus>
+												  		<input id="ratio2" class="radio-custom"  type="radio" name="idOpcionLowTicketKf2" ng-model="$parent.idOpcionLowTicketKf" value="2" ng-click="sendOpcion(2)" required autofocus>
 												  		<label for="ratio2" class="radio-custom-label">
 													  		<span>Conozco las llaves en mi poder</span>
 											  			</label> 
@@ -319,12 +319,12 @@
 											 	</div>
 											</div>
 										</div>
-										<div ng-if="knowsKeys!=0" class="form-group" style="margin-bottom: 10px;">
-						                  	<div style="text-align: left; margin: 0 auto;" ng-if="knowsKeys==1" class="alert alert-info alert-width" role="alert">
+										<div ng-if="idOpcionLowTicketKf!=0" class="col-md-offset-2 col-md-8" style="margin-bottom: 10px;">
+						                  	<div style="text-align: left; margin: 0 auto;" ng-if="idOpcionLowTicketKf==1" class="alert alert-info" role="alert">
 						                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			            						<span class="pull-left" style="font-size:1.2em;"><i class="fas fa-info-circle">&nbsp&nbsp </i></span><strong> Recorda, </strong> que debes de indicar los codigos de el/los llavero/s a dar de baja.
 			      							</div>
-			      							<div style="text-align: left; margin: 0 auto;" ng-if="knowsKeys==2" class="alert alert-info alert-width" role="alert">
+			      							<div style="text-align: left; margin: 0 auto;" ng-if="idOpcionLowTicketKf==2" class="alert alert-info" role="alert">
 						                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			            						<span class="pull-left" style="font-size:1.2em;"><i class="fas fa-info-circle">&nbsp&nbsp </i></span><strong> Recorda, </strong> que debes de indicar los codigos de el/los llavero/s que tenes en tu poder.
 			      							</div>
@@ -335,7 +335,7 @@
 										  		<div class="col-md-4">
 													<div class="input-group">
 											  			<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-											  				<select name="qkuTenant" ng-disabled="!knowsKeys" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
+											  				<select name="qkuTenant" ng-disabled="!idOpcionLowTicketKf" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
 															    <option value=""></option>
 															    <option value="1">1</option>
 															    <option value="2">2</option>
@@ -487,13 +487,13 @@
 										      <div class="panel-heading"><span class="blink">Notificar al usuario</span></div>
 										      	<div class="panel-body">
 										      		<div class="form-check form-check-inline">
-														<div class="col-md-3 col-md-offset-3">
+														<div class="col-md-3 col-md-offset-3 col-xs-3 col-xs-offset-3">
 													  		<input id="sendnotify1" class="radio-custom" ng-model="userNotify" ng-click="getNotify(1)" type="radio" value="1" required autofocus>
 													  		<label for="sendnotify1" class="radio-custom-label">
 														  		<span>SI</span>
 												  			</label>
 												  		</div>
-												  		<div class="col-md-3">
+												  		<div class="col-md-3 col-xs-3">
 													  		<input id="sendnotify2" class="radio-custom" ng-model="userNotify" ng-click="getNotify(0)" type="radio" value="0" required autofocus>
 													  		<label for="sendnotify2" class="radio-custom-label">
 														  		<span>NO</span>
@@ -560,13 +560,13 @@
 										<div class="form-check form-check-inline">
 											<div class="col-md-9 col-md-offset-2">
 												<div class="col-md-6">
-											  		<input id="ratio1" class="radio-custom" type="radio" name="knowsKeys"  ng-model="knowsKeys" value="1"  required autofocus>
+											  		<input id="ratio1" class="radio-custom" type="radio" name="idOpcionLowTicketKf1"  ng-model="idOpcionLowTicketKf" value="1" ng-value="1"  required autofocus>
 											  		<label for="ratio1" class="radio-custom-label">
 												  		<span>Conozco las llaves a dar de baja.</span>
 										  			</label>
 										  		</div>
 										  		<div class="col-md-6">
-											  		<input id="ratio2" class="radio-custom"  type="radio" name="knowsKeys" ng-model="knowsKeys" value="2" required autofocus>
+											  		<input id="ratio2" class="radio-custom" type="radio" name="idOpcionLowTicketKf2" ng-model="idOpcionLowTicketKf" value="2" ng-value="2" required autofocus>
 											  		<label for="ratio2" class="radio-custom-label">
 												  		<span>Conozco las llaves que tengo en mi poder</span>
 										  			</label> 
@@ -574,12 +574,12 @@
 										 	</div>
 										</div>
 									</div>
-									<div ng-if="knowsKeys!=0" class="form-group" style="margin-bottom: 10px;">
-					                  	<div style="text-align: left; margin: 0 auto;" ng-if="knowsKeys==1" class="alert alert-info alert-width" role="alert">
+									<div ng-if="idOpcionLowTicketKf!=0" class="col-md-offset-2 col-md-8" style="margin-bottom: 10px;">
+					                  	<div style="text-align: left; margin: 0 auto;" ng-if="idOpcionLowTicketKf==1" class="alert alert-info" role="alert">
 					                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		            						<span class="pull-left" style="font-size:1.2em;"><i class="fas fa-info-circle">&nbsp&nbsp </i></span><strong> Recorda, </strong> que debes de indicar los codigos de el/los llavero/s a dar de baja.
 		      							</div>
-		      							<div style="text-align: left; margin: 0 auto;" ng-if="knowsKeys==2" class="alert alert-info alert-width" role="alert">
+		      							<div style="text-align: left; margin: 0 auto;" ng-if="idOpcionLowTicketKf==2" class="alert alert-info" role="alert">
 					                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		            						<span class="pull-left" style="font-size:1.2em;"><i class="fas fa-info-circle">&nbsp&nbsp </i></span><strong> Recorda, </strong> que debes de indicar los codigos de el/los llavero/s que tenes en tu poder.
 		      							</div>
@@ -590,7 +590,7 @@
 									  		<div class="col-md-4">
 												<div class="input-group">
 										  			<span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
-										  				<select name="qkuTenant" ng-disabled="!knowsKeys" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
+										  				<select name="qkuTenant" ng-disabled="!idOpcionLowTicketKf" class="form-control" placeholder="Seleccione la cantidad de llaves"  ng-model="quantity.qkuTenant" required autofocus >
 														    <option value=""></option>
 														    <option value="1">1</option>
 														    <option value="2">2</option>

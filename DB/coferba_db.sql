@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-11-2018 a las 18:24:17
--- Versión del servidor: 10.1.34-MariaDB
--- Versión de PHP: 7.0.31
+-- Tiempo de generación: 11-02-2019 a las 15:15:22
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.0.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -36,6 +36,7 @@ CREATE TABLE `tb_addres` (
   `priceManagement` decimal(10,2) DEFAULT '0.00' COMMENT 'Precio por Gestion',
   `priceShipping` decimal(10,2) DEFAULT '0.00' COMMENT 'Precio por envio ',
   `IdSecurityCode` varchar(255) COLLATE utf8_swedish_ci DEFAULT NULL COMMENT 'Codigo de verificacion para mostrar direccion a propietarios/inquilinos',
+  `IsInDebt` int(11) DEFAULT '0',
   `SA_ID_COMPANY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
@@ -43,15 +44,15 @@ CREATE TABLE `tb_addres` (
 -- Volcado de datos para la tabla `tb_addres`
 --
 
-INSERT INTO `tb_addres` (`idAdress`, `nameAdress`, `idCompanyKf`, `priceUni`, `priceManagement`, `priceShipping`, `IdSecurityCode`, `SA_ID_COMPANY`) VALUES
-(1, 'Cramer 1275', 1, '100.00', '0.00', '150.00', '', NULL),
-(2, 'Blanco Encalada 2355', 1, '0.00', '0.00', '0.00', '1234533', NULL),
-(3, 'Cabildo 3510', 2, '0.00', '0.00', '0.00', '12359', NULL),
-(4, 'Gral. La valle 1920', 2, '0.00', '0.00', '0.00', '123522', NULL),
-(5, 'Parana 2568', 3, '0.00', '0.00', '0.00', '12345211', NULL),
-(6, 'Rivadavia 4530', 3, '0.00', '0.00', '0.00', '1235667', NULL),
-(11, 'DIRECCION DE PRUEBA', 5, '110.00', '260.00', '170.00', '1234123', 595),
-(12, 'DIRECCION DE PRUEBA 2', 5, '260.00', '0.00', '310.00', '1231223', 596);
+INSERT INTO `tb_addres` (`idAdress`, `nameAdress`, `idCompanyKf`, `priceUni`, `priceManagement`, `priceShipping`, `IdSecurityCode`, `IsInDebt`, `SA_ID_COMPANY`) VALUES
+(1, 'Cramer 1275', 1, '100.00', '0.00', '150.00', NULL, 0, NULL),
+(2, 'Blanco Encalada 2355', 1, '0.00', '0.00', '0.00', NULL, 0, NULL),
+(3, 'Cabildo 3510', 2, '0.00', '0.00', '0.00', NULL, 0, NULL),
+(4, 'Gral. La valle 1920', 2, '0.00', '0.00', '0.00', NULL, 0, NULL),
+(5, 'Parana 2568', 3, '0.00', '0.00', '0.00', NULL, 0, NULL),
+(6, 'Rivadavia 4530', 3, '0.00', '0.00', '0.00', NULL, 0, NULL),
+(11, 'DIRECCION DE PRUEBA', 5, '110.00', '260.00', '170.00', '54321', 0, 595),
+(12, 'DIRECCION DE PRUEBA 2', 5, '260.00', '0.00', '310.00', '12345', 0, 596);
 
 -- --------------------------------------------------------
 
@@ -96,6 +97,7 @@ CREATE TABLE `tb_company` (
   `idCompany` int(11) UNSIGNED NOT NULL,
   `nameCompany` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
   `SA_ID_COMPANY` int(11) DEFAULT NULL,
+  `tlfCompany` varchar(255) COLLATE utf8_swedish_ci DEFAULT NULL COMMENT 'TELEFONO DE LA EMPRESA O ADMINISTRACION',
   `mail_services` varchar(200) COLLATE utf8_swedish_ci DEFAULT '',
   `mail_request` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL,
   `mail_admin` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -106,11 +108,11 @@ CREATE TABLE `tb_company` (
 -- Volcado de datos para la tabla `tb_company`
 --
 
-INSERT INTO `tb_company` (`idCompany`, `nameCompany`, `SA_ID_COMPANY`, `mail_services`, `mail_request`, `mail_admin`, `isEdit`) VALUES
-(1, 'Carlos Castaño', NULL, 'servicios@carloscastanoooo.com', 'pedidos@carloscastanoooo.com', 'admin@carloscastanoooo.com', 1),
-(2, 'Talcahuano Propiedades', NULL, 'servicio@talcahuanossss.com', 'pedidos@talcahuanossss.com', 'admin@talcahuanossss.com', 1),
-(3, 'Toyota', NULL, 'servicio@toyotaa.com', 'Pedidos@toyotaa.com', 'admin@toyotaa.com', 1),
-(5, 'ADMINISTRACION DE PRUEBA', 686, 'angelgabrielceballos@gmail.com', 'angelgabrielceballos@gmail.com', 'angelgabrielceballos@gmail.com', 0);
+INSERT INTO `tb_company` (`idCompany`, `nameCompany`, `SA_ID_COMPANY`, `tlfCompany`, `mail_services`, `mail_request`, `mail_admin`, `isEdit`) VALUES
+(1, 'Carlos Castaño', NULL, NULL, 'servicios@carloscastanoooo.com', 'pedidos@carloscastanoooo.com', 'admin@carloscastanoooo.com', 1),
+(2, 'Talcahuano Propiedades', NULL, NULL, 'servicio@talcahuanossss.com', 'pedidos@talcahuanossss.com', 'admin@talcahuanossss.com', 1),
+(3, 'Toyota', NULL, NULL, 'servicio@toyotaa.com', 'Pedidos@toyotaa.com', 'admin@toyotaa.com', 1),
+(5, 'ADMINISTRACION DE PRUEBA', 686, NULL, 'angelgabrielceballos@gmail.com', 'angelgabrielceballos@gmail.com', 'angelgabrielceballos@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -122,7 +124,7 @@ CREATE TABLE `tb_company_type_keychains` (
   `idKey` int(11) UNSIGNED NOT NULL,
   `idAddressKf` int(11) DEFAULT NULL,
   `item` varchar(200) DEFAULT NULL,
-  `value` varchar(200) DEFAULT NULL
+  `value` decimal(10,2) DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -130,12 +132,12 @@ CREATE TABLE `tb_company_type_keychains` (
 --
 
 INSERT INTO `tb_company_type_keychains` (`idKey`, `idAddressKf`, `item`, `value`) VALUES
-(1, 11, 'Llaveros', '50'),
-(2, 11, 'Sticket Vehicular', '75'),
-(3, 11, 'Credencial Movil', '100'),
-(4, 12, 'Llaveros', '80'),
-(5, 12, 'Sticket Vehicular', '100'),
-(6, 5, 'Credencial Movil', '80'),
+(1, 11, 'Llaveros', '0.99'),
+(2, 11, 'Sticket Vehicular', '0.99'),
+(3, 11, 'Credencial Movil', '0.99'),
+(4, 12, 'Llaveros', '0.99'),
+(5, 12, 'Sticket Vehicular', '0.99'),
+(6, 5, 'Credencial Movil', '0.99'),
 (7, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -165,14 +167,14 @@ CREATE TABLE `tb_department` (
 
 INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `deparmentNumber`, `deparmentDescription`, `idStatusKf`, `idUserAdminRKf`, `idUserAdminPropietariKf`, `idUserKf`, `isAprobatedAdmin`, `isRequesLowByProp`, `SA_ID_DEPARMENT`) VALUES
 (1, 1, 'Porteria', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
-(2, 1, '1-A', 0, '', 1, 1, NULL, 75, 1, 0, NULL),
+(2, 1, '1-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (3, 1, '1-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (4, 1, '2-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (5, 1, '2-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (6, 1, '3-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (7, 1, '3-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (8, 1, '4-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
-(9, 1, '4-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
+(9, 1, '4-B', 0, '', 1, 1, NULL, 71, 1, 0, NULL),
 (10, 1, '5-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (11, 1, '5-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (12, 2, '6-A', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
@@ -183,11 +185,11 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 (17, 3, '8-B', 0, '', 1, 1, NULL, NULL, 0, 0, NULL),
 (18, 2, 'Porteria', 0, NULL, 1, 1, NULL, NULL, 0, 0, NULL),
 (19, 3, 'Porteria', 0, NULL, 1, 1, NULL, NULL, 0, 0, NULL),
-(100, 11, '01-A', NULL, NULL, NULL, NULL, NULL, 52, 1, 0, 14143),
-(101, 11, '01-B', NULL, NULL, NULL, NULL, NULL, 51, 1, 0, 14144),
-(102, 11, '01-C', NULL, NULL, NULL, NULL, NULL, 76, 1, 0, 14145),
-(103, 11, '02-A', NULL, NULL, NULL, NULL, NULL, 60, 1, 0, 14146),
-(104, 11, '02-B', NULL, NULL, NULL, NULL, NULL, 51, 1, 0, 14147),
+(100, 11, '01-A', NULL, NULL, NULL, NULL, NULL, 71, 1, 0, 14143),
+(101, 11, '01-B', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14144),
+(102, 11, '01-C', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14145),
+(103, 11, '02-A', NULL, NULL, NULL, NULL, NULL, 75, 1, 0, 14146),
+(104, 11, '02-B', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14147),
 (105, 11, '02-C', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14148),
 (106, 11, '03-A', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14149),
 (107, 11, '03-B', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14150),
@@ -198,25 +200,25 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 (112, 11, '05-A', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14155),
 (113, 11, '05-B', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14156),
 (114, 11, '05-C', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14157),
-(115, 11, 'PB-A', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14158),
-(116, 12, 'PB-01', NULL, NULL, NULL, NULL, NULL, 72, 1, 0, 14159),
-(117, 12, 'PB-02', NULL, NULL, NULL, NULL, NULL, 72, 1, 0, 14160),
-(118, 12, '01-01', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 14161),
-(119, 12, '01-02', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14162),
-(120, 12, '02-01', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14163),
-(121, 12, '02-02', NULL, NULL, NULL, NULL, NULL, 76, 1, 0, 14164),
-(122, 12, '03-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14165),
-(123, 12, '03-02', NULL, NULL, NULL, NULL, NULL, 70, 1, 0, 14166),
+(115, 11, 'PB-A', NULL, NULL, NULL, NULL, NULL, 78, 1, 0, 14158),
+(116, 12, 'PB-01', NULL, NULL, NULL, NULL, NULL, 73, 1, 0, 14159),
+(117, 12, 'PB-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14160),
+(118, 12, '01-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14161),
+(119, 12, '01-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14162),
+(120, 12, '02-01', NULL, NULL, NULL, NULL, NULL, 71, 1, 0, 14163),
+(121, 12, '02-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14164),
+(122, 12, '03-01', NULL, NULL, NULL, NULL, NULL, 76, 1, 0, 14165),
+(123, 12, '03-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14166),
 (124, 12, '04-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14167),
 (125, 12, '04-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14168),
 (126, 12, '05-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14169),
 (127, 12, '05-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14170),
 (128, 12, '06-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14171),
-(129, 12, '06-02', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14172),
+(129, 12, '06-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14172),
 (130, 12, '07-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14173),
 (131, 12, '07-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14174),
 (132, 12, '08-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14175),
-(133, 12, '08-02', NULL, NULL, NULL, NULL, NULL, 56, 1, 0, 14176),
+(133, 12, '08-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14176),
 (134, 12, '09-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14177),
 (135, 12, '09-02', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14178),
 (136, 12, '10-01', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 14179),
@@ -240,8 +242,28 @@ CREATE TABLE `tb_opcion_low` (
 --
 
 INSERT INTO `tb_opcion_low` (`idOpcionLowTicket`, `opcionLowTicket`) VALUES
-(1, 'LLaveros en Mi poder'),
-(2, 'LLaveros Quiero dar de Baja');
+(1, 'LLaveros a dar de baja'),
+(2, 'LLaveros en mi poder');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_pick_receive`
+--
+
+CREATE TABLE `tb_pick_receive` (
+  `idWhoPickUp` int(11) DEFAULT NULL,
+  `nameWhoPickUp` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_pick_receive`
+--
+
+INSERT INTO `tb_pick_receive` (`idWhoPickUp`, `nameWhoPickUp`) VALUES
+(1, 'Titular'),
+(2, 'Encargado'),
+(3, 'Tercera persona');
 
 -- --------------------------------------------------------
 
@@ -364,7 +386,7 @@ CREATE TABLE `tb_sys_code` (
 --
 
 INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
-(1, '215', 'TK');
+(1, '224', 'TK');
 
 -- --------------------------------------------------------
 
@@ -401,49 +423,54 @@ INSERT INTO `tb_sys_param` (`idParam`, `value`, `description`) VALUES
 CREATE TABLE `tb_tickets` (
   `idTicket` int(11) NOT NULL,
   `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateRecibedAdmin` datetime DEFAULT NULL,
   `dateRecibeCompany` datetime DEFAULT NULL,
   `idStatusTicketKf` int(11) DEFAULT '2',
   `codTicket` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `idTypeTicketKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO DE TICKET',
-  `description` text COLLATE utf8_spanish2_ci,
-  `idRequestKf` int(11) DEFAULT NULL,
+  `idTypeTicketKf` int(11) NOT NULL COMMENT 'ID DEL TIPO DE TICKET',
+  `idRequestKf` int(11) NOT NULL,
   `idUserTenantKf` int(11) DEFAULT NULL COMMENT 'ID DEL INQUILINO',
+  `idOWnerKf` int(11) DEFAULT NULL COMMENT 'ID DEL PROPIETARIO',
   `idUserAdminKf` int(11) DEFAULT NULL COMMENT 'ID ADMIN COFERBA',
   `idUserCompany` int(11) DEFAULT NULL COMMENT 'ID USUARIO EMPRESA',
   `idUserEnterpriceKf` int(11) NOT NULL COMMENT 'ID ADMIN CONSORCIO',
+  `idUserAttendantKf` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO',
   `numberItemes` int(11) DEFAULT NULL COMMENT 'CANTIDAD DE LLAVEROS O ELEMENTOS ',
   `idTypeOfKeysKf` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'ID DE LOS TIPOS DE LLAVEROS A SOLICITAR',
-  `idTypeDeliveryKf` int(11) DEFAULT NULL,
   `itemToDisabled` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'CODIGO Y TIPO DE LOS LLAVEROS A DAR DE BAJA',
-  `idOWnerKf` int(11) DEFAULT NULL COMMENT 'ID DEL PROPIETARIO',
+  `idReasonDisabledItemKf` int(11) DEFAULT NULL COMMENT 'Razon Cancelar item',
   `idTypeOuther` int(11) DEFAULT NULL COMMENT 'TIPO DE CONSULTA',
   `mailContactConsult` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'MAIL DE CONTACTO PARA CONSULTAS',
-  `SA_NRO_ORDER` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `idReasonDisabledItemKf` int(11) DEFAULT NULL COMMENT 'Razon Cancelar item',
+  `SA_NRO_ORDER` int(255) DEFAULT NULL COMMENT 'ID DE NUMERO DE ORDEN QUE SERA ASIGNADO POR EL SISTEMA LOCAL',
+  `descriptionComment` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `descriptionOrder` varchar(500) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'DESCRIPCION DEL PEDIDO',
+  `isCommentOrDesccriptionChange` int(4) DEFAULT NULL,
   `idTypeServicesKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO SERVICIO SOBRE EL CUAL SE SOLICITA EL SERVICIO TECNICO',
   `totalService` decimal(18,2) DEFAULT '0.00' COMMENT 'MONTO TOTAL DEL SERVICIO',
   `addressConsul` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `idProfileKf` int(11) DEFAULT NULL,
   `idOpcionLowTicketKf` int(11) DEFAULT NULL,
-  `idUserAttendantKf` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO',
-  `idCompanyKf` int(11) DEFAULT NULL,
-  `isAprobatedAdmin` tinyint(4) DEFAULT '0',
-  `isCancelTicket` tinyint(4) DEFAULT '0',
-  `dateCancel` timestamp NULL DEFAULT NULL,
   `idTypeOfOptionKf` int(11) DEFAULT NULL COMMENT 'ID DEL TIPO DE SOLICITUD -ENCARGADO/OTRO/EDIFICIO',
-  `idDepartmentKf` int(11) DEFAULT NULL COMMENT 'ID DEL DEPARTAMENTO',
+  `idCompanyKf` int(11) DEFAULT NULL,
   `idAdressKf` int(11) DEFAULT NULL COMMENT 'DIRECCION DEL TICKET',
-  `dateAprovatedAdmin` timestamp NULL DEFAULT NULL,
+  `idDepartmentKf` int(11) DEFAULT NULL COMMENT 'ID DEL DEPARTAMENTO',
+  `idUserCancelTicket` int(11) DEFAULT NULL,
+  `isCancelRequested` int(4) DEFAULT NULL COMMENT 'NOTIFICA A COFERBA SOBRE LA CANCELACION SUJETA A APROBACION',
+  `reasonForCancelTicket` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'NOTA INDICANDO LA RAZON DE LA CANCELACION DEL TICKET',
+  `dateCancel` datetime DEFAULT NULL,
+  `idUserApprovedTicket` int(11) DEFAULT NULL,
+  `dateRecibedAdmin` datetime DEFAULT NULL,
   `idOtherKf` int(11) DEFAULT NULL COMMENT 'ID DEL ENGARGADO DE TIPO "Otro"',
+  `isChangeDeliverylRequested` int(4) DEFAULT NULL COMMENT 'NOTIFICA A COFERBA SOBRE EL CAMBIO DE ENVIO SUJETO A APROBACION',
+  `idUserHasChangeTicket` tinyint(4) DEFAULT NULL,
+  `idTypeDeliveryKf` int(11) DEFAULT NULL COMMENT 'ID DE LA OPCION DE ENVIO',
+  `idWhoPickUp` int(11) DEFAULT NULL,
   `idUserAttendantKfDelivery` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO QUE RECIBE LA LLAVE',
   `thirdPersonNames` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'NOMBRE DE LA TERCERA PERSONA QUE RECIBE O RETIRA',
   `thirdPersonPhone` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'TELEFONO DE LA TERCERA PERSONA',
   `thirdPersonId` int(11) DEFAULT NULL COMMENT 'DNI DE LA TERCERA PERSONA',
   `isNew` tinyint(4) DEFAULT NULL,
-  `isChangueTypeSend` tinyint(4) DEFAULT NULL,
   `isAplicate` tinyint(4) DEFAULT NULL,
+  `idStatusTicketKfOld` int(11) DEFAULT NULL COMMENT 'ID DEL STATUS EN LA QUE SE ENCONTRABA EL TICKET ANTE DE UNA CANCELACION',
   `sendUserNotification` tinyint(4) DEFAULT NULL COMMENT 'Autorizar a notificar y permitir visualizar pedido al usuario o empresa'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -451,20 +478,54 @@ CREATE TABLE `tb_tickets` (
 -- Volcado de datos para la tabla `tb_tickets`
 --
 
-INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibedAdmin`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `description`, `idRequestKf`, `idUserTenantKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `numberItemes`, `idTypeOfKeysKf`, `idTypeDeliveryKf`, `itemToDisabled`, `idOWnerKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `idReasonDisabledItemKf`, `descriptionOrder`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idUserAttendantKf`, `idCompanyKf`, `isAprobatedAdmin`, `isCancelTicket`, `dateCancel`, `idTypeOfOptionKf`, `idDepartmentKf`, `idAdressKf`, `dateAprovatedAdmin`, `idOtherKf`, `idUserAttendantKfDelivery`, `thirdPersonNames`, `thirdPersonPhone`, `thirdPersonId`, `isNew`, `isChangueTypeSend`, `isAplicate`, `sendUserNotification`) VALUES
-(51, '2018-11-17 01:55:17', NULL, NULL, 2, 'TK-00000204', 1, NULL, NULL, 72, 31, NULL, 0, 2, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1},{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '180.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, NULL, 116, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0),
-(52, '2018-11-19 02:56:43', NULL, NULL, 2, 'TK-00000205', 3, 'adadsdsa', NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1),
-(53, '2018-11-19 03:01:46', NULL, NULL, 2, 'TK-00000206', 3, 'Prueba', NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Prueba', 2, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1),
-(54, '2018-11-19 04:15:29', NULL, NULL, 2, 'TK-00000207', 1, NULL, NULL, 76, 0, NULL, 0, 2, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1},{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 1, 'null', 76, NULL, NULL, NULL, NULL, NULL, NULL, '180.00', NULL, 3, NULL, 0, 5, 0, 0, NULL, NULL, 121, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(55, '2018-11-22 01:15:43', NULL, NULL, 2, 'TK-00000208', 1, NULL, NULL, 61, 31, NULL, 0, 11, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"3\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '580.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, NULL, 100, 11, NULL, 0, 51, NULL, NULL, NULL, 1, NULL, NULL, 1),
-(56, '2018-11-22 02:30:21', NULL, NULL, 2, 'TK-00000209', 1, NULL, NULL, 70, 31, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '390.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, NULL, 123, 12, NULL, 0, NULL, 'Gabriel Gomez', '91123343434', 30945888, 1, NULL, NULL, 1),
-(57, '2018-11-22 02:49:09', NULL, NULL, 2, 'TK-00000210', 1, NULL, NULL, 73, 0, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '390.00', NULL, 5, NULL, 0, 5, 0, 0, NULL, NULL, 116, 12, NULL, 0, 64, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(58, '2018-11-22 03:17:29', NULL, NULL, 2, 'TK-00000211', 1, NULL, NULL, 71, 0, NULL, 0, 11, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"3\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '580.00', NULL, 5, NULL, 0, 5, 0, 0, NULL, NULL, 102, 11, NULL, 0, 67, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(59, '2018-11-24 02:57:26', NULL, NULL, 2, 'TK-00000212', 1, NULL, NULL, 0, 31, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '480.00', NULL, 0, NULL, 0, 5, 0, 0, NULL, 2, 0, 11, NULL, 0, 68, NULL, NULL, NULL, 1, NULL, NULL, 0),
-(60, '2018-11-24 03:05:42', NULL, NULL, 2, 'TK-00000213', 1, NULL, NULL, 0, 31, NULL, 0, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '80.00', NULL, 1, NULL, 0, 5, 0, 0, NULL, 2, 0, 12, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0),
-(61, '2018-11-24 03:08:21', NULL, NULL, 2, 'TK-00000214', 1, NULL, NULL, 0, 0, NULL, 74, 1, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1}]}', 2, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '390.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, 2, 0, 12, NULL, 0, 64, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(62, '2018-11-24 03:13:18', NULL, NULL, 2, 'TK-00000215', 1, NULL, NULL, 0, 0, NULL, 74, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 1, 'null', 0, NULL, NULL, NULL, NULL, NULL, NULL, '310.00', NULL, 4, NULL, 0, 5, 0, 0, NULL, 2, 0, 11, NULL, 0, NULL, 'Fran Marquez', '91293213213', 95490931, 1, NULL, NULL, NULL),
-(50, '2018-11-17 00:30:47', NULL, NULL, 2, 'TK-00000203', 3, NULL, NULL, NULL, 31, NULL, 0, NULL, 'null', NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'Por favor cambiar camara de entrada al edificio', NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1);
+INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibeCompany`, `idStatusTicketKf`, `codTicket`, `idTypeTicketKf`, `idRequestKf`, `idUserTenantKf`, `idOWnerKf`, `idUserAdminKf`, `idUserCompany`, `idUserEnterpriceKf`, `idUserAttendantKf`, `numberItemes`, `idTypeOfKeysKf`, `itemToDisabled`, `idReasonDisabledItemKf`, `idTypeOuther`, `mailContactConsult`, `SA_NRO_ORDER`, `descriptionComment`, `descriptionOrder`, `isCommentOrDesccriptionChange`, `idTypeServicesKf`, `totalService`, `addressConsul`, `idProfileKf`, `idOpcionLowTicketKf`, `idTypeOfOptionKf`, `idCompanyKf`, `idAdressKf`, `idDepartmentKf`, `idUserCancelTicket`, `isCancelRequested`, `reasonForCancelTicket`, `dateCancel`, `idUserApprovedTicket`, `dateRecibedAdmin`, `idOtherKf`, `isChangeDeliverylRequested`, `idUserHasChangeTicket`, `idTypeDeliveryKf`, `idWhoPickUp`, `idUserAttendantKfDelivery`, `thirdPersonNames`, `thirdPersonPhone`, `thirdPersonId`, `isNew`, `isAplicate`, `idStatusTicketKfOld`, `sendUserNotification`) VALUES
+(90, '2019-02-11 02:36:16', NULL, 3, 'TK-00000222', 1, 0, 71, 71, 0, NULL, 0, 0, 1, '{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}', 'null', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '430.99', NULL, 3, NULL, NULL, 5, 11, 100, NULL, NULL, NULL, NULL, 79, '2019-02-11 03:47:50', NULL, NULL, NULL, 2, 2, 78, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(91, '2019-02-11 02:46:38', NULL, 3, 'TK-00000223', 1, 0, 74, 0, 0, NULL, 0, 0, 2, '{\"keys\":[{\"idKeyKf\":\"4\",\"keyQty\":1},{\"idKeyKf\":\"5\",\"keyQty\":1}]}', 'null', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1.98', NULL, 5, NULL, NULL, 5, 12, 120, NULL, NULL, NULL, NULL, 79, '2019-02-11 03:47:44', NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(92, '2019-02-11 03:29:22', NULL, 3, 'TK-00000224', 3, 0, NULL, NULL, 31, NULL, 0, NULL, NULL, 'null', 'null', NULL, NULL, NULL, NULL, 'Agregando nota adicional', 'Camara de entrada con falla electrica.', 1, 1, NULL, NULL, 1, NULL, NULL, 5, 12, NULL, NULL, NULL, NULL, NULL, 31, '2019-02-11 04:29:32', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_tmp_delivery_data`
+--
+
+CREATE TABLE `tb_tmp_delivery_data` (
+  `idTmpDeliveryData` int(11) NOT NULL COMMENT 'ID DE LA INFO TEMPORAL ASOCIADO A UN TICKET',
+  `tmp_idTicketKf` int(11) NOT NULL COMMENT 'ID DEL TICKET ',
+  `tmp_thirdPersonNames` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'NOMBRE DE LA TERCERA PERSONA QUE RECIBE O RETIRA',
+  `tmp_thirdPersonPhone` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish2_ci DEFAULT NULL COMMENT 'TELEFONO DE LA TERCERA PERSONA',
+  `tmp_thirdPersonId` int(11) DEFAULT NULL COMMENT 'DNI DE LA TERCERA PERSONA',
+  `tmp_idUserAttendantKfDelivery` int(11) DEFAULT NULL COMMENT 'ID DEL ENCARGADO QUE RECIBE LA LLAVE',
+  `tmp_idTypeDeliveryKf` int(11) DEFAULT NULL,
+  `tmp_totalService` decimal(18,2) DEFAULT NULL,
+  `tmp_idWhoPickUpKf` int(11) DEFAULT NULL,
+  `tmp_idUserRequestChOrCancel` int(11) DEFAULT NULL COMMENT 'ID DEL USUARIO QUE SOLICITA EL CAMBIO DE ENVIO O CANCELACION',
+  `tmp_reasonForCancelTicket` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `tmp_isChApproved` int(4) DEFAULT NULL COMMENT 'VALOR SUMINISTRADO POR SISTEMA LOCAL COFERBA',
+  `tmp_isCancelApproved` int(4) DEFAULT NULL COMMENT 'VALOR SUMINISTRADO POR SISTEMA LOCAL COFERBA',
+  `tmp_isChOrCancelApplied` int(4) DEFAULT NULL,
+  `dateOfRequestByUser` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_tmp_delivery_data`
+--
+
+INSERT INTO `tb_tmp_delivery_data` (`idTmpDeliveryData`, `tmp_idTicketKf`, `tmp_thirdPersonNames`, `tmp_thirdPersonPhone`, `tmp_thirdPersonId`, `tmp_idUserAttendantKfDelivery`, `tmp_idTypeDeliveryKf`, `tmp_totalService`, `tmp_idWhoPickUpKf`, `tmp_idUserRequestChOrCancel`, `tmp_reasonForCancelTicket`, `tmp_isChApproved`, `tmp_isCancelApproved`, `tmp_isChOrCancelApplied`, `dateOfRequestByUser`) VALUES
+(16, 83, NULL, NULL, NULL, NULL, 1, '0.99', 1, 31, NULL, 1, NULL, 1, '2019-01-28 16:51:35'),
+(17, 85, NULL, NULL, NULL, NULL, 1, '1.98', 1, 31, NULL, 0, NULL, 0, '2019-01-28 22:05:33'),
+(18, 85, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 'Probando.', NULL, 0, 0, '2019-01-28 22:53:25'),
+(19, 85, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 'Probando nuevamente.', NULL, 0, 0, '2019-01-28 23:01:56'),
+(20, 85, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 'Cancelando pa probar', NULL, 0, 0, '2019-01-28 23:11:09'),
+(21, 85, NULL, NULL, NULL, NULL, 1, '1.98', 1, 31, NULL, 1, NULL, 1, '2019-01-29 15:30:02'),
+(22, 84, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 'Probando', NULL, 1, NULL, '2019-01-30 03:32:13'),
+(24, 85, NULL, NULL, NULL, 76, 2, '311.98', 2, 31, NULL, 0, NULL, 0, '2019-01-30 03:36:56'),
+(25, 87, NULL, NULL, NULL, NULL, 1, '262.97', 1, 71, NULL, 1, NULL, 1, '2019-01-30 02:47:50'),
+(26, 87, NULL, NULL, NULL, 78, 2, '432.97', 2, 71, NULL, 0, NULL, 0, '2019-01-30 02:48:34'),
+(27, 87, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 71, 'Probando|', NULL, 1, 1, '2019-01-30 03:27:17'),
+(28, 82, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 'Probando', NULL, 1, 1, '2019-01-30 03:33:45'),
+(29, 85, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 'Probando', NULL, 1, 1, '2019-01-30 03:37:28'),
+(30, 83, NULL, NULL, NULL, 76, 2, '310.99', 2, 31, NULL, NULL, NULL, NULL, '2019-01-30 03:45:06');
 
 -- --------------------------------------------------------
 
@@ -566,9 +627,10 @@ CREATE TABLE `tb_type_outher` (
 INSERT INTO `tb_type_outher` (`idTypeOuther`, `TypeOuther`) VALUES
 (1, 'VENTA'),
 (2, 'LLAVEROS'),
-(3, 'FACTURACION'),
-(4, 'ADMINISTRATIVAS'),
-(5, 'SEGURIDAD');
+(3, 'SERVICIOS TECNICOS'),
+(4, 'FACTURACION'),
+(5, 'ADMINISTRATIVAS'),
+(6, 'SEGURIDAD');
 
 -- --------------------------------------------------------
 
@@ -630,34 +692,17 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `passwordUser`, `idProfileKf`, `dateCreated`, `idCompanyKf`, `resetPasword`, `idAddresKf`, `idTyepeAttendantKf`, `descOther`, `idDepartmentKf`, `isDepartmentApproved`, `isEdit`, `requireAuthentication`, `idTypeTenantKf`, `idStatusKf`, `tokenMail`, `isConfirmatedMail`, `SA_ID`) VALUES
-(31, 'admin sistema', 'soporte@coferba.com.ar', '(054) 9 11 2323-2323', '(054) 9 11 2343-2324', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 1, '2018-02-16 12:01:22', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 1, NULL),
-(51, 'Eduardo Luengo', 'davideduardo.luegoss@hotmail.com', '33333333333333', '22222222222222', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 6, '2018-09-22 22:58:14', 5, 0, 11, 2, NULL, 104, NULL, 0, 1, 1, 1, 'kwOVz7xSJ9', 1, NULL),
-(52, 'David Rincon', 'rexx84@gmail.com', '222222222222222', '12321321321', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-09-22 23:18:08', 5, 0, 11, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, 'SeA7VYdpQj', 1, NULL),
-(53, 'Fernando Chacon', 'fchacon@asdasddsa.com', '1111111111111111', '12321321313', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-09-26 21:02:24', 5, 0, 11, NULL, NULL, 101, 1, 0, NULL, 2, 1, 'oBIkWeeWA1', 1, NULL),
-(54, 'Emiliano Kasieri', 'emiliano@dadsdsad.com', '11111111111111111', '1231232133', '2865258e4c3c988ffd09ace858c1ff259e7c8ce3', 2, '2018-09-29 00:25:00', 5, 1, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, '3V0ruqQUKq', 1, NULL),
-(55, 'Roberto Caceres', 'roberto@dadasd.com', '111111111111', '12321321321312', 'f4bb4469fe14e2a95692d771c985fe90ee887888', 2, '2018-09-29 03:16:16', 5, 1, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'NCW12A3TBf', 1, NULL),
-(56, 'Alejandro Garcia', 'alejandro@dadasds.com', '22222222222222', '111111111111111', '1a3fd04aed13f43b0b7f34452b819d6c5ccad7fe', 6, '2018-09-29 03:41:38', 5, 1, 12, 3, NULL, 133, 1, 1, NULL, 2, 1, 'BnXuX7nAwW', 1, NULL),
-(57, 'David Rincon', 'davideduardo.luengoooo@hotmail.com', '112222223433', '112322332323', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2018-10-01 19:12:54', 5, 0, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, 1, 'PED8IQpNow', 1, NULL),
-(58, 'Jorgasdasd', 'sdasds@asdas', '2123213131232213213232132', '213213213', 'eaa07189e6e7c4bf1897a69c5d0e6a1e1931173e', 3, '2018-10-01 19:17:31', 5, 1, 11, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'LYPCjjCble', 1, NULL),
-(59, 'sadsadasdsa', 'asdasdsad@qwdeasd.com', '', '213213123231233123123123', '6a5e737ea7866e8562e8cc7e2789a70878479420', 5, '2018-10-01 19:18:36', NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, 2, 1, 'hxXbHUK7CI', 1, NULL),
-(60, 'Veronica Calelo', 'rexx84213231@gmail.com', '1212322121322132132132132', '2132132133', '6036284a14eb3dee8a6335c906afc3426d8d9b50', 3, '2018-10-01 19:22:07', 5, 1, 11, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, '0PHfV4Szaa', 1, NULL),
-(61, 'Genesis Carmon', 'genesiscarmona@asdasdasd.com', '22222222222', '12313123313', '7b72317635557fbf9e4ff338626d6823d444d3ce', 5, '2018-10-01 19:42:09', 5, 1, 11, NULL, NULL, 100, 1, 1, NULL, 2, 1, 'PeC8q6KTj7', 0, NULL),
-(62, 'Fernando Gutierrez', 'fgutierrez@asdasds.com', '', '123213213123', '3888373256ed2bf1b0a9801b710112f5653811c6', 5, '2018-10-01 19:50:23', 5, 1, 11, NULL, NULL, 104, 1, 1, NULL, 2, 1, 'kUdKO4y7Xn', 0, NULL),
-(63, 'qwewqewqewqe', '2143213213123@sdsadsad', '', '21321321321', '3f9d1caac6722358bb7a80c69908af838dd6488d', 5, '2018-10-01 19:57:59', 5, 1, 12, NULL, NULL, 123, 1, 1, NULL, 2, 1, 'yDO32axeqq', 0, NULL),
-(64, 'Indira Lugo', 'indiralugo@asdadd.com', '119293484938492', '11213232432444444', '73c046f679e99054c5e37c710b62f74689d5bd3d', 6, '2018-10-01 21:37:56', 5, 1, 12, 2, NULL, NULL, NULL, 1, 0, 0, 1, 'HhD0rv198f', 1, NULL),
-(65, 'Rafito los palotes', 'rafito@sadsadasd', '', '2132121323', '3912557543073a3d02e08da924b83d67d874c42f', 5, '2018-10-01 21:59:24', 5, 1, 11, NULL, NULL, 108, 1, 1, NULL, 2, 1, 'IfpVRYaTpL', 0, NULL),
-(66, 'Chachi', 'chachi@asdasd', '', '123213213213', 'cef31d07664d5b1d6e348a76fd2268460fd00bcf', 5, '2018-10-01 21:59:58', 5, 1, 11, NULL, NULL, 108, 1, 1, NULL, 2, 1, 'qEUZlR5qKF', 0, NULL),
-(67, 'Gabriel Vasquez', 'gvasquez@asdsadad.com', '11111111111111111', '123123213213213', '75c67600afe762574121e418bf9456761a17b7d9', 6, '2018-10-01 22:31:25', 5, 1, 11, 2, NULL, NULL, NULL, 1, 0, 0, 1, 'pF2rzYLAWl', 1, NULL),
-(68, 'Alfonzo Marquez', 'amarquez@asdsadsad.com', '11111111111111111111', '1123213213213213', 'b403c087637dabe8b511636784292052e4698f88', 6, '2018-10-02 01:45:08', 5, 1, 11, 3, NULL, 112, 1, 1, NULL, 2, 1, '20ymbCMJOn', 1, NULL),
-(69, 'Fernando Carrasco', 'fcarrasco@dasdsadasd.com', '1231232132132132132133213', '1232132132132132132132132', 'edd928aca114215182458cd67203e7b150bf1fbe', 5, '2018-10-09 18:02:39', 5, 1, 11, NULL, NULL, 100, 1, 1, NULL, 2, 1, 'xKG0pux1CM', 0, NULL),
-(70, 'Jairo Gomez', 'jgomez@dasdsadasdsa.com', '123283823232939233', '112112112123213213', '9b0c7294db056f5e097fbe88533101d3d2bb6ce0', 3, '2018-10-18 02:13:33', 5, 1, 12, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, 'X9o4Esy9Fj', 1, NULL),
-(71, 'Lucia Finol', 'david.rincon.oracle@gmail.com', '111111111111111', '1123213214444', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-10-24 02:41:20', 5, 0, 11, NULL, NULL, 102, 1, 1, NULL, 2, 1, 'wia3HATd4Y', 1, NULL),
-(72, 'David Rincon', 'davideduardo.luengo2@hotmail.com', NULL, '1122326388', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-10-25 12:54:01', 5, 0, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, '4Pl5A7eVtM', 1, NULL),
-(73, 'Daniel Mendez', 'dmendez@sadsadsa.com', '', '12321321321321', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-10-29 02:44:53', 5, 0, 12, NULL, NULL, 116, 1, 0, NULL, 2, 1, '8qo5QrIVyp', 1, NULL),
-(74, 'Humberto Moran', 'davideduardo.luengo@hotmail.com', NULL, '1212323244555', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2018-10-29 15:24:56', 5, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1, 'TG6slDmwua', 1, NULL),
-(75, 'asdsad sadsad', 'sadsadsad@asdsada', '', '12321321321321', '8f65a5cc8f86a94842ac2808dd5ca6ff0fa48695', 3, '2018-10-29 16:28:59', 1, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, 1, 0, 'X7nAwW5GRx', 0, NULL),
-(76, 'David Rincon', 'davideduardo.luego@hotmail.com', '', '11223344555545', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-11-07 01:23:26', 5, 0, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, 'Y9Ma7JmyO0', 1, NULL),
-(78, 'Sandra Vilchez', 'svilchez@asdsad.com', '11232323234', '11232323232', '227d5094b8a76a8ac0680126d996350df33200eb', 5, '2018-11-22 03:20:50', 5, 1, 12, NULL, NULL, 121, 1, 1, NULL, 2, 0, 'pgP7mhaYX5', 0, NULL);
+(31, 'admin sistema', 'soporte@coferba.com.ar', '(054) 9 11 2323-2323', '91124759596', 'fe703d258c7ef5f50b71e06565a65aa07194907f', 1, '2018-02-16 12:01:22', NULL, 0, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1, NULL, 1, NULL),
+(71, 'David Eduardo Rincon', 'davideduardo.luengo@hotmail.com', '1122345556677777', '1122333444555666', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 3, '2018-10-22 02:33:22', 5, 0, 11, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, '3Jh0NuqLHa', 1, NULL),
+(72, 'leandro figueroa', 'lean.figueroa@gmail.com', '12345678', '12345678', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 5, '2018-10-29 16:27:43', 5, 0, 12, NULL, NULL, 117, 1, 0, NULL, 2, 1, 'JbuVXny0Jr', 1, NULL),
+(73, 'leandro2 figueroa2', 'leandro.figueroa@coferba.com.ar', '12345678', '12345678', '1f82ea75c5cc526729e2d581aeb3aeccfef4407e', 3, '2018-10-29 16:48:52', 5, 0, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, 'OLtCaObFgO', 1, NULL),
+(74, 'inquilino prueba', 'rexx84@gmail.com', '12345678', '12345678', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2018-10-29 16:58:23', 5, 0, 12, NULL, NULL, 120, 1, 0, NULL, 2, 1, 'XTrpLMkZiG', 1, NULL),
+(75, 'Encargado Prueba', 'encargadoprueba@asdasda', '123213213213213', '1123232434333423', 'c4f9fcd7be6b041073f1b23a2bf80bd1d831292e', 6, '2018-12-19 17:30:57', 5, 1, 11, 4, NULL, 103, 1, 1, 1, 2, 1, 'gQuGxR2Zoo', 1, NULL),
+(76, 'Roberto Higuera', 'rhiguera@fffff.com', '1232131233', '12321321313', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 6, '2019-01-18 04:10:24', 5, 0, 12, 2, NULL, NULL, NULL, 0, 1, 1, 1, 'ZWsfbNEEXB', 1, NULL),
+(77, 'Esteban Moreli', 'emoreli@akjsdsadas.com', '2132132133', '1123213213', '44b07ccf74fd8a488be0b4aa0593beff5ac6f3ef', 6, '2019-01-18 04:31:36', 5, 1, 12, 3, NULL, NULL, NULL, 1, 0, 0, 1, 'uQzz412uH5', 1, NULL),
+(78, 'Victor Gonzalez', 'vgonzalez@asdadsadwq.com', '123213213213', '123213213213', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 6, '2019-01-18 04:33:07', 5, 0, 11, 2, NULL, NULL, NULL, 0, 1, 1, 1, '69bMxpjXQ8', 1, NULL),
+(79, 'Sofia Rincon', 'sofia.rincon@asdasdsad.com', NULL, '123123213213', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 4, '2019-01-22 04:06:32', 5, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 1, 'NaUwCkVwH4', 1, NULL),
+(80, 'Daniela Becerra', 'daniela.becerra@hoasdsad.com', '1122332442323', '1123234443231', '03d000df4fa813c9d0c93e59a0ba3b6dc5c88399', 5, '2019-02-11 01:23:37', 5, 0, 12, NULL, NULL, 116, 1, 1, NULL, 2, 1, 'hXLcQRwWGn', 1, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -742,6 +787,12 @@ ALTER TABLE `tb_tickets`
   ADD PRIMARY KEY (`idTicket`);
 
 --
+-- Indices de la tabla `tb_tmp_delivery_data`
+--
+ALTER TABLE `tb_tmp_delivery_data`
+  ADD PRIMARY KEY (`idTmpDeliveryData`);
+
+--
 -- Indices de la tabla `tb_typetenant`
 --
 ALTER TABLE `tb_typetenant`
@@ -786,7 +837,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT de la tabla `tb_addres`
 --
 ALTER TABLE `tb_addres`
-  MODIFY `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idAdress` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_clients_tickets`
@@ -834,7 +885,13 @@ ALTER TABLE `tb_sys_param`
 -- AUTO_INCREMENT de la tabla `tb_tickets`
 --
 ALTER TABLE `tb_tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_tmp_delivery_data`
+--
+ALTER TABLE `tb_tmp_delivery_data`
+  MODIFY `idTmpDeliveryData` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID DE LA INFO TEMPORAL ASOCIADO A UN TICKET', AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_typeticket`
@@ -858,7 +915,7 @@ ALTER TABLE `tb_type_services`
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- Restricciones para tablas volcadas

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('body').tooltip({ selector: '[data-toggle="tooltip"]' });
   $('body').popover({ selector: '[data-toggle="popover"]' });
   $('.input--tel').mask('(054) 9 99 9999-9999');

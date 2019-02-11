@@ -115,7 +115,7 @@
                               <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
                           </ui-select-choices>
                       </ui-select>
-                      <span ng-show="selectIdAddressKf.selected!=0" style="cursor: pointer;" class="input-group-addon"><i ng-click="getDeparment(1,selectIdAddressKf.selected.idAdress); listUserDepto(1,selectIdAddressKf.selected.idAdress);" class="glyphicon glyphicon-refresh"></i></span>
+                      <span ng-show="selectIdAddressKf.selected!=undefined && (sessionidProfile==3 || (sessionidProfile==6 && sessionidTypeTenant==1))" style="cursor: pointer;" class="input-group-addon"><i ng-click="getDeparment(1,selectIdAddressKf.selected.idAdress); listUserDepto(1,selectIdAddressKf.selected.idAdress);" class="glyphicon glyphicon-refresh"></i></span>
                     </div>
                   </div>
             </div>
@@ -151,7 +151,7 @@
                               <!--<small ng-bind-html="item.nameCompany | highlight: $select.search"></small>-->
                           </ui-select-choices>
                       </ui-select>
-                      <span ng-show="selectIdAddressKf.selected!=0 && sessionidProfile==3" style="cursor: pointer;" class="input-group-addon"><i ng-click="listUserDepto(1,selectIdAddressKf.selected.idAdress); getAllAttendant(selectIdAddressKf.selected.idAdress);" class="glyphicon glyphicon-refresh"></i></span>
+                      <span ng-show="selectIdAddressKf.selected!=undefined && sessionidProfile==4" style="cursor: pointer;" class="input-group-addon"><i ng-click="listUserDepto(1,selectIdAddressKf.selected.idAdress); getAllAttendant(selectIdAddressKf.selected.idAdress);" class="glyphicon glyphicon-refresh"></i></span>
                     </div>
                   </div>
             </div>
@@ -213,10 +213,10 @@
         </div>
         <div class="clearfix"></div> 
         <div class="col-lg-12">
-          <div ng-show="noRecordsFound && (sessionidProfile==3 || sessionidProfile==5 || sessionidProfile==6)" class="alert alert-info" role="alert">
+          <div ng-show="noRecordsFound && selectIdAddressKf.selected!=undefined && (sessionidProfile==3 || sessionidProfile==5 || sessionidProfile==6)" class="alert alert-info" role="alert">
               <strong>INFO: </strong>Estimado/a, <strong>{{sessionNames}}</strong> No existen departamentos asociados a la direccion seleccionada.
           </div>
-          <div ng-show="noRecordsFound && sessionidProfile!=3 && sessionidProfile==6 && selectIdAddressKf.selected" class="alert alert-info" role="alert">
+          <div ng-show="noRecordsFound && selectIdAddressKf.selected!=undefined && sessionidProfile!=3 && sessionidProfile==6" class="alert alert-info" role="alert">
             <strong>INFO: </strong>No hay departamentos registrados en la direccion seleccionada.
           </div>
               <button ng-show="selectIdAddressKf.selected && sessionidProfile!=3 && sessionidProfile!=5 && sessionidProfile!=6 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap1"  ng-class="!isCollapsed && collap==1 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-1 btn " ng-click="isCollapsed = !isCollapsed; switchTab(1); "><i class="fas fa-building"></i> DEPARTAMENTOS</button>
@@ -228,7 +228,7 @@
                 <div class="panel-body">
                   <div class="row">
                      <!-- Filter Department For Admins -->
-                    <div ng-show="sessionidProfile!=3" class="form-group col-md-4">
+                    <div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group col-md-4">
                       <label style="padding-left: 15px;">Departamentos</label>
                         <div class="col-xs-12 selectContainer">
                           <div class="input-group">
@@ -240,7 +240,7 @@
                           </div>
                       </div>
                     </div>
-                    <div ng-show="sessionidProfile!=3" class="form-group pull-right col-md-2">
+                    <div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group pull-right col-md-2">
                       <label style="padding-left: 15px;">Codigo de Seguridad</label>
                         <div class="col-xs-12 selectContainer">
                           <div class="input-group">
@@ -710,7 +710,7 @@
             </div>
             <div class="modal-body">
             <form name="frmSecCode" class="form-horizontal" autocomplete="off" role="form" novalidate>
-              <div class="form-group" ng-class="{'has-error': frmSecCode.checkCode.$dirty && frmSecCode.checkCode.$invalid}">
+              <div id="divCodeFrm" class="form-group" ng-class="{'has-error': frmSecCode.checkCode.$dirty && frmSecCode.checkCode.$invalid}">
                 <label>Codigo de Validacion</label> 
                 <div class="col-md-12">
                   <div class="input-group">

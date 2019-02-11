@@ -124,9 +124,24 @@ class Direccion_model extends CI_Model
         }
             return null;
      }
+    public function checkIfAddressIsInDebt($id) {
+        $quuery = null;
+        $rs = null;
 
-     
-    
+        
+            $this->db->select("*")->from("tb_addres");
+
+            $quuery = $this->db->where("tb_addres.IsInDebt=1 AND tb_addres.idAdress=".$id)->get();
+
+            if ($quuery->num_rows() > 0) {
+                $rs = $quuery->num_rows();
+            }else{
+                $rs=0;
+            }
+            return $rs;
+        
+    }
+
 
 }
 ?>
