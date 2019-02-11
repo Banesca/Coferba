@@ -58,6 +58,18 @@ class User extends REST_Controller {
     }
 
 
+
+    /* SERVICIO GET QUE OBTIENE TODO LOS USUARIOS QUE NO POSEEN DEPARTAMENTOS ASOCIADOS  */
+    public function usernoregister_get() {
+
+        $user = $this->user_model->usernoregister();
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
      public function filterForm_get() {
         $filters = $this->user_model->getFilterForm();
 

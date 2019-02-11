@@ -36,7 +36,35 @@ class User_model extends CI_Model
         {
             return null;
         }
-	}
+    }
+    
+
+    
+
+     // GET DE USUARIO  NO ASOCIADOS A NINGUN DEPARTAMENTO//
+     public function usernoregister() {
+        $query = null;
+        $rs = null;
+
+            $sql = "SELECT distinct idUser,tb_user.* from tb_user where idUser not in
+            (SELECT distinct idUserAdminRKf as id from  tb_department as tbaux1 where  tbaux1.idUserAdminRKf  != '')
+            and  idUser
+            not in (SELECT distinct idUserKf as id from  tb_department as tbaux2 where  tbaux2.idUserKf  != '' )
+            and  idUser not in
+            (SELECT distinct idUserAdminPropietariKf as id from  tb_department as tbaux3 where  tbaux3.idUserAdminPropietariKf  != '' ) 
+            AND tb_user.idStatusKf != -1 ";
+            
+            $query = $this->db->query($sql);
+
+            if ($query->num_rows() > 0) {
+                $rs =  $query->result_array();
+                return $rs;
+            }
+            
+            return null;
+            
+        
+    }
 
 
 	 // GET DE LISTADO BUSQUEDA DE USUARIO //
