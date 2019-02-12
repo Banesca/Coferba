@@ -46,13 +46,11 @@ class User_model extends CI_Model
         $query = null;
         $rs = null;
 
-            $sql = "SELECT distinct idUser,tb_user.* from tb_user where idUser not in
-            (SELECT distinct idUserAdminRKf as id from  tb_department as tbaux1 where  tbaux1.idUserAdminRKf  != '')
+            $sql = "SELECT distinct idUser,tb_user.idDepartmentKf,tb_user.* from tb_user where idUser not in
+            (  SELECT distinct idUserKf as id from  tb_department as tbaux1 where  tbaux1.idUserKf  != '' )
             and  idUser
-            not in (SELECT distinct idUserKf as id from  tb_department as tbaux2 where  tbaux2.idUserKf  != '' )
-            and  idUser not in
-            (SELECT distinct idUserAdminPropietariKf as id from  tb_department as tbaux3 where  tbaux3.idUserAdminPropietariKf  != '' ) 
-            AND tb_user.idStatusKf != -1 ";
+            not in (SELECT distinct idUser as id from  tb_user as tbaux2 where  tbaux2.idDepartmentKf  != ''  )
+            AND tb_user.idStatusKf != -1 and tb_user.idTypeTenantKf in (1,2) ";
             
             $query = $this->db->query($sql);
 
