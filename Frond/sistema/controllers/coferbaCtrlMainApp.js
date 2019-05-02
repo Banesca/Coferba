@@ -1210,7 +1210,7 @@ $scope.slider = {
                 }); 
                 $scope.dptoNotFound=true;
                }
-              if (!idAddressTmp && $scope.manageDepto==0){
+              if (!idAddressTmp && $scope.manageDepto==0 && !$scope.IsSystem){
                 inform.add('Debe seleccionar una direccion o contacte al administrador.',{
                       ttl:5000, type: 'warning'
                    }); 
@@ -2112,6 +2112,22 @@ $scope.slider = {
      $scope.sysUpdateIdAddressKf = {};
      $scope.profileHasChange=false;
      $scope.tmp = {};
+     $scope.getAttValue = function(){
+      $scope.ariaAtt = $('#filterContent').attr('aria-expanded');
+      if ($scope.ariaAtt=="false" || $scope.ariaAtt==undefined){
+        $('#bodyContent').addClass('mb-collapsed-filter');
+        $('#bodyContent').removeClass('margin-row-1');
+        //console.log("$scope.ariaAtt: "+$scope.ariaAtt);
+      }else{
+        $('#bodyContent').removeClass('mb-collapsed-filter');
+        $('#bodyContent').addClass('margin-row-1');
+        //console.log("$scope.ariaAtt: "+$scope.ariaAtt);
+      }
+
+     }
+    
+
+    
     $scope.selectUserDataFn = function (obj) {
       $scope.CallFilterFormU(); 
       $scope.CallFilterFormT(); 
@@ -2121,7 +2137,7 @@ $scope.slider = {
        $scope.profileHasChange=false;
        $scope.att.ownerOption=null;
        $scope.tmp = {};
-      $scope.tmp.idProfileKf                  = obj.idProfileKf;
+       $scope.tmp.idProfileKf                  = obj.idProfileKf;
       console.log("[selectUserDataFn]");
       console.log("|--->idUser              : "+ obj.idUser);
       console.log("|--->idProfile           : "+ $scope.tmp.idProfileKf);
@@ -2150,21 +2166,52 @@ $scope.slider = {
         }
         
         if(obj.idProfileKf==6 && idCompanyTmp){$scope.officeListByCompnayID($scope.sysUpdateidCompanyKf.selected.idCompany)}
-        $scope.sysUpdate.idTypeAttKf           = obj.idTyepeAttendantKf;
-        $scope.sysUpdateIdAddressKf.selected   = {idAdress: obj.idAddresKf, nameAdress: obj.nameAdress};
-        $scope.sysUpdate.idDepartmentKf        = obj.idDepartmentKf;
-        $scope.sysUpdate.typeOtherAtt          = obj.descOther;
-        $scope.sysUpdate.names                 = obj.fullNameUser;
-        $scope.sysUpdate.email                 = obj.emailUser;
-        $scope.sysUpdate.emailTmp              = obj.emailUser;
-        $scope.sysUpdate.phonelocalNumberUser  = obj.phoneLocalNumberUser;
-        $scope.sysUpdate.phoneMovilNumberUser  = obj.phoneNumberUser;
+          $scope.sysUpdate.idTypeAttKf           = obj.idTyepeAttendantKf;
+          $scope.sysUpdateIdAddressKf.selected   = {idAdress: obj.idAddresKf, nameAdress: obj.nameAdress};
+          $scope.sysUpdate.idDepartmentKf        = obj.idDepartmentKf;
+          $scope.sysUpdate.typeOtherAtt          = obj.descOther;
+          $scope.sysUpdate.names                 = obj.fullNameUser;
+          $scope.sysUpdate.email                 = obj.emailUser;
+          $scope.sysUpdate.emailTmp              = obj.emailUser;
+          $scope.sysUpdate.phonelocalNumberUser  = obj.phoneLocalNumberUser;
+          $scope.sysUpdate.phoneMovilNumberUser  = obj.phoneNumberUser;
         if(obj.idProfileKf==6 && obj.idTyepeAttendantKf!=1 && obj.idTypeTenantKf==1){$scope.att.ownerOption=1;}
         else if(obj.idProfileKf==6 && obj.idTyepeAttendantKf!=1 && obj.idTypeTenantKf==2){$scope.att.ownerOption=2;}
-        if(obj.idProfileKf==6 && obj.idTyepeAttendantKf!=0 && !obj.idTypeTenantKf){$scope.att.ownerOption=3;}
+        if(obj.idProfileKf==6 && obj.idTyepeAttendantKf!=0 && (!obj.idTypeTenantKf || obj.idTypeTenantKf==0)){$scope.att.ownerOption=3;}
         if(obj.idProfileKf!=2 && obj.idProfileKf!=4){$scope.getDeparment(0,$scope.sysUpdateIdAddressKf.selected.idAdress);}
-        
+        //Validamos si el usuario inquilino no tiene asignado un departamento.
+        if(($scope.sysUpdate.idProfileKf==5 || ($scope.sysUpdate.idProfileKf==6 && $scope.sysUpdate.idTypeTenantKf==2)) && !$scope.sysUpdate.idDepartmentKf && $scope.sysUpdate.idAddresKf){
+            inform.add('Para completar los datos selecciona el departamento que corresponde al usuario '+$scope.sysUpdate.names,{
+              ttl:5000, type: 'warning'
+            });
+        //Validamos si el usuario inquilino no tiene seleccionado un consorcio y asignado un departamento.
+        }else if(($scope.sysUpdate.idProfileKf==5 || ($scope.sysUpdate.idProfileKf==6 && $scope.sysUpdate.idTypeTenantKf==2)) && !$scope.sysUpdate.idDepartmentKf && !$scope.sysUpdate.idAddresKf){
+            inform.add('Para completar los datos selecciona un consorcio y el departamento que corresponde al usuario '+$scope.sysUpdate.names,{
+              ttl:5000, type: 'warning'
+            });
+        }
+        //Validamos si el usuario no establecido ningun numero telefonico de contacto.
+        if(!$scope.sysUpdate.phonelocalNumberUser && !$scope.sysUpdate.phoneMovilNumberUser){
+            inform.add('Para completar los datos indica al menos un telefono de contacto del usuario '+$scope.sysUpdate.names,{
+              ttl:5000, type: 'warning'
+            });
+        //Validamos si el usuario inquilino no tiene seleccionado un consorcio y asignado un departamento.
+        }
+        $('#UpdateModalUser').on('shown.bs.modal', function () {
+          //$('#idDepartmentKf').trigger('focus');
+          if(!$scope.sysUpdate.idDepartmentKf && $scope.sysUpdate.idAddresKf){
+            $('#idDepartmentKf').focus();
+          }else if(!$scope.sysUpdate.idDepartmentKf && !$scope.sysUpdate.idAddresKf){
+            $scope.$broadcast('idAddressKf');
+          }
+          if(!$scope.sysUpdate.phonelocalNumberUser && !$scope.sysUpdate.phoneMovilNumberUser){
+            $('#phoneLocal').focus();
+          }
+          //if($scope.sysUpdate.phoneMovilNumberUser){$('#phoneMovil').addClass('has-warning');}
+          
+        })
         $('#UpdateModalUser').modal('toggle');
+
       //$('#EditModalUser').modal('toggle');
     };
     /**************************************************************************************/
@@ -3806,6 +3853,23 @@ $scope.slider = {
     +
     +
     */
+  /**************************************************
+  *                                                 *
+  *        LIST OF USER TO ASSIGN A DEPARMENT       *
+  *                                                 *
+  **************************************************/
+  $scope.listUserWithoutDepto = null;
+  $scope.sysFunctionsListOfUser2Assign = function(idDepto){
+
+    userServices.usersWithoutDepto(idDepto).then(function(data) {
+        if(data){
+          $scope.listUserWithoutDepto = data;
+          console.log($scope.listUserWithoutDepto);
+          $("#ModalListUser2Assign").modal('show');
+        }
+    });
+    
+  }
   /**************************************************
   *                                                 *
   *        ASSIGN DEPARMENT TO A TENANT USER        *

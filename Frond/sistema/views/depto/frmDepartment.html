@@ -211,6 +211,19 @@
                   </fieldset>
             </form>
         </div>
+        <div class="col-md-12 depto-m-d-b">
+          <div ng-show="selectIdAddressKf.selected && (sessionidProfile==1 || sessionidProfile==4)" class="form-group pull-right col-md-12 col-sm-12 col-xs-12">
+            <label style="padding-left: 15px;">Codigo de Seguridad</label>
+              <div class="col-xs-12 selectContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon icon-key"></i></span>
+                    <input type="text" data-toggle="tooltip" readonly="true" data-placement="bottom" title="Codigo de Seguridad" ng-model="addressCodeSecurity" class="form-control">
+                </div>
+            </div>
+          </div>
+          <button ng-show="selectIdAddressKf.selected && sessionidProfile!=3 && sessionidProfile!=5 && sessionidProfile!=6 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap1"  ng-class="!isCollapsed && collap==1 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-1 col-sm-6 col-xs-6 btn " ng-click="isCollapsed = !isCollapsed; switchTab(1); "><i class="fas fa-building"></i> DEPARTAMENTOS</button>
+          <button ng-show="selectIdAddressKf.selected && sessionidProfile!=3 && sessionidProfile!=5 && sessionidProfile!=6 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap2" ng-class="!isCollapsed && collap==2 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-2 col-sm-6 col-xs-6 btn " ng-click="isCollapsed = !isCollapsed; switchTab(2); getAllAttendant(selectIdAddressKf.selected.idAdress);"><i class="fas fa-users"></i> ENCARGADOS</button>
+        </div>
         <div class="clearfix"></div> 
         <div class="col-lg-12">
           <div ng-show="noRecordsFound && selectIdAddressKf.selected!=undefined && (sessionidProfile==3 || sessionidProfile==5 || sessionidProfile==6)" class="alert alert-info" role="alert">
@@ -219,9 +232,7 @@
           <div ng-show="noRecordsFound && selectIdAddressKf.selected!=undefined && sessionidProfile!=3 && sessionidProfile==6" class="alert alert-info" role="alert">
             <strong>INFO: </strong>No hay departamentos registrados en la direccion seleccionada.
           </div>
-              <button ng-show="selectIdAddressKf.selected && sessionidProfile!=3 && sessionidProfile!=5 && sessionidProfile!=6 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap1"  ng-class="!isCollapsed && collap==1 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-1 btn " ng-click="isCollapsed = !isCollapsed; switchTab(1); "><i class="fas fa-building"></i> DEPARTAMENTOS</button>
-              <button ng-show="selectIdAddressKf.selected && sessionidProfile!=3 && sessionidProfile!=5 && sessionidProfile!=6 && !noRecordsFound && !dptoNotFound" type="button" ng-model="collap2" ng-class="!isCollapsed && collap==2 ? 'btn-success' : 'btn-primary'" class="col-md-4 col-md-offset-2 btn " ng-click="isCollapsed = !isCollapsed; switchTab(2); getAllAttendant(selectIdAddressKf.selected.idAdress);"><i class="fas fa-users"></i> ENCARGADOS</button>
-            <hr>
+
             <div uib-collapse="isCollapsed">
               <!--*********************DEPARTAMENTOS *******************************--> 
               <div ng-if="!isCollapsed && collap==1 && sessionidProfile>0 && recordsFound && !noRecordsFound && !dptoNotFound && selectIdAddressKf.selected!=undefined" class="panel panel-default">             
@@ -240,7 +251,7 @@
                           </div>
                       </div>
                     </div>
-                    <div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group pull-right col-md-2">
+                    <div ng-show="sessionidProfile==1 || sessionidProfile==4" class="form-group pull-right col-md-4 col-sm-12 col-xs-12">
                       <label style="padding-left: 15px;">Codigo de Seguridad</label>
                         <div class="col-xs-12 selectContainer">
                           <div class="input-group">
@@ -275,10 +286,10 @@
                     <table ng-show="recordsFound && sessionidProfile!=0"  class="table table-sm table-striped table-bordered table-condensed table-list table-responsive">
                         <thead style=" background: #4d5d6f; color: white;">
                             <tr>
-                                <th class="col-md-4"></th>
+                                <th class="col-md-4 "><i class="fas fa-users-cog"></i> Habitantes</th>
                                 <!--<th>ID</th>-->
                                 <th><i class="fas fa-home"></i> Departamento</th>
-                                <th class="col-md-2 col-md-offset-3"><i class="fas fa-bookmark"></i> Estatus</th>
+                                <th style="text-align: center;" class="col-md-1"><i class="fas fa-bookmark"></i> Estatus</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -286,37 +297,40 @@
                             <tr style="align-content: center; cursor: pointer;" ng-repeat-start="item in ListDptoByTenant | filter: idStatusDeptoKf |filter: (!!idDepartmentKf || undefined) && {departmentFloor:idDepartmentKf}">
                               <td>
                                 <div class="btn-group">
-                                  <button type="button" ng-disabled="(sessionidProfile==3||sessionidProfile==6) && item.isAprobatedAdmin!=1" ng-click="selectTableRow($index, item.idDepartment); isAllowed=item.isAprobatedAdmin==1?item.idUserKf:null" class="btn btn-labeled btn-sm" ng-class="dayDataCollapse[$index]?'btn-info':'btn-success'">
-                                  <span ng-if="dayDataCollapse[$index]" class="btn-label"><i title="Ver Habitantes" class="glyphicon glyphicon-plus"></i></span>
-                                  <span ng-if="!dayDataCollapse[$index]" class="btn-label"><i title="Ver Habitantes" class="glyphicon glyphicon-minus"></i></span>
-                                    <span ng-if="item.departmentFloor=='Porteria' || item.departmentFloor=='ENCARGADO'"> Ver Encargado</span>
-                                    <span ng-if="item.departmentFloor!='Porteria'"> Ver Habitantes</span>
+                                  <button type="button" ng-disabled="(sessionidProfile==3||sessionidProfile==6) && item.isAprobatedAdmin!=1" ng-click="selectTableRow($index, item.idDepartment); isAllowed=item.isAprobatedAdmin==1?item.idUserKf:null" class="btn btn-sm" ng-class="dayDataCollapse[$index]?'btn-info':'btn-success'">
+                                  <i ng-if="dayDataCollapse[$index]" title="Ver Habitantes" class="glyphicon glyphicon-plus"></i>
+                                  <i ng-if="!dayDataCollapse[$index]" title="Ver Habitantes" class="glyphicon glyphicon-minus"></i>
+                                    <span ng-if="item.departmentFloor=='Porteria' || item.departmentFloor=='ENCARGADO'"><span class="show-tag-1"> &nbsp;Ver</span> <span class="show-tag-2">Encargado</span></span>
+                                    <span ng-if="item.departmentFloor!='Porteria'"><span class="show-tag-1">&nbsp;Ver </span> <span class="show-tag-2"></span></span>
                                   </button>
                                 </div>
                                 <div ng-if="((sessionidProfile!=5 && item.idUserKf==null || item.idUserKf==0) || (sessionidProfile!=5 || item.idUserK>0))" class="btn-group">
-                                  <button data-toggle="tooltip" data-placement="right" title="Nuevo Habitante" ng-if="item.departmentFloor.indexOf('Porteria')<0 && item.departmentFloor.indexOf('ENCARGADO')<0" ng-disabled="(sessionidProfile==3||sessionidProfile==6) && item.isAprobatedAdmin!=1" type="button" ng-click="sysFunctionsTenant('open', 'add', item.idDepartment); " class="btn btn-labeled btn-sm btn-info">
-                                  <span class="btn-label"><i class="fas fa-user-plus"></i> </span>Nuevo Habitante</button> 
+                                  <button data-toggle="tooltip" data-placement="right" title="Nuevo Habitante" ng-if="item.departmentFloor.indexOf('Porteria')<0 && item.departmentFloor.indexOf('ENCARGADO')<0" ng-disabled="(sessionidProfile==3||sessionidProfile==6) && item.isAprobatedAdmin!=1" type="button" ng-click="sysFunctionsTenant('open', 'add', item.idDepartment); " class="btn btn-sm btn-info">
+                                  <i class="fas fa-user-plus"></i><span class="show-tag-1">&nbsp;Nuevo</span> <span class="show-tag-2"></span></button> 
 
-                                  <button data-toggle="tooltip" data-placement="right" title="Nuevo Encargado" ng-if="item.departmentFloor.indexOf('Porteria')>=0 || item.departmentFloor.indexOf('ENCARGADO')>=0" ng-click="sysFunctionsAtt('open', item)" type="button" ng-click="" class="btn btn-labeled btn-sm btn-info">
-                                  <span class="btn-label"><i class="fas fa-user-plus"></i> </span>Nuevo Encargado</button>
-                    
+                                  <button data-toggle="tooltip" data-placement="right" title="Nuevo Encargado" ng-if="item.departmentFloor.indexOf('Porteria')>=0 || item.departmentFloor.indexOf('ENCARGADO')>=0" ng-click="sysFunctionsAtt('open', item)" type="button" ng-click="" class="btn btn-sm btn-info">
+                                  <i class="fas fa-user-plus"></i><span class="show-tag-1">&nbsp;Nuevo</span> <span class="show-tag-2">Encargado</span></button>
+                                </div>
+                                <div ng-if="(((sessionidProfile==1 || sessionidProfile==4) && item.idUserKf==null || item.idUserKf==0) || (sessionidProfile!=5 || item.idUserK>0))" class="btn-group">
+                                  <button data-toggle="tooltip" data-placement="right" title="Asignar Habitante" ng-if="item.departmentFloor.indexOf('Porteria')<0 && item.departmentFloor.indexOf('ENCARGADO')<0" type="button" ng-click="sysFunctionsListOfUser2Assign(item.idDepartment); " class="btn btn-sm btn-info">
+                                  <i class="fas fa-user-tag"></i> <span class="show-tag-1">&nbsp;Asignar</span> <span class="show-tag-2"></span></button>                     
                                 </div>
                               </td>
                               <!--<td>{{item.idDepartment}}</td>-->
                               <td>{{item.departmentFloor}}</td>
                               <!-- Status for Administrator -->
-                              <td ng-if="sessionidProfile!=3">
+                              <td ng-if="sessionidProfile!=3" style="text-align: center;">
                                 <div class="btn-group">
                                   <!-- STATUS ASSGIN SUCESS -->
-                                  <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==1 && (item.idUserKf!=null || item.idUserKf!=0)" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    CON PROPIETARIO &nbsp
-                                  </button>
+                                  <span type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==1 && (item.idUserKf!=null || item.idUserKf!=0)" class="btn btn-sm btn-success" >
+                                    CON PROPIETARIO &nbsp <i class="fas fa-user-tie"></i>
+                                  </span>
                                    <!-- STATUS AVAILABLE SUCESS -->
-                                  <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==0 && (item.idUserKf==null || item.idUserKf==0)" class="btn btn-sm btn-primary dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                                    SIN PROPIETARIO &nbsp
+                                  <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==0 && (item.idUserKf==null || item.idUserKf==0)" class="btn btn-sm btn-primary">
+                                    SIN PROPIETARIO &nbsp <i class="fas fa-user-slash"></i>
                                   </button>
                                    <!-- STATUS REQUESTED SUCESS -->
-                                  <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==0 && item.idUserKf>0" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <button type="button" ng-if="item.isRequesLowByProp==0 && item.isAprobatedAdmin==0 && item.idUserKf>0" class="btn btn-sm btn-warning" >
                                     SOLICITADO &nbsp <span class="caret"></span>
                                   </button>
                                     <ul ng-if="item.isAprobatedAdmin==0 && (item.idUserKf!=null || item.idUserKf!=0) && item.isRequesLowByProp==0" class="dropdown-menu" role="menu">
@@ -393,17 +407,17 @@
                                                   <!--<th><i class="glyphicon glyphicon-envelope"> </i> Correo</th>-->
                                                   <th>Perfil</th>
                                                   <th><i class="glyphicon icon-flag"> </i> Status</th>
-                                                  <th><i class="glyphicon icon-calendar"> </i> Registrado</th>
+                                                  <th class="show-column-table"><i class="glyphicon icon-calendar"> </i> Registrado</th>
                                               </tr>
                                             </thead>
                                             <tbody>
                                               <tr style="align-content: center;" ng-repeat="item in listTenant | filter: searchboxfilter | filter: {idTypeTenantKf:filterTenant}">
                                                   <td>
                                                     <div class="btn-group">
-                                                      <button type="button" ng-click="select2EditTenant(item, idDeptoKf);" class="btn btn-sm btn-warning">
+                                                      <button type="button" ng-click="select2EditTenant(item, idDeptoKf);" class="btn btn-sm btn-xs btn-warning">
                                                       <i data-toggle="tooltip" data-placement="bottom"  title="Modificar Datos" class="glyphicon glyphicon-edit"></i>  
                                                       </button>
-                                                      <button type="button" ng-click="modalConfirmation('removet', 0, item)" class="btn btn-sm btn-danger">
+                                                      <button type="button" ng-click="modalConfirmation('removet', 0, item)" class="btn btn-sm btn-xs btn-danger">
                                                       <i data-toggle="tooltip" data-placement="bottom"  title="Eliminar Habitante" class="glyphicon glyphicon-remove-circle"></i>  
                                                       </button>
                                                     </div>
@@ -459,7 +473,7 @@
                                                       <i data-toggle="tooltip" style="cursor: pointer;" data-placement="bottom"  title="Autorizado" class="fas fa-unlock-alt"></i>
                                                       </span>
                                                   </td>
-                                                  <td>{{item.dateCreated  | dateToISO | date:'MM/dd/yyyy'}}</td>
+                                                  <td class="show-column-table">{{item.dateCreated  | dateToISO | date:'MM/dd/yyyy'}}</td>
                                                   <!--<td>{{item.dateCreated}}</td>-->
                                               </tr>
                                             </tbody>

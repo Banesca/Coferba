@@ -41,16 +41,19 @@ class User_model extends CI_Model
 
     
 
-     // GET DE USUARIO  NO ASOCIADOS A NINGUN DEPARTAMENTO//
-     public function usernoregister() {
+     // GET DE USUARIO NO ASOCIADOS A NINGUN DEPARTAMENTO//
+     public function usernoregister($id) {
         $query = null;
         $rs = null;
 
-            $sql = "SELECT distinct idUser,tb_user.idDepartmentKf,tb_user.* from tb_user where idUser not in
-            (  SELECT distinct idUserKf as id from  tb_department as tbaux1 where  tbaux1.idUserKf  != '' )
-            and  idUser
-            not in (SELECT distinct idUser as id from  tb_user as tbaux2 where  tbaux2.idDepartmentKf  != ''  )
-            AND tb_user.idStatusKf != -1 and tb_user.idTypeTenantKf in (1,2) ";
+            $sql = "
+             SELECT distinct idUser,tb_user.idDepartmentKf,tb_user.* from tb_user 
+             where idUser NOT in
+            (SELECT distinct idUserKf as id from  tb_department as tbaux1 where  tbaux1.idDepartment=$id AND tbaux1.idUserKf != '' )
+            AND  idUser NOT IN 
+            (SELECT distinct idUser as id from  tb_user as tbaux2 where  tbaux2.idDepartmentKf  != '')
+            AND tb_user.idStatusKf != -1 AND tb_user.idTypeTenantKf in (1,2)";
+
             
             $query = $this->db->query($sql);
 

@@ -182,7 +182,6 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
               })   
           },
           /*/LOGIN SERVICE*/
-          /* ADD AN USER */
           approveDepto: function(idDepto) {
             //console.log(serverHeaders);
               console.log("[Service][approveDepto]---> idDepto: "+idDepto);
@@ -239,6 +238,17 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                   return response
               });
           },
+          removeTenantDepto: function(userData2Remove) {
+              console.log("[Service][removeTenantDepto]---> Department to remove: "+userData2Remove.department.idDepartment);
+              return $http.post(serverHost+serverBackend+"Department/removeTenant",userData2Remove)
+                .then(function mySucess(response) {
+                  console.log("[Service][removeTenantDepto]---> Department N°: "+userData2Remove.department.idDepartment+" (Successfully removed)");
+                  return response;
+              },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response
+              });
+          },
           /*GET OFFICES BY COMPANY ID*/
           officeList: function(idCompany) {
               var rsData = {};
@@ -280,6 +290,21 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                     url : serverHost+serverBackend+"Direccion/getTheAddressBySecurityCode/"+codeSecurity
                   }).then(function mySuccess(response) {
                       console.log("[Service][addressByCode]---> codeSecurity: "+codeSecurity+" (Successfully Confirmed)");
+                      return response;
+
+                  },function myError(response, error) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  });
+          },
+          /*/GET THE TENANT WITHOUT DEPT AND OWNER WITH OR WITHOUT DEPT*/
+          usersWithoutDepto: function(idDepto) {
+              console.log("[Service][usersWithoutDepto]---> idDeparment: "+idDepto);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"user/usernoregister/"+idDepto
+                  }).then(function mySuccess(response) {
+                      response = response.data;
                       return response;
 
                   },function myError(response, error) { 

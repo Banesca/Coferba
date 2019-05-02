@@ -60,9 +60,11 @@ class User extends REST_Controller {
 
 
     /* SERVICIO GET QUE OBTIENE TODO LOS USUARIOS QUE NO POSEEN DEPARTAMENTOS ASOCIADOS  */
-    public function usernoregister_get() {
-
-        $user = $this->user_model->usernoregister();
+    public function usernoregister_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+        $user = $this->user_model->usernoregister($id);
         if (!is_null($user)) {
             $this->response($user, 200);
         } else {

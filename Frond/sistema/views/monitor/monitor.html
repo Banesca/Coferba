@@ -4,7 +4,7 @@
         <div class="filter-bar">
             <div id="innerRow"  class="row" >
                 <div class="pull-left">
-                    <button ng-class="collapse ? 'btn-success' : 'btn-primary'"  class="btn btn-md" data-toggle="collapse" data-target="#filterContent"><i class="fas fa-filter"></i></button>
+                    <button ng-class="collapse ? 'btn-success' : 'btn-primary'" ng-click="getAttValue();"  class="btn btn-md" data-toggle="collapse" data-target="#filterContent"><i class="fas fa-filter"></i></button>
                     <span class="label_tags filter_span"> Filtros:</span>
                 </div><!--
                 <div class="col-md-1 pull-right">
@@ -210,7 +210,7 @@
     </div>
     <!-- /modal -->
     <!-- Monitor Body -->
-    <div  class="container-fluid show-grid margin-row-1">
+    <div id="bodyContent"  class="container-fluid show-grid margin-row-1">
         <div ng-repeat="tk in listTickt | filter: ticketFiltered()" class="row align-items-end row_body row-margin-1">
             <div ng-click="openTicketFn(tk, 0)">
                 <!--ng-if="differentDays[$index]<=2 && tk.isCancelTicket<=0" -->

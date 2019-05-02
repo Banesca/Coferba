@@ -439,7 +439,7 @@
 		    				<form class="form-horizontal" name="fUpdateUser" ng-init="" novalidate>
 								<fieldset>
 								<!-- Select profile -->
-								<div class="form-group col-md-12" ng-if="sessionidProfile==1"> 
+								<div class="form-group col-md-12" ng-class="{'has-error': !tmp.idProfileKf}" ng-if="sessionidProfile==1"> 
 								  <label style="padding-left: 15px;">Perfil</label>
 								    <div class="col-xs-12 selectContainer">
 									    <div class="input-group">
@@ -450,8 +450,7 @@
 									  	</div>
 									</div>
 								</div>
-								<!-- Company List-->
-								      
+								<!-- Company List-->	      
 								<div class="form-group col-md-12" ng-show="tmp.idProfileKf==2 || tmp.idProfileKf==4 || tmp.idProfileKf==6" >  
 								  <label ng-if="tmp.idProfileKf!=2 && tmp.idProfileKf!=4" style="padding-left: 15px;">Empresa / Administracion</label>
 								  <label ng-if="tmp.idProfileKf==2" style="padding-left: 15px;">Empresa</label>
@@ -460,7 +459,7 @@
 									    <div class="input-group">
 					                      <span class="input-group-addon"><i class="icon-suitcase"></i></span>
 					                        <ui-select name="idCompanyKf" ng-required="tmp.idProfileKf==2 || tmp.idProfileKf==4" ng-model="sysUpdateidCompanyKf.selected" on-select="onSelectCallback()" ng-change="tmp.idProfileKf!=1 || tmp.idProfileKf!=3 || tmp.idProfileKf!=5?officeListByCompnayID(sysUpdateidCompanyKf.selected.idCompany):''; sysUpdate.idDepartmentKf=null;">
-					                          <ui-select-match allow-clear="true" placeholder="Todos" >{{$select.selected.nameCompany}}</ui-select-match>
+					                          <ui-select-match allow-clear="false" placeholder="Todos" >{{$select.selected.nameCompany}}</ui-select-match>
 					                            <ui-select-choices repeat="item in listCompany | filter: $select.search">
 					                              <div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
 					                                <small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
@@ -507,7 +506,7 @@
 					                </div>
 					            </div>
 								<!-- List Address For Attendant-->
-								<div ng-if="(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf!=1)" class="form-group " ng-class="(tmp.idProfileKf==6 && sysUpdate.idTypeTenantKf && dptoNotFound) || (tmp.idProfileKf==6 && profileHasChange)?'col-md-12':'col-md-6' " >
+								<div ng-if="(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf!=1)" class="form-group " ng-class="(tmp.idProfileKf==6 && att.ownerOption!=2 && (!profileHasChange || profileHasChange))?'col-md-12':'col-md-6' " >
 								  <label style="padding-left: 15px;">Direcci&#243n</label>  
 								    <div class="col-xs-12 selectContainer">
 									    <!-- ######################################################################################################### -->
@@ -515,7 +514,7 @@
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
 	                                      <ui-select name="idAddressKf" ng-disabled="!companyFound" ng-required="(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf!=1)" ng-change="getDeparment(0,sysUpdateIdAddressKf.selected.idAdress); sysUpdate.idDepartmentKf=null; ListDpto=''" ng-model="sysUpdateIdAddressKf.selected" autofocus>
 
-					                          <ui-select-match allow-clear="true" placeholder="Todos">{{$select.selected.nameAdress}}</ui-select-match>
+					                          <ui-select-match allow-clear="false" placeholder="Todos">{{$select.selected.nameAdress}}</ui-select-match>
 					                            <ui-select-choices repeat="item in listOffice | filter: $select.search">
 					                              <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
 					                                <!--<small>Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
@@ -529,15 +528,15 @@
 								  </div>
 								</div>
 								<!-- List Address For Tenant-->
-								<div ng-if="((tmp.idProfileKf==3 || tmp.idProfileKf==5) && !sysUpdate.idTypeAttKf)" class="form-group" ng-class="tmp.idProfileKf==3 && !profileHasChange?'col-md-12':'col-md-6'">
+								<div ng-if="((tmp.idProfileKf==3 || tmp.idProfileKf==5) && !sysUpdate.idTypeAttKf)" class="form-group" ng-class="[tmp.idProfileKf==3 && !profileHasChange?'col-md-12':'col-md-6', !sysUpdateIdAddressKf.selected.idAdress?'has-error':'']">
 								  <label style="padding-left: 15px;">Direcci&#243n</label>  
 								    <div class="col-xs-12 selectContainer">
 									    <!-- ######################################################################################################### -->
 									    <div class="input-group">
 					                      <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-	                                      <ui-select name="idAddressKf"  ng-required="tmp.idProfileKf==3 || tmp.idProfileKf==5" ng-change="getDeparment(0,sysUpdateIdAddressKf.selected.idAdress); sysUpdate.idDepartmentKf=null; ListDpto=''" ng-model="sysUpdateIdAddressKf.selected" autofocus>
+	                                      <ui-select focus-on="idAddressKf" name="idAddressKf"  ng-required="tmp.idProfileKf==3 || tmp.idProfileKf==5" ng-change="getDeparment(0,sysUpdateIdAddressKf.selected.idAdress); sysUpdate.idDepartmentKf=null; ListDpto=''" ng-model="sysUpdateIdAddressKf.selected" autofocus>
 
-					                          <ui-select-match allow-clear="true" placeholder="Todos">{{$select.selected.nameAdress}}</ui-select-match>
+					                          <ui-select-match allow-clear="false" placeholder="Todos">{{$select.selected.nameAdress}}</ui-select-match>
 					                            <ui-select-choices repeat="item in ListAddress | filter: $select.search">
 					                              <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
 					                                <!--<small>Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
@@ -551,12 +550,12 @@
 								  </div>
 								</div>
 								<!-- List Department-->
-								<div ng-if="sysUpdateIdAddressKf.selected.idAdress && (tmp.idProfileKf==5 || (tmp.idProfileKf==6 && sysUpdate.idTypeTenantKf) || (att.ownerOption==2 && profileHasChange) || (tmp.idProfileKf==3 && profileHasChange))" class="form-group col-md-6">
+								<div ng-if="sysUpdateIdAddressKf.selected.idAdress && (tmp.idProfileKf==5 || (tmp.idProfileKf==6 && sysUpdate.idTypeTenantKf==2) || (att.ownerOption==2 && profileHasChange))" class="form-group col-md-6" ng-class="{'has-error': !sysUpdate.idDepartmentKf}">
 								  <label style="padding-left: 15px;">Departamento</label>  
 								    <div class="col-xs-12 selectContainer">
 									    <div class="input-group">
 									    	<span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-									  		<select name="idDepartmentKf" class="form-control" ng-disabled="dptoNotFound" ng-change="tmp.idProfileKf==6 && sysUpdate.idTypeTenantKf==1?preCheckDeptoHasOwner(sysUpdate.idTypeAttKf, sysUpdate.idDepartmentKf): '';"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-required="((tmp.idProfileKf==5) && !sysUpdate.idTypeAttKf)||(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf==2)" ng-model="sysUpdate.idDepartmentKf" autofocus >
+									  		<select autofocus="true" id="idDepartmentKf" name="idDepartmentKf" class="form-control" ng-disabled="dptoNotFound" ng-change="tmp.idProfileKf==6 && sysUpdate.idTypeTenantKf==1?preCheckDeptoHasOwner(sysUpdate.idTypeAttKf, sysUpdate.idDepartmentKf): '';"  ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" ng-required="((tmp.idProfileKf==5) && !sysUpdate.idTypeAttKf)||(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf==2)" ng-model="sysUpdate.idDepartmentKf" autofocus >
 											    <option value=""></option>
 										    </select>
 									    </div>
@@ -653,23 +652,23 @@
 								</div>-->
 								<!-- Text Phone-->
 								       
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-6" ng-class="[!sysUpdate.phonelocalNumberUser && sysUpdate.phoneMovilNumberUser?'has-warning':'', !sysUpdate.phonelocalNumberUser && !sysUpdate.phoneMovilNumberUser?'has-error':'']">
 								  <label style="padding-left: 15px;">Telefono Fijo</label>  
 								    <div class="col-xs-12">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-									  		<input name="phoneLocal" ng-minlength="10" class="form-control input--local" ng-model="sysUpdate.phonelocalNumberUser" type="text" autofocus ng-required="sysUpdate.phoneMovilNumberUser==''" />
+									  		<input id="phoneLocal" name="phoneLocal" ng-minlength="10" class="form-control input--local" ng-model="sysUpdate.phonelocalNumberUser" type="text" autofocus ng-required="sysUpdate.phoneMovilNumberUser==''" />
 									    </div>
 								  </div>
 								</div>
 								<!-- Text Phone-->
 								       
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-6" ng-class="[!sysUpdate.phoneMovilNumberUser && sysUpdate.phonelocalNumberUser?'has-warning':'', !sysUpdate.phonelocalNumberUser && !sysUpdate.phoneMovilNumberUser?'has-error':'']">
 								  <label style="padding-left: 15px;">Telefono Movil</label>  
 								    <div class="col-xs-12">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-									  		<input name="phoneMovil" ng-minlength="11" class="form-control input--movil" ng-model="sysUpdate.phoneMovilNumberUser"  type="text" ng-required="sysUpdate.phonelocalNumberUser==''" autofocus />
+									  		<input id="phoneMovil" name="phoneMovil" ng-minlength="11" class="form-control input--movil" ng-model="sysUpdate.phoneMovilNumberUser"  type="text" ng-required="sysUpdate.phonelocalNumberUser==''" />
 									    </div>
 								  </div>
 								</div>
@@ -757,6 +756,52 @@
 				</div>
 			</div>
 			<!-- // LIST TENANT MODAL -->
+			<!-- LIST USER TO ASSIGN MODAL -->
+			<div id="ModalListUser2Assign" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
+			  	<div class="modal-dialog modal-lg" >
+			    <!-- Modal content-->
+				    <div class="modal-content">
+				      	<div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Habitantes disponibles</h4>
+				      	</div>
+				      	<div class="modal-body pre-scrollable">
+	                				<table class="table  table-striped ">
+					                    <thead style=" background: #4d5d6f; color: white;">
+					                        <tr >
+					                            <th><i class="far fa-id-card"></i> ID</th>
+					                            <th><i class="glyphicon glyphicon-user"> </i> Nombres</th>
+					                            <!--<th>Tlf Movil</th>
+					                            <th>Tlf Local</th>-->
+					                            <th><i class="glyphicon glyphicon-envelope"></i> Correo</th>
+					                            <th><i class="fas fa-id-card-alt"></i> </i> Perfil</th>
+					                            <th><i class="glyphicon icon-flag"> </i> Status</th>
+					                        </tr>
+					                    </thead>
+					                    <tbody>
+					                        <tr  style="align-content: center; cursor: pointer;" data-ng-repeat="item in listUserWithoutDepto ">
+					                        
+					                        	<td><button ng-click="selectTenant(item);" title="Seleccionar" class="btn btn-primary"><i class="glyphicon glyphicon-check">&nbsp</i>{{item.idUser}}</button></td>
+						                        <td>{{item.fullNameUser}}</td>
+						                        <!--<td>{{item.phoneNumberUser}}</td>
+						                        <td>{{item.phoneLocalNumberUser}}</td>-->
+						                        <td>{{item.emailUser}}</td>
+						                        <td ng-if="item.idTypeTenantKf==1">Propietario</td>
+						                        <td ng-if="item.idTypeTenantKf==2">Inquilino</td>
+						                        <td ng-if="item.idStatusKf==1">Activo</td>
+						                        <td ng-if="item.idStatusKf==0">Inactivo</td>
+						                    </tr>
+						                </tbody>
+		            				</table>
+					      		<!--<div class="modal-footer">
+					        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      		</div>-->
+			    		</div>
+
+			  		</div>
+				</div>
+			</div>
+			<!-- // LIST USER TO ASSIGN MODAL -->
 
 			<!-- TENANT REGISTER FORM -->
 			<div id="RegisterModalTenant" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
@@ -850,7 +895,7 @@
 								    <div class="col-md-6">
 									    <div class="input-group">
 									        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-									  		<input name="phoneMovil"  class="form-control input--movil" ng-model="$parent.phoneMovilT"  type="text" ng-required="phonelocalT==''" autofocus />
+									  		<input name="phoneMovil"  class="form-control input--movil" ng-model="$parent.phoneMovilT"  type="text" ng-required="phonelocalT==''" ng-disable="ownerFound" autofocus />
 									    </div>
 								  </div>
 								</div>

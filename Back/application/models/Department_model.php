@@ -280,7 +280,7 @@ class Department_model extends CI_Model
         {
             $this->db->set(
                 array(
-                    'idUserKf' => 0,
+                    'idUserKf' => null,
                     'isAprobatedAdmin' => 0
                 )
             )
