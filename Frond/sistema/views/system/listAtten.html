@@ -30,6 +30,15 @@
 			    <li ng-if="item.idStatusKf>0"><a href="" ng-click="modalConfirmation('removeu', 0, item)"><i title="Eliminar Usuario" class="glyphicon glyphicon-trash"></i> Eliminar</a></li>
 			  </ul>
           <span ng-if="
+            ((item.idProfileKf==5 || (item.idProfileKf==6 && item.idTypeTenantKf==2)) && (!item.idAddresKf && !item.idAdress) && !item.idDepartmentKf)" class="badge badge-notify">
+            <i data-toggle="tooltip" data-placement="right" title="Direccion y Depto incompletos" class="fas fa-map-marked-alt"> <i class="fas fa-home"></i></i>
+            
+          </span>
+          <span ng-if="
+            ((item.idProfileKf==5 || (item.idProfileKf==6 && item.idTypeTenantKf==2)) && (item.idAddresKf || item.idAdress) && !item.idDepartmentKf)" class="badge badge-notify">
+            <i data-toggle="tooltip" data-placement="right" title="Depto. No seleccionado." class="fas fa-home"></i>
+          </span>
+          <span ng-if="
             (!item.phoneLocalNumberUser && !item.phoneNumberUser)" class="badge badge-notify">
             <i data-toggle="tooltip" data-placement="right" title="No posee numeros de tlf" class="fas fa-phone-slash"></i>
           </span>

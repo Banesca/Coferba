@@ -2156,7 +2156,7 @@ $scope.slider = {
       /*--------------------------------------------------------------*/
         $scope.sysUpdate = obj;
         $scope.tmp.idProfileKf                  = obj.idProfileKf;
-        if(!obj.idCompanyKf && !obj.idCompany){
+        if(($scope.sysUpdate.idProfileKf==2 || $scope.sysUpdate.idProfileKf==4 || ($scope.sysUpdate.idProfileKf==6 && $scope.sysUpdate.idTyepeAttendantKf==2)) && !obj.idCompanyKf && !obj.idCompany){
           inform.add('Debe seleccionar y asignar una empresa/administracion para el usuario '+obj.fullNameUser,{
               ttl:5000, type: 'info'
           });
