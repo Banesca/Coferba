@@ -264,7 +264,14 @@ class Ticket extends REST_Controller {
                         }
                        
             }
-            
+			
+			
+			/** SEND MAIL */
+			public function sendMail_post(){
+				$rs = $this->mail_model->sendMail($this->post('title'),$this->post('mailTo'),$this->post('body'));
+				$this->response(array('response' => $rs),200);
+
+			}
 
 
 

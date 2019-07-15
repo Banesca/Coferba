@@ -12,17 +12,31 @@ class Mail_model extends CI_Model
         {
 
             $param = $this->getMailSmtp();
-            $config = array(
+			
+			//coferba
+			$config = array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'coferba.com.ar',
                 'smtp_user' => $param['0']['value'], 
                 'smtp_pass' => $param['1']['value'], 
                 'smtp_port' => '465',
-                'smtp_crypto' => 'ssl',
                 'mailtype' => 'html',
                 'wordwrap' => TRUE,
-                'charset' => 'utf-8'
-            );
+				'charset' => 'utf-8',
+				'smtp_timeout' => 30,
+				'smtp_crypto'  => 'ssl'
+			);
+			
+			//LOCAL
+			/*$config = array(
+				'protocol'  => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_port' => 465,
+				'smtp_user' => 'jorguti58@gmail.com',
+				'smtp_pass' => 'AdMg1210',
+				'mailtype'  => 'html',
+				'charset'   => 'utf-8'
+			);*/
 
             $this->load->library('email', $config);
             $this->email->set_newline("\r\n");
@@ -35,43 +49,26 @@ class Mail_model extends CI_Model
             <html lang='es'>
             <head>
             </head>
-
-
-           
             <body style='  text-align: center;'>
-
-
-          
-
-           <img width='1000' src='https://win-social.com/win_page/img/Asset_1.png'>
-           
+           <img width='1000' src='https://win-social.com/img/Asset_1.png'>
            <br>
            <br>
-
            <label style='
            font-size: 25px;
            width: 900x;
-
            color: #acd063;
            background-color: #14162b;
            font-family: sans-serif;
            padding: 18px;'>".$title."</label>
            <br>
            <br>
-
-
-            <div
-            
-            style=' font-size: 22px;
+            <div style=' font-size: 22px;
             color: #656464;
             font-family: sans-serif;'>
            ".$body."
            </div>
            <br>
-
-            <img width='1000' src='https://win-social.com/win_page/img/Asset_2.png'> 
-           
-
+            <img width='1000' src='https://win-social.com/img/Asset_2.png'> 
             </body>
             </html>";
 
@@ -83,22 +80,15 @@ class Mail_model extends CI_Model
              */
           
                 $this->email->message($body);
-
                 $this->email->to($to);
+				$this->email->send();
 
-                $rs = $this->email->send(FALSE);
+				
+				$r = $this->email->print_debugger();
+			
+				return "Enviado";
+              return $r;
                 
-
-             
-
-                if($rs){
-                    //print_r($rs);
-                //$this->response("Solicitud Enviada",200);
-
-                }else {
-
-                   return $rs;
-                }
             }
 
 
