@@ -370,13 +370,14 @@ class User extends REST_Controller {
             $this->response(array('error' => "ERROR INESPERADO"), 500);
         }
     }
-    public function findUserByEmail_get($mail) {
-        if (!$mail) {
+    public function findUserByEmail_post() {
+	   
+		if (!$this->post('mail')) {
             $this->response(NULL, 404);
         }
 
         $user = null;
-        $user = $this->user_model->findUserByEmail($mail);
+        $user = $this->user_model->findUserByEmail($this->post('mail')['email']);
 
         if (!is_null($user)) {
             $this->response($user, 200);
