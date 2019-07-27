@@ -147,7 +147,10 @@ class Ticket_model extends CI_Model
                     'thirdPersonNames'            =>  $ticket['thirdPersonNames'],
                     'thirdPersonPhone'            =>  $ticket['thirdPersonPhone'],
                     'thirdPersonId'               =>  $ticket['thirdPersonId'],
-                    'totalService'                =>  $ticket['totalService'],
+					'totalService'                =>  $ticket['totalService'],
+					'totalGestion'                =>  $ticket['totalGestion'],
+					'totalLlave'                =>  $ticket['totalLlave'],
+					'totalEnvio'                =>  $ticket['totalEnvio'],
                     'isChangeDeliverylRequested'  =>  null
                 )
         )->where("idTicket", $ticket['idTicket'])->update("tb_tickets");
@@ -188,7 +191,10 @@ class Ticket_model extends CI_Model
                     'descriptionOrder'              =>  $ticket['descriptionOrder'],
                     'idTypeServicesKf'              =>  $ticket['idTypeServicesKf'],
 
-                    'totalService'                  =>  $ticket['totalService'],
+					'totalService'                  =>  $ticket['totalService'],
+					'totalGestion'                =>  $ticket['totalGestion'],
+					'totalLlave'                =>  $ticket['totalLlave'],
+					'totalEnvio'                =>  $ticket['totalEnvio'],
                     'addressConsul'                 =>  $ticket['addressConsul'],
                     'idProfileKf'                   =>  $ticket['idProfileKf'],
 
@@ -272,7 +278,10 @@ class Ticket_model extends CI_Model
             'codTicket'                 => $codTicket,
             'idTypeTicketKf'            => @$ticket['idTypeTicketKf'],
             'idProfileKf'               => @$ticket['idProfileKf'],
-            'totalService'              => @$ticket['totalService'],
+			'totalService'              => @$ticket['totalService'],
+			'totalGestion'              => @$ticket['totalGestion'],
+			'totalLlave'                => @$ticket['totalLlave'],
+			'totalEnvio'                => @$ticket['totalEnvio'],
 
             /***** ALTA / BAJA *****/
             'idUserTenantKf'            => @$ticket['idUserTenantKf'],
@@ -1185,7 +1194,10 @@ class Ticket_model extends CI_Model
             'tmp_thirdPersonNames'          => @$ticket['thirdPersonNames'],
             'tmp_thirdPersonPhone'          => @$ticket['thirdPersonPhone'],
             'tmp_thirdPersonId'             => @$ticket['thirdPersonId'],
-            'tmp_totalService'              => @$ticket['totalService'],
+			'tmp_totalService'              => @$ticket['totalService'],
+			'totalGestion'                  => @$ticket['totalGestion'],
+			'totalLlave'                    => @$ticket['totalLlave'],
+			'totalEnvio'                    => @$ticket['totalEnvio'],
             'tmp_reasonForCancelTicket'     => @$ticket['reasonForCancelTicket']
             )
         );
