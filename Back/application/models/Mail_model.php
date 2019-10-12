@@ -10,33 +10,30 @@ class Mail_model extends CI_Model
 
         public function	sendMail($title,$to,$body)
         {
-
-            $param = $this->getMailSmtp();
-			
-			//coferba
-			$config = array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'coferba.com.ar',
-                'smtp_user' => $param['0']['value'], 
-                'smtp_pass' => $param['1']['value'], 
-                'smtp_port' => '465',
-                'mailtype' => 'html',
-                'wordwrap' => TRUE,
-				'charset' => 'utf-8',
-				'smtp_timeout' => 30,
-				'smtp_crypto'  => 'ssl'
-			);
-			
-			//LOCAL
-			/*$config = array(
-				'protocol'  => 'smtp',
-				'smtp_host' => 'ssl://smtp.googlemail.com',
-				'smtp_port' => 465,
-				'smtp_user' => 'jorguti58@gmail.com',
-				'smtp_pass' => 'AdMg1210',
-				'mailtype'  => 'html',
-				'charset'   => 'utf-8'
-			);*/
+          $param = $this->getMailSmtp();
+    			 //coferba
+    			$config = array(
+              'protocol' => 'smtp',
+              'smtp_host' => 'coferba.com.ar',
+              'smtp_user' => $param['0']['value'], 
+              'smtp_pass' => $param['1']['value'], 
+              'smtp_port' => '465',
+              'mailtype' => 'html',
+              'wordwrap' => TRUE,
+              'charset' => 'utf-8',
+              'smtp_timeout' => 30,
+              'smtp_crypto'  => 'ssl'
+    			);
+    			 //LOCAL
+    			/*$config = array(
+    				'protocol'  => 'smtp',
+    				'smtp_host' => 'ssl://smtp.googlemail.com',
+    				'smtp_port' => 465,
+    				'smtp_user' => 'jorguti58@gmail.com',
+    				'smtp_pass' => 'AdMg1210',
+    				'mailtype'  => 'html',
+    				'charset'   => 'utf-8'
+    			);*/
 
             $this->load->library('email', $config);
             $this->email->set_newline("\r\n");
@@ -50,25 +47,21 @@ class Mail_model extends CI_Model
             <head>
             </head>
             <body style='  text-align: center;'>
-           <img width='1000' src='https://win-social.com/img/Asset_1.png'>
+           <img width='100%' src='https://win-social.com/img/Asset_1.png'>
            <br>
+
            <br>
-           <label style='
-           font-size: 25px;
-           width: 900x;
-           color: #acd063;
-           background-color: #14162b;
-           font-family: sans-serif;
-           padding: 18px;'>".$title."</label>
-           <br>
-           <br>
-            <div style=' font-size: 22px;
+            <div style=' 
+            margin-left:auto;
+            margin-right:auto;
+            font-size: 22px;
             color: #656464;
-            font-family: sans-serif;'>
+            font-family: sans-serif;
+            text-align: justify;'>
            ".$body."
            </div>
            <br>
-            <img width='1000' src='https://win-social.com/img/Asset_2.png'> 
+            <img width='100%' src='https://win-social.com/img/Asset_2.png'> 
             </body>
             </html>";
 
@@ -79,20 +72,19 @@ class Mail_model extends CI_Model
             </div>
              */
           
-                $this->email->message($body);
-                $this->email->to($to);
-				$this->email->send();
+            $this->email->message($body);
+            $this->email->to($to);
+		        $this->email->send();
 
 				
-				$r = $this->email->print_debugger();
+			      $r = $this->email->print_debugger();
 			
-				return "Enviado";
-              return $r;
-                
+				    return "Enviado";
+            return $r; 
             }
 
 
-
+            //Get the main parameter of the system mail stored in the DB
             private function getMailSmtp()
             {
                 $param = null;

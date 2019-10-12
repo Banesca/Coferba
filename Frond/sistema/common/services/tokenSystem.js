@@ -21,6 +21,9 @@ tkSysService.service("tokenSystem",function(){
               case 4:
                 tokenStorageValue = JSON.parse(localStorage.getItem("attempsToken"));
               break;
+              case 5:
+                tokenStorageValue = !JSON.parse(localStorage.getItem("sysTmpTicket")) ? false : JSON.parse(localStorage.getItem("sysTmpTicket"));
+              break;
               default:
 
             }
@@ -35,6 +38,9 @@ tkSysService.service("tokenSystem",function(){
           },
           temporalStorage: function(tkTmpUser) {
               localStorage.setItem("sysTmpUser", JSON.stringify(tkTmpUser));
+          },
+          tmpTicketlStorage: function(tkTmpTicket) {
+              localStorage.setItem("sysTmpTicket", JSON.stringify(tkTmpTicket));
           },
           destroyTokenStorage: function(value) {
             switch (value){
@@ -51,6 +57,7 @@ tkSysService.service("tokenSystem",function(){
               case 4:
                 localStorage.removeItem("attempsToken");
                 localStorage.removeItem("sysTmpUser");
+                //localStorage.removeItem("sysTmpTicket");
               break;
               case 5:
                 localStorage.removeItem("sysLoggedUser");

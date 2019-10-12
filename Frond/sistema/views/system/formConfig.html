@@ -209,78 +209,80 @@
 		</div>
 		<div ng-if="sysContent=='dashboard'">
 			<div class="col-md-12">
-				<div class="col-md-2">    	    
+				<div class="col-md-4 col-sm-6">    	    
 					<div ng-click="sysConfig('user','dash')" class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-user"></i>
 		            	</div>
 		            	<div class="text threeSpread">
-		                	<h2 class="text-muted">Usuarios</h2>
+		                	<h4 class="text-muted text-uppercase text-box">Usuarios</h4>
 		            	</div>
 		            	<div class="options">
 		                <a data-toggle="tooltip" data-placement="bottom" title="Usuarios Registrados" ng-click="sysConfig('user','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{listUser.length}}</span> </a>
 		            	</div>
 		        	</div>
 		        </div>
-				<div class="col-md-2">
+				<div class="col-md-4 col-sm-6">
 					<div ng-click="sysConfig('tenant','dash')" class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-user"></i>
 		            	</div>
 		            	<div class="text threeSpread">
-		                	<h2 class="text-muted">Habitantes</h2>
+		                	<h4 class="text-muted text-uppercase text-box">Habitantes</h4>
 		            	</div>
 		            	<div class="options">
 		                <a  data-toggle="tooltip" data-placement="bottom" title="Habitantes Registrados" ng-click="sysConfig('tenant','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{sysListTenant.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4 col-sm-6">
 					<div ng-click="sysConfig('att','dash')" class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-user"></i>
 		            	</div>
 		            	<div class="text">
-		                	<h2 class="text-muted">Encargados</h2>
+		                	<h4 class="text-muted text-uppercase text-box">Encargados</h4>
 		            	</div>
 		            	<div class="options">
 		                <a data-toggle="tooltip" data-placement="bottom" title="Encargados Registrados" ng-click="sysConfig('att','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{sysListAttendant.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
-				<div class="col-md-2">
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-4 col-sm-6">
 					<div ng-click="sysConfig('company','dash')" class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-suitcase"></i>
 		            	</div>
 		            	<div class="text">
-		                	<h2 class="text-muted">Empresas</h2>
+		                	<h4 class="text-muted text-uppercase text-box">Empresas</h4>
 		            	</div>
 		            	<div class="options">
 		                <a data-toggle="tooltip" data-placement="bottom" title="Empresas Registradas" ng-click="sysConfig('company','dash')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{listCompany.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4 col-sm-6">
 					<div ng-click="fnShowHide('home', 'open')"  class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-file-text"></i>
 		            	</div>
 		            	<div class="text">
-		                	<h2 class="text-muted">Solicitudes</h2>
+		                	<h4 class="text-muted text-uppercase text-box">Solicitudes</h4>
 		            	</div>
 		            	<div class="options">
 		                <a data-toggle="tooltip" data-placement="bottom" title="Solicitudes Registradas" ng-click="fnShowHide('home', 'open')" href="" class="btn btn-primary btn-sm"><span class="badge badge-light">{{listTickt.length}}</span></a>
 		            	</div>
 		        	</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4 col-sm-6">
 					<div ng-click="sysConfig('services', 'open')" class="hero-widget well well-sm">
 		            	<div class="icon">
 		                 	<i class="icon-usd"></i>
 		            	</div>
 		            	<div class="text">
-		                	<h2 class="text-muted">Servicios</h2>
+		                	<h4 class="text-muted text-uppercase text-box">Servicios</h4>
 		            	</div>
 		            	<div class="options">
 		            	<input type="button" class="btn btn-primary btn-sm" value="Consultar" ng-click="sysConfig('services', 'open')"/>
@@ -289,26 +291,26 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-		        <div class="col-md-4"> 
+		        <div class="col-md-4 col-sm-12"> 
 			        <div class="panel panel-success">
 	  					<div class="panel-heading"><i class="icon-envelope"></i> SMTP Email <span ng-click="sysConfig('smtp', 'open')" data-toggle="tooltip" data-placement="top" title="Modificar" style="cursor: pointer;" class="pull-right"><i class="glyphicon glyphicon-edit"></i></span></div>
 	  					<div class="panel-body">
 						    <div ng-show="smtpMail" class="well" >
-								<strong>Mail Actual: </strong>{{smtpMail}}
+								<strong>Mail Actual: </strong><span>{{smtpMail}}</span>
 							</div>
 							<div ng-show="!smtpMail" class="alert alert-warning" role="alert">
-								<strong>Mail Actual: </strong>No Asignado.
+								<strong>Mail Actual: </strong><span>No Asignado.</span>
 							</div>
 							<div ng-show="smtpPwd" class="well" >
-								<strong>Clave Actual: </strong>Asignada
+								<strong>Clave Actual: </strong><span>Asignada</span>
 							</div>
 							<div ng-show="!smtpPwd" class="alert alert-warning" role="alert">
-								<strong>Clave Actual: </strong>No Asignado.
+								<strong>Clave Actual: </strong><span>No Asignado.</span>
 							</div>
 	  					</div>
 					</div>
 				</div>
-		        <div class="col-md-8"> 
+		        <div class="col-md-8 col-sm-12"> 
 			        <div class="panel panel-success">
 	  					<div class="panel-heading"><i class="icon-envelope"></i> Correos</div>
 	  					<div class="panel-body">

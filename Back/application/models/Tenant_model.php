@@ -191,6 +191,7 @@ class Tenant_model extends CI_Model
                 $tenant = null;
                 $extrawhere = "";
                 $extrawheresubquery = "";
+                $rs = null;
 
                 if($id > 0){
                     $extrawhere = " where  t1.idDepartmentKf = ".$id."  or idUser in (select idUserKf from  tb_department where idDepartment = ".$id." ) ";

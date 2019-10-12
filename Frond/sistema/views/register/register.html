@@ -10,29 +10,32 @@
 				<!-- FORM CONTAINER -->
 				<form class="form-horizontal" name="fNewUser" autocomplete="off" role="form" ng-init="CallFilterFormU(); CallFilterFormT(); getTypeAttendant(); getAllAddress();" novalidate>
 						<!-- Select profile -->					  
-						<div class="form-group col-md-12" ng-class="{'has-error': fNewUser.idProfileKf.$dirty && fNewUser.idProfileKf.$invalid, 'has-error': fNewUser.idProfileKf.$invalid && !fNewUser.idProfileKf.$pristine}">
+						<div class="form-group col-md-12">
 					    	<div class="inner-addon right-addon">
-					    		<select id="idProfileKf" name="idProfileKf" class="form-input" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null; modalConfirmation();"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " ng-model="register.idProfileKf"  required autofocus />
+					    		<select id="idProfileKf" name="idProfileKf" class="form-input" ng-class="{'input-login-error': register.idProfileKf=='' && !fNewUser.idProfileKf.$touched || register.idProfileKf=='' && fNewUser.idProfileKf.$touched || register.idProfileKf=='' && fNewUser.idProfileKf.$touched, 'input-login-success': register.idProfileKf!='' && fNewUser.idProfileKf.$valid}" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null; modalConfirmation();"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " ng-model="register.idProfileKf"  required autofocus />
 								<label>Perfil</label> 
 								<span class="bar"></span>
-					    	</div>
+							</div>
+						    <small id="registerHelpBlock1" class="form-text text-muted">
+								<span style="color: red;" ng-if="register.idProfileKf=='' && fNewUser.idProfileKf.$touched" class="text-info">Campo requerido</span> 
+							</small>
 						</div>
 						<!-- Select Company -->					  
-						<div ng-if="register.idProfileKf==2 || register.idProfileKf==4" class="form-group col-md-12" ng-class="{'has-error': fNewUser.idCompanyKf.$dirty && fNewUser.idCompanyKf.$invalid, 'has-error': fNewUser.idCompanyKf.$invalid && !fNewUser.idCompanyKf.$pristine}">
+						<!--<div ng-if="register.idProfileKf==2 || register.idProfileKf==4" class="form-group col-md-12" ng-class="{'has-error': fNewUser.idCompanyKf.$dirty && fNewUser.idCompanyKf.$invalid, 'has-error': fNewUser.idCompanyKf.$invalid && !fNewUser.idCompanyKf.$pristine}">
 					    	<div class="inner-addon right-addon">
 					    		<select name="idCompanyKf" class="form-input" ng-blur="inputCheckCss('idCompanyKf', 's');" ng-change="register.idTypeAttKf=null;"  ng-options="item.idCompany as item.nameCompany for item in listCompany" ng-model="register.idCompanyKf"  ng-required="register.idProfileKf==2 || register.idProfileKf==4" autofocus />
-								<label>Empresa</label> 
+								<label>Empresas</label> 
 								<span class="bar"></span>
 					    	</div>
-						</div>
+						</div>-->
 						<!-- Select Type of Attendant -->					  
-						<div ng-if="register.idProfileKf==6" class="form-group "  ng-class="!register.idTypeAttKf ? 'col-md-12' : 'col-md-6' " ng-class="{'has-error': fNewUser.idTypeAttKf.$dirty && fNewUser.idTypeAttKf.$invalid, 'has-error': fNewUser.idTypeAttKf.$invalid && !fNewUser.idTypeAttKf.$pristine}">
+						<!--<div ng-if="register.idProfileKf==6" class="form-group "  ng-class="!register.idTypeAttKf ? 'col-md-12' : 'col-md-6' " ng-class="{'has-error': fNewUser.idTypeAttKf.$dirty && fNewUser.idTypeAttKf.$invalid, 'has-error': fNewUser.idTypeAttKf.$invalid && !fNewUser.idTypeAttKf.$pristine}">
 					    	<div class="inner-addon right-addon">
 					    		<select name="idTypeAttKf" class="form-input" ng-blur="inputCheckCss('idTypeAttKf', 's');"  ng-options="item.idTyepeAttendant as item.nameTypeAttendant for item in listTypeAttendant | filter:hideTypeAttendant()" ng-change="register.idDepartmentKf=null; register.password1=null; register.password2=null;" ng-model="register.idTypeAttKf" ng-required="register.idProfileKf==6" autofocus />
 								<label>Tipo de Encargado</label> 
 								<span class="bar"></span>
 					    	</div>
-						</div>
+						</div>-->
 						<!-- Select Attendant Address-->					  
 						<!--<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6"   ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
 					    	<div class="form-input inner-addon right-addon">
@@ -50,32 +53,78 @@
 					    	</div>
 						</div>-->
 						<!-- Form Input Address -->
-						<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6"   ng-class="{'has-error': fNewUser.idAddrAttKf.$dirty && fNewUser.idAddrAttKf.$invalid, 'has-error': fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine}">
+						<div ng-if="(register.idProfileKf==3 || register.idProfileKf==5) || (register.idProfileKf==6 && register.idTypeAttKf)" class="form-group col-md-6">
 						  	<div class="inner-addon right-addon">
-							  	<input id="idAddrAttKf" name="idAddrAttKf" readonly="true" value="{{register.idAddrName}}" class="form-input" ng-blur="inputCheckCss('idAddrAttKf', 'i');" type="text" required autofocus/>
-							  	<label>Direcci&#243n</label>  
-					  			<i ng-show="fNewUser.idAddrAttKf.$valid && !fNewUser.idAddrAttKf.$pristine" class="glyphicon icon-building"></i>
-						  		<i ng-show="fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$dirty" class="glyphicon icon-building"></i>
-						  		<i style="color: red;" ng-show="fNewUser.idAddrAttKf.$invalid && !fNewUser.idAddrAttKf.$pristine" class="glyphicon glyphicon-remove"></i>
+							  	<input  id="idAddrAttKf" 
+							  			name="idAddrAttKf" 
+							  			class="form-input" 
+							  			ng-class="{
+								  					  'input-login-error': 
+								  					  register.idAddrName=='' && (!fNewUser.idAddrAttKf.$touched || fNewUser.idAddrAttKf.$touched),
+								  					  'input-login-success': 
+								  					  register.idAddrName!='' && (!fNewUser.idAddrAttKf.$touched || fNewUser.idAddrAttKf.$touched)
+							  					  }" 
+							  			readonly="true" 
+							  			value="{{register.idAddrName}}" 
+							  			ng-blur="inputCheckCss('idAddrAttKf', 'i');" 
+							  			type="text" 
+							  			ng-required="true" 
+							  			autofocus
+							  	/>
+							  	<label>Direcci&#243n</label> 
+						  		<i style="color: #5cb85c;" ng-show="register.idAddrName!='' && (!fNewUser.idAddrAttKf.$touched || fNewUser.idAddrAttKf.$touched)" class="glyphicon icon-ok"></i>
+						  		<i style="color: red;" ng-show="(register.idAddrName=='' || register.idAddrName==undefined) && !fNewUser.idAddrAttKf.$touched || (register.idAddrName=='' || register.idAddrName==undefined) && fNewUser.idAddrAttKf.$touched" class="glyphicon glyphicon-asterisk"></i>
 						  		<span class="bar"></span>
 						  	</div>
+							<small id="registerHelpBlock1" class="form-text text-muted">
+								<span 	style="color: red;" 
+										ng-if="
+											(register.idAddrName=='') && !fNewUser.idAddrAttKf.$touched || 
+			  					  			(register.idAddrName=='') && fNewUser.idAddrAttKf.$touched" 
+								  	 	class="text-info">Campo requerido</span> 
+								
+							</small>
 						</div>
 						<!-- Select Department -->
-						<div ng-if="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" class="form-group" ng-class="(register.idTypeAttKf!=1 && register.idTypeAttKf!=2) || (register.idTypeAttKf==0)  ? 'col-md-6' : 'col-md-3' " ng-class="{'has-error': fNewUser.idDepartmentKf.$dirty && fNewUser.idDepartmentKf.$invalid, 'has-error': fNewUser.idDepartmentKf.$invalid && !fNewUser.idDepartmentKf.$pristine}">
+						<div ng-if="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" class="form-group" ng-class="(register.idTypeAttKf!=1 && register.idTypeAttKf!=2) || (register.idTypeAttKf==0)  ? 'col-md-6' : 'col-md-3' ">
 				  		 	<div class="inner-addon right-addon">
-					    		<select id="idDepartmentKf" name="idDepartmentKf" ng-change="deptoHasOwner(register.idDepartmentKf)" class="form-input" ng-blur="deptoHasOwner(register.idDepartmentKf); inputCheckCss('idDepartmentKf', 's');" ng-options="item.idDepartment as item.departmentFloor for item in ListDpto | filter:hideDeptoByProfile()" ng-model="register.idDepartmentKf" ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)" autofocus >
-						    		<option value=""></option>
+					    		<select 
+					    			id="idDepartmentKf" 
+				    				class="form-input" 
+				    				name="idDepartmentKf" 
+							  			ng-class="{
+								  					  'input-login-error': 
+								  					  register.idDepartmentKf=='' && (!fNewUser.idDepartmentKf.$touched || fNewUser.idDepartmentKf.$touched),
+								  					  'input-login-success': 
+								  					  register.idDepartmentKf!='' && (!fNewUser.idDepartmentKf.$touched || fNewUser.idDepartmentKf.$touched)
+							  					  }" 
+				    				ng-change="deptoHasOwner(register.idDepartmentKf)" 
+				    				ng-blur="deptoHasOwner(register.idDepartmentKf); inputCheckCss('idDepartmentKf', 's');" 
+				    				ng-options="item.idDepartment as item.departmentFloor for item in ListDpto | filter:hideDeptoByProfile()" 
+				    				ng-model="register.idDepartmentKf"  
+				    				required 
+				    				autofocus 
+					    		>
+					    			<!--ng-required="((register.idProfileKf==3 || register.idProfileKf==5) && !register.idTypeAttKf)||(register.idProfileKf==6 && register.idTypeAttKf==2)"-->
 						    	</select>
 								<label>Departamento</label> 
 								<span class="bar"></span>
 					    	</div>
+							<small id="registerHelpBlock1" class="form-text text-muted">
+								<span 	style="color: red;" 
+										ng-if="
+											(register.idDepartmentKf=='') && !fNewUser.idDepartmentKf.$touched || 
+			  					  			(register.idDepartmentKf=='') && fNewUser.idDepartmentKf.$touched" 
+								  	 	class="text-info">Campo requerido</span> 
+								
+							</small>					    	
 							<!--<div ng-if="ownerFound && sessionidProfile!=0" class="alert alert-warning" role="alert">
 			            		<strong><i class="fas fa-exclamation-triangle">&nbsp </i>ATENCION: </strong>Departamento no disponible, contacte con el administrador.
 			        		</div>-->
 						</div>
 	
 						<!-- Other Attendant Type Functions -->
-						<div ng-if="register.idProfileKf==6 && register.idTypeAttKf==1" class="form-group col-md-3" ng-class="{'has-error': fNewUser.typeOtherAtt.$dirty && fNewUser.typeOtherAtt.$invalid, 'has-error': fNewUser.typeOtherAtt.$invalid && !fNewUser.typeOtherAtt.$pristine}">
+						<!--<div ng-if="register.idProfileKf==6 && register.idTypeAttKf==1" class="form-group col-md-3">
 						  	<div  class="inner-addon right-addon">
 							  	<input  name="typeOtherAtt" autofocus="true" class="form-input" ng-blur="inputCheckCss('typeOtherAtt', 'i');" ng-model="register.typeOtherAtt"  type="text" ng-required="register.idProfileKf==6 && register.idTypeAttKf==1" autofocus/>
 							  	<label>Funcion</label>  
@@ -84,37 +133,138 @@
 						  		<i style="color: red;" ng-show="fNewUser.typeOtherAtt.$invalid && !fNewUser.typeOtherAtt.$pristine" class="glyphicon glyphicon-remove"></i>
 						  		<span class="bar"></span>
 						  	</div>
-						</div> 
+						</div> -->
 						<!-- Form First Name -->
-						<div class="form-group col-md-6" ng-class="{'has-error': fNewUser.fname.$dirty && fNewUser.fname.$invalid, 'has-error': fNewUser.fname.$invalid && !fNewUser.fname.$pristine}">
+						<div class="form-group col-md-6">
 						  	<div class="inner-addon right-addon">
-							  	<input  name="fname" ng-minlength="3" class="form-input" ng-blur="inputCheckCss('fname', 'i');" ng-model="register.fname"  type="text" required autofocus/>
-							  	<label>Nombre</label>  
-					  			<i ng-show="fNewUser.fname.$valid && !fNewUser.fname.$pristine" class="glyphicon glyphicon-user"></i>
-						  		<i ng-show="fNewUser.fname.$invalid && !fNewUser.fname.$dirty" class="glyphicon glyphicon-user"></i>
-						  		<i style="color: red;" ng-show="fNewUser.fname.$invalid && !fNewUser.fname.$pristine" class="glyphicon glyphicon-remove"></i>
+							  	<input  
+							  		name="fname" 
+							  		class="form-input" 
+							  		ng-class="
+							  			{
+							  				'input-login-error': 
+							  				(register.fname.length>0 && register.fname.length<3) && !fNewUser.fname.$touched || 
+							  				(register.fname.length>0 && register.fname.length<3) && fNewUser.fname.$touched || 
+							  				(register.fname.length==0 && register.fname.length<1) && fNewUser.fname.$touched || 
+							  				(register.fname=='' || register.fname==undefined) && fNewUser.fname.$touched,
+							  				'input-login-success': 
+							  				register.fname.length>=3 && fNewUser.fname.$valid}" 
+							  		ng-blur="inputCheckCss('fname', 'i');" 
+							  		ng-model="register.fname"  
+							  		type="text" 
+							  		ng-required="true"
+							  		autofocus>
+							  	<label ng-class="{'label-font-error': (register.fname.length>0 && register.fname.length<3) && !fNewUser.fname.$touched || (register.fname.length>0 && register.fname.length<3) && fNewUser.fname.$touched || (register.fname.length==0 && register.fname.length<1) && fNewUser.fname.$touched}">Nombre</label>
+						  		<i style="color: #5cb85c;" ng-show="register.fname.length>=3 && fNewUser.fname.$valid" class="glyphicon glyphicon-ok"></i>
+						  		<i 
+						  			style="color: red;" 
+						  			ng-show="
+						  					(register.fname.length>0 && register.fname.length<3) && !fNewUser.fname.$touched || 
+						  					(register.fname.length>0 && register.fname.length<3) && fNewUser.fname.$touched || 
+						  					(register.fname.length==0 && register.fname.length<1) && fNewUser.fname.$touched ||
+						  					(register.fname=='' || register.fname==undefined) && fNewUser.fname.$touched" 
+						  			class="glyphicon glyphicon-asterisk"></i>
+						  		<i ng-show="(register.fname.length==0 && register.fname.length<1) && !fNewUser.fname.$touched" class="glyphicon glyphicon-user"></i>
 						  		<span class="bar"></span>
 						  	</div>
+						    <small id="registerHelpBlock1" class="form-text text-muted">
+								<span style="color: red;" ng-if="(register.fname.length>0 && register.fname.length<3) && !fNewUser.fname.$touched || (register.fname.length>0 && register.fname.length<3) && fNewUser.fname.$touched || (register.fname.length==0 && register.fname.length<1) && fNewUser.fname.$touched" class="text-info">Campo requerido</span> 
+							</small>
+
 						</div>
 						<!-- Form Last Name -->
-						<div class="form-group col-md-6" ng-class="{'has-error': fNewUser.lname.$dirty && fNewUser.lname.$invalid, 'has-error': fNewUser.lname.$invalid && !fNewUser.lname.$pristine}">
+						<div class="form-group col-md-6">
 							<div class="inner-addon right-addon">
-						  		<input name="lname" class="form-input" ng-minlength="3" ng-blur="inputCheckCss('lname', 'i');" ng-model="register.lname" type="text" required autofocus />
+						  		<input 
+						  			name="lname" 
+						  			class="form-input" 
+						  			ng-class="
+						  				{
+						  					'input-login-error': 
+						  					(register.lname.length>0 && register.lname.length<3) && !fNewUser.lname.$touched || 
+						  					(register.lname.length>0 && register.lname.length<3) && fNewUser.lname.$touched || 
+						  					(register.lname.length==0 && register.lname.length<1) && fNewUser.lname.$touched, 
+						  					'input-login-success': 
+						  					register.lname.length>=3 && fNewUser.lname.$valid}" 
+						  			ng-blur="inputCheckCss('lname', 'i');"  
+						  			ng-model="register.lname" 
+						  			type="text" 
+						  			ng-required="true"
+						  			autofocus />
 						  		<label >Apellido</label> 
-						  		<i ng-show="fNewUser.lname.$valid && !fNewUser.lname.$pristine" class="glyphicon glyphicon-user"></i>
-						  		<i ng-show="fNewUser.lname.$invalid && !fNewUser.lname.$dirty" class="glyphicon glyphicon-user"></i>
-						  		<i style="color: red;" ng-show="fNewUser.lname.$invalid && !fNewUser.lname.$pristine" class="glyphicon glyphicon-remove"></i>
+						  		<i 
+						  			style="color: #5cb85c;" 
+						  			ng-show="register.lname.length>=3 && fNewUser.lname.$valid" 
+						  			class="glyphicon glyphicon-ok">
+						  		</i>
+						  		<i 
+						  			style="color: red;" 
+						  			ng-show="
+						  				(register.lname.length>0 && register.lname.length<3) && (!fNewUser.lname.$touched || fNewUser.lname.$touched) || 
+						  				(register.lname.length==0 && register.lname.length<1) && fNewUser.lname.$touched" 
+						  			class="glyphicon glyphicon-asterisk">
+						  		</i>
+						  		<i 
+						  			ng-show="
+						  				(register.lname.length==0 && register.lname.length<1) && !fNewUser.lname.$touched" 
+						  			class="glyphicon glyphicon-user">
+						  		</i>
+
 								<span class="bar"></span>
 							</div>
+						    <small id="registerHelpBlock1" class="form-text text-muted">
+								<span style="color: red;" ng-if="(register.lname.length>0 && register.lname.length<3) && !fNewUser.lname.$touched || (register.lname.length>0 && register.lname.length<3) && fNewUser.lname.$touched || (register.lname.length==0 && register.lname.length<1) && fNewUser.lname.$touched" class="text-info">Campo requerido</span> 
+							</small>
+
 						</div>
 						<!-- Text Mail-->
-						<div class="form-group col-lg-12" ng-class="{'has-error': fNewUser.emailUser.$dirty && fNewUser.emailUser.$invalid}">
+						<div class="form-group col-lg-12">
 						    <div class="inner-addon right-addon">
-						  		<input id="emailRegister"  name="emailUser" value="{{register.email}}" class="form-input" ng-blur="inputCheckCss('emailUser', 'i'); sysCheckEmail();" ng-model="register.email"  type="email" required autofocus autocomplete="off" />
+						  		<input 
+						  			id="emailRegister"  
+						  			name="emailUser" 
+						  			value="{{register.email}}" 
+						  			class="form-input"
+						  			ng-class="{
+							  					'input-login-error':
+								  				fNewUser.emailUser.$error.required && register.email==undefined && (!fNewUser.emailUser.$touched || fNewUser.emailUser.$touched) || 
+								  				fNewUser.emailUser.$error.required && fNewUser.emailUser.$touched || 
+								  				fNewUser.emailUser.$error.pattern &&  (!fNewUser.emailUser.$touched || fNewUser.emailUser.$touched),
+												'input-login-success':
+												!fNewUser.emailUser.$error.required && fNewUser.emailUser.$valid
+											}
+							  				"
+						  			ng-blur="inputCheckCss('emailUser', 'i'); sysCheckEmail();" 
+						  			ng-model="register.email"
+						  			type="email" 
+						  			ng-pattern="regexEmail"
+						  			required
+						  			autofocus 
+						  			autocomplete="off" >
 						  		<label>E-Mail</label> 
-						  		<i class="glyphicon glyphicon-envelope"></i>
+						  		<i 	style="color: #5cb85c;" 
+						  			ng-show="!fNewUser.emailUser.$error.pattern && fNewUser.emailUser.$valid" 
+						  			class="glyphicon glyphicon-ok"></i>
+						  		<i 	style="color: red;" 
+						  			ng-show="
+						  				fNewUser.emailUser.$error.required && register.email==undefined && (!fNewUser.emailUser.$touched || fNewUser.emailUser.$touched) || 
+						  				fNewUser.emailUser.$error.required && fNewUser.emailUser.$touched || 
+						  				fNewUser.emailUser.$error.pattern &&  (!fNewUser.emailUser.$touched || fNewUser.emailUser.$touched)"
+						  			class="glyphicon glyphicon-asterisk">
+						  		</i>
+						  		<i 	ng-show="
+						  				(register.email=='') && (!fNewUser.emailUser.$touched)" 
+						  			class="glyphicon glyphicon-envelope">
+						  		</i>
 						  		<span class="bar"></span>
-						    </div><br>
+						    </div>
+						    <small id="registerHelpBlock1" class="form-text text-muted">
+								<span style="color: red;" ng-if="
+						  				fNewUser.emailUser.$error.required && register.email==undefined && (!fNewUser.emailUser.$touched || fNewUser.emailUser.$touched) || 
+						  				fNewUser.emailUser.$error.required && fNewUser.emailUser.$touched || 
+						  				fNewUser.emailUser.$error.pattern &&  (!fNewUser.emailUser.$touched || fNewUser.emailUser.$touched)" class="text-info">Campo requerido</span> 
+							</small>
+						    <br>
 							<div ng-if="sysEmailRegistered && sessionidProfile!=0" class="alert alert-danger" role="alert">
 			            		<strong><i class="fas fa-ban">&nbsp </i>ATENCION: </strong>la direccion de correo ingresada se encuentra registrada. Si no recuerda su clave puede recuperarla haciendo <strong><a href="#/forgotpwd"> click aqui</a></strong>.
 		            		  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -158,22 +308,137 @@
 							</small>
 						</div>-->
 						<!-- Text Phone-->						       
-						<div class="form-group col-md-6 " ng-class="{'has-error':fNewUser.phoneLocal.$dirty && fNewUser.phoneLocal.$invalid, 'has-success':fNewUser.phoneLocal.$valid}">
+						<div class="form-group col-md-6">
 						    <div class="inner-addon right-addon">
-						  		<input name="phoneLocal" ng-minlength="8" class="form-input input--local" ng-blur="inputCheckCss('phoneLocal', 'i');" ng-model="register.phonelocalNumberUser" type="text" autofocus ng-required="register.phoneMovilNumberUser==''" />
-						  		<label>Telefono Fijo</label>  
-						  		<i class="glyphicon glyphicon-earphone"></i>
+						  		<input 
+					  				name="phoneLocal" 
+					  				class="form-input input--local" 
+						  			ng-class="
+						  				{
+						  					'input-login-error': 
+						  					(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && (register.phonelocalNumberUser.length>0 && register.phonelocalNumberUser.length<8) && (!fNewUser.phoneLocal.$touched || fNewUser.phoneLocal.$touched) || 
+						  					(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && (register.phonelocalNumberUser.length==0 && register.phonelocalNumberUser.length<1) && fNewUser.phoneLocal.$touched || 
+						  					(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && (register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && fNewUser.phoneLocal.$touched,
+
+											'input-login-warning':
+							  				(!register.phoneMovilNumberUser=='' || !register.phoneMovilNumberUser==undefined) && (register.phonelocalNumberUser.length>0 && register.phonelocalNumberUser.length<8) && fNewUser.phoneLocal.$touched,
+
+						  					'input-login-success': 
+						  					register.phonelocalNumberUser.length>=8 && fNewUser.phoneLocal.$valid}" 
+					  				ng-blur="inputCheckCss('phoneLocal', 'i');" 
+					  				ng-model="register.phonelocalNumberUser" 
+					  				type="text" 
+					  				autofocus 
+					  				ng-required="register.phoneMovilNumberUser==''; " 
+					  				ng-click="printScope(register.phonelocalNumberUser, 'phonelocalNumberUser')">
+						  		<label>Telefono Fijo</label>
+								<i 	style="color: #5cb85c;" 
+						  			ng-show="(register.phonelocalNumberUser.length>=8 && fNewUser.phoneLocal.$valid)" 
+						  			class="glyphicon glyphicon-ok"></i>
+						  		<i 	style="color: red;" 
+						  			ng-show="
+						  				(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && (register.phonelocalNumberUser.length>0 && register.phonelocalNumberUser.length<8) && (!fNewUser.phoneLocal.$touched || fNewUser.phoneLocal.$touched) ||
+						  				(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && 
+					  					(register.phonelocalNumberUser.length==0 && register.phonelocalNumberUser.length<1) && fNewUser.phoneLocal.$touched ||
+					  					(register.phonelocalNumberUser==undefined) && fNewUser.phoneLocal.$touched"  
+						  				
+						  			class="glyphicon glyphicon-asterisk">
+						  		</i>
+						  		<!--						  				
+						  				(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && (register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && (!fNewUser.phoneMovil.$touched || fNewUser.phoneMovil.$touched) ||
+						  				(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && 
+					  					(register.phoneMovilNumberUser.length==0 && register.phoneMovilNumberUser.length<1) && fNewUser.phoneMovil.$touched ||
+					  					(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && fNewUser.phoneMovil.$touched " -->
+						  		<i 	style="color: #f0ad4e;" 
+						  			ng-show="
+						  				(!register.phoneMovilNumberUser=='' || !register.phoneMovilNumberUser==undefined) &&
+					  					(register.phonelocalNumberUser.length>0 && register.phonelocalNumberUser.length<8) && fNewUser.phoneLocal.$touched"
+						  			class="glyphicon glyphicon-asterisk">
+						  		</i>
+						  		<i 	ng-show="
+						  				(register.phonelocalNumberUser.length==0 && register.phonelocalNumberUser.length<1) && (!fNewUser.phoneLocal.$touched) ||
+						  				(!register.phoneMovilNumberUser=='') && (register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && fNewUser.phoneLocal.$touched"  
+						  			class="glyphicon glyphicon-earphone">
+						  		</i>
 						  		<span class="bar"></span>	
 						    </div>
+						    <small id="registerHelpBlock1" class="form-text text-muted">
+								<span style="color: red;" ng-if="
+						  				(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && (register.phonelocalNumberUser.length>0 && register.phonelocalNumberUser.length<8) && (!fNewUser.phoneLocal.$touched || fNewUser.phoneLocal.$touched) ||
+						  				(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && 
+					  					(register.phonelocalNumberUser.length==0 && register.phonelocalNumberUser.length<1) && fNewUser.phoneLocal.$touched ||
+					  					(register.phonelocalNumberUser==undefined) && fNewUser.phoneLocal.$touched" class="text-info">Campo requerido</span> 
+								<span style="color: #f0ad4e;" ng-if="
+										(!register.phoneMovilNumberUser=='' || !register.phoneMovilNumberUser==undefined) &&
+					  					(register.phonelocalNumberUser.length>0 && register.phonelocalNumberUser.length<8) && fNewUser.phoneLocal.$touched" class="text-info">Campo opcional</span> 
+							</small>
 						</div>
 						<!-- Text Phone-->						       
-						<div class="form-group col-md-6 " ng-class="{'has-error':fNewUser.phoneMovil.$dirty && fNewUser.phoneMovil.$invalid, 'has-success':fNewUser.phoneMovil.$valid}">
+						<div class="form-group col-md-6 ">
 						    <div class="inner-addon right-addon">
-						  		<input name="phoneMovil" ng-minlength="8" class="form-input input--movil" ng-blur="inputCheckCss('phoneMovil', 'i');" ng-model="register.phoneMovilNumberUser"  type="text" ng-required="register.phonelocalNumberUser==''" autofocus />
+						  		<input 
+						  				name="phoneMovil" 
+						  				class="form-input input--movil"
+							  			ng-class="
+							  				{
+							  					'input-login-error': 
+							  					(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && (register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && (!fNewUser.phoneMovil.$touched || fNewUser.phoneMovil.$touched) || 
+							  					(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && 
+							  					(register.phoneMovilNumberUser.length==0 && register.phoneMovilNumberUser.length<1) && fNewUser.phoneMovil.$touched  || 
+						  						(register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && 
+						  						(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && fNewUser.phoneMovil.$touched,
+
+							  					'input-login-warning':
+							  					(!register.phonelocalNumberUser=='' || !register.phonelocalNumberUser==undefined) && 
+							  					(register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && fNewUser.phoneMovil.$touched, 
+
+							  					'input-login-success': 
+							  					register.phoneMovilNumberUser.length>=8 && fNewUser.phoneMovil.$valid}" 
+						  				ng-blur="inputCheckCss('phoneMovil', 'i');" 
+						  				ng-model="register.phoneMovilNumberUser"  
+						  				type="text" 
+						  				ng-required="register.phonelocalNumberUser=='';" 
+						  				autofocus
+						  				ng-click="printScope(register.phoneMovilNumberUser, 'phoneMovilNumberUser')"
+						  				 >
 						  		<label>Telefono Movil</label> 
-						  		<i class="glyphicon glyphicon-phone"></i>
+								<i 	style="color: #5cb85c;" 
+						  			ng-show="(register.phoneMovilNumberUser.length>=8 && fNewUser.phoneMovil.$valid)" 
+						  			class="glyphicon glyphicon-ok"></i>
+						  		<i 	style="color: red;" 
+						  			ng-show="
+						  				(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && (register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && (!fNewUser.phoneMovil.$touched || fNewUser.phoneMovil.$touched) ||
+						  				(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && 
+					  					(register.phoneMovilNumberUser.length==0 && register.phoneMovilNumberUser.length<1) && fNewUser.phoneMovil.$touched || 
+					  					(register.phoneMovilNumberUser==undefined) && fNewUser.phoneMovil.$touched" 
+					  					
+						  			class="glyphicon glyphicon-asterisk">
+						  		</i>
+
+						  		<i 	style="color: #f0ad4e;" 
+						  			ng-show="(!register.phonelocalNumberUser=='' || !register.phonelocalNumberUser==undefined) &&
+					  					(register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && fNewUser.phoneMovil.$touched"
+						  			class="glyphicon glyphicon-asterisk">
+						  		</i>	
+						  		<i 	ng-show="
+						  				(register.phoneMovilNumberUser.length==0 && register.phoneMovilNumberUser.length<1) && (!fNewUser.phoneMovil.$touched) || 
+						  				(!register.phonelocalNumberUser=='') && (register.phoneMovilNumberUser=='' || register.phoneMovilNumberUser==undefined) && fNewUser.phoneMovil.$touched " 
+						  			class="glyphicon glyphicon-phone">
+						  		</i>
 						  		<span class="bar"></span>	
 						    </div>
+						    <small id="registerHelpBlock1" class="form-text text-muted">
+								<span style="color: red;" ng-if="
+						  				(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && (register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && (!fNewUser.phoneMovil.$touched || fNewUser.phoneMovil.$touched) ||
+						  				(register.phonelocalNumberUser=='' || register.phonelocalNumberUser==undefined) && 
+					  					(register.phoneMovilNumberUser.length==0 && register.phoneMovilNumberUser.length<1) && fNewUser.phoneMovil.$touched || 
+					  					(register.phoneMovilNumberUser==undefined) && fNewUser.phoneMovil.$touched" class="text-info">Campo requerido
+					  			</span>
+								<span style="color: #f0ad4e;" ng-if="
+						  				(!register.phonelocalNumberUser=='' || !register.phonelocalNumberUser==undefined) &&
+					  					(register.phoneMovilNumberUser.length>0 && register.phoneMovilNumberUser.length<8) && fNewUser.phoneMovil.$touched" class="text-info">Campo opcional
+					  			</span> 
+							</small>
 						</div>
 			</div>
             <div class="panel-footer">
@@ -212,11 +477,11 @@
         <h5 class="modal-title" id="ModalLabel">Soporte coferba </h5>
       </div>
       <div class="modal-body">
-			<form name="frmSecCode" class="form-horizontal" autocomplete="off" role="form" novalidate>
+			<form name="frmSecCode" class="form-horizontal" autocomplete="off" role="form" ng-submit="sysCheckCode()" novalidate>
 				<div class="form-group" ng-class="{'has-error': frmSecCode.checkCode.$dirty && frmSecCode.checkCode.$invalid}">
 					<div class="col-md-12">
 						<div class="inner-addon right-addon">
-					  		<input id="checkCode" name="checkCode" class="form-input" ng-blur="inputCheckCss('checkCode', 'i');" ng-model="register.securityCode" type="password" required autofocus />
+					  		<input id="checkCode" name="checkCode" class="form-input" ng-blur="inputCheckCss('checkCode', 'i');" ng-model="register.securityCode" type="password" required autofocus autocomplete="off" />
 					  		<label>Codigo de Validacion</label> 
 					  		<i class="glyphicon glyphicon-lock"></i>
 							<span class="bar"></span>

@@ -313,6 +313,7 @@
 }
 
 .btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.btn-label-right {position: relative; right: -12px; display: inline-block; padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
 .btn-labeled {padding-top: 0;padding-bottom: 0;}
 .alert-width{
   width: 600px;
@@ -732,6 +733,23 @@
 .i-cancel{
   color:#dc3545!important;
 }
+/* TICKETS POPUP CSS */
+
+.spacer-div-10-10 {
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+.tk-tag-1{
+  color:rgb(250, 107, 107);
+  background: #fff;
+  border-radius: 10px;
+  padding-left: 5px; 
+  padding-right: 5px; 
+  font-size: 11px;
+}
+/* SYSTEM CONFIG CSS */
+/*SYSTEM DASHBOARD */
+
 /********************************************/
  ::-webkit-scrollbar {
         width: 12px;
@@ -842,6 +860,7 @@
   }
 }
 @media screen and (min-width: 1025px) and (max-width: 1200px){
+
   .label_tag{
       margin-top: 0.4em;
     }
@@ -1229,13 +1248,31 @@
     display: none;
   }
   .input-group > .ui-select-bootstrap.dropdown {
-      margin-left: -1.5em;
+      /*margin-left: -1.5em;*/
   }
   .show-tag-1, .show-tag-2{
     display: none;
   }
   .show-column-table{
     display: none;
+  }
+  .font-xs-5{
+      font-size: 93%;
+  }
+  .ml-div2em{
+    margin-left: -2em;
+  }
+  .p-r0-xs{
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 15px;
+  }
+  .p-l0-xs{
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 15px;
   }
 }
 

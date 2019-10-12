@@ -52,6 +52,12 @@ app.config(['$routeProvider', '$locationProvider',
             css: 'views/login/style-login.css'
 
         })
+        .when('/login/auth/:Type/id/:ticketId/token/:secureToken', {
+            templateUrl: 'views/login/login.html',
+            controller: 'LoginCtrl',
+            css: 'views/login/style-login.css'
+
+        })
         .when('/register', {
             templateUrl: 'views/register/register.html',
             controller: 'RegisterUserCtrl',
@@ -98,6 +104,7 @@ app.directive('passwordConfirm', ['$parse', function ($parse) {
     require: 'ngModel',
     link: function link(scope, elem, attrs, ctrl) {
       var validator = function (value) {
+        //console.log(value);
         ctrl.$setValidity('match', value === scope.matchTarget);
         return value;
       }

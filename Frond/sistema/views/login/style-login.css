@@ -1,4 +1,6 @@
-
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
 .main_content{
   width: 350px;
   height: 700px;
@@ -108,7 +110,9 @@
 .newPwdForm {
     padding-top: 120px;
 }
-
+.newPwdRules {
+    padding-top: 133px;
+}
 /* Fade In & Out*/
 
 
@@ -209,6 +213,11 @@
     max-width: 20%; /* Max Width of the popover (depending on the container!) */
     border-radius: 0px;
     padding: 0px;
+}
+.popover-custom{
+    top: 220px;
+    left: 1335px;
+    display: block;
 }
 .popover-footer{
     padding: 6px 14px;
@@ -342,8 +351,17 @@
     display: block;
     width: 100%;
 }
-.bar-red {
+.input-login-error {
     border-bottom: 1.5px solid red;
+}
+.input-login-success {
+    border-bottom: 1.5px solid #5cb85c;
+}
+.input-login-warning{
+  border-bottom: 1.5px solid #f0ad4e;
+}
+.label-font-error{
+  color: red;
 }
 .bar:before, .bar:after {
     content: '';
@@ -392,12 +410,75 @@ select:focus ~ .bar:before, select:focus ~ .bar:after { width: 50%; }
 .form-input:focus ~ .glyphicon, .form-input:active ~ .glyphicon, .form-input.active ~ .glyphicon{
     color: rgba(20, 22, 43, 0.9);
 } 
+.i-success{
+  color: #5cb85c;
+}
+.i-warning{
+  color: #f0ad4e;
+}
+.i-danger{
+  color: #d9534f;
+}
+.i-default{
+  color: #337ab7;
+}
+.i-disable{
+  color: #777;
+}
+.i-cancel{
+  color:#dc3545!important;
+}
 
-
-
-
-
+.ulPwdRules{
+  list-style: none;
+  margin-top: -10px;
+}
+.ulPwdRules li{
+  margin-left: -2.8em;
+  line-height: 1.6em;
+  font-size: 1.2em;
+  color: rgba(20, 22, 43, .5);
+}
+.iPwdRules {
+  font-size: 1.8em;
+  padding-top: 0.4em;
+}
+.success-Rules{
+  color: #5cb85c
+}
+.warning-Rules {
+  color: #f0ad4e
+}
+.danger-Rules{
+  color: #d9534f
+}
+.default-Rules {
+  color: rgba(20, 22, 43, .5);
+}
 /*-----------------------------------------------------------------------*/
+@media (max-width: 1199px) {
+  .ulPwdRules li{
+    line-height: 3.3em;
+    font-size: 1em;
+    color: rgba(20, 22, 43, .5);
+  }
+  .iPwdRules {
+    font-size: 1.8em;
+    padding-top: 0.4em;
+  }
+}
+@media (max-width: 991px) {
+  .ulPwdRules li{
+    margin-left: -5em;
+    line-height: 5em;
+    font-size: 0.7em;
+    color: rgba(20, 22, 43, .5);
+  }
+  .iPwdRules {
+    font-size: 1.6em;
+    padding-top: 0.4em;
+  }
+}
 @media (max-width: 767px) {
   .registerForm{
     padding-top: 0;
@@ -405,7 +486,9 @@ select:focus ~ .bar:before, select:focus ~ .bar:after { width: 50%; }
   }
   .newPwdForm{
     padding-top: 75px;
-
+  }
+  .newPwdRules{
+    padding-top: 0px;
   }
   .main_content{
   }
@@ -424,5 +507,14 @@ select:focus ~ .bar:before, select:focus ~ .bar:after { width: 50%; }
   }
   .verticalAllign{
     padding-top: 70px;
+  }
+  .ulPwdRules li{
+    margin-left: -3em;
+    line-height: 6em;
+    font-size: 1em;
+  }
+  .iPwdRules {
+    font-size: 1.8em;
+    padding-top: 0.4em;
   }
 }

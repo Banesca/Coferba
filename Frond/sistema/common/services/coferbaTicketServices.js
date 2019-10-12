@@ -152,15 +152,36 @@ moduleTicketrServices.service("ticketServices", ['$http', 'tokenSystem', '$timeo
           /* GET TICKET BY ID*/
           ticketById: function(ticketID) {
             var ticketId=ticketID;
-            console.log("Ticket a buscar: "+ticketID);
+            console.log("[Service] => [ticketById] => Ticket a buscar: "+ticketID);
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Ticket/ticketById/"+ticketID
                   }).then(function mySuccess(response) {
                       rsJsonTicket = response.data;
+                      console.log("[Service] => [ticketById] => Response data");
+                      console.log(rsJsonTicket);
                       return rsJsonTicket;
                   },function myError(response) { 
                         if(!ticketId){
+                            checkResult = 0;
+                        }
+                    return checkResult;
+            });   
+          },
+          /* GET TICKET BY ID*/
+          ticketByToken: function(ticketToken) {
+            var ticketToken=ticketToken;
+            console.log("Ticket a buscar: "+ticketToken);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Ticket/ticketByToken/"+ticketToken
+                  }).then(function mySuccess(response) {
+                      rsJsonTicket = response.data;
+                      tokenSystem.tmpTicketlStorage(rsJsonTicket[0]); 
+                      checkResult = 1;
+                      return checkResult;
+                  },function myError(response) { 
+                        if(!ticketToken){
                             checkResult = 0;
                         }
                     return checkResult;

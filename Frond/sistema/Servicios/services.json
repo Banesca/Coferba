@@ -22,9 +22,6 @@ METODO:POST
     "idBranchKf" : 1,// OPCIONAL PARA SUCARSALES DE UNA EMPRESA 
     "idCompanyKf":1,// OPCIONAL PARA EMPRES 
     "totalService" : "100.40",
-    "totalGestion" : "0.0" ,
-    "totalLlave":  "0.0",
-    "totalEnvio":  "0.0",
     "idOtherKf" : 0// opcional si envias un otro de encargado 
 
   }

@@ -13,6 +13,9 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   $scope.sysRegisteredUser = {};
   $scope.tmp               = {};
   $scope.email2Register = tokenSystem.getTokenStorage(4);
+  $scope.rsInput = false;
+  $scope.rsInputLength = 0;
+  $scope.regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   //console.log($scope.email2Register.emailAttempted)
   $scope.register.email = !$scope.email2Register?'':$scope.email2Register.emailAttempted;
 
@@ -29,8 +32,16 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
 
 $scope.modalConfirmation = function(){
+  $scope.register.securityCode = "";
+  $scope.register.idAddrName = "";
+  $scope.reg.idAddrAttKf = "";
+  $scope.register.idDepartmentKf = "";
   $('#confirmCodeModal').modal({backdrop: 'static', keyboard: false});
-  $('#confirmCodeModal').modal('show');
+  $('#confirmCodeModal').on('shown.bs.modal', function () {
+      $('#checkCode').focus();
+  })
+  //$('#confirmCodeModal').modal('show');
+  console.log("register.idAddrName :" +$scope.register.idAddrName);
 }
 $scope.reg = {idAddrAttKf: ''};
 $scope.sysCheckCode = function(){
@@ -45,8 +56,10 @@ $scope.sysCheckCode = function(){
         $scope.reg.idAddrAttKf = $scope.sysSecurityCode.data[0].idAdress;
         $scope.getDeptoListByAddress($scope.reg.idAddrAttKf);
         $('#confirmCodeModal').modal('hide');
-        $('#idAddrAttKf').addClass('active');
-        $('#idDepartmentKf').focus();
+        $('#confirmCodeModal').on('hidden.bs.modal', function () {
+          $('#idAddrAttKf').focus();
+          $('#idDepartmentKf').focus();
+        });
       }else{
         $scope.sysSecurityCode={};
         inform.add('Codigo de seguridad invalido por favor valida nuevamente o comunicate con el area de soporte.',{
@@ -273,8 +286,18 @@ $scope.getCompanyFromAddress = function(){
           }
       });
   }
-
-
+  $scope.inputCheckLength = function(obj){
+    
+    var input = obj=="" || obj==undefined ?"":obj;
+    console.log("input length="+input.length);
+    $scope.rsInputLength  = input.length;
+  }
+  $scope.printScope = function(obj, nameInput){
+    console.log(nameInput+" : "+obj);
+    if (obj!=undefined){
+      console.log(nameInput +" length : "+obj.length);
+    }
+  }
   $scope.inputCheckCss = function (obj, type) {
     var $this;
     switch (type){
@@ -294,7 +317,7 @@ $scope.getCompanyFromAddress = function(){
       //console.log($this)
       var inputObj   = $this
       var inputValue = !$this.val()?$this[0].innerText:$this.val();
-      console.log(inputValue);
+      //console.log(inputValue);
       inputService.setClass(inputValue, inputObj);
   }
   /**************************************************

@@ -411,7 +411,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr style="align-content: center;" ng-repeat="item in listTenant | filter: searchboxfilter | filter: {idTypeTenantKf:filterTenant}">
+                                              <tr style="align-content: center;" ng-repeat="item in listTenant | filter: (!!filterTenant || undefined) && {idTypeTenantKf: filterTenant} | filter: (!!searchboxfilter || undefined) && searchboxfilter">
                                                   <td>
                                                     <div class="btn-group">
                                                       <button type="button" ng-click="select2EditTenant(item, idDeptoKf);" class="btn btn-sm btn-xs btn-warning">
@@ -562,7 +562,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr style="align-content: center;" ng-repeat="item in listAttendant | filter: {idTyepeAttendantKf:filteroAttProfile} | filter: {idStatusKf:filterUserStatus} | filter: searchboxfilter | orderBy: 'idUser'">
+                              <tr style="align-content: center;" ng-repeat="item in listAttendant | filter: (!!filteroAttProfile || undefined) && {idTyepeAttendantKf:filteroAttProfile} | filter: (!!filterUserStatus || undefined) && {idStatusKf:filterUserStatus} | filter: (!!searchboxfilter || undefined) && searchboxfilter | orderBy: 'idUser'">
                                 <td>
                                 <div class="btn-group">
                                   <button type="button" ng-click="select2EditAtt(item);" class="btn btn-info btn-sm">{{item.idUser}}</button>

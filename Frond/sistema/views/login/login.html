@@ -32,7 +32,7 @@
 					          			type="email" 
 					          			ng-model="login.email" 
 					          			data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de ingreso con el correo <bold>{{login.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
-					          			class="form-input popover-large" 
+					          			class="form-input" 
 					          			ng-blur="inputCheckCss('loginemail');" 
 					          			name="loginemail" autofocus required>
 					          		<label>Email</label>
@@ -48,7 +48,7 @@
 						          	ng-model="login.passwd" 
 						          	data-content="<p>Ha ingresado en {{mailCheckCount+1}} oportunidades la clave incorrecta.<br><br> Desea restablecer la Contrase&#241a de su cuenta? </p>"
 						          	ng-blur="inputCheckCss('loginpassword');" 
-						          	class="form-input popover-large" 
+						          	class="form-input" 
 						          	name="loginpassword" autofocus required>
 						          	<label>Contrase&#241a</label>
 					          		<i class="glyphicon glyphicon-lock"></i>
@@ -60,7 +60,8 @@
 			          	</form>
 				    </div>
 			    	<!-- ************************************************* -->
-			      	<div ng-show="signupUser" class="signup"><!-- REGISTER FORM CHECK -->
+			    	<!-- REGISTER FORM CHECK -->
+			      	<div ng-show="signupUser" class="signup">
 				        <h2>COFERBA</h2>
 				        <h5>Nuevo usuario</h5><br><br>
 				        <form name="frmSignUpCheck" class="form-horizontal" id="frmSignUpCheck" ng-submit="sysCheckBeforeSignup()">
@@ -70,7 +71,7 @@
 					          		id="signupemail" 
 					          		type="email" 
 				          			data-content="<p>El correo <bold>{{signup.email}}</bold> se encuentra registrado en nuestro sistema.<br><br> Desea restablacer su clave? </p>"
-				          			class="form-input popover-large"
+				          			class="form-input"
 					          		ng-blur="inputCheckCss('signupemail')" 
 					          		required 
 					          		ng-model="signup.email" 

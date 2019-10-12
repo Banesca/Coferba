@@ -27,7 +27,7 @@ class User extends REST_Controller {
 	}
 
 	public function index_post() {
-       
+       $user = null;
         if (!$this->post('user')) {
             $this->response(NULL, 404);
         }

@@ -250,6 +250,18 @@ class Ticket extends REST_Controller {
                   $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
                 }
             }
+            public function ticketByToken_get($token) {
+                
+          
+                $rs = null;
+                $rs = $this->ticket_model->ticketByToken($token);
+      
+                if (!is_null($rs)) {
+                    $this->response($rs, 200);
+                } else {
+                  $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+                }
+            }
             /* SERVICIO QUE CREA UN TEMPORAL DE LA DATA DE ENVIO O CANCELACION DE UN TICKET */
             public function addTmpDeliveryOrCancelData_post()
             {
@@ -268,9 +280,21 @@ class Ticket extends REST_Controller {
 			
 			/** SEND MAIL */
 			public function sendMail_post(){
-				$rs = $this->mail_model->sendMail($this->post('title'),$this->post('mailTo'),$this->post('body'));
-				$this->response(array('response' => $rs),200);
-
+                $mailToV = null;
+                $mailToV = $this->post('mailTo');
+                if (is_null($mailToV) || $mailToV=='undefined'){
+                    $this->response(array('error' => "DATOS INCOMPLETOS", 'code' => "203"),203);
+                }else{
+    				$rs = $this->mail_model->sendMail($this->post('title'),$this->post('mailTo'),$this->post('body'));
+                        if(!is_null($rs))
+                        {
+                            $this->response(array('response' => $rs, 'code' => "200"),200);
+                        }
+                        else
+                        {
+                            $this->response(array('error' => "ERROR INESPERADO", 'code' => "500"),500);
+                        }
+                }
 			}
 
 

@@ -10,7 +10,7 @@
 			    	</div>
 					<div class="panel-body">
 							<!-- FORM CONTAINER-->
-							<form name="frmForgotPwd" class="form-horizontal" autocomplete="off" role="form" novalidate>
+							<form name="frmForgotPwd" class="form-horizontal" autocomplete="off" role="form" ng-submit="sysPwdRequest()" novalidate>
 								<div class="form-group login" ng-class="{'has-error': frmForgotPwd.email.$dirty && frmForgotPwd.email.$invalid}">
 									<div class="col-md-12">
 										<div class="inner-addon right-addon">
@@ -18,8 +18,8 @@
 						  					id="forgotemail"
 						  					type="email" 
 						  					ng-blur="inputCheckCss('forgotemail');"
-						  					data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de ingreso con el correo <bold>{{login.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
-						  					required class="form-input popover-large" 
+						  					data-content="<p>Ha realizado {{mailCheckCount+1}} intentos fallidos de recuperar la clave con el correo <bold>{{forgot.email}}</bold><br><br> Desea realizar el registro de usuario? </p>"
+						  					required class="form-input" 
 						  					name="forgotemail" 
 						  					ng-model="forgot.email" >
   							          		<label>Email</label>
@@ -33,7 +33,7 @@
 			            <div class="panel-footer">
 			                <div class="row">
 			                    <div class="col-xs-12 col-sm-12 col-md-6">
-			                        <button type="submit" ng-click="sysPwdRequest()" ng-disabled="frmForgotPwd.$invalid" class="btn btn-labeled btn-success">
+			                        <button id="sendBtnForgotpwd" type="submit" ng-click="sysPwdRequest()" ng-disabled="frmForgotPwd.$invalid" class="btn btn-labeled btn-success">
 			                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i></span>Enviar</button>
 			                        <a href="#/login" type="button" class="btn btn-labeled btn-danger">
 			                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>

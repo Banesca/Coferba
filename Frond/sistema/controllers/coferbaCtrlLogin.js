@@ -1,7 +1,7 @@
 var moduleLoginUser = angular.module("coferbaApp.LoginUser", ["coferbaTokenSystem", "coferbaServices.User"]);
 
 
-moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, blockUI, $timeout, inform, inputService, userServices, tokenSystem, serverHost, serverBackend, $window){
+moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $routeParams, blockUI, $timeout, inform, inputService, userServices, tokenSystem, serverHost, serverBackend, $window){
 
   $scope.login               = {email:'', passwd:''};
   $scope.signup              = {email:''};
@@ -26,6 +26,25 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
 
   /**************************************************
   *                                                 *
+  *         PARAMETER TO AUTHORIZE A TICKET         *
+  *                                                 *
+  **************************************************/
+
+  /* USAGE: /login/auth/ticket/id/tokenId/token/secureToken */
+  if($routeParams.ticketId && $routeParams.secureToken){
+    $scope.ticketId = $routeParams.ticketId;
+    $scope.secureToken = $routeParams.secureToken;
+    console.log("$scope.ticketId :" +$scope.ticketId+"$scope.secureToken: "+$scope.secureToken);
+    inform.add('Inicia la sesion para autorizar el ticket:  '+$scope.ticketId,{
+    ttl:5000, type: 'info'
+    });
+  }
+    
+
+    
+
+  /**************************************************
+  *                                                 *
   *       VALIDACION DE EMAIL ANTES DEL LOGIN       *
   *                                                 *
   **************************************************/
@@ -33,32 +52,40 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
     if($scope.login.email){
       userServices.checkUserMail($scope.login.email, "login").then(function(data) {
         $scope.mailCheckResult= data;
-        console.log("[sysCheckEmailLogin] --> mailCheckResult: "+$scope.mailCheckResult); 
-          if(!$scope.mailCheckResult){
-            var attempsToken = JSON.parse(localStorage.getItem("attempsToken"));
-            $scope.mailCheckCount = attempsToken.attempsCount;
-            if($scope.mailCheckCount==3){
-              $scope.checkEmailLogin = 1;
-              console.log($scope.mailCheckCount);
-              $scope.swOption = "register";
-              $scope.msg1="Ha realizado "+$scope.mailCheckCount+" intentos fallidos de ingreso con el correo "+$scope.login.email;
-              $scope.msg2="Desea realizar el registro de usuario?";
-              $('#confirmRequestModal').modal('show');
-                    $scope.mailCheckCount++;
-                    $("#loginEmail").popover({
-                      container: 'body',
-                      placement:'auto right',
-                      trigger: 'manual',
-                      title: '<div>Soporte coferba</div>',
-                      template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
-                      html: true
-              }); 
-              $("#loginEmail").popover('show');
-            }else{
-              inform.add('El Correo: '+ $scope.login.email + ', no se encuentra registrado, verifique los datos ingresados.',{
-                ttl:4000, type: 'warning'
+        //console.log("[sysCheckEmailLogin] --> mailCheckResult: "+$scope.mailCheckResult); 
+          if(!$scope.mailCheckResult || $scope.mailCheckResult==500){
+            if($scope.mailCheckResult==500){
+              inform.add('[Error]: '+$scope.mailCheckResult+', Ha ocurrido un error en la comunicacion con servidor, contacta el area de soporte. ',{
+              ttl:5000, type: 'danger'
               });
-              console.log("Email No registrado / "+ $scope.login.email);
+            }else{
+              var attempsToken = JSON.parse(localStorage.getItem("attempsToken"));
+              $scope.mailCheckCount = attempsToken.attempsCount;
+
+              if($scope.mailCheckCount==3){
+                $scope.checkEmailLogin = 1;
+                console.log($scope.mailCheckCount);
+                $scope.swOption = "register";
+                $scope.msg1="Ha realizado "+$scope.mailCheckCount+" intentos fallidos de ingreso con el correo "+$scope.login.email;
+                $scope.msg2="Desea realizar el registro de usuario?";
+                $('#confirmRequestModal').modal('show');
+                      $scope.mailCheckCount++;
+                      $("#loginEmail").popover({
+                        container: 'body',
+                        placement:'auto right',
+                        trigger: 'manual',
+                        title: '<div>Soporte coferba</div>',
+                        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
+                        html: true
+                }); 
+                $("#loginEmail").popover('show');
+              }else{
+                console.log($scope.mailCheckResult);
+                inform.add('El Correo: '+ $scope.login.email + ', no se encuentra registrado, verifique los datos ingresados.',{
+                  ttl:4000, type: 'warning'
+                });
+                console.log("Email No registrado / "+ $scope.login.email);
+              }
             }
           }else{
             var sysCheckEmailLogin=true;
@@ -187,7 +214,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, block
     userServices.checkUserMail($scope.signup.email, "register").then(function(data) {
       $scope.mailCheckResult= data; 
         if($scope.mailCheckResult){
-          console.log($scope.mailCheckCount);
+          console.log("Mail check attemps: "+$scope.mailCheckCount);
           $scope.swOption = "forgotpwd";
           $scope.msg1="El correo "+$scope.signup.email+", se encuentra registrado en nuestro sistema.";
           $scope.msg2="Desea restablacer su clave?";

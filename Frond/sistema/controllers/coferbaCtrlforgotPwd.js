@@ -9,6 +9,23 @@ moduleForgotPwd.controller('ForgotPwdCtrl', function($scope, $rootScope, $locati
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken = tokenSystem.getTokenStorage(1);
   $scope.sysRsTmpUser = tokenSystem.getTokenStorage(3);
+  
+  if (!$scope.sysRsTmpUser){
+        setTimeout(function() {
+        $('#forgotemail').addClass('active');
+        $('#forgotemail').focus();
+        }, 100);
+
+  }else{
+        $scope.forgot.email = $scope.sysRsTmpUser.emailUser
+        setTimeout(function() {
+        $('#forgotemail').addClass('active');
+        $('#sendBtnForgotpwd').focus();
+        }, 100);
+
+  }
+       
+  
   /**************************************************
   *                                                 *
   *                LOST PWD USER                    *

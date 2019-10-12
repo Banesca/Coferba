@@ -6,15 +6,14 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
       var attempsToken = {emailAttempted:'', attempsCount: 0};
       var loginResult="";
       var rsJSON;
+      var mail2Search = {mail:{ email: ''}};
       return {
           /* FIND USER BY EMAIL */
           checkUserMail: function(userMail, typeOfCheck) {
-            var mail2Search=userMail;
-            console.log("Email a verificar: "+userMail);
-              return $http({
-                    method : "GET",
-                    url : serverHost+serverBackend+"user/findUserByEmail/"+mail2Search
-                  }).then(function mySuccess(response) {
+            mail2Search.mail.email=userMail;
+            //console.log("Email a verificar: "+userMail);  
+              return $http.post(serverHost+serverBackend+"User/findUserByEmail",mail2Search)
+                .then(function mySucess(response, status, data) {
                       checkResult = 1;
                       //console.log("Email registrado: "+response.data.emailUser);
                       if(typeOfCheck!="updatesession"){
@@ -28,30 +27,35 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                       return checkResult;
                       //console.log(response.data)
                   },function myError(response) { 
-                    //console.log(response.data.error); 
-                    if (typeOfCheck=="login" || typeOfCheck=="forgotPwd"){
-                      var attempsTkn=!JSON.parse(localStorage.getItem("attempsToken"))? false :JSON.parse(localStorage.getItem("attempsToken"));
-                        if(attempsTkn==false || attempsTkn==undefined){
-                            attempsToken['attempsCount']=0;
-                            attempsToken['attempsCount']++;
-                            attempsToken['emailAttempted']=userMail;
-                        }else if(userMail!==attempsTkn.emailAttempted) {
-                            localStorage.removeItem("attempsToken");
-                            attempsToken['attempsCount']=0;
-                            attempsToken['attempsCount']++;
-                            attempsToken['emailAttempted']=userMail;
-                        }else{
-                            attempsToken['attempsCount']=attempsTkn.attempsCount+1;
-                            attempsToken['emailAttempted']=attempsTkn.emailAttempted;
-                        }  
+                    
+                    //console.log("Error code["+response.status+"]: "+response.statusText); 
+                    if(response.status==500){
+                      return checkResult=response.status;
+                    }else{
+                      if (typeOfCheck=="login" || typeOfCheck=="forgotPwd"){
+                        var attempsTkn=!JSON.parse(localStorage.getItem("attempsToken"))? false :JSON.parse(localStorage.getItem("attempsToken"));
+                          if(attempsTkn==false || attempsTkn==undefined){
+                              attempsToken['attempsCount']=0;
+                              attempsToken['attempsCount']++;
+                              attempsToken['emailAttempted']=userMail;
+                          }else if(userMail!==attempsTkn.emailAttempted) {
+                              localStorage.removeItem("attempsToken");
+                              attempsToken['attempsCount']=0;
+                              attempsToken['attempsCount']++;
+                              attempsToken['emailAttempted']=userMail;
+                          }else{
+                              attempsToken['attempsCount']=attempsTkn.attempsCount+1;
+                              attempsToken['emailAttempted']=attempsTkn.emailAttempted;
+                          }  
                       }else if (typeOfCheck=='register'){
-                            localStorage.removeItem("attempsToken");
-                            attempsToken['attempsCount']=0;
-                            attempsToken['emailAttempted']=userMail;
+                              localStorage.removeItem("attempsToken");
+                              attempsToken['attempsCount']=0;
+                              attempsToken['emailAttempted']=userMail;
                       }
                         localStorage.setItem("attempsToken", JSON.stringify(attempsToken));
                         checkResult = 0;
-                    return checkResult;
+                        return checkResult;
+                    }
             });   
           },
           /* RESTORE PASSWORD */
@@ -100,7 +104,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           /* LOGIN SERVICE */
           letLogin: function(jsonLogin) {
             var jsonUser=jsonLogin.user.fullNameUser;
-              console.log("Login con el email: "+jsonUser);
+              //console.log("Login con el email: "+jsonUser);
               return $http.post(serverHost+serverBackend+"User/auth",jsonLogin)
                 .then(function mySucess(response, status) {
                   rsJSON=response.data.response;
@@ -167,7 +171,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                     }
                 },function myError(response) {
                   alert(status);
-                    if(respone.status == 404){
+                    if(response.status == 404){
                       console.log("!Informacion: "+response.data.error+"info");
                       /*inform.add(response.data.error,{
                         ttl:5000, type: 'warning'

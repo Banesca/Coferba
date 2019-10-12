@@ -147,10 +147,10 @@ class Ticket_model extends CI_Model
                     'thirdPersonNames'            =>  $ticket['thirdPersonNames'],
                     'thirdPersonPhone'            =>  $ticket['thirdPersonPhone'],
                     'thirdPersonId'               =>  $ticket['thirdPersonId'],
-					'totalService'                =>  $ticket['totalService'],
-					'totalGestion'                =>  $ticket['totalGestion'],
-					'totalLlave'                =>  $ticket['totalLlave'],
-					'totalEnvio'                =>  $ticket['totalEnvio'],
+                    'totalService'                =>  $ticket['totalService'],
+                    'totalGestion'                =>  $ticket['totalGestion'],
+                    'totalLlave'                  =>  $ticket['totalLlave'],
+                    'totalEnvio'                  =>  $ticket['totalEnvio'],
                     'isChangeDeliverylRequested'  =>  null
                 )
         )->where("idTicket", $ticket['idTicket'])->update("tb_tickets");
@@ -168,7 +168,7 @@ class Ticket_model extends CI_Model
                 array(
                     'idTypeTicketKf'                =>  $ticket['idTypeTicketKf'],
                     'descriptionComment'            =>  $ticket['descriptionComment'],
-                    'isCommentOrDesccriptionChange' => $ticket['isCommentOrDesccriptionChange'],                   
+                    'isCommentOrDesccriptionChange' =>  $ticket['isCommentOrDesccriptionChange'],                   
                     'idRequestKf'                   =>  $ticket['idRequestKf'],
 
                     'idUserTenantKf'                =>  $ticket['idUserTenantKf'],
@@ -191,10 +191,10 @@ class Ticket_model extends CI_Model
                     'descriptionOrder'              =>  $ticket['descriptionOrder'],
                     'idTypeServicesKf'              =>  $ticket['idTypeServicesKf'],
 
-					'totalService'                  =>  $ticket['totalService'],
-					'totalGestion'                =>  $ticket['totalGestion'],
-					'totalLlave'                =>  $ticket['totalLlave'],
-					'totalEnvio'                =>  $ticket['totalEnvio'],
+                    'totalService'                  =>  $ticket['totalService'],
+                    'totalGestion'                  =>  $ticket['totalGestion'],
+                    'totalLlave'                    =>  $ticket['totalLlave'],
+                    'totalEnvio'                    =>  $ticket['totalEnvio'],
                     'addressConsul'                 =>  $ticket['addressConsul'],
                     'idProfileKf'                   =>  $ticket['idProfileKf'],
 
@@ -216,7 +216,7 @@ class Ticket_model extends CI_Model
                     'idOtherKf'                     =>  $ticket['idOtherKf'],
 
                     'isChangeDeliverylRequested'    =>  $ticket['isChangeDeliverylRequested'],
-                    'idUserHasChangeTicket'          =>  $ticket['idUserHasChangeTicket'],
+                    'idUserHasChangeTicket'         =>  $ticket['idUserHasChangeTicket'],
 
                     'idTypeDeliveryKf'              =>  $ticket['idTypeDeliveryKf'],
                     'idWhoPickUp'                   =>  $ticket['idWhoPickUp'],
@@ -224,7 +224,8 @@ class Ticket_model extends CI_Model
                     'thirdPersonNames'              =>  $ticket['thirdPersonNames'],
                     'thirdPersonPhone'              =>  $ticket['thirdPersonPhone'],
                     'thirdPersonId'                 =>  $ticket['thirdPersonId'],
-                    
+
+                    'urlToken'                      =>  $ticket['urlToken'],
                     'sendUserNotification'          =>  $ticket['sendUserNotification']
                 )
         )->where("idTicket", $ticket['idTicket'])->update("tb_tickets");
@@ -278,10 +279,10 @@ class Ticket_model extends CI_Model
             'codTicket'                 => $codTicket,
             'idTypeTicketKf'            => @$ticket['idTypeTicketKf'],
             'idProfileKf'               => @$ticket['idProfileKf'],
-			'totalService'              => @$ticket['totalService'],
-			'totalGestion'              => @$ticket['totalGestion'],
-			'totalLlave'                => @$ticket['totalLlave'],
-			'totalEnvio'                => @$ticket['totalEnvio'],
+            'totalService'              =>  $ticket['totalService'],
+            'totalGestion'              =>  $ticket['totalGestion'],
+            'totalLlave'                =>  $ticket['totalLlave'],
+            'totalEnvio'                =>  $ticket['totalEnvio'],
 
             /***** ALTA / BAJA *****/
             'idUserTenantKf'            => @$ticket['idUserTenantKf'],
@@ -333,6 +334,7 @@ class Ticket_model extends CI_Model
             
             'sendUserNotification'      => @$ticket['sendNotify'],
             'isNew'                     => @$ticket['isNew'],
+            'urlToken'                  => @$ticket['urlToken'],
             'idStatusTicketKf'          => 2
         )
         );
@@ -515,10 +517,10 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_department', 'tb_department.idDepartment = tb_tickets.idDepartmentKf', 'left');
             $this->db->join('tb_user b', 'b.idUser = tb_tickets.idOWnerKf', 'left');
             $this->db->join('tb_type_delivery tmp_a', 'tmp_a.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
-
             $this->db->join('tb_reason_disabled_item', 'tb_reason_disabled_item.idReasonDisabledItem = tb_tickets.idReasonDisabledItemKf', 'left');
             $this->db->join('tb_tmp_delivery_data deliverTmp', 'deliverTmp.tmp_idTicketKf = tb_tickets.idTicket AND deliverTmp.tmp_isChOrCancelApplied is null AND (deliverTmp.tmp_isChApproved is null OR AND deliverTmp.tmp_isCancelApproved is null)', 'left');
             $this->db->join('tb_type_delivery tmp_b', 'tmp_b.idTypeDelivery = deliverTmp.tmp_idTypeDeliveryKf', 'left');
+            $this->db->join('tb_type_outher typeo', 'typeo.idTypeOuther = tb_tickets.idTypeOuther', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_tickets.idAdressKf',  'left');      
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
             $this->db->join('tb_user d', 'd.idUser = tb_tickets.idUserAdminKf', 'left');
@@ -680,25 +682,27 @@ class Ticket_model extends CI_Model
         else
         { 
             $this->db->select("*,
-                CASE  
-                  WHEN idUserCompany > 0 THEN a.fullNameUser
-                  WHEN idOWnerKf > 0 THEN b.fullNameUser
-                  WHEN idUserEnterpriceKf > 0 THEN c.fullNameUser
-                  WHEN idUserAdminKf > 0 THEN d.fullNameUser
-                  WHEN idUserTenantKf > 0 THEN g.fullNameUser
+                CASE    
+                  WHEN idUserCompany      > 0 THEN a.fullNameUser        /* ID DEL EMPRESA */
+                  WHEN idOWnerKf          > 0 THEN b.fullNameUser            /* ID DEL PROPIETARIO */
+                  WHEN idUserEnterpriceKf > 0 THEN c.fullNameUser   /* ID DEL ADMIN DEL CONSORCIO */
+                  WHEN idUserAdminKf      > 0 THEN d.fullNameUser        /* ID DEL ADMIN DEL SISTEMA */
+                  WHEN idUserTenantKf     > 0 THEN g.fullNameUser       /* ID DEL INQUILINO */
+                  WHEN idUserAttendantKf  > 0 THEN n.fullNameUser   /* ID DEL ENCARGADO */
                   ELSE '' 
                 END as fullNameUser,
-                 a.fullNameUser as FullNameUserCompany,
-                 b.fullNameUser as FullNameUserOwner,
-                 c.fullNameUser as FullNameUserEnterprice,
-                 d.fullNameUser as FullNameUserAdmin,
-                 g.fullNameUser as FullUserTenant,
+                 a.fullNameUser as FullNameUserCompany,             
+                 b.fullNameUser as FullNameUserOwner,               
+                 c.fullNameUser as FullNameUserEnterprice,         
+                 d.fullNameUser as FullNameUserAdmin,              
+                 g.fullNameUser as FullUserTenant,                 
+                 n.fullNameUser as FullUserEncargado,             
                 CASE  
-                  WHEN idUserCompany > 0 THEN a.phoneNumberUser
-                  WHEN idOWnerKf > 0 THEN b.phoneNumberUser
+                  WHEN idUserCompany      > 0 THEN a.phoneNumberUser
+                  WHEN idOWnerKf          > 0 THEN b.phoneNumberUser
                   WHEN idUserEnterpriceKf > 0 THEN c.phoneNumberUser
-                  WHEN idUserAdminKf > 0 THEN d.phoneNumberUser
-                  WHEN idUserTenantKf > 0 THEN g.phoneNumberUser
+                  WHEN idUserAdminKf      > 0 THEN d.phoneNumberUser
+                  WHEN idUserTenantKf     > 0 THEN g.phoneNumberUser
                   ELSE '' 
                 END as phoneNumberUser,
                 CASE  
@@ -707,6 +711,7 @@ class Ticket_model extends CI_Model
                   WHEN idUserEnterpriceKf > 0 THEN cProf.nameProfile
                   WHEN idUserAdminKf      > 0 THEN dProf.nameProfile
                   WHEN idUserTenantKf     > 0 THEN gProf.nameProfile
+                  WHEN idUserAttendantKf  > 0 THEN nProf.nameProfile
                   ELSE '' 
                 END as nameProfile,
                  aProf.nameProfile as profileUserCompany,
@@ -714,6 +719,7 @@ class Ticket_model extends CI_Model
                  cProf.nameProfile as profileUserEnterprice,
                  dProf.nameProfile as profileUserAdmin,
                  gProf.nameProfile as profileTenant,
+                 nProf.nameProfile as profileEncargado,
                 CASE  
                   WHEN idOtherKf > 0 THEN f.fullNameUser
                   WHEN idOtherKf < 1 THEN e.fullNameUser
@@ -770,10 +776,10 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_typeticket', 'tb_typeticket.idTypeTicket = tb_tickets.idTypeTicketKf', 'left');
             $this->db->join('tb_statusticket', 'tb_statusticket.idStatus = tb_tickets.idStatusTicketKf', 'left');
             $this->db->join('tb_type_delivery tmp_a', 'tmp_a.idTypeDelivery = tb_tickets.idTypeDeliveryKf', 'left');
-
             $this->db->join('tb_reason_disabled_item', 'tb_reason_disabled_item.idReasonDisabledItem = tb_tickets.idReasonDisabledItemKf', 'left');
             $this->db->join('tb_tmp_delivery_data deliverTmp', 'deliverTmp.tmp_idTicketKf = tb_tickets.idTicket AND deliverTmp.tmp_isChOrCancelApplied is null', 'left');
             $this->db->join('tb_type_delivery tmp_b', 'tmp_b.idTypeDelivery = deliverTmp.tmp_idTypeDeliveryKf', 'left');
+            $this->db->join('tb_type_outher typeo', 'typeo.idTypeOuther = tb_tickets.idTypeOuther', 'left');
             $this->db->join('tb_user e', 'e.idUser = tb_tickets.idUserAttendantKf', 'left');
             $this->db->join('tb_user f', 'f.idUser = tb_tickets.idOtherKf', 'left');
             $this->db->join('tb_user c', 'c.idUser = tb_tickets.idUserEnterpriceKf', 'left');
@@ -784,6 +790,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_user k', 'k.idUser = deliverTmp.tmp_idUserAttendantKfDelivery', 'left');
             $this->db->join('tb_user l', 'l.idUser = deliverTmp.tmp_idUserRequestChOrCancel', 'left');
             $this->db->join('tb_user m', 'm.idUser = tb_tickets.idUserCancelTicket', 'left');
+            $this->db->join('tb_user n', 'n.idUser = tb_tickets.idUserAttendantKf', 'left');
             $this->db->join('tb_opcion_low low', 'low.idOpcionLowTicket = tb_tickets.idOpcionLowTicketKf', 'left');
             $this->db->join('tb_type_attendant auxTypeA', 'auxTypeA.idTyepeAttendant = f.idTyepeAttendantKf', 'left');
             $this->db->join('tb_type_attendant auxTypeB', 'auxTypeB.idTyepeAttendant = e.idTyepeAttendantKf', 'left');
@@ -794,6 +801,7 @@ class Ticket_model extends CI_Model
             $this->db->join('tb_profile cProf', 'cProf.idProfile = c.idProfileKf', 'left');
             $this->db->join('tb_profile dProf', 'dProf.idProfile = d.idProfileKf', 'left');
             $this->db->join('tb_profile gProf', 'gProf.idProfile = g.idProfileKf', 'left');
+            $this->db->join('tb_profile nProf', 'nProf.idProfile = n.idProfileKf', 'left');
 
             if(@$searchFilter['idProfileKf']  == 1 || @$searchFilter['idProfileKf']  == 4 ||  @$searchFilter['idProfileKf']  == 2)
             {
@@ -988,7 +996,113 @@ class Ticket_model extends CI_Model
                 return null;
         
     }
+    /* GET TICKET BY TOKEN */
+    public function ticketByToken($token) {
+        $quuery = null;
+        $rs = null;
 
+        
+            $this->db->select("
+                         TK.idTicket         AS tk_id, 
+                         TK.codTicket        AS tk_cod,
+                         TK.numberItemes     AS tk_qtty,
+                         TK.dateCreated      AS tk_date_created,
+                         TK.dateRecibedAdmin AS tk_date_approved,
+                         TK.dateRecibeCompany AS tk_date_system,
+                         TK.dateCancel       AS tk_date_cancel,
+                         TK.idTypeTicketKf   AS tk_type_id,
+                        CASE 
+                             WHEN TK.idTypeTicketKf<=2 THEN SUBSTR(TTK.typeTicketName, 1, 4)
+                             WHEN TK.idTypeTicketKf=3  THEN SUBSTR(TTK.typeTicketName, 1, 8)
+                             WHEN TK.idTypeTicketKf=4  THEN SUBSTR(TTK.typeTicketName, 20, 9)
+                             ELSE ''
+                        END AS tk_type,
+                         TK.idTypeOfOptionKf  AS tk_typeOfOption_id,
+                         CASE 
+                            WHEN TK.idTypeOfOptionKf=1 THEN 'Solicitud para Encargado'
+                            WHEN TK.idTypeOfOptionKf=2 THEN 'Solicitud para Consorcio'
+                            ELSE ''
+                        END AS tk_typeOfOption,
+                         TK.idTypeDeliveryKf AS tk_type_delivery_id,
+                         TYD.typeDelivery    AS tk_type_delivery,
+                         TK.idWhoPickUp      AS tk_who_pickup_id,
+                         UPPER(TYR.nameWhoPickUp)   AS tk_who_pickup,
+                         TK.thirdPersonNames AS tk_third_person_name,
+                         TK.thirdPersonPhone AS tk_third_person_phone,
+                         TK.thirdPersonId    AS tk_third_person_id,
+                         TK.urlToken         AS tk_token,
+                         TYOU.typeOuther     AS tk_type_qry,
+                         TK.totalGestion     AS tk_mgmt,
+                         TK.totalLlave       AS tk_keys,
+                         TK.totalEnvio       AS tk_deliv,
+                         TK.totalService     AS tk_total,
+                         STK.statusName      AS tk_status,
+                         SYSU.fullNameUser   AS u_system,
+                         SYSP.nameProfile    AS p_system,
+                         UO.fullNameUser     AS u_owner,
+                         PUO.nameProfile     AS p_owner,
+                         UO.emailUser        AS m_owner,
+                         UT.fullNameUser     AS u_tenant,
+                         PUT.nameProfile     AS p_tenant,
+                         UT.emailUser        AS m_tenant,
+                         CASE 
+                            WHEN TK.idUserTenantKf >0 AND TK.idOWnerKf IS NULL OR TK.idOWnerKf=0 THEN UON.fullNameUser
+                            ELSE ''
+                         END AS notify_owner_names,
+                         CASE 
+                            WHEN TK.idUserTenantKf >0 AND TK.idOWnerKf IS NULL OR TK.idOWnerKf=0 THEN UON.emailUser
+                         ELSE ''
+                         END AS notify_owner_mail,
+                         UADMC.fullNameUser  AS u_admc,
+                         PADMC.nameProfile   AS p_admc,
+                         UADMC.emailUser     AS m_admc,
+                         UENT.fullNameUser   AS u_enterp,
+                         PENT.nameProfile    AS p_enterp,
+                         UENT.emailUser      AS m_enterp,
+                         UATT.fullNameUser   AS u_atten,
+                         PUATT.nameProfile   AS p_atten,
+                         UATT.emailUser      AS m_atten,
+                         UATTD.fullNameUser  AS u_attend,
+                         PUATTD.nameProfile  AS p_attend,
+                         UATTD.emailUser     AS m_attend,
+                         RQA.nameAdress      AS rq_address,
+                         RQD.departmentFloor AS rq_deparment,
+                         RQC.nameCompany     AS rq_company,
+                         RQC.mail_request    AS rq_mailRequest,
+                         RQC.mail_services   AS rq_mailService,
+                         RQC.mail_admin      AS rq_mailAdmin")->from("tb_tickets TK");
+            $this->db->join('tb_statusticket  STK   ', 'STK.idStatus = TK.idStatusTicketKf', 'left');
+            $this->db->join('tb_typeticket    TTK   ', 'TTK.idTypeTicket = TK.idTypeTicketKf ', 'left');
+            $this->db->join('tb_type_delivery TYD   ', 'TYD.idTypeDelivery = TK.idTypeDeliveryKf ', 'left');
+            $this->db->join('tb_pick_receive  TYR   ', 'TYR.idWhoPickUp = TK.idWhoPickUp ', 'left');
+            $this->db->join('tb_user          SYSU  ', 'SYSU.idUser  = TK.idUserAdminKf', 'left');
+            $this->db->join('tb_user          UO    ', 'UO.idUser  = TK.idOWnerKf', 'left');
+            $this->db->join('tb_user          UT    ', 'UT.idUser  = TK.idUserTenantKf', 'left');
+            $this->db->join('tb_user          UENT  ', 'UENT.idUser  = TK.idUserCompany', 'left');
+            $this->db->join('tb_user          UADMC ', 'UADMC.idUser  = TK.idUserEnterpriceKf', 'left');
+            $this->db->join('tb_user          UATT  ', 'UATT.idUser = TK.idUserAttendantKf ', 'left');
+            $this->db->join('tb_user          UATTD ', 'UATTD.idUser = TK.idUserAttendantKfDelivery', 'left');
+            $this->db->join('tb_type_outher   TYOU  ', 'TYOU.idTypeOuther = TK.idTypeOuther', 'left');
+            $this->db->join('tb_addres        RQA   ', 'RQA.idAdress = TK.idAdressKf', 'left');
+            $this->db->join('tb_department    RQD   ', 'RQD.idDepartment = TK.idDepartmentKf', 'left');
+            $this->db->join('tb_user          UON   ', 'UON.idUser  = RQD.idUserKf', 'left');
+            $this->db->join('tb_company       RQC   ', 'RQC.idCompany = TK.idCompanyKf', 'left');
+            $this->db->join('tb_profile       SYSP  ', 'SYSU.idProfileKf = SYSP.idProfile', 'left');
+            $this->db->join('tb_profile       PUO   ', 'UO.idProfileKf = PUO.idProfile', 'left');
+            $this->db->join('tb_profile       PUT   ', 'UT.idProfileKf = PUT.idProfile', 'left');
+            $this->db->join('tb_profile       PADMC ', 'UADMC.idProfileKf = PADMC.idProfile ', 'left');
+            $this->db->join('tb_profile       PUATT ', 'UATT.idProfileKf = PUATT.idProfile', 'left');
+            $this->db->join('tb_profile       PUATTD', 'UATTD.idProfileKf = PUATTD.idProfile', 'left');
+            $this->db->join('tb_profile       PENT  ', 'UENT.idProfileKf = PENT.idProfile ', 'left');
+            $quuery = $this->db->where("TK.urlToken =", $token)->get();
+
+
+            if ($quuery->num_rows() > 0) {
+                return $quuery->result_array();
+            } 
+                return null;
+        
+    }
      /* LISTADO DE FILTROS */
     public function getFilterForm() {
 
@@ -1194,10 +1308,10 @@ class Ticket_model extends CI_Model
             'tmp_thirdPersonNames'          => @$ticket['thirdPersonNames'],
             'tmp_thirdPersonPhone'          => @$ticket['thirdPersonPhone'],
             'tmp_thirdPersonId'             => @$ticket['thirdPersonId'],
-			'tmp_totalService'              => @$ticket['totalService'],
-			'totalGestion'                  => @$ticket['totalGestion'],
-			'totalLlave'                    => @$ticket['totalLlave'],
-			'totalEnvio'                    => @$ticket['totalEnvio'],
+            'totalService'                  => @$ticket['totalService'],
+            'totalGestion'                  => @$ticket['totalGestion'],
+            'totalLlave'                    => @$ticket['totalLlave'],
+            'totalEnvio'                    => @$ticket['totalEnvio'],
             'tmp_reasonForCancelTicket'     => @$ticket['reasonForCancelTicket']
             )
         );

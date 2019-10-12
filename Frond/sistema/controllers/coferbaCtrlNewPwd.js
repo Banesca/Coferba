@@ -1,5 +1,31 @@
 var moduleNewPwd = angular.module("coferbaApp.NewPwd", ["coferbaTokenSystem", "coferbaServices.User"]);
 
+moduleNewPwd.directive('noSpaces', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      attrs.ngTrim = 'false';
+
+      element.bind('keydown', function(e) {
+        if (e.which === 32) {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      ngModel.$parsers.unshift(function(value) {
+        var spacelessValue = value.replace(/ /g, '');
+
+        if (spacelessValue !== value) {
+          ngModel.$setViewValue(spacelessValue);
+          ngModel.$render();
+        }
+
+        return spacelessValue;
+      });
+    }
+  };
+});
 moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI,userServices, inputService, userServices, $timeout, tokenSystem, serverHost, serverHeaders, inform, $window){
 
   //console.log(serverHeaders)
@@ -11,12 +37,20 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
   $scope.sysRsTmpUser  = tokenSystem.getTokenStorage(3);
+  $scope.regexStrongPwd=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+  $scope.regexRules = {uperChar:false, lowerChar:false, numberChar:false, specialChar:false, minChar:false } ;
+  var regexUperChar    =/^(?=.*[A-Z]).{1,}$/;
+  var regexLowerChar   =/^(?=.*[a-z]).{1,}$/;
+  var regexNumberChar  =/^(?=.*\d).{1,}$/;
+  var regexSpecialChar =/^(?=.*\W).{1,}$/;
+  var regexMinChar     =/^.{8,}/;
   var data2update = {};
   var user = !$scope.sysToken ? $scope.sysRsTmpUser : $scope.sysLoggedUser;
   //console.log(user);
   var data2update = {
                       user
                     };
+
   /**************************************************
   *                                                 *
   *                 NEW PWD INIT                    *
@@ -68,5 +102,21 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   }else{
       location.href = "#/login";
   }
-
+  /**************************************************
+  *                                                 *
+  *             CHECK THE PASSWD STRENG             *
+  *                                                 *
+  **************************************************/
+  $scope.regexChecker = function(value){
+    if (value!=undefined && value!=''){
+      $scope.regexRules.lowerChar=regexLowerChar.test(value);
+      $scope.regexRules.uperChar=regexUperChar.test(value);
+      $scope.regexRules.numberChar=regexNumberChar.test(value);
+      $scope.regexRules.specialChar=regexSpecialChar.test(value);
+      $scope.regexRules.minChar=regexMinChar.test(value);
+      console.log("regexRules.lowerChar: "+$scope.regexRules.lowerChar);
+    }else{
+      $scope.regexRules = {uperChar:false, lowerChar:false, numberChar:false, specialChar:false, minChar:false }
+    }
+  }
 });

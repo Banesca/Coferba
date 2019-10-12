@@ -133,7 +133,8 @@ class User_model extends CI_Model
         $ramdonPwd = $this->get_random_password();
         $isDepartmentApproved = null;
         $idStatusKfByAdmin = null;
-        if (@$user['idTypeTenantKf']!=1 && @$user['idDepartmentKf'] && (@$user['isCreateByAdmin'] || @$user['isCreateByOwner'])){$isDepartmentApproved=1;}else{$isDepartmentApproved=null;}
+        if (@$user['idTypeTenantKf']!=1 && @$user['idDepartmentKf'] && (@$user['isCreateByAdmin'] || @$user['isCreateByOwner']))
+            {$isDepartmentApproved=1;}else{$isDepartmentApproved=null;}
         if (@$user['idTyepeAttendantKf']!=0 && @$user['isCreateByAdmin']){$idStatusKfByAdmin=1;}else{$idStatusKfByAdmin=0;}
         /* CREAMOS UN USUARIO */
         $this->db->insert('tb_user', array(
@@ -194,7 +195,7 @@ class User_model extends CI_Model
          return -1;
      }
     }
-    function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=yes, $include_special_chars=false)
+    public function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers='yes', $include_special_chars=false)
     {
         $length = rand($chars_min, $chars_max);
         $selection = 'aeuoyibcdfghjklmnpqrstvwxz';
@@ -213,6 +214,34 @@ class User_model extends CI_Model
         
       return $password;
     }
+
+
+     /* EDITAR CLAVES  */
+    public function updatePass($user) {
+        $recoverRamdonPwd = null;
+        $recoverRamdonPwd = $this -> get_random_password();
+                $this->db->set(
+                        array(
+                            'passwordUser' => sha1(md5($recoverRamdonPwd)),
+                            'resetPasword' => 1
+                        )
+                )->where("emailUser", $user['emailUser'])->update("tb_user");
+        
+                 /*MAIL*/
+                 $title ="Mail de Clave de Acceso a Coferba";
+                 $body = "Se Restablecio su clave de acceso!<br> Usuario: ".$user['emailUser']."<br> Clave: ".$recoverRamdonPwd." <br> Le Recomendamos luego de acceder cambie su clave!";
+                 $m = $this->mail_model->sendMail($title,$user['emailUser'],$body);
+
+               
+                
+                if ($this->db->affected_rows() === 1) {
+                   
+                    return true;
+                } else {
+                    return false;
+                }
+    }
+
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -442,30 +471,6 @@ class User_model extends CI_Model
    
 
 
-     /* EDITAR CLAVES  */
-     public function updatePass($user) {
-        
-                $this->db->set(
-                        array(
-                            'passwordUser' => sha1(md5(12345)),
-                            'resetPasword' => 1
-                        )
-                )->where("emailUser", $user['emailUser'])->update("tb_user");
-        
-                 /*MAIL*/
-                 $title ="Mail de Clave de Acceso a Coferba";
-                 $body = "Se Restablecio su clave de acceso!<br> Usuario: ".$user['emailUser']."<br> Clave: 12345 <br> Le Recomendamos luego de acceder cambie su clave!";
-                 $m = $this->mail_model->sendMail($title,$user['emailUser'],$body);
-
-               
-                
-                if ($this->db->affected_rows() === 1) {
-                   
-                    return true;
-                } else {
-                    return false;
-                }
-            }
 
 /* EDITAR DATOS DE UN EMPRESA */
 public function updateMailSmtp($mail) {
