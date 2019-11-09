@@ -1,0 +1,445 @@
+{
+	"info": {
+		"_postman_id": "c755df60-068c-0c4b-4ddb-2c9e370a6715",
+		"name": "COFERBA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Seeds",
+			"item": [
+				{
+					"name": "Obtener Modulos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Modules",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Modules"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Profiles",
+			"item": [
+				{
+					"name": "Crear Perfiles",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pofile\":\n\t{\n\t\t\"name\":\"PERFIL UNo\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"}\n\t\t\t]\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Perfiles",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pofile\":\n\t{\n\t\n\t\t\"idProfiles\":\"8\",\n\t\t\"name\":\"PERFIL edd edite\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"},\n\t\t\t{\"idModuleFk\":\"4\"},\n\t\t\t{\"idModuleFk\":\"7\"}\n\t\t\t]\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Perfil",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/delete/8",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"delete",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Perfil por id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/find/8",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"find",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener modulos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/modules",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"modules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Perfil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"searchFilter\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Modulos de Perfil",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/deletemodule/20",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"deletemodule",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Autenticar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\":\n  {\n    \"fullNameUser\" : \"soporte@coferba.com.ar\",\n    \"passwordUser\" : \"12345\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/Coferba/Back/index.php/User/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"User",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar un usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"user\":\n  {\n        \"fullNameUser\" : \"prueba\",\n\t    \"emailUser\" : \"sfsdfdsfdfds\",\n\t    \"phoneNumberUser\" : \"prueba\",\n\t    \"addresUser\" : \"prueba\",\n\t    \"passwordUser\" : \"prueba\",\n\t    \"idProfileKf\" : \"1\",\n\t    \"rezonSocial\" : \"prueba\",\n\t    \"idSysProfileFk\":8,\n\t    \"idTypeTenantKf\": 0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/Coferba/Back/index.php/User",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"User"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	]
+}

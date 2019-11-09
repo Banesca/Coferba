@@ -30,6 +30,28 @@ class User_model extends CI_Model
 		if($query->num_rows() == 1){ 
 
 			$user = $query->row_array();
+
+			$idProfiles = $user['idSysProfileFk'];
+			if($idProfiles > 0){
+					// Buscamos los perfiles de coferba //
+					$this->db->select("*")->from("tb_profiles");
+					$quuery = $this->db->where("tb_profiles.idProfiles =", $idProfiles)->get();
+		
+		
+					if ($quuery->num_rows() === 1) {
+						$rs =  $quuery->row_array();
+
+
+						$this->db->select("*")->from("tb_profiles_modules");
+						$this->db->join('tb_modules', 'tb_modules.idModule = tb_profiles_modules.idModuleFk', 'inner');
+						$quuery = $this->db->where("tb_profiles_modules.idProfilesFk =", $idProfiles)->get();
+
+						$rs2 =  $quuery->result_array();
+
+						$user['modules'] =  $rs2;
+					}
+			}
+
             return $user;
         } 
         else
@@ -155,7 +177,8 @@ class User_model extends CI_Model
             'isEdit' => @$user['isEdit'],
             'requireAuthentication' => @$user['requireAuthentication'],
             'resetPasword' => 1,
-            'tokenMail' => $tokenMail
+			'tokenMail' => $tokenMail,
+			'idSysProfileFk'=> @$user['idSysProfileFk']
                 )
         );
        
@@ -186,7 +209,15 @@ class User_model extends CI_Model
             $this->mail_model->sendMail($title,$user['emailUser'],$body);
             //*****************/
 
-            $idUser = $this->db->insert_id();
+			$idUser = $this->db->insert_id();
+			
+
+			// Validamos que es de tipo coferba //
+			if($user['idProfileKf'] == 1){
+
+				
+			}
+
             return $idUser;
         } else {
             return null;
