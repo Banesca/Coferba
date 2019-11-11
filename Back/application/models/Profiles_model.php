@@ -133,9 +133,11 @@ class Profiles_model extends CI_Model
    
 			   if ($quuery->num_rows() > 0) {
 
-					$rs =  $quuery->row_array();
+					$rs =  $quuery->result_array();
 
 					$list =  array();
+
+					$i = 0;
 					foreach ($quuery->result() as &$row){
 
 						$this->db->select("*")->from("tb_profiles_modules");
@@ -143,11 +145,10 @@ class Profiles_model extends CI_Model
 						$quuery = $this->db->where("tb_profiles_modules.idProfilesFk =", $row->idProfiles)->get();
 
 						$rs2 =  $quuery->result_array();
-						array_push($list, $rs2);
-
+						$rs[$i]['modules'] =  $rs2;
+						$i++;
 					}
-						$rs['modules'] =  $list;
-
+					
 
 				   return $rs;
 			   }
