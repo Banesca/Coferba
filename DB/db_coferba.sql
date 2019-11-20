@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.23)
 # Base de datos: db_coferba
-# Tiempo de Generación: 2019-11-11 13:20:37 +0000
+# Tiempo de Generación: 2019-11-20 13:11:15 +0000
 # ************************************************************
 
 
@@ -1039,6 +1039,34 @@ VALUES
 UNLOCK TABLES;
 
 
+# Volcado de tabla tb_divice_opening
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_divice_opening`;
+
+CREATE TABLE `tb_divice_opening` (
+  `idDiviceOpening` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `diviceOpening` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idDiviceOpening`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `tb_divice_opening` WRITE;
+/*!40000 ALTER TABLE `tb_divice_opening` DISABLE KEYS */;
+
+INSERT INTO `tb_divice_opening` (`idDiviceOpening`, `diviceOpening`)
+VALUES
+	(1,'Llavero marien'),
+	(2,'Llavero hid'),
+	(3,'Llavero hid ex'),
+	(4,'Llaver pct ss'),
+	(5,'Stiker Vehicular '),
+	(6,'Movible hid'),
+	(7,'Movible hid ex');
+
+/*!40000 ALTER TABLE `tb_divice_opening` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Volcado de tabla tb_format_tramitio
 # ------------------------------------------------------------
 
@@ -1191,11 +1219,25 @@ CREATE TABLE `tb_products` (
   `isNumberSerieFabric` tinyint(1) DEFAULT '0',
   `isNumberSerieInternal` tinyint(1) DEFAULT '0',
   `isDateExpiration` tinyint(1) DEFAULT '0',
-  `controlSchedule` tinyint(1) DEFAULT '0',
+  `isControlSchedule` tinyint(1) DEFAULT '0',
   `priceFabric` decimal(18,2) DEFAULT '0.00',
+  `idStatusFk` int(11) DEFAULT '1',
   PRIMARY KEY (`idProduct`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_products` WRITE;
+/*!40000 ALTER TABLE `tb_products` DISABLE KEYS */;
+
+INSERT INTO `tb_products` (`idProduct`, `descriptionProduct`, `codigoFabric`, `brand`, `model`, `idProductClassificationFk`, `isNumberSerieFabric`, `isNumberSerieInternal`, `isDateExpiration`, `isControlSchedule`, `priceFabric`, `idStatusFk`)
+VALUES
+	(1,'2Ejemplo3111','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,1,120.38,1),
+	(2,'Ejemplo2','Ejemplo','Ejemplo','Ejemplo','5',1,0,0,0,120.38,1),
+	(3,'Ejemplo3','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,0,120.38,1),
+	(4,'2Ejemplo3','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,1,120.38,1),
+	(5,'2Ejemdplo3','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,1,120.38,1);
+
+/*!40000 ALTER TABLE `tb_products` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_products_classification
@@ -1244,11 +1286,39 @@ DROP TABLE IF EXISTS `tb_products_divice_opening`;
 
 CREATE TABLE `tb_products_divice_opening` (
   `idProductsDiviceOpening` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `idDiviceFk` int(11) DEFAULT NULL,
+  `idDiviceOpeningFk` int(11) DEFAULT NULL,
   `idProductFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idProductsDiviceOpening`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_products_divice_opening` WRITE;
+/*!40000 ALTER TABLE `tb_products_divice_opening` DISABLE KEYS */;
+
+INSERT INTO `tb_products_divice_opening` (`idProductsDiviceOpening`, `idDiviceOpeningFk`, `idProductFk`)
+VALUES
+	(5,2,2),
+	(6,3,2),
+	(7,4,2),
+	(8,5,2),
+	(9,2,3),
+	(10,3,3),
+	(11,4,3),
+	(12,5,3),
+	(13,2,4),
+	(14,3,4),
+	(15,4,4),
+	(16,5,4),
+	(21,2,1),
+	(22,3,1),
+	(23,4,1),
+	(24,5,1),
+	(25,2,5),
+	(26,3,5),
+	(27,4,5),
+	(28,5,5);
+
+/*!40000 ALTER TABLE `tb_products_divice_opening` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_profile

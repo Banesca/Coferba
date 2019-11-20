@@ -74,20 +74,12 @@ class Profiles_model extends CI_Model
 		public function delete($idProfiles) {
 
 			$this->db->set(
-				array('idStatus' =>  -1)
-		)->where("idProfiles", $idProfiles)->update("tb_profiles"); 
+				array('idStatus' =>  -1))->where("idProfiles", $idProfiles)->update("tb_profiles"); 
 			return true;
 					
 			
 		}
 
-		public function deleteModules($idProfileModule) {
-
-			$this->db->delete('tb_profiles_modules', array('idProfileModule' => $idProfileModule));  
-			return true;
-					
-			
-		}
 		public function get($id = null, $searchFilter = null) {
 			$quuery = null;
 			$rs = null;
@@ -154,6 +146,14 @@ class Profiles_model extends CI_Model
 			   }
 			   return null;
 		   }
+		}
+
+		public function deleteModules($idProfileModule) {
+
+			$this->db->delete('tb_profiles_modules', array('idProfileModule' => $idProfileModule));  
+			return true;
+					
+			
 		}
 
 
