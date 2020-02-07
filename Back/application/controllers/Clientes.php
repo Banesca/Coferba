@@ -28,10 +28,10 @@ class Clientes extends REST_Controller {
 	}
 
 
-	/*
-	public function update_post() {
+	
+	public function updateadmin_post() {
 
-		$rs = $this->profiles_model->update($this->post('pofile'));
+		$rs = $this->client_model->updateAdmin($this->post('client'));
 		if (!is_null($rs)) {
 			$this->response("Actualizado", 200);
 		} else {
@@ -41,7 +41,7 @@ class Clientes extends REST_Controller {
 
 	public function delete_delete($id) {
 
-		$rs = $this->profiles_model->delete($id);
+		$rs = $this->client_model->delete($id);
 		if (!is_null($rs)) {
 			$this->response("Eliminado", 200);
 		} else {
@@ -49,23 +49,16 @@ class Clientes extends REST_Controller {
 		}
 	}
 
-	public function deletemodule_delete($id) {
+	
 
-		$rs = $this->profiles_model->deleteModules($id);
-		if (!is_null($rs)) {
-			$this->response("Eliminado", 200);
-		} else {
-			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
-		}
-	}
 
-	public function find_get($id) {
+	public function findadmin_get($id) {
         if (!$id) {
             $this->response(NULL, 404);
         }
 
         $user = null;
-        $user = $this->profiles_model->get($id);
+        $user = $this->client_model->getadmin($id);
 
         if (!is_null($user)) {
             $this->response($user, 200);
@@ -73,6 +66,8 @@ class Clientes extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
 	}
+
+	/*
 
 	public function modules_get() {
        
@@ -85,13 +80,14 @@ class Clientes extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
 	}
-	
+	*/
 	public function search_post() {
 
 		$searchFilter = $this->post('filter');
+		$idClientTypeFk = $this->post('idClientTypeFk');
 		
 
-        $user = $this->profiles_model->get(null, $searchFilter);
+        $user = $this->client_model->getadmin(null, $searchFilter,$idClientTypeFk);
 
         if (!is_null($user)) {
             $this->response($user, 200);
@@ -99,7 +95,7 @@ class Clientes extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }
-*/
+
 }
 
 ?>
