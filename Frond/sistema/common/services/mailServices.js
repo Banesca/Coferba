@@ -1,4 +1,4 @@
-var moduleMailServices = angular.module("systemServices.Mail", ["coferbaTokenSystem", "coferbaServices.User"]);
+var moduleMailServices = angular.module("systemServices.Mail", ["tokenSystem", "services.User"]);
 
 moduleMailServices.service("mailServices", ['$http', 'tokenSystem', '$timeout', 'serverHost', 'serverBackend', 'serverHeaders', 
   function($http, tokenSystem, $timeout, serverHost, serverBackend, serverHeaders){

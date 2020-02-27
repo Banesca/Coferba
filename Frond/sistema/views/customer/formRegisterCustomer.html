@@ -1,0 +1,333 @@
+<!-- CUSTOMER REGISTER FORM -->
+<div id="RegisterModalCustomer" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
+  	<div class="modal-dialog modal-lg" >
+	    <div class="modal-content">
+          	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+            	<h3 class="modal-title">NUEVO CLIENTE</h3>
+        	</div>
+    		<div class="modal-body"  style="overflow-y: scroll;">
+				<!-- FORM CONTAINER-->
+				<form name="fNewCustomer" novalidate>
+					<div ng-switch on="mySwitch">
+						<fieldset ng-switch-when="PASO 1: DATOS DE CLIENTE">
+							<div class="col-md-6">
+								<!-- Customer Type -->
+								<div class="form-group col-md-12"> 
+								  <label style="padding-left: 15px;">Tipo de cliente</label>
+									    <div class="input-group">
+									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+										    	<select name="idProfileKf" class="form-control" ng-change=" "  ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData " ng-model="customer.new.idClientType" required autofocus >
+											    	<option value="">Seleccione una opci&#243n</option>
+										    	</select>
+									  	</div>
+								</div>
+								<!-- Customer Name -->
+								<div class="form-group col-md-12">
+								  <label style="padding-left: 15px;">Nombre</label>  
+										  <div class="input-group">
+											  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											  <input  name="cname" autofocus="true" placeholder="Nombre" class="form-control" ng-model="customer.new.name"  type="text" required autofocus/>
+										  </div>
+								</div>					
+								<!-- Agent -->
+								<div class="form-group col-md-12" > 
+								  	<label style="padding-left: 15px;">Agente</label>
+									    <div class="input-group">
+								    		<span class="input-group-addon"><i class="fas fa-cogs"></i></span>
+									    	<select name="Agent" class="form-control"  ng-options="item.idAgent as item.agent for item in rsAgentsData" ng-model="customer.new.idAgentFk" required autofocus >
+										    	<option value="">Seleccione una opci&#243n</option>
+									    	</select>
+									  	</div>
+								</div>
+								<!-- Company razon social Name -->
+								<div class="form-group col-md-12">
+								  	<label style="padding-left: 15px;">Raz&#243n Social</label>  
+								  		<div class="input-group">
+									  <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+									  <input  name="razonsocial" autofocus="true" placeholder="Raz&#243n Social" class="form-control" ng-model="customer.new.businessName"  type="text" required autofocus/>
+								  		</div>
+								</div>	
+								<!-- Company CUIT -->
+								<div class="form-group col-md-12">
+								  	<label style="padding-left: 15px;">CUIT</label>  
+								  		<div class="input-group">
+								  			<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+											<input  name="fname" autofocus="true" placeholder="CUIT" class="form-control" ng-model="customer.new.CUIT"  type="text" required autofocus/>
+										</div>
+								</div>	
+								<!-- Address list-->
+					            <div class="form-group col-md-12" >
+					              	<label style="padding-left: 15px;">Direcci&#243n</label> 
+				                  	<div class="input-group">
+				                  		<span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span> 
+										<input type="text" name="direccion" ng-model="customer.new.nameAddress" placeholder="Direcci&#243n" ng-keyup="getAddressByNameFn(customer.new.nameAddress)" class="form-control" required="true" />
+				                  	</div>
+									<ul class="list-group" ng-if="rsAddress_API_Data.length>0">
+										<li class="list-group-item" ng-repeat="item in rsAddress_API_Data" ng-click="fillData(item, 'address')">{{item.nomenclatura}}</li>
+									</ul>			                 
+					            </div> 							
+								<!-- State List-->
+					            <div class="form-group col-md-12" >
+					              	<label style="padding-left: 15px;">Provincia</label> 
+				                  	<div class="input-group">
+				                  		<span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span> 
+										<input type="text" name="provincia" ng-model="customer.new.nameState" placeholder="Provincia" ng-keyup="sysFindInArrFn(customer.new.nameState, rsStatesData, 'states')" class="form-control"  ng-disabled="!customer.new.nameAddress" required="customer.new.nameAddress"/>
+				                  	</div>
+									<ul class="list-group" ng-if="rsStatesList.length>0">
+										<li class="list-group-item" ng-repeat="item in rsStatesList" ng-click="fillData(item.objTmp, 'states')">{{item.objTmp.province}}</li>
+									</ul>			                 
+					            </div> 						
+								<!-- Localidad list-->
+					            <div class="form-group col-md-12" >
+					              	<label style="padding-left: 15px;">Localidad</label> 
+				                  	<div class="input-group">
+				                  		<span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span> 
+										<input type="text" name="localidad" ng-model="customer.new.nameLocation" placeholder="Localidad" ng-keyup="sysFindInArrFn(customer.new.nameLocation, rsLocations_Data, 'locations')" class="form-control" ng-disabled="!customer.new.nameAddress" required="customer.new.nameAddress" />
+				                  	</div>
+									<ul class="list-group" ng-if="rsLocationsList.length>0">
+										<li class="list-group-item" ng-repeat="item in rsLocationsList" ng-click="fillData(item.objTmp, 'locations')">{{item.objTmp.location}}</li>
+									</ul>			                 
+					            </div>
+					            <!-- Schedule Atention -->
+				              	<div class=" col-md-12">
+					                <div class="well-checkbox" style="margin-left: 0px; margin-right: 0px;">
+					                	<label class="from-left-from-label">HORARIO DE ATENCION </label>
+					                  	<table>
+						                    <tr ng-repeat="item in list_schedule">
+					                        	<td style="padding-top: 11px; width: 1%;">
+						                            <label class="switch">
+						                                <input type="checkbox" class="success" ng-click="item.id>=2?setScheduleTimeFn(item):''" ng-required="!item.selected" ng-model="item.selected" id="modCheck-{{item.id}}">
+						                                <span class="slider round nslider nround"></span>
+						                            </label>
+					                          	</td>
+					                          	<td style="font-size: 11px; padding-top: 11px; width: 5%;">
+					                          		<span class="text-muted text-uppercase text-box">{{item.day}}</span>
+					                          	</td>
+					                          	<td style="font-size: 11px; padding-left: 10px;">
+								  					<label class="from-left-from-label">desde</label>  		
+		  									  		<label class="from-middle-to-label">hasta</label>
+		  									  		<label class="from-middle-from-label">desde</label>  		
+		  									  		<label class="from-rigth-to-label">hasta</label>
+					                          		<div class="form-group form-inline">							  	
+													  	<input style="width:22%" name="fromAm-{{item.id}}" ng-disabled="!item.selected" autofocus="true" class="from-left-box input--time" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" placeholder="07:00" ng-required="!item.selected" ng-model="item.fromAm" type="text" autofocus/>
+
+													  	<input style="width: 22%;" name="toAm-{{item.id}}" ng-disabled="!item.selected" autofocus="true" class="from-left-box input--time" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" placeholder="12:00" ng-required="!item.selected" ng-model="item.toAm"  type="text" ng-keyup="item.toAm.length==5?setScheduleTimeFn(item):''" autofocus/>
+
+													  	<input style="width: 22%;" name="fromPm-{{item.id}}" ng-disabled="!item.selected" autofocus="true" class="from-left-box input--time" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" placeholder="14:00" ng-required="!item.selected" ng-model="item.fromPm"  type="text" autofocus/>
+
+													  	<input style="width: 22%;" name="toPm-{{item.id}}" ng-disabled="!item.selected" autofocus="true" class="from-left-box input--time" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" placeholder="18:00" ng-required="!item.selected" ng-model="item.toPm"  type="text" ng-keyup="item.toPm.length==5?setScheduleTimeFn(item):''" autofocus/>												  													  
+													 </div>
+					                          	</td>				                          	
+						                    </tr>          
+				                  		</table>   
+			                    	</div>
+				              	</div>				          							
+								<!-- website -->
+								<div class="form-group col-md-12">
+								  <label style="padding-left: 15px;">Pagina web</label>  
+									  	<div class="input-group">
+									  		<span class="input-group-addon"><i class="fas fa-code"></i></span>
+										  	<input  name="typeOtherAtt" autofocus="true" class="form-control" placeholder="website.com" ng-model="customer.new.pageWeb"  type="text" autofocus/>
+									  	</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+					            <div class="form-group form-inline col-md-12">
+					                <label class="clf-p-left">Telefonos de contactos <button style="margin-left: 100px;" ng-disabled="contactPhones.phoneContact==undefined || contactPhones.phoneContact.length<=0 || contactPhones.phoneContact.length<8 || contactPhones.phoneTag=='' || contactPhones.phoneTag==undefined" ng-click="addPhoneNumFn(contactPhones)" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button> </label>  
+						            <div class="input-group">
+						            	<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>  
+										<select style="width: 43%" name="contactName" class="form-control" ng-model="contactPhones.phoneTag" ng-required="list_phones.length==0" autofocus >
+										    	<option value="">Selecci&#243n Tipo</option>
+										    	<option value="comercial">Comercial</option>
+										    	<option value="guardia">Guardia</option>
+										    	<option value="urgente">Urgente</option>
+									    </select>
+									    								  				
+									  	<input style="width: 57%" name="contact_numbers" autofocus="true" class="form-control input--phone" ng-keydown="fnLoadPhoneMask()" ng-model="contactPhones.phoneContact" type="text" ng-required="list_phones.length==0" autofocus/>
+								  	</div>
+					                <div ng-if="list_phones.length>0" class="well-checkbox n-padding-t n-padding-b" style="margin-left: 0px;margin-right: 0px;">
+					                  	<table>
+					                    	<tr ng-repeat="phone in list_phones">
+					                      		<td style="width: 50%">
+					                      			<span class="text-muted text-box">
+					                      				<label ng-if="phone.phoneTag=='comercial'" style="font-size: 100%" class="label label-default">{{phone.phoneTag | uppercase}}</label>
+					                      				<label ng-if="phone.phoneTag=='guardia'" style="font-size: 100%" class="label label-warning">{{phone.phoneTag | uppercase}}</label>
+					                      				<label ng-if="phone.phoneTag=='urgente'" style="font-size: 100%" class="label label-danger">{{phone.phoneTag | uppercase}}</label>
+					                      			</span>
+					                      		</td>					                    	
+					                      		<td style="width: 150%"><span class="text-muted text-box"><label style="font-size: 100%" class="label label-info">{{phone.phoneContact}}</label></span></td>
+					                          	<td style="padding-bottom: 5px;">
+					                            	<button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removePhoneNumFn(phone)" class="btn btn-sm btn-danger"><i class="fas fa-phone-slash"></i></button>
+
+					                          	</td>
+					                      	</tr>
+					                  	</table>
+					                </div>
+					            </div>				
+								<!-- mail for key orders -->
+								<div class="form-group col-md-12">
+								  <label style="padding-left: 15px;" >Mail para llaveros</label> 
+										<div class="input-group">
+									  		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="mailFromKey"  ng-blur="checkEmail('mailFromKey'); enabledNextBtn(); customer.new.mailFromKey=emailFound==true?'':customer.new.mailFromKey" placeholder="indique mail" class="form-control" ng-model="customer.new.mailFromKey" type="email" required autofocus />
+										</div>
+								  	<br>
+										<div ng-if="emailFound && customer.new.mailFromKey && msgTimer && mailFromKey" class="alert alert-warning" role="alert">
+						            		<strong><i class="fas fa-exclamation-circle">&nbsp </i>INFO: </strong><br>correo registrado en el usuario, <strong>{{mailFoundNameUser}}</strong>.
+						        		</div>					
+								</div>
+								<!-- Comments for keyorder -->
+								<div class="form-group col-md-12">
+								  <label >Observaciones de pedidos de llaveros</label> 
+							  		<textarea style="resize: none;" name="observationOrderKey" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="customer.new.observationOrderKey" ></textarea>
+								</div>							
+								<!-- mail for technical service-->
+								<div class="form-group col-md-12">
+								 <label style="padding-left: 15px;">Mail para servicios tecnicos</label>  
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="mailServiceTecnic" ng-blur="checkEmail('mailServiceTecnic'); enabledNextBtn(); customer.new.mailServiceTecnic=emailFound==true?'':customer.new.mailServiceTecnic" placeholder="indique mail" class="form-control" ng-model="customer.new.mailServiceTecnic" type="email" required autofocus />
+									    </div>
+								  	<br>
+										<div ng-if="emailFound && customer.new.mailServiceTecnic && msgTimer && mailServiceTecnic" class="alert alert-warning" role="alert">
+						            		<strong><i class="fas fa-exclamation-circle">&nbsp </i>INFO: </strong><br>correo registrado en el usuario, <strong>{{mailFoundNameUser}}</strong>.
+						        		</div>	
+								</div>
+								<!-- Comments for technical services -->
+								<div class="form-group col-md-12">
+								  <label class="col-xs-12" >Observaciones de servicios tecnicos</label> 
+							  		<textarea style="resize: none;" name="observationSericeTecnic" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="customer.new.observationSericeTecnic" ></textarea>
+								</div>										
+								<!-- mail for payments-->
+								<div class="form-group col-md-12">
+								 <label style="padding-left: 15px;">Mail para Cobranzas</label>  
+									    <div class="input-group">
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+									  		<input name="mailCollection" ng-blur="checkEmail('mailCollection'); enabledNextBtn(); customer.new.mailCollection=emailFound==true?'':customer.new.mailCollection" placeholder="indique mail" class="form-control" ng-model="customer.new.mailCollection"  type="email" required autofocus />
+									    </div>
+								  	<br>
+										<div ng-if="emailFound && customer.new.mailCollection && msgTimer && mailCollection" class="alert alert-warning" role="alert">
+						            		<strong><i class="fas fa-exclamation-circle">&nbsp </i>INFO: </strong><br>correo registrado en el usuario, <strong>{{mailFoundNameUser}}</strong>.
+						        		</div>	
+								</div>	
+								<!-- Comments for payments -->
+								<div class="form-group col-md-12">
+								  <label>Observaciones de  Cobranzas</label> 
+							  		<textarea style="resize: none;" name="sruTenant" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="customer.new.observationCollection" ></textarea>
+								</div>								
+							</div>		
+						</fieldset>
+						<fieldset ng-switch-when="PASO 2: FINALIZAR REGISTRO">
+							<div class="col-md-6">
+								<!-- General Comments -->
+								<div class="form-group col-md-12">
+								  <label>Observaciones Generales</label> 
+							  		<textarea style="resize: none;" name="observation" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="customer.new.observation" ></textarea>
+								</div>								
+					          	<div class="col-md-12">	          		
+									<label class="clf-p-left">Usuario a autorizar <span style="margin-left: 120px;"> <button ng-disabled="authUser==0 || authUser==undefined" ng-click="addAuthUserFn(authUser.selected)" class="btn btn-sm btn-success"><i class="fas fa-plus"></i>Agregar</button></label>  
+					                <div class="selectContainer">
+					                    <div class="input-group">
+					                      <span class="input-group-addon"><i class="fas fa-lock-open"></i></span>
+						                        <ui-select class="dropdown-select" ng-model="$parent.authUser.selected" on-select="onSelectCallback()">
+						                          <ui-select-match style="width: 326px;" allow-clear="true" placeholder="Buscar usuario" >{{$select.selected.fullNameUser}}</ui-select-match>
+						                            <ui-select-choices repeat="item in rsList.clientUser | filter: $select.search">
+						                              <div ng-bind-html="item.fullNameUser | highlight: $select.search"></div>
+						                              	<small ng-bind-html="item.emailUser | highlight: $select.search"></small>
+						                                <small ng-bind-html="item.nameProfile | highlight: $select.search"></small>
+						                                
+						                            </ui-select-choices>
+						                            <ui-select-no-choice>
+													    No hay resultados, contacte area de soporte.
+												  	</ui-select-no-choice>
+						                        </ui-select>
+					                    </div>
+					                </div>
+					              	<div ng-if="list_users.length>0" class="well-checkbox n-padding-t n-padding-b" style="margin-left: 0px;margin-right: 0px;">
+						                <table>
+						                  <tr ng-repeat="user in list_users">
+						                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">{{user.fullNameUser}} </span></td>
+						                        <td style="padding-bottom: 5px;">
+						                          <button ng-click="removeAuthUserFn(user)" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i> Eliminar</button>
+						                        </td>
+						                    </tr>
+						                </table>
+					              	</div>          
+					          	</div>
+							</div>
+							<div class="col-md-6">					
+								<!-- PAYMENT FIELDS -->
+								<div class="form-group col-md-12">
+								  <label class="clf-size from-left-from-label">DATOS DE FACTURACION</label><br>
+								  <label style="padding-left: 15px;" >Razon Social</label> 
+										<div class="input-group">
+									  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									  		<input name="businessNameBilling" placeholder="razon social" class="form-control" ng-model="customer.new.billing_information.businessNameBilling" type="text" required autofocus />
+										</div>								  	
+								</div>
+								<div class="form-group col-md-12">								  
+								  <label style="padding-left: 15px;" >CUIT</label> 
+										<div class="input-group">
+									  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									  		<input name="cuitBilling" placeholder="CUIT" class="form-control" ng-model="customer.new.billing_information.cuitBilling" type="text" required autofocus />
+										</div>								  	
+								</div>
+								<!-- State List-->
+					            <div class="form-group col-md-12" >
+					              	<label style="padding-left: 15px;">Provincia</label> 
+				                  	<div class="input-group">
+				                  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+										<input type="text" name="paymentprovincia" ng-model="customer.new.billing_information.nameProvinceBillingFk" placeholder="Provincia" ng-keyup="sysFindInArrFn(customer.new.billing_information.nameProvinceBillingFk, rsStatesData, 'states2')" class="form-control" required/>
+				                  	</div>
+									<ul class="list-group" ng-if="rsStatesList2.length>0">
+										<li class="list-group-item" ng-repeat="item in rsStatesList2" ng-click="fillData(item.objTmp, 'states2')">{{item.objTmp.province}}</li>
+									</ul>			                 
+					            </div> 						
+								<!-- Localidad list-->
+					            <div class="form-group col-md-12" >
+					              	<label style="padding-left: 15px;">Localidad</label> 
+				                  	<div class="input-group">
+				                  		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+										<input type="text" name="paymentlocalidad" ng-model="customer.new.billing_information.nameLocationBillingFk" placeholder="Localidad" ng-keyup="sysFindInArrFn(customer.new.billing_information.nameLocationBillingFk, rsLocations_Data, 'locations2')" class="form-control" ng-disabled="!customer.new.billing_information.nameProvinceBillingFk" required />
+				                  	</div>
+									<ul class="list-group" ng-if="rsLocationsList2.length>0">
+										<li class="list-group-item" ng-repeat="item in rsLocationsList2" ng-click="fillData(item.objTmp, 'locations2')">{{item.objTmp.location}}</li>
+									</ul>			                 
+					            </div>	
+								<!-- Type of IVA -->
+								<div class="form-group col-md-12" > 
+								  <label style="padding-left: 15px;">Tipo de IVA</label>
+									    <div class="input-group">
+									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+										    	<select name="typeOfIVA" class="form-control"  ng-options="item.idTypeTax as item.typeTax for item in rsTypeOfIVAData" ng-model="customer.new.billing_information.idTypeTaxFk" required autofocus>
+											    	<option value="">Seleccione una opci&#243n</option>
+										    	</select>
+									  	</div>
+								</div>					            														
+							</div>	
+						</fieldset>
+					</div>
+				</form>
+				<div class="clearfix"> </div> 
+			</div>
+			<!-- Actions Button --> <!--ng-click="sysCustomerFn('register', 'customer')" ng-disabled="fNewCustomer.$invalid"-->
+	        <div class="modal-footer">
+	            <div class="row">
+	                <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
+	                    <button type="submit" ng-click="fnCustomers('newClient','administration')" ng-show="!hasNextStep()" ng-disabled="fNewCustomer.$invalid" class="btn btn-labeled btn-success">
+	                        Enviar<span class="btn-label-right"><i class="glyphicon glyphicon-send"></i> </span></button>
+	                        <!--enabledNextBtn(); loadFieldsTo2Step(); -->
+	                    <button ng-click="incrementStep(); enabledNextBtn(); loadFieldsTo2Step();" ng-disabled="formValidated!=true" ng-show="btnShow" class="btn btn-labeled btn-primary">
+	                        Siguiente<span class="btn-label-right"><i class="fas fa-arrow-circle-right"></i></span></button>
+	                </div>
+	                <div class="col-xs-1 col-sm-1 col-md-1 pull-left">
+	                     <button type="button" ng-click="decrementStep();" ng-show="btnBack" class="btn btn-labeled btn-primary">
+	                        <span class="btn-label"><i class="fas fa-arrow-circle-left"></i></span>Atras</button>
+	                </div>              
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>
+<!-- // CUSTOMER REGISTER FORM -->

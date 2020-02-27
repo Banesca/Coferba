@@ -1,0 +1,79 @@
+<!-- MANAGE PRODUCTSs-->
+<div class="col-md-12">
+  <div class="panel panel-default padding-panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">GESTION DE CLIENTES </h3>
+    </div>
+    <div class="panel-body">
+  	<!-- ROW WITH THE FILTERS USED TO DISPLAY DATA IN THE TABLE -->
+    <div  class="row">
+    	<div class="form-group">
+            <!-- Filter Search -->          
+            <div class="col-md-4 col-sm-12 col-xs-12">	            
+            	<div class="input-group search-box-rule col-md-12 col-sm-12 col-xs-12">
+              		<input type="text" class="form-control" ng-change="search(searchboxfilter, false)"  ng-model="searchboxfilter" placeholder="Buscar..." style="border-radius: 4px;">
+            	</div>
+            </div>
+            <!-- Filter Type of Tenant For Admins ng-if="sysContent=='customer'"-->
+            <div class="col-md-3 col-sm-6">
+                <label style="padding-left: 15px;">Tipo de Cliente</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                    <select  name="filterTypeOfClient" ng-change="search(filterTypeOfClient.idClientType, true)" ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData "  class="form-control" ng-model="$parent.filterTypeOfClient">
+                        <option value="" >Todos</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Company Name-->    
+          	<div class="col-md-3 col-sm-6">
+                <label style="padding-left: 15px;">Administracion</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="icon-suitcase"></i></span>
+                    <ui-select class="dropdown-select" ng-model="$parent.filterCompanyKf.selected" ng-change="search(filterCompanyKf.selected.nameCompany, true); officeListByCompnayID(filterCompanyKf.selected.idCompany);" on-select="onSelectCallback()">
+                      <ui-select-match allow-clear="true" placeholder="Todos" >{{$select.selected.nameCompany}}</ui-select-match>
+                        <ui-select-choices repeat="item in listCompany | filter: $select.search">
+                          <div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
+                            <small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
+                        </ui-select-choices>
+                        <ui-select-no-choice>
+						    No hay resultados, contacte area de soporte.
+					  	</ui-select-no-choice>
+                    </ui-select>
+                </div>
+          	</div>               		
+            <div class="btn-group-mg-top-s col-md-2"><br>         
+        		<!-- Search button-->
+        		<!--<button data-toggle="tooltip" data-placement="top" title="Buscar cliente" type="button" ng-click="" class="btn btn-md btn-labeled btn-success"><span class="btn-label"><i class="fas fa-search"></i> </span>Buscar</button>-->
+				<!-- //Search button -->
+				<!-- New Customer button -->
+        		<button data-toggle="tooltip" data-placement="top" title="Nuevo Cliente" type="button" ng-click="fnCustomers('newClient','new','')" class="btn btn-md btn-labeled btn-info"><span class="btn-label"><i class="glyphicon glyphicon-plus"></i> </span>Nuevo</button>
+            </div>
+    	</div>
+	</div>
+    <div>
+        <!-- TABLE LIST WHERE IS DISPLAYED THE CUSTOMER -->
+        <div ng-include="'views/customer/listCustomers.html'"></div>
+        <!-- PAGINATION -->
+        <div>
+          	<ul class="pager">
+                <li ng-class="{disabled: currentPage == 0}">
+                  <a href ng-click="prevPage()">« Anterior</a>
+                </li>
+                <!--<li ng-repeat="n in range(pagedItems.length)[currentPage]"
+                    ng-class="{active: n == currentPage}"
+                    ng-click="setPage()">
+                  <a href ng-bind="n + 1">1</a>
+                </li>-->
+                <span style="margin-top:-5px" class="badge badge-success">{{currentPage+1}} / {{pagedItems.length}}</span>
+                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+                  <a href ng-click="nextPage()">Siguiente »</a>
+                </li>
+            </ul>
+		</div>
+	</div>	     
+    </div>
+  </div>
+</div>
+<div ng-include="'views/customer/formAuthUser.html'"></div>
+<div ng-include="'views/customer/formAttachCustomerFiles.html'"></div>
+<div ng-include="'views/customer/formRegisterCustomer.html'"></div>

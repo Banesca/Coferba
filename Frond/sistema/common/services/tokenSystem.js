@@ -1,4 +1,4 @@
-var tkSysService = angular.module("coferbaTokenSystem", []);
+var tkSysService = angular.module("tokenSystem", []);
 /**************************************************
 *                                                 *
 *        TOKEN SERVICE FOR USER LOGGED IN         *
@@ -24,14 +24,18 @@ tkSysService.service("tokenSystem",function(){
               case 5:
                 tokenStorageValue = !JSON.parse(localStorage.getItem("sysTmpTicket")) ? false : JSON.parse(localStorage.getItem("sysTmpTicket"));
               break;
+              case 6:
+                tokenStorageValue = !JSON.parse(localStorage.getItem("sysLoggedUserModules")) ? false : JSON.parse(localStorage.getItem("sysLoggedUserModules"));
+              break;
               default:
 
             }
               return tokenStorageValue;
           },
-          setTokenStorage: function(tksSystem, tkLoggedUser) {
+          setTokenStorage: function(tksSystem, tkLoggedUser, tkModulesUser) {
               localStorage.setItem("sysToken", tksSystem);
               localStorage.setItem("sysLoggedUser", JSON.stringify(tkLoggedUser));
+              localStorage.setItem("sysLoggedUserModules", JSON.stringify(tkModulesUser));
           },
           setLoggedUserStorage: function(tkLoggedUser) {
               localStorage.setItem("sysLoggedUser", JSON.stringify(tkLoggedUser));
