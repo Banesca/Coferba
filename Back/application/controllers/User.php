@@ -418,5 +418,15 @@ empresa
         }
     }
 
+    /* SERVICIO GET QUE OBTIENE TODO LOS USUARIOS REGISTRADOS */
+    public function getListOfUsers_get() {
+
+        $lists = $this->user_model->getListOfUsers();
+        if (!is_null($lists)) {
+            $this->response($lists, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 }
 ?>

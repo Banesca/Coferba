@@ -49,11 +49,9 @@ class Profiles_model extends CI_Model
 		}
 
 		public function update($profile) {
-
 			$this->db->set(
 					array('name' =>  $profile['name'])
 			)->where("idProfiles", $profile['idProfiles'])->update("tb_profiles");
-	
 
 				if(count(@$profile['list_id_modules']) > 0)
 					{

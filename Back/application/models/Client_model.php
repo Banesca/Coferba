@@ -18,33 +18,31 @@ class Client_model extends CI_Model
 			$query = $this->db->where("tb_clients.name =", $client['name'])->get();
             if($query->num_rows() < 1){ 
                
-
 				$this->db->insert('tb_clients', array(
-					'idClientTypeFk' => $client['idClientTypeFk'],
-					'name' => $client['name'],
-					'address' => $client['address'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idAgentFk' => $client['idAgentFk'],
-					'businessName' => $client['businessName'],
-					'CUIT' => $client['CUIT'],
-					'idLocationFk' => $client['idLocationFk'],
-					'idProvinceFk' => $client['idProvinceFk'],
-					'mobile' => $client['mobile'],
-					'mail' => $client['mail'],
-					'observation' => $client['observation'],
-					'pageWeb' => $client['pageWeb'],
-					'idStatusFk' => 1,
-					'mailFronKey' => $client['mailFronKey'],
-					'observationOrderKey' => $client['observationOrderKey'],
-					'isNotCliente' => $client['isNotCliente'],
-					'idClientAdminFk' => $client['idClientAdminFk'],
-					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'mailCollection' => $client['mailCollection'],
-					'observationCollection' => $client['observationCollection'],
-					'idClientCompaniFk' => $client['idClientCompaniFk']
-					
+					'idClientTypeFk' 			=> $client['idClientTypeFk'],
+					'name' 						=> $client['name'],
+					'address' 					=> $client['address'],
+					'addressLat'				=> $client['addressLat'],
+					'addressLon' 				=> $client['addressLon'],
+					'idAgentFk' 				=> $client['idAgentFk'],
+					'businessName'  			=> $client['businessName'],
+					'CUIT' 						=> $client['CUIT'],
+					'idLocationFk'  			=> $client['idLocationFk'],
+					'idProvinceFk'  			=> $client['idProvinceFk'],
+					'mobile' 					=> $client['mobile'],
+					'mail' 						=> $client['mail'],
+					'observation' 				=> $client['observation'],
+					'pageWeb' 					=> $client['pageWeb'],
+					'idStatusFk' 				=> 1,
+					'mailFronKey' 				=> $client['mailFronKey'],
+					'observationOrderKey' 		=> $client['observationOrderKey'],
+					'isNotCliente' 				=> $client['isNotCliente'],
+					'idClientAdminFk' 			=> $client['idClientAdminFk'],
+					'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+					'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+					'mailCollection' 			=> $client['mailCollection'],
+					'observationCollection' 	=> $client['observationCollection'],
+					'idClientCompaniFk' 		=> $client['idClientCompaniFk']
 					
 					)
 				);
@@ -54,12 +52,12 @@ class Client_model extends CI_Model
 
 					// DATOS DE FACTURCION
 					$this->db->insert('tb_client_billing_information', array(
-						'idClientFk' => $idClientFk,
-						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'cuitBilling' =>$client['billing_information']['cuitBilling'],
-						'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-						'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk']
+						'idClientFk' 			=> $idClientFk,
+						'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+						'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+						'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+						'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+						'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk']
 					)
 					);
 
@@ -73,12 +71,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $idClientFk,
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $idClientFk,
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm'   		=> $valor['toAm'],
+								'fronPm' 		=> $valor['fronPm'],
+								'toPm'   		=> $valor['toPm']
 							)
 							);
 						}
@@ -86,8 +84,9 @@ class Client_model extends CI_Model
 						foreach (@$client['list_phone_contact'] as $valor) {
 							
 							$this->db->insert('tb_client_phone_contact', array(
-								'idClientFk' => $idClientFk,
-								'phoneContact' => $valor['phoneContact']
+								'idClientFk' 	=> $idClientFk,
+								'phoneTag'		=> $valor['phoneTag'],
+								'phoneContact' 	=> $valor['phoneContact']
 							)
 							);
 						}
@@ -96,8 +95,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_client_user'] as $valor) {
 							
 							$this->db->insert('tb_client_users', array(
-								'idClientFk' => $idClientFk,
-								'idUserFk' => $valor['idUserFk']
+								'idClientFk' 	=> $idClientFk,
+								'idUserFk' 		=> $valor['idUserFk']
 							)
 							);
 						}
@@ -111,8 +110,7 @@ class Client_model extends CI_Model
 				} else {
 					return 0;
 				}
-				
-			} else{
+			}else{
 				return 2;
 			}
 		
@@ -124,42 +122,42 @@ class Client_model extends CI_Model
 
 			$this->db->set(
 					array(
-						'idClientTypeFk' => $client['idClientTypeFk'],
-					'name' => $client['name'],
-					'address' => $client['address'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idAgentFk' => $client['idAgentFk'],
-					'businessName' => $client['businessName'],
-					'CUIT' => $client['CUIT'],
-					'idLocationFk' => $client['idLocationFk'],
-					'idProvinceFk' => $client['idProvinceFk'],
-					'mobile' => $client['mobile'],
-					'mail' => $client['mail'],
-					'observation' => $client['observation'],
-					'pageWeb' => $client['pageWeb'],
-					'idStatusFk' => 1,
-					'mailFronKey' => $client['mailFronKey'],
-					'observationOrderKey' => $client['observationOrderKey'],
-					'isNotCliente' => $client['isNotCliente'],
-					'idClientAdminFk' => $client['idClientAdminFk'],
-					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'mailCollection' => $client['mailCollection'],
-					'observationCollection' => $client['observationCollection'],
-					'idClientCompaniFk' => $client['idClientCompaniFk']
+					'idClientTypeFk' 			=> $client['idClientTypeFk'],
+					'name' 						=> $client['name'],
+					'address' 					=> $client['address'],
+					'addressLat' 				=> $client['addressLat'],
+					'addressLon' 				=> $client['addressLon'],
+					'idAgentFk' 				=> $client['idAgentFk'],
+					'businessName' 				=> $client['businessName'],
+					'CUIT' 						=> $client['CUIT'],
+					'idLocationFk' 				=> $client['idLocationFk'],
+					'idProvinceFk' 				=> $client['idProvinceFk'],
+					'mobile' 					=> $client['mobile'],
+					'mail' 						=> $client['mail'],
+					'observation' 				=> $client['observation'],
+					'pageWeb' 					=> $client['pageWeb'],
+					'idStatusFk' 				=> 1,
+					'mailFronKey' 				=> $client['mailFronKey'],
+					'observationOrderKey' 		=> $client['observationOrderKey'],
+					'isNotCliente' 				=> $client['isNotCliente'],
+					'idClientAdminFk' 			=> $client['idClientAdminFk'],
+					'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+					'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+					'mailCollection' 			=> $client['mailCollection'],
+					'observationCollection' 	=> $client['observationCollection'],
+					'idClientCompaniFk'			=> $client['idClientCompaniFk']
 						)
 			)->where("idClient", $client['idClient'])->update("tb_clients");
 	
 
 			$this->db->set(
 				array(
-				'idClientFk' => $client['idClient'],
-				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'cuitBilling' =>$client['billing_information']['cuitBilling'],
-				'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-				'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk'])
+				'idClientFk' 			=> $client['idClient'],
+				'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+				'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+				'idLocationBillingFk' 	=> $client['billing_information']['idLocationBillingFk'],
+				'idProvinceBillingFk' 	=> $client['billing_information']['idProvinceBillingFk'],
+				'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk'])
 		    )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
@@ -178,12 +176,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $valor['idClienteFk'],
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $valor['idClienteFk'],
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm' 			=> $valor['toAm'],
+								'fronPm' 		=> $valor['fronPm'],
+								'toPm' 			=> $valor['toPm']
 							));
 						}
 
@@ -192,8 +190,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_phone_contact'] as $valor) {
 							
 							$this->db->insert('tb_client_phone_contact', array(
-								'idClientFk' => $valor['idClientFk'],
-								'phoneContact' => $valor['phoneContact']
+								'idClientFk' 	=> $valor['idClientFk'],
+								'phoneContact' 	=> $valor['phoneContact']
 							));
 						}
 
@@ -203,8 +201,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_client_user'] as $valor) {
 							
 							$this->db->insert('tb_client_users', array(
-								'idClientFk' => $valor['idClienteFk'],
-								'idUserFk' => $valor['idUserFk']
+								'idClientFk'	=> $valor['idClienteFk'],
+								'idUserFk' 		=> $valor['idUserFk']
 							)
 							);
 						}

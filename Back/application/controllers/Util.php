@@ -33,10 +33,13 @@ class Util extends REST_Controller {
         }
 	}
 
-	public function localidad_get() {
-       
+	public function localidad_get($idProvinceFk) {
+           
+        if (!$idProvinceFk) {
+            $this->response(NULL, 404);
+        }
         $user = null;
-        $user = $this->util_model->getLocalidad();
+        $user = $this->util_model->getLocalidad($idProvinceFk);
 
         if (!is_null($user)) {
             $this->response($user, 200);
@@ -46,14 +49,10 @@ class Util extends REST_Controller {
 	}
 	
 	
-	public function provincia_get($idLocationFk) {
-	   
-		if (!$idLocationFk) {
-            $this->response(NULL, 404);
-        }
-		
+	public function provincia_get() {
+	
         $user = null;
-        $user = $this->util_model->getProvincia($idLocationFk);
+        $user = $this->util_model->getProvincia();
 
         if (!is_null($user)) {
             $this->response($user, 200);

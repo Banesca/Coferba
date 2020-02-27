@@ -22,6 +22,7 @@ class User_model extends CI_Model
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
         $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
         $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+        $this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
         $this->db->where("passwordUser =",sha1(md5($user['passwordUser'])));
         $this->db->where("emailUser =",$user['fullNameUser']);
         $query =$this->db->or_where("fullNameUser =",$user['fullNameUser'])->get();
@@ -33,7 +34,7 @@ class User_model extends CI_Model
 
 			$idProfiles = $user['idSysProfileFk'];
 			if($idProfiles > 0){
-					// Buscamos los perfiles de coferba //
+					// Buscamos los perfiles de sistema //
 					$this->db->select("*")->from("tb_profiles");
 					$quuery = $this->db->where("tb_profiles.idProfiles =", $idProfiles)->get();
 		
@@ -329,14 +330,15 @@ class User_model extends CI_Model
                     'phoneLocalNumberUser' => $user['phoneLocalNumberUser'],
                     'idAddresKf' => $user['idAddresKf'],
                     'idProfileKf' => $user['idProfileKf'],
-                    'idCompanyKf' => (!$user['idCompanyKf'])?$user['idCompany']:$user['idCompanyKf'],
+                    'idCompanyKf' => $user['idCompanyKf'],
                     'idTyepeAttendantKf' => @$user['idTyepeAttendantKf'],
                     'descOther' => @$user['descOther'],
                     'idDepartmentKf' => @$user['idDepartmentKf'],
                     'idTypeTenantKf' => $user['idTypeTenantKf'],
                     'requireAuthentication' => @$user['requireAuthentication'],
                     'isDepartmentApproved' => @$user['isDepartmentApproved'],
-                    'isEdit' => @$user['isEdit']
+                    'isEdit' => @$user['isEdit'],
+                    'idSysProfileFk'=> @$user['idSysProfileFk']
                 )
         )->where("idUser", $user['idUser'])->update("tb_user");
 
@@ -367,6 +369,7 @@ class User_model extends CI_Model
     
             $this->db->select("*")->from("tb_user");
             $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
             $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
             $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
             $query = $this->db->where("tb_user.emailUser =", $mail)->get();
@@ -635,10 +638,88 @@ public function updateMailSmtp($mail) {
             if ($quuery->num_rows() > 0) {
                 return $quuery->result_array();
             }
-            return null;
-        
+            return null;    
     }
 
+     /* LISTADO DE FILTROS */
+    public function getListOfUsers() {
+        $where                = null;
+        $clientUser           = null;
+        $tenants              = null;
+        $attendants           = null;
+        $companyUser          = null;
+        $sysUser              = null;
+        /* LISTADO DE USUARIOS */
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+            $this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
+            $where = "idProfileKf!=1";
+            $this->db->where($where);
+            $query = $this->db->order_by("tb_user.dateCreated", "DESC")->get();
+        if ($query->num_rows() > 0) {
+            $clientUser = $query->result_array();
+        }
+         /* LISTADO DE INQUILINOS */
+           
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+            $this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
+            $where="idProfileKf = 3 OR idProfileKf = 5 OR (idProfileKf = 6 AND idTypeTenantKf IN (1,2))";
+            $this->db->where($where);
+            $query = $this->db->order_by("tb_user.idUser", "DESC")->get();
+        if ($query->num_rows() > 0) {
+            $tenants = $query->result_array();
+        }
+         /* LISTADO DE ENCARGADOS */
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+            $this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
+            $query = $this->db->where("idProfileKf",6)->order_by("tb_user.idUser", "ASC")->get();
+        if ($query->num_rows() > 0) {
+            $attendants = $query->result_array();
+        }
+         /* LISTADO DE ADMIN DE CONSORCIOS Y USUARIOS DE EMPRESAS */
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+            $this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+            $this->db->where("idProfileKf",2);
+            $this->db->or_where("idProfileKf",4);
+            $query = $this->db->order_by("tb_user.idUser", "DESC")->get();
+        if ($query->num_rows() > 0) {
+            $companyUser = $query->result_array();
+        }
+         /* LISTADO DE USUARIOS DE SISTEMA */
+            $this->db->select("*")->from("tb_user");
+            $this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+            $this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
+            $this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
+            $this->db->where("idProfileKf",1);
+            $query = $this->db->order_by("tb_user.idUser", "DESC")->get();
+        if ($query->num_rows() > 0) {
+            $sysUser = $query->result_array();
+        }
+
+        $lists = array(
+            'clientUser'                 => $clientUser,
+            'tenants'                    => $tenants,
+            'attendants'                 => $attendants,
+            'companyUser'                => $companyUser,
+            'sysUser'                    => $sysUser
+
+        );
+
+        return $lists;
+    }
 
     
 

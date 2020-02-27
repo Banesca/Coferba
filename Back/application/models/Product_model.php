@@ -65,7 +65,7 @@ class Product_model extends CI_Model
 					'codigoFabric' => $product['codigoFabric'] ,
 					'brand' => $product['brand'] ,
 					'model' => $product['model'] ,
-					'idProductClassificationFk' => $product['idProductClassificationFk'] ,
+					'idProductClassificationFk' => $product['idProductClassificationFk'],
 					'isNumberSerieFabric' => $product['isNumberSerieFabric'] ,
 					'isNumberSerieInternal' => $product['isNumberSerieInternal'] ,
 					'isDateExpiration' => $product['isDateExpiration'] ,
@@ -74,27 +74,30 @@ class Product_model extends CI_Model
 				)
 		)->where("idProduct", $product['idProduct'])->update("tb_products");
 
+			if($product['idProductClassificationFk']==3){
+				if(count(@$product['list_id_divice']) > 0)
+					{
+						$this->db->delete('tb_products_divice_opening', array('idProductFk' => $product['idProduct']));  
 
-			if(count(@$product['list_id_divice']) > 0)
-				{
-					$this->db->delete('tb_products_divice_opening', array('idProductFk' => $product['idProduct']));  
-
-					foreach ($product['list_id_divice'] as $valor) {
-						
-						$this->db->insert('tb_products_divice_opening', array(
-							'idProductFk' => $product['idProduct'],
-							'idDiviceOpeningFk' => $valor['idDiviceOpeningFk'])
-						);
+						foreach ($product['list_id_divice'] as $valor) {
+							
+							$this->db->insert('tb_products_divice_opening', array(
+								'idProductFk' => $product['idProduct'],
+								'idDiviceOpeningFk' => $valor['idDiviceOpeningFk'])
+							);
+						}
+						return true;
 					}
-					return true;
-				}
+			}else{
+				return true;
+			}
 		
 	}
 
-	public function delete($idProfiles) {
+	public function delete($idProduct) {
 
 		$this->db->set(
-			array('idStatusFk' =>  -1))->where("idProduct", $idProfiles)->update("tb_products"); 
+			array('idStatusFk' =>  -1))->where("idProduct", $idProduct)->update("tb_products"); 
 		return true;
 				
 		

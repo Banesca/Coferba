@@ -30,6 +30,7 @@ class Product extends REST_Controller {
 	public function update_post() {
 
 		$rs = $this->product_model->update($this->post('product'));
+		
 		if (!is_null($rs)) {
 			$this->response("Actualizado", 200);
 		} else {
