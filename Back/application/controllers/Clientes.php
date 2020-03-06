@@ -27,11 +27,122 @@ class Clientes extends REST_Controller {
 		}
 	}
 
+	public function building_post(){
+		
+		$pofile = null;
+        if (!$this->post('client')) {
+            $this->response(NULL, 404);
+        }
 
-	
+        $pofile = $this->client_model->addBuilding($this->post('client'));
+
+        if ($pofile == 1) {
+			$this->response(array('response' => "Registro exitoso"), 200);
+        } else if ($pofile == 0) { 
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+		} else if ($pofile == 2) { 
+			$this->response(array('response' => "Cliente ya se encuentra registrado"), 203);
+		}
+	}
+
+	public function company_post(){
+		
+		$pofile = null;
+        if (!$this->post('client')) {
+            $this->response(NULL, 404);
+        }
+
+        $pofile = $this->client_model->addCompany($this->post('client'));
+
+        if ($pofile == 1) {
+			$this->response(array('response' => "Registro exitoso"), 200);
+        } else if ($pofile == 0) { 
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+		} else if ($pofile == 2) { 
+			$this->response(array('response' => "Cliente ya se encuentra registrado"), 203);
+		}
+	}
+
+	public function branch_post(){
+		
+		$pofile = null;
+        if (!$this->post('client')) {
+            $this->response(NULL, 404);
+        }
+
+        $pofile = $this->client_model->addBranch($this->post('client'));
+
+        if ($pofile == 1) {
+			$this->response(array('response' => "Registro exitoso"), 200);
+        } else if ($pofile == 0) { 
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+		} else if ($pofile == 2) { 
+			$this->response(array('response' => "Cliente ya se encuentra registrado"), 203);
+		}
+	}
+
+	public function particular_post(){
+		
+		$pofile = null;
+        if (!$this->post('client')) {
+            $this->response(NULL, 404);
+        }
+
+        $pofile = $this->client_model->addParticular($this->post('client'));
+
+        if ($pofile == 1) {
+			$this->response(array('response' => "Registro exitoso"), 200);
+        } else if ($pofile == 0) { 
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+		} else if ($pofile == 2) { 
+			$this->response(array('response' => "Cliente ya se encuentra registrado"), 203);
+		}
+	}
+
+
 	public function updateadmin_post() {
 
 		$rs = $this->client_model->updateAdmin($this->post('client'));
+		if (!is_null($rs)) {
+			$this->response("Actualizado", 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
+
+	public function updatebuilding_post() {
+
+		$rs = $this->client_model->updatebuilding($this->post('client'));
+		if (!is_null($rs)) {
+			$this->response("Actualizado", 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
+
+	public function updatecompany_post() {
+
+		$rs = $this->client_model->updateCompany($this->post('client'));
+		if (!is_null($rs)) {
+			$this->response("Actualizado", 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
+
+	public function updatebranch_post() {
+
+		$rs = $this->client_model->updateBranch($this->post('client'));
+		if (!is_null($rs)) {
+			$this->response("Actualizado", 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
+
+	public function updateparticular_post() {
+
+		$rs = $this->client_model->updateParticular($this->post('client'));
 		if (!is_null($rs)) {
 			$this->response("Actualizado", 200);
 		} else {
