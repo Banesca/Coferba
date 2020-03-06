@@ -11,25 +11,25 @@ class Profiles extends REST_Controller {
 
 	public function index_post(){
 		
-		$pofile = null;
-        if (!$this->post('pofile')) {
+		$profile = null;
+        if (!$this->post('profile')) {
             $this->response(NULL, 404);
         }
 
-        $pofile = $this->profiles_model->add($this->post('pofile'));
+        $profile = $this->profiles_model->add($this->post('profile'));
 
-        if ($pofile == 1) {
+        if ($profile == 1) {
 			$this->response(array('response' => "Registro exitoso"), 200);
-        } else if ($pofile == 0) { 
+        } else if ($profile == 0) { 
             $this->response(array('error' => "ERROR INESPERADO"), 500);
-		} else if ($pofile == 2) { 
+		} else if ($profile == 2) { 
 			$this->response(array('response' => "Perfil ya se encuentra registrado"), 203);
 		}
 	}
 
 	public function update_post() {
 
-		$rs = $this->profiles_model->update($this->post('pofile'));
+		$rs = $this->profiles_model->update($this->post('profile'));
 		if (!is_null($rs)) {
 			$this->response("Actualizado", 200);
 		} else {

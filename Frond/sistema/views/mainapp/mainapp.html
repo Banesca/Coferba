@@ -5,15 +5,19 @@
 		<div class="navbar-inverse navbar-inner m-h-30">
 	        <div class="container-fluid">
 	            <div>
-	            	<ul class="nav navbar-nav navbar-right">
+	            	<div class="nav navbar-nav navbar-left">
+	            		<img id="comp-k1xl6bdlimgimage" class="sys-logo" data-type="image" itemprop="image" src="https://static.wixstatic.com/media/b2c01b_142b5431aa03446eb145220aeee6a0e8~mv2.png/v1/fill/w_179,h_75,al_c,q_85,usm_0.66_1.00_0.01/LogoTassHorizontal.webp">
+	            	</div>
+	            	<ul class="nav navbar-nav navbar-right nav-prof nav-role">
 	            		<li class="dropdown gray">
-	            			<h3><i class="fas fa-id-card-alt"></i> {{sessionProfileName}}</h3>
+	            			<h3><i class="fas fa-id-card-alt"></i> <span data-toggle="tooltip" data-placement="bottom" title="Perfil de usuario" >{{sessionProfileName}}</span> <span data-toggle="tooltip" data-placement="bottom" title="Role Asignado">[{{sessionProfileRoleName}}] </span></h3>
 	            		</li>
+	            		<!-- USER PROFILE MENU -->
 	                    <li class="dropdown gray">
-	                        <a class="dropdown-toggle margin-a-left" data-toggle="dropdown" >
-	                            <i class="fas fa-user-circle fa-2x"></i> {{sessionNames}} <i class="icon-caret-down"></i>
+	                        <a class="dropdown-toggle margin-a-left nav-user" style="color: rgba(255, 188, 87, 1);" data-toggle="dropdown" >
+	                            <i class="fas fa-user-circle fa-2x"></i> {{sessionNames | uppercase}} <i class="icon-caret-down"></i>
 	                        </a>
-	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+	                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" ng-if="sysModules.idPerfilUsuario">
 	                          <li role="presentation">
 	                                <a style="cursor: pointer;" class="clear-lazy-cache" ng-click="windows.print();fnShowHide('ruprofile', 'open')" tabindex="-1" role="menuitem"><i class="fas fa-address-card"></i> Perfil</a>
 	                            </li>
@@ -51,13 +55,13 @@
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				      <ul class="nav navbar-nav">
-		                <li id="m_monitor"  class="active icon-m" ng-show="sessionidProfile!=0">
+		                <li id="m_monitor"  class="active icon-m" ng-if="sysModules.idMonitor || sessionidProfile!=1 ">
 		                    <a ng-click="fnShowHide('home', 'open')"> 
 		                        <i class="fas fa-tachometer-alt icon-4x"></i>
 		                        <br>Monitor de pedidos
 		                    </a>
 		              	</li>
-				        <li id="m_pedidos" class="dropdown" class="">
+				        <li id="m_pedidos" class="dropdown" class="" ng-if="sysModules.idLlaveros">
 				          <a class="dropdown-toggle icon-m" data-toggle="dropdown"><i style="margin-left: -0.4em;" class="icon-file-text icon-4x"></i><br>Pedidos <b class="caret"></b></a>
 					        <ul class="dropdown-menu">
 			                	<li ng-show="sessionidProfile!=2" class="dropdown-header">Llaveros</li>
@@ -75,7 +79,7 @@
 				                </li>
 					        </ul>
 				        </li>
-			            <li id="m_depto" ng-show="sessionidProfile!=2" class="icon-m">
+			            <li id="m_depto" class="icon-m" ng-if="sysModules.idEdificios || sessionidProfile!=1">
 			                <a ng-click="fnShowHide('managedepto', 'open')"> 
 			                    <i class="icon-building icon-4x"></i>
 			                    <br>Gestion de Edificio
@@ -87,7 +91,7 @@
 			                    <br>Gestion de inquilinos
 			                 </a>
 			              </li>-->
-		               	<li id="m_config" ng-show="sessionidProfile==1" class="icon-m">
+		               	<li id="m_config" class="icon-m" ng-if="sysModules.idConfiguracion">
 		                 	<a  ng-click="fnShowHide('sysConfig', 'open')"> 
 		                    <i style="margin-left: -0.4em" class="icon-cogs icon-4x"></i>
 		                    <br>Configuracion
@@ -99,18 +103,30 @@
 			                    <br><span>Contacto</span>
 		                 	</a>
 		              	</li>-->
-			            <li style="text-align: left; text-align: justify;" id="m_client" ng-show="sessionidProfile==1" class="icon-m">
+			            <!--<li style="text-align: left; text-align: justify;" id="m_client" ng-show="sessionidProfile==1" class="icon-m">
 			                <a ng-click="fnShowHide('managedclient', 'open')"> 
 			                    <i style="margin-left: -0.1em" class="fas fa-users-cog icon-4x"></i>
 			                    <br>Gestion de Clientes
 			                </a>
-			            </li>
-			            <li id="m_client" ng-show="sessionidProfile" class="icon-m">
+			            </li>-->
+			            <!--<li id="m_client" ng-show="sessionidProfile" class="icon-m">
 			                <a ng-click="sysSendNotifyMail()"> 
 			                    <i style="margin-left: -0.5em" class="far fa-envelope icon-4x"></i>
 			                    <br>Send Mail
 			                </a>
-			            </li>
+			            </li>-->
+		               	<li id="m_product" class="icon-m" ng-if="sysModules.idProducto">
+		                 	<a  ng-click="fnShowHide('products', 'open')"> 
+		                    <i style="margin-left: -0.5em" class="fas fa-th icon-4x"></i>
+		                    <br>Productos
+		                 	</a>
+		              	</li>	
+		               	<li id="m_customers" class="icon-m" ng-if="sysModules.idCliente">
+		                 	<a  ng-click="fnShowHide('customers', 'open')"> 
+		                    <i style="margin-left: -0.58em" class="fas fa-user-tie icon-4x"></i>
+		                    <br>Clientes
+		                 	</a>
+		              	</li>		        		       
 				      </ul>
 
 				      <!--<ul class="nav navbar-nav navbar-right">
@@ -144,7 +160,8 @@
 			<div ng-show="rusysconfig" ng-include="'views/system/formConfig.html'"></div>
 			<div ng-if="rucontact" ng-include="'views/contact/formContact.html'"></div>
 			<div ng-if="rucost" ng-include="'views/tickets/formCost.html'"></div>
-			<div ng-if="ruclient" ng-include="'views/system/formclient.html'"></div>
+			<div ng-if="rucustomer" ng-include="'views/customer/customers.html'"></div>
+			<div ng-if="ruproduct" ng-include="'views/products/frmProducts.html'"></div>
 			<div ng-show="home" ng-include="'views/monitor/monitor.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
 
@@ -166,7 +183,19 @@
 								    <div class="col-xs-12 selectContainer">
 									    <div class="input-group">
 									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-										    	<select name="idProfileKf" class="form-control" ng-change="sysReg.idTypeAttKf=null; sysRegidCompanyKf.selected=undefine; sysRegIdAddressKf.selected=undefine; sysReg.idDepartmentKf=null;"   ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="sysReg.idProfileKf" required autofocus >
+										    	<select name="idProfileKf" class="form-control" ng-change="sysReg.idTypeAttKf=null; idSysProfileFk=null; sysRegidCompanyKf.selected=undefine; sysRegIdAddressKf.selected=undefine; sysReg.idDepartmentKf=null;"   ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser" ng-model="sysReg.idProfileKf" required autofocus >
+											    	<option value="">Seleccione una opcion</option>
+										    	</select>
+									  	</div>
+									</div>
+								</div>
+								<!-- Select SYS profile -->
+								<div class="form-group col-md-12" ng-if="sessionidProfile==1 && sysReg.idProfileKf==1"> 
+								  <label style="padding-left: 15px;">Perfil de Sistema</label>
+								    <div class="col-xs-12 selectContainer">
+									    <div class="input-group">
+									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+										    	<select name="idSysProfileFk" class="form-control"  ng-options="item.idProfiles as item.name for item in rsProfileData" ng-model="sysReg.idSysProfileFk" required autofocus >
 											    	<option value="">Seleccione una opcion</option>
 										    	</select>
 									  	</div>
@@ -457,7 +486,19 @@
 								    <div class="col-xs-12 selectContainer">
 									    <div class="input-group">
 									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-										    	<select name="idProfileKf" class="form-control" ng-change="sysCheckProfile(tmp.idProfileKf);"   ng-options="item.idProfile as item.nameProfile for item in listProfile" ng-model="tmp.idProfileKf" required autofocus >
+										    	<select name="idProfileKf" class="form-control" ng-change="sysCheckProfile(tmp.idProfileKf);"   ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser" ng-model="tmp.idProfileKf" required autofocus >
+											    	<option value="">Seleccione una opcion</option>
+										    	</select>
+									  	</div>
+									</div>
+								</div>
+								<!-- Select SYS profile -->
+								<div class="form-group col-md-12" ng-if="sessionidProfile==1 && tmp.idProfileKf==1"> 
+								  <label style="padding-left: 15px;">Perfil de Sistema</label>
+								    <div class="col-xs-12 selectContainer">
+									    <div class="input-group">
+									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+										    	<select name="idSysProfileFk" class="form-control"  ng-options="item.idProfiles as item.name for item in rsProfileData" ng-model="sysUpdate.idSysProfileFk" required autofocus >
 											    	<option value="">Seleccione una opcion</option>
 										    	</select>
 									  	</div>
@@ -519,7 +560,7 @@
 					                </div>
 					            </div>
 								<!-- List Address For Attendant-->
-								<div ng-if="(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf!=1)" class="form-group " ng-class="(tmp.idProfileKf==6 && att.ownerOption!=2 && (!profileHasChange || profileHasChange))?'col-md-12':'col-md-6' " >
+								<div ng-if="(tmp.idProfileKf==6 && sysUpdate.idTypeAttKf!=0 && sysUpdate.idTypeTenantKf!=0)" class="form-group " ng-class="(tmp.idProfileKf==6 && att.ownerOption!=2 && (!profileHasChange || profileHasChange))?'col-md-12':'col-md-6' " >
 								  <label style="padding-left: 15px;">Direcci&#243n</label>  
 								    <div class="col-xs-12 selectContainer">
 									    <!-- ######################################################################################################### -->
@@ -620,49 +661,6 @@
 						        		</div>
 					        		</div>
 								</div>
-								<!-- Text Password--><!--
-
-								<div ng-if="(tmp.idProfileKf!=6 && !sysUpdate.idTypeAttKf) || (tmp.idProfileKf==6 && sysUpdate.idTypeAttKf==2)" class="form-group col-md-6">
-								  <label style="padding-left: 15px;">Contrase&#241a</label>  
-								    <div class="col-xs-12">
-									    <div class="input-group">
-									        <span class="input-group-addon">
-	        							  		<i ng-show="(fUpdateUser.password1.$pristine && !fUpdateUser.password1.$dirty) || (fUpdateUser.password1.$valid && fUpdateUser.password1.$dirty && !fUpdateUser.password1.$valid.minlength && !fUpdateUser.password2.$valid)" class="glyphicon glyphicon-lock"></i>
-						  						<i style="color: red;" ng-if="fUpdateUser.password1.$invalid && fUpdateUser.password1.$dirty && fUpdateUser.password1.$error.minlength" class="glyphicon glyphicon-lock"></i>
-										  		<i ng-if="fUpdateUser.password1.$dirty && fUpdateUser.password1.$invalid && !fUpdateUser.password1.$error.minlength" class="glyphicon glyphicon-ok"></i>
-										  		<i style="color: green;" ng-if="fUpdateUser.password1.$valid && fUpdateUser.password2.$valid" class="glyphicon glyphicon-ok"></i>
-									        </span>
-									  		<input id="password1" name="password1" placeholder="Contrase&#241a" aria-describedby="passwordHelpBlock1" class="form-control" ng-model="sysUpdate.password1" ng-minlength="8" type="password" password-confirm match-target="sysUpdate.password2" ng-required="(sysUpdate.idProfileKf!=6 && !sysUpdate.idTypeAttKf) || (sysUpdate.idProfileKf==6 && sysUpdate.idTypeAttKf==2)" autofocus />
-									    </div>
-									    <small id="passwordHelpBlock1" class="form-text text-muted">
-											<span ng-if="!sysUpdate.password1 && !fUpdateUser.password1.$error.minlength" class="text-info">La clave debe contener minimo 8 caracteres alfanumericos.</span> 
-											<span class="bg-warning" ng-if="fUpdateUser.password1.$error.minlength">Su clave no cumple con el minimo requerido</span>
-											<span class="bg-success" ng-if="password1 && !fUpdateUser.password1.$error.minlength && fUpdateUser.password2.$error.match">Confirma la clave en el proximo campo</span>
-											<span ></span>
-										</small>
-									</div>
-								</div>-->
-								<!-- Text Password Check--><!--
-
-								<div ng-if="(sysUpdate.idProfileKf!=6 && !sysUpdate.idTypeAttKf) || (sysUpdate.idProfileKf==6 && sysUpdate.idTypeAttKf==2) " class="form-group col-md-6">
-								  <label style="padding-left: 15px;">Confirme su Contrase&#241a</label>  
-								    <div class="col-xs-12">
-									    <div class="input-group">
-									        <span class="input-group-addon">
-									        	<i ng-show="(fUpdateUser.password2.$pristine && !fUpdateUser.password2.$dirty) || (fUpdateUser.password2.$invalid.match && fUpdateUser.password2.$dirty && !fUpdateUser.password2.$valid.minlength && !fUpdateUser.password1.$valid)" class="glyphicon glyphicon-lock"></i>
-										  		<i style="color: red;" ng-if="fUpdateUser.password2.$invalid && fUpdateUser.password2.$dirty && fUpdateUser.password2.$error.minlength" class="glyphicon glyphicon-lock"></i>
-										  		<i ng-if="fUpdateUser.password2.$dirty && fUpdateUser.password2.$invalid && !fUpdateUser.password2.$error.minlength" class="glyphicon glyphicon-ok"></i>
-										  		<i style="color: green;" ng-if="fUpdateUser.password1.$valid && fUpdateUser.password2.$valid" class="glyphicon glyphicon-ok"></i>
-									        </span>
-									  		<input id="password2" name="password2" ng-change="fnValidatePwd()" placeholder="Confirme su Contrase&#241a" aria-describedby="passwordHelpBlock2" class="form-control" ng-minlength="8" ng-model="sysUpdate.password2" type="password" password-confirm match-target="sysUpdate.password1" ng-required="(sysUpdate.idProfileKf!=6 && !sysUpdate.idTypeAttKf) || (sysUpdate.idProfileKf==6 && sysUpdate.idTypeAttKf==2)" autofocus />
-									    </div>
-									    <small  id="passwordHelpBlock2" class="form-text text-muted">
-											<span ng-if="!sysUpdate.password2 && !fUpdateUser.password2.$error.minlength" class="text-info">La clave debe contener minimo 8 caracteres alfanumericos.</span> 
-											<span class="bg-warning" ng-if="fUpdateUser.password2.$error.minlength">Su clave no cumple con el minimo requerido</span>
-											<span class="bg-danger" ng-show="fUpdateUser.password2.$error.match && !fUpdateUser.password2.$error.minlength && sysUpdate.password2">Las claves no coinciden, por favor verificar.</span>
-										</small>
-									</div>
-								</div>-->
 								<!-- Text Phone-->
 								       
 								<div class="form-group col-md-6" ng-class="[!sysUpdate.phonelocalNumberUser && sysUpdate.phoneMovilNumberUser?'has-warning':'', !sysUpdate.phonelocalNumberUser && !sysUpdate.phoneMovilNumberUser?'has-error':'']">
@@ -826,7 +824,7 @@
 		                		<span ng-if="sessionidProfile!=3 && idTypeTenantKf==1">PROPIETARIO</span>
 		                		<span ng-if="sessionidProfile>0 && idTypeTenantKf==2">HABITANTE</span></h3>
 		            	</div>
-	            		<div class="modal-body" style="overflow-y: scroll; scroll;" >
+	            		<div class="modal-body" style="overflow-y: scroll;" >
 							<!-- FORM CONTAINER-->
 		    				<form class="form-horizontal" name="fNewTenant" novalidate>
 								<fieldset>
@@ -1952,6 +1950,352 @@
 				</div>
 			</div>
 			<!-- // TICKET UPDATE FORM -->
+			<!-- NEW PRODUCT -->
+			<div id="newProduct" style="top: 130px;" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
+			    <div class="modal-dialog modal-lg" >
+			      <div class="modal-content">
+			          <div class="modal-header">
+			              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+			              <h3 class="modal-title">NUEVO PRODUCTO</h3>
+			          </div>
+			        <div class="modal-body"  style="overflow-y: scroll;">
+			          <!-- FORM CONTAINER-->
+			          <form class="form-horizontal" name="fNewProduct" novalidate>
+			            <fieldset>
+			              <!-- Form Profile Name -->
+			              <div class="form-group col-md-6">
+			                <label class="clf-size clf-p-left">Descripcion del Producto</label>  
+			                  <div class="col-xs-12">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="fas fa-info-circle"></i></span>
+			                      <input  name="description" autofocus="true" placeholder="Descripcion" class="form-control" ng-model="newProduct.product.descriptionProduct"  type="text" required autofocus/>
+			                    </div>
+			                  </div>
+			              </div>
+			              <div class="form-group col-md-6">
+			                <label class="clf-size clf-p-left">Codigo del Fabricante</label>  
+			                  <div class="col-xs-12">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+			                      <input  name="fabricCode" autofocus="true" placeholder="Codigo del Fabricante" class="form-control" ng-model="newProduct.product.codigoFabric"  type="text" required autofocus/>
+			                    </div>
+			                  </div>
+			              </div>
+			              <div class="form-group col-md-6">
+			                <label class="clf-size clf-p-left">Marca</label>  
+			                  <div class="col-xs-12">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="fas fa-box"></i></span>
+			                      <input  name="brand" autofocus="true" placeholder="Marca" class="form-control" ng-model="newProduct.product.brand"  type="text" required autofocus/>
+			                    </div>
+			                  </div>
+			              </div>
+			              <div class="form-group col-md-6">
+			                <label class="clf-size clf-p-left">Modelo</label>  
+			                  <div class="col-xs-12">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="fas fa-tag"></i></span>
+			                      <input  name="model" autofocus="true" placeholder="Modelo" class="form-control" ng-model="newProduct.product.model"  type="text" required autofocus/>
+			                    </div>
+			                  </div>
+			              </div>
+			              <!-- List Procuts Classification-->
+			              <div class="form-group col-md-6">
+			                <label class="clf-size clf-p-left">Clasificacion del Producto</label>  
+			                  <div class="col-xs-12 selectContainer">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+			                      <select name="ProductsClassif" 
+			                          class="form-control" 
+			                          ng-change="newProduct.product.diviceOpening=null; removeAllDevices(); newProduct.product.isControlSchedule=false;"  
+			                          ng-options="item.idProductClassification as item.classification for item in rsClasProductsData" 
+			                          required autofocus
+			                          ng-model="newProduct.product.idProductClassificationFk" autofocus >
+			                        <option value=""></option>
+			                      </select>
+			                    </div>
+			                  </div>
+			              </div>
+			              <!-- Product Price input -->
+			              <div class="form-group col-md-6">
+			                <label class="clf-size clf-p-left">Precio</label>  
+			                  <div class="col-xs-12">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="fas fa-tag"></i></span>
+			                      <input  name="price" autofocus="true" placeholder="Precio" class="form-control" ng-model="newProduct.product.priceFabric"  type="text" required autofocus/>
+			                    </div>
+			                  </div>
+			              </div>
+			              <!-- -->
+			              <div class=" col-md-6 col-sm-6 ">
+			                <div class="well-checkbox n-padding-t n-padding-b">
+			                  <table>
+			                    <tr>
+			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">Numero serie Fabricante</span></td>
+			                          <td>
+			                            <label class="switch ">
+			                                <input type="checkbox" class="success"ng-model="newProduct.product.isNumberSerieFabric" id="isNumberSerieFabric">
+			                                <span class="slider round nslider nround"></span>
+			                            </label>
+			                          </td>
+			                      </tr>
+			                    <tr>
+			                      <td style="width: 200%"><span class="text text-muted text-uppercase text-box">Numero serie Interno</span></td>
+			                          <td>
+			                            <label class="switch ">
+			                                <input type="checkbox" class="success"ng-model="newProduct.product.isNumberSerieInternal" id="isNumberSerieInternal">
+			                                <span class="slider round nslider nround"></span>
+			                            </label>
+			                          </td>
+			                      </tr>
+			                    <tr>
+			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">Fecha vencimiento</span></td>
+			                          <td>
+			                            <label class="switch ">
+			                                <input type="checkbox" class="success"ng-model="newProduct.product.isDateExpiration" id="isDateExpiration">
+			                                <span class="slider round nslider nround"></span>
+			                            </label>
+			                          </td>
+			                      </tr>
+			                  </table>   
+		                    </div>
+			              </div>
+			              <!-- -->
+			              <div ng-if="newProduct.product.idProductClassificationFk==1" class=" col-md-6 col-sm-6">
+			                <div class="well-checkbox n-padding-t n-padding-b">
+			                  <table>
+			                    <tr>
+			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">Control de Horario </span></td>
+			                          <td>
+			                            <label class="switch ">
+			                                <input type="checkbox" class="success"ng-model="newProduct.product.isControlSchedule" id="isControlSchedule" ng-required="newProduct.product.idProductClassificationFk==1">
+			                                <span class="slider round nslider nround"></span>
+			                            </label>
+			                          </td>
+			                      </tr>
+			                  </table>
+			                </div>
+			              </div>
+			              <!-- List of Open Devices Procuts-->
+			              <div ng-if="newProduct.product.idProductClassificationFk==3" class="form-group col-md-6">
+			                 <label class="clf-size clf-p-left">Dispositivos de Apertura <span style="margin-left: 100px;"> <button ng-disabled="diviceOpening==0 || diviceOpening==undefined" ng-click="addDeviceOpeningFn(diviceOpening)" class="btn btn-sm btn-success">Agregar</button></label>  
+			                  <div class="col-xs-12 selectContainer">
+			                    <div class="input-group">
+			                      <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+			                      <select name="diviceOpening" 
+			                          class="form-control" 
+			                          ng-change=""  
+			                          ng-options="item as item.diviceOpening for item in rsOpenDeviceProductsData" 
+			                          ng-required="newProduct.product.idProductClassificationFk==3"
+			                          autofocus
+			                          ng-model="diviceOpening" autofocus >
+			                        <option value=""></option>
+			                      </select>
+			                    </div>
+			                  </div>
+			                 <div ng-if="list_divices.length>0" class="well-checkbox n-padding-t n-padding-b" style="margin-top: 20px;">
+			                  <table>
+			                    <tr ng-repeat="device in list_divices">
+			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">{{device.diviceOpening}} </span></td>
+			                          <td style="padding-bottom: 5px;">
+			                            <button ng-click="removeDeviceOpeningFn(device)" class="btn btn-sm btn-danger">Eliminar</button>
+			                          </td>
+			                      </tr>
+			                  </table>
+			                </div>
+			              </div>
+			            </fieldset>
+			          </form>
+			          <div class="clearfix"> </div> 
+			        </div>
+			        <!-- Actions Button ng-click="newSysProfileFn()"-->
+			        <div class="modal-footer">
+			            <div class="row">
+			                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+			                    <button type="submit" ng-click="addNewProductFn()" ng-disabled="fNewProduct.$invalid" class="btn btn-labeled btn-success">
+			                        <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
+			                    <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+			                        <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- // NEW PRODUCT -->
+			<!-- UPDATE PRODUCT -->
+			<div id="updateProduct" style="top: 130px;" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
+			    <div class="modal-dialog modal-lg" >
+			      <div class="modal-content">
+			            <div class="modal-header">
+			              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+			              <h3 class="modal-title">MODIFICAR PRODUCTO</h3>
+			          </div>
+			        <div class="modal-body"  style="overflow-y: scroll;">
+			        <!-- FORM CONTAINER-->
+			        <form class="form-horizontal" name="fUpdateProduct" novalidate>
+			          <fieldset>
+			            <!-- Form Profile Name -->
+			            <div class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Descripcion del Producto</label>  
+			                <div class="col-xs-12">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="fas fa-info-circle"></i></span>
+			                    <input  name="updatedescription" autofocus="true" placeholder="Descripcion" class="form-control" ng-model="updateProduct.product.descriptionProduct"  type="text" required autofocus/>
+			                  </div>
+			                </div>
+			            </div>
+			            <div class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Codigo del Fabricante</label>  
+			                <div class="col-xs-12">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+			                    <input  name="updatefabricCode" autofocus="true" placeholder="Codigo del Fabricante" class="form-control" ng-model="updateProduct.product.codigoFabric"  type="text" required autofocus/>
+			                  </div>
+			                </div>
+			            </div>
+			            <div class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Marca</label>  
+			                <div class="col-xs-12">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="fas fa-box"></i></span>
+			                    <input  name="updatebrand" autofocus="true" placeholder="Marca" class="form-control" ng-model="updateProduct.product.brand"  type="text" required autofocus/>
+			                  </div>
+			                </div>
+			            </div>
+			            <div class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Modelo</label>  
+			                <div class="col-xs-12">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="fas fa-tag"></i></span>
+			                    <input  name="updatemodel" autofocus="true" placeholder="Modelo" class="form-control" ng-model="updateProduct.product.model"  type="text" required autofocus/>
+			                  </div>
+			                </div>
+			            </div>
+			            <!-- List Procuts Classification-->
+			            <div class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Clasificacion del Producto</label>  
+			                <div class="col-xs-12 selectContainer">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+			                    <select name="updateProductsClassif" 
+			                        class="form-control" 
+			                        ng-change="updateProduct.product.diviceOpening=null; removeAllDevices(); updateProduct.product.isControlSchedule=false;"  
+			                        ng-options="item.idProductClassification as item.classification for item in rsClasProductsData" 
+			                        required autofocus
+			                        ng-model="updateProduct.product.idProductClassificationFk" autofocus >
+			                      <option value=""></option>
+			                    </select>
+			                  </div>
+			                </div>
+			            </div>
+			            <!-- Product Price input -->
+			            <div class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Precio</label>  
+			                <div class="col-xs-12">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="fas fa-tag"></i></span>
+			                    <input  name="updateprice" autofocus="true" placeholder="Precio" class="form-control" ng-model="updateProduct.product.priceFabric"  type="text" required autofocus/>
+			                  </div>
+			                </div>
+			            </div>
+			            <!-- -->
+			            <div class=" col-md-6 col-sm-6 ">
+			              <div class="well-checkbox n-padding-t n-padding-b">
+			                <table>
+			                  <tr>
+			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">Numero serie Fabricante</span></td>
+			                        <td>
+			                          <label class="switch ">
+			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isNumberSerieFabric" id="updateisNumberSerieFabric">
+			                              <span class="slider round nslider nround"></span>
+			                          </label>
+			                        </td>
+			                    </tr>
+			                  <tr>
+			                    <td style="width: 200%"><span class="text text-muted text-uppercase text-box">Numero serie Interno</span></td>
+			                        <td>
+			                          <label class="switch ">
+			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isNumberSerieInternal" id="updateisNumberSerieInternal">
+			                              <span class="slider round nslider nround"></span>
+			                          </label>
+			                        </td>
+			                    </tr>
+			                  <tr>
+			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">Fecha vencimiento</span></td>
+			                        <td>
+			                          <label class="switch ">
+			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isDateExpiration" id="updateisDateExpiration">
+			                              <span class="slider round nslider nround"></span>
+			                          </label>
+			                        </td>
+			                    </tr>
+			                </table>   
+			                  </div>
+			            </div>
+			            <!-- -->
+			            <div ng-if="updateProduct.product.idProductClassificationFk==1" class=" col-md-6 col-sm-6">
+			              <div class="well-checkbox n-padding-t n-padding-b">
+			                <table>
+			                  <tr>
+			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">Control de Horario </span></td>
+			                        <td>
+			                          <label class="switch ">
+			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isControlSchedule" id="updateisControlSchedule" ng-required="updateProduct.product.idProductClassificationFk==1">
+			                              <span class="slider round nslider nround"></span>
+			                          </label>
+			                        </td>
+			                    </tr>
+			                </table>
+			              </div>
+			            </div>
+			            <!-- List of Open Devices Procuts-->
+			            <div ng-if="updateProduct.product.idProductClassificationFk==3" class="form-group col-md-6">
+			              <label class="clf-size clf-p-left">Dispositivos de Apertura <span style="margin-left: 100px;"> <button ng-disabled="diviceOpening==0 || diviceOpening==undefined" ng-click="addDeviceOpeningFn(diviceOpening)" class="btn btn-sm btn-success">Agregar</button></label>  
+			                <div class="col-xs-12 selectContainer">
+			                  <div class="input-group">
+			                    <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+			                    <select name="updatediviceOpening" 
+			                        class="form-control" 
+			                        ng-change=""  
+			                        ng-options="item as item.diviceOpening for item in rsOpenDeviceProductsData" 
+			                        ng-required="updateProduct.product.idProductClassificationFk==3 && list_id_divice.length==0"
+			                        autofocus
+			                        ng-model="diviceOpening" autofocus >
+			                      <option value=""></option>
+			                    </select>
+			                  </div>
+			                </div>
+			              <div ng-if="list_divices.length>0" class="well-checkbox n-padding-t n-padding-b" style="margin-top: 20px;">
+			                <table>
+			                  <tr ng-repeat="device in list_divices">
+			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">{{device.diviceOpening}} </span></td>
+			                        <td style="padding-bottom: 5px;">
+			                          <button ng-click="removeDeviceOpeningFn(device)" class="btn btn-sm btn-danger">Eliminar</button>
+			                        </td>
+			                    </tr>
+			                </table>
+			              </div>
+			            </div>
+			          </fieldset>
+			        </form>
+			        <div class="clearfix"> </div> 
+			      </div>
+			      <!-- Actions Button ng-click="newSysProfileFn()"-->
+			            <div class="modal-footer">
+			                <div class="row">
+			                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+			                        <button type="submit" ng-click="updateProductFn()" ng-disabled="fUpdateProduct.$invalid" class="btn btn-labeled btn-success">
+			                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Actualizar</button>
+			                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+			                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+			                    </div>
+			                </div>
+			            </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- // UPDATE PRODUCT -->
 			<!-- Modal Delivery Change -->
 			<div id="UpdateModalDelivery" style="top: 130px;" class="modal fade modal-dialog-centered" role="dialog">
 	  			<div class="modal-dialog modal-md" >
@@ -2143,7 +2487,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-	        <h5 class="modal-title" id="ModalLabel">Soporte coferba </h5>
+	        <h5 class="modal-title" id="ModalLabel"><bold>Soporte coferba</bold></h5>
 	      </div>
 	      <div class="modal-body">
 	        <p>{{msg1}}</p>

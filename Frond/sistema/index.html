@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="coferbaApp" lang="es">
+<html ng-app="systemApp" lang="es">
 <head>
-<title>Sistema Coferba</title>
+<title>Seguridad TASS</title>
 <meta content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0" name="viewport">
 <!-- Default Style Sheets -->
 
@@ -17,6 +17,7 @@
   
 <link rel="stylesheet" type="text/css" afrres="true" href="lib/angular/ui-select/css/selectize.default.css">
 <link rel="stylesheet" type="text/css" afrres="true" href="lib/angular/ui-select/css/select.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
 
 <!-- Default Style Sheets -->
 
@@ -49,7 +50,7 @@
 
 <!--//JQUERY MODULES -->
 <!--ANGULAR MODULES -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+<script src="lib/angular/angularjs/v1.3.14/angular.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-cookies.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-sanitize.min.js"></script>
 <script src="lib/angular/ui-select/js/select.js"></script>
@@ -61,26 +62,33 @@
 <script src="lib/angular/angular-showdown/js/angular-showdown.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-animate.min.js"></script>
 <script src="lib/angular/ui-bootstrap/js/ui-bootstrap.js"></script>
+<script src="lib/angular/angular-file-upload/angular-file-upload.min.js"></script>
+<script src="lib/angular/angular-steps/angular-steps.js"></script>
 
 <!-- ----------------------->
 
 
 <!--ANGULAR MODULES -->
 
-<script src="coferbaApp.js"></script> <!-- Coferba Angular App -->
+<script src="sysApp.js"></script> <!-- Seguridad TASS Angular App -->
 
 <script src="common/services/tokenSystem.js"></script>
-<script src="common/services/coferbaUserServices.js"></script>
-<script src="common/services/coferbaTicketServices.js"></script>
-<script src="common/services/coferbaAddressServices.js"></script>
+<script src="common/services/sUsers.js"></script>
+<script src="common/services/sTickets.js"></script>
+<script src="common/services/sAddress.js"></script>
 <script src="common/services/mailServices.js"></script>
+<script src="common/services/sProfiles.js"></script>
+<script src="common/services/sProducts.js"></script>
+<script src="common/services/sCustomers.js"></script>
+<script src="common/services/sUtilities.js"></script>
 
-<script src="lib/jquery/mainAppJs/coferbaJsMainApp.js"></script>  <!-- Coferba Jquery Login Functions -->
-<script src="controllers/coferbaCtrlMainApp.js"></script> <!--  Coferba Angular Main System Functions -->
-<script src="controllers/coferbaCtrlLogin.js"></script> <!--  Coferba Angular Login Functions -->
-<script src="controllers/coferbaCtrlRegister.js"></script> <!--  Coferba Angular Register Functions -->
-<script src="controllers/coferbaCtrlforgotPwd.js"></script> <!--  Coferba Angular ForgotPwd Functions -->
-<script src="controllers/coferbaCtrlNewPwd.js"></script> <!--  Coferba Angular Tenant Functions -->
+<script src="lib/jquery/mainAppJs/coferbaJsMainApp.js"></script>  <!-- Seguridad TASS Jquery Login Functions -->
+<script src="controllers/ctrlMainApp.js"></script> <!--  Seguridad TASS Angular Main System Functions -->
+<script src="controllers/TASSCtrlLogin.js"></script> <!--  Seguridad TASS Angular Login Functions -->
+<script src="controllers/TASSCtrlRegister.js"></script> <!--  Seguridad TASS Angular Register Functions -->
+<script src="controllers/TASSCtrlforgotPwd.js"></script> <!--  Seguridad TASS Angular ForgotPwd Functions -->
+<script src="controllers/TASSCtrlNewPwd.js"></script> <!--  Seguridad TASS Angular Tenant Functions -->
+
 
 
 </body>

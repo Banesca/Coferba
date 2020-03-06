@@ -37,12 +37,14 @@ class Util_model extends CI_Model
 		
 		
 	
-	public function getLocalidad() {
+	public function getLocalidad($idProvinceFk) {
     
         $query = null;
         $rs = null;
 
-        $query =  $this->db->select("*")->from("tb_location")->get();
+        $query =  $this->db->select("*")->from("tb_location")
+        ->where("tb_location.idProvinceFk =", $idProvinceFk)
+        ->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();          
         }
@@ -51,14 +53,12 @@ class Util_model extends CI_Model
 	}
 	
 
-	public function getProvincia($idLocationFk) {
+	public function getProvincia() {
     
         $query = null;
         $rs = null;
 
-		$query =  $this->db->select("*")->from("tb_province")
-		->where("tb_province.idLocationFk =", $idLocationFk)
-		->get();
+		$query =  $this->db->select("*")->from("tb_province")->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();          
         }

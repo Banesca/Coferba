@@ -208,5 +208,3 @@ class Clientes extends REST_Controller {
     }
 
 }
-
-?>
