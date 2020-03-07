@@ -602,6 +602,7 @@ class Client_model extends CI_Model
 					if(count(@$client['list_schedule_atention']) > 0
 					&& count(@$client['list_phone_contact']) > 0
 					&& count(@$client['list_client_user']) > 0
+					&& count(@$client['list_oter_ufc']) > 0
 					)
 					{
 						
@@ -638,6 +639,17 @@ class Client_model extends CI_Model
 							);
 						}
 
+						// OTRA UFC
+						foreach ($client['list_oter_ufc'] as $valor) {
+							
+							$this->db->insert('tb_client_ufc', array(
+								'idClientFk' => $idClientFk,
+								'identificador' => $valor['identificador'],
+								'idProvinceFk' => $valor['idProvinceFk'],
+								'idTypeTaxFk' => $valor['idTypeTaxFk']
+							)
+							);
+						}
 					
 
 
@@ -697,6 +709,7 @@ class Client_model extends CI_Model
 					if(count(@$client['list_schedule_atention']) > 0
 					&& count(@$client['list_phone_contact']) > 0
 					&& count(@$client['list_client_user']) > 0
+					&& count(@$client['list_oter_ufc']) > 0
 					)
 					{
 						$this->db->delete('tb_client_schedule_atention', array('idClienteFk' => $client['idClient']));  
@@ -731,6 +744,20 @@ class Client_model extends CI_Model
 							$this->db->insert('tb_client_users', array(
 								'idClientFk' => $valor['idClienteFk'],
 								'idUserFk' => $valor['idUserFk']
+							)
+							);
+						}
+
+						// OTRA UFC
+						$this->db->delete('tb_client_ufc', array('idClientFk' => $client['idClient']));  
+
+						foreach ($client['list_oter_ufc'] as $valor) {
+							
+							$this->db->insert('tb_client_ufc', array(
+								'idClientFk' => $client['idClient'],
+								'identificador' => $valor['identificador'],
+								'idProvinceFk' => $valor['idProvinceFk'],
+								'idTypeTaxFk' => $valor['idTypeTaxFk']
 							)
 							);
 						}
