@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.23)
 # Base de datos: db_coferba
-# Tiempo de Generación: 2019-11-20 13:11:15 +0000
+# Tiempo de Generación: 2020-03-17 20:32:12 +0000
 # ************************************************************
 
 
@@ -320,7 +320,7 @@ DROP TABLE IF EXISTS `tb_client_address_particular`;
 CREATE TABLE `tb_client_address_particular` (
   `idAddressParticular` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientFk` int(11) DEFAULT NULL,
-  `address` int(200) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
   `depto` varchar(100) DEFAULT NULL,
   `isBuilding` int(11) DEFAULT NULL,
   `idProvinceFk` int(11) DEFAULT NULL,
@@ -329,6 +329,18 @@ CREATE TABLE `tb_client_address_particular` (
   PRIMARY KEY (`idAddressParticular`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_client_address_particular` WRITE;
+/*!40000 ALTER TABLE `tb_client_address_particular` DISABLE KEYS */;
+
+INSERT INTO `tb_client_address_particular` (`idAddressParticular`, `idClientFk`, `address`, `depto`, `isBuilding`, `idProvinceFk`, `idLocationFk`, `clarification`)
+VALUES
+	(1,12,'TEST','depto',1,1,1,'TEST'),
+	(2,12,'TEST','depto',1,1,1,'TEST'),
+	(3,12,'TEST','depto',1,1,1,'TEST'),
+	(4,12,'TEST','depto',1,1,1,'TEST');
+
+/*!40000 ALTER TABLE `tb_client_address_particular` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_client_authorizing
@@ -363,6 +375,27 @@ CREATE TABLE `tb_client_billing_information` (
   PRIMARY KEY (`idBillingInfo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_client_billing_information` WRITE;
+/*!40000 ALTER TABLE `tb_client_billing_information` DISABLE KEYS */;
+
+INSERT INTO `tb_client_billing_information` (`idBillingInfo`, `idClientFk`, `businessNameBilling`, `cuitBilling`, `idLocationBillingFk`, `idProvinceBillingFk`, `idTypeTaxFk`)
+VALUES
+	(1,1,'text','text',1,1,1),
+	(2,3,'text','text',1,1,1),
+	(3,4,'text','text',1,1,1),
+	(4,5,'text','text',1,1,1),
+	(5,6,'text','text',1,1,1),
+	(6,7,'text','text',1,1,1),
+	(7,8,'text','text',1,1,1),
+	(8,9,'text','text',1,1,1),
+	(9,10,'text','text',1,1,1),
+	(10,11,'text','text',1,1,1),
+	(11,12,'text','text',1,1,1),
+	(12,13,'text','text',1,1,1),
+	(13,14,'text','text',1,1,1);
+
+/*!40000 ALTER TABLE `tb_client_billing_information` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_client_departament
@@ -386,7 +419,13 @@ LOCK TABLES `tb_client_departament` WRITE;
 
 INSERT INTO `tb_client_departament` (`idClientDepartament`, `idClientFk`, `floor`, `departament`, `idCategoryDepartamentFk`, `idStatusFk`, `created_at`)
 VALUES
-	(1,NULL,NULL,NULL,NULL,NULL,'2019-10-22 18:10:26');
+	(1,NULL,NULL,NULL,NULL,NULL,'2019-10-22 18:10:26'),
+	(4,NULL,'1','departament',0,1,'2020-03-06 15:00:01'),
+	(5,NULL,'1','departament',0,1,'2020-03-06 15:00:01'),
+	(6,NULL,'1','departament',0,1,'2020-03-06 15:00:03'),
+	(7,NULL,'1','departament',0,1,'2020-03-06 15:00:03'),
+	(8,3,'1','departament',0,1,'2020-03-06 15:01:13'),
+	(9,3,'1','departament',0,1,'2020-03-06 15:01:13');
 
 /*!40000 ALTER TABLE `tb_client_departament` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -423,6 +462,55 @@ CREATE TABLE `tb_client_functional_units` (
 
 
 
+# Volcado de tabla tb_client_phone_contact
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_client_phone_contact`;
+
+CREATE TABLE `tb_client_phone_contact` (
+  `idClientPhoneFk` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `phoneContact` varchar(80) DEFAULT NULL,
+  `idClientFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idClientPhoneFk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `tb_client_phone_contact` WRITE;
+/*!40000 ALTER TABLE `tb_client_phone_contact` DISABLE KEYS */;
+
+INSERT INTO `tb_client_phone_contact` (`idClientPhoneFk`, `phoneContact`, `idClientFk`)
+VALUES
+	(1,'text',NULL),
+	(2,'text',2),
+	(3,'text2',2),
+	(8,'text',1),
+	(9,'text2',1),
+	(12,'text',5),
+	(13,'text2',5),
+	(14,'text',1),
+	(15,'text2',1),
+	(16,'text',1),
+	(17,'text2',1),
+	(18,'text',1),
+	(19,'text2',1),
+	(20,'text',11),
+	(21,'text2',11),
+	(24,'text',1),
+	(25,'text2',1),
+	(26,'text',1),
+	(27,'text2',1),
+	(28,'text',14),
+	(29,'text2',14),
+	(30,'text',1),
+	(31,'text2',1),
+	(32,'text',1),
+	(33,'text2',1),
+	(34,'text',1),
+	(35,'text2',1);
+
+/*!40000 ALTER TABLE `tb_client_phone_contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Volcado de tabla tb_client_schedule_atention
 # ------------------------------------------------------------
 
@@ -439,6 +527,60 @@ CREATE TABLE `tb_client_schedule_atention` (
   PRIMARY KEY (`idScheduleAtention`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_client_schedule_atention` WRITE;
+/*!40000 ALTER TABLE `tb_client_schedule_atention` DISABLE KEYS */;
+
+INSERT INTO `tb_client_schedule_atention` (`idScheduleAtention`, `idClienteFk`, `day`, `fronAm`, `toAm`, `fronPm`, `toPm`)
+VALUES
+	(3,2,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(4,2,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(5,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(6,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(7,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(8,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(9,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(10,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(29,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(30,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(31,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(32,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(37,5,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(38,5,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(45,6,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(46,6,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(47,7,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(48,7,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(59,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(60,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(61,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(62,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(63,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(64,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(65,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(66,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(67,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(68,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(69,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(70,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(71,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(72,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(73,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(74,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(75,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(76,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(77,13,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(78,13,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(79,14,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(80,14,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(81,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(82,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(83,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(84,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(85,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+	(86,1,0,'00:00:00','00:00:00','00:00:00','00:00:00');
+
+/*!40000 ALTER TABLE `tb_client_schedule_atention` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_client_services
@@ -450,16 +592,15 @@ CREATE TABLE `tb_client_services` (
   `idClientServices` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientFk` int(11) DEFAULT NULL,
   `idTipeServiceFk` int(11) DEFAULT NULL,
-  `idClientServicesBodyFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServices`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `tb_client_services` WRITE;
 /*!40000 ALTER TABLE `tb_client_services` DISABLE KEYS */;
 
-INSERT INTO `tb_client_services` (`idClientServices`, `idClientFk`, `idTipeServiceFk`, `idClientServicesBodyFk`)
+INSERT INTO `tb_client_services` (`idClientServices`, `idClientFk`, `idTipeServiceFk`)
 VALUES
-	(1,NULL,NULL,NULL);
+	(1,NULL,NULL);
 
 /*!40000 ALTER TABLE `tb_client_services` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -603,6 +744,7 @@ DROP TABLE IF EXISTS `tb_client_services_camera`;
 
 CREATE TABLE `tb_client_services_camera` (
   `idClientServicesCamera` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `contract` text,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
@@ -638,6 +780,7 @@ DROP TABLE IF EXISTS `tb_client_services_gps`;
 
 CREATE TABLE `tb_client_services_gps` (
   `idClientServicesGps` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesFk` int(11) DEFAULT NULL,
   `idTypeGpsFk` int(11) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
   `dateUp` date DEFAULT NULL,
@@ -687,6 +830,7 @@ DROP TABLE IF EXISTS `tb_client_services_smart_panic`;
 
 CREATE TABLE `tb_client_services_smart_panic` (
   `idClientServicesSmartPanic` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `contract` text,
   `dateUp` date DEFAULT NULL,
@@ -699,6 +843,44 @@ CREATE TABLE `tb_client_services_smart_panic` (
   `countNewLicense` int(11) DEFAULT NULL,
   `observation` text,
   PRIMARY KEY (`idClientServicesSmartPanic`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Volcado de tabla tb_client_services_totem
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_client_services_totem`;
+
+CREATE TABLE `tb_client_services_totem` (
+  `idClientServicesTotem` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesFk` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `contract_SE` text,
+  `item_SE` varchar(100) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `idCompanyFk` int(11) DEFAULT NULL,
+  `dvr_nvr` varchar(100) DEFAULT NULL,
+  `addresss` varchar(100) DEFAULT NULL,
+  `latAddress` varchar(100) DEFAULT NULL,
+  `lonAddress` varchar(100) DEFAULT NULL,
+  `maxCamera` int(11) DEFAULT NULL,
+  `idTotenModelFk` int(11) DEFAULT NULL,
+  `tipeMaintenance_SE` int(11) DEFAULT NULL,
+  `dateDown` date DEFAULT NULL,
+  `numerFertilizer` varchar(100) DEFAULT NULL,
+  `numberPort` varchar(100) DEFAULT NULL,
+  `addreesVpn` varchar(100) DEFAULT NULL,
+  `namePort1` varchar(100) DEFAULT NULL,
+  `numberPort1` varchar(100) DEFAULT NULL,
+  `namePort2` varchar(100) DEFAULT NULL,
+  `numberPort2` varchar(100) DEFAULT NULL,
+  `addressClientInter` varchar(100) DEFAULT NULL,
+  `portHttpInter` varchar(100) DEFAULT NULL,
+  `namePortInter` varchar(100) DEFAULT NULL,
+  `numberPortInter` varchar(100) DEFAULT NULL,
+  `observatioGeneral` text,
+  PRIMARY KEY (`idClientServicesTotem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -757,6 +939,34 @@ VALUES
 UNLOCK TABLES;
 
 
+# Volcado de tabla tb_client_ufc
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_client_ufc`;
+
+CREATE TABLE `tb_client_ufc` (
+  `idUfd` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `identificador` varchar(200) DEFAULT NULL,
+  `idProvinceFk` int(11) DEFAULT NULL,
+  `idClientFk` int(11) DEFAULT NULL,
+  `idTypeTaxFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idUfd`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `tb_client_ufc` WRITE;
+/*!40000 ALTER TABLE `tb_client_ufc` DISABLE KEYS */;
+
+INSERT INTO `tb_client_ufc` (`idUfd`, `identificador`, `idProvinceFk`, `idClientFk`, `idTypeTaxFk`)
+VALUES
+	(1,'test1',1,14,1),
+	(2,'test2',1,14,1),
+	(7,'EDITADO 111',1,4,1),
+	(8,'test2',1,4,1);
+
+/*!40000 ALTER TABLE `tb_client_ufc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Volcado de tabla tb_client_users
 # ------------------------------------------------------------
 
@@ -770,6 +980,34 @@ CREATE TABLE `tb_client_users` (
   PRIMARY KEY (`idClientUsers`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_client_users` WRITE;
+/*!40000 ALTER TABLE `tb_client_users` DISABLE KEYS */;
+
+INSERT INTO `tb_client_users` (`idClientUsers`, `idClientFk`, `idUserFk`, `created_at`)
+VALUES
+	(1,2,1,NULL),
+	(2,2,2,NULL),
+	(7,1,1,NULL),
+	(8,1,2,NULL),
+	(11,5,1,NULL),
+	(12,5,2,NULL),
+	(13,1,1,NULL),
+	(14,1,2,NULL),
+	(15,1,1,NULL),
+	(16,1,2,NULL),
+	(17,1,1,NULL),
+	(18,1,2,NULL),
+	(19,14,1,NULL),
+	(20,14,2,NULL),
+	(21,1,1,NULL),
+	(22,1,2,NULL),
+	(23,1,1,NULL),
+	(24,1,2,NULL),
+	(25,1,1,NULL),
+	(26,1,2,NULL);
+
+/*!40000 ALTER TABLE `tb_client_users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_clients
@@ -789,7 +1027,6 @@ CREATE TABLE `tb_clients` (
   `CUIT` varchar(30) DEFAULT NULL,
   `idLocationFk` int(11) DEFAULT NULL,
   `idProvinceFk` int(11) DEFAULT NULL,
-  `phoneContact` varchar(200) DEFAULT NULL,
   `mobile` varchar(200) DEFAULT NULL,
   `mail` varchar(200) DEFAULT NULL,
   `observation` varchar(500) DEFAULT NULL,
@@ -809,6 +1046,28 @@ CREATE TABLE `tb_clients` (
   PRIMARY KEY (`idClient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_clients` WRITE;
+/*!40000 ALTER TABLE `tb_clients` DISABLE KEYS */;
+
+INSERT INTO `tb_clients` (`idClient`, `idClientTypeFk`, `name`, `address`, `addressLat`, `addressLon`, `idAgentFk`, `businessName`, `CUIT`, `idLocationFk`, `idProvinceFk`, `mobile`, `mail`, `observation`, `pageWeb`, `created_at`, `update_at`, `idStatusFk`, `mailFronKey`, `observationOrderKey`, `isNotCliente`, `idClientAdminFk`, `mailServiceTecnic`, `observationSericeTecnic`, `mailCollection`, `observationCollection`, `idClientCompaniFk`)
+VALUES
+	(1,4,'edite','TEST','TEST','TEST',1,'text2','text',1,1,'text','text','TEST','text','2020-01-28 12:47:49',NULL,1,'text','text',1,1,'TEST','TEST','TEST','TEST',1),
+	(2,1,'te1xt','text','text','text',1,'text2','text',1,1,'text','text','text','text','2020-01-28 12:49:10',NULL,1,'text','text',0,1,'text','text','text','text',1),
+	(3,NULL,'edite la empresa TESaT','TEST','TEST','TEST',1,'TEST','TEST',1,1,NULL,NULL,'TEST','TEST','2020-03-06 14:47:01',NULL,1,NULL,NULL,NULL,NULL,'TEST','TEST','TEST','TEST',NULL),
+	(4,3,'edite la empresa TESaT','TEST','TEST','TEST',1,'TEST','TEST',1,1,NULL,NULL,'TEST','TEST','2020-03-06 15:12:48',NULL,1,NULL,NULL,NULL,NULL,'TEST','TEST','TEST','TEST',NULL),
+	(5,3,'TESaT','TEST','TEST','TEST',1,'TEST','TEST',1,1,NULL,NULL,'TEST','TEST','2020-03-06 15:14:29',NULL,NULL,NULL,NULL,0,NULL,'TEST','TEST','TEST','TEST',NULL),
+	(6,4,NULL,'TEST','TEST','TEST',NULL,NULL,NULL,1,1,NULL,NULL,'TEST',NULL,'2020-03-06 15:37:21',NULL,NULL,NULL,NULL,1,NULL,'TEST','TEST','TEST','TEST',1),
+	(7,4,NULL,'TEST','TEST','TEST',NULL,NULL,NULL,1,1,NULL,NULL,'TEST',NULL,'2020-03-06 15:38:07',NULL,NULL,NULL,NULL,1,NULL,'TEST','TEST','TEST','TEST',1),
+	(8,4,'TEST','TEST','TEST','TEST',NULL,NULL,NULL,1,1,NULL,NULL,'TEST',NULL,'2020-03-06 15:38:29',NULL,NULL,NULL,NULL,1,NULL,'TEST','TEST','TEST','TEST',1),
+	(9,4,'jorge edito','TEST','TEST','TEST',NULL,NULL,NULL,1,1,NULL,NULL,'TEST',NULL,'2020-03-06 15:39:14',NULL,NULL,NULL,NULL,1,NULL,'TEST','TEST','TEST','TEST',1),
+	(10,5,'TEST PARTICULR','TEST','TEST','TEST',1,NULL,NULL,1,1,'TEST',NULL,'TEST',NULL,'2020-03-06 16:00:49',NULL,1,NULL,NULL,NULL,NULL,'TEST',NULL,'TEST',NULL,NULL),
+	(11,5,'TEST PARTICaULR','TEST','TEST','TEST',1,NULL,NULL,1,1,'TEST',NULL,'TEST',NULL,'2020-03-06 16:03:40',NULL,NULL,NULL,NULL,0,NULL,'TEST',NULL,'TEST',NULL,NULL),
+	(12,5,'TEST PARdTICaULR editado','TEST','TEST','TEST',1,NULL,NULL,1,1,'TEST',NULL,'TEST',NULL,'2020-03-06 16:04:14',NULL,NULL,NULL,NULL,0,NULL,'TEST',NULL,'TEST',NULL,NULL),
+	(13,1,'te1ddxt','text','text','text',1,'text2','text',1,1,'text','text','text','text','2020-03-06 16:12:04',NULL,1,'text','text',0,1,'text','text','text','text',1),
+	(14,3,'jorge','TEST','TEST','TEST',1,'TEST','TEST',1,1,NULL,NULL,'TEST','TEST','2020-03-07 09:29:50',NULL,NULL,NULL,NULL,0,NULL,'TEST','TEST','TEST','TEST',NULL);
+
+/*!40000 ALTER TABLE `tb_clients` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_clients_phones
@@ -1123,10 +1382,20 @@ DROP TABLE IF EXISTS `tb_location`;
 
 CREATE TABLE `tb_location` (
   `idLocation` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `location` int(11) DEFAULT NULL,
+  `location` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idLocation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tb_location` WRITE;
+/*!40000 ALTER TABLE `tb_location` DISABLE KEYS */;
+
+INSERT INTO `tb_location` (`idLocation`, `location`)
+VALUES
+	(1,'CABA'),
+	(2,'SAAVEDRA');
+
+/*!40000 ALTER TABLE `tb_location` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla tb_modules
@@ -1413,16 +1682,17 @@ DROP TABLE IF EXISTS `tb_province`;
 CREATE TABLE `tb_province` (
   `idProvince` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `province` varchar(200) DEFAULT NULL,
+  `idLocationFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idProvince`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `tb_province` WRITE;
 /*!40000 ALTER TABLE `tb_province` DISABLE KEYS */;
 
-INSERT INTO `tb_province` (`idProvince`, `province`)
+INSERT INTO `tb_province` (`idProvince`, `province`, `idLocationFk`)
 VALUES
-	(1,'CABA '),
-	(2,'BUENOS AIRES');
+	(1,'CABA ',1),
+	(2,'BUENOS AIRES',2);
 
 /*!40000 ALTER TABLE `tb_province` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1782,6 +2052,19 @@ CREATE TABLE `tb_tmp_delivery_data` (
 
 
 
+# Volcado de tabla tb_totem_model
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_totem_model`;
+
+CREATE TABLE `tb_totem_model` (
+  `idTotenModel` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `totenModel` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`idTotenModel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Volcado de tabla tb_type_attendant
 # ------------------------------------------------------------
 
@@ -2012,7 +2295,7 @@ LOCK TABLES `tb_user` WRITE;
 
 INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`, `phoneLocalNumberUser`, `passwordUser`, `idProfileKf`, `dateCreated`, `idCompanyKf`, `resetPasword`, `idAddresKf`, `idTyepeAttendantKf`, `descOther`, `idDepartmentKf`, `isDepartmentApproved`, `isEdit`, `requireAuthentication`, `idTypeTenantKf`, `idStatusKf`, `tokenMail`, `isConfirmatedMail`, `SA_ID`, `idSysProfileFk`)
 VALUES
-	(31,'admin sistema','soporte@coferba.com.ar','(054) 9 11 2323-2323','91124759596','fe703d258c7ef5f50b71e06565a65aa07194907f',1,'2018-02-16 09:01:22',NULL,0,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,NULL,1,NULL,8),
+	(1,'admin sistema','soporte@coferba.com.ar','(054) 9 11 2323-2323','91124759596','fe703d258c7ef5f50b71e06565a65aa07194907f',1,'2018-02-16 09:01:22',NULL,0,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,NULL,1,NULL,8),
 	(71,'David Eduardo Rincon','davideduardo.luengo@hotmail.com','','1122333444555666','870e8768d555d80e0aeb44870c081f5563d90bd3',3,'2018-10-21 23:33:22',5,0,11,NULL,NULL,NULL,NULL,0,NULL,1,1,'3Jh0NuqLHa',1,NULL,NULL),
 	(72,'leandro figueroa','lean.figueroa@gmail.com','123213213213213','123213213213213','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',5,'2018-10-29 13:27:43',5,0,12,NULL,NULL,117,1,0,NULL,2,1,'JbuVXny0Jr',1,NULL,NULL),
 	(73,'leandro2 figueroa2','leandro.figueroa@coferba.com.ar','1122356388','123213213213213','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-10-29 13:48:52',5,0,12,NULL,NULL,NULL,NULL,1,NULL,1,1,'OLtCaObFgO',1,NULL,NULL),
