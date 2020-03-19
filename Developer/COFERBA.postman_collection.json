@@ -1,19 +1,20 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "c755df60-068c-0c4b-4ddb-2c9e370a6715",
 		"name": "COFERBA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "f3e47f1a-1d6c-8230-a079-1c448a3d4b1a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Seeds",
+			"description": "",
 			"item": [
 				{
 					"name": "Obtener Modulos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/Modules",
 						"method": "GET",
 						"header": [
 							{
@@ -27,33 +28,14 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/Modules",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"seeds",
-								"Modules"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Obtener Clasificacion de productos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/ProductClassification",
 						"method": "GET",
 						"header": [
 							{
@@ -67,33 +49,14 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/ProductClassification",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"seeds",
-								"ProductClassification"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Obtener Dispositivos de apertura",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/DiviceOpening",
 						"method": "GET",
 						"header": [
 							{
@@ -107,36 +70,20 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/DiviceOpening",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"seeds",
-								"DiviceOpening"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Profiles",
+			"description": "",
 			"item": [
 				{
 					"name": "Crear Perfiles",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles",
 						"method": "POST",
 						"header": [
 							{
@@ -148,36 +95,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pofile\":\n\t{\n\t\t\"name\":\"PERFIL dos\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"}\n\t\t\t]\n\t}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"pofile\":\n\t{\n\t\t\"name\":\"PERFIL dos\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"}\n\t\t\t]\n\t}\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editar Perfiles",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/update",
 						"method": "POST",
 						"header": [
 							{
@@ -189,37 +116,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pofile\":\n\t{\n\t\n\t\t\"idProfiles\":\"8\",\n\t\t\"name\":\"PERFIL edd edite\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"},\n\t\t\t{\"idModuleFk\":\"4\"},\n\t\t\t{\"idModuleFk\":\"7\"}\n\t\t\t]\n\t}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"pofile\":\n\t{\n\t\n\t\t\"idProfiles\":\"8\",\n\t\t\"name\":\"PERFIL edd edite\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"},\n\t\t\t{\"idModuleFk\":\"4\"},\n\t\t\t{\"idModuleFk\":\"7\"}\n\t\t\t]\n\t}\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/update",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles",
-								"update"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Eliminar Perfil",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/delete/8",
 						"method": "DELETE",
 						"header": [
 							{
@@ -231,41 +137,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/delete/8",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles",
-								"delete",
-								"8"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar Perfil por id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/find/8",
 						"method": "GET",
 						"header": [
 							{
@@ -277,41 +158,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/find/8",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles",
-								"find",
-								"8"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Obtener modulos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/modules",
 						"method": "GET",
 						"header": [
 							{
@@ -323,37 +179,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/modules",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles",
-								"modules"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar Perfil",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/search",
 						"method": "POST",
 						"header": [
 							{
@@ -365,37 +200,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilter\":\"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"searchFilter\":\"\"\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/search",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles",
-								"search"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Eliminar Modulos de Perfil",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/deletemodule/20",
 						"method": "DELETE",
 						"header": [
 							{
@@ -407,44 +221,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/deletemodule/20",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"profiles",
-								"deletemodule",
-								"20"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Usuarios",
+			"description": "",
 			"item": [
 				{
 					"name": "Autenticar",
 					"request": {
+						"url": "http://localhost:8888/Coferba/Back/index.php/User/auth",
 						"method": "POST",
 						"header": [
 							{
@@ -456,34 +248,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"user\":\n  {\n    \"fullNameUser\" : \"soporte@coferba.com.ar\",\n    \"passwordUser\" : \"12345\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n  \"user\":\n  {\n    \"fullNameUser\" : \"soporte@coferba.com.ar\",\n    \"passwordUser\" : \"12345\"\n    }\n}"
 						},
-						"url": {
-							"raw": "http://localhost:8888/Coferba/Back/index.php/User/auth",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"User",
-								"auth"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Agregar un usuario",
 					"request": {
+						"url": "http://localhost:8888/Coferba/Back/index.php/User",
 						"method": "POST",
 						"header": [
 							{
@@ -495,39 +269,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \n  \"user\":\n  {\n        \"fullNameUser\" : \"prueba\",\n\t    \"emailUser\" : \"sfsdfdsfdfds\",\n\t    \"phoneNumberUser\" : \"prueba\",\n\t    \"addresUser\" : \"prueba\",\n\t    \"passwordUser\" : \"prueba\",\n\t    \"idProfileKf\" : \"1\",\n\t    \"rezonSocial\" : \"prueba\",\n\t    \"idSysProfileFk\":8,\n\t    \"idTypeTenantKf\": 0\n  }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n  \n  \"user\":\n  {\n        \"fullNameUser\" : \"prueba\",\n\t    \"emailUser\" : \"sfsdfdsfdfds\",\n\t    \"phoneNumberUser\" : \"prueba\",\n\t    \"addresUser\" : \"prueba\",\n\t    \"passwordUser\" : \"prueba\",\n\t    \"idProfileKf\" : \"1\",\n\t    \"rezonSocial\" : \"prueba\",\n\t    \"idSysProfileFk\":8,\n\t    \"idTypeTenantKf\": 0\n  }\n}"
 						},
-						"url": {
-							"raw": "http://localhost:8888/Coferba/Back/index.php/User",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"User"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Productos",
+			"description": "",
 			"item": [
 				{
 					"name": "Crear Producto",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product",
 						"method": "POST",
 						"header": [
 							{
@@ -539,36 +296,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"product\":\n\t{\n\t\t\"descriptionProduct\":\"2Ejemdplo3\",\n\t\t\"codigoFabric\":\"Ejemplo\",\n\t\t\"brand\":\"Ejemplo\",\n\t\t\"model\":\"Ejemplo\",\n\t\t\"idProductClassificationFk\":5,\n\t\t\"isNumberSerieFabric\":true,\n\t\t\"isNumberSerieInternal\":false,\n\t\t\"isDateExpiration\":true,\n\t\t\"isControlSchedule\":true,\n\t\t\"priceFabric\":120.38,\n\t\t\"list_id_divice\":[\n\t\t\t{\"idDiviceOpeningFk\":2},\n\t\t\t{\"idDiviceOpeningFk\":3},\n\t\t\t{\"idDiviceOpeningFk\":4},\n\t\t\t{\"idDiviceOpeningFk\":5}\n\t\t]\n\t}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"product\":\n\t{\n\t\t\"descriptionProduct\":\"2Ejemdplo3\",\n\t\t\"codigoFabric\":\"Ejemplo\",\n\t\t\"brand\":\"Ejemplo\",\n\t\t\"model\":\"Ejemplo\",\n\t\t\"idProductClassificationFk\":5,\n\t\t\"isNumberSerieFabric\":true,\n\t\t\"isNumberSerieInternal\":false,\n\t\t\"isDateExpiration\":true,\n\t\t\"isControlSchedule\":true,\n\t\t\"priceFabric\":120.38,\n\t\t\"list_id_divice\":[\n\t\t\t{\"idDiviceOpeningFk\":2},\n\t\t\t{\"idDiviceOpeningFk\":3},\n\t\t\t{\"idDiviceOpeningFk\":4},\n\t\t\t{\"idDiviceOpeningFk\":5}\n\t\t]\n\t}\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Product"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editar Producto",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/update",
 						"method": "POST",
 						"header": [
 							{
@@ -580,37 +317,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"product\":\n\t{\n\t\t\"idProduct\":\"1\",\n\t\t\"descriptionProduct\":\"2Ejemplo3111\",\n\t\t\"codigoFabric\":\"Ejemplo\",\n\t\t\"brand\":\"Ejemplo\",\n\t\t\"model\":\"Ejemplo\",\n\t\t\"idProductClassificationFk\":5,\n\t\t\"isNumberSerieFabric\":true,\n\t\t\"isNumberSerieInternal\":false,\n\t\t\"isDateExpiration\":true,\n\t\t\"isControlSchedule\":true,\n\t\t\"priceFabric\":120.38,\n\t\t\"list_id_divice\":[\n\t\t\t{\"idDiviceOpeningFk\":2},\n\t\t\t{\"idDiviceOpeningFk\":3},\n\t\t\t{\"idDiviceOpeningFk\":4},\n\t\t\t{\"idDiviceOpeningFk\":5}\n\t\t]\n\t}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"product\":\n\t{\n\t\t\"idProduct\":\"1\",\n\t\t\"descriptionProduct\":\"2Ejemplo3111\",\n\t\t\"codigoFabric\":\"Ejemplo\",\n\t\t\"brand\":\"Ejemplo\",\n\t\t\"model\":\"Ejemplo\",\n\t\t\"idProductClassificationFk\":5,\n\t\t\"isNumberSerieFabric\":true,\n\t\t\"isNumberSerieInternal\":false,\n\t\t\"isDateExpiration\":true,\n\t\t\"isControlSchedule\":true,\n\t\t\"priceFabric\":120.38,\n\t\t\"list_id_divice\":[\n\t\t\t{\"idDiviceOpeningFk\":2},\n\t\t\t{\"idDiviceOpeningFk\":3},\n\t\t\t{\"idDiviceOpeningFk\":4},\n\t\t\t{\"idDiviceOpeningFk\":5}\n\t\t]\n\t}\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/update",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Product",
-								"update"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar General",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/search",
 						"method": "POST",
 						"header": [
 							{
@@ -622,37 +338,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilter\":\"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"searchFilter\":\"\"\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/search",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Product",
-								"search"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Eliminar Producto",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/delete/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -664,41 +359,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/delete/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Product",
-								"delete",
-								"1"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar por id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/find/5",
 						"method": "GET",
 						"header": [
 							{
@@ -710,181 +380,98 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/find/5",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Product",
-								"find",
-								"5"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Util",
+			"description": "",
 			"item": [
 				{
 					"name": "Agentes",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/agent",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/agent",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Util",
-								"agent"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "TIPO DE CLIENTE",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/clientType",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/clientType",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Util",
-								"clientType"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Localidades",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/localidad",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/localidad",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Util",
-								"localidad"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Provincia",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/provincia/1",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/provincia/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Util",
-								"provincia",
-								"1"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Typo de iva",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/taxtype",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/taxtype",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Util",
-								"taxtype"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Client",
+			"description": "",
 			"item": [
 				{
 					"name": "Crear Cliente ADMIN",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/admin",
 						"method": "POST",
 						"header": [
 							{
@@ -896,37 +483,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":1,\n\t\t\t\"name\":\"te1ddxt\",\n\t\t\t\"address\":\"text\",\n\t\t\t\"addressLat\":\"text\",\n\t\t\t\"addressLon\":\"text\",\n\t\t\t\"idAgentFk\":1,\n\t\t\t\"businessName\":\"text2\",\n\t\t\t\"CUIT\":\"text\",\n\t\t\t\"idLocationFk\":1,\n\t\t\t\"idProvinceFk\":1,\n\t\t\t\"mobile\":\"text\",\n\t\t\t\"mail\":\"text\",\n\t\t\t\"observation\":\"text\",\n\t\t\t\"pageWeb\":\"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"mailFronKey\":\"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"isNotCliente\":0,\n\t\t\t\"idClientAdminFk\":1,\n\t\t\t\"mailServiceTecnic\":\"text\",\n\t\t\t\"observationSericeTecnic\":\"text\",\n\t\t\t\"mailCollection\":\"text\",\n\t\t\t\"observationCollection\":\"text\",\n\t\t\t\"idClientCompaniFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"phoneTag\":\"123123\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"phoneTag\":\"123123\"\n\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":1,\n\t\t\t\"name\":\"te1ddxt\",\n\t\t\t\"address\":\"text\",\n\t\t\t\"addressLat\":\"text\",\n\t\t\t\"addressLon\":\"text\",\n\t\t\t\"idAgentFk\":1,\n\t\t\t\"businessName\":\"text2\",\n\t\t\t\"CUIT\":\"text\",\n\t\t\t\"idLocationFk\":1,\n\t\t\t\"idProvinceFk\":1,\n\t\t\t\"mobile\":\"text\",\n\t\t\t\"mail\":\"text\",\n\t\t\t\"observation\":\"text\",\n\t\t\t\"pageWeb\":\"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"mailFronKey\":\"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"isNotCliente\":0,\n\t\t\t\"idClientAdminFk\":1,\n\t\t\t\"mailServiceTecnic\":\"text\",\n\t\t\t\"observationSericeTecnic\":\"text\",\n\t\t\t\"mailCollection\":\"text\",\n\t\t\t\"observationCollection\":\"text\",\n\t\t\t\"idClientCompaniFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"phoneTag\":\"123123\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"phoneTag\":\"123123\"\n\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/admin",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"admin"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Crear Cliente PARTICULAR",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/particular",
 						"method": "POST",
 						"header": [
 							{
@@ -938,37 +504,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":5,\n\t\t\t\t\t\"name\" : \"TEST PARdTICaULR\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"mobile\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\"\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_address_particular\":\n\t\t\t[\n\t\t\t    {\n\t\t\t    \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":5,\n\t\t\t\t\t\"name\" : \"TEST PARdTICaULR\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"mobile\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\"\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_address_particular\":\n\t\t\t[\n\t\t\t    {\n\t\t\t    \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/particular",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"particular"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Crear Cliente SUCURSAL",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/branch",
 						"method": "POST",
 						"header": [
 							{
@@ -980,37 +525,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\" : 4,\n\t\t\t\t\t\"name\" : \"TESTs\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"isNotCliente\" : 1,\n\t\t\t\t\t\"idClientCompaniFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\n\t\t\t\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\" : 4,\n\t\t\t\t\t\"name\" : \"TESTs\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"isNotCliente\" : 1,\n\t\t\t\t\t\"idClientCompaniFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\n\t\t\t\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/branch",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"branch"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Crear Cliente EMPRESA",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/company",
 						"method": "POST",
 						"header": [
 							{
@@ -1022,37 +546,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\" : 3,\n\t\t\t\t\t\"name\" : \"jorge\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"businessName\" : \"TEST\",\n\t\t\t\t\t\"CUIT\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"pageWeb\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\"\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_oter_ufc\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test1\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test2\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\" : 3,\n\t\t\t\t\t\"name\" : \"jorge\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"businessName\" : \"TEST\",\n\t\t\t\t\t\"CUIT\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"pageWeb\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\"\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_oter_ufc\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test1\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test2\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/company",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"company"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Crear Cliente EDIFICIO",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatebuilding",
 						"method": "POST",
 						"header": [
 							{
@@ -1064,37 +567,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t    \"idClient\":3,\n\t\t\t\"idClientTypeFk\": 2,\n\t\t\t\"name\": \"empresa ediatda\",\n\t\t\t\"address\": \"caba\",\n\t\t\t\"addressLat\": \"text\",\n\t\t\t\"addressLon\": \"text\",\n\t\t\t\"idAgentFk\": 1,\n\t\t\t\"isNotCliente\": 1,\n\t\t\t\"idClientAdminFk\": 1,\n\t\t\t\"mailFronKey\": \"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"mailServiceTecnic\": \"text\",\n\t\t\t\"observationSericeTecnic\": \"text\",\n\t\t\t\"mailCollection\": \"text\",\n\t\t\t\"observationCollection\": \"text\",\n\t\t\t\"observation\": \"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t        \n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\n\t\t\t\"list_departament\":\n\t\t\t[\n\t\t\t    { \n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t    \"idClient\":3,\n\t\t\t\"idClientTypeFk\": 2,\n\t\t\t\"name\": \"empresa ediatda\",\n\t\t\t\"address\": \"caba\",\n\t\t\t\"addressLat\": \"text\",\n\t\t\t\"addressLon\": \"text\",\n\t\t\t\"idAgentFk\": 1,\n\t\t\t\"isNotCliente\": 1,\n\t\t\t\"idClientAdminFk\": 1,\n\t\t\t\"mailFronKey\": \"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"mailServiceTecnic\": \"text\",\n\t\t\t\"observationSericeTecnic\": \"text\",\n\t\t\t\"mailCollection\": \"text\",\n\t\t\t\"observationCollection\": \"text\",\n\t\t\t\"observation\": \"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t        \n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\n\t\t\t\"list_departament\":\n\t\t\t[\n\t\t\t    { \n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatebuilding",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"updatebuilding"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editar  Cliente EDIFICIO",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/building",
 						"method": "POST",
 						"header": [
 							{
@@ -1106,37 +588,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\t\"idClientTypeFk\": 2,\n\t\t\t\"name\": \"empresa\",\n\t\t\t\"address\": \"caba\",\n\t\t\t\"addressLat\": \"text\",\n\t\t\t\"addressLon\": \"text\",\n\t\t\t\"idAgentFk\": 1,\n\t\t\t\"isNotCliente\": 1,\n\t\t\t\"idClientAdminFk\": 1,\n\t\t\t\"mailFronKey\": \"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"mailServiceTecnic\": \"text\",\n\t\t\t\"observationSericeTecnic\": \"text\",\n\t\t\t\"mailCollection\": \"text\",\n\t\t\t\"observationCollection\": \"text\",\n\t\t\t\"observation\": \"text\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\n\t\t\t\"list_departament\":\n\t\t\t[\n\t\t\t    { \n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\t\"idClientTypeFk\": 2,\n\t\t\t\"name\": \"empresa\",\n\t\t\t\"address\": \"caba\",\n\t\t\t\"addressLat\": \"text\",\n\t\t\t\"addressLon\": \"text\",\n\t\t\t\"idAgentFk\": 1,\n\t\t\t\"isNotCliente\": 1,\n\t\t\t\"idClientAdminFk\": 1,\n\t\t\t\"mailFronKey\": \"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"mailServiceTecnic\": \"text\",\n\t\t\t\"observationSericeTecnic\": \"text\",\n\t\t\t\"mailCollection\": \"text\",\n\t\t\t\"observationCollection\": \"text\",\n\t\t\t\"observation\": \"text\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\n\t\t\t\"list_departament\":\n\t\t\t[\n\t\t\t    { \n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/building",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"building"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editr Cliente Admin",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updateadmin",
 						"method": "POST",
 						"header": [
 							{
@@ -1148,37 +609,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClient\":1,\n\t\t\"idClientTypeFk\":1,\n\t\t\t\"name\":\"edite\",\n\t\t\t\"address\":\"text\",\n\t\t\t\"addressLat\":\"text\",\n\t\t\t\"addressLon\":\"text\",\n\t\t\t\"idAgentFk\":1,\n\t\t\t\"businessName\":\"text2\",\n\t\t\t\"CUIT\":\"text\",\n\t\t\t\"idLocationFk\":1,\n\t\t\t\"idProvinceFk\":1,\n\t\t\t\"mobile\":\"text\",\n\t\t\t\"mail\":\"text\",\n\t\t\t\"observation\":\"text\",\n\t\t\t\"pageWeb\":\"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"mailFronKey\":\"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"isNotCliente\":0,\n\t\t\t\"idClientAdminFk\":1,\n\t\t\t\"mailServiceTecnic\":\"text\",\n\t\t\t\"observationSericeTecnic\":\"text\",\n\t\t\t\"mailCollection\":\"text\",\n\t\t\t\"observationCollection\":\"text\",\n\t\t\t\"idClientCompaniFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClient\":1,\n\t\t\"idClientTypeFk\":1,\n\t\t\t\"name\":\"edite\",\n\t\t\t\"address\":\"text\",\n\t\t\t\"addressLat\":\"text\",\n\t\t\t\"addressLon\":\"text\",\n\t\t\t\"idAgentFk\":1,\n\t\t\t\"businessName\":\"text2\",\n\t\t\t\"CUIT\":\"text\",\n\t\t\t\"idLocationFk\":1,\n\t\t\t\"idProvinceFk\":1,\n\t\t\t\"mobile\":\"text\",\n\t\t\t\"mail\":\"text\",\n\t\t\t\"observation\":\"text\",\n\t\t\t\"pageWeb\":\"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"mailFronKey\":\"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"isNotCliente\":0,\n\t\t\t\"idClientAdminFk\":1,\n\t\t\t\"mailServiceTecnic\":\"text\",\n\t\t\t\"observationSericeTecnic\":\"text\",\n\t\t\t\"mailCollection\":\"text\",\n\t\t\t\"observationCollection\":\"text\",\n\t\t\t\"idClientCompaniFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updateadmin",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"updateadmin"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editr Cliente Particular",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updateparticular",
 						"method": "POST",
 						"header": [
 							{
@@ -1190,37 +630,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\t\"idClient\":12,\n\t\t\t\"name\" : \"TEST PARdTICaULR editado\",\n\t\t\t\"address\" : \"TEST\",\n\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\"idAgentFk\" : 1,\n\t\t\t\"idLocationFk\" : 1,\n\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\"mobile\" : \"TEST\",\n\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_address_particular\":\n\t\t\t[\n\t\t\t    {\n\t\t\t    \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ]\n\t\t\t\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\t\"idClient\":12,\n\t\t\t\"name\" : \"TEST PARdTICaULR editado\",\n\t\t\t\"address\" : \"TEST\",\n\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\"idAgentFk\" : 1,\n\t\t\t\"idLocationFk\" : 1,\n\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\"mobile\" : \"TEST\",\n\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_address_particular\":\n\t\t\t[\n\t\t\t    {\n\t\t\t    \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ]\n\t\t\t\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updateparticular",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"updateparticular"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editr Cliente Sucursal",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatebranch",
 						"method": "POST",
 						"header": [
 							{
@@ -1232,37 +651,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":4,\n\t\t\"idClient\":9,\n\t\t\"name\" : \"jorge edito\",\n\t\t\"address\" : \"TEST\",\n\t\t\"addressLat\" : \"TEST\",\n\t\t\"addressLon\" : \"TEST\",\n\t\t\"idLocationFk\" : 1,\n\t\t\"idProvinceFk\" : 1,\n\t\t\"isNotCliente\" : 1,\n\t\t\"idClientCompaniFk\" : 1,\n\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\"mailCollection\" : \"TEST\",\n\t\t\"observationCollection\" : \"TEST\",\n\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\n\t\t\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":4,\n\t\t\"idClient\":9,\n\t\t\"name\" : \"jorge edito\",\n\t\t\"address\" : \"TEST\",\n\t\t\"addressLat\" : \"TEST\",\n\t\t\"addressLon\" : \"TEST\",\n\t\t\"idLocationFk\" : 1,\n\t\t\"idProvinceFk\" : 1,\n\t\t\"isNotCliente\" : 1,\n\t\t\"idClientCompaniFk\" : 1,\n\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\"mailCollection\" : \"TEST\",\n\t\t\"observationCollection\" : \"TEST\",\n\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\n\t\t\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatebranch",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"updatebranch"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Editr Cliente Empresa",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatecompany",
 						"method": "POST",
 						"header": [
 							{
@@ -1274,37 +672,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClient\":4,\n\t\t\t\"name\" : \"edite la empresa TESaT\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"businessName\" : \"TEST\",\n\t\t\t\t\t\"CUIT\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"pageWeb\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\"list_oter_ufc\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"EDITADO 111\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test2\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClient\":4,\n\t\t\t\"name\" : \"edite la empresa TESaT\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"businessName\" : \"TEST\",\n\t\t\t\t\t\"CUIT\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"pageWeb\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\"list_oter_ufc\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"EDITADO 111\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test2\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatecompany",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"updatecompany"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Eliminar Cliente",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/delete/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -1316,41 +693,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/delete/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"delete",
-								"1"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar por id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/findadmin/1",
 						"method": "GET",
 						"header": [
 							{
@@ -1362,38 +714,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/findadmin/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"findadmin",
-								"1"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar General",
 					"request": {
+						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/search",
 						"method": "POST",
 						"header": [
 							{
@@ -1405,36 +735,46 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilter\":\"\",\n\t\"idClientTypeFk\":1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"searchFilter\":\"\",\n\t\"idClientTypeFk\":1\n}"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/search",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8888",
-							"path": [
-								"Coferba",
-								"Back",
-								"index.php",
-								"Clientes",
-								"search"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
+		},
+		{
+			"name": "Services",
+			"description": "",
+			"item": [
+				{
+					"name": "GPS",
+					"description": "",
+					"item": [
+						{
+							"name": "add",
+							"request": {
+								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addgps",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeGpsFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"dateUp\":\"2020-03-19\",\n\t\t\"dateDown\":\"2020-03-19\",\n\t\t\"moden\":\"1\",\n\t\t\"contract\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"nroLine\":\"1\",\n\t\t\"nroChip\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\"\n\t}\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
 		}
 	]
 }
