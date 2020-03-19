@@ -754,7 +754,7 @@
 						{
 							"name": "add",
 							"request": {
-								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addgps",
+								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addinternet",
 								"method": "POST",
 								"header": [
 									{
@@ -765,7 +765,34 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeGpsFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"dateUp\":\"2020-03-19\",\n\t\t\"dateDown\":\"2020-03-19\",\n\t\t\"moden\":\"1\",\n\t\t\"contract\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"nroLine\":\"1\",\n\t\t\"nroChip\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\"\n\t}\n}"
+									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"1\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "INTERNET",
+					"description": "",
+					"item": [
+						{
+							"name": "add",
+							"request": {
+								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addinternet",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"2020-03-19\",\n\t\t\"dateUp\":\"2020-03-19\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
 								},
 								"description": ""
 							},

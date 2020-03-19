@@ -506,14 +506,16 @@ CREATE TABLE `tb_client_services` (
   `idClientFk` int(11) DEFAULT NULL,
   `idTipeServiceFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services` */
 
 insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeServiceFk`) values 
 (1,NULL,NULL),
 (2,NULL,NULL),
-(3,NULL,NULL);
+(3,NULL,NULL),
+(4,NULL,NULL),
+(5,NULL,NULL);
 
 /*Table structure for table `tb_client_services_acces_control` */
 
@@ -522,7 +524,7 @@ DROP TABLE IF EXISTS `tb_client_services_acces_control`;
 CREATE TABLE `tb_client_services_acces_control` (
   `idClientServicesAccesControl` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `door` varchar(100) DEFAULT NULL,
-  `contract` text,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `dateUp` date DEFAULT NULL,
   `dateDown` date DEFAULT NULL,
   `accesControl` varchar(100) DEFAULT NULL,
@@ -565,7 +567,7 @@ DROP TABLE IF EXISTS `tb_client_services_alarms`;
 CREATE TABLE `tb_client_services_alarms` (
   `idClientServicesAlarms` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
-  `contract` text,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
   `dateUp` date DEFAULT NULL,
   `dateDown` date DEFAULT NULL,
@@ -651,7 +653,7 @@ CREATE TABLE `tb_client_services_camera` (
   `idClientServicesCamera` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
-  `contract` text,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
   `dateUp` date DEFAULT NULL,
   `dateDown` date DEFAULT NULL,
@@ -690,7 +692,6 @@ CREATE TABLE `tb_client_services_gps` (
   `dateUp` date DEFAULT NULL,
   `dateDown` date DEFAULT NULL,
   `moden` varchar(200) DEFAULT NULL,
-  `contract` text,
   `idInternetCompanyFk` int(11) DEFAULT NULL,
   `nroLine` varchar(200) DEFAULT NULL,
   `nroChip` varchar(200) DEFAULT NULL,
@@ -699,9 +700,12 @@ CREATE TABLE `tb_client_services_gps` (
   `nroSerieManufacturer` varchar(200) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesGps`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_gps` */
+
+insert  into `tb_client_services_gps`(`idClientServicesGps`,`idClientServicesFk`,`idTypeGpsFk`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`moden`,`idInternetCompanyFk`,`nroLine`,`nroChip`,`idServiceAsociateFk`,`nroSerieInternal`,`nroSerieManufacturer`,`idContracAssociated_SE`) values 
+(1,4,1,1,'2020-03-19','2020-03-19','1',1,'1','1',1,'1','1',1);
 
 /*Table structure for table `tb_client_services_internet` */
 
@@ -717,17 +721,23 @@ CREATE TABLE `tb_client_services_internet` (
   `idRouterInternetFk` int(11) DEFAULT NULL,
   `numberSeria` varchar(100) DEFAULT NULL,
   `userAdmin` varchar(100) DEFAULT NULL,
-  `contract` text,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idInternetCompanyFk` int(11) DEFAULT NULL,
   `modenMark` varchar(100) DEFAULT '',
   `dateDown` date DEFAULT NULL,
+  `dateUp` date DEFAULT NULL,
   `isDown` tinyint(1) DEFAULT '0',
   `port` decimal(11,0) DEFAULT NULL,
   `passAdmin` varchar(200) DEFAULT NULL,
+  `nroSerieInternal` varchar(200) DEFAULT NULL,
+  `nroSerieManufacturer` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesInternet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_internet` */
+
+insert  into `tb_client_services_internet`(`idClientServicesInternet`,`idClientServicesFk`,`idTypeInternetFk`,`idTypeMaintenanceFk`,`idServiceFk`,`idServiceAsociateFk`,`idRouterInternetFk`,`numberSeria`,`userAdmin`,`idContracAssociated_SE`,`idInternetCompanyFk`,`modenMark`,`dateDown`,`dateUp`,`isDown`,`port`,`passAdmin`,`nroSerieInternal`,`nroSerieManufacturer`) values 
+(1,5,1,1,1,1,1,'1','1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1');
 
 /*Table structure for table `tb_client_services_smart_panic` */
 
@@ -737,7 +747,7 @@ CREATE TABLE `tb_client_services_smart_panic` (
   `idClientServicesSmartPanic` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
-  `contract` text,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `dateUp` date DEFAULT NULL,
   `dateDown` date DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
@@ -760,7 +770,7 @@ CREATE TABLE `tb_client_services_totem` (
   `idClientServicesTotem` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
-  `contract_SE` text,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `item_SE` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `idCompanyFk` int(11) DEFAULT NULL,
