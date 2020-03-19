@@ -29,6 +29,8 @@ class Services extends REST_Controller {
 	}
 
 	public function addgps_post(){
+
+        //$this->response($this->post('service'));
 		
 		$product = null;
         if (!$this->post('service')) {
