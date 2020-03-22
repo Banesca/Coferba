@@ -800,6 +800,33 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CAMARA",
+					"description": "",
+					"item": [
+						{
+							"name": "add",
+							"request": {
+								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addcamera",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"service\":{\n\t\t\t\"services\":{\n\t\t\t\t\"name\":\"1\",\n\t\t\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\t\t\"dateUp\":\"2020-03-21\",\n\t\t\t\t\"dateDown\":\"2020-03-21\",\n\t\t\t\t\"idDvrNvr_tb_prod_classFk\":\"1\",\n\t\t\t\t\"location\":\"1\",\n\t\t\t\t\"locationLat\":\"1\",\n\t\t\t\t\"locationLon\":\"1\",\n\t\t\t\t\"maxCamera\":\"1\",\n\t\t\t\t\"numberPortRouter\":\"1\",\n\t\t\t\t\"addressVpn\":\"1\",\n\t\t\t\t\"nroPort1\":\"1\",\n\t\t\t\t\"nroPort2\":\"1\",\n\t\t\t\t\"namePort1\":\"1\",\n\t\t\t\t\"namePort2\":\"1\",\n\t\t\t\t\"observation\":\"1\",\n\t\t\t\t\"addessClient\":\"1\",\n\t\t\t\t\"addessClientLat\":\"1\",\n\t\t\t\t\"addessClientLot\":\"1\",\n\t\t\t\t\"portHttp\":\"1\",\n\t\t\t\t\"namePort\":\"1\",\n\t\t\t\t\"port\":\"1\"\n\t\t\t},\t\n\t\t\t\"cameras\":[\n\t\t\t\t{\n\t\t\t\t\t\"portCamera\":\"21\",\n\t\t\t\t\t\"coveredArea\":\"2\",\n\t\t\t\t\t\"locationCamera\":\"venezuela\",\n\t\t\t\t\t\"nroSerieCamera\":\"5\",\n\t\t\t\t\t\"nroFabricCamera\":\"48\",\n\t\t\t\t\t\"dateExpireCamera\":\"2020-03-20\"\n\t\t\t\t},{\n\t\t\t\t\n\t\t\t\t\t\"portCamera\":\"20\",\n\t\t\t\t\t\"coveredArea\":\"1\",\n\t\t\t\t\t\"locationCamera\":\"venezuela\",\n\t\t\t\t\t\"nroSerieCamera\":\"4\",\n\t\t\t\t\t\"nroFabricCamera\":\"47\",\n\t\t\t\t\t\"dateExpireCamera\":\"2020-03-21\"\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"clients\":[\n\t\t\t\t{\n\t\t\t\t\t\"idClientFk\":\"1\",\n\t\t\t\t\t\"name\":\"ale\",\n\t\t\t\t\t\"user\":\"aleUser\",\n\t\t\t\t\t\"pass\":\"1234\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"idClientFk\":\"1\",\n\t\t\t\t\t\"name\":\"ale\",\n\t\t\t\t\t\"user\":\"aleUser\",\n\t\t\t\t\t\"pass\":\"1234\"\n\t\t\t\t}\n\t\t\t],\t\n\t\t\t\"backup_energy\":[\n\t\t\t\t{\n\t\t\t\t\t\"description\":\"bateria\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"description\":\"ups\"\n\t\t\t\t}\n\t\t\t]\n\t}\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		}

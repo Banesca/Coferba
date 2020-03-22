@@ -151,36 +151,45 @@ class Services_model extends CI_Model
 
     public function addcamera($item)
     {
-
-        $idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
-
         $this->db->insert('tb_client_services_camera', [
-                'name'                   => $item['name'],
-                'idContracAssociated_SE' => $item['idContracAssociated_SE'],
-                'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'],
-                'dateUp'                 => $item['dateUp'],
-                'dateDown'               => $item['dateDown'],
-                'DVR'                    => $item['DVR'],
-                'location'               => $item['location'],
-                'locationLat'            => $item['locationLat'],
-                'locationLon'            => $item['locationLon'],
-                'maxCamera'              => $item['maxCamera'],
-                'numberPortRouter'       => $item['numberPortRouter'],
-                'addressVpn'             => $item['addressVpn'],
-                'nroPort1'               => $item['nroPort1'],
-                'nroPort2'               => $item['nroPort2'],
-                'namePort1'              => $item['namePort1'],
-                'namePort2'              => $item['namePort2'],
-                'observation'            => $item['observation'],
-                'addessClient'           => $item['addessClient'],
-                'addessClientLat'        => $item['addessClientLat'],
-                'addessClientLot'        => $item['addessClientLot'],
-                'portHttp'               => $item['portHttp'],
-                'namePort'               => $item['namePort'],
-                'port'                   => $item['port'],
-                'idClientServicesFk'     => $idClientServicesFk,
+                'name'                     => $item['services']['name'],
+                'idContracAssociated_SE'   => $item['services']['idContracAssociated_SE'],
+                'idTypeMaintenanceFk'      => $item['services']['idTypeMaintenanceFk'],
+                'dateUp'                   => $item['services']['dateUp'],
+                'dateDown'                 => $item['services']['dateDown'],
+                'idDvrNvr_tb_prod_classFk' => $item['services']['idDvrNvr_tb_prod_classFk'],
+                'location'                 => $item['services']['location'],
+                'locationLat'              => $item['services']['locationLat'],
+                'locationLon'              => $item['services']['locationLon'],
+                'maxCamera'                => $item['services']['maxCamera'],
+                'numberPortRouter'         => $item['services']['numberPortRouter'],
+                'addressVpn'               => $item['services']['addressVpn'],
+                'nroPort1'                 => $item['services']['nroPort1'],
+                'nroPort2'                 => $item['services']['nroPort2'],
+                'namePort1'                => $item['services']['namePort1'],
+                'namePort2'                => $item['services']['namePort2'],
+                'observation'              => $item['services']['observation'],
+                'addessClient'             => $item['services']['addessClient'],
+                'addessClientLat'          => $item['services']['addessClientLat'],
+                'addessClientLot'          => $item['services']['addessClientLot'],
+                'portHttp'                 => $item['services']['portHttp'],
+                'namePort'                 => $item['services']['namePort'],
+                'port'                     => $item['services']['port'],
+                //'idClientServicesFk'       => $idClientServicesFk, //esto no va debido a que pueden ser varios clientes
             ]
         );
+
+        $id = $this->db->insert_id();
+
+        if (count($item['clients']) > 0) {
+            $this->insertService($item['clients'], $id);  //se crean los usuarios dvr
+        }
+        if (count($item['cameras']) > 0) {
+            $this->insertServiceCamera($item['cameras'], $id);// CREAMOS las camaras
+        }
+        if (count($item['backup_energy']) > 0) {
+            $this->insertServiceEnergy($item['backup_energy'], $id);// CREAMOS las opciones de energia
+        }
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -231,15 +240,51 @@ class Services_model extends CI_Model
         }
     }
 
-    public function insertService($product)
+    public function insertService($product, $id)
     {
-        $this->db->insert('tb_client_services', [
-                'idClientFk'      => $product['idClientFk'],
-                'idTipeServiceFk' => $product['idTipeServiceFk'],
-            ]
-        );
+        foreach ($product as $item) {
+            $this->db->insert('tb_client_camera', [
+                    'idClientFk'               => $item['idClientFk'],
+                    "idClientServicesCameraFk" => $id,
+                    'name'                     => $item['name'],
+                    'user'                     => $item['user'],
+                    'pass'                     => $item['pass'],
+                ]
+            );
+        }
 
-        return $this->db->insert_id();
+        return true;
+    }
+
+    public function insertServiceCamera($product, $id)
+    {
+        foreach ($product as $item) {
+            $this->db->insert('tb_cameras', [
+                    "idClientServicesCameraFk" => $id,
+                    "portCamera"               => $item['portCamera'],
+                    "coveredArea"              => $item['coveredArea'],
+                    "locationCamera"           => $item['locationCamera'],
+                    "nroSerieCamera"           => $item['nroSerieCamera'],
+                    "nroFabricCamera"          => $item['nroFabricCamera'],
+                    "dateExpireCamera"         => $item['dateExpireCamera'],
+                ]
+            );
+        }
+
+        return true;
+    }
+
+    public function insertServiceEnergy($product, $id)
+    {
+        foreach ($product as $item) {
+            $this->db->insert('tb_backup_energy', [
+                    "idClientServicesCameraFk" => $id,
+                    "description"              => $item['description'],
+                ]
+            );
+        }
+
+        return true;
     }
 
     /*
