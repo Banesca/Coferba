@@ -47,7 +47,17 @@ class Util extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
 	}
-	
+    public function localidades_get() {
+        
+        $user = null;
+        $user = $this->util_model->getAllLocalidades();
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }	
 	
 	public function provincia_get() {
 	
