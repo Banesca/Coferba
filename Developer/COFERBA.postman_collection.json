@@ -14,14 +14,13 @@
 				{
 					"name": "Obtener Modulos",
 					"request": {
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/Modules",
+						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/Modules",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
 								"value": "application/json",
-								"type": "text"
+								"description": ""
 							}
 						],
 						"body": {
@@ -35,14 +34,13 @@
 				{
 					"name": "Obtener Clasificacion de productos",
 					"request": {
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/ProductClassification",
+						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/ProductClassification",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"description": ""
 							}
 						],
 						"body": {
@@ -56,14 +54,73 @@
 				{
 					"name": "Obtener Dispositivos de apertura",
 					"request": {
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/seeds/DiviceOpening",
+						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/DiviceOpening",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Los Tipos De Servicios del Cliente",
+					"request": {
+						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/TypeServices",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Tipos de Clientes",
+					"request": {
+						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/ClientType",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Categorías de los departamentos",
+					"request": {
+						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/CategoryDepartament",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
 							}
 						],
 						"body": {
@@ -820,6 +877,33 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n\t\"service\":{\n\t\t\t\"services\":{\n\t\t\t\t\"name\":\"1\",\n\t\t\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\t\t\"dateUp\":\"2020-03-21\",\n\t\t\t\t\"dateDown\":\"2020-03-21\",\n\t\t\t\t\"idDvrNvr_tb_prod_classFk\":\"1\",\n\t\t\t\t\"location\":\"1\",\n\t\t\t\t\"locationLat\":\"1\",\n\t\t\t\t\"locationLon\":\"1\",\n\t\t\t\t\"maxCamera\":\"1\",\n\t\t\t\t\"numberPortRouter\":\"1\",\n\t\t\t\t\"addressVpn\":\"1\",\n\t\t\t\t\"nroPort1\":\"1\",\n\t\t\t\t\"nroPort2\":\"1\",\n\t\t\t\t\"namePort1\":\"1\",\n\t\t\t\t\"namePort2\":\"1\",\n\t\t\t\t\"observation\":\"1\",\n\t\t\t\t\"addessClient\":\"1\",\n\t\t\t\t\"addessClientLat\":\"1\",\n\t\t\t\t\"addessClientLot\":\"1\",\n\t\t\t\t\"portHttp\":\"1\",\n\t\t\t\t\"namePort\":\"1\",\n\t\t\t\t\"port\":\"1\"\n\t\t\t},\t\n\t\t\t\"cameras\":[\n\t\t\t\t{\n\t\t\t\t\t\"portCamera\":\"21\",\n\t\t\t\t\t\"coveredArea\":\"2\",\n\t\t\t\t\t\"locationCamera\":\"venezuela\",\n\t\t\t\t\t\"nroSerieCamera\":\"5\",\n\t\t\t\t\t\"nroFabricCamera\":\"48\",\n\t\t\t\t\t\"dateExpireCamera\":\"2020-03-20\"\n\t\t\t\t},{\n\t\t\t\t\n\t\t\t\t\t\"portCamera\":\"20\",\n\t\t\t\t\t\"coveredArea\":\"1\",\n\t\t\t\t\t\"locationCamera\":\"venezuela\",\n\t\t\t\t\t\"nroSerieCamera\":\"4\",\n\t\t\t\t\t\"nroFabricCamera\":\"47\",\n\t\t\t\t\t\"dateExpireCamera\":\"2020-03-21\"\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"clients\":[\n\t\t\t\t{\n\t\t\t\t\t\"idClientFk\":\"1\",\n\t\t\t\t\t\"name\":\"ale\",\n\t\t\t\t\t\"user\":\"aleUser\",\n\t\t\t\t\t\"pass\":\"1234\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"idClientFk\":\"1\",\n\t\t\t\t\t\"name\":\"ale\",\n\t\t\t\t\t\"user\":\"aleUser\",\n\t\t\t\t\t\"pass\":\"1234\"\n\t\t\t\t}\n\t\t\t],\t\n\t\t\t\"backup_energy\":[\n\t\t\t\t{\n\t\t\t\t\t\"description\":\"bateria\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"description\":\"ups\"\n\t\t\t\t}\n\t\t\t]\n\t}\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CONTROL DE ACCESO",
+					"description": "",
+					"item": [
+						{
+							"name": "add",
+							"request": {
+								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addaccescontrol",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"1\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
 								},
 								"description": ""
 							},
