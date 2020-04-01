@@ -104,7 +104,7 @@ class Clientes extends REST_Controller {
 
 		$rs = $this->client_model->updateAdmin($this->post('client'));
 		if (!is_null($rs)) {
-			$this->response("Actualizado", 200);
+			$this->response(array('response' => "Actualizado"), 200);
 		} else {
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
@@ -114,7 +114,7 @@ class Clientes extends REST_Controller {
 
 		$rs = $this->client_model->updatebuilding($this->post('client'));
 		if (!is_null($rs)) {
-			$this->response("Actualizado", 200);
+			$this->response(array('response' => "Actualizado"), 200);
 		} else {
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
@@ -124,7 +124,7 @@ class Clientes extends REST_Controller {
 
 		$rs = $this->client_model->updateCompany($this->post('client'));
 		if (!is_null($rs)) {
-			$this->response("Actualizado", 200);
+			$this->response(array('response' => "Actualizado"), 200);
 		} else {
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
@@ -134,7 +134,7 @@ class Clientes extends REST_Controller {
 
 		$rs = $this->client_model->updateBranch($this->post('client'));
 		if (!is_null($rs)) {
-			$this->response("Actualizado", 200);
+			$this->response(array('response' => "Actualizado"), 200);
 		} else {
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
@@ -144,7 +144,7 @@ class Clientes extends REST_Controller {
 
 		$rs = $this->client_model->updateParticular($this->post('client'));
 		if (!is_null($rs)) {
-			$this->response("Actualizado", 200);
+			$this->response(array('response' => "Actualizado"), 200);
 		} else {
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}

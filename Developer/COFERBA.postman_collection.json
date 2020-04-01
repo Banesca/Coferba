@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "COFERBA",
-		"_postman_id": "f3e47f1a-1d6c-8230-a079-1c448a3d4b1a",
+		"_postman_id": "aee2d299-ec72-a522-5afc-2d025c2640cb",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -509,6 +509,20 @@
 					"name": "Typo de iva",
 					"request": {
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/taxtype",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Categoria del departamento",
+					"request": {
+						"url": "http://localhost/alejandro/Coferba/Back/index.php/Util/agent",
 						"method": "GET",
 						"header": [],
 						"body": {

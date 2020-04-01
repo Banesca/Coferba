@@ -51,7 +51,18 @@ class Util_model extends CI_Model
 
         return $rs;
 	}
-	
+    public function getAllLocalidades() {
+    
+        $query = null;
+        $rs = null;
+
+        $query =  $this->db->select("*")->from("tb_location")->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();          
+        }
+
+        return $rs;
+    }	
 
 	public function getProvincia() {
     
@@ -76,6 +87,20 @@ class Util_model extends CI_Model
 		->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();          
+        }
+
+        return $rs;
+	}
+
+	public function getCategoryDepartament() {
+
+        $query = null;
+        $rs = null;
+
+		$query =  $this->db->select("*")->from("tb_category_departament")
+		->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
         }
 
         return $rs;

@@ -30,9 +30,7 @@ class Client_model extends CI_Model
 					'businessName'  			=> $client['businessName'],
 					'CUIT' 						=> $client['CUIT'],
 					'idLocationFk'  			=> $client['idLocationFk'],
-					'idProvinceFk'  			=> $client['idProvinceFk'],
-					'mobile' 					=> $client['mobile'],
-					'mail' 						=> $client['mail'],
+					'idProvinceFk'  			=> $client['idProvinceFk'],										
 					'observation' 				=> $client['observation'],
 					'pageWeb' 					=> $client['pageWeb'],
 					'idStatusFk' 				=> 1,
@@ -65,7 +63,7 @@ class Client_model extends CI_Model
 
 					if(count(@$client['list_schedule_atention']) > 0
 					&& count(@$client['list_phone_contact']) > 0
-					&& count(@$client['list_client_user']) > 0
+					|| count(@$client['list_client_user']) > 0
 					)
 					{
 						
@@ -102,11 +100,7 @@ class Client_model extends CI_Model
 							)
 							);
 						}
-
-					
-
-
-						
+		
 					}
 					return 1;
 				} else {
@@ -132,9 +126,7 @@ class Client_model extends CI_Model
 					'businessName' 				=> $client['businessName'],
 					'CUIT' 						=> $client['CUIT'],
 					'idLocationFk' 				=> $client['idLocationFk'],
-					'idProvinceFk' 				=> $client['idProvinceFk'],
-					'mobile' 					=> $client['mobile'],
-					'mail' 						=> $client['mail'],
+					'idProvinceFk' 				=> $client['idProvinceFk'],										
 					'observation' 				=> $client['observation'],
 					'pageWeb' 					=> $client['pageWeb'],
 					'idStatusFk' 				=> 1,
@@ -162,14 +154,9 @@ class Client_model extends CI_Model
 		    )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
-			
-			
-
-		
-
 					if(count(@$client['list_schedule_atention']) > 0
 					&& count(@$client['list_phone_contact']) > 0
-					&& count(@$client['list_client_user']) > 0
+					|| count(@$client['list_client_user']) > 0
 					)
 					{
 						$this->db->delete('tb_client_schedule_atention', array('idClienteFk' => $client['idClient']));  
@@ -192,6 +179,7 @@ class Client_model extends CI_Model
 							
 							$this->db->insert('tb_client_phone_contact', array(
 								'idClientFk' 	=> $valor['idClientFk'],
+								'phoneTag'		=> $valor['phoneTag'],								
 								'phoneContact' 	=> $valor['phoneContact']
 							));
 						}
@@ -388,22 +376,22 @@ class Client_model extends CI_Model
                
 
 				$this->db->insert('tb_clients', array(
-					'idClientTypeFk' => $client['idClientTypeFk'],
-					'name' => $client['name'],
-					'address' => $client['address'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idAgentFk' => $client['idAgentFk'],
-					'isNotCliente' => $client['isNotCliente'],
-					'idClientAdminFk' => $client['idClientAdminFk'],
-					'mailFronKey' => $client['mailFronKey'],
-					'observationOrderKey' => $client['observationOrderKey'],
-					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'mailCollection' => $client['mailCollection'],
-					'observationCollection' => $client['observationCollection'],
-					'observation' => $client['observation'],
-					'idStatusFk' => 1
+					'idClientTypeFk' 			=> $client['idClientTypeFk'],
+					'name' 						=> $client['name'],
+					'address' 					=> $client['address'],
+					'addressLat' 				=> $client['addressLat'],
+					'addressLon' 				=> $client['addressLon'],
+					'idAgentFk' 				=> $client['idAgentFk'],
+					'isNotCliente' 				=> $client['isNotCliente'],
+					'idClientAdminFk' 			=> $client['idClientAdminFk'],
+					'mailFronKey' 				=> $client['mailFronKey'],
+					'observationOrderKey' 		=> $client['observationOrderKey'],
+					'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+					'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+					'mailCollection' 			=> $client['mailCollection'],
+					'observationCollection' 	=> $client['observationCollection'],
+					'observation' 				=> $client['observation'],
+					'idStatusFk' 				=> 1
 					)
 				);
 
@@ -412,12 +400,12 @@ class Client_model extends CI_Model
 
 					// DATOS DE FACTURCION
 					$this->db->insert('tb_client_billing_information', array(
-						'idClientFk' => $idClientFk,
-						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'cuitBilling' =>$client['billing_information']['cuitBilling'],
-						'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-						'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk']
+						'idClientFk' 			=> $idClientFk,
+						'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+						'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+						'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+						'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+						'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk']
 					)
 					);
 
@@ -430,12 +418,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $idClientFk,
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $idClientFk,
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm' 			=> $valor['toAm'],
+								'fronPm'		=> $valor['fronPm'],
+								'toPm'			=> $valor['toPm']
 							)
 							);
 						}
@@ -445,11 +433,11 @@ class Client_model extends CI_Model
 						foreach ($client['list_departament'] as $valor) {
 							
 							$this->db->insert('tb_client_departament', array(
-								'idClientFk' => $idClientFk,
-								'floor' => $valor['floor'],
-								'departament' => $valor['departament'],
-								'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-								'idStatusFk' =>1
+								'idClientFk' 				=> $idClientFk,
+								'floor' 					=> $valor['floor'],
+								'departament' 				=> $valor['departament'],
+								'idCategoryDepartamentFk'	=> $valor['idCategoryDepartamentFk'],
+								'idStatusFk' 				=>1
 							)
 							);
 						}
@@ -475,33 +463,33 @@ class Client_model extends CI_Model
 
 			$this->db->set(
 					array(
-					'name' => $client['name'],
-					'address' => $client['address'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idAgentFk' => $client['idAgentFk'],
-					'isNotCliente' => $client['isNotCliente'],
-					'idClientAdminFk' => $client['idClientAdminFk'],
-					'mailFronKey' => $client['mailFronKey'],
-					'observationOrderKey' => $client['observationOrderKey'],
-					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'mailCollection' => $client['mailCollection'],
-					'observationCollection' => $client['observationCollection'],
-					'observation' => $client['observation'],
-					'idStatusFk' => $client['idStatusFk'],
+					'name' 						=> $client['name'],
+					'address' 					=> $client['address'],
+					'addressLat' 				=> $client['addressLat'],
+					'addressLon' 				=> $client['addressLon'],
+					'idAgentFk' 				=> $client['idAgentFk'],
+					'isNotCliente' 				=> $client['isNotCliente'],
+					'idClientAdminFk' 			=> $client['idClientAdminFk'],
+					'mailFronKey' 				=> $client['mailFronKey'],
+					'observationOrderKey' 		=> $client['observationOrderKey'],
+					'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+					'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+					'mailCollection' 			=> $client['mailCollection'],
+					'observationCollection' 	=> $client['observationCollection'],
+					'observation' 				=> $client['observation'],
+					'idStatusFk' 				=> $client['idStatusFk'],
 						)
 			)->where("idClient", $client['idClient'])->update("tb_clients");
 	
 
 			$this->db->set(
 				array(
-				'idClientFk' => $client['idClient'],
-				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'cuitBilling' =>$client['billing_information']['cuitBilling'],
-				'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-				'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk'])
+				'idClientFk' 			=> $client['idClient'],
+				'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+				'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+				'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+				'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+				'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk'])
 		    )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
@@ -519,12 +507,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $client['idClient'],
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $client['idClient'],
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm' 			=> $valor['toAm'],
+								'fronPm'		=> $valor['fronPm'],
+								'toPm'			=> $valor['toPm']
 							));
 						}
 
@@ -535,11 +523,11 @@ class Client_model extends CI_Model
 						foreach ($client['list_departament'] as $valor) {
 							
 							$this->db->insert('tb_client_departament', array(
-								'idClientFk' => $client['idClient'],
-								'floor' => $valor['floor'],
-								'departament' => $valor['departament'],
-								'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-								'idStatusFk' =>1
+								'idClientFk' 				=> $client['idClient'],
+								'floor' 					=> $valor['floor'],
+								'departament' 				=> $valor['departament'],
+								'idCategoryDepartamentFk' 	=> $valor['idCategoryDepartamentFk'],
+								'idStatusFk' 				=>1
 							)
 							);
 						}
@@ -566,22 +554,22 @@ class Client_model extends CI_Model
                
 
 				$this->db->insert('tb_clients', array(
-					'idClientTypeFk' => $client['idClientTypeFk'],
-					'name' => $client['name'],
-					'address' => $client['address'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idAgentFk' => $client['idAgentFk'],
-					'businessName' => $client['businessName'],
-					'CUIT' => $client['CUIT'],
-					'idLocationFk' => $client['idLocationFk'],
-					'idProvinceFk' => $client['idProvinceFk'],
-					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'mailCollection' => $client['mailCollection'],
-					'observationCollection' => $client['observationCollection'],
-					'pageWeb' => $client['pageWeb'],
-					'observation' => $client['observation']
+					'idClientTypeFk' 			=> $client['idClientTypeFk'],
+					'name' 						=> $client['name'],
+					'address' 					=> $client['address'],
+					'addressLat' 				=> $client['addressLat'],
+					'addressLon' 				=> $client['addressLon'],
+					'idAgentFk' 				=> $client['idAgentFk'],
+					'businessName'				=> $client['businessName'],
+					'CUIT' 						=> $client['CUIT'],
+					'idLocationFk' 				=> $client['idLocationFk'],
+					'idProvinceFk' 				=> $client['idProvinceFk'],
+					'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+					'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+					'mailCollection' 			=> $client['mailCollection'],
+					'observationCollection' 	=> $client['observationCollection'],
+					'pageWeb' 					=> $client['pageWeb'],
+					'observation' 				=> $client['observation']
 					)
 				);
 
@@ -590,12 +578,12 @@ class Client_model extends CI_Model
 
 					// DATOS DE FACTURCION
 					$this->db->insert('tb_client_billing_information', array(
-						'idClientFk' => $idClientFk,
-						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'cuitBilling' =>$client['billing_information']['cuitBilling'],
-						'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-						'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk']
+						'idClientFk' 			=> $idClientFk,
+						'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+						'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+						'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+						'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+						'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk']
 					)
 					);
 
@@ -610,12 +598,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $idClientFk,
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $idClientFk,
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm'  		=> $valor['toAm'],
+								'fronPm'		=> $valor['fronPm'],
+								'toPm'  		=> $valor['toPm']
 							)
 							);
 						}
@@ -623,8 +611,9 @@ class Client_model extends CI_Model
 						foreach (@$client['list_phone_contact'] as $valor) {
 							
 							$this->db->insert('tb_client_phone_contact', array(
-								'idClientFk' => $idClientFk,
-								'phoneContact' => $valor['phoneContact']
+								'idClientFk' 	=> $idClientFk,
+								'phoneTag'		=> $valor['phoneTag'],								
+								'phoneContact' 	=> $valor['phoneContact']
 							)
 							);
 						}
@@ -633,8 +622,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_client_user'] as $valor) {
 							
 							$this->db->insert('tb_client_users', array(
-								'idClientFk' => $idClientFk,
-								'idUserFk' => $valor['idUserFk']
+								'idClientFk' 	=> $idClientFk,
+								'idUserFk' 		=> $valor['idUserFk']
 							)
 							);
 						}
@@ -643,10 +632,10 @@ class Client_model extends CI_Model
 						foreach ($client['list_oter_ufc'] as $valor) {
 							
 							$this->db->insert('tb_client_ufc', array(
-								'idClientFk' => $idClientFk,
+								'idClientFk' 	=> $idClientFk,
 								'identificador' => $valor['identificador'],
-								'idProvinceFk' => $valor['idProvinceFk'],
-								'idTypeTaxFk' => $valor['idTypeTaxFk']
+								'idProvinceFk'  => $valor['idProvinceFk'],
+								'idTypeTaxFk'   => $valor['idTypeTaxFk']
 							)
 							);
 						}
@@ -671,33 +660,33 @@ class Client_model extends CI_Model
 
 			$this->db->set(
 					array(
-						'name' => $client['name'],
-						'address' => $client['address'],
-						'addressLat' => $client['addressLat'],
-						'addressLon' => $client['addressLon'],
-						'idAgentFk' => $client['idAgentFk'],
-						'businessName' => $client['businessName'],
-						'CUIT' => $client['CUIT'],
-						'idLocationFk' => $client['idLocationFk'],
-						'idProvinceFk' => $client['idProvinceFk'],
-						'mailServiceTecnic' => $client['mailServiceTecnic'],
-						'observationSericeTecnic' => $client['observationSericeTecnic'],
-						'mailCollection' => $client['mailCollection'],
-						'observationCollection' => $client['observationCollection'],
-						'pageWeb' => $client['pageWeb'],
-						'observation' => $client['observation']
+						'name'       				=> $client['name'],
+						'address' 	 				=> $client['address'],
+						'addressLat' 				=> $client['addressLat'],
+						'addressLon' 				=> $client['addressLon'],
+						'idAgentFk' 				=> $client['idAgentFk'],
+						'businessName' 				=> $client['businessName'],
+						'CUIT' 						=> $client['CUIT'],
+						'idLocationFk' 				=> $client['idLocationFk'],
+						'idProvinceFk' 				=> $client['idProvinceFk'],
+						'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+						'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+						'mailCollection'	 		=> $client['mailCollection'],
+						'observationCollection' 	=> $client['observationCollection'],
+						'pageWeb' 					=> $client['pageWeb'],
+						'observation'	 			=> $client['observation']
 						)
 			)->where("idClient", $client['idClient'])->update("tb_clients");
 	
 
 			$this->db->set(
 				array(
-				'idClientFk' => $client['idClient'],
-				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'cuitBilling' =>$client['billing_information']['cuitBilling'],
-				'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-				'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk'])
+				'idClientFk' 			=> $client['idClient'],
+				'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+				'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+				'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+				'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+				'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk'])
 		    )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
@@ -717,12 +706,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $valor['idClienteFk'],
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $valor['idClienteFk'],
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm' 			=> $valor['toAm'],
+								'fronPm'		=> $valor['fronPm'],
+								'toPm'			=> $valor['toPm']
 							));
 						}
 
@@ -731,8 +720,9 @@ class Client_model extends CI_Model
 						foreach ($client['list_phone_contact'] as $valor) {
 							
 							$this->db->insert('tb_client_phone_contact', array(
-								'idClientFk' => $valor['idClientFk'],
-								'phoneContact' => $valor['phoneContact']
+								'idClientFk' 	=> $valor['idClientFk'],
+								'phoneTag'		=> $valor['phoneTag'],								
+								'phoneContact' 	=> $valor['phoneContact']
 							));
 						}
 
@@ -742,8 +732,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_client_user'] as $valor) {
 							
 							$this->db->insert('tb_client_users', array(
-								'idClientFk' => $valor['idClienteFk'],
-								'idUserFk' => $valor['idUserFk']
+								'idClientFk' 	=> $valor['idClienteFk'],
+								'idUserFk' 		=> $valor['idUserFk']
 							)
 							);
 						}
@@ -754,10 +744,10 @@ class Client_model extends CI_Model
 						foreach ($client['list_oter_ufc'] as $valor) {
 							
 							$this->db->insert('tb_client_ufc', array(
-								'idClientFk' => $client['idClient'],
+								'idClientFk' 	=> $client['idClient'],
 								'identificador' => $valor['identificador'],
-								'idProvinceFk' => $valor['idProvinceFk'],
-								'idTypeTaxFk' => $valor['idTypeTaxFk']
+								'idProvinceFk' 	=> $valor['idProvinceFk'],
+								'idTypeTaxFk' 	=> $valor['idTypeTaxFk']
 							)
 							);
 						}
@@ -787,19 +777,19 @@ class Client_model extends CI_Model
                
 
 				$this->db->insert('tb_clients', array(
-					'address' => $client['address'],
-					'name' => $client['name'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idLocationFk' => $client['idLocationFk'],
-					'idProvinceFk' => $client['idProvinceFk'],
-					'isNotCliente' => $client['isNotCliente'],
-					'idClientCompaniFk' => $client['idClientCompaniFk'],
-					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'mailCollection' => $client['mailCollection'],
-					'observationCollection' => $client['observationCollection'],
-					'observation' => $client['observation']
+					'address' 					=> $client['address'],
+					'name' 						=> $client['name'],
+					'addressLat' 				=> $client['addressLat'],
+					'addressLon' 				=> $client['addressLon'],
+					'idLocationFk' 				=> $client['idLocationFk'],
+					'idProvinceFk' 				=> $client['idProvinceFk'],
+					'isNotCliente' 				=> $client['isNotCliente'],
+					'idClientCompaniFk' 		=> $client['idClientCompaniFk'],
+					'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+					'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+					'mailCollection' 			=> $client['mailCollection'],
+					'observationCollection' 	=> $client['observationCollection'],
+					'observation' 				=> $client['observation']
 					)
 				);
 
@@ -808,12 +798,12 @@ class Client_model extends CI_Model
 
 					// DATOS DE FACTURCION
 					$this->db->insert('tb_client_billing_information', array(
-						'idClientFk' => $idClientFk,
-						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'cuitBilling' =>$client['billing_information']['cuitBilling'],
-						'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-						'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk']
+						'idClientFk' 			=> $idClientFk,
+						'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+						'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+						'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+						'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+						'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk']
 					)
 					);
 
@@ -825,12 +815,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $idClientFk,
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $idClientFk,
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm' 			=> $valor['toAm'],
+								'fronPm'		=> $valor['fronPm'],
+								'toPm'			=> $valor['toPm']
 							)
 							);
 						}
@@ -857,31 +847,31 @@ class Client_model extends CI_Model
 
 			$this->db->set(
 					array(
-						'name' => $client['name'],
-						'address' => $client['address'],
-						'addressLat' => $client['addressLat'],
-						'addressLon' => $client['addressLon'],
-						'idLocationFk' => $client['idLocationFk'],
-						'idProvinceFk' => $client['idProvinceFk'],
-						'isNotCliente' => $client['isNotCliente'],
-						'idClientCompaniFk' => $client['idClientCompaniFk'],
-						'mailServiceTecnic' => $client['mailServiceTecnic'],
-						'observationSericeTecnic' => $client['observationSericeTecnic'],
-						'mailCollection' => $client['mailCollection'],
-						'observationCollection' => $client['observationCollection'],
-						'observation' => $client['observation']
+						'name' 						=> $client['name'],
+						'address' 					=> $client['address'],
+						'addressLat' 				=> $client['addressLat'],
+						'addressLon' 				=> $client['addressLon'],
+						'idLocationFk' 				=> $client['idLocationFk'],
+						'idProvinceFk' 				=> $client['idProvinceFk'],
+						'isNotCliente' 				=> $client['isNotCliente'],
+						'idClientCompaniFk' 		=> $client['idClientCompaniFk'],
+						'mailServiceTecnic' 		=> $client['mailServiceTecnic'],
+						'observationSericeTecnic' 	=> $client['observationSericeTecnic'],
+						'mailCollection' 			=> $client['mailCollection'],
+						'observationCollection' 	=> $client['observationCollection'],
+						'observation' 				=> $client['observation']
 						)
 			)->where("idClient", $client['idClient'])->update("tb_clients");
 	
 
 			$this->db->set(
 				array(
-				'idClientFk' => $client['idClient'],
-				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'cuitBilling' =>$client['billing_information']['cuitBilling'],
-				'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-				'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk'])
+				'idClientFk' 			=> $client['idClient'],
+				'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+				'cuitBilling' 			=>$client['billing_information']['cuitBilling'],
+				'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+				'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+				'idTypeTaxFk' 			=>   $client['billing_information']['idTypeTaxFk'])
 		    )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
@@ -897,12 +887,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_schedule_atention'] as $valor) {
 							
 							$this->db->insert('tb_client_schedule_atention', array(
-								'idClienteFk' => $valor['idClienteFk'],
-								'day' => $valor['day'],
-								'fronAm' => $valor['fronAm'],
-								'toAm' => $valor['toAm'],
-								'fronPm'=> $valor['fronPm'],
-								'toPm'=> $valor['toPm']
+								'idClienteFk' 	=> $valor['idClienteFk'],
+								'day' 			=> $valor['day'],
+								'fronAm' 		=> $valor['fronAm'],
+								'toAm' 			=> $valor['toAm'],
+								'fronPm'		=> $valor['fronPm'],
+								'toPm'			=> $valor['toPm']
 							));
 						}
 
@@ -928,18 +918,18 @@ class Client_model extends CI_Model
                
 
 				$this->db->insert('tb_clients', array(
-					'idClientTypeFk' => $client['idClientTypeFk'],
-					'name' => $client['name'],
-					'address' => $client['address'],
-					'addressLat' => $client['addressLat'],
-					'addressLon' => $client['addressLon'],
-					'idAgentFk' => $client['idAgentFk'],
-					'idLocationFk' => $client['idLocationFk'],
-					'idProvinceFk' => $client['idProvinceFk'],
-					'observation' => $client['observation'],
+					'idClientTypeFk' 	=> $client['idClientTypeFk'],
+					'name' 				=> $client['name'],
+					'address' 			=> $client['address'],
+					'addressLat' 		=> $client['addressLat'],
+					'addressLon' 		=> $client['addressLon'],
+					'idAgentFk' 		=> $client['idAgentFk'],
+					'idLocationFk' 		=> $client['idLocationFk'],
+					'idProvinceFk' 		=> $client['idProvinceFk'],
+					'observation' 		=> $client['observation'],
 					'mailServiceTecnic' => $client['mailServiceTecnic'],
-					'mobile' => $client['mobile'],
-					'mailCollection' => $client['mailCollection']
+					'mobile' 			=> $client['mobile'],
+					'mailCollection' 	=> $client['mailCollection']
 					)
 				);
 
@@ -948,12 +938,12 @@ class Client_model extends CI_Model
 
 					// DATOS DE FACTURCION
 					$this->db->insert('tb_client_billing_information', array(
-						'idClientFk' => $idClientFk,
-						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'cuitBilling' =>$client['billing_information']['cuitBilling'],
-						'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-						'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk']
+						'idClientFk' 			=> $idClientFk,
+						'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+						'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+						'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+						'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+						'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk']
 					)
 					);
 
@@ -967,8 +957,8 @@ class Client_model extends CI_Model
 						foreach (@$client['list_phone_contact'] as $valor) {
 							
 							$this->db->insert('tb_client_phone_contact', array(
-								'idClientFk' => $idClientFk,
-								'phoneContact' => $valor['phoneContact']
+								'idClientFk' 	=> $idClientFk,
+								'phoneContact' 	=> $valor['phoneContact']
 							)
 							);
 						}
@@ -977,12 +967,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_address_particular'] as $valor) {
 							
 							$this->db->insert('tb_client_address_particular', array(
-								'idClientFk' => $idClientFk,
-								'address' => $valor['address'],
-								'depto' => $valor['depto'],
-								'isBuilding' => $valor['isBuilding'],
-								'idProvinceFk' => $valor['idProvinceFk'],
-								'idLocationFk' => $valor['idLocationFk'],
+								'idClientFk' 	=> $idClientFk,
+								'address' 		=> $valor['address'],
+								'depto' 		=> $valor['depto'],
+								'isBuilding' 	=> $valor['isBuilding'],
+								'idProvinceFk' 	=> $valor['idProvinceFk'],
+								'idLocationFk' 	=> $valor['idLocationFk'],
 								'clarification' => $valor['clarification']
 							)
 							);
@@ -1009,29 +999,29 @@ class Client_model extends CI_Model
 
 			$this->db->set(
 					array(
-						'name' => $client['name'],
-						'address' => $client['address'],
-						'addressLat' => $client['addressLat'],
-						'addressLon' => $client['addressLon'],
-						'idAgentFk' => $client['idAgentFk'],
-						'idLocationFk' => $client['idLocationFk'],
-						'idProvinceFk' => $client['idProvinceFk'],
-						'observation' => $client['observation'],
+						'name' 				=> $client['name'],
+						'address' 			=> $client['address'],
+						'addressLat' 		=> $client['addressLat'],
+						'addressLon' 		=> $client['addressLon'],
+						'idAgentFk' 		=> $client['idAgentFk'],
+						'idLocationFk' 		=> $client['idLocationFk'],
+						'idProvinceFk' 		=> $client['idProvinceFk'],
+						'observation' 		=> $client['observation'],
 						'mailServiceTecnic' => $client['mailServiceTecnic'],
-						'mobile' => $client['mobile'],
-						'mailCollection' => $client['mailCollection']
+						'mobile' 			=> $client['mobile'],
+						'mailCollection' 	=> $client['mailCollection']
 						)
 			)->where("idClient", $client['idClient'])->update("tb_clients");
 	
 
 			$this->db->set(
 				array(
-				'idClientFk' => $client['idClient'],
-				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'cuitBilling' =>$client['billing_information']['cuitBilling'],
-				'idLocationBillingFk'=> $client['billing_information']['idLocationBillingFk'],
-				'idProvinceBillingFk'=> $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk' =>   $client['billing_information']['idTypeTaxFk'])
+				'idClientFk' 			=> $client['idClient'],
+				'businessNameBilling' 	=> $client['billing_information']['businessNameBilling'],
+				'cuitBilling' 			=> $client['billing_information']['cuitBilling'],
+				'idLocationBillingFk'	=> $client['billing_information']['idLocationBillingFk'],
+				'idProvinceBillingFk'	=> $client['billing_information']['idProvinceBillingFk'],
+				'idTypeTaxFk' 			=> $client['billing_information']['idTypeTaxFk'])
 		    )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
@@ -1051,8 +1041,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_phone_contact'] as $valor) {
 							
 							$this->db->insert('tb_client_phone_contact', array(
-								'idClientFk' => $valor['idClientFk'],
-								'phoneContact' => $valor['phoneContact']
+								'idClientFk' 	=> $valor['idClientFk'],
+								'phoneContact' 	=> $valor['phoneContact']
 							));
 						}
 
@@ -1062,12 +1052,12 @@ class Client_model extends CI_Model
 						foreach ($client['list_address_particular'] as $valor) {
 							
 							$this->db->insert('tb_client_address_particular', array(
-								'idClientFk' => $client['idClient'],
-								'address' => $valor['address'],
-								'depto' => $valor['depto'],
-								'isBuilding' => $valor['isBuilding'],
-								'idProvinceFk' => $valor['idProvinceFk'],
-								'idLocationFk' => $valor['idLocationFk'],
+								'idClientFk' 	=> $client['idClient'],
+								'address' 		=> $valor['address'],
+								'depto' 		=> $valor['depto'],
+								'isBuilding' 	=> $valor['isBuilding'],
+								'idProvinceFk' 	=> $valor['idProvinceFk'],
+								'idLocationFk' 	=> $valor['idLocationFk'],
 								'clarification' => $valor['clarification']
 							)
 							);
