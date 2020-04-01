@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "COFERBA",
-		"_postman_id": "aee2d299-ec72-a522-5afc-2d025c2640cb",
+		"_postman_id": "a6c6d095-6b2d-caa7-7167-f7e535b07fab",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -11,6 +11,26 @@
 			"name": "Seeds",
 			"description": "",
 			"item": [
+				{
+					"name": "InternetCompany copy",
+					"request": {
+						"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
 				{
 					"name": "Obtener Modulos",
 					"request": {
@@ -823,9 +843,76 @@
 					"description": "",
 					"item": [
 						{
+							"name": "seed",
+							"description": "",
+							"item": [
+								{
+									"name": "TypeGps",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeGps",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "AlarmServicesAditionals",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/AlarmServicesAditionals",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "InternetCompany Empresa",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "add",
 							"request": {
-								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addinternet",
+								"url": "http://localhost/Coferba/Back/index.php/Services/addgps",
 								"method": "POST",
 								"header": [
 									{
@@ -836,7 +923,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"1\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
+									"raw": "{\n\t\"service\":{\n\t\t\n\t\t\"idClientFk\":\"1\",\n\t\t\"idTipeServiceFk\":\"1\",\n\t\t\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeGpsFk\":\"1\",\n\t\t\"typeMaintenance\":\"pser\",\n\t\t\"dateUp\":\"2020-03-31\",\n\t\t\"dateDown\":\"2020-03-31\",\n\t\t\"modem\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"nroLine\":\"1\",\n\t\t\"nroChip\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
 								},
 								"description": ""
 							},
@@ -850,9 +937,116 @@
 					"description": "",
 					"item": [
 						{
+							"name": "seed",
+							"description": "",
+							"item": [
+								{
+									"name": "TypeInternet",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeInternet",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "Services",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/Services",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "AlarmServicesAditionals copy",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/AlarmServicesAditionals",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "RouterInternet",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/RouterInternet",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "InternetCompany",
+									"request": {
+										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany",
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"description": ""
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "add",
 							"request": {
-								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addinternet",
+								"url": "http://localhost/Coferba/Back/index.php/Services/addinternet",
 								"method": "POST",
 								"header": [
 									{
@@ -863,7 +1057,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"2020-03-19\",\n\t\t\"dateUp\":\"2020-03-19\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
+									"raw": "{\n\t\"service\":{\n\t\t\n\t\t\"idClientFk\":\"1\",\n\t\t\"idTipeServiceFk\":\"1\",\n\t\t\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"typeMaintenance\":\"psa\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"2020-03-19\",\n\t\t\"dateUp\":\"2020-03-19\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
 								},
 								"description": ""
 							},
@@ -879,7 +1073,7 @@
 						{
 							"name": "add",
 							"request": {
-								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addcamera",
+								"url": "http://localhost/Coferba/Back/index.php/Services/addcamera",
 								"method": "POST",
 								"header": [
 									{
@@ -906,7 +1100,7 @@
 						{
 							"name": "add",
 							"request": {
-								"url": "http://localhost/alejandro/Coferba/Back/index.php/Services/addaccescontrol",
+								"url": "http://localhost/Coferba/Back/index.php/Services/addaccescontrol",
 								"method": "POST",
 								"header": [
 									{
@@ -917,7 +1111,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"service\":{\n\t\t\"idClientServicesFk\":\"1\",\n\t\t\"idTypeInternetFk\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"idServiceFk\":\"1\",\n\t\t\"idServiceAsociateFk\":\"1\",\n\t\t\"idRouterInternetFk\":\"1\",\n\t\t\"numberSeria\":\"1\",\n\t\t\"userAdmin\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"idInternetCompanyFk\":\"1\",\n\t\t\"modenMark\":\"1\",\n\t\t\"dateDown\":\"1\",\n\t\t\"isDown\":\"1\",\n\t\t\"port\":\"1\",\n\t\t\"passAdmin\":\"1\",\n\t\t\"nroSerieInternal\":\"1\",\n\t\t\"nroSerieManufacturer\":\"1\"\n\t}\n}"
+									"raw": "{\n\t\"service\":{\n\t\t\"idDoorFk\":\"1\",\n\t\t\"idContracAssociated_SE\":\"1\",\n\t\t\"dateUp\":\"1\",\n\t\t\"dateDown\":\"1\",\n\t\t\"idAccessControlFk\":\"1\",\n\t\t\"idInputReaderFk\":\"1\",\n\t\t\"locationGabinet\":\"1\",\n\t\t\"idFontFk\":\"1\",\n\t\t\"aclaration\":\"1\",\n\t\t\"idTypeMaintenanceFk\":\"1\",\n\t\t\"lock\":\"1\",\n\t\t\"ouputReader\":\"1\",\n\t\t\"ouputButom\":\"1\",\n\t\t\"isOuputReader\":\"1\",\n\t\t\"isOuputButom\":\"1\",\n\t\t\"isBlocklingScrew\":\"1\",\n\t\t\"idEmergencyButtonFk\":\"1\",\n\t\t\"idShutdownKeyFk\":\"1\",\n\t\t\"acaration2\":\"1\",\n\t\t\"address\":\"1\",\n\t\t\"addressLat\":\"1\",\n\t\t\"addressLon\":\"1\",\n\t\t\"portNumberRouter\":\"1\",\n\t\t\"addressClient\":\"1\",\n\t\t\"addressVpn\":\"1\",\n\t\t\"addressClientLat\":\"1\",\n\t\t\"addressClientLon\":\"1\",\n\t\t\"user\":\"1\",\n\t\t\"useVpn\":\"1\",\n\t\t\"passVpn\":\"1\",\n\t\t\"pass\":\"1\",\n\t\t\"portHttp\":\"1\",\n\t\t\n\t\t\"battery_install\":[\n\t\t\t\t{\n\t\t\t\t\t\"battery\":\"1\",\n\t\t\t\t\t\"nroSerieInternal\":\"1\",\n\t\t\t\t\t\"nroSerieManufacturer\":\"1\",\n\t\t\t\t\t\"dateUp\":\"2020-03-31\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"battery\":\"1\",\n\t\t\t\t\t\"nroSerieInternal\":\"1\",\n\t\t\t\t\t\"nroSerieManufacturer\":\"1\",\n\t\t\t\t\t\"dateUp\":\"2020-03-31\"\n\t\t\t\t}\n\t\t\t\t\n\t\t\t]\n\t\t\n\t}\n}"
 								},
 								"description": ""
 							},

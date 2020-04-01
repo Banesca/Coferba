@@ -2,22 +2,19 @@
     exit('No direct script access allowed');
 }
 
-class Services_model extends CI_Model
-{
-    public function __construct()
-    {
+class Services_model extends CI_Model {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function addinternet($item)
-    {
+    public function addinternet($item) {
 
         $idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_internet', [
                 'idClientServicesFk'     => $idClientServicesFk,
                 'idTypeInternetFk'       => $item['idTypeInternetFk'],
-                'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'],
+                'typeMaintenance'        => $item['typeMaintenance'],
                 'idServiceFk'            => $item['idServiceFk'],
                 'idServiceAsociateFk'    => $item['idServiceAsociateFk'],
                 'idRouterInternetFk'     => $item['idRouterInternetFk'],
@@ -43,19 +40,18 @@ class Services_model extends CI_Model
         }
     }
 
-    public function addgps($item)
-    {
+    public function addgps($item) {
         $idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_gps', [
                 'idClientServicesFk'     => $idClientServicesFk,
                 'idTypeGpsFk'            => $item['idTypeGpsFk'],
-                'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'],
+                'typeMaintenance'        => $item['typeMaintenance'],
                 'dateUp'                 => $item['dateUp'],
                 'dateDown'               => $item['dateDown'],
-                'moden'                  => $item['moden'],
+                'modem'                  => $item['modem'],
+                'idInternetCompanyFk'    => $item['idInternetCompanyFk'], //empresa
                 'idContracAssociated_SE' => $item['idContracAssociated_SE'],
-                'idInternetCompanyFk'    => $item['idInternetCompanyFk'],
                 'nroLine'                => $item['nroLine'],
                 'nroChip'                => $item['nroChip'],
                 'idServiceAsociateFk'    => $item['idServiceAsociateFk'],
@@ -71,21 +67,20 @@ class Services_model extends CI_Model
         }
     }
 
-    public function addaccescontrol($item)
-    {
+    public function addaccescontrol($item) {
 
-        $idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
+        //$idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
 
-        $this->db->insert('tb_client_services_acces_control', [
-                'idClientServicesFk'     => $idClientServicesFk,
-                'door'                   => $item['door'],
+        $this->db->insert('tb_client_services_access_control', [
+                //'idClientServicesFk'            => $idClientServicesFk,
+                'idDoorFk'               => $item['idDoorFk'],
                 'idContracAssociated_SE' => $item['idContracAssociated_SE'],
                 'dateUp'                 => $item['dateUp'],
                 'dateDown'               => $item['dateDown'],
-                'accesControl'           => $item['accesControl'],
-                'readerEntry'            => $item['readerEntry'],
+                'idAccessControlFk'      => $item['idAccessControlFk'],
+                'idInputReaderFk'        => $item['idInputReaderFk'],
                 'locationGabinet'        => $item['locationGabinet'],
-                'font'                   => $item['font'],
+                'idFontFk'               => $item['idFontFk'],
                 'aclaration'             => $item['aclaration'],
                 'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'],
                 'lock'                   => $item['lock'],
@@ -94,8 +89,8 @@ class Services_model extends CI_Model
                 'isOuputReader'          => $item['isOuputReader'],
                 'isOuputButom'           => $item['isOuputButom'],
                 'isBlocklingScrew'       => $item['isBlocklingScrew'],
-                'butonEmergency'         => $item['butonEmergency'],
-                'keyboardOff'            => $item['keyboardOff'],
+                'idEmergencyButtonFk'    => $item['idEmergencyButtonFk'],
+                'idShutdownKeyFk'        => $item['idShutdownKeyFk'],
                 'acaration2'             => $item['acaration2'],
                 'address'                => $item['address'],
                 'addressLat'             => $item['addressLat'],
@@ -110,8 +105,17 @@ class Services_model extends CI_Model
                 'passVpn'                => $item['passVpn'],
                 'pass'                   => $item['pass'],
                 'portHttp'               => $item['portHttp'],
+
             ]
         );
+
+
+        $id = $this->db->insert_id();
+
+        if (count($item['battery_install']) > 0) {
+            $this->insertServiceBatteryAccessControl($item['battery_install'], $id);  //se crean las baterias
+        }
+
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -120,10 +124,9 @@ class Services_model extends CI_Model
         }
     }
 
-    public function addsmartpanic($item)
-    {
+    public function addsmartpanic($item) {
 
-        $idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
+        $idClientServicesFk = $this->insertService($item); // CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_smart_panic', [
                 'idClientServicesFk'         => $idClientServicesFk,
@@ -149,8 +152,7 @@ class Services_model extends CI_Model
         }
     }
 
-    public function addcamera($item)
-    {
+    public function addcamera($item) {
         $this->db->insert('tb_client_services_camera', [
                 'name'                     => $item['services']['name'],
                 'idContracAssociated_SE'   => $item['services']['idContracAssociated_SE'],
@@ -182,7 +184,7 @@ class Services_model extends CI_Model
         $id = $this->db->insert_id();
 
         if (count($item['clients']) > 0) {
-            $this->insertService($item['clients'], $id);  //se crean los usuarios dvr
+            $this->insertServiceUser($item['clients'], $id);  //se crean los usuarios dvr
         }
         if (count($item['cameras']) > 0) {
             $this->insertServiceCamera($item['cameras'], $id);// CREAMOS las camaras
@@ -198,10 +200,9 @@ class Services_model extends CI_Model
         }
     }
 
-    public function addTotem($item)
-    {
+    public function addTotem($item) {
 
-        $idClientServicesFk = $this->insertService($item);// CREAMOS EL SERVICIO
+        $idClientServicesFk = $this->insertServiceUser($item);// CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_totem', [
                 'name'                   => $item['name'],
@@ -240,8 +241,7 @@ class Services_model extends CI_Model
         }
     }
 
-    public function insertService($product, $id)
-    {
+    public function insertServiceUser($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_client_camera', [
                     'idClientFk'               => $item['idClientFk'],
@@ -256,8 +256,32 @@ class Services_model extends CI_Model
         return true;
     }
 
-    public function insertServiceCamera($product, $id)
-    {
+    public function insertServiceBatteryAccessControl($product, $id) {
+        foreach ($product as $item) {
+            $this->db->insert('tb_battery_install_access_control', [
+                    "battery"                         => $item["battery"],
+                    "idClientServicesAccessControlFk" => $id,
+                    "nroSerieInternal"                => $item["nroSerieInternal"],
+                    "nroSerieManufacturer"            => $item["nroSerieManufacturer"],
+                    "dateUp"                          => $item["dateUp"],
+                ]
+            );
+        }
+
+        return true;
+    }
+
+    public function insertService($product) {
+        $this->db->insert('tb_client_services', [
+                'idClientFk'      => $product['idClientFk'],
+                'idTipeServiceFk' => $product['idTipeServiceFk'],
+            ]
+        );
+
+        return $this->db->insert_id();
+    }
+
+    public function insertServiceCamera($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_cameras', [
                     "idClientServicesCameraFk" => $id,
@@ -274,8 +298,8 @@ class Services_model extends CI_Model
         return true;
     }
 
-    public function insertServiceEnergy($product, $id)
-    {
+
+    public function insertServiceEnergy($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_backup_energy', [
                     "idClientServicesCameraFk" => $id,

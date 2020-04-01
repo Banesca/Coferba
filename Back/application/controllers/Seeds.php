@@ -40,6 +40,106 @@ class Seeds extends REST_Controller {
 			}
 		}
 
+		public function TypeServices_get() {
+
+			$user = $this->seeds_model->getTypeServices();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function ClientType_get() {
+
+			$user = $this->seeds_model->getClientType();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function CategoryDepartament_get() {
+
+			$user = $this->seeds_model->getCategoryDepartament();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function TypeGps_get() {
+
+			$user = $this->seeds_model->getTypeGps();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function TypeMaintenance_get() {
+
+			$user = $this->seeds_model->getTypeMaintenance();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function InternetCompany_get() {
+
+			$user = $this->seeds_model->getInternetCompany();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function AlarmServicesAditionals_get() {
+
+			$user = $this->seeds_model->getAlarmServicesAditionals();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function TypeInternet_get() {
+
+			$user = $this->seeds_model->getTypeInternet();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function Services_get() {
+
+			$user = $this->seeds_model->getServices();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function RouterInternet_get() {
+
+			$user = $this->seeds_model->getRouterInternet();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
 
 		
 	
