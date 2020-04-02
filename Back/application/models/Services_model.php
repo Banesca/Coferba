@@ -259,11 +259,8 @@ class Services_model extends CI_Model {
     public function insertServiceBatteryAccessControl($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_battery_install_access_control', [
-                    "battery"                         => $item["battery"],
                     "idClientServicesAccessControlFk" => $id,
-                    "nroSerieInternal"                => $item["nroSerieInternal"],
-                    "nroSerieManufacturer"            => $item["nroSerieManufacturer"],
-                    "dateUp"                          => $item["dateUp"],
+                    "idBatteryFk"                     => $item["idBatteryFk"],
                 ]
             );
         }

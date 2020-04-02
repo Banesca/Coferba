@@ -90,7 +90,7 @@ CREATE TABLE `tb_agents` (
 /*Data for the table `tb_agents` */
 
 insert  into `tb_agents`(`idAgent`,`agent`) values 
-(1,'TASS');
+(1,'COFERBA');
 
 /*Table structure for table `tb_alarm_batery` */
 
@@ -422,7 +422,7 @@ CREATE TABLE `tb_client_billing_information` (
   `idProvinceBillingFk` int(11) DEFAULT NULL,
   `idTypeTaxFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idBillingInfo`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_billing_information` */
 
@@ -439,12 +439,33 @@ insert  into `tb_client_billing_information`(`idBillingInfo`,`idClientFk`,`busin
 (10,11,'text','text',1,1,1),
 (11,12,'text','text',1,1,1),
 (12,13,'text','text',1,1,1),
-(13,14,'text','text',1,1,1),
-(14,15,'Administracion Uno s.a','23432432434-4',42,1,2),
-(15,16,'administracion dos s.a','3243243244-4',37,1,2),
-(16,17,'administracion dos s.a','3243243244-4',37,1,2),
-(17,18,'administracion tres s.a','213213213-4',921,2,2),
-(18,19,'text','text',1,1,1);
+(13,14,'text','text',1,1,1);
+
+/*Table structure for table `tb_client_camera` */
+
+DROP TABLE IF EXISTS `tb_client_camera`;
+
+CREATE TABLE `tb_client_camera` (
+  `idClientCamera` int(11) NOT NULL AUTO_INCREMENT,
+  `idClientFk` int(11) DEFAULT NULL,
+  `idClientServicesCameraFk` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `user` varchar(100) DEFAULT NULL,
+  `pass` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idClientCamera`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_client_camera` */
+
+insert  into `tb_client_camera`(`idClientCamera`,`idClientFk`,`idClientServicesCameraFk`,`name`,`user`,`pass`) values 
+(15,1,16,'ale','aleUser','1234'),
+(16,1,16,'ale','aleUser','1234'),
+(17,1,17,'ale','aleUser','1234'),
+(18,1,17,'ale','aleUser','1234'),
+(19,1,18,'ale','aleUser','1234'),
+(20,1,18,'ale','aleUser','1234'),
+(21,1,19,'ale','aleUser','1234'),
+(22,1,19,'ale','aleUser','1234');
 
 /*Table structure for table `tb_client_departament` */
 
@@ -506,35 +527,42 @@ CREATE TABLE `tb_client_functional_units` (
 DROP TABLE IF EXISTS `tb_client_phone_contact`;
 
 CREATE TABLE `tb_client_phone_contact` (
-  `idClientPhoneFk` int(11) unsigned NOT NULL,
-  `phoneTag` varchar(80) DEFAULT NULL COMMENT 'Etiqueta del telefono de contacto Ejmp: Guardia/Urgencia',
+  `idClientPhoneFk` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `phoneContact` varchar(80) DEFAULT NULL,
   `idClientFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientPhoneFk`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_phone_contact` */
 
-insert  into `tb_client_phone_contact`(`idClientPhoneFk`,`phoneTag`,`phoneContact`,`idClientFk`) values 
-(38,'comercial','11232423234',NULL),
-(39,'comercial','11232423244',NULL),
-(40,'comercial','112324242344',NULL),
-(41,'comercial','112324242323',NULL),
-(57,'text','text',1),
-(58,'text','text2',1),
-(59,'text','text',1),
-(60,'text','text2',1),
-(61,'text','text',1),
-(62,'text','text2',1),
-(63,'text','text',1),
-(64,'text','text2',1),
-(80,'comercial','112324232333',17),
-(88,'comercial','114354363463',15),
-(95,'comercial','112324325677',18),
-(96,'guardia','112324325670',18),
-(97,'urgente','112324325672',18),
-(98,NULL,'text',19),
-(99,NULL,'text2',19);
+insert  into `tb_client_phone_contact`(`idClientPhoneFk`,`phoneContact`,`idClientFk`) values 
+(1,'text',NULL),
+(2,'text',2),
+(3,'text2',2),
+(8,'text',1),
+(9,'text2',1),
+(12,'text',5),
+(13,'text2',5),
+(14,'text',1),
+(15,'text2',1),
+(16,'text',1),
+(17,'text2',1),
+(18,'text',1),
+(19,'text2',1),
+(20,'text',11),
+(21,'text2',11),
+(24,'text',1),
+(25,'text2',1),
+(26,'text',1),
+(27,'text2',1),
+(28,'text',14),
+(29,'text2',14),
+(30,'text',1),
+(31,'text2',1),
+(32,'text',1),
+(33,'text2',1),
+(34,'text',1),
+(35,'text2',1);
 
 /*Table structure for table `tb_client_schedule_atention` */
 
@@ -543,63 +571,63 @@ DROP TABLE IF EXISTS `tb_client_schedule_atention`;
 CREATE TABLE `tb_client_schedule_atention` (
   `idScheduleAtention` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClienteFk` int(11) DEFAULT NULL,
-  `day` varchar(11) DEFAULT '' COMMENT 'Dia de la semana',
+  `day` int(11) DEFAULT NULL,
   `fronAm` time DEFAULT NULL,
   `toAm` time DEFAULT NULL,
   `fronPm` time DEFAULT NULL,
   `toPm` time DEFAULT NULL,
   PRIMARY KEY (`idScheduleAtention`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_schedule_atention` */
 
 insert  into `tb_client_schedule_atention`(`idScheduleAtention`,`idClienteFk`,`day`,`fronAm`,`toAm`,`fronPm`,`toPm`) values 
-(3,2,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(4,2,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(5,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(6,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(7,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(8,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(9,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(10,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(29,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(30,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(31,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(32,NULL,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(37,5,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(38,5,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(45,6,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(46,6,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(47,7,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(48,7,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(59,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(60,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(61,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(62,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(63,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(64,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(65,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(66,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(67,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(68,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(69,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(70,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(71,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(72,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(73,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(74,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(75,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(76,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(77,13,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(78,13,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(79,14,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(80,14,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(81,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(82,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(83,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(84,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(85,1,'0','00:00:00','00:00:00','00:00:00','00:00:00'),
-(86,1,'0','00:00:00','00:00:00','00:00:00','00:00:00');
+(3,2,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(4,2,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(5,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(6,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(7,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(8,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(9,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(10,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(29,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(30,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(31,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(32,NULL,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(37,5,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(38,5,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(45,6,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(46,6,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(47,7,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(48,7,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(59,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(60,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(61,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(62,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(63,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(64,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(65,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(66,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(67,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(68,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(69,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(70,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(71,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(72,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(73,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(74,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(75,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(76,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(77,13,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(78,13,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(79,14,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(80,14,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(81,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(82,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(83,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(84,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(85,1,0,'00:00:00','00:00:00','00:00:00','00:00:00'),
+(86,1,0,'00:00:00','00:00:00','00:00:00','00:00:00');
 
 /*Table structure for table `tb_client_services` */
 
@@ -1400,6 +1428,22 @@ insert  into `tb_internet_company`(`idInternetCompany`,`internetCompany`) values
 (2,'FIBERTEL'),
 (3,'MOVISTAR');
 
+/*Table structure for table `tb_location` */
+
+DROP TABLE IF EXISTS `tb_location`;
+
+CREATE TABLE `tb_location` (
+  `idLocation` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `location` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idLocation`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_location` */
+
+insert  into `tb_location`(`idLocation`,`location`) values 
+(1,'CABA'),
+(2,'SAAVEDRA');
+
 /*Table structure for table `tb_modules` */
 
 DROP TABLE IF EXISTS `tb_modules`;
@@ -1563,7 +1607,7 @@ CREATE TABLE `tb_profile` (
 /*Data for the table `tb_profile` */
 
 insert  into `tb_profile`(`idProfile`,`nameProfile`) values 
-(1,'TASS'),
+(1,'Coferba'),
 (2,'Empresa'),
 (3,'Propietario'),
 (4,'Admin Consorsio'),
@@ -1584,7 +1628,7 @@ CREATE TABLE `tb_profiles` (
 /*Data for the table `tb_profiles` */
 
 insert  into `tb_profiles`(`idProfiles`,`name`,`idStatus`) values 
-(8,'Admin',1),
+(8,'pefil coferba 1',-1),
 (9,'PERFIL UNo',1),
 (10,'PERFIL dos',1);
 
@@ -1622,35 +1666,13 @@ CREATE TABLE `tb_province` (
   `province` varchar(200) DEFAULT NULL,
   `idLocationFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idProvince`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_province` */
 
 insert  into `tb_province`(`idProvince`,`province`,`idLocationFk`) values 
-(1,'Ciudad Autonoma de Buenos Aires',NULL),
-(2,'Buenos Aires',NULL),
-(3,'Misiones',NULL),
-(4,'San Luis',NULL),
-(5,'San Juan',NULL),
-(6,'Entre Rios',NULL),
-(7,'Santa Cruz',NULL),
-(8,'Rio Negro',NULL),
-(9,'Chubut',NULL),
-(10,'Cordoba',NULL),
-(11,'Mendoza',NULL),
-(12,'La Rioja',NULL),
-(13,'Catamarca',NULL),
-(14,'La Pampa',NULL),
-(15,'Santiago del Estero',NULL),
-(16,'Corrientes',NULL),
-(17,'Santa Fe',NULL),
-(18,'Tucuman',NULL),
-(19,'Neuquen',NULL),
-(20,'Salta',NULL),
-(21,'Chaco',NULL),
-(22,'Formosa',NULL),
-(23,'Jujuy',NULL),
-(24,'Tierra del Fuego, Antartida e Islas del Atlántico Sur',NULL);
+(1,'CABA ',1),
+(2,'BUENOS AIRES',2);
 
 /*Table structure for table `tb_reason_disabled_item` */
 
