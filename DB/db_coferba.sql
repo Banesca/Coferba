@@ -243,14 +243,24 @@ CREATE TABLE `tb_backup_energy` (
   `idBackupEnergy` int(11) NOT NULL AUTO_INCREMENT,
   `idClientServicesCameraFk` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`idBackupEnergy`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idBackupEnergy`),
+  KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`),
+  CONSTRAINT `tb_backup_energy_ibfk_1` FOREIGN KEY (`idClientServicesCameraFk`) REFERENCES `tb_client_services_camera` (`idClientServicesCamera`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_backup_energy` */
 
 insert  into `tb_backup_energy`(`idBackupEnergy`,`idClientServicesCameraFk`,`description`) values 
 (15,19,'bateria'),
-(16,19,'ups');
+(16,19,'ups'),
+(17,25,'bateria'),
+(18,25,'ups'),
+(19,26,'bateria'),
+(20,26,'ups'),
+(21,27,'bateria'),
+(22,27,'ups'),
+(23,28,'bateria'),
+(24,28,'ups');
 
 /*Table structure for table `tb_bakups_order` */
 
@@ -278,7 +288,7 @@ CREATE TABLE `tb_battery_install_access_control` (
   KEY `idBatteryFk` (`idBatteryFk`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_1` FOREIGN KEY (`idClientServicesAccessControlFk`) REFERENCES `tb_client_services_access_control` (`idClientServicesAccessControl`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_2` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_batterys` (`idBattery`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_battery_install_access_control` */
 
@@ -286,7 +296,9 @@ insert  into `tb_battery_install_access_control`(`idBatteryInstallAccessControl`
 (6,25,1),
 (7,25,2),
 (8,26,1),
-(9,26,2);
+(9,26,2),
+(10,27,NULL),
+(11,27,NULL);
 
 /*Table structure for table `tb_battery_install_alarm` */
 
@@ -338,8 +350,10 @@ CREATE TABLE `tb_cameras` (
   `nroSerieCamera` int(11) DEFAULT NULL,
   `nroFabricCamera` int(11) DEFAULT NULL,
   `dateExpireCamera` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idCamera`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idCamera`),
+  KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`),
+  CONSTRAINT `tb_cameras_ibfk_1` FOREIGN KEY (`idClientServicesCameraFk`) REFERENCES `tb_client_services_camera` (`idClientServicesCamera`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_cameras` */
 
@@ -351,7 +365,15 @@ insert  into `tb_cameras`(`idCamera`,`idClientServicesCameraFk`,`portCamera`,`co
 (15,18,21,2,0,5,48,2020),
 (16,18,20,1,0,4,47,2020),
 (17,19,21,2,0,5,48,2020),
-(18,19,20,1,0,4,47,2020);
+(18,19,20,1,0,4,47,2020),
+(19,25,21,2,0,5,48,2020),
+(20,25,20,1,0,4,47,2020),
+(21,26,21,2,0,5,48,2020),
+(22,26,20,1,0,4,47,2020),
+(23,27,21,2,0,5,48,2020),
+(24,27,20,1,0,4,47,2020),
+(25,28,21,2,0,5,48,2020),
+(26,28,20,1,0,4,47,2020);
 
 /*Table structure for table `tb_category_departament` */
 
@@ -445,6 +467,34 @@ insert  into `tb_client_billing_information`(`idBillingInfo`,`idClientFk`,`busin
 (16,17,'administracion dos s.a','3243243244-4',37,1,2),
 (17,18,'administracion tres s.a','213213213-4',921,2,2),
 (18,19,'text','text',1,1,1);
+
+/*Table structure for table `tb_client_camera` */
+
+DROP TABLE IF EXISTS `tb_client_camera`;
+
+CREATE TABLE `tb_client_camera` (
+  `idClientCamera` int(11) NOT NULL AUTO_INCREMENT,
+  `idClientFk` int(11) DEFAULT NULL,
+  `idClientServicesCameraFk` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `pass` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idClientCamera`),
+  KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`),
+  CONSTRAINT `tb_client_camera_ibfk_1` FOREIGN KEY (`idClientServicesCameraFk`) REFERENCES `tb_client_services_camera` (`idClientServicesCamera`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_client_camera` */
+
+insert  into `tb_client_camera`(`idClientCamera`,`idClientFk`,`idClientServicesCameraFk`,`name`,`user`,`pass`) values 
+(1,1,25,'ale','aleUser','1234'),
+(2,1,25,'ale','aleUser','1234'),
+(3,1,26,'ale','aleUser','1234'),
+(4,1,26,'ale','aleUser','1234'),
+(5,1,27,'ale','aleUser','1234'),
+(6,1,27,'ale','aleUser','1234'),
+(7,1,28,'ale','aleUser','1234'),
+(8,1,28,'ale','aleUser','1234');
 
 /*Table structure for table `tb_client_departament` */
 
@@ -549,7 +599,7 @@ CREATE TABLE `tb_client_schedule_atention` (
   `fronPm` time DEFAULT NULL,
   `toPm` time DEFAULT NULL,
   PRIMARY KEY (`idScheduleAtention`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_schedule_atention` */
 
@@ -612,7 +662,7 @@ CREATE TABLE `tb_client_services` (
   PRIMARY KEY (`idClientServices`),
   KEY `idTipeServiceFk` (`idTipeServiceFk`),
   CONSTRAINT `tb_client_services_ibfk_1` FOREIGN KEY (`idTipeServiceFk`) REFERENCES `tb_type_services` (`idTypeServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services` */
 
@@ -640,7 +690,16 @@ insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeService
 (38,1,1),
 (39,1,1),
 (40,1,1),
-(41,1,1);
+(41,1,1),
+(42,NULL,NULL),
+(43,1,1),
+(44,1,1),
+(45,1,1),
+(46,1,1),
+(47,1,1),
+(48,1,1),
+(49,1,1),
+(50,1,1);
 
 /*Table structure for table `tb_client_services_access_control` */
 
@@ -695,7 +754,7 @@ CREATE TABLE `tb_client_services_access_control` (
   CONSTRAINT `tb_client_services_access_control_ibfk_5` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_type_maintenance` (`idTypeMaintenance`),
   CONSTRAINT `tb_client_services_access_control_ibfk_6` FOREIGN KEY (`idEmergencyButtonFk`) REFERENCES `tb_emergency_button` (`idEmergencyButton`),
   CONSTRAINT `tb_client_services_access_control_ibfk_7` FOREIGN KEY (`idShutdownKeyFk`) REFERENCES `tb_shutdown_key` (`idShutdownKey`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_access_control` */
 
@@ -705,7 +764,8 @@ insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`
 (23,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1),
 (24,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1),
 (25,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1),
-(26,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1);
+(26,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1),
+(27,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1);
 
 /*Table structure for table `tb_client_services_alarms` */
 
@@ -797,7 +857,7 @@ CREATE TABLE `tb_client_services_alarms_aditional` (
 DROP TABLE IF EXISTS `tb_client_services_camera`;
 
 CREATE TABLE `tb_client_services_camera` (
-  `idClientServicesCamera` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesCamera` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
@@ -821,16 +881,31 @@ CREATE TABLE `tb_client_services_camera` (
   `portHttp` int(11) DEFAULT NULL,
   `namePort` varchar(100) DEFAULT NULL,
   `port` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idClientServicesCamera`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  `idClientServicesFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idClientServicesCamera`),
+  KEY `idClientServicesFk` (`idClientServicesFk`),
+  KEY `idTypeMaintenanceFk` (`idTypeMaintenanceFk`),
+  KEY `idDvrNvr_tb_prod_classFk` (`idDvrNvr_tb_prod_classFk`),
+  CONSTRAINT `tb_client_services_camera_ibfk_1` FOREIGN KEY (`idClientServicesFk`) REFERENCES `tb_client_services` (`idClientServices`),
+  CONSTRAINT `tb_client_services_camera_ibfk_2` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_type_maintenance` (`idTypeMaintenance`),
+  CONSTRAINT `tb_client_services_camera_ibfk_3` FOREIGN KEY (`idDvrNvr_tb_prod_classFk`) REFERENCES `tb_products_classification` (`idProductClassification`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_camera` */
 
-insert  into `tb_client_services_camera`(`idClientServicesCamera`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`idDvrNvr_tb_prod_classFk`,`location`,`locationLat`,`locationLon`,`maxCamera`,`numberPortRouter`,`addressVpn`,`nroPort1`,`nroPort2`,`namePort1`,`namePort2`,`observation`,`addessClient`,`addessClientLat`,`addessClientLot`,`portHttp`,`namePort`,`port`) values 
-(16,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1),
-(17,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1),
-(18,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1),
-(19,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1);
+insert  into `tb_client_services_camera`(`idClientServicesCamera`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`idDvrNvr_tb_prod_classFk`,`location`,`locationLat`,`locationLon`,`maxCamera`,`numberPortRouter`,`addressVpn`,`nroPort1`,`nroPort2`,`namePort1`,`namePort2`,`observation`,`addessClient`,`addessClientLat`,`addessClientLot`,`portHttp`,`namePort`,`port`,`idClientServicesFk`) values 
+(16,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(17,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(18,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(19,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(20,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,43),
+(21,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,44),
+(22,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,45),
+(23,'fghgfh',34,1,'2020-04-05','2020-04-05',9,'45','445','4545',5,67,'5',4,3,'4','5','ertertet','4trtt','rtrtrtrhhh','5656',4545,'56',6,42),
+(25,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,46),
+(26,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,47),
+(27,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,48),
+(28,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,49);
 
 /*Table structure for table `tb_client_services_gps` */
 
@@ -900,23 +975,30 @@ insert  into `tb_client_services_internet`(`idClientServicesInternet`,`idClientS
 DROP TABLE IF EXISTS `tb_client_services_smart_panic`;
 
 CREATE TABLE `tb_client_services_smart_panic` (
-  `idClientServicesSmartPanic` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesSmartPanic` int(11) NOT NULL AUTO_INCREMENT,
   `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   `dateUp` date DEFAULT NULL,
   `dateDown` date DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
-  `companyMonitor` varchar(200) DEFAULT NULL,
-  `sucribeNumber` varchar(200) DEFAULT NULL,
-  `idDetinationOfLicenseFk` varchar(200) DEFAULT NULL,
+  `idCompanyMonitorFK` int(11) DEFAULT NULL,
+  `sucribeNumber` varchar(200) NOT NULL,
+  `idDetinationOfLicenseFk` int(11) DEFAULT NULL,
   `idDepartmentFk` int(11) DEFAULT NULL,
   `countNewLicense` int(11) DEFAULT NULL,
   `observation` text,
-  PRIMARY KEY (`idClientServicesSmartPanic`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idClientServicesSmartPanic`),
+  KEY `idDetinationOfLicenseFk` (`idDetinationOfLicenseFk`),
+  KEY `idDepartmentFk` (`idDepartmentFk`),
+  CONSTRAINT `tb_client_services_smart_panic_ibfk_1` FOREIGN KEY (`idDetinationOfLicenseFk`) REFERENCES `tb_detination_of_license` (`idDetinationOfLicense`),
+  CONSTRAINT `tb_client_services_smart_panic_ibfk_2` FOREIGN KEY (`idDepartmentFk`) REFERENCES `tb_department` (`idDepartment`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_smart_panic` */
+
+insert  into `tb_client_services_smart_panic`(`idClientServicesSmartPanic`,`idClientServicesFk`,`name`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idTypeMaintenanceFk`,`idCompanyMonitorFK`,`sucribeNumber`,`idDetinationOfLicenseFk`,`idDepartmentFk`,`countNewLicense`,`observation`) values 
+(1,50,'NOMBRE',1,'2020-04-03','2020-04-03',1,NULL,'1',1,1,1,'Observacion de prueba');
 
 /*Table structure for table `tb_client_services_totem` */
 
@@ -1285,7 +1367,7 @@ insert  into `tb_department`(`idDepartment`,`idAdressKf`,`departmentFloor`,`depa
 DROP TABLE IF EXISTS `tb_detination_of_license`;
 
 CREATE TABLE `tb_detination_of_license` (
-  `idDetinationOfLicense` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idDetinationOfLicense` int(11) NOT NULL AUTO_INCREMENT,
   `detinationOfLicense` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idDetinationOfLicense`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -1488,7 +1570,7 @@ insert  into `tb_products`(`idProduct`,`descriptionProduct`,`codigoFabric`,`bran
 DROP TABLE IF EXISTS `tb_products_classification`;
 
 CREATE TABLE `tb_products_classification` (
-  `idProductClassification` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idProductClassification` int(11) NOT NULL AUTO_INCREMENT,
   `classification` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`idProductClassification`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
@@ -1768,6 +1850,23 @@ insert  into `tb_shutdown_key`(`idShutdownKey`,`titulo`) values
 (1,'TECLA DE APAGADO 1'),
 (2,'TECLA DE APAGADO 2'),
 (3,'TECLA DE APAGADO 3');
+
+/*Table structure for table `tb_smart_panic_license_pivote` */
+
+DROP TABLE IF EXISTS `tb_smart_panic_license_pivote`;
+
+CREATE TABLE `tb_smart_panic_license_pivote` (
+  `idPivoteLicense` int(11) NOT NULL AUTO_INCREMENT,
+  `idClientServicesSmartPanicFk` int(11) NOT NULL,
+  `idUserLinceseFk` int(11) NOT NULL,
+  PRIMARY KEY (`idPivoteLicense`),
+  KEY `idClientServicesSmartPanicFk` (`idClientServicesSmartPanicFk`),
+  KEY `idUserLinceseFk` (`idUserLinceseFk`),
+  CONSTRAINT `tb_smart_panic_license_pivote_ibfk_1` FOREIGN KEY (`idClientServicesSmartPanicFk`) REFERENCES `tb_client_services_smart_panic` (`idClientServicesSmartPanic`),
+  CONSTRAINT `tb_smart_panic_license_pivote_ibfk_2` FOREIGN KEY (`idUserLinceseFk`) REFERENCES `tb_user_license` (`idUserLicense`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_smart_panic_license_pivote` */
 
 /*Table structure for table `tb_status` */
 
@@ -2217,18 +2316,22 @@ insert  into `tb_user`(`idUser`,`fullNameUser`,`emailUser`,`phoneNumberUser`,`ph
 DROP TABLE IF EXISTS `tb_user_license`;
 
 CREATE TABLE `tb_user_license` (
-  `idUserLincese` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idUserLicense` int(11) NOT NULL AUTO_INCREMENT,
   `fullName` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
   `key` varchar(100) DEFAULT NULL,
   `isAndroidOperantSystem` tinyint(1) DEFAULT '1',
   `profileUser` int(11) DEFAULT NULL,
-  `idClientServicesSmartPanicFk` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idUserLincese`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idUserLicense`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_user_license` */
+
+insert  into `tb_user_license`(`idUserLicense`,`fullName`,`email`,`phone`,`key`,`isAndroidOperantSystem`,`profileUser`) values 
+(1,'1','1','1','1',1,1),
+(2,'1','1','1','1',1,1),
+(3,'1','1','1','1',1,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
