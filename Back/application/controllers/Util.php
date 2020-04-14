@@ -92,6 +92,28 @@ class Util extends REST_Controller {
         }
     }
 
+    public function detinationLicense_get() {
+        $user = null;
+        $user = $this->util_model->getDetinationLicense();
+
+        if (! is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
+    public function department_get() {
+        $user = null;
+        $user = $this->util_model->getDepartment();
+
+        if (! is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
 }
 
 ?>

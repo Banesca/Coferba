@@ -172,6 +172,33 @@ class Services extends REST_Controller
             }
         }
     }
+
+    public function addlicencia_post() {
+
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        $product= json_decode($this->services_model->insertLicence($this->post('service')));
+
+        if ($product->res == 1) {
+            $this->response(
+                [
+                    'response'        => "Registro exitoso",
+                    'idUserLinceseFk' => $product->id,
+                ],
+                200);
+        } else {
+            if ($product->res == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product->res == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
     /*
     public function update_post() {
 

@@ -130,13 +130,12 @@ class Services_model extends CI_Model {
 
         $this->db->insert('tb_client_services_smart_panic', [
                 'idClientServicesFk'         => $idClientServicesFk,
-                'idClientServicesSmartPanic' => $item['idClientServicesSmartPanic'],
                 'name'                       => $item['name'],
                 'idContracAssociated_SE'     => $item['idContracAssociated_SE'],
                 'dateUp'                     => $item['dateUp'],
                 'dateDown'                   => $item['dateDown'],
                 'idTypeMaintenanceFk'        => $item['idTypeMaintenanceFk'],
-                'companyMonitor'             => $item['companyMonitor'],
+                'idCompanyMonitorFK'      => $item['idCompanyMonitorFK'],
                 'sucribeNumber'              => $item['sucribeNumber'],
                 'idDetinationOfLicenseFk'    => $item['idDetinationOfLicenseFk'],
                 'idDepartmentFk'             => $item['idDepartmentFk'],
@@ -153,6 +152,8 @@ class Services_model extends CI_Model {
     }
 
     public function addcamera($item) {
+        $idClientServicesFk = $this->insertService($item['services']); // CREAMOS EL SERVICIO
+
         $this->db->insert('tb_client_services_camera', [
                 'name'                     => $item['services']['name'],
                 'idContracAssociated_SE'   => $item['services']['idContracAssociated_SE'],
@@ -177,7 +178,7 @@ class Services_model extends CI_Model {
                 'portHttp'                 => $item['services']['portHttp'],
                 'namePort'                 => $item['services']['namePort'],
                 'port'                     => $item['services']['port'],
-                //'idClientServicesFk'       => $idClientServicesFk, //esto no va debido a que pueden ser varios clientes
+                'idClientServicesFk'       => $idClientServicesFk,
             ]
         );
 
@@ -301,12 +302,37 @@ class Services_model extends CI_Model {
             $this->db->insert('tb_backup_energy', [
                     "idClientServicesCameraFk" => $id,
                     "description"              => $item['description'],
+                    "idBatteryFk"              => $item['idBatteryFk'],
                 ]
             );
         }
 
         return true;
     }
+
+    public function insertLicence($item) {
+        $this->db->insert('tb_user_license', [
+                "fullName"               => $item['fullName'],
+                "email"                  => $item['email'],
+                "phone"                  => $item['phone'],
+                "key"                    => $item['key'],
+                "isAndroidOperantSystem" => $item['isAndroidOperantSystem'],
+                "profileUser"            => $item['profileUser'],
+            ]
+        );
+
+        $id  = $this->db->insert_id();
+        $res = null;
+
+        if ($this->db->affected_rows() === 1) {
+            $res = 1;
+        } else {
+            $res = 0;
+        }
+
+        return json_encode([ 'id' => $id, 'res' => $res ]);
+    }
+
 
     /*
     public function update($product) {

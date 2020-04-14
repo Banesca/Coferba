@@ -7,7 +7,6 @@ class Util_model extends CI_Model
 	{
 		parent::__construct();
     }
-	  
 
 	public function getClientType() {
     
@@ -34,8 +33,6 @@ class Util_model extends CI_Model
 
         return $rs;
     }
-		
-		
 	
 	public function getLocalidad($idProvinceFk) {
     
@@ -51,6 +48,7 @@ class Util_model extends CI_Model
 
         return $rs;
 	}
+
     public function getAllLocalidades() {
     
         $query = null;
@@ -76,7 +74,6 @@ class Util_model extends CI_Model
 
         return $rs;
 	}
-
 
 	public function getTaxtype() {
     
@@ -105,6 +102,33 @@ class Util_model extends CI_Model
 
         return $rs;
 	}
+    public function getDetinationLicense() {
+
+        $query = null;
+        $rs = null;
+
+        $query =  $this->db->select("*")->from("tb_detination_of_license")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getDepartment() {
+
+        $query = null;
+        $rs = null;
+
+        $query =  $this->db->select("*")->from("tb_department")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
 
 	
 	
