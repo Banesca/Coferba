@@ -289,7 +289,7 @@
 								    <div class="col-xs-12 selectContainer">
 									    <!-- ######################################################################################################### -->
 									    <div class="input-group">
-					                      <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+					                      <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span> 
 	                                      <ui-select name="idAddressKf"  
 	                                      			 ng-required="((sysReg.idProfileKf==3 || sysReg.idProfileKf==5) && !sysReg.idTypeAttKf)" 
 	                                      			 ng-change="getDeparment(0,sysRegIdAddressKf.selected.idAdress); sysReg.idDepartmentKf=null; ListDpto=''" 
@@ -313,7 +313,7 @@
 								  <label style="padding-left: 15px;">Departamento</label>  
 								    <div class="col-xs-12 selectContainer">
 									    <div class="input-group">
-									    	<span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+									    	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 									  		<select name="idDepartmentKf" 
 									  				class="form-control" 
 									  				ng-disabled="dptoNotFound" 
@@ -2033,27 +2033,27 @@
 			                    <tr>
 			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">Numero serie Fabricante</span></td>
 			                          <td>
-			                            <label class="switch ">
+			                            <label class="switch switch-3x">
 			                                <input type="checkbox" class="success"ng-model="newProduct.product.isNumberSerieFabric" id="isNumberSerieFabric">
-			                                <span class="slider round nslider nround"></span>
+			                                <span class="slider slider-3x flat"></span>
 			                            </label>
 			                          </td>
 			                      </tr>
 			                    <tr>
 			                      <td style="width: 200%"><span class="text text-muted text-uppercase text-box">Numero serie Interno</span></td>
 			                          <td>
-			                            <label class="switch ">
+			                            <label class="switch switch-3x">
 			                                <input type="checkbox" class="success"ng-model="newProduct.product.isNumberSerieInternal" id="isNumberSerieInternal">
-			                                <span class="slider round nslider nround"></span>
+			                                <span class="slider slider-3x flat"></span>
 			                            </label>
 			                          </td>
 			                      </tr>
 			                    <tr>
 			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">Fecha vencimiento</span></td>
 			                          <td>
-			                            <label class="switch ">
+			                            <label class="switch switch-3x">
 			                                <input type="checkbox" class="success"ng-model="newProduct.product.isDateExpiration" id="isDateExpiration">
-			                                <span class="slider round nslider nround"></span>
+			                                <span class="slider slider-3x flat"></span>
 			                            </label>
 			                          </td>
 			                      </tr>
@@ -2067,9 +2067,9 @@
 			                    <tr>
 			                      <td style="width: 200%"><span class="text-muted text-uppercase text-box">Control de Horario </span></td>
 			                          <td>
-			                            <label class="switch ">
+			                            <label class="switch switch-3x">
 			                                <input type="checkbox" class="success"ng-model="newProduct.product.isControlSchedule" id="isControlSchedule" ng-required="newProduct.product.idProductClassificationFk==1">
-			                                <span class="slider round nslider nround"></span>
+			                                <span class="slider slider-3x flat"></span>
 			                            </label>
 			                          </td>
 			                      </tr>
@@ -2078,13 +2078,14 @@
 			              </div>
 			              <!-- List of Open Devices Procuts-->
 			              <div ng-if="newProduct.product.idProductClassificationFk==3" class="form-group col-md-6">
-			                 <label class="clf-size clf-p-left">Dispositivos de Apertura <span style="margin-left: 100px;"> <button ng-disabled="diviceOpening==0 || diviceOpening==undefined" ng-click="addDeviceOpeningFn(diviceOpening)" class="btn btn-sm btn-success">Agregar</button></label>  
+			                 <label class="clf-size clf-p-left">Dispositivos de Apertura <span style="margin-left: 100px;"> <button ng-disabled="diviceOpening==0 || diviceOpening==undefined || list_divices.length==1 " ng-click="addDeviceOpeningFn(diviceOpening)" class="btn btn-sm btn-success">Agregar</button></label>  
 			                  <div class="col-xs-12 selectContainer">
 			                    <div class="input-group">
 			                      <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
 			                      <select name="diviceOpening" 
 			                          class="form-control" 
-			                          ng-change=""  
+			                          ng-change="" 
+			                          ng-disabled="list_divices.length==1" 
 			                          ng-options="item as item.diviceOpening for item in rsOpenDeviceProductsData" 
 			                          ng-required="newProduct.product.idProductClassificationFk==3"
 			                          autofocus
@@ -2206,27 +2207,27 @@
 			                  <tr>
 			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">Numero serie Fabricante</span></td>
 			                        <td>
-			                          <label class="switch ">
+			                          <label class="switch switch-3x">
 			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isNumberSerieFabric" id="updateisNumberSerieFabric">
-			                              <span class="slider round nslider nround"></span>
+			                              <span class="slider slider-3x flat"></span>
 			                          </label>
 			                        </td>
 			                    </tr>
 			                  <tr>
 			                    <td style="width: 200%"><span class="text text-muted text-uppercase text-box">Numero serie Interno</span></td>
 			                        <td>
-			                          <label class="switch ">
+			                          <label class="switch switch-3x">
 			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isNumberSerieInternal" id="updateisNumberSerieInternal">
-			                              <span class="slider round nslider nround"></span>
+			                              <span class="slider slider-3x flat"></span>
 			                          </label>
 			                        </td>
 			                    </tr>
 			                  <tr>
 			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">Fecha vencimiento</span></td>
 			                        <td>
-			                          <label class="switch ">
+			                          <label class="switch switch-3x">
 			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isDateExpiration" id="updateisDateExpiration">
-			                              <span class="slider round nslider nround"></span>
+			                              <span class="slider slider-3x flat"></span>
 			                          </label>
 			                        </td>
 			                    </tr>
@@ -2240,9 +2241,9 @@
 			                  <tr>
 			                    <td style="width: 200%"><span class="text-muted text-uppercase text-box">Control de Horario </span></td>
 			                        <td>
-			                          <label class="switch ">
+			                          <label class="switch switch-3x">
 			                              <input type="checkbox" class="success"ng-model="updateProduct.product.isControlSchedule" id="updateisControlSchedule" ng-required="updateProduct.product.idProductClassificationFk==1">
-			                              <span class="slider round nslider nround"></span>
+			                              <span class="slider slider-3x flat"></span>
 			                          </label>
 			                        </td>
 			                    </tr>
@@ -2251,13 +2252,14 @@
 			            </div>
 			            <!-- List of Open Devices Procuts-->
 			            <div ng-if="updateProduct.product.idProductClassificationFk==3" class="form-group col-md-6">
-			              <label class="clf-size clf-p-left">Dispositivos de Apertura <span style="margin-left: 100px;"> <button ng-disabled="diviceOpening==0 || diviceOpening==undefined" ng-click="addDeviceOpeningFn(diviceOpening)" class="btn btn-sm btn-success">Agregar</button></label>  
+			              <label class="clf-size clf-p-left">Dispositivos de Apertura <span style="margin-left: 100px;"> <button ng-disabled="diviceOpening==0 || diviceOpening==undefined || list_divices.length==1 " ng-click="addDeviceOpeningFn(diviceOpening)" class="btn btn-sm btn-success">Agregar</button></label>  
 			                <div class="col-xs-12 selectContainer">
 			                  <div class="input-group">
 			                    <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
 			                    <select name="updatediviceOpening" 
 			                        class="form-control" 
-			                        ng-change=""  
+			                        ng-change=""
+			                        ng-disabled="list_divices.length==1"  
 			                        ng-options="item as item.diviceOpening for item in rsOpenDeviceProductsData" 
 			                        ng-required="updateProduct.product.idProductClassificationFk==3 && list_id_divice.length==0"
 			                        autofocus

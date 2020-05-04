@@ -21,7 +21,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
             });   
           },
           getLocations: function(idProvince) {
-            console.log("[Utilities Services]: Get Locations of province id:"+idProvince);
+            //console.log("[Utilities Services]: Get Locations of province id:"+idProvince);
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Util/localidad/"+idProvince
@@ -33,9 +33,23 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     return response;
             });   
           },
+          getAllLocations: function() {
+            //console.log("[Utilities Services]: Get Locations:");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/localidades"
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    //console.log(rsJson);
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
           /*API GOB AR */
           getLocationsByName: function(locationName) {
-            console.log("[Utilities Services]: Get Locations By Name: "+locationName);
+            //console.log("[Utilities Services]: Get Locations By Name: "+locationName);
               return $http({
                     method : "GET",
                     url : "https://apis.datos.gob.ar/georef/api/localidades?provincia="+locationName+"&campos=nombre&max=100"
@@ -78,7 +92,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
           },
           /*API LOCAL */   
           getStates: function() {
-            console.log("[Utilities Services]: Get States ");
+            //console.log("[Utilities Services]: Get States ");
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Util/provincia/"
@@ -96,6 +110,19 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Util/taxtype"
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          categoryDepartament: function() {
+            //console.log("[Utilities Services]: Get Department Category ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/categoryDepartament"
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;

@@ -1,0 +1,147 @@
+<!-- Authorized Users -->
+<div id="customerParticularAddress" style="top: 130px;" class="modal fade modal-dialog-centered in" style="top: 130px;" role="dialog">
+    <div class="modal-dialog modal-md" >
+      <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+              <h3 class="modal-title">DATOS DE DIRECCIONES</h3>
+          </div>
+        <div class="modal-body">
+        	<!-- FORM CONTAINER-->
+        	<form class="form-horizontal" name="fCustomerParticularAddress" novalidate>
+          		<fieldset>
+					<!-- Address list-->
+				<div class="form-group col-md-12 n-padding-l n-padding-r" style="width: auto;">
+					<div style="margin-left: 200px;">
+				    	<label class="switch switch-1x">
+				    		<input type="checkbox" class="success" ng-change="list_particular_address.depto=''; list_particular_address.address.selected=undefined; list_particular_address.nameAddress=''" ng-model="list_particular_address.isBuilding" id="checkbuttonBuilding" style="margin: 0px !important; display: inherit !important;">
+							<span class="slider slider-1x flat"></span>
+						</label>
+				  		<label for="checkbuttonBuilding" style="cursor: pointer; font-weight: 600;">Edificio Cliente</label>
+					</div>
+					<!-- Address for customer differents than Particular -->
+					<div class="form-group col-md-6" ng-if="!list_particular_address.isBuilding">
+				      	<label style="padding-left: 15px;">Direcci&#243n</label> 
+				      	<div class="input-group">
+				      		<span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span> 
+							<input type="text" name="direccion" ng-model="list_particular_address.nameAddress" placeholder="Direcci&#243n" ng-keyup="getAddressByNameFn(list_particular_address.nameAddress)" class="form-control" required="true" />
+				      	</div>			                  	
+						<ul class="list-group" ng-if="rsAddress_API_Data_PCA.length>0">
+							<li class="list-group-item" ng-repeat="item in rsAddress_API_Data_PCA" ng-click="fillData(item, 'address', 'custom')"">{{item.nomenclatura}}</li>
+						</ul>
+					</div>
+					<!-- Address for customer differents than Particular -->
+					<!-- Address for customer Particular -->
+					<div class="form-group col-md-6 n-padding-l n-padding-r" ng-if="list_particular_address.isBuilding" >
+					  <label style="padding-left: 25px;">Direcci&#243n</label>  
+					    <div class="col-xs-12 selectContainer">
+						    <!-- ######################################################################################################### -->
+						    <div class="input-group">
+				              <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+				              <ui-select name="idAddressKf"  
+				              			 ng-required="list_particular_address.idClientTypeFk==5 && list_particular_address.isBuilding" 
+				              			 ng-change="getDeparment(0,list_particular_address.address.selected.idAdress); ListDpto=''" 
+				              			 ng-model="list_particular_address.address.selected" autofocus>
+
+				                  <ui-select-match allow-clear="true" placeholder="Todos">{{$select.selected.nameAdress}}</ui-select-match>
+				                    <ui-select-choices repeat="item in ListAddress | filter: $select.search">
+				                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
+				                        <!--<small>Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+				                        <small>Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+				                    </ui-select-choices>
+				                    <ui-select-no-choice>
+									    No hay resultados, contacte are de soporte.
+								  	</ui-select-no-choice>
+				                </ui-select>
+				            </div>
+					  </div>
+					</div>
+					<!-- Address for customer Particular -->
+					<!-- Deparments for customer Particular -->									
+					<div class="form-group col-md-6 n-padding-l n-padding-r" ng-if="(list_particular_address.isBuilding)">
+					  	<label style="padding-left: 25px;">Departamento</label>  
+					    <div class="col-xs-12 selectContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+						  		<select name="idDepartmentKf" 
+						  				class="form-control" 
+						  				ng-disabled="!list_particular_address.isBuilding || list_particular_address.address.selected==undefined" 
+						  				ng-options="item.idDepartment as item.departmentFloor for item in ListDpto" 
+						  				ng-required="(list_particular_address.isBuilding)" 
+						  				ng-model="list_particular_address.depto" autofocus >
+								    <option value=""></option>
+							    </select>
+						    </div>
+					  </div>
+					</div>						
+					<div class="form-group col-md-6 n-padding-l n-padding-r" ng-if="(!list_particular_address.isBuilding)">
+					  	<label style="padding-left: 25px;">Departamento</label>  
+					    <div class="col-xs-12 selectContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+						  		<input name="idDepartmentKf" 
+						  				class="form-control" 
+						  				placeholder="Piso - Depto: 1 - A"
+						  				ng-disabled="list_particular_address.isBuilding || list_particular_address.nameAddress==''" 
+						  				ng-required="(!list_particular_address.isBuilding)" 
+						  				ng-model="list_particular_address.depto" type="text" autofocus >
+								    <option value=""></option>
+							    </select>
+						    </div>
+					  </div>
+					</div>					
+					<!-- Deparments for customer Particular -->
+					<!-- State List-->
+				    <div class="form-group col-md-12" ng-if="!list_particular_address.isBuilding">
+				      <label style="padding-left: 15px;">Provincia</label> 
+				        <div class="input-group">
+				                <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+				                    <ui-select name="new_province" class="dropdown-select" ng-disabled="!list_particular_address.nameAddress" ng-model="list_particular_address.idProvinceFk.selected"  ng-change="getLocationByIdFn(list_particular_address.idProvinceFk.selected.idProvince); " required="list_particular_address.nameAddress" autofocus>
+				                        <ui-select-match placeholder="Seleccione una provincia">{{$select.selected.province | uppercase}}</ui-select-match>
+				                        <ui-select-choices repeat="item in rsStatesData | filter: $select.search">
+				                          <div ng-bind-html="item.province | highlight: $select.search"></div>
+				                            <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+				                            <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+				                        </ui-select-choices>
+				                    </ui-select>
+				        </div>
+				    </div>    														
+					<!-- Localidad list-->
+				    <div class="form-group col-md-12" ng-if="!list_particular_address.isBuilding">
+				      <label style="padding-left: 15px;">Localidad</label> 
+				        <div class="input-group">
+				                <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+				                    <ui-select name="new_Localidad" class="dropdown-select" ng-model="list_particular_address.idLocationFk.selected" ng-disabled="!list_particular_address.idProvinceFk.selected.idProvince" required="list_particular_address.nameAddress" autofocus>
+				                        <ui-select-match placeholder="Seleccione una localidad">{{$select.selected.location | uppercase}}</ui-select-match>
+				                        <ui-select-choices repeat="item in rsLocations_All | filter: $select.search">
+				                          <div ng-bind-html="item.location | highlight: $select.search"></div>
+				                            <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
+				                            <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
+				                        </ui-select-choices>
+				                    </ui-select>
+				        </div>
+			    </div>
+				<!-- Aclaraciones -->
+				<div class="form-group col-md-12">
+				  <label>Aclaraci&#243n</label> 
+			  		<textarea style="resize: none;" name="aclaracion" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="list_particular_address.clarification" ></textarea>
+				</div>				    
+				</fieldset>
+          	</form>
+          	<div class="clearfix"> </div> 
+        </div>
+      	<!-- Actions Button -->
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                    <button type="submit" ng-click="addParticularAddressFn('',list_particular_address);"  ng-disabled="fCustomerParticularAddress.$invalid" class="btn btn-labeled btn-success">
+                        <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Guardar</button>
+                    <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+                        <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- // Authorized Users -->			    

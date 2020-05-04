@@ -15,6 +15,7 @@ var app = angular.module('systemApp', ["module.LoginUser",
                                                "ngAnimate", 
                                             "ui.bootstrap",
                                        "angularFileUpload",
+                                             "ngclipboard",
                                              "angularCSS"]);
 /**************************************************************************
 *                                                                         *

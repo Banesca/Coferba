@@ -219,6 +219,7 @@ class Client_model extends CI_Model {
 
 
             $this->db->select("*")->from("tb_clients");
+            $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
             $quuery = $this->db->where("tb_clients.idClient =", $id)->get();
 
 
@@ -266,6 +267,7 @@ class Client_model extends CI_Model {
         } else {
 
             $this->db->select("*")->from("tb_clients");
+            $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
             $this->db->where("tb_clients.idStatusFk !=", -1);
 
 
@@ -399,7 +401,8 @@ class Client_model extends CI_Model {
 
                 if (count(@$client['list_schedule_atention']) > 0
                     && count(@$client['list_departament']) > 0
-                    && count(@$client['tb_client_ufc']) > 0
+                    && count(@$client['list_phone_contact']) > 0
+                    || count(@$client['tb_client_ufc']) > 0
                 ) {
 
                     // HORARIOS
@@ -430,6 +433,16 @@ class Client_model extends CI_Model {
                         );
                     }
 
+                    //  TELEFONOS DE CONTACTO
+                    foreach (@$client['list_phone_contact'] as $valor) {
+
+                        $this->db->insert('tb_client_phone_contact', [
+                                'idClientFk'   => $idClientFk,
+                                'phoneTag'     => $valor['phoneTag'],
+                                'phoneContact' => $valor['phoneContact'],
+                            ]
+                        );
+                    }
 
                     // OTRA UFC
                     foreach ($client['list_oter_ufc'] as $valor) {
@@ -494,7 +507,8 @@ class Client_model extends CI_Model {
 
         if (count(@$client['list_schedule_atention']) > 0
             && count(@$client['list_departament']) > 0
-            && count(@$client['list_oter_ufc']) > 0
+            && count(@$client['list_phone_contact']) > 0
+            || count(@$client['list_oter_ufc']) > 0
         ) {
             $this->db->delete('tb_client_schedule_atention', [ 'idClienteFk' => $client['idClient'] ]);
 
@@ -525,7 +539,17 @@ class Client_model extends CI_Model {
                     ]
                 );
             }
+            //  TELEFONOS
+            $this->db->delete('tb_client_phone_contact', [ 'idClientFk' => $client['idClient'] ]);
 
+            foreach ($client['list_phone_contact'] as $valor) {
+
+                $this->db->insert('tb_client_phone_contact', [
+                    'idClientFk'   => $valor['idClientFk'],
+                    'phoneTag'     => $valor['phoneTag'],
+                    'phoneContact' => $valor['phoneContact'],
+                ]);
+            }
             // OTRA UFC
             foreach ($client['list_oter_ufc'] as $valor) {
 
@@ -568,6 +592,7 @@ class Client_model extends CI_Model {
                     'idAgentFk'               => $client['idAgentFk'],
                     'businessName'            => $client['businessName'],
                     'CUIT'                    => $client['CUIT'],
+                    'idStatusFk'              => 1,
                     'idLocationFk'            => $client['idLocationFk'],
                     'idProvinceFk'            => $client['idProvinceFk'],
                     'mailServiceTecnic'       => $client['mailServiceTecnic'],
@@ -595,8 +620,8 @@ class Client_model extends CI_Model {
 
                 if (count(@$client['list_schedule_atention']) > 0
                     && count(@$client['list_phone_contact']) > 0
-                    && count(@$client['list_client_user']) > 0
-                    && count(@$client['list_oter_ufc']) > 0
+                    || count(@$client['list_client_user']) > 0
+                    || count(@$client['list_oter_ufc']) > 0
                 ) {
 
                     // HORARIOS
@@ -771,6 +796,7 @@ class Client_model extends CI_Model {
 
 
             $this->db->insert('tb_clients', [
+            		'idClientTypeFk'          => $client['idClientTypeFk'],
                     'address'                 => $client['address'],
                     'name'                    => $client['name'],
                     'addressLat'              => $client['addressLat'],
@@ -778,6 +804,7 @@ class Client_model extends CI_Model {
                     'idLocationFk'            => $client['idLocationFk'],
                     'idProvinceFk'            => $client['idProvinceFk'],
                     'isNotCliente'            => $client['isNotCliente'],
+                    'idStatusFk'              => 1,
                     'idClientCompaniFk'       => $client['idClientCompaniFk'],
                     'mailServiceTecnic'       => $client['mailServiceTecnic'],
                     'observationSericeTecnic' => $client['observationSericeTecnic'],
@@ -908,6 +935,7 @@ class Client_model extends CI_Model {
                     'addressLat'        => $client['addressLat'],
                     'addressLon'        => $client['addressLon'],
                     'idAgentFk'         => $client['idAgentFk'],
+                    'idStatusFk'        => 1,
                     'idLocationFk'      => $client['idLocationFk'],
                     'idProvinceFk'      => $client['idProvinceFk'],
                     'observation'       => $client['observation'],

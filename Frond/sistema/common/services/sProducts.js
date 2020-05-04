@@ -11,7 +11,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
             var sFilter=searchFilter;
             var sMsg=searchFilter==null||searchFilter==undefined?"All":searchFilter;
             console.log("[Products Services] => criterio de busqueda: "+sMsg);
-              return $http.post(serverHost+serverBackend+"Product/search",sFilter)
+              return $http.post(serverHost+serverBackend+"Product/search",sFilter,serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJson=response.data;
                   return rsJson;

@@ -11,7 +11,7 @@
             <!-- Filter Search -->          
             <div class="col-md-4 col-sm-12 col-xs-12">	            
             	<div class="input-group search-box-rule col-md-12 col-sm-12 col-xs-12">
-              		<input type="text" class="form-control" ng-change="search(searchboxfilter, false)"  ng-model="searchboxfilter" placeholder="Buscar..." style="border-radius: 4px;">
+              		<input type="text" class="form-control" ng-change="search(searchboxfilter, false)" ng-disabled="rsCustomerListData.status==404"  ng-model="searchboxfilter" placeholder="Buscar..." style="border-radius: 4px;">
             	</div>
             </div>
             <!-- Filter Type of Tenant For Admins ng-if="sysContent=='customer'"-->
@@ -19,34 +19,55 @@
                 <label style="padding-left: 15px;">Tipo de Cliente</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                    <select  name="filterTypeOfClient" ng-change="search(filterTypeOfClient.idClientType, true)" ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData "  class="form-control" ng-model="$parent.filterTypeOfClient">
+                    <select  name="filterTypeOfClient" ng-change="search(filterTypeOfClient.ClientType, true); getCustomersListByTypeFn(filterTypeOfClient.idClientType); onSelectCallback()" ng-options="(item.ClientType | uppercase) for item in rsCustomerTypeData " ng-disabled="rsCustomerListData.status==404"  class="form-control" ng-model="$parent.filterTypeOfClient">
                         <option value="" >Todos</option>
                     </select>
                 </div>
             </div>
             <!-- Company Name-->    
-          	<div class="col-md-3 col-sm-6">
-                <label style="padding-left: 15px;">Administracion</label>
+            <div class="col-md-3 col-sm-6">
+                <label class="clf-p-left">
+                  <span ng-if="filterTypeOfClient.idClientType==1">Cliente Administracion </span>
+                  <span ng-if="filterTypeOfClient.idClientType==2">Cliente Edificio</span>
+                  <span ng-if="filterTypeOfClient.idClientType==3">Cliente Empresa </span>
+                  <span ng-if="filterTypeOfClient.idClientType==4">Cliente Sucursal </span>
+                  <span ng-if="filterTypeOfClient.idClientType==5">Cliente Particular </span>
+                  <span ng-if="filterTypeOfClient.idClientType=='' || filterTypeOfClient.idClientType==undefined">Cliente </span>
+                </label>                             
                 <div class="input-group">
-                  <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-                    <ui-select class="dropdown-select" ng-model="$parent.filterCompanyKf.selected" ng-change="search(filterCompanyKf.selected.nameCompany, true); officeListByCompnayID(filterCompanyKf.selected.idCompany);" on-select="onSelectCallback()">
-                      <ui-select-match allow-clear="true" placeholder="Todos" >{{$select.selected.nameCompany}}</ui-select-match>
-                        <ui-select-choices repeat="item in listCompany | filter: $select.search">
-                          <div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
-                            <small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
-                        </ui-select-choices>
-                        <ui-select-no-choice>
-						    No hay resultados, contacte area de soporte.
-					  	</ui-select-no-choice>
-                    </ui-select>
+                      <span class="input-group-addon"><i class="fas fa-file-signature"></i></span>
+                          <ui-select name="new_admin_id" 
+                                      ng-disabled="rsCustomerListData.status==404" 
+                                      class="dropdown-select" 
+                                      ng-change="search(filterCustomerIdKf.selected.name, true);" 
+                                      ng-model="filterCustomerIdKf.selected"  
+                                      autofocus>
+                              <ui-select-match placeholder="Seleccione una opci&#243n">{{$select.selected.name | uppercase}}</ui-select-match>
+                              <ui-select-choices repeat="item in rsCustomerListByTypeData | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                                <small>Razon Social: </small>
+                                <small ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4 || item.idClientTypeFk==5" ng-bind-html="item.billing_information[0].businessNameBilling | highlight: $select.search" ng-bind-html="item.billing_information[0].businessNameBilling | highlight: $select.search"></small>
+                                <small ng-if="item.idClientTypeFk!=2 && item.idClientTypeFk!=4 && item.idClientTypeFk!=5" ng-bind-html="item.businessName | highlight: $select.search" ng-bind-html="item.billing_information[0].businessNameBilling | highlight: $select.search"></small>
+                              </ui-select-choices>
+                               <ui-select-no-choice>
+                                  <span ng-if="rsCustomerListByTypeData.length==0"><i class="fas fa-exclamation-triangle"> </i>&nbsp;No hay clientes registrados de tipo 
+                                    <span ng-if="filterTypeOfClient.idClientType==1"> Administracion </span>
+                                    <span ng-if="filterTypeOfClient.idClientType==2"> Edificio</span>
+                                    <span ng-if="filterTypeOfClient.idClientType==3"> Empresa </span>
+                                    <span ng-if="filterTypeOfClient.idClientType==4"> Sucursal </span>
+                                    <span ng-if="filterTypeOfClient.idClientType==5"> Particular </span>
+                                  </span>
+                                  <span ng-if="rsCustomerListData.status==404"><i class="fas fa-exclamation-triangle"> </i>&nbsp;No hay clientes registrados</span>
+                               </ui-select-no-choice>
+                          </ui-select>
                 </div>
-          	</div>               		
+            </div>              		
             <div class="btn-group-mg-top-s col-md-2"><br>         
         		<!-- Search button-->
         		<!--<button data-toggle="tooltip" data-placement="top" title="Buscar cliente" type="button" ng-click="" class="btn btn-md btn-labeled btn-success"><span class="btn-label"><i class="fas fa-search"></i> </span>Buscar</button>-->
 				<!-- //Search button -->
 				<!-- New Customer button -->
-        		<button data-toggle="tooltip" data-placement="top" title="Nuevo Cliente" type="button" ng-click="fnCustomers('newClient','new','')" class="btn btn-md btn-labeled btn-info"><span class="btn-label"><i class="glyphicon glyphicon-plus"></i> </span>Nuevo</button>
+        		<button data-toggle="tooltip" data-placement="top" title="Nuevo Cliente" type="button" ng-click="switchCustomersFn('new','')" class="btn btn-md btn-labeled btn-info"><span class="btn-label"><i class="glyphicon glyphicon-plus"></i> </span>Nuevo</button>
             </div>
     	</div>
 	</div>
@@ -54,26 +75,16 @@
         <!-- TABLE LIST WHERE IS DISPLAYED THE CUSTOMER -->
         <div ng-include="'views/customer/listCustomers.html'"></div>
         <!-- PAGINATION -->
-        <div>
-          	<ul class="pager">
-                <li ng-class="{disabled: currentPage == 0}">
-                  <a href ng-click="prevPage()">« Anterior</a>
-                </li>
-                <!--<li ng-repeat="n in range(pagedItems.length)[currentPage]"
-                    ng-class="{active: n == currentPage}"
-                    ng-click="setPage()">
-                  <a href ng-bind="n + 1">1</a>
-                </li>-->
-                <span style="margin-top:-5px" class="badge badge-success">{{currentPage+1}} / {{pagedItems.length}}</span>
-                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
-                  <a href ng-click="nextPage()">Siguiente »</a>
-                </li>
-            </ul>
-		</div>
-	</div>	     
+        <div ng-if="rsCustomerListData.length>10" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>  
     </div>
   </div>
 </div>
 <div ng-include="'views/customer/formAuthUser.html'"></div>
 <div ng-include="'views/customer/formAttachCustomerFiles.html'"></div>
 <div ng-include="'views/customer/formRegisterCustomer.html'"></div>
+<div ng-include="'views/customer/formUpdateCustomer.html'"></div>
+<div ng-include="'views/customer/phonesandschedule.html'"></div>
+<div ng-include="'views/customer/mailscontact.html'"></div>
+<div ng-include="'views/customer/multiLoadDepto.html'"></div>
+<div ng-include="'views/customer/otherFunctionalUnits.html'"></div>
+<div ng-include="'views/customer/customer_particular_address.html'"></div>
