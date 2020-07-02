@@ -1,4 +1,5 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (! defined('BASEPATH'))
+    exit('No direct script access allowed');
 require APPPATH.'/libraries/REST_Controller.php';
 
 class Util extends REST_Controller {
@@ -109,6 +110,17 @@ class Util extends REST_Controller {
 
         if (! is_null($user)) {
             $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
+    public function adress_get() {
+        $adressEdi = null;
+        $adressEdi = $this->util_model->getAdressClientEdificio();
+
+        if (! is_null($adressEdi)) {
+            $this->response($adressEdi, 200);
         } else {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }

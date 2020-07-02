@@ -451,6 +451,15 @@
 						"url": "http://localhost/alejandro/Coferba/Back/index.php/Util/agent"
 					},
 					"response": []
+				},
+				{
+					"name": "Lista de direcciones de clientes tipo Edificio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/adress"
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}

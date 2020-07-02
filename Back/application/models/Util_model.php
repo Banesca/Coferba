@@ -1,113 +1,113 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (! defined('BASEPATH'))
+    exit('No direct script access allowed');
 
-class Util_model extends CI_Model
-{
-	
-	public function __construct()
-	{
-		parent::__construct();
+class Util_model extends CI_Model {
+
+    public function __construct() {
+        parent::__construct();
     }
 
-	public function getClientType() {
-    
-        $query = null;
-        $rs = null;
-
-        $query =  $this->db->select("*")->from("tb_client_type")->get();
-        if ($query->num_rows() > 0) {
-            $rs = $query->result_array();          
-        }
-
-        return $rs;
-	}
-	
-	public function getAgent() {
-    
-        $query = null;
-        $rs = null;
-
-        $query =  $this->db->select("*")->from("tb_agents")->get();
-        if ($query->num_rows() > 0) {
-            $rs = $query->result_array();          
-        }
-
-        return $rs;
-    }
-	
-	public function getLocalidad($idProvinceFk) {
-    
-        $query = null;
-        $rs = null;
-
-        $query =  $this->db->select("*")->from("tb_location")
-        ->where("tb_location.idProvinceFk =", $idProvinceFk)
-        ->get();
-        if ($query->num_rows() > 0) {
-            $rs = $query->result_array();          
-        }
-
-        return $rs;
-	}
-
-    public function getAllLocalidades() {
-    
-        $query = null;
-        $rs = null;
-
-        $query =  $this->db->select("*")->from("tb_location")->get();
-        if ($query->num_rows() > 0) {
-            $rs = $query->result_array();          
-        }
-
-        return $rs;
-    }	
-
-	public function getProvincia() {
-    
-        $query = null;
-        $rs = null;
-
-		$query =  $this->db->select("*")->from("tb_province")->get();
-        if ($query->num_rows() > 0) {
-            $rs = $query->result_array();          
-        }
-
-        return $rs;
-	}
-
-	public function getTaxtype() {
-    
-        $query = null;
-        $rs = null;
-
-		$query =  $this->db->select("*")->from("tb_tax")
-		->get();
-        if ($query->num_rows() > 0) {
-            $rs = $query->result_array();          
-        }
-
-        return $rs;
-	}
-
-	public function getCategoryDepartament() {
+    public function getClientType() {
 
         $query = null;
-        $rs = null;
+        $rs    = null;
 
-		$query =  $this->db->select("*")->from("tb_category_departament")
-		->get();
+        $query = $this->db->select("*")->from("tb_client_type")->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
         }
 
         return $rs;
-	}
+    }
+
+    public function getAgent() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_agents")->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getLocalidad($idProvinceFk) {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_location")
+            ->where("tb_location.idProvinceFk =", $idProvinceFk)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getAllLocalidades() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_location")->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getProvincia() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_province")->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getTaxtype() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_tax")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getCategoryDepartament() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_category_departament")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
     public function getDetinationLicense() {
 
         $query = null;
-        $rs = null;
+        $rs    = null;
 
-        $query =  $this->db->select("*")->from("tb_detination_of_license")
+        $query = $this->db->select("*")->from("tb_detination_of_license")
             ->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
@@ -119,9 +119,9 @@ class Util_model extends CI_Model
     public function getDepartment() {
 
         $query = null;
-        $rs = null;
+        $rs    = null;
 
-        $query =  $this->db->select("*")->from("tb_department")
+        $query = $this->db->select("*")->from("tb_department")
             ->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
@@ -130,8 +130,31 @@ class Util_model extends CI_Model
         return $rs;
     }
 
-	
-	
-		
+    public function getAdressClientEdificio() {
+
+        $query = null;
+        $rs    = null;
+        $query = $this->db->select("tb_clients.`address`,
+              tb_clients.`addressLon`,
+              tb_clients.`addressLat`,
+              tb_clients.`idLocationFk`,
+              tb_clients.`idProvinceFk`,
+              tb_location.`location`,
+              tb_province.`province`")
+            ->from("tb_clients,tb_location,tb_province")
+            ->where("tb_clients.idLocationFk = `tb_location`.`idLocation`
+              AND tb_clients.idProvinceFk = tb_province.`idProvince`
+              AND tb_clients.`idClientTypeFk` = 2")
+            ->get();
+
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+
 }
+
 ?>
