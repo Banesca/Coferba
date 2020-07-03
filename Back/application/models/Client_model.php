@@ -1,4 +1,5 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (! defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Client_model extends CI_Model {
 
@@ -9,9 +10,7 @@ class Client_model extends CI_Model {
 
     // ADMINISTRADORES //
     public function addAdmin($client) {
-
         $user = null;
-
         $this->db->select("*")->from("tb_clients");
         $this->db->where("tb_clients.name =", $client['name']);
         $query = $this->db->where("tb_clients.idClientTypeFk =", $client['idClientTypeFk'])->get();
@@ -41,6 +40,7 @@ class Client_model extends CI_Model {
                     'mailCollection'          => $client['mailCollection'],
                     'observationCollection'   => $client['observationCollection'],
                     'idClientCompaniFk'       => $client['idClientCompaniFk'],
+                    'idZonaFk'                => @$client['idZonaFk'],
 
                 ]
             );
@@ -113,6 +113,8 @@ class Client_model extends CI_Model {
 
     public function updateAdmin($client) {
 
+
+
         $this->db->set(
             [
                 'idClientTypeFk'          => $client['idClientTypeFk'],
@@ -137,6 +139,7 @@ class Client_model extends CI_Model {
                 'mailCollection'          => $client['mailCollection'],
                 'observationCollection'   => $client['observationCollection'],
                 'idClientCompaniFk'       => $client['idClientCompaniFk'],
+                'idZonaFk'                => @$client['idZonaFk'],
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
@@ -382,6 +385,7 @@ class Client_model extends CI_Model {
                     'observationCollection'   => $client['observationCollection'],
                     'observation'             => $client['observation'],
                     'idStatusFk'              => 1,
+                    'idZonaFk'                => @$client['idZonaFk'],
                 ]
             );
 
@@ -490,6 +494,7 @@ class Client_model extends CI_Model {
                 'observationCollection'   => $client['observationCollection'],
                 'observation'             => $client['observation'],
                 'idStatusFk'              => $client['idStatusFk'],
+                'idZonaFk'                => @$client['idZonaFk'],
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
@@ -601,6 +606,7 @@ class Client_model extends CI_Model {
                     'observationCollection'   => $client['observationCollection'],
                     'pageWeb'                 => $client['pageWeb'],
                     'observation'             => $client['observation'],
+                    'idZonaFk'                => @$client['idZonaFk'],
                 ]
             );
 
@@ -704,6 +710,7 @@ class Client_model extends CI_Model {
                 'observationCollection'   => $client['observationCollection'],
                 'pageWeb'                 => $client['pageWeb'],
                 'observation'             => $client['observation'],
+                'idZonaFk'                => @$client['idZonaFk'],
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
@@ -796,7 +803,7 @@ class Client_model extends CI_Model {
 
 
             $this->db->insert('tb_clients', [
-            		'idClientTypeFk'          => $client['idClientTypeFk'],
+                    'idClientTypeFk'          => $client['idClientTypeFk'],
                     'address'                 => $client['address'],
                     'name'                    => $client['name'],
                     'addressLat'              => $client['addressLat'],
@@ -811,6 +818,7 @@ class Client_model extends CI_Model {
                     'mailCollection'          => $client['mailCollection'],
                     'observationCollection'   => $client['observationCollection'],
                     'observation'             => $client['observation'],
+                    'idZonaFk'                => @$client['idZonaFk'],
                 ]
             );
 
@@ -877,6 +885,7 @@ class Client_model extends CI_Model {
                 'mailCollection'          => $client['mailCollection'],
                 'observationCollection'   => $client['observationCollection'],
                 'observation'             => $client['observation'],
+                'idZonaFk'                => @$client['idZonaFk'],
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
@@ -942,6 +951,7 @@ class Client_model extends CI_Model {
                     'mailServiceTecnic' => $client['mailServiceTecnic'],
                     'mobile'            => $client['mobile'],
                     'mailCollection'    => $client['mailCollection'],
+                    'idZonaFk'          => @$client['idZonaFk'],
                 ]
             );
 
@@ -1019,6 +1029,7 @@ class Client_model extends CI_Model {
                 'mailServiceTecnic' => $client['mailServiceTecnic'],
                 'mobile'            => $client['mobile'],
                 'mailCollection'    => $client['mailCollection'],
+                'idZonaFk'          => @$client['idZonaFk'],
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 

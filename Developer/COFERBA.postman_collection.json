@@ -481,9 +481,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":1,\n\t\t\t\"name\":\"te1ddxt\",\n\t\t\t\"address\":\"text\",\n\t\t\t\"addressLat\":\"text\",\n\t\t\t\"addressLon\":\"text\",\n\t\t\t\"idAgentFk\":1,\n\t\t\t\"businessName\":\"text2\",\n\t\t\t\"CUIT\":\"text\",\n\t\t\t\"idLocationFk\":1,\n\t\t\t\"idProvinceFk\":1,\n\t\t\t\"mobile\":\"text\",\n\t\t\t\"mail\":\"text\",\n\t\t\t\"observation\":\"text\",\n\t\t\t\"pageWeb\":\"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"mailFronKey\":\"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"isNotCliente\":0,\n\t\t\t\"idClientAdminFk\":1,\n\t\t\t\"mailServiceTecnic\":\"text\",\n\t\t\t\"observationSericeTecnic\":\"text\",\n\t\t\t\"mailCollection\":\"text\",\n\t\t\t\"observationCollection\":\"text\",\n\t\t\t\"idClientCompaniFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"phoneTag\":\"123123\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"phoneTag\":\"123123\"\n\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClientTypeFk\": 1,\n\t\t\"name\": \"te1ddxgfhgh4hj5545t\",\n\t\t\"address\": \"text\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"text2\",\n\t\t\"CUIT\": \"text\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mobile\": \"text\",\n\t\t\"mail\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"pageWeb\": \"text\",\n\t\t\"idStatusFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"isNotCliente\": 0,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/admin"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/admin"
 					},
 					"response": []
 				},
@@ -501,9 +501,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":5,\n\t\t\t\t\t\"name\" : \"TEST PARdTICaULR\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"mobile\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\"\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_address_particular\":\n\t\t\t[\n\t\t\t    {\n\t\t\t    \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClientTypeFk\": 5,\n\t\t\"name\": \"TEST PARdTICaULR\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idAgentFk\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"observation\": \"TEST\",\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"mobile\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\"\n\t\t\t}\n\t\t],\n\t\t\"list_address_particular\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1,\n\t\t\t\t\"address\": \"TEST\",\n\t\t\t\t\"depto\": \"depto\",\n\t\t\t\t\"isBuilding\": 1,\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idLocationFk\": 1,\n\t\t\t\t\"clarification\": \"TEST\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1,\n\t\t\t\t\"address\": \"TEST\",\n\t\t\t\t\"depto\": \"depto\",\n\t\t\t\t\"isBuilding\": 1,\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idLocationFk\": 1,\n\t\t\t\t\"clarification\": \"TEST\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/particular"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/particular"
 					},
 					"response": []
 				},
@@ -521,7 +521,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\" : 4,\n\t\t\t\t\t\"name\" : \"TESTs\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"isNotCliente\" : 1,\n\t\t\t\t\t\"idClientCompaniFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\n\t\t\t\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClientTypeFk\": 4,\n\t\t\"name\": \"TESTs\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/branch"
 					},
@@ -541,7 +541,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\" : 3,\n\t\t\t\t\t\"name\" : \"jorge\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"businessName\" : \"TEST\",\n\t\t\t\t\t\"CUIT\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"pageWeb\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\"\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\"\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_oter_ufc\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test1\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test2\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClientTypeFk\": 3,\n\t\t\"name\": \"jorge\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"TEST\",\n\t\t\"CUIT\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"pageWeb\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\"\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2\n\t\t\t}\n\t\t],\n\t\t\"list_oter_ufc\": [\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test1\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test2\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/company"
 					},
@@ -561,7 +561,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t    \"idClient\":3,\n\t\t\t\"idClientTypeFk\": 2,\n\t\t\t\"name\": \"empresa ediatda\",\n\t\t\t\"address\": \"caba\",\n\t\t\t\"addressLat\": \"text\",\n\t\t\t\"addressLon\": \"text\",\n\t\t\t\"idAgentFk\": 1,\n\t\t\t\"isNotCliente\": 1,\n\t\t\t\"idClientAdminFk\": 1,\n\t\t\t\"mailFronKey\": \"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"mailServiceTecnic\": \"text\",\n\t\t\t\"observationSericeTecnic\": \"text\",\n\t\t\t\"mailCollection\": \"text\",\n\t\t\t\"observationCollection\": \"text\",\n\t\t\t\"observation\": \"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t        \n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\n\t\t\t\"list_departament\":\n\t\t\t[\n\t\t\t    { \n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 3,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"name\": \"empresa ediatda\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idStatusFk\": 1,\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatebuilding"
 					},
@@ -581,7 +581,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\t\"idClientTypeFk\": 2,\n\t\t\t\"name\": \"empresa\",\n\t\t\t\"address\": \"caba\",\n\t\t\t\"addressLat\": \"text\",\n\t\t\t\"addressLon\": \"text\",\n\t\t\t\"idAgentFk\": 1,\n\t\t\t\"isNotCliente\": 1,\n\t\t\t\"idClientAdminFk\": 1,\n\t\t\t\"mailFronKey\": \"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"mailServiceTecnic\": \"text\",\n\t\t\t\"observationSericeTecnic\": \"text\",\n\t\t\t\"mailCollection\": \"text\",\n\t\t\t\"observationCollection\": \"text\",\n\t\t\t\"observation\": \"text\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\n\t\t\t\"list_departament\":\n\t\t\t[\n\t\t\t    { \n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"floor\":\"1\",\n\t\t\t        \"departament\":\"departament\",\n\t\t\t        \"idCategoryDepartamentFk\":\"idCategoryDepartamentFk\"\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClientTypeFk\": 2,\n\t\t\"name\": \"empresa\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/building"
 					},
@@ -601,9 +601,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClient\":1,\n\t\t\"idClientTypeFk\":1,\n\t\t\t\"name\":\"edite\",\n\t\t\t\"address\":\"text\",\n\t\t\t\"addressLat\":\"text\",\n\t\t\t\"addressLon\":\"text\",\n\t\t\t\"idAgentFk\":1,\n\t\t\t\"businessName\":\"text2\",\n\t\t\t\"CUIT\":\"text\",\n\t\t\t\"idLocationFk\":1,\n\t\t\t\"idProvinceFk\":1,\n\t\t\t\"mobile\":\"text\",\n\t\t\t\"mail\":\"text\",\n\t\t\t\"observation\":\"text\",\n\t\t\t\"pageWeb\":\"text\",\n\t\t\t\"idStatusFk\":1,\n\t\t\t\"mailFronKey\":\"text\",\n\t\t\t\"observationOrderKey\":\"text\",\n\t\t\t\"isNotCliente\":0,\n\t\t\t\"idClientAdminFk\":1,\n\t\t\t\"mailServiceTecnic\":\"text\",\n\t\t\t\"observationSericeTecnic\":\"text\",\n\t\t\t\"mailCollection\":\"text\",\n\t\t\t\"observationCollection\":\"text\",\n\t\t\t\"idClientCompaniFk\":1,\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 1,\n\t\t\"idClientTypeFk\": 1,\n\t\t\"name\": \"edite\",\n\t\t\"address\": \"text\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"text2\",\n\t\t\"CUIT\": \"text\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mobile\": \"text\",\n\t\t\"mail\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"pageWeb\": \"text\",\n\t\t\"idStatusFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"isNotCliente\": 0,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n\t\t\t\"idClienteFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\",\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\",\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"idClientFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\",\n\t\t\t\t\"idClientFk\": 1\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1,\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2,\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updateadmin"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updateadmin"
 					},
 					"response": []
 				},
@@ -621,7 +621,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\t\"idClient\":12,\n\t\t\t\"name\" : \"TEST PARdTICaULR editado\",\n\t\t\t\"address\" : \"TEST\",\n\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\"idAgentFk\" : 1,\n\t\t\t\"idLocationFk\" : 1,\n\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\"mobile\" : \"TEST\",\n\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_address_particular\":\n\t\t\t[\n\t\t\t    {\n\t\t\t    \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \t\"idUserFk\":1,\n\t\t\t        \"address\":\"TEST\",\n\t\t\t        \"depto\":\"depto\",\n\t\t\t        \"isBuilding\":1,\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idLocationFk\":1,\n\t\t\t        \"clarification\":\"TEST\"\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ]\n\t\t\t\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 12,\n\t\t\"name\": \"TEST PARdTICaULR editado\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idAgentFk\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"observation\": \"TEST\",\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"mobile\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n\t\t\t\"idClienteFk\": 1\n\t\t},\n\t\t\"list_address_particular\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1,\n\t\t\t\t\"address\": \"TEST\",\n\t\t\t\t\"depto\": \"depto\",\n\t\t\t\t\"isBuilding\": 1,\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idLocationFk\": 1,\n\t\t\t\t\"clarification\": \"TEST\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1,\n\t\t\t\t\"address\": \"TEST\",\n\t\t\t\t\"depto\": \"depto\",\n\t\t\t\t\"isBuilding\": 1,\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idLocationFk\": 1,\n\t\t\t\t\"clarification\": \"TEST\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"idClientFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\",\n\t\t\t\t\"idClientFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updateparticular"
 					},
@@ -641,7 +641,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClientTypeFk\":4,\n\t\t\"idClient\":9,\n\t\t\"name\" : \"jorge edito\",\n\t\t\"address\" : \"TEST\",\n\t\t\"addressLat\" : \"TEST\",\n\t\t\"addressLon\" : \"TEST\",\n\t\t\"idLocationFk\" : 1,\n\t\t\"idProvinceFk\" : 1,\n\t\t\"isNotCliente\" : 1,\n\t\t\"idClientCompaniFk\" : 1,\n\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\"mailCollection\" : \"TEST\",\n\t\t\"observationCollection\" : \"TEST\",\n\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\n\t\t\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClientTypeFk\": 4,\n\t\t\"idClient\": 9,\n\t\t\"name\": \"jorge edito\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n\t\t\t\"idClienteFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\",\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\",\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatebranch"
 					},
@@ -661,7 +661,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\":\n\t{\n\t\t\"idClient\":4,\n\t\t\t\"name\" : \"edite la empresa TESaT\",\n\t\t\t\t\t\"address\" : \"TEST\",\n\t\t\t\t\t\"addressLat\" : \"TEST\",\n\t\t\t\t\t\"addressLon\" : \"TEST\",\n\t\t\t\t\t\"idAgentFk\" : 1,\n\t\t\t\t\t\"businessName\" : \"TEST\",\n\t\t\t\t\t\"CUIT\" : \"TEST\",\n\t\t\t\t\t\"idLocationFk\" : 1,\n\t\t\t\t\t\"idProvinceFk\" : 1,\n\t\t\t\t\t\"mailServiceTecnic\" : \"TEST\",\n\t\t\t\t\t\"observationSericeTecnic\" : \"TEST\",\n\t\t\t\t\t\"mailCollection\" : \"TEST\",\n\t\t\t\t\t\"observationCollection\" : \"TEST\",\n\t\t\t\t\t\"pageWeb\" : \"TEST\",\n\t\t\t\t\t\"observation\" : \"TEST\",\n\t\t\t\"billing_information\": {\n\t\t\t    \"businessNameBilling\":\"text\",\n\t\t\t    \"cuitBilling\":\"text\",\n\t\t\t    \"idLocationBillingFk\":1,\n\t\t\t    \"idProvinceBillingFk\":1,\n\t\t\t    \"idTypeTaxFk\":1,\n\t\t\t    \"idClienteFk\":1\n\t\t\t},\n\t\t\t\n\t\t\t\"list_schedule_atention\":[\n\t\t\t    {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"day\":\"text\",\n\t\t\t        \"fronAm\":\"text\",\n\t\t\t        \"toAm\":\"text\",\n\t\t\t        \"fronPm\":\"text\",\n\t\t\t        \"toPm\":\"text\",\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\n\t\t\t\"list_phone_contact\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    },\n\t\t\t    {\n\t\t\t        \"phoneContact\":\"text2\",\n\t\t\t        \"idClientFk\":1\n\t\t\t    }\n\t\t\t    ],\n\t\t\t\"list_client_user\":\n\t\t\t[\n\t\t\t    {\n\t\t\t       \n\t\t\t        \"idUserFk\":1,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idUserFk\":2,\n\t\t\t        \"idClienteFk\":1\n\t\t\t    }\n\t\t\t],\"list_oter_ufc\":\n\t\t\t[\n\t\t\t    {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"EDITADO 111\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    },\n\t\t\t     {\n\t\t\t        \"idClientFk\":1,\n\t\t\t        \"identificador\":\"test2\",\n\t\t\t        \"idProvinceFk\":1,\n\t\t\t        \"idTypeTaxFk\":1\n\t\t\t    }\n\t\t\t]\n\t\t\t\t}\n\t\t\t}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 4,\n\t\t\"name\": \"edite la empresa TESaT\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"TEST\",\n\t\t\"CUIT\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"pageWeb\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n\t\t\t\"idClienteFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\",\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\",\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"idClientFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\",\n\t\t\t\t\"idClientFk\": 1\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1,\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2,\n\t\t\t\t\"idClienteFk\": 1\n\t\t\t}\n\t\t],\n\t\t\"list_oter_ufc\": [\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"EDITADO 111\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test2\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/updatecompany"
 					},
@@ -1022,6 +1022,90 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zonas",
+			"item": [
+				{
+					"name": "Agregar Zona",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"zona\": {\r\n        \"n_zona\": \"4\",\r\n        \"descripcion\": \"ziba en reclamacion\",\r\n        \"costo_envio\": \"45\",\r\n        \"valor_envio\": \"455\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/add"
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Zona",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"zona\": {\r\n        \"idZona\":\"1\",\r\n        \"n_zona\": \"5\",\r\n        \"descripcion\": \"ziba en reclamacion\",\r\n        \"costo_envio\": \"45\",\r\n        \"valor_envio\": \"455\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Zonas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Zona",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/delete/1"
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
