@@ -18,35 +18,15 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                         <input type="text" name="Agent" class="form-control" ng-model="otherFU.identificador" required autofocus >
                       </div>
-                </div>              
-                <!-- State List-->
-                <div class="form-group col-md-12">
-                  <label style="padding-left: 15px;">Provincia</label> 
-                    <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
-                                <ui-select name="new_province" class="dropdown-select" ng-disabled="!otherFU.identificador" ng-model="otherFU.idProvinceFk.selected" required autofocus>
-                                    <ui-select-match placeholder="Seleccione una provincia">{{$select.selected.province | uppercase}}</ui-select-match>
-                                    <ui-select-choices repeat="item in rsStatesData | filter: $select.search">
-                                      <div ng-bind-html="item.province | highlight: $select.search"></div>
-                                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
-                                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
-                                    </ui-select-choices>
-                                     <ui-select-no-choice>
-                                      <span ng-if="rsStatesData.length==0"><i class="fas fa-exclamation-triangle"> </i>&nbsp;No se encontraron resultados </span>
-                                    </ui-select-no-choice>
-                                </ui-select>
-                    </div>
-                </div> 
-                <!-- Type of IVA -->
+                </div>     
+                <!-- Unit Desiption -->
                 <div class="form-group col-md-12" > 
-                  <label style="padding-left: 15px;">Tipo de IVA</label>
+                    <label style="padding-left: 15px;">Descripcion</label>
                       <div class="input-group">
-                          <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-                          <select name="typeOfIVA" class="form-control"  ng-options="item.idTypeTax as item.typeTax for item in rsTypeOfIVAData" ng-model="otherFU.idTypeTaxFk" required autofocus>
-                            <option value="">Seleccione una opci&#243n</option>
-                          </select>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                        <input type="text" name="Agent" class="form-control" ng-model="otherFU.description" required autofocus >
                       </div>
-                </div>
+                </div>    
                 <button title="Agregar Unidad Funcional" ng-disabled="fOtherFunctUnits.$invalid" ng-click="otherFunctionalUnitsFn('add', otherFU)" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button>                                         
           	</div>
             <div class="col-md-6 col-sm-6">

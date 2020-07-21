@@ -5,9 +5,10 @@
           <th width="2%">ID</th>
           <th width="20%"><i class="glyphicon glyphicon-user"> </i> Nombres</th>
           <th width="20%"><i class="fas fa-file-signature"> </i> Raz&#243n Social</th>
-          <th width="30%"><i class="glyphicon glyphicon-envelope"> </i> Emails</th>
+          <th width="20%"><i class="glyphicon glyphicon-envelope"> </i> Emails</th>
           <th width="7%"><i class="glyphicon glyphicon-user"> </i>Tipo de cliente</th>
           <th width="4%"><i class="glyphicon icon-flag"> </i> Status</th>
+          <th ><i class="fas fa-ellipsis-h"> </i> Opciones</th>
           <!--<th><i class="glyphicon icon-calendar"> </i> Registrado</th>-->
       </tr>
     </thead>
@@ -57,17 +58,17 @@
         </td>
         <td>
         	<div class="btn-group">
-              <button class="btn btn-info btn-sm">opciones</button>
-		           <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+              <button class="btn btn-info btn-sm btn-xs"><i class="fas fa-bars"></i></button>
+		           <button type="button" class="btn btn-info  btn-sm btn-xs dropdown-toggle" data-toggle="dropdown">
 		           <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="" ng-click="switchCustomersFn('edit', item);"><i title="Modificar Datos" class="fas fa-user-edit"></i>  Editar</a></li>
                 <li role="presentation"><div class="divider"></div>
-                <li><a href="" ng-click="switchCustomersFn('enabled', item)"><i title="Activar Usuario" class="far fa-check-circle"></i> Activar</a></li>
+                <!--<li><a href="" ng-click="switchCustomersFn('enabled', item)"><i title="Activar Usuario" class="far fa-check-circle"></i> Activar</a></li>
                 <li role="presentation"><div class="divider"></div>
                 <li><a href="" ng-click="switchCustomersFn('disabled',item)"><i title="Desactivar Usuario" class="fas fa-times-circle"></i> Desactivar</a></li>
-                <li role="presentation"><div class="divider"></div></li>
+                <li role="presentation"><div class="divider"></div></li>-->
                 <li><a href="" ng-click="switchCustomersFn('remove', item)"><i title="Eliminar Usuario" class="fas fa-user-times"></i> Eliminar</a></li>
                 <li role="presentation"><div class="divider"></div>
         				<li><a href="" ng-click="switchCustomersFn('services', item)"><i title="Eliminar Usuario" class="fas fa-globe"></i> Servicios</a></li>
@@ -77,8 +78,8 @@
         				<li><a href="" ng-click="switchCustomersFn('uploadFiles', item)"><i title="Eliminar Usuario" class="fas fa-paperclip"></i> Adjuntos</a></li>               	
               </ul>             	
           </div>
-          <button ng-click="switchCustomersFn('phonesandschedule', item)" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Ver telefonos & horario"><i class="glyphicon glyphicon-earphone"></i></button>
-          <button ng-click="switchCustomersFn('seemails', item)" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ver correos de contacto"><i class="fas fa-envelope-open-text"></i></button>
+          <button ng-click="switchCustomersFn('phonesandschedule', item)" class="btn btn-success  btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver telefonos & horario"><i class="glyphicon glyphicon-earphone"></i></button>
+          <button ng-click="switchCustomersFn('seemails', item)" class="btn btn-warning btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver correos de contacto"><i class="fas fa-envelope-open-text"></i></button>
         </td>        
       </tr>
       <!-- Show if there is not customer registered -->

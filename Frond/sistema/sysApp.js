@@ -91,13 +91,11 @@ app.config(['$routeProvider', '$locationProvider',
             redirectTo: '/login/'
         });
 }]);
-
-
 //app.constant("serverHost","http://192.168.0.6/");
 app.constant("serverHost","http://localhost/");
 //app.constant("serverHost","http://10.39.9.110/");
 app.constant("serverBackend","Coferba/Back/index.php/");
-app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8' }});
+app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8','Access-Control-Allow-Origin':'*'}});
 
 app.directive('passwordConfirm', ['$parse', function ($parse) {
  return {

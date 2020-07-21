@@ -116,12 +116,30 @@ class Util_model extends CI_Model {
         return $rs;
     }
 
-    public function getDepartment() {
+    public function getDepartmentByCustomerId($id) {
+
+        $query = null;
+        $rs    = null;
+        $select="tb_client_departament.idClientDepartament AS idDepto, 
+                    CONCAT(tb_client_departament.floor,\"-\",tb_client_departament.departament) AS Depto,
+                    tb_clients.idClient AS idBuilding,
+                    tb_clients.name AS Building";
+        $where="tb_client_departament.idClientFk=".$id." AND tb_client_departament.idStatusFk<>0";
+        $this->db->select($select)->from("tb_client_departament");
+        $query = $this->db->join('tb_clients', 'tb_client_departament.idClientFk = tb_clients.idClient', 'left')
+            ->where($where)->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+    public function getTipoInmueble() {
 
         $query = null;
         $rs    = null;
 
-        $query = $this->db->select("*")->from("tb_department")
+        $query = $this->db->select("*")->from("tb_tipo_inmueble")
             ->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
@@ -134,7 +152,7 @@ class Util_model extends CI_Model {
 
         $query = null;
         $rs    = null;
-        $query = $this->db->select("tb_clients.`address`,
+        $query = $this->db->select("tb_clients.`idClient`, tb_clients.`address`,
               tb_clients.`addressLon`,
               tb_clients.`addressLat`,
               tb_clients.`idLocationFk`,

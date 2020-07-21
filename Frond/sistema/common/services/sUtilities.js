@@ -20,11 +20,12 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     return response;
             });   
           },
-          getLocations: function(idProvince) {
-            //console.log("[Utilities Services]: Get Locations of province id:"+idProvince);
+           /* GET ALL ZONES FOR CUSTOMERS */
+          getZones: function() {
+            //console.log("[Utilities Services]: Get Agents ");
               return $http({
                     method : "GET",
-                    url : serverHost+serverBackend+"Util/localidad/"+idProvince
+                    url : serverHost+serverBackend+"Zonas/listar"
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
@@ -32,79 +33,8 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     console.log("Error: "+response.data.error); 
                     return response;
             });   
-          },
-          getAllLocations: function() {
-            //console.log("[Utilities Services]: Get Locations:");
-              return $http({
-                    method : "GET",
-                    url : serverHost+serverBackend+"Util/localidades"
-                  }).then(function mySuccess(response) {
-                    rsJson=response.data;
-                    //console.log(rsJson);
-                    return rsJson;
-                  },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
-                    return response;
-            });   
-          },
-          /*API GOB AR */
-          getLocationsByName: function(locationName) {
-            //console.log("[Utilities Services]: Get Locations By Name: "+locationName);
-              return $http({
-                    method : "GET",
-                    url : "https://apis.datos.gob.ar/georef/api/localidades?provincia="+locationName+"&campos=nombre&max=100"
-                  }).then(function mySuccess(response) {
-                    rsJson=response.data.localidades;
-                    return rsJson;
-                  },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
-                    return response;
-            });   
-          },
-          /*API GOB AR */
-          getAddressByName: function(addressName) {
-            //console.log("[Utilities Services]: Get Address By name");
-              return $http({
-                    method : "GET",
-                    url : "https://apis.datos.gob.ar/georef/api/direcciones?direccion="+addressName
-                  }).then(function mySuccess(response) {
-                    rsJson=response.data.direcciones;
-                    return rsJson;
-                  },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
-                    return response;
-            });   
-          }, 
-          /*API GOB AR */   
-          getStates_API: function() {
-            //console.log("[Utilities Services]: Get States ");
-              return $http({
-                    method : "GET",
-                    url : "https://apis.datos.gob.ar/georef/api/provincias"
-                  }).then(function mySuccess(response) {
-                    rsJson=response.data.provincias;
-                    //console.log(rsJson);
-                    return rsJson;
-                  },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
-                    return response;
-            });   
-          },
-          /*API LOCAL */   
-          getStates: function() {
-            //console.log("[Utilities Services]: Get States ");
-              return $http({
-                    method : "GET",
-                    url : serverHost+serverBackend+"Util/provincia/"
-                  }).then(function mySuccess(response) {
-                    rsJson=response.data;
-                    //console.log(rsJson);
-                    return rsJson;
-                  },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
-                    return response;
-            });   
-          },
+          },      
+
           getTypeOfIVA: function() {
             //console.log("[Utilities Services]: Get Type of iva ");
               return $http({

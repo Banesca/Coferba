@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c7ae513a-2a19-4a40-bd5c-f850a88b5637",
+		"_postman_id": "66aa5fdd-ff45-4614-8bfe-274a65b166f2",
 		"name": "COFERBA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -408,6 +408,24 @@
 					"response": []
 				},
 				{
+					"name": "Tipo de Inmueble",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/tipoInmueble"
+					},
+					"response": []
+				},
+				{
+					"name": "DepartmentsByCustomerId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getDepartmentsByCustomerId/18"
+					},
+					"response": []
+				},
+				{
 					"name": "TIPO DE CLIENTE",
 					"request": {
 						"method": "GET",
@@ -720,9 +738,29 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilter\":\"\",\n\t\"idClientTypeFk\":1\n}"
+							"raw": "{\n\t\"searchFilter\":\"Ayacucho\",\n\t\"idClientTypeFk\":\"2\",\n\t\"isNotCliente\":\"1\"\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/search"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/search"
+					},
+					"response": []
+				},
+				{
+					"name": "getDepartmentId",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"clientId\":\"18\",\n\t\"floor\":\"3\",\n\t\"department\":\"F\"\n}"
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/getDepartmentId"
 					},
 					"response": []
 				},
@@ -740,7 +778,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"address\": \"text\"\n}"
+							"raw": "{\n\t\"address\": \"VIDAL 3527\"\n}"
 						},
 						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/searchAddress"
 					},

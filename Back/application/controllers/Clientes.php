@@ -176,30 +176,16 @@ class Clientes extends REST_Controller {
         }
     }
 
-    /*
-
-    public function modules_get() {
-
-        $user = null;
-        $user = $this->profiles_model->getModules();
-
-        if (!is_null($user)) {
-            $this->response($user, 200);
-        } else {
-            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
-        }
-    }
-    */
     public function search_post() {
 
         $searchFilter   = $this->post('filter');
         $idClientTypeFk = $this->post('idClientTypeFk');
+        $isNotCliente   = $this->post('isNotCliente');
 
+        $client_rs = $this->client_model->getadmin(null, $searchFilter, $idClientTypeFk, $isNotCliente);
 
-        $user = $this->client_model->getadmin(null, $searchFilter, $idClientTypeFk);
-
-        if (! is_null($user)) {
-            $this->response($user, 200);
+        if (! is_null($client_rs)) {
+            $this->response($client_rs, 200);
         } else {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
@@ -208,16 +194,32 @@ class Clientes extends REST_Controller {
     public function searchAddress_post() {
 
         $address = $this->post('address');
+        $idProvince = $this->post('idProvinceFk');
+        $idLocation = $this->post('idLocationFk');
         //$idClientTypeFk = $this->post('idClientTypeFk');
-        $client = $this->client_model->searchAddress($address);
+        $client = $this->client_model->searchAddress($address, $idProvince, $idLocation);
 
-        if (! is_null($client)) {
+        if (! is_null($client) && $client!='0') {
             $this->response($client, 200);
         } else {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+    public function getDepartmentId_post() {
 
+        $clientId = $this->post('clientId');
+        $floor = $this->post('floor');
+        $department = $this->post('department');
+
+        //$idClientTypeFk = $this->post('idClientTypeFk');
+        $deptoId = $this->client_model->getDepartmentId($clientId, $floor, $department);
+
+        if (! is_null($deptoId)) {
+            $this->response($deptoId, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
     public function userPorId_get($idClient) {
         if (! $idClient) {
             $this->response(null, 404);

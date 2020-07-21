@@ -15,148 +15,187 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
                                                        "ngclipboard",
                                                      "Service.Pager",
                                                          "ngCookies"]);
-
-/**************************************************
-*                                                 *
-*          DATE FILTER FOR MYSQL TIMESTAMP        *
-*                                                 *
-**************************************************/
-moduleMainApp.filter('dateToISO', function() {
-  return function(input) {
-    input = new Date(input).toISOString();
-    return input;
-  }
-});
-/*************************************************/
-app.filter('commaToDecimal', function(){
-    return function(value) {
-        return value ? parseFloat(value).toFixed(2).toString().replace('.', ',') : null;
-    };
-});
-moduleMainApp.filter('startFrom', function () {
-  return function (input, start) {
-    if (input) {
-      start = +start;
-      return input.slice(start);
+/*FILTERS & DIRECTIVES */
+  /**************************************************
+  *                                                 *
+  *          DATE FILTER FOR MYSQL TIMESTAMP        *
+  *                                                 *
+  **************************************************/
+  moduleMainApp.filter('dateToISO', function() {
+    return function(input) {
+      input = new Date(input).toISOString();
+      return input;
     }
-    return [];
-  };
-});
-moduleMainApp.directive('onlyNumbers', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attr, ngModelCtrl) {
-            function fromUser(text) {
-                if (text) {
-                    var transformedInput = text.replace(/[^0-9]/g, '');
-
-                    if (transformedInput !== text) {
-                        ngModelCtrl.$setViewValue(transformedInput);
-                        ngModelCtrl.$render();
-                    }
-                    return transformedInput;
-                }
-                return undefined;
-            }            
-            ngModelCtrl.$parsers.push(fromUser);
-        }
-    };
-});
-moduleMainApp.directive('myMaxlength', function() {
-  return {
-    require: 'ngModel',
-    link: function (scope, element, attrs, ngModelCtrl) {
-      var maxlength = Number(attrs.myMaxlength);
-      function fromUser(text) {
-          if (text.length > maxlength) {
-            var transformedInput = text.substring(0, maxlength);
-            ngModelCtrl.$setViewValue(transformedInput);
-            ngModelCtrl.$render();
-            return transformedInput;
-          } 
-          return text;
-      }
-      ngModelCtrl.$parsers.push(fromUser);
-    }
-  }; 
-});
-moduleMainApp.directive('scrollTo', function ($location, $anchorScroll) {
-    return function(scope, element, attrs) {
-      element.bind('click', function(event) {
-        event.stopPropagation();
-        scope.$on('$locationChangeStart', function(ev) {
-          ev.preventDefault();
-        });
-        var location = attrs.scrollTo;
-        $location.hash(location);
-        $anchorScroll();
-      });
-    };
-});
-moduleMainApp.directive('showCode', function () {
-  return {
-    scope: {
-      jsFile: '@',
-      htmlFile: '@'
-    },
-    templateUrl: 'show-code.html'
-  };
-});
-
-moduleMainApp.directive('clickableLabel', function () {
-  return {
-    restrict: 'E',
-    scope: {label: '='},
-    replace: true,
-    template: "<button ng-click='onclick(label)' style='cursor: pointer;'>click me - {{label}}</button>",
-    link: function (scope, elem, attrs) {
-      scope.onclick = function (label) {
-        alert("I'm " + label);
+  });
+  /*************************************************/
+  app.filter('commaToDecimal', function(){
+      return function(value) {
+          return value ? parseFloat(value).toFixed(2).toString().replace('.', ',') : null;
       };
-    }
-  };
-});
-moduleMainApp.filter('unique', function () {
-
-    return function (items, filterOn) {
-
-        if (filterOn === false) {
-            return items;
-        }
-
-        if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
-            var hashCheck = {}, newItems = [];
-
-            var extractValueToCompare = function (item) {
-                if (angular.isObject(item) && angular.isString(filterOn)) {
-                    return item[filterOn];
-                } else {
-                    return item;
-                }
-            };
-
-            angular.forEach(items, function (item) {
-                var valueToCheck, isDuplicate = false;
-
-                for (var i = 0; i < newItems.length; i++) {
-                    if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
-                        isDuplicate = true;
-                        break;
-                    }
-                }
-                if (!isDuplicate) {
-                    newItems.push(item);
-                }
-
-            });
-            items = newItems;
-        }
-        return items;
+  });
+  moduleMainApp.filter('startFrom', function () {
+    return function (input, start) {
+      if (input) {
+        start = +start;
+        return input.slice(start);
+      }
+      return [];
     };
-});
+  });
+  moduleMainApp.directive('onlyNumbers', function () {
+      return {
+          require: 'ngModel',
+          link: function (scope, element, attr, ngModelCtrl) {
+              function fromUser(text) {
+                  if (text) {
+                      var transformedInput = text.replace(/[^0-9]/g, '');
+
+                      if (transformedInput !== text) {
+                          ngModelCtrl.$setViewValue(transformedInput);
+                          ngModelCtrl.$render();
+                      }
+                      return transformedInput;
+                  }
+                  return undefined;
+              }            
+              ngModelCtrl.$parsers.push(fromUser);
+          }
+      };
+  });
+  moduleMainApp.directive('allowTyping', function () {
+    return {
+      restrict : 'A',
+      link : function(scope, elem, attrs, ctrl) {
+        var regex = attrs.allowTyping;
+        elem.bind('keypress', function(event) {
+          var pos =  event.target.selectionStart;
+          var oldViewValue = elem.val();
+          var input = newViewValue(oldViewValue, pos, event.key);
+          console.log(input);
+          var validator = new RegExp(regex);
+          if (!validator.test(input)) {
+            event.preventDefault();
+            return false;
+          }
+        });
+          function newViewValue(oldViewValue, pos, key) {
+            if (!oldViewValue) return key;
+            return   [oldViewValue.slice(0, pos), key, oldViewValue.slice(pos)].join('');
+          } 
+      }
+    };
+  });
+  moduleMainApp.directive('limitLength', function () {
+    return {
+      restrict: "A",
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        attrs.$set("ngTrim", "false");
+        var limitLength = parseInt(attrs.awLimitLength, 10);// console.log(attrs);
+        scope.$watch(attrs.ngModel, function(newValue) {
+          if(ngModel.$viewValue.length>limitLength){
+            ngModel.$setViewValue( ngModel.$viewValue.substring(0, limitLength ) );
+            ngModel.$render();
+          }
+        });
+      }
+    };
+  });
+  moduleMainApp.directive('myMaxlength', function() {
+    return {
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModelCtrl) {
+        var maxlength = Number(attrs.myMaxlength);
+        function fromUser(text) {
+            if (text.length > maxlength) {
+              var transformedInput = text.substring(0, maxlength);
+              ngModelCtrl.$setViewValue(transformedInput);
+              ngModelCtrl.$render();
+              return transformedInput;
+            } 
+            return text;
+        }
+        ngModelCtrl.$parsers.push(fromUser);
+      }
+    }; 
+  });
+  moduleMainApp.directive('scrollTo', function ($location, $anchorScroll) {
+      return function(scope, element, attrs) {
+        element.bind('click', function(event) {
+          event.stopPropagation();
+          scope.$on('$locationChangeStart', function(ev) {
+            ev.preventDefault();
+          });
+          var location = attrs.scrollTo;
+          $location.hash(location);
+          $anchorScroll();
+        });
+      };
+  });
+  moduleMainApp.directive('showCode', function () {
+    return {
+      scope: {
+        jsFile: '@',
+        htmlFile: '@'
+      },
+      templateUrl: 'show-code.html'
+    };
+  });
+
+  moduleMainApp.directive('clickableLabel', function () {
+    return {
+      restrict: 'E',
+      scope: {label: '='},
+      replace: true,
+      template: "<button ng-click='onclick(label)' style='cursor: pointer;'>click me - {{label}}</button>",
+      link: function (scope, elem, attrs) {
+        scope.onclick = function (label) {
+          alert("I'm " + label);
+        };
+      }
+    };
+  });
+  moduleMainApp.filter('unique', function () {
+
+      return function (items, filterOn) {
+
+          if (filterOn === false) {
+              return items;
+          }
+
+          if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
+              var hashCheck = {}, newItems = [];
+
+              var extractValueToCompare = function (item) {
+                  if (angular.isObject(item) && angular.isString(filterOn)) {
+                      return item[filterOn];
+                  } else {
+                      return item;
+                  }
+              };
+
+              angular.forEach(items, function (item) {
+                  var valueToCheck, isDuplicate = false;
+
+                  for (var i = 0; i < newItems.length; i++) {
+                      if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
+                          isDuplicate = true;
+                          break;
+                      }
+                  }
+                  if (!isDuplicate) {
+                      newItems.push(item);
+                  }
+
+              });
+              items = newItems;
+          }
+          return items;
+      };
+  });
 
 //Controller.$inject = ['$scope'];
-moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $filter, $http, blockUI, $timeout, inform, inputService, userServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, serverHost, serverBackend, $window, FileUploader, UtilitiesServices, PagerService, $cookies){
+moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, serverHost, serverBackend, $window, FileUploader, UtilitiesServices, PagerService, $cookies){
     /**************************************************************/
       $scope.redirectSuccessfull = false;
       $scope.counT  =5;
@@ -402,8 +441,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
                     'PASO 2: DATOS DE LA SOLICITUD'
                      ];
       $scope.pasos4= [
-                    'PASO 1: DATOS DE CLIENTE',
-                    'PASO 2: FINALIZAR REGISTRO'
+                    'PASO 1',
+                    'PASO 2',
+                    'DEPARTAMENTOS',
+                    'FINALIZAR'
                      ];                    
         $scope.fSwitch = "";
       function selectSwitch(valor){
@@ -448,12 +489,30 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
         {
           var stepIndex = $scope.getCurrentStepIndex();
           var nextStep = stepIndex + 1;
+          //console.log("nextStep: "+nextStep);
           $scope.stepIndexTmp = nextStep;
-          $scope.mySwitch = $scope.pasos[nextStep];
+          if ($scope.customer.new.idClientTypeFk!=2 && nextStep==2){
+            $scope.mySwitch = $scope.pasos[3];
+            nextStep=3;
+          }else{
+             $scope.mySwitch = $scope.pasos[nextStep];
+          }
           $scope.formValidated=false;
           $scope.btnBack=true;
-          if($scope.fSwitch=="t"){if(nextStep>1){$scope.btnShow=false;}}else
-          {if(nextStep==1){$scope.btnShow=false;}}
+          if($scope.fSwitch=="t"){
+            if(nextStep>1){
+              $scope.btnShow=false;
+            }
+          }else if($scope.fSwitch=="c"){
+            //console.log("incrementStep: "+nextStep);
+            if(nextStep>2){
+              $scope.btnShow=false;
+            }
+          }else{
+            if(nextStep==1){
+              $scope.btnShow=false;
+            }
+          }
         }
       };
 
@@ -463,7 +522,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           var stepIndex = $scope.getCurrentStepIndex();
           var previousStep = stepIndex - 1;
           $scope.stepIndexTmp = previousStep;
-          $scope.mySwitch = $scope.pasos[previousStep];
+          if ($scope.customer.new.idClientTypeFk!=2 && previousStep==2){
+            $scope.mySwitch = $scope.pasos[1];
+          }else{
+             $scope.mySwitch = $scope.pasos[previousStep];
+          }
           $scope.formValidated=true;
           $scope.btnShow=true;
           if(previousStep<1){$scope.btnBack=false;}
@@ -477,136 +540,407 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $fi
           //alert($scope.stepIndexTmp);
         switch ($scope.stepIndexTmp){
           case 0:
-            //alert("ENTRO CASE 0");
-            if ($scope.fSwitch=="t" && $scope.sessionidProfile!=0){
-              if (!$scope.select.idAddressAtt){
-                  $scope.formValidated=false; 
-              }else{
-                $scope.formValidated=true;
-              }
-
-            }else if ($scope.fSwitch=="i" && $scope.sessionidProfile!=0){
-              if (!$scope.sessionIdDeparmentKf || !$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved==0){
-                  $scope.formValidated=false; 
-              }else{
-                $scope.formValidated=true;
-              }
-
-            }else if ($scope.fSwitch=="s" && $scope.sessionidProfile!=3){
-              if (!$scope.select.idAddressAtt){
-                  $scope.formValidated=false; 
-              }else{
-                $scope.formValidated=true;
-              }
-            }else if ($scope.fSwitch=="c"){
-              //console.log("ARRAY FIELDS");
-              //console.log($scope.customer);
-              //console.log("PHONE LIST");
-              //console.log($scope.list_phones);
-              //console.log("SCHEDULE LIST");
-              //console.log($scope.list_schedule_atention);
-              if($scope.isNewCustomer){
-                
-                if($scope.customer.new.idClientTypeFk==1){//ADMINISTRATION CUSTOMER
-                  if ($scope.selectCustomerLocationId.selected!=undefined && $scope.selectCustomerAddressId.selected!=undefined && $scope.customer.new.nameAddress!='' && $scope.customer.new.cuit!='' &&
-                      $scope.customer.new.razonSocial!='' && $scope.customer.new.idAgent!='' && $scope.customer.new.name!='' && $scope.customer.new.idClientTypeFk!='' && 
-                      $scope.list_phones.length>=1 && $scope.list_schedule_atention.length>=1 && 
-                      ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) && 
-                      ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
-                      ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)) {
-                      $scope.formValidated=true;
-                      console.log("$scope.formValidated: New "+$scope.formValidated);
-                  }else{
-                      $scope.formValidated=false;
-                  }
-                }else if($scope.customer.new.idClientTypeFk==2){//BUILDING CUSTOMER
-                  if ($scope.selectCustomerLocationId.selected!=undefined && $scope.selectCustomerAddressId.selected!=undefined && $scope.customer.new.nameAddress!='' && $scope.customer.new.razonSocial!='' && $scope.customer.new.idAgent!='' && 
-                      $scope.customer.new.idClientTypeFk!='' && $scope.list_phones.length>=1 && $scope.list_schedule_atention.length>=1 && $scope.list_departments.length>=1 &&
-                      ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) && 
-                      ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
-                      ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)){
-                      $scope.formValidated=true;
-                      console.log("$scope.formValidated: New "+$scope.formValidated);
-                  }else{
-                    $scope.formValidated=false;
-                  }
-                }else if($scope.customer.new.idClientTypeFk==3){//COMPANY CUSTOMER
-                  if ($scope.selectCustomerLocationId.selected!=undefined && $scope.selectCustomerAddressId.selected!=undefined && $scope.customer.new.nameAddress!='' && $scope.customer.new.razonSocial!='' && $scope.customer.new.idAgent!='' && 
-                      $scope.customer.new.idClientTypeFk!='' && $scope.list_phones.length>=1 && $scope.list_schedule_atention.length>=1 &&
-                      ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
-                      ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)){
-                      $scope.formValidated=true;
-                      console.log("$scope.formValidated: New "+$scope.formValidated);
-                  }else{
-                    $scope.formValidated=false;
-                  }
-                }else if($scope.customer.new.idClientTypeFk==4){//BRANCH CUSTOMER
-                  if ($scope.selectCustomerLocationId.selected!=undefined && $scope.selectCustomerAddressId.selected!=undefined && $scope.customer.new.nameAddress!='' &&
-                      $scope.customer.new.idClientTypeFk!='' && $scope.list_phones.length>=1 && $scope.list_schedule_atention.length>=1 && $scope.selectnameLocationBillingFk.selected!=undefined &&
-                      $scope.selectnameProvinceBillingFk.selected!=undefined && $scope.customer.new.billing_information.cuitBilling!='' && $scope.customer.new.billing_information.businessNameBilling!='' &&
-                      $scope.customer.new.billing_information.idTypeTaxFk!='' && 
-                      ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
-                      ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)){
-                      $scope.formValidated=true;
-                      console.log("$scope.formValidated: New "+$scope.formValidated);
-                  }else{
-                    $scope.formValidated=false;
-                    console.log("$scope.formValidated: New "+$scope.formValidated);
-                  }
-                }
-              }else{
-                if($scope.customer.update.nameLocation!='' && $scope.customer.update.nameState!='' && $scope.customer.update.nameAddress!='' && $scope.customer.update.cuit!='' &&
-                    $scope.customer.update.razonSocial!='' && $scope.customer.update.idAgent!='' && $scope.customer.update.name!='' && $scope.customer.update.idClientTypeFk!='' &&
-                    $scope.list_phones.length>=1 && ($scope.list_schedule_atention.length>=1 || $scope.customer.update.list_schedule_atention.length>=1) && 
-                    ($scope.customer.update.mailFronKey!='' && $scope.customer.update.mailFronKey!=undefined) &&
-                    ($scope.customer.update.mailServiceTecnic!='' && $scope.customer.update.mailServiceTecnic!=undefined) &&
-                    ($scope.customer.update.mailCollection!='' && $scope.customer.update.mailCollection!=undefined)){
+              //alert("ENTRO CASE 0");
+              if ($scope.fSwitch=="t" && $scope.sessionidProfile!=0){
+                if (!$scope.select.idAddressAtt){
+                    $scope.formValidated=false; 
+                }else{
                   $scope.formValidated=true;
-                  console.log("$scope.formValidated: Update "+$scope.formValidated);
-                }else {
-                  $scope.formValidated=false;
+                }
+              }else if ($scope.fSwitch=="i" && $scope.sessionidProfile!=0){
+                if (!$scope.sessionIdDeparmentKf || !$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved==0){
+                    $scope.formValidated=false; 
+                }else{
+                  $scope.formValidated=true;
+                }
+              }else if ($scope.fSwitch=="s" && $scope.sessionidProfile!=3){
+                if (!$scope.select.idAddressAtt){
+                    $scope.formValidated=false; 
+                }else{
+                  $scope.formValidated=true;
+                }
+              }else if ($scope.fSwitch=="c"){
+                //console.log("ARRAY FIELDS");
+                //console.log($scope.customer);
+                //console.log("PHONE LIST");
+                //console.log($scope.list_phones);
+                //console.log("SCHEDULE LIST");
+                //console.log($scope.list_schedule_atention);
+                //$scope.customer.select.main = {'address':{}, 'department':{}, 'province':{}, 'location':{}}
+                if($scope.isNewCustomer){
+                    if($scope.customer.new.idClientTypeFk==1 || $scope.customer.new.idClientTypeFk==3){//ADMINISTRATION OR COMPANY CUSTOMER
+                      console.log("Validation Customer :::> Administration or Company [ok] ");
+                        console.log("Form Step :::> 1 [ok] ");
+                        if($scope.customer.new.typeInmueble!=undefined && $scope.customer.new.name!='' && $scope.customer.new.idAgent!='' && $scope.customer.new.razonSocial!='' && 
+                            $scope.customer.new.cuit!='' && ($scope.customer.new.idZonaFk!='' && $scope.customer.new.idZonaFk!=undefined) && $scope.list_schedule_atention.length>=1) {
+                            console.log("First inputs :::> [ok] ");
+                            if($scope.customer.new.typeInmueble==1){
+                                console.log("Inmueble :::> Department [ok] ");
+                              if (!$scope.customer.new.isNotCliente){
+                                  console.log("Building not registered :::> [ok] ");
+                                if ($scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined && $scope.customer.new.nameAddress!='' && $scope.customer.new.floor!='' && $scope.customer.new.depto!=''){
+                                  $scope.formValidated=true;
+                                  console.log("Address inputs :::> [ok] ");
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                    console.log("Address inputs :::> [Fail] ");
+                                    $scope.formValidated=false;
+                                }
+                              }else {
+                                console.log("Building registered :::> [ok] ");
+                                console.info($scope.customer.select.main.department);
+                                if (($scope.customer.select.main.department!=undefined && $scope.customer.select.main.department!='')  && $scope.customer.select.main.address.selected!=undefined){
+                                  console.log("Building Address :::> [ok] ");
+                                  $scope.formValidated=true;
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                  console.log("Building Address :::> [Fail] ");
+                                    $scope.formValidated=false;
+                                }
+                              }
+                            }else if($scope.customer.new.typeInmueble>1){
+                              console.log("Inmueble :::> Local/Casa [ok] ");
+                              if ($scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined && $scope.customer.new.nameAddress!=''){
+                                  $scope.formValidated=true;
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                    $scope.formValidated=false;
+                                }
+                            }
+                        }else{
+                            console.log("First inputs :::> [Fail] ");
+                           $scope.formValidated=false;
+                        }
+                    }else if($scope.customer.new.idClientTypeFk==2){//BUILDING CUSTOMER
+                      console.log("Validation Customer :::> Edificio [ok] ");
+                      if ($scope.stepIndexTmp==0){
+                        console.log("Form Step :::> 1 [ok] ");
+                        if($scope.customer.select.company.selected!=undefined && ($scope.customer.new.idZonaFk!='' && $scope.customer.new.idZonaFk!=undefined) && $scope.list_schedule_atention.length>=1 && 
+                           $scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined  && ($scope.customer.new.nameAddress!='' && $scope.addrrSelected)) {
+                            $scope.formValidated=true;
+                            console.log("First Steps inputs :::> [ok] ");
+                        }else{
+                            console.log("First Steps inputs :::> [Fail] ");
+                           $scope.formValidated=false;
+                        }
+                      }else if ($scope.stepIndexTmp==1){
+                          console.log("Form Step :::> 2 [ok] ");
+                        if ($scope.list_phones.length>=1 && ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) && 
+                            ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)){}
+
+                      }
+                    }else if($scope.customer.new.idClientTypeFk==4){//BRANCH CUSTOMER
+                      console.log("Validation Customer :::> Branch [ok] ");
+                      if ($scope.stepIndexTmp==0){
+                        console.log("Form Step :::> 1 [ok] ");
+                        if($scope.customer.new.typeInmueble!=undefined && $scope.customer.select.company.selected!=undefined && ($scope.customer.new.idZonaFk!='' && $scope.customer.new.idZonaFk!=undefined) && $scope.list_schedule_atention.length>=1) {
+                            console.log("First inputs :::> [ok] ");
+                            if($scope.customer.new.typeInmueble==1){
+                                console.log("Inmueble :::> Department [ok] ");
+                              if (!$scope.customer.new.isNotCliente){
+                                  console.log("Building not registered :::> [ok] ");
+                                if ($scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined && $scope.customer.new.nameAddress!='' && $scope.customer.new.floor!='' && $scope.customer.new.depto!=''){
+                                  $scope.formValidated=true;
+                                  console.log("Address inputs :::> [ok] ");
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                    console.log("Address inputs :::> [Fail] ");
+                                    $scope.formValidated=false;
+                                }
+                              }else {
+                                console.log("Building registered :::> [ok] ");
+                                console.info($scope.customer.select.main.department);
+                                if (($scope.customer.select.main.department!=undefined && $scope.customer.select.main.department!='')  && $scope.customer.select.main.address.selected!=undefined){
+                                  console.log("Building Address :::> [ok] ");
+                                  $scope.formValidated=true;
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                  console.log("Building Address :::> [Fail] ");
+                                    $scope.formValidated=false;
+                                }
+                              }
+                            }else if($scope.customer.new.typeInmueble>1){
+                              console.log("Inmueble :::> Local/Casa [ok] ");
+                              if ($scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined && $scope.customer.new.nameAddress!=''){
+                                  $scope.formValidated=true;
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                    $scope.formValidated=false;
+                                }
+                            }
+                        }else{
+                            console.log("First inputs :::> [Fail] ");
+                           $scope.formValidated=false;
+                        }
+                      }else if ($scope.stepIndexTmp==1){
+                          console.log("Form Step :::> 2 [ok] ");
+                          if ($scope.list_phones.length>=1 && ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) && 
+                            ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)){
+
+                          }
+                      }
+                    }else if($scope.customer.new.idClientTypeFk==5){//PARTICULAR CUSTOMER
+                      console.log("Validation Customer :::> Particular [ok] ");
+                      if ($scope.stepIndexTmp==0){
+                        console.log("Form Step :::> 1 [ok] ");
+                        console.log($scope.customer.new);
+                        if($scope.customer.new.typeInmueble!=undefined && $scope.customer.new.name!='' && $scope.customer.new.idAgent!='' && ($scope.customer.new.idZonaFk!='' && $scope.customer.new.idZonaFk!=undefined) && 
+                          $scope.customer.new.mail!='' && ($scope.customer.new.localPhone!='' || $scope.customer.new.mobile!='')) {
+                            console.log("First inputs :::> [ok] ");
+                            if($scope.customer.new.typeInmueble==1){
+                                console.log("Inmueble :::> Department [ok] ");
+                              if (!$scope.customer.new.isNotCliente){
+                                  console.log("Building not registered :::> [ok] ");
+                                if ($scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined && $scope.customer.new.nameAddress!='' && $scope.customer.new.floor!='' && $scope.customer.new.depto!=''){
+                                  $scope.formValidated=true;
+                                  console.log("Address inputs :::> [ok] ");
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                    console.log("Address inputs :::> [Fail] ");
+                                    $scope.formValidated=false;
+                                }
+                              }else {
+                                console.log("Building registered :::> [ok] ");
+                                console.info($scope.customer.select.main.department);
+                                if (($scope.customer.select.main.department!=undefined && $scope.customer.select.main.department!='')  && $scope.customer.select.main.address.selected!=undefined){
+                                  console.log("Building Address :::> [ok] ");
+                                  $scope.formValidated=true;
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                  console.log("Building Address :::> [Fail] ");
+                                    $scope.formValidated=false;
+                                }
+                              }
+                            }else if($scope.customer.new.typeInmueble>1){
+                              console.log("Inmueble :::> Local/Casa [ok] ");
+                              if ($scope.customer.select.main.location.selected!=undefined && $scope.customer.select.main.province.selected!=undefined && $scope.customer.new.nameAddress!=''){
+                                  $scope.formValidated=true;
+                                  //console.log("$scope.formValidated: New "+$scope.formValidated);
+                                }else{
+                                    $scope.formValidated=false;
+                                }
+                            }
+                        }else{
+                            console.log("First inputs :::> [Fail] ");
+                           $scope.formValidated=false;
+                        }
+                      }else if ($scope.stepIndexTmp==1){
+                          console.log("Form Step :::> 2 [ok] ");
+                          if ($scope.list_phones.length>=1 && ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) && 
+                            ($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined)){
+
+                          }
+                      }
+                    }
+                }else{
+                  if($scope.customer.update.nameLocation!='' && $scope.customer.update.nameState!='' && $scope.customer.update.nameAddress!='' && $scope.customer.update.cuit!='' &&
+                      $scope.customer.update.razonSocial!='' && $scope.customer.update.idAgent!='' && $scope.customer.update.name!='' && $scope.customer.update.idClientTypeFk!='' &&
+                      $scope.list_phones.length>=1 && ($scope.list_schedule_atention.length>=1 || $scope.customer.update.list_schedule_atention.length>=1) && 
+                      ($scope.customer.update.mailFronKey!='' && $scope.customer.update.mailFronKey!=undefined) &&
+                      ($scope.customer.update.mailServiceTecnic!='' && $scope.customer.update.mailServiceTecnic!=undefined) &&
+                      ($scope.customer.update.mailCollection!='' && $scope.customer.update.mailCollection!=undefined)){
+                    $scope.formValidated=true;
+                    console.log("$scope.formValidated: Update "+$scope.formValidated);
+                  }else {
+                    $scope.formValidated=false;
+                  }
                 }
               }
-            }
             break;
             case 1:
               $scope.typeOption = item;
               //console.log("$scope.typeOption: "+$scope.typeOption);
               //alert("ENTRO CASE 1");
-            if ($scope.fSwitch=="t" && $scope.sessionidProfile!=3){
-              //alert("ENTRO AL PRIMER IF");
-              if ($scope.collap==1){
-                //alert("ENTRO AL 2DO IF");
-                if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
-                  $scope.formValidated=false;
-                }else{
-                  $scope.formValidated=true;
-                }
-              }else 
-                if ($scope.collap==2){
-                  if($scope.typeOption==1){
-                      if($scope.select.nameAtt==null){
-                        console.log("select vacio o modo edicion activado");
-                        $scope.formValidated=false; 
+              if ($scope.fSwitch=="t" && $scope.sessionidProfile!=3){
+                //alert("ENTRO AL PRIMER IF");
+                if ($scope.collap==1){
+                  //alert("ENTRO AL 2DO IF");
+                  if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
+                    $scope.formValidated=false;
+                  }else{
+                    $scope.formValidated=true;
+                  }
+                }else 
+                  if ($scope.collap==2){
+                    if($scope.typeOption==1){
+                        if($scope.select.nameAtt==null){
+                          console.log("select vacio o modo edicion activado");
+                          $scope.formValidated=false; 
+                        }else{
+                          console.log("select lleno");
+                          console.log($scope.select.nameAtt);
+                          $scope.formValidated=true;
+                        }
                       }else{
-                        console.log("select lleno");
-                        console.log($scope.select.nameAtt);
+                        console.log($scope.typeOption);
                         $scope.formValidated=true;
-                      }
-                    }else{
-                      console.log($scope.typeOption);
-                      $scope.formValidated=true;
-                  } 
-                }
+                    } 
+                  }
 
-            }else if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==3 && $scope.sessionidTypeTenant==1)){
-              //alert("ENTRO");
-                if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
-                  $scope.formValidated=false;
+              }else if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==3 && $scope.sessionidTypeTenant==1)){
+                //alert("ENTRO");
+                  if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
+                    $scope.formValidated=false;
+                  }else{
+                    $scope.formValidated=true;
+                  }
+              }else if ($scope.fSwitch=="c"){
+                if ($scope.isNewCustomer){
+                  if ($scope.customer.new.idClientTypeFk==1 ){//ADMINISTRATION CUSTOMER
+                        //console.log("Validation Customer :::> Administration [ok] ");
+                        //console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined) &&
+                            ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) &&
+                            $scope.list_phones.length>=1)
+                        {
+                             $scope.formValidated=true;
+                           //console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }else if ($scope.customer.new.idClientTypeFk==2){//BUILDING CUSTOMER
+                        console.log("Validation Customer :::> Building [ok] ");
+                        console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined) && 
+                            ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined))
+                        {
+                             $scope.formValidated=true;
+                            console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }else if ($scope.customer.new.idClientTypeFk==3){//COMPANY CUSTOMER
+                        //console.log("Validation Customer :::> Company [ok] ");
+                        //console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined) &&
+                            $scope.list_phones.length>=1)
+                        {
+                             $scope.formValidated=true;
+                           //console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            //console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }else if ($scope.customer.new.idClientTypeFk==4){//BRANCH CUSTOMER
+                        console.log("Validation Customer :::> Branch [ok] ");
+                        console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined))
+                        {
+                             $scope.formValidated=true;
+                           console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }
                 }else{
-                  $scope.formValidated=true;
+
                 }
-            }
+              }
+            break;
+            case 2:
+              $scope.typeOption = item;
+              //console.log("$scope.typeOption: "+$scope.typeOption);
+              //alert("ENTRO CASE 1");
+              if ($scope.fSwitch=="t" && $scope.sessionidProfile!=3){
+                //alert("ENTRO AL PRIMER IF");
+                if ($scope.collap==1){
+                  //alert("ENTRO AL 2DO IF");
+                  if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
+                    $scope.formValidated=false;
+                  }else{
+                    $scope.formValidated=true;
+                  }
+                }else 
+                  if ($scope.collap==2){
+                    if($scope.typeOption==1){
+                        if($scope.select.nameAtt==null){
+                          console.log("select vacio o modo edicion activado");
+                          $scope.formValidated=false; 
+                        }else{
+                          console.log("select lleno");
+                          console.log($scope.select.nameAtt);
+                          $scope.formValidated=true;
+                        }
+                      }else{
+                        console.log($scope.typeOption);
+                        $scope.formValidated=true;
+                    } 
+                  }
+
+              }else if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==3 && $scope.sessionidTypeTenant==1)){
+                //alert("ENTRO");
+                  if (!$scope.select.idDepartmentKf || $scope.tenant.namesTenant==""){
+                    $scope.formValidated=false;
+                  }else{
+                    $scope.formValidated=true;
+                  }
+              }else if ($scope.fSwitch=="c"){
+                if ($scope.isNewCustomer){
+                  if ($scope.customer.new.idClientTypeFk==1 ){//ADMINISTRATION CUSTOMER
+                        //console.log("Validation Customer :::> Administration [ok] ");
+                        //console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined) &&
+                            ($scope.customer.new.mailFronKey!='' && $scope.customer.new.mailFronKey!=undefined) &&
+                            $scope.list_phones.length>=1)
+                        {
+                             $scope.formValidated=true;
+                           //console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }else if ($scope.customer.new.idClientTypeFk==2){//BUILDING CUSTOMER
+                        console.log("Validation Customer :::> Building [ok] ");
+                        console.log("Form Step :::> 3 [ok] ");
+                        if ($scope.list_depto_floors.length>0)
+                        {
+                             $scope.formValidated=true;
+                            console.log("Form Step Validation :::> 3 [ok] ");
+                        }else{
+                            console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }else if ($scope.customer.new.idClientTypeFk==3){//COMPANY CUSTOMER
+                        //console.log("Validation Customer :::> Company [ok] ");
+                        //console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined) &&
+                            $scope.list_phones.length>=1)
+                        {
+                             $scope.formValidated=true;
+                           //console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            //console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }else if ($scope.customer.new.idClientTypeFk==4){//BRANCH CUSTOMER
+                        console.log("Validation Customer :::> Branch [ok] ");
+                        console.log("Form Step :::> 2 [ok] ");
+                        if (($scope.customer.new.mailServiceTecnic!='' && $scope.customer.new.mailServiceTecnic!=undefined) && 
+                            ($scope.customer.new.mailCollection!='' && $scope.customer.new.mailCollection!=undefined))
+                        {
+                             $scope.formValidated=true;
+                           console.log("Form Step Validation :::> 2 [ok] ");
+                        }else{
+                            console.log("Form Step Validation :::> [Fail] ");
+                            $scope.formValidated=false;  
+                        }
+                  }
+                }else{
+
+                }
+              }
             break;
           default:
         }
@@ -6091,8 +6425,84 @@ $scope.slider = {
     *                                                                                                                                           *
     ********************************************************************************************************************************************/
     $scope.isNewCustomer=false;
-    $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'companyData':{}};
-    $scope.customer.new = {'idClientTypeFk':'', 'name':'', 'idAgentFk':'','businessName':'', 'CUIT':'', 'mailFronKey':'', 'observationOrderKey': '', 'nameAddress':'', 'idProvinceFk':'', 'idLocationFk':'', 'pageWeb':'', 'mailServiceTecnic':'','observationSericeTecnic':'', 'mailCollection':'','observationCollection':'', 'observation':'', 'isNotCliente':false, 'billing_information':{'businessNameBilling':'', 'cuitBilling':'', 'idLocationBillingFk':'', 'idProvinceBillingFk':'', 'idTypeTaxFk':''}, 'list_oter_ufc':{'identificador':'', 'idProvinceFk': '', 'idTypeTaxFk':''}, 'list_departament':{'floor':'', 'departament':'', 'idCategoryDepartamentFk':''}};
+    $scope.defArrForCustomersFn = function(){
+      $scope.list_phones=[];
+      $scope.list_phone_contact=[];
+      $scope.list_schedule_atention =  [];
+      $scope.list_departments = [];
+      $scope.list_address_particular=[];
+      $scope.formValidated=false;
+      $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'companyData':{}, 'select':{'main':{},'payment':{}, 'particular':{}, 'company':{}}};
+      $scope.customer.select.main = {'address':{}, 'department':'', 'province':{}, 'location':{}}
+      $scope.customer.select.payment = {'address':{}, 'department':'', 'province':{}, 'location':{}}
+      $scope.customer.select.particular = {'address':{}, 'department':{}, 'province':{}, 'location':{}}
+      $scope.customer.new = {
+                            'idClientTypeFk':'', 
+                            'name':'', 
+                            'idAgentFk':'',
+                            'businessName':'',
+                            'CUIT':'', 
+                            'mailFronKey':'', 
+                            'observationOrderKey': '', 
+                            'idDepartmentFk':'', 
+                            'nameAddress':'', 
+                            'idProvinceFk':'', 
+                            'idLocationFk':'', 
+                            'pageWeb':'', 
+                            'mailServiceTecnic':'',
+                            'observationSericeTecnic':'', 
+                            'mailCollection':'',
+                            'observationCollection':'', 
+                            'observation':'', 
+                            'isNotCliente':0, 
+                            'localPhone':'', 
+                            'mobilePhone':'', 
+                            'mail':'',
+                            'floor':'',
+                            'department':'',
+                            'idCategoryDepartamentFk':'',
+                            'numberUNF':'', 
+                            'billing_information':{
+                                'businessNameBilling':'', 
+                                'cuitBilling':'', 
+                                'nameAddress':'', 
+                                'idLocationBillingFk':'', 
+                                'idProvinceBillingFk':'', 
+                                'idTypeTaxFk':''
+                            }, 
+                            'list_departament':{
+                                'floor':'', 
+                                'departament':'', 
+                                'idCategoryDepartamentFk':'',
+                                'numberUNF':''
+                            },
+                            'list_address_particular':{
+                                'address':'',
+                                'depto':'',
+                                'isBuilding':'',
+                                'idProvinceFk':'',
+                                'idLocationFk':'',
+                                'idDepartmentFk':'',
+                                'clarification':'',
+                                'idTipoInmuebleFk':''
+                            }
+                        };
+    }
+    $scope.cleanCustomerFieldFn = function(){
+      $scope.customer.new.billing_information={'businessNameBilling':'', 'cuitBilling':'', 'nameAddress':'', 'idLocationBillingFk':'', 'idProvinceBillingFk':'',  'idTypeTaxFk':''};
+      $scope.customer.new.list_departament={'floor':'', 'departament':'', 'idCategoryDepartamentFk':'', 'numberUNF':''};
+      $scope.customer.new.list_address_particular={'address':'', 'depto':'', 'isBuilding':'', 'idProvinceFk':'', 'idLocationFk':'', 'idDepartmentFk':'','clarification':'', 'idTipoInmuebleFk':''};
+      $scope.customer.select.main = {'address':{}, 'department':'', 'province':{}, 'location':{}}
+      $scope.customer.select.payment = {'address':{}, 'department':'', 'province':{}, 'location':{}}
+      $scope.customer.select.particular = {'address':{}, 'department':{}, 'province':{}, 'location':{}}
+      $scope.list_phones=[];
+      $scope.list_phone_contact=[];
+      $scope.list_schedule_atention =  [];
+      $scope.setScheduleListFn();
+      $scope.list_departments = [];
+      $scope.list_address_particular=[];
+    }
+    $scope.defArrForCustomersFn();   
     $scope.switchCustomersFn = function(fnOpt, fnObj){
       var cObj = !fnObj || fnObj==undefined ? null : fnObj;
       switch (fnOpt){
@@ -6104,15 +6514,13 @@ $scope.slider = {
           $scope.isNewCustomer=true;
           $scope.decrementStep();
           $scope.setScheduleListFn();
-          $scope.list_phones=[];
-          $scope.list_phone_contact=[];
-          $scope.list_schedule_atention =  [];
-          $scope.list_departments = [];
-          $scope.formValidated=false;
-          $scope.customer = {'new':{}, 'update':{}, 'info':{}};
-          $scope.customer.new = {'idClientTypeFk':'', 'name':'', 'idAgentFk':'','businessName':'', 'CUIT':'', 'mailFronKey':'', 'observationOrderKey': '', 'nameAddress':'', 'idProvinceFk':'', 'idLocationFk':'', 'pageWeb':'', 'mailServiceTecnic':'','observationSericeTecnic':'', 'mailCollection':'','observationCollection':'', 'observation':'', 'isNotCliente':false, 'billing_information':{'businessNameBilling':'', 'cuitBilling':'', 'idLocationBillingFk':'', 'idProvinceBillingFk':'', 'idTypeTaxFk':''}, 'list_oter_ufc':{'identificador':'', 'idProvinceFk': '', 'idTypeTaxFk':''}, 'list_departament':{'floor':'', 'departament':'', 'idCategoryDepartamentFk':''}};
+          $scope.defArrForCustomersFn();          
           $scope.customer.new.isNotCliente=false;
-          $('#RegisterModalCustomer').modal('toggle');
+          $('#RegisterModalCustomer').modal('toggle'); ; 
+          $('#RegisterModalCustomer').on('shown.bs.modal', function () {
+            $('#idProfileKf').focus();
+          });
+
         break;
         case "add":
           $scope.fnNewCustomerFn(cObj);
@@ -6121,12 +6529,8 @@ $scope.slider = {
           $scope.isNewCustomer=false;
           $scope.decrementStep();
           $scope.setScheduleListFn();
-          $scope.list_phones=[];
-          $scope.list_phone_contact=[];
-          $scope.list_schedule_atention = [];
-          $scope.list_departments = [];
           $scope.formValidated=false;
-          $scope.customer = {'new':{}, 'update':{}, 'info':{}};
+          $scope.defArrForCustomersFn();
           $scope.customer.new.isNotCliente=false;
           $scope.customerDataFn(cObj, 'edit');
         break;
@@ -6166,135 +6570,218 @@ $scope.slider = {
     *                 ADD NEW CUSTOMER                *
     *                                                 *
     **************************************************/
-              /******************************
-              *    GETTING CUSTOMER DATA    *
-              ******************************/    
-                $scope.fnNewCustomerFn = function(client){
-                  var switchOption = client.idClientTypeFk;
-                  //console.log(switchOption);
-                  switch(switchOption){
-                    case "1": //ADMINISTRATION CUSTOMER
-                          //Getting the customer schedule setting
-                          $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
-                          //Getting the customer phones contact list
-                          $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
-                          //Getting the authorized user to the new customer
-                          $scope.customer.new.list_client_user                          = $scope.list_client_user;
-                          $scope.customer.new.idProvinceFk                              = $scope.selectCustomerAddressId.selected.idProvince;
-                          $scope.customer.new.idLocationFk                              = $scope.selectCustomerLocationId.selected.idLocation;
-                          $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.selectnameProvinceBillingFk.selected.idProvince;
-                          $scope.customer.new.billing_information.idLocationBillingFk   = $scope.selectnameLocationBillingFk.selected.idLocation;
-                          //Assigning the value of the field isNotCliente to 0
-                          $scope.customer.new.isNotCliente                              = 0;
-                          $scope.customer.new.idClientAdminFk                           = 0;
-                          $scope.customer.new.idClientCompaniFk                         = 0;
-                          //Printing the current array before add the customer
-                          console.log($scope.customer.new);
-                          //Send the customer data to the addcustomer service
-                          $scope.fnAddCustomerFn($scope.customer.new);        
-                    break;
-                    case "2": //BUILDING CUSTOMER
-                          //Getting the customer schedule setting
-                          $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
-                          //Getting the customer phones contact list
-                          $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
-                          //Getting the department that was created
-                          $scope.customer.new.list_departament                          = $scope.list_departments;
-                          //Getting the authorized user to the new customer
-                          $scope.customer.new.list_client_user                          = $scope.list_client_user;
-                          $scope.customer.new.idProvinceFk                              = $scope.selectCustomerAddressId.selected.idProvince;
-                          $scope.customer.new.idLocationFk                              = $scope.selectCustomerLocationId.selected.idLocation;
-                          $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.selectnameProvinceBillingFk.selected.idProvince;
-                          $scope.customer.new.billing_information.idLocationBillingFk   = $scope.selectnameLocationBillingFk.selected.idLocation;
-                          //Assigning the value of the field isNotCliente to 0
-                          $scope.customer.new.isNotCliente                              = $scope.customer.new.isNotCliente?1:0;
-                          $scope.customer.new.idClientAdminFk                           = !$scope.customer.new.isNotCliente?$scope.customer.companyData.idClient:0;
-                          $scope.customer.new.idClientCompaniFk                         = 0;
-                          $scope.customer.new.list_oter_ufc                             = $scope.list_ofu;
-                          $scope.customer.new.name                                      = $scope.customer.new.address;
-                          //Printing the current array before add the customer
-                          console.log($scope.customer.new);
-                          //Send the customer data to the addcustomer service
-                          $scope.fnAddCustomerFn($scope.customer.new);                     
-                    break;
-                    case "3": //COMPANY CUSTOMER
-                          $scope.customer.new.list_departament                            = {};
-                          $scope.customer.new.list_oter_ufc                               = {};
-                          //Getting the customer schedule setting
-                          $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
-                          //Getting the customer phones contact list
-                          $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
-                          //Getting the authorized user to the new customer
-                          $scope.customer.new.list_client_user                          = $scope.list_client_user;
-                          $scope.customer.new.idProvinceFk                              = $scope.selectCustomerAddressId.selected.idProvince;
-                          $scope.customer.new.idLocationFk                              = $scope.selectCustomerLocationId.selected.idLocation;
-                          $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.selectnameProvinceBillingFk.selected.idProvince;
-                          $scope.customer.new.billing_information.idLocationBillingFk   = $scope.selectnameLocationBillingFk.selected.idLocation;
-                          //Assigning the value of the field isNotCliente to 0
-                          $scope.customer.new.isNotCliente                              = $scope.customer.new.isNotCliente?1:0;
-                          $scope.customer.new.idClientAdminFk                           = 0;
-                          $scope.customer.new.idClientCompaniFk                         = !$scope.customer.new.isNotCliente?$scope.customer.companyData.idClient:0;
-                          //Printing the current array before add the customer
-                          console.log($scope.customer.new);
-                          //Send the customer data to the addcustomer service
-                          $scope.fnAddCustomerFn($scope.customer.new);                      
-                    break;
-                    case "4": //BRANCH CUSTOMER
-                          $scope.customer.new.list_departament                          = {};
-                          $scope.customer.new.list_oter_ufc                             = {}; 
-                          //Getting the customer schedule setting
-                          $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
-                          //Getting the customer phones contact list
-                          $scope.customer.new.list_phone_contact                        = $scope.customer.companyData.list_phone_contact;
-                          //Getting the authorized user to the new customer
-                          $scope.customer.new.list_client_user                          = $scope.list_client_user;
-                          $scope.customer.new.idProvinceFk                              = $scope.selectCustomerAddressId.selected.idProvince;
-                          $scope.customer.new.idLocationFk                              = $scope.selectCustomerLocationId.selected.idLocation;
-                          $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.selectnameProvinceBillingFk.selected.idProvince;
-                          $scope.customer.new.billing_information.idLocationBillingFk   = $scope.selectnameLocationBillingFk.selected.idLocation;
-                          //Assigning the value of the field isNotCliente to 0
-                          $scope.customer.new.isNotCliente                              = $scope.customer.new.isNotCliente?1:0;
-                          $scope.customer.new.idClientAdminFk                           = 0;
-                          $scope.customer.new.idClientCompaniFk                         = !$scope.customer.new.isNotCliente?$scope.customer.companyData.idClient:0;
-                          $scope.customer.new.name                                      = $scope.customer.new.address;
-                          //Printing the current array before add the customer
-                          console.log($scope.customer.new);
-                          //Send the customer data to the addcustomer service
-                          $scope.fnAddCustomerFn($scope.customer.new);                      
-                    break;                    
-                    default:
-                  }
-                };
-              /******************************
-              *   ADDING NEW THE CUSTOMER   *
-              ******************************/
-                $scope.fnAddCustomerFn = function(client){
-                  CustomerServices.addCustomer(client).then(function(data){
-                      $scope.rsJsonData = data;
-                      //console.log($scope.rsJsonData);
-                      if($scope.rsJsonData.status==200){
-                        console.log("Customer Successfully Created");
-                        inform.add('Registro de cliente realizado con exito. ',{
-                              ttl:2000, type: 'success'
-                        });
-                        $('#RegisterModalCustomer').modal('hide');
-                      }else if($scope.rsJsonData.status==203){
-                        console.log("Customer already exist, contact administrator");
-                        inform.add('INFO: Cliente ya se encuentra registrado. ',{
-                              ttl:2000, type: 'warning'
-                        });
-                        //$('#RegisterModalCustomer').modal('hide');
-                      }else if($scope.rsJsonData.status==500){
-                        console.log("Customer not Created, contact administrator");
-                        inform.add('Error: [500] Contacta al area de soporte. ',{
-                              ttl:2000, type: 'danger'
-                        });
-                        //$('#RegisterModalCustomer').modal('hide');
-                      }
-                        $scope.getCustomerListFn("",1);
-                      //console.log($scope.rsLocations_API_Data);
+        /******************************
+        *    GETTING CUSTOMER DATA    *
+        ******************************/    
+          $scope.fnNewCustomerFn = function(client){
+            var switchOption = client.idClientTypeFk;
+            //console.log(switchOption);
+            switch(switchOption){
+              case "1": //ADMINISTRATION CUSTOMER
+                    //Getting the customer schedule setting
+                    $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
+                    //Getting the customer phones contact list
+                    $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
+                    //Getting the authorized user to the new customer
+                    $scope.customer.new.list_client_user                          = $scope.list_client_user;
+                    if ($scope.customer.new.typeInmueble==1 && $scope.customer.new.isNotCliente==true){
+                      $scope.customer.new.idDepartmentFk                          = $scope.customer.select.main.department;
+                      $scope.customer.new.address                                 = $scope.customer.select.main.address.selected.address;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk;
+                      $scope.customer.new.addressLat                              = $scope.customer.select.main.address.selected.addressLat;
+                      $scope.customer.new.addressLon                              = $scope.customer.select.main.address.selected.addressLon;
+
+                    }else{
+                      $scope.customer.new.idDepartmentFk                          = null;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
+                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
+                      $scope.customer.new.numberUNF                               = null;
+                    }
+
+                    $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
+                    $scope.customer.new.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                    //Assigning the default value to 0
+                    $scope.customer.new.isNotCliente                              = 0;
+                    $scope.customer.new.idClientAdminFk                           = 0;
+                    $scope.customer.new.idClientCompaniFk                         = 0;
+                    $scope.customer.new.idTipoInmuebleFk                          = $scope.customer.new.typeInmueble;
+                    //Printing the current array before add the customer
+                    console.log($scope.customer.new);
+                    //Send the customer data to the addcustomer service
+                    $scope.fnAddCustomerFn($scope.customer.new);        
+              break;
+              case "2": //BUILDING CUSTOMER
+                    //Getting the customer schedule setting
+                    $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
+                    //Getting the customer phones contact list
+                    $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
+                    //Getting the department that was created
+                    $scope.selectDeptoDataFn();
+                    $scope.customer.new.list_departament                          = $scope.list_departments;
+                    //Getting the authorized user to the new customer
+                    $scope.customer.new.list_client_user                          = $scope.list_client_user;
+                    $scope.customer.new.idProvinceFk                              = $scope.customer.select.main.province.selected.idProvince;
+                    $scope.customer.new.idLocationFk                              = $scope.customer.select.main.location.selected.idLocation;
+                    $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
+                    $scope.customer.new.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                    //Assigning the default value to 0
+                    $scope.customer.new.isNotCliente                              = 0;
+                    $scope.customer.new.idClientAdminFk                           = $scope.customer.select.company.selected!=undefined?$scope.customer.companyData.idClient:null;
+                    $scope.customer.new.idClientCompaniFk                         = null;
+                    $scope.customer.new.idDepartmentFk                            = null;
+                    $scope.customer.new.idTipoInmuebleFk                          = null;
+                    $scope.customer.new.name                                      = $scope.customer.new.address;
+                    //Printing the current array before add the customer
+                    console.log($scope.customer.new);
+                    //Send the customer data to the addcustomer service
+                    $scope.fnAddCustomerFn($scope.customer.new);                     
+              break;
+              case "3": //COMPANY CUSTOMER
+                    $scope.customer.new.list_departament                            = {};
+                    //Getting the customer schedule setting
+                    $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
+                    //Getting the customer phones contact list
+                    $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
+                    //Getting the authorized user to the new customer
+                    $scope.customer.new.list_client_user                          = $scope.list_client_user;
+                    if ($scope.customer.new.typeInmueble==1 && $scope.customer.new.isNotCliente==true){
+                      $scope.customer.new.idDepartmentFk                          = $scope.customer.select.main.department;
+                      $scope.customer.new.address                                 = $scope.customer.select.main.address.selected.address;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk;
+                      $scope.customer.new.addressLat                              = $scope.customer.select.main.address.selected.addressLat;
+                      $scope.customer.new.addressLon                              = $scope.customer.select.main.address.selected.addressLon;
+
+                    }else{
+                      $scope.customer.new.idDepartmentFk                          = null;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
+                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
+                      $scope.customer.new.numberUNF                               = null;
+                    }
+                    $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
+                    $scope.customer.new.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                    //Assigning the value of the field isNotCliente to 0
+                    $scope.customer.new.isNotCliente                              = 0;
+                    $scope.customer.new.idClientAdminFk                           = null;
+                    $scope.customer.new.idClientCompaniFk                         = null;
+                    $scope.customer.new.idDepartmentFk                            = null;
+                    $scope.customer.new.idTipoInmuebleFk                          = $scope.customer.new.typeInmueble;
+                    //Printing the current array before add the customer
+                    console.log($scope.customer.new);
+                    //Send the customer data to the addcustomer service
+                    $scope.fnAddCustomerFn($scope.customer.new);                      
+              break;
+              case "4": //BRANCH CUSTOMER
+                    $scope.customer.new.list_departament                          = {};
+                    $scope.customer.new.list_oter_ufc                             = {}; 
+                    //Getting the customer schedule setting
+                    $scope.customer.new.list_schedule_atention                    = $scope.list_schedule_atention;
+                    //Getting the customer phones contact list
+                    $scope.customer.new.list_phone_contact                        = $scope.customer.companyData.list_phone_contact;
+                    //Getting the authorized user to the new customer
+                    $scope.customer.new.list_client_user                          = $scope.list_client_user;
+                    if ($scope.customer.new.typeInmueble==1 && $scope.customer.new.isNotCliente==true){
+                      $scope.customer.new.idDepartmentFk                          = $scope.customer.select.main.department;
+                      $scope.customer.new.address                                 = $scope.customer.select.main.address.selected.address;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk;
+                      $scope.customer.new.addressLat                              = $scope.customer.select.main.address.selected.addressLat;
+                      $scope.customer.new.addressLon                              = $scope.customer.select.main.address.selected.addressLon;
+
+                    }else{
+                      $scope.customer.new.idDepartmentFk                          = null;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
+                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
+                      $scope.customer.new.numberUNF                               = null;
+                    }
+                    $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
+                    $scope.customer.new.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                    //Assigning the value of the field isNotCliente to 0
+                    $scope.customer.new.isNotCliente                              = $scope.customer.new.isNotCliente?1:0;
+                    $scope.customer.new.idClientAdminFk                           = 0;
+                    $scope.customer.new.idClientCompaniFk                         = $scope.customer.select.company.selected!=undefined?$scope.customer.companyData.idClient:null;
+                    $scope.customer.new.name                                      = $scope.customer.new.address;
+                    $scope.customer.new.idTipoInmuebleFk                          = $scope.customer.new.typeInmueble;
+                    //Printing the current array before add the customer
+                    console.log($scope.customer.new);
+                    //Send the customer data to the addcustomer service
+                    $scope.fnAddCustomerFn($scope.customer.new);                      
+              break;
+              case "5": //PARTICULAR CUSTOMER
+
+                    //Getting the customer schedule setting
+                    if ($scope.customer.new.typeInmueble==1 && $scope.customer.new.isNotCliente==true){
+                      $scope.customer.new.idDepartmentFk                          = $scope.customer.select.main.department;
+                      $scope.customer.new.address                                 = $scope.customer.select.main.address.selected.address;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk;
+                      $scope.customer.new.addressLat                              = $scope.customer.select.main.address.selected.addressLat;
+                      $scope.customer.new.addressLon                              = $scope.customer.select.main.address.selected.addressLon;
+
+                    }else{
+                      $scope.customer.new.idDepartmentFk                          = null;
+                      $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
+                      $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
+                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
+                      $scope.customer.new.numberUNF                               = null;
+                    }
+                    $scope.customer.new.list_address_particular                   = $scope.list_address_particular;
+                    $scope.customer.new.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
+                    $scope.customer.new.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                    //Assigning the value of the field isNotCliente to 0
+                    $scope.customer.new.isNotCliente                              = 0;
+                    $scope.customer.new.idTipoInmuebleFk                          = $scope.customer.new.typeInmueble;
+                    $scope.list_phone_contact = [];
+                    if ($scope.customer.new.mobilePhone!=''){
+                      $scope.list_phone_contact.push({"phoneTag":"mobile", "phoneContact":$scope.customer.new.mobilePhone});
+                    }
+                    if ($scope.customer.new.localPhone!=''){
+                      $scope.list_phone_contact.push({"phoneTag":"local", "phoneContact":$scope.customer.new.localPhone});
+                    }
+
+                    $scope.customer.new.list_phone_contact                        = $scope.list_phone_contact;
+                    //Printing the current array before add the customer
+                    console.log($scope.customer.new);
+                    //Send the customer data to the addcustomer service
+                    $scope.fnAddCustomerFn($scope.customer.new);                      
+              break;                    
+              default:
+            }
+          };
+        /******************************
+        *   ADDING NEW THE CUSTOMER   *
+        ******************************/
+          $scope.fnAddCustomerFn = function(client){
+            CustomerServices.addCustomer(client).then(function(data){
+                $scope.rsJsonData = data;
+                //console.log($scope.rsJsonData);
+                if($scope.rsJsonData.status==200){
+                  console.log("Customer Successfully Created");
+                  inform.add('Registro de cliente realizado con exito. ',{
+                        ttl:2000, type: 'success'
                   });
-                };
+                  $('#RegisterModalCustomer').modal('hide');
+                }else if($scope.rsJsonData.status==203){
+                  console.log("Customer already exist, contact administrator");
+                  inform.add('INFO: Cliente ya se encuentra registrado. ',{
+                        ttl:2000, type: 'warning'
+                  });
+                  //$('#RegisterModalCustomer').modal('hide');
+                }else if($scope.rsJsonData.status==500){
+                  console.log("Customer not Created, contact administrator");
+                  inform.add('Error: [500] Contacta al area de soporte. ',{
+                        ttl:2000, type: 'danger'
+                  });
+                  //$('#RegisterModalCustomer').modal('hide');
+                }
+                  $scope.getCustomerListFn("",1);
+                //console.log($scope.rsLocations_API_Data);
+            });
+          };
     /**************************************************
     *                                                 *
     *                UPDATE CUSTOMER                  *
@@ -6366,6 +6853,62 @@ $scope.slider = {
                                   }
                                 }                    
                           break;
+                          case "2": //BUILDING CUSTOMER
+                              console.info("-------------------------");
+                              console.info(" showCustomerBuildingFields ");
+                              console.info("-------------------------");
+                              $scope.customer.update=obj;
+                              $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
+                              $scope.tmpVars.billing_information=obj.billing_information[0];
+                              console.info($scope.customer.update);
+                              var chekbDays = $scope.chekBox.row;
+                              //console.log($scope.chekBox.row);
+                              /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
+                              for (var key in chekbDays){
+                                  if (chekbDays[key]==true){
+                                    $scope.chekBox.row[key]=false;
+                                  }
+                              }
+                              var addrArr  = [];
+                              var locatArr = [];                              
+                              addrArr= $scope.getCustomerAddressFromId($scope.customer.update.idProvinceFk);
+                              locatArr= $scope.getCustomerLocationFromId($scope.customer.update.idLocationFk, $scope.customer.update.idProvinceFk);
+                              $scope.selectCustomerAddressId.selected = {idProvince: addrArr[0].idProvince, province: addrArr[0].province};
+                              $scope.selectCustomerLocationId.selected = {idLocation: locatArr[0].idLocation, location: locatArr[0].location};
+                              $scope.selectnameProvinceBillingFk.selected= {idProvince: addrArr[0].idProvince, province: addrArr[0].province};
+                              $scope.selectnameLocationBillingFk.selected= {idLocation: locatArr[0].idLocation, location: locatArr[0].location};
+                              //console.log(obj.list_phone_contact);
+                              if (obj.list_phone_contact.length>0){
+                                for (var key in  obj.list_phone_contact){
+                                  //console.log(obj.list_phone_contact[key]);
+                                  $scope.list_phone_contact.push({'idClientFk': obj.list_phone_contact[key].idClientFk,'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
+                                  $scope.list_phones.push({'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
+                                }
+                              }else{
+                                //console.log("obj.list_phone_contact is empty");
+                              }
+                              $('#UpdateModalCustomer').modal('toggle');
+                                $scope.enabledNextBtn();
+                                //console.log($scope.tmpSysModules.length);
+                                for (var i = 0; i < $scope.tmpVars.list_schedule_atention.length; i++) {
+                                  if($scope.tmpVars.list_schedule_atention[i].day==$scope.list_schedule[i].day){
+                                    //Load the data to the list that will be render in the frontend
+                                    $scope.list_schedule[i].fronAm    = $scope.tmpVars.list_schedule_atention[i].fronAm;
+                                    $scope.list_schedule[i].toAm      = $scope.tmpVars.list_schedule_atention[i].toAm;
+                                    $scope.list_schedule[i].fronPm    = $scope.tmpVars.list_schedule_atention[i].fronPm;
+                                    $scope.list_schedule[i].toPm      = $scope.tmpVars.list_schedule_atention[i].toPm;
+                                    $scope.list_schedule[i].selected  = true;
+                                    //Load the data to a temp array to handle the schedule
+                                    $scope.list_schedule_atention.push({
+                                        'idClienteFk':$scope.tmpVars.list_schedule_atention[i].idClienteFk, 
+                                        'day':$scope.tmpVars.list_schedule_atention[i].day, 
+                                        'fronAm':$scope.tmpVars.list_schedule_atention[i].fronAm, 
+                                        'toAm':$scope.tmpVars.list_schedule_atention[i].toAm, 
+                                        'fronPm':$scope.tmpVars.list_schedule_atention[i].fronPm, 
+                                        'toPm':$scope.tmpVars.list_schedule_atention[i].toPm});
+                                  }
+                                }                    
+                          break;                          
                           default:
                         }
                       break;
@@ -6373,31 +6916,31 @@ $scope.slider = {
                         switch (subOption){
                           case "1": //ADMINISTRATION CUSTOMER
 
-                          $scope.customer.update.list_schedule_atention=$scope.list_schedule_atention;
-                          //Getting the customer phones contact list
-                          $scope.customer.update.list_phone_contact=$scope.list_phone_contact;
-                          //Getting the authorized user to the update customer
-                          $scope.customer.update.list_client_user=$scope.list_client_user;
-                          //Assigning the value of the field isNotCliente to 0
-                          $scope.customer.update.isNotCliente=0;
-                          $scope.customer.update.idClientAdminFk=1;
-                          $scope.customer.update.idClientCompaniFk=1;
-                          $scope.customer.update.idProvinceFk = $scope.selectCustomerAddressId.selected.idProvince;
-                          $scope.customer.update.idLocationFk = $scope.selectCustomerLocationId.selected.idLocation;
-                          //get payment updated data from the user
-                          $scope.customer.update.billing_information={};                              
-                          $scope.customer.update.billing_information={'idClientFk':'', 'businessNameBilling':'', 'cuitBilling':'', 'idLocationBillingFk':'', 'idProvinceBillingFk':'', 'idTypeTaxFk':''};
-                          $scope.customer.update.billing_information=$scope.tmpVars.billing_information;
-                          console.log($scope.customer.update);
-                          $scope.customer.update.billing_information.idProvinceBillingFk = $scope.selectnameProvinceBillingFk.selected.idProvince;
-                          $scope.customer.update.billing_information.idLocationBillingFk = $scope.selectnameLocationBillingFk.selected.idLocation;
+                            $scope.customer.update.list_schedule_atention=$scope.list_schedule_atention;
+                            //Getting the customer phones contact list
+                            $scope.customer.update.list_phone_contact=$scope.list_phone_contact;
+                            //Getting the authorized user to the update customer
+                            $scope.customer.update.list_client_user=$scope.list_client_user;
+                            //Assigning the value of the field isNotCliente to 0
+                            $scope.customer.update.isNotCliente=0;
+                            $scope.customer.update.idClientAdminFk=1;
+                            $scope.customer.update.idClientCompaniFk=1;
+                            $scope.customer.update.idProvinceFk = $scope.selectCustomerAddressId.selected.idProvince;
+                            $scope.customer.update.idLocationFk = $scope.selectCustomerLocationId.selected.idLocation;
+                            //get payment updated data from the user
+                            $scope.customer.update.billing_information={};                              
+                            $scope.customer.update.billing_information={'idClientFk':'', 'businessNameBilling':'', 'cuitBilling':'', 'idLocationBillingFk':'', 'idProvinceBillingFk':'', 'idTypeTaxFk':''};
+                            $scope.customer.update.billing_information=$scope.tmpVars.billing_information;
+                            console.log($scope.customer.update);
+                            $scope.customer.update.billing_information.idProvinceBillingFk = $scope.selectnameProvinceBillingFk.selected.idProvince;
+                            $scope.customer.update.billing_information.idLocationBillingFk = $scope.selectnameLocationBillingFk.selected.idLocation;
 
-                          //$scope.customer.update.billing_information[0].idProvinceBillingFk=$scope.selectnameProvinceBillingFk.selected.idProvince;
-                          //$scope.customer.update.billing_information[0].idLocationBillingFk=$scope.selectnameLocationBillingFk.selected.idLocation;
-                          //Printing the current array before add the customer
-                          console.log($scope.customer.update);
-                          //Send the customer data to the addcustomer service
-                          $scope.updateAdminCustomerFn($scope.customer.update);    
+                            //$scope.customer.update.billing_information[0].idProvinceBillingFk=$scope.selectnameProvinceBillingFk.selected.idProvince;
+                            //$scope.customer.update.billing_information[0].idLocationBillingFk=$scope.selectnameLocationBillingFk.selected.idLocation;
+                            //Printing the current array before add the customer
+                            console.log($scope.customer.update);
+                            //Send the customer data to the addcustomer service
+                            $scope.updateAdminCustomerFn($scope.customer.update);    
                           break;
                         }
                       break;
@@ -6554,57 +7097,57 @@ $scope.slider = {
     *                 LIST CUSTOMER                   *
     *                                                 *
     **************************************************/
-    $scope.rsCustomerListData = {};
-    $scope.rsFrmCustomerListData = {};
-    $scope.rsCustomerListByTypeData = {};
-    $scope.getCustomerListFn = function(search, opt){
-      CustomerServices.getCustomerList(search).then(function(data){
-          $scope.rsCustomerListData = data;
-          $scope.rsFrmCustomerListData = data.status==404?$scope.rsFrmCustomerListData=[]:data;
-          $scope.rsCustomerListByTypeData  = data.status==404?$scope.rsCustomerListByTypeData=[]:data;
-          if(opt==1){$scope.loadPagination($scope.rsCustomerListData, "idClient", "10");}
-          //console.log("rsCustomerListData");
-          //console.log($scope.rsCustomerListData);
-      });
-    };
+      $scope.rsCustomerListData = {};
+      $scope.rsFrmCustomerListData = {};
+      $scope.rsCustomerListByTypeData = {};
+      $scope.getCustomerListFn = function(search, opt){
+        CustomerServices.getCustomerList(search).then(function(data){
+            $scope.rsCustomerListData = data;
+            $scope.rsFrmCustomerListData = data.status==404?$scope.rsFrmCustomerListData=[]:data;
+            $scope.rsCustomerListByTypeData  = data.status==404?$scope.rsCustomerListByTypeData=[]:data;
+            if(opt==1){$scope.loadPagination($scope.rsCustomerListData, "idClient", "10");}
+            //console.log("rsCustomerListData");
+            //console.log($scope.rsCustomerListData);
+        });
+      };
     /**************************************************
     *                                                 *
     *             LIST CUSTOMER BY TYPE               *
     *                                                 *
     **************************************************/
     
-    $scope.getCustomersListByTypeFn = function(type){
-      console.log("getCustomerListByTypeFn => type:"+type);
-      if($scope.rsCustomerListData.status!=404){
-        $scope.rsCustomerListByTypeData=[];
-        if (type!=undefined && type!='' && type!=null){
-          for (var item in $scope.rsCustomerListData){
-            if ($scope.rsCustomerListData[item].idClientTypeFk==type){
-              //console.log($scope.rsCustomerListData[item]);
-              $scope.rsCustomerListByTypeData.push($scope.rsCustomerListData[item]);
-              //console.log($scope.rsCustomerListByTypeData);
+      $scope.getCustomersListByTypeFn = function(type){
+        console.log("getCustomerListByTypeFn => type:"+type);
+        if($scope.rsCustomerListData.status!=404){
+          $scope.rsCustomerListByTypeData=[];
+          if (type!=undefined && type!='' && type!=null){
+            for (var item in $scope.rsCustomerListData){
+              if ($scope.rsCustomerListData[item].idClientTypeFk==type){
+                //console.log($scope.rsCustomerListData[item]);
+                $scope.rsCustomerListByTypeData.push($scope.rsCustomerListData[item]);
+                //console.log($scope.rsCustomerListByTypeData);
+              }
             }
+          }else{
+             $scope.rsCustomerListByTypeData=$scope.rsCustomerListData;
           }
         }else{
-           $scope.rsCustomerListByTypeData=$scope.rsCustomerListData;
+          $scope.rsCustomerListByTypeData=[];
         }
-      }else{
-        $scope.rsCustomerListByTypeData=[];
-      }
-      //console.log($scope.rsCustomerListByTypeData);
-    };
+        //console.log($scope.rsCustomerListByTypeData);
+      };
     /**************************************************
     *                                                 *
     *                GET TYPE OF CUSTOMER             *
     *                                                 *
     **************************************************/
-    $scope.rsCustomerTypeData = {};
-    $scope.getCustomerTypesFn = function(){
-      CustomerServices.getCustomerType().then(function(data){
-          $scope.rsCustomerTypeData = data;
-          //console.log($scope.rsCustomerTypeData);
-      });
-    };
+      $scope.rsCustomerTypeData = {};
+      $scope.getCustomerTypesFn = function(){
+        CustomerServices.getCustomerType().then(function(data){
+            $scope.rsCustomerTypeData = data;
+            //console.log($scope.rsCustomerTypeData);
+        });
+      };
     $scope.list_id_user=[];
     $scope.list_client_user=[];
     $scope.list_users=[];
@@ -6613,17 +7156,17 @@ $scope.slider = {
     *          SHOW ONLY CUSTOMER BY X TYPE OF        *
     *             ADMINISTRATION OR COMPANY           *
     **************************************************/
-    $scope.filterCustomerByType = function(item){
-      switch($scope.customer.new.idClientTypeFk){
-        case "2":
-          return item.idClientTypeFk == "1";
-        break;
-        case "4":
-          return item.idClientTypeFk == "3";
-        break;
-      }
-       
-    };
+      $scope.filterCustomerByType = function(item){
+        switch($scope.customer.new.idClientTypeFk){
+          case "2":
+            return item.idClientTypeFk == "1" || item.idClientTypeFk == "3";
+          break;
+          case "4":
+            return item.idClientTypeFk == "1" || item.idClientTypeFk == "3";
+          break;
+        }
+         
+      };
 
     /**************************************************
     *                                                 *
@@ -6684,1117 +7227,1487 @@ $scope.slider = {
     ********************************************************************************************************************************************/
     $scope.regexURL = '^((https?|ftp)://)?([A-Za-z]+\\.)?[A-Za-z0-9-]+(\\.[a-zA-Z]{1,4}){1,2}(/.*\\?.*)?$';
     $scope.regexTIME='/([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/';
+    $scope.regexDepto = '/([a-zA-Z]|[\d]){1,3}\b$/'
     /**************************************************
     *                                                 *
     *                SCHEDULE ATENTION                *
     *                                                 *
     **************************************************/
-    $scope.setScheduleListFn = function(){
-      $scope.list_schedule=[{
-                          id    :1,
-                          day   :'Lunes',
-                          fromAm:'',
-                          toAm  :'',
-                          fromPm:'',
-                          toPm  :'',
-                          selected:false
-                        },{
-                          id    :2,                          
-                          day   :'Martes',
-                          fronAm:'',
-                          toAm  :'',
-                          fronPm:'',
-                          toPm  :'',
-                          selected:false                          
-                        },{
-                          id    :3,
-                          day   :'Miercoles',
-                          fronAm:'',
-                          toAm  :'',
-                          fronPm:'',
-                          toPm  :'',
-                          selected:false                          
-                        },{
-                          id    :4,
-                          day   :'Jueves',
-                          fronAm:'',
-                          toAm  :'',
-                          fronPm:'',
-                          toPm  :'',
-                          selected:false                          
-                        },{
-                          id    :5,
-                          day   :'Viernes',
-                          fronAm:'',
-                          toAm  :'',
-                          fronPm:'',
-                          toPm  :'' ,
-                          selected:false                         
-                        },{
-                          id    :6,
-                          day   :'Sabado',
-                          fronAm:'',
-                          toAm  :'',
-                          fronPm:'',
-                          toPm  :'' ,
-                          selected:false                         
-                        },{
-                          id    :7,
-                          day   :'Domingo',
-                          fronAm:'',
-                          toAm  :'',
-                          fronPm:'',
-                          toPm  :'',
-                          selected:false                          
-                        }];
-    }                        
-    $scope.setScheduleListFn();
-
+      $scope.setScheduleListFn = function(){
+        $scope.list_schedule=[{
+                            id    :1,
+                            day   :'Lunes',
+                            fromAm:'',
+                            toAm  :'',
+                            fromPm:'',
+                            toPm  :'',
+                            selected:false
+                          },{
+                            id    :2,                          
+                            day   :'Martes',
+                            fronAm:'',
+                            toAm  :'',
+                            fronPm:'',
+                            toPm  :'',
+                            selected:false                          
+                          },{
+                            id    :3,
+                            day   :'Miercoles',
+                            fronAm:'',
+                            toAm  :'',
+                            fronPm:'',
+                            toPm  :'',
+                            selected:false                          
+                          },{
+                            id    :4,
+                            day   :'Jueves',
+                            fronAm:'',
+                            toAm  :'',
+                            fronPm:'',
+                            toPm  :'',
+                            selected:false                          
+                          },{
+                            id    :5,
+                            day   :'Viernes',
+                            fronAm:'',
+                            toAm  :'',
+                            fronPm:'',
+                            toPm  :'' ,
+                            selected:false                         
+                          },{
+                            id    :6,
+                            day   :'Sabado',
+                            fronAm:'',
+                            toAm  :'',
+                            fronPm:'',
+                            toPm  :'' ,
+                            selected:false                         
+                          },{
+                            id    :7,
+                            day   :'Domingo',
+                            fronAm:'',
+                            toAm  :'',
+                            fronPm:'',
+                            toPm  :'',
+                            selected:false                          
+                          }];
+      }                        
+      $scope.setScheduleListFn();
     $scope.tmpAddres = {'province':{},'location':{}};
     /**************************************************
     *                                                 *
     *          GET CURRENT ADDR/LOCAT VALUE           *
     *                                                 *
     **************************************************/
-    $scope.getCurrentAddrVal = function(province, location){
+      $scope.getCurrentAddrVal = function(province, location){
 
-          $scope.tmpAddres.province=province;
-          //'idProvince': $scope.tmpAddres.province.idProvince, 'province': $scope.tmpAddres.province.province;
-          
-          $scope.tmpAddres.location=location;
-          //'idLocation': $scope.tmpAddres.location.idLocation, 'location': $scope.tmpAddres.location.location;
+            $scope.tmpAddres.province=province;
+            //'idProvince': $scope.tmpAddres.province.idProvince, 'province': $scope.tmpAddres.province.province;
+            
+            $scope.tmpAddres.location=location;
+            //'idLocation': $scope.tmpAddres.location.idLocation, 'location': $scope.tmpAddres.location.location;
 
-      //console.log($scope.tmpAddres);
-    }
+        //console.log($scope.tmpAddres);
+      }
     /**************************************************
     *                                                 *
     *        GET CURRENT COMPANY DATA & LOAD          *
     *                                                 *
     **************************************************/
-    $scope.getCompanyDataFn = function(obj){
-      //console.log(obj);
-      //console.log("$scope.customer.new.isNotCliente: "+$scope.customer.new.isNotCliente);
-        if (obj){
-          $scope.customer.companyData = $scope.customer.new.isNotCliente==undefined || $scope.customer.new.isNotCliente!=true?obj:$scope.customer.companyData;
-          console.log($scope.customer.companyData);
-          $scope.customer.new.mailServiceTecnic = $scope.customer.companyData.mailServiceTecnic;
-          $scope.customer.new.mailCollection    = $scope.customer.companyData.mailCollection;
-          $scope.customer.new.mailFronKey       = $scope.customer.companyData.mailFronKey;
-          var addrArr  = [];
-          var locatArr = [];                              
-          addrArr  = $scope.getCustomerAddressFromId($scope.customer.companyData.billing_information[0].idProvinceBillingFk);
-          locatArr = $scope.getCustomerLocationFromId($scope.customer.companyData.billing_information[0].idLocationBillingFk, $scope.customer.companyData.billing_information[0].idProvinceBillingFk);
-          $scope.customer.companyData.provinceName  = addrArr[0].province;
-          $scope.customer.companyData.locationName  = locatArr[0].location;
-          if ($scope.customer.new.idClientTypeFk==4){
-              $scope.list_phone_contact = $scope.customer.companyData.list_phone_contact;
-              $scope.list_phones        = $scope.list_phone_contact
-              $scope.customer.new.billing_information.businessNameBilling    = $scope.customer.companyData.businessName;
-              $scope.customer.new.billing_information.cuitBilling            = $scope.customer.companyData.CUIT;
-              $scope.selectnameProvinceBillingFk.selected                    = {idProvince: addrArr[0].idProvince, province: addrArr[0].province};
-              $scope.selectnameLocationBillingFk.selected                    = {idLocation: locatArr[0].idLocation, location: locatArr[0].location};
-              $scope.customer.new.billing_information.idTypeTaxFk            = $scope.customer.companyData.billing_information[0].idTypeTax;
-          }
-          
-        }else{
-          //console.log("erasing companyData");
-          $scope.customer.companyData={};
-        }
+      $scope.getCompanyDataFn = function(obj){
+        console.log(obj);
+        //console.log("$scope.customer.new.isNotCliente: "+$scope.customer.new.isNotCliente);
+          if (obj){
+            $scope.customer.companyData = obj;
+            //console.log($scope.customer.companyData);
+            $scope.customer.new.mailServiceTecnic = $scope.customer.companyData.mailServiceTecnic;
+            $scope.customer.new.mailCollection    = $scope.customer.companyData.mailCollection;
+            $scope.customer.new.mailFronKey       = $scope.customer.companyData.mailFronKey;
+            var addrArr  = [];
+            var locatArr = [];                              
+            addrArr  = $scope.getCustomerAddressFromId($scope.customer.companyData.billing_information[0].idProvinceBillingFk);
+            locatArr = $scope.getCustomerLocationFromId($scope.customer.companyData.billing_information[0].idLocationBillingFk, $scope.customer.companyData.billing_information[0].idProvinceBillingFk);
+            $scope.customer.companyData.provinceName  = addrArr[0].province;
+            $scope.customer.companyData.locationName  = locatArr[0].location;
 
-    }    
+            if ($scope.customer.new.idClientTypeFk==4){
+                 /*Load phones list contacts */
+                for (var key in  $scope.customer.companyData.list_phone_contact){
+                  //console.log(obj.list_phone_contact[key]);
+                  $scope.list_phone_contact.push({'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
+                  $scope.list_phones.push({'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
+                } 
+                $scope.customer.new.billing_information.businessNameBilling    = $scope.customer.companyData.businessName;
+                $scope.customer.new.billing_information.cuitBilling            = $scope.customer.companyData.CUIT;
+                $scope.customer.select.payment.province.selected               = {idProvince: addrArr[0].idProvince, province: addrArr[0].province};
+                $scope.customer.select.payment.location.selected               = {idLocation: locatArr[0].idLocation, location: locatArr[0].location};
+                $scope.customer.new.billing_information.idTypeTaxFk            = $scope.customer.companyData.billing_information[0].idTypeTax;
+            }
+            
+          }else{
+            //console.log("erasing companyData");
+            $scope.customer.companyData={};
+          }
+
+      }    
     /**************************************************
     *                                                 *
     *                     GET AGENTS                  *
     *                                                 *
     **************************************************/
-    $scope.rsAgentsData = {};
-    $scope.getAgentsFn = function(){
-      UtilitiesServices.getAgents().then(function(data){
-          $scope.rsAgentsData = data;
-          //console.log($scope.rsProfileData);
-      });
-    };
+      $scope.rsAgentsData = {};
+      $scope.getAgentsFn = function(){
+        UtilitiesServices.getAgents().then(function(data){
+            $scope.rsAgentsData = data;
+            //console.log($scope.rsProfileData);
+        });
+      };
+    /**************************************************
+    *                                                 *
+    *                    GET ZONES                    *
+    *                                                 *
+    **************************************************/
+      $scope.rsZonesData = {};
+      $scope.getZonesFn = function(){
+        UtilitiesServices.getZones().then(function(data){
+            $scope.rsZonesData = data;
+            //console.log($scope.rsProfileData);
+        });
+      };
+    /**************************************************
+    *                                                 *
+    *                GET BUILDINGS                    *
+    *                                                 *
+    **************************************************/
+      $scope.rsBuildingAddressData = {};
+      $scope.getBuildingsFn = function(){
+        addressServices.getBuildings().then(function(data){
+            $scope.rsBuildingAddressData = data;
+            //console.log($scope.rsProfileData);
+        });
+      };
+    /**************************************************
+    *                                                 *
+    *                GET DEPTOS BY ID                 *
+    *                                                 *
+    **************************************************/
+      $scope.rsBuildingDepartmentsData = {};
+      $scope.getBuildingsDeptosFn = function(id){
+        addressServices.getBuildingsDeptos(id).then(function(data){
+            $scope.rsBuildingDepartmentsData = data;
+            //console.log($scope.rsProfileData);
+        });
+      };
     /**************************************************
     *                                                 *
     *                GET TYPE OF IVA                  *
     *                                                 *
     **************************************************/
-    $scope.rsTypeOfIVAData = {};
-    $scope.getTypeOfIVAFn = function(){
-      UtilitiesServices.getTypeOfIVA().then(function(data){
-          $scope.rsTypeOfIVAData = data;
-          //console.log($scope.rsProfileData);
-      });
-    };
+      $scope.rsTypeOfIVAData = {};
+      $scope.getTypeOfIVAFn = function(){
+        UtilitiesServices.getTypeOfIVA().then(function(data){
+            $scope.rsTypeOfIVAData = data;
+            //console.log($scope.rsProfileData);
+        });
+      };
     /**************************************************
     *                                                 *
     *                   GET STATES                    *
     *                   LOCAL API                     *
     *                                                 *
     **************************************************/
-    $scope.rsStatesData = {};
-    $scope.getStatesFn = function(){
-      UtilitiesServices.getStates().then(function(data){
-          $scope.rsStatesData = data;
-          //console.log($scope.rsStatesData);
-      });
-    };
+      $scope.rsStatesData = {};
+      $scope.getStatesFn = function(){
+        addressServices.getStates().then(function(data){
+            $scope.rsStatesData = data;
+            //console.log($scope.rsStatesData);
+        });
+      };
     /**************************************************
     *                                                 *
     *             GET LOCATION BY NAME                *
     *                  ARG GOB API                    *
     *                                                 *
     **************************************************/
-    $scope.rsLocations_API_Data = {};
-    console.info("Length: "+$scope.rsLocations_API_Data.length);
-    $scope.getLocationByNameFn = function(name){
-      UtilitiesServices.getLocationsByName(name).then(function(data){
-          $scope.rsLocations_API_Data = data;
-          //console.log($scope.rsLocations_API_Data);
-      });
-    };
+      $scope.rsLocations_API_Data = {};
+      console.info("Length: "+$scope.rsLocations_API_Data.length);
+      $scope.getLocationByNameFn = function(name){
+        addressServices.getLocationsByName(name).then(function(data){
+            $scope.rsLocations_API_Data = data;
+            //console.log($scope.rsLocations_API_Data);
+        });
+      };
     /**************************************************
     *                                                 *
     *                  GET LOCATION                   *
     *                   LOCAL API                     *
     *                                                 *
     **************************************************/
-    $scope.rsLocations_Data = {};
-    $scope.getLocationByIdFn = function(idProvince){
-      UtilitiesServices.getLocations(idProvince).then(function(data){
-          $scope.rsLocations_All = data;
-          //console.log($scope.rsLocations_Data);
-      });
-    }; 
-    $scope.getAllLocationsFn = function(){
-      UtilitiesServices.getAllLocations().then(function(data){
-          $scope.rsLocations_All = data;
-          $scope.rsLocations_All2 = data;
-          //console.log($scope.rsLocations_API_Data);
-      });
-    };        
+      $scope.rsLocations_Data = {};
+      $scope.getLocationByIdFn = function(idProvince){
+        addressServices.getLocations(idProvince).then(function(data){
+            $scope.rsLocations_All = data;
+            //console.log($scope.rsLocations_Data);
+        });
+      }; 
+      $scope.getAllLocationsFn = function(){
+        addressServices.getAllLocations().then(function(data){
+            $scope.rsLocations_All = data;
+            $scope.rsLocations_All2 = data;
+            //console.log($scope.rsLocations_API_Data);
+        });
+      };        
     /**************************************************
     *                                                 *
     *              GET ADDRESS BY Name                *
     *                                                 *
     **************************************************/
-    $scope.rsAddress_API_Data = {};
-    $scope.getAddressByNameFn = function(name){
-      var twoNumber_patt=/^(?=(?:\D*\d){2})[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
-      if (twoNumber_patt.test(name)){
-        UtilitiesServices.getAddressByName(name).then(function(data){
-          if($scope.isPCA){
-            $scope.rsAddress_API_Data_PCA = data; //PCA = Particular Customer Address
-          }else{
-            $scope.rsAddress_API_Data = data;
-          }
-            
-            
-            //console.log($scope.rsProfileData);
-        });
-      }else{
-        //console.info("expected 2 numbers at least");
-      }
-    };
+      $scope.rsAddress_API_Data_Main = {}; $scope.rsAddress_API_Data_Payment = {}; $scope.rsAddress_API_Data_PCA = {};
+      $scope.getAddressByNameFn = function(name, opt){
+        var twoNumber_patt=/^(?=(?:\D*\d){2})[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
+        if (twoNumber_patt.test(name)){
+          addressServices.getAddressByName(name).then(function(data){
+            switch(opt){
+              case "main":
+                $scope.rsAddress_API_Data_Main = data; //Main = Principal Customer Address
+              break;
+              case "payment":
+                $scope.rsAddress_API_Data_Payment = data; //Payment = Payment Customer Address
+              break;
+              case "particular":
+                $scope.rsAddress_API_Data_PCA = data;  //PCA = Particular Customer Address
+              break;
+            }
+              //console.log($scope.rsProfileData);
+              $scope.addrrSelected=false;
+              $scope.enabledNextBtn();
+          });
+        }else{
+            switch(opt){
+              case "main":
+                $scope.rsAddress_API_Data_Main = null; //Main = Principal Customer Address
+              break;
+              case "payment":
+                $scope.rsAddress_API_Data_Payment = null; //Payment = Payment Customer Address
+              break;
+              case "particular":
+                $scope.rsAddress_API_Data_PCA = null;  //PCA = Particular Customer Address
+              break;
+            }
+          $scope.addrrSelected=false;
+          //console.info("expected 2 numbers at least");
+          $scope.enabledNextBtn();
+        }
+      };
+      $scope.addrrSelected=false;
+      $scope.fillData=function(item, opt1, opt2){
+        switch (opt1){
+          case "address":
+            switch(opt2){
+              case "new":
+                $scope.customer.new.nameAddress=item.calle.nombre+" "+item.altura.valor;              
+                $scope.customer.new.address=item.calle.nombre+" "+item.altura.valor;
+                $scope.customer.new.addressLat=item.ubicacion.lat;
+                $scope.customer.new.addressLon=item.ubicacion.lon;
+                $scope.rsAddress_API_Data_Main=null;
+                $scope.addrrSelected=true;
+                $scope.enabledNextBtn();
+              break;
+              case "update":
+                $scope.customer.update.nameAddress=item.calle.nombre+" "+item.altura.valor;
+                $scope.customer.update.address=item.calle.nombre+" "+item.altura.valor;
+                $scope.customer.update.addressLat=item.ubicacion.lat;
+                $scope.customer.update.addressLon=item.ubicacion.lon;
+                $scope.rsAddress_API_Data_Main=null;
+              break;
+              case "particular":
+                $scope.list_particular_address.nameAddress=item.calle.nombre+" "+item.altura.valor;
+                $scope.rsAddress_API_Data_PCA=null;
+                 $scope.addrrSelected=true;
+                 $scope.enabledNextBtn();
+              break;
+              case "payment":
+                $scope.customer.new.billing_information.nameAddress=item.calle.nombre+" "+item.altura.valor;
+                $scope.rsAddress_API_Data_Payment=null;
+                $scope.addrrSelected=true;
+                $scope.enabledNextBtn();
+              break;                          
+            }
+          break;        
+          default:
+        }
 
-    $scope.fillData=function(item, opt1, opt2){
-      switch (opt1){
-        case "address":
-          switch(opt2){
-            case "new":
-              $scope.customer.new.nameAddress=item.calle.nombre+" "+item.altura.valor;
-              $scope.customer.new.address=item.calle.nombre+" "+item.altura.valor;
-              $scope.customer.new.addressLat=item.ubicacion.lat;
-              $scope.customer.new.addressLon=item.ubicacion.lon;
-              $scope.rsAddress_API_Data=null;
-            break;
-            case "update":
-              $scope.customer.update.nameAddress=item.calle.nombre+" "+item.altura.valor;
-              $scope.customer.update.address=item.calle.nombre+" "+item.altura.valor;
-              $scope.customer.update.addressLat=item.ubicacion.lat;
-              $scope.customer.update.addressLon=item.ubicacion.lon;
-              $scope.rsAddress_API_Data=null;
-            break;
-            case "custom":
-              $scope.list_particular_address.nameAddress=item.calle.nombre+" "+item.altura.valor;
-              $scope.rsAddress_API_Data_PCA=null;
-            break;            
-          }
-        break;        
-        default:
       }
-
-    }
-    $scope.sysArrFound=false;
-    $scope.rsStatesList={}; $scope.rsLocationsList={};
-    $scope.rsStatesList2={}; $scope.rsLocationsList2={};
-    $scope.sysFindInArrFn=function(string, objArr, opt){
-      var nombre_1="";
-      var nombre_2="";
-      $scope.objArrTmp={};
-      $scope.objArrTmp=objArr;
-      console.log($scope.objArrTmp);
-      var output=[];
-      var i=0;
-      if (string!=undefined && string!=""){
-        angular.forEach($scope.objArrTmp,function(objTmp){
-          console.log(objTmp);
-          nombre_1=objTmp.province
-          nombre_2=objTmp.location;
-          var nameTmp=!nombre_1?nombre_2:nombre_1;
-          console.info(nameTmp);
-          if(nameTmp.toLowerCase().indexOf(string.toLowerCase())>=0){
-            output.push({objTmp});
-          }
-        });
-      }else{
-            $scope.objArrTmp=null;
-            $scope.sysArrFound=false;
+      $scope.sysArrFound=false;
+      $scope.rsStatesList={}; $scope.rsLocationsList={};
+      $scope.rsStatesList2={}; $scope.rsLocationsList2={};
+      $scope.sysFindInArrFn=function(string, objArr, opt){
+        var nombre_1="";
+        var nombre_2="";
+        $scope.objArrTmp={};
+        $scope.objArrTmp=objArr;
+        console.log($scope.objArrTmp);
+        var output=[];
+        var i=0;
+        if (string!=undefined && string!=""){
+          angular.forEach($scope.objArrTmp,function(objTmp){
+            console.log(objTmp);
+            nombre_1=objTmp.province
+            nombre_2=objTmp.location;
+            var nameTmp=!nombre_1?nombre_2:nombre_1;
+            console.info(nameTmp);
+            if(nameTmp.toLowerCase().indexOf(string.toLowerCase())>=0){
+              output.push({objTmp});
+            }
+          });
+        }else{
+              $scope.objArrTmp=null;
+              $scope.sysArrFound=false;
+        }
+        switch (opt){
+          case "states":
+            $scope.rsStatesList=output;
+            console.log($scope.rsStatesList);
+          break;
+          case "locations":
+            $scope.rsLocationsList=output;
+            console.log($scope.rsLocationsList);
+          break;
+          case "states2":
+            $scope.rsStatesList2=output;
+            console.log($scope.rsStatesList2);
+          break;
+          case "locations2":
+            $scope.rsLocationsList2=output;
+            console.log($scope.rsLocationsList2);
+          break;        
+          default:
+        }   
       }
-      switch (opt){
-        case "states":
-          $scope.rsStatesList=output;
-          console.log($scope.rsStatesList);
-        break;
-        case "locations":
-          $scope.rsLocationsList=output;
-          console.log($scope.rsLocationsList);
-        break;
-        case "states2":
-          $scope.rsStatesList2=output;
-          console.log($scope.rsStatesList2);
-        break;
-        case "locations2":
-          $scope.rsLocationsList2=output;
-          console.log($scope.rsLocationsList2);
-        break;        
-        default:
-      }   
-    }
     /**************************************************
     *                                                 *
     *                  CONTACT PHONES                 *
     *                                                 *
     **************************************************/
-    $scope.list_phone_contact=[];
-    $scope.list_phones=[];
-    $scope.contactPhones={};
-    $scope.isPhoneExist=null;
-    $scope.addPhoneNumFn = function (obj, opt){
-      //console.log("addPhoneNumFn => $scope.list_phones.length: "+$scope.list_phones.length);
-      if (opt=="new"){
-        if ($scope.list_phones.length<=0){
-          //console.log("length is equal 0 or less 0");
-          $scope.list_phone_contact.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-          $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-        }else{
-          for (var key in  $scope.list_phone_contact){
-           // console.log(key);
-            console.log("Validando: "+$scope.list_phone_contact[key].phoneContact+" == "+obj.phoneContact);
-              if ($scope.list_phone_contact[key].phoneContact==obj.phoneContact){
-                var tmpTag=$scope.list_phone_contact[key].phoneTag;
-                var ptag= tmpTag.toUpperCase();
-                inform.add("El Numero de contacto: "+obj.phoneContact+", se encuentra agregado como contacto "+ptag,{
-                  ttl:5000, type: 'success'
-                });
-                $scope.isPhoneExist=true;
-                break;
-                //console.log($scope.isPhoneExist);
-              }else{
-                $scope.isPhoneExist=false;
-                //console.log($scope.isPhoneExist);
-              }
-          }
-          if(!$scope.isPhoneExist){
-              //console.log("ADD_NO_EXIST");
-                $scope.list_phone_contact.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-                $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-          }
-        }
-      }else if (opt=="update"){
-        //$scope.list_phone_contact.push({'idClientFk': obj.list_phone_contact[key].idClientFk,'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
-        if ($scope.list_phones.length<=0){
-          //console.log("length is equal 0 or less 0");
-          $scope.list_phone_contact.push({'idClientFk':$scope.customer.update.idClient,'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-          $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-        }else{
-          for (var key in  $scope.list_phone_contact){
-           // console.log(key);
-            console.log("Validando: "+$scope.list_phone_contact[key].phoneContact+" == "+obj.phoneContact);
-              if ($scope.list_phone_contact[key].phoneContact==obj.phoneContact){
-                var tmpTag=$scope.list_phone_contact[key].phoneTag;
-                var ptag= tmpTag.toUpperCase();
-                inform.add("El Numero de contacto: "+obj.phoneContact+", se encuentra agregado como contacto "+ptag,{
-                  ttl:5000, type: 'success'
-                });
-                $scope.isPhoneExist=true;
-                break;
-                //console.log($scope.isPhoneExist);
-              }else{
-                $scope.isPhoneExist=false;
-                //console.log($scope.isPhoneExist);
-              }
-          }
-          if(!$scope.isPhoneExist){
-              //console.log("ADD_NO_EXIST");
-                $scope.list_phone_contact.push({'idClientFk':$scope.customer.update.idClient,'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-                $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
-          }
-        }      
-      }
-      //console.log("OBJ A ADICIONAR:");
-      //console.log(obj);
-      //console.log("list_phone_contact:");
-      //console.log($scope.list_phone_contact);
-      //console.log("list_phones:");
-      //console.log($scope.list_phones);
-      $scope.enabledNextBtn();
-    }
-    $scope.removePhoneNumFn = function (obj){
-      for (var key in  $scope.list_phone_contact){
-          if ( $scope.list_phone_contact[key].phoneContact==obj.phoneContact){
-              $scope.list_phones.splice(key,1);
-              $scope.list_phone_contact.splice(key,1);
-          }
-      }
-      //console.log("OBJ A ELIMINAR:");
-      //console.log(obj);
-      //console.log("list_phone_contact:");
-      //console.log($scope.list_phone_contact);
-      //console.log("list_phones:");
-      //console.log($scope.list_phones);
-      $scope.enabledNextBtn();      
-    }
-    $scope.removeAllPhones = function(){
-      for (var key in  $scope.list_phones){
-        $scope.list_phones.splice(key,1);
-        $scope.list_phone_contact.splice(key,1);
-      }
-    }
-    $scope.list_schedule_atention = [];
-    $scope.list_schedule_Arr = [];
-    $scope.list_input_first = {fronAm:'', toAm:'', fronPm: '', toPm:''};
-    $scope.list_input_last = {fronAm:'', toAm:'', fronPm: '', toPm:''};
-    $scope.setScheduleTimeFn = function(obj, opt){
-      if (opt=="new"){
-        if(obj.selected==true){
-          console.info("Checkbox selected = "+obj.selected);
-          if ($scope.list_schedule_atention.length<=0 ){
-            //console.log("length is equal 0 or less 0");
-            $scope.list_schedule_atention.push({'day':obj.day, 'fronAm':obj.fronAm, 'toAm': obj.toAm, 'fronPm': obj.fronPm, 'toPm': obj.toPm});
-            $scope.list_input_first.fronAm  = obj.fronAm;
-            $scope.list_input_first.toAm    = obj.toAm;
-            $scope.list_input_first.fronPm  = obj.fronPm;
-            $scope.list_input_first.toPm    = obj.toPm;
+      $scope.list_phone_contact=[];
+      $scope.list_phones=[];
+      $scope.contactPhones={};
+      $scope.isPhoneExist=null;
+      $scope.addPhoneNumFn = function (obj, opt){
+        console.log("before addPhoneNumFn => $scope.list_phones.length: "+$scope.list_phones.length);
+        console.log($scope.list_phones);
+        if (opt=="new"){
+          if ($scope.list_phones.length<=0){
+            console.log("length is equal 0 or less 0");
+            $scope.list_phone_contact.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+            $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
           }else{
-            for (var key in  $scope.list_schedule_atention){
+            for (var key in  $scope.list_phone_contact){
              // console.log(key);
-              //console.log("Validando: "+$scope.list_phone_contact[key].phoneContact+" == "+obj.idDiviceOpening);
-                if ($scope.list_schedule_atention[key].day==obj.day){
-                    $scope.list_schedule_atention[key].fronAm   = obj.fronAm;
-                    $scope.list_schedule_atention[key].toAm     = obj.toAm;
-                    $scope.list_schedule_atention[key].fronPm   = obj.fronPm;
-                    $scope.list_schedule_atention[key].toPm     = obj.toPm;
-                    //Validate if there is only one item in the array.
-                    if($scope.list_schedule_atention.length==1 || ($scope.list_schedule_atention[key].day==obj.day && obj.day=="Lunes")){
-                      $scope.list_input_first.fronAm  = obj.fronAm;
-                      $scope.list_input_first.toAm    = obj.toAm;
-                      $scope.list_input_first.fronPm  = obj.fronPm;
-                      $scope.list_input_first.toPm    = obj.toPm;
-                    }
-
-                  $scope.isSchedItemExist=true;
+              console.log("Validando: "+$scope.list_phone_contact[key].phoneContact+" == "+obj.phoneContact);
+                if ($scope.list_phone_contact[key].phoneContact==obj.phoneContact){
+                  var tmpTag=$scope.list_phone_contact[key].phoneTag;
+                  var ptag= tmpTag.toUpperCase();
+                  inform.add("El Numero de contacto: "+obj.phoneContact+", se encuentra agregado como contacto "+ptag,{
+                    ttl:5000, type: 'success'
+                  });
+                  $scope.isPhoneExist=true;
                   break;
-                  
+                  //console.log($scope.isPhoneExist);
                 }else{
-                  $scope.isSchedItemExist=false;
+                  $scope.isPhoneExist=false;
+                  //console.log($scope.isPhoneExist);
                 }
             }
-            console.log("isSchedItemExist: "+$scope.isSchedItemExist);
-            if(!$scope.isSchedItemExist){
+            if(!$scope.isPhoneExist){
                 console.log("ADD_NO_EXIST");
-              for (var key in  $scope.list_schedule){
-                  if ( $scope.list_schedule[key].day==obj.day){
-                    $scope.list_schedule[key].fronAm = $scope.list_input_first.fronAm;
-                    $scope.list_schedule[key].toAm   = $scope.list_input_first.toAm;
-                    $scope.list_schedule[key].fronPm = $scope.list_input_first.fronPm;
-                    $scope.list_schedule[key].toPm   = $scope.list_input_first.toPm;
+                  $scope.list_phone_contact.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+                  $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+            }
+          }
+        }else if (opt=="update"){
+          //$scope.list_phone_contact.push({'idClientFk': obj.list_phone_contact[key].idClientFk,'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
+          if ($scope.list_phones.length<=0){
+            //console.log("length is equal 0 or less 0");
+            $scope.list_phone_contact.push({'idClientFk':$scope.customer.update.idClient,'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+            $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+          }else{
+            for (var key in  $scope.list_phone_contact){
+             // console.log(key);
+              console.log("Validando: "+$scope.list_phone_contact[key].phoneContact+" == "+obj.phoneContact);
+                if ($scope.list_phone_contact[key].phoneContact==obj.phoneContact){
+                  var tmpTag=$scope.list_phone_contact[key].phoneTag;
+                  var ptag= tmpTag.toUpperCase();
+                  inform.add("El Numero de contacto: "+obj.phoneContact+", se encuentra agregado como contacto "+ptag,{
+                    ttl:5000, type: 'success'
+                  });
+                  $scope.isPhoneExist=true;
+                  break;
+                  //console.log($scope.isPhoneExist);
+                }else{
+                  $scope.isPhoneExist=false;
+                  //console.log($scope.isPhoneExist);
+                }
+            }
+            if(!$scope.isPhoneExist){
+                //console.log("ADD_NO_EXIST");
+                  $scope.list_phone_contact.push({'idClientFk':$scope.customer.update.idClient,'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+                  $scope.list_phones.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+            }
+          }      
+        }
+        //console.log("OBJ A ADICIONAR:");
+        //console.log(obj);
+        //console.log("list_phone_contact:");
+        //console.log($scope.list_phone_contact);
+        //console.log("list_phones:");
+        //console.log($scope.list_phones);
+        $scope.enabledNextBtn();
+        console.log("after addPhoneNumFn => $scope.list_phones.length: "+$scope.list_phones.length);
+        console.log($scope.list_phones);
+      }
+      $scope.removePhoneNumFn = function (obj){
+        for (var key in  $scope.list_phone_contact){
+            if ( $scope.list_phone_contact[key].phoneContact==obj.phoneContact){
+                $scope.list_phones.splice(key,1);
+                $scope.list_phone_contact.splice(key,1);
+            }
+        }
+        //console.log("OBJ A ELIMINAR:");
+        //console.log(obj);
+        //console.log("list_phone_contact:");
+        //console.log($scope.list_phone_contact);
+        //console.log("list_phones:");
+        //console.log($scope.list_phones);
+        $scope.enabledNextBtn();      
+      }
+      $scope.removeAllPhones = function(){
+        for (var key in  $scope.list_phones){
+          $scope.list_phones.splice(key,1);
+          $scope.list_phone_contact.splice(key,1);
+        }
+      }
+      $scope.list_schedule_atention = [];
+      $scope.list_schedule_Arr = [];
+      $scope.list_input_first = {fronAm:'', toAm:'', fronPm: '', toPm:''};
+      $scope.list_input_last = {fronAm:'', toAm:'', fronPm: '', toPm:''};
+    /**************************************************
+    *                                                 *
+    *                   SCHEDULE TIME                 *
+    *                                                 *
+    **************************************************/
+      $scope.setScheduleTimeFn = function(obj, opt){
+        if (opt=="new"){
+          if(obj.selected==true){
+            console.info("Checkbox selected = "+obj.selected);
+            if ($scope.list_schedule_atention.length<=0 ){
+              //console.log("length is equal 0 or less 0");
+              $scope.list_schedule_atention.push({'day':obj.day, 'fronAm':obj.fronAm, 'toAm': obj.toAm, 'fronPm': obj.fronPm, 'toPm': obj.toPm});
+              $scope.list_input_first.fronAm  = obj.fronAm;
+              $scope.list_input_first.toAm    = obj.toAm;
+              $scope.list_input_first.fronPm  = obj.fronPm;
+              $scope.list_input_first.toPm    = obj.toPm;
+            }else{
+              for (var key in  $scope.list_schedule_atention){
+               // console.log(key);
+                //console.log("Validando: "+$scope.list_phone_contact[key].phoneContact+" == "+obj.idDiviceOpening);
+                  if ($scope.list_schedule_atention[key].day==obj.day){
+                      $scope.list_schedule_atention[key].fronAm   = obj.fronAm;
+                      $scope.list_schedule_atention[key].toAm     = obj.toAm;
+                      $scope.list_schedule_atention[key].fronPm   = obj.fronPm;
+                      $scope.list_schedule_atention[key].toPm     = obj.toPm;
+                      //Validate if there is only one item in the array.
+                      if($scope.list_schedule_atention.length==1 || ($scope.list_schedule_atention[key].day==obj.day && obj.day=="Lunes")){
+                        $scope.list_input_first.fronAm  = obj.fronAm;
+                        $scope.list_input_first.toAm    = obj.toAm;
+                        $scope.list_input_first.fronPm  = obj.fronPm;
+                        $scope.list_input_first.toPm    = obj.toPm;
+                      }
+
+                    $scope.isSchedItemExist=true;
+                    break;
+                    
+                  }else{
+                    $scope.isSchedItemExist=false;
                   }
               }
-              $scope.list_schedule_atention.push({'day':obj.day, 'fronAm':obj.fronAm, 'toAm': obj.toAm, 'fronPm': obj.fronPm, 'toPm': obj.toPm});
-            }
-          }
-          console.info($scope.list_schedule_atention);
-        }else{
-          console.info("Checkbox selected = "+obj.selected);
-          console.info("The arr Item id ["+obj.id+"] - "+obj.day+" Will be removed.");
-          for (var key in  $scope.list_schedule_atention){
-            if ($scope.list_schedule_atention[key].day==obj.day){
-              //$scope.list_schedule_atention.splice(key,1);
-            }
-          }
-          for (var key in  $scope.list_schedule){
-            if ( $scope.list_schedule[key].day==obj.day){
-              $scope.list_schedule[key].fronAm = "";
-              $scope.list_schedule[key].toAm   = "";
-              $scope.list_schedule[key].fronPm = "";
-              $scope.list_schedule[key].toPm   = "";
-            }
-          }
-        }
-      }else{
-        if(obj.selected==true){
-          var list_schedule_atention_length=$scope.list_schedule_atention.length;
-          console.info("Checkbox selected = "+obj.selected);
-          if (list_schedule_atention_length<=0 ){
-            //console.log("length is equal 0 or less 0");
-            $scope.list_schedule_atention.push({'idClienteFk':$scope.customer.update.idClient, 'day':obj.day, 'fronAm':obj.fronAm, 'toAm': obj.toAm, 'fronPm': obj.fronPm, 'toPm': obj.toPm});
-            $scope.list_input_first.fronAm  = obj.fronAm;
-            $scope.list_input_first.toAm    = obj.toAm;
-            $scope.list_input_first.fronPm  = obj.fronPm;
-            $scope.list_input_first.toPm    = obj.toPm;
-          }else{
-            for (var key in  $scope.list_schedule_atention){
-              //Validate if there is one or more item in the array to pick up the first element value or the last one
-              if(list_schedule_atention_length==1 || ($scope.list_schedule_atention[key].day==obj.day && obj.day=="Lunes")){
-                $scope.list_input_first.fronAm  = $scope.list_schedule_atention[key].fronAm;
-                $scope.list_input_first.toAm    = $scope.list_schedule_atention[key].toAm;
-                $scope.list_input_first.fronPm  = $scope.list_schedule_atention[key].fronPm;
-                $scope.list_input_first.toPm    = $scope.list_schedule_atention[key].toPm;
-              }else if(list_schedule_atention_length>1 && ($scope.list_schedule_atention[key].day=="Lunes" || $scope.list_schedule_atention[key].day=="Martes" || $scope.list_schedule_atention[key].day=="Miercoles" || $scope.list_schedule_atention[key].day=="Jueves" || $scope.list_schedule_atention[key].day=="Viernes" || $scope.list_schedule_atention[key].day=="Sabado" || $scope.list_schedule_atention[key].day=="Domingo")){
-                $scope.list_input_last.fronAm  = $scope.list_schedule_atention[key].fronAm;
-                $scope.list_input_last.toAm    = $scope.list_schedule_atention[key].toAm;
-                $scope.list_input_last.fronPm  = $scope.list_schedule_atention[key].fronPm;
-                $scope.list_input_last.toPm    = $scope.list_schedule_atention[key].toPm;                      
-              }
-            }
-            for (var key in  $scope.list_schedule_atention){
-                if ($scope.list_schedule_atention[key].day==obj.day){
-                    $scope.list_schedule_atention[key].fronAm   = obj.fronAm;
-                    $scope.list_schedule_atention[key].toAm     = obj.toAm;
-                    $scope.list_schedule_atention[key].fronPm   = obj.fronPm;
-                    $scope.list_schedule_atention[key].toPm     = obj.toPm;
-                  $scope.isSchedItemExist=true;
-                  break;
-                  
-                }else{
-                  $scope.isSchedItemExist=false;
-                }
-            }
-            console.log("isSchedItemExist: "+$scope.isSchedItemExist);
-            if(!$scope.isSchedItemExist){
-                console.log("ADD_NO_EXIST");
-              for (var key in  $scope.list_schedule){
-                  if ( $scope.list_schedule[key].day==obj.day){
-                    if (list_schedule_atention_length==1){
-                      console.log("adding the data of the first element of the array.");
+              console.log("isSchedItemExist: "+$scope.isSchedItemExist);
+              if(!$scope.isSchedItemExist){
+                  console.log("ADD_NO_EXIST");
+                for (var key in  $scope.list_schedule){
+                    if ( $scope.list_schedule[key].day==obj.day){
                       $scope.list_schedule[key].fronAm = $scope.list_input_first.fronAm;
                       $scope.list_schedule[key].toAm   = $scope.list_input_first.toAm;
                       $scope.list_schedule[key].fronPm = $scope.list_input_first.fronPm;
                       $scope.list_schedule[key].toPm   = $scope.list_input_first.toPm;
-                      $scope.list_schedule_atention.push({
-                        'idClienteFk':$scope.customer.update.idClient, 
-                        'day':obj.day, 
-                        'fronAm':$scope.list_input_first.fronAm, 
-                        'toAm': $scope.list_input_first.toAm, 
-                        'fronPm': $scope.list_input_first.fronPm, 
-                        'toPm': $scope.list_input_first.toPm});                      
-                    }else if(list_schedule_atention_length>1){
-                      console.log("adding the data of the last element of the array.");
-                      $scope.list_schedule[key].fronAm = $scope.list_input_last.fronAm;
-                      $scope.list_schedule[key].toAm   = $scope.list_input_last.toAm;
-                      $scope.list_schedule[key].fronPm = $scope.list_input_last.fronPm;
-                      $scope.list_schedule[key].toPm   = $scope.list_input_last.toPm;
-                      $scope.list_schedule_atention.push({
-                        'idClienteFk':$scope.customer.update.idClient, 
-                        'day':obj.day, 
-                        'fronAm':$scope.list_input_last.fronAm, 
-                        'toAm': $scope.list_input_last.toAm, 
-                        'fronPm': $scope.list_input_last.fronPm, 
-                        'toPm': $scope.list_input_last.toPm});
                     }
+                }
+                $scope.list_schedule_atention.push({'day':obj.day, 'fronAm':obj.fronAm, 'toAm': obj.toAm, 'fronPm': obj.fronPm, 'toPm': obj.toPm});
+              }
+            }
+            console.info($scope.list_schedule_atention);
+          }else{
+            console.info("Checkbox selected = "+obj.selected);
+            console.info("The arr Item id ["+obj.id+"] - "+obj.day+" Will be removed.");
+            for (var key in  $scope.list_schedule_atention){
+              if ($scope.list_schedule_atention[key].day==obj.day){
+                //$scope.list_schedule_atention.splice(key,1);
+              }
+            }
+            for (var key in  $scope.list_schedule){
+              if ( $scope.list_schedule[key].day==obj.day){
+                $scope.list_schedule[key].fronAm = "";
+                $scope.list_schedule[key].toAm   = "";
+                $scope.list_schedule[key].fronPm = "";
+                $scope.list_schedule[key].toPm   = "";
+              }
+            }
+          }
+        }else{
+          if(obj.selected==true){
+            var list_schedule_atention_length=$scope.list_schedule_atention.length;
+            console.info("Checkbox selected = "+obj.selected);
+            if (list_schedule_atention_length<=0 ){
+              //console.log("length is equal 0 or less 0");
+              $scope.list_schedule_atention.push({'idClienteFk':$scope.customer.update.idClient, 'day':obj.day, 'fronAm':obj.fronAm, 'toAm': obj.toAm, 'fronPm': obj.fronPm, 'toPm': obj.toPm});
+              $scope.list_input_first.fronAm  = obj.fronAm;
+              $scope.list_input_first.toAm    = obj.toAm;
+              $scope.list_input_first.fronPm  = obj.fronPm;
+              $scope.list_input_first.toPm    = obj.toPm;
+            }else{
+              for (var key in  $scope.list_schedule_atention){
+                //Validate if there is one or more item in the array to pick up the first element value or the last one
+                if(list_schedule_atention_length==1 || ($scope.list_schedule_atention[key].day==obj.day && obj.day=="Lunes")){
+                  $scope.list_input_first.fronAm  = $scope.list_schedule_atention[key].fronAm;
+                  $scope.list_input_first.toAm    = $scope.list_schedule_atention[key].toAm;
+                  $scope.list_input_first.fronPm  = $scope.list_schedule_atention[key].fronPm;
+                  $scope.list_input_first.toPm    = $scope.list_schedule_atention[key].toPm;
+                }else if(list_schedule_atention_length>1 && ($scope.list_schedule_atention[key].day=="Lunes" || $scope.list_schedule_atention[key].day=="Martes" || $scope.list_schedule_atention[key].day=="Miercoles" || $scope.list_schedule_atention[key].day=="Jueves" || $scope.list_schedule_atention[key].day=="Viernes" || $scope.list_schedule_atention[key].day=="Sabado" || $scope.list_schedule_atention[key].day=="Domingo")){
+                  $scope.list_input_last.fronAm  = $scope.list_schedule_atention[key].fronAm;
+                  $scope.list_input_last.toAm    = $scope.list_schedule_atention[key].toAm;
+                  $scope.list_input_last.fronPm  = $scope.list_schedule_atention[key].fronPm;
+                  $scope.list_input_last.toPm    = $scope.list_schedule_atention[key].toPm;                      
+                }
+              }
+              for (var key in  $scope.list_schedule_atention){
+                  if ($scope.list_schedule_atention[key].day==obj.day){
+                      $scope.list_schedule_atention[key].fronAm   = obj.fronAm;
+                      $scope.list_schedule_atention[key].toAm     = obj.toAm;
+                      $scope.list_schedule_atention[key].fronPm   = obj.fronPm;
+                      $scope.list_schedule_atention[key].toPm     = obj.toPm;
+                    $scope.isSchedItemExist=true;
+                    break;
+                    
+                  }else{
+                    $scope.isSchedItemExist=false;
                   }
               }
-              
+              console.log("isSchedItemExist: "+$scope.isSchedItemExist);
+              if(!$scope.isSchedItemExist){
+                  console.log("ADD_NO_EXIST");
+                for (var key in  $scope.list_schedule){
+                    if ( $scope.list_schedule[key].day==obj.day){
+                      if (list_schedule_atention_length==1){
+                        console.log("adding the data of the first element of the array.");
+                        $scope.list_schedule[key].fronAm = $scope.list_input_first.fronAm;
+                        $scope.list_schedule[key].toAm   = $scope.list_input_first.toAm;
+                        $scope.list_schedule[key].fronPm = $scope.list_input_first.fronPm;
+                        $scope.list_schedule[key].toPm   = $scope.list_input_first.toPm;
+                        $scope.list_schedule_atention.push({
+                          'idClienteFk':$scope.customer.update.idClient, 
+                          'day':obj.day, 
+                          'fronAm':$scope.list_input_first.fronAm, 
+                          'toAm': $scope.list_input_first.toAm, 
+                          'fronPm': $scope.list_input_first.fronPm, 
+                          'toPm': $scope.list_input_first.toPm});                      
+                      }else if(list_schedule_atention_length>1){
+                        console.log("adding the data of the last element of the array.");
+                        $scope.list_schedule[key].fronAm = $scope.list_input_last.fronAm;
+                        $scope.list_schedule[key].toAm   = $scope.list_input_last.toAm;
+                        $scope.list_schedule[key].fronPm = $scope.list_input_last.fronPm;
+                        $scope.list_schedule[key].toPm   = $scope.list_input_last.toPm;
+                        $scope.list_schedule_atention.push({
+                          'idClienteFk':$scope.customer.update.idClient, 
+                          'day':obj.day, 
+                          'fronAm':$scope.list_input_last.fronAm, 
+                          'toAm': $scope.list_input_last.toAm, 
+                          'fronPm': $scope.list_input_last.fronPm, 
+                          'toPm': $scope.list_input_last.toPm});
+                      }
+                    }
+                }
+                
+              }
             }
-          }
-          console.info($scope.list_schedule_atention);
-        }else{
-          console.info("Checkbox selected = "+obj.selected);
-          console.info("The arr Item id ["+obj.id+"] - "+obj.day+" Will be removed.");
-          for (var key in  $scope.list_schedule_atention){
-            if ($scope.list_schedule_atention[key].day==obj.day){
-              $scope.list_schedule_atention.splice(key,1);
+            console.info($scope.list_schedule_atention);
+          }else{
+            console.info("Checkbox selected = "+obj.selected);
+            console.info("The arr Item id ["+obj.id+"] - "+obj.day+" Will be removed.");
+            for (var key in  $scope.list_schedule_atention){
+              if ($scope.list_schedule_atention[key].day==obj.day){
+                $scope.list_schedule_atention.splice(key,1);
+              }
             }
-          }
-          for (var key in  $scope.list_schedule){
-            if ( $scope.list_schedule[key].day==obj.day){
-              $scope.list_schedule[key].fronAm = "";
-              $scope.list_schedule[key].toAm   = "";
-              $scope.list_schedule[key].fronPm = "";
-              $scope.list_schedule[key].toPm   = "";
+            for (var key in  $scope.list_schedule){
+              if ( $scope.list_schedule[key].day==obj.day){
+                $scope.list_schedule[key].fronAm = "";
+                $scope.list_schedule[key].toAm   = "";
+                $scope.list_schedule[key].fronPm = "";
+                $scope.list_schedule[key].toPm   = "";
+              }
             }
           }
         }
-      }
 
-    }
-    $scope.loadFieldsTo2Step = function(opt){
-      if (opt =="new"){
-        if ($scope.customer.new.idClientTypeFk!=2){
-          $scope.customer.new.billing_information.businessNameBilling    = $scope.customer.new.businessName;
-          $scope.customer.new.billing_information.cuitBilling            = $scope.customer.new.CUIT;
-          $scope.selectnameProvinceBillingFk.selected                    = {idProvince: $scope.tmpAddres.province.idProvince, province: $scope.tmpAddres.province.province};
-          $scope.selectnameLocationBillingFk.selected                    = {idLocation: $scope.tmpAddres.location.idLocation, location: $scope.tmpAddres.location.location};
-        }else {
-          if (!$scope.customer.new.isNotCliente){
+      }
+    
+    /**************************************************
+    *                                                 *
+    *     LOAD FIELDS TO NEXT REGISTRATION STEPS      *
+    *                                                 *
+    **************************************************/
+      $scope.loadFieldsTo2Step = function(opt){
+        if (opt =="new"){
+          if ($scope.customer.new.idClientTypeFk!=4){
+            if ($scope.customer.new.idClientTypeFk==1 || $scope.customer.new.idClientTypeFk==3){
+              /*Load if the customer is administration or company*/
+              $scope.customer.new.billing_information.businessNameBilling    = $scope.customer.new.businessName;           
+              $scope.customer.new.billing_information.cuitBilling            = $scope.customer.new.CUIT;
+              
+              if (!$scope.customer.new.isNotCliente){ 
+                /*load for all customer differents than building, branch and particular */
+                $scope.addrrSelected=true;
+                $scope.customer.new.billing_information.nameAddress            = $scope.customer.new.nameAddress;
+                $scope.customer.select.payment.province.selected               = {idProvince: $scope.tmpAddres.province.idProvince, province: $scope.tmpAddres.province.province};
+                $scope.customer.select.payment.location.selected               = {idLocation: $scope.tmpAddres.location.idLocation, location: $scope.tmpAddres.location.location};
+              }else{
+                $scope.addrrSelected=true;
+                $scope.customer.new.billing_information.nameAddress            = $scope.customer.select.main.address.selected.address;
+                $scope.customer.select.payment.province.selected               = {idProvince: $scope.customer.select.main.address.selected.idProvinceFk, province: $scope.customer.select.main.address.selected.province};
+                $scope.customer.select.payment.location.selected               = {idLocation: $scope.customer.select.main.address.selected.idLocationFk, location: $scope.customer.select.main.address.selected.location};
+              }  
+            }else if ($scope.customer.new.idClientTypeFk==5){ 
+              /*load the province and location data if there isn't a registered building for particular users*/ 
+              $scope.customer.new.billing_information.businessNameBilling    = $scope.customer.new.name;        
+              $scope.customer.new.billing_information.nameAddress            = $scope.customer.new.nameAddress;
+              if (!$scope.customer.new.isNotCliente){ 
+                $scope.addrrSelected=true;
+                $scope.customer.select.payment.province.selected               = {idProvince: $scope.tmpAddres.province.idProvince, province: $scope.tmpAddres.province.province};
+                $scope.customer.select.payment.location.selected               = {idLocation: $scope.tmpAddres.location.idLocation, location: $scope.tmpAddres.location.location};
+              }else{
+
+              }  
+            }
+          }else {
+            $scope.addrrSelected=true;
             $scope.customer.new.billing_information.businessNameBilling    = $scope.customer.companyData.businessName;
             $scope.customer.new.billing_information.cuitBilling            = $scope.customer.companyData.CUIT;
-            $scope.selectnameProvinceBillingFk.selected                    = {idProvince: $scope.customer.companyData.idProvinceFk, province: $scope.customer.companyData.provinceName};
-            $scope.selectnameLocationBillingFk.selected                    = {idLocation: $scope.customer.companyData.idLocationFk, location: $scope.customer.companyData.locationName};
-          }else{
-            $scope.customer.new.billing_information.businessNameBilling    = "";
-            $scope.customer.new.billing_information.cuitBilling            = "";
-            $scope.selectnameProvinceBillingFk.selected                    = {idProvince: $scope.tmpAddres.province.idProvince, province: $scope.tmpAddres.province.province};
-            $scope.selectnameLocationBillingFk.selected                    = {idLocation: $scope.tmpAddres.location.idLocation, location: $scope.tmpAddres.location.location};            
+            $scope.customer.new.billing_information.nameAddress            = $scope.customer.companyData.address;
+            $scope.customer.select.payment.province.selected               = {idProvince: $scope.customer.companyData.idProvinceFk, province: $scope.customer.companyData.provinceName};
+            $scope.customer.select.payment.location.selected               = {idLocation: $scope.customer.companyData.idLocationFk, location: $scope.customer.companyData.locationName};
           }          
-        }          
-      }else if (opt=="update"){
-        $scope.tmpVars.billing_information.businessNameBilling            = $scope.customer.update.businessName;
-        $scope.tmpVars.billing_information.cuitBilling                    = $scope.customer.update.CUIT;
-        $scope.selectnameProvinceBillingFk.selected                       = {idProvince: $scope.tmpAddres.province.idProvince, province: $scope.tmpAddres.province.province};
-        $scope.selectnameLocationBillingFk.selected                       = {idLocation: $scope.tmpAddres.location.idLocation, location: $scope.tmpAddres.location.location};
+        }else if (opt=="update"){
+          $scope.tmpVars.billing_information.businessNameBilling            = $scope.customer.update.businessName;
+          $scope.tmpVars.billing_information.cuitBilling                    = $scope.customer.update.CUIT;
+          $scope.customer.select.payment.province.selected                  = {idProvince: $scope.tmpAddres.province.idProvince, province: $scope.tmpAddres.province.province};
+          $scope.customer.select.payment.location.selected                  = {idLocation: $scope.tmpAddres.location.idLocation, location: $scope.tmpAddres.location.location};
+        }
       }
-    }
     /**************************************************
     *                                                 *
     *                  DEPARTMENTS                    *
     *                                                 *
     **************************************************/
-    $scope.dptoPaginationFn = function(arrData, itemPerPage){
-       $scope.paginationServiceFn(arrData, itemPerPage);
-        if ($scope.vm.pager.totalPages > 1){
-          $scope.vm.setPage($scope.vm.pager.totalPages)
+      /**************************************************
+      *                SINGLE FUNCTION                  *
+      ***************************************************/
+        $scope.dptoPaginationFn = function(arrData, itemPerPage){
+           $scope.paginationServiceFn(arrData, itemPerPage);
+            if ($scope.vm.pager.totalPages > 1){
+              $scope.vm.setPage($scope.vm.pager.totalPages)
+            }
+            if (arrData.length>5){
+              $scope.showPagination=true;
+            }else{
+              $scope.showPagination=false;
+            }
         }
-        if (arrData.length>5){
-          $scope.showPagination=true;
-        }else{
-          $scope.showPagination=false;
-        }
-    }
-    $scope.list_departments=[];
-    $scope.list_depto=[];
-    $scope.isDeptoExist=null;
-    $scope.showPagination=false;
-    $scope.addDeptoSingleFn = function (obj, opt){
-      //console.log(obj);
-      //console.log("addDeptoSingleFn => $scope.list_depto.length: "+$scope.list_depto.length);
-      if (opt=="new"){
-        if ($scope.list_depto.length<=0){
-          //console.log("length is equal 0 or less 0");
-          $scope.list_departments.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-          $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-        }else{
-          for (var key in  $scope.list_departments){
-           // console.log(key);
-            //console.log("Validando PISO: "+$scope.list_departments[key].floor+" == "+obj.floor);
-            //console.log("Validando DEPTO: "+$scope.list_departments[key].departament+" == "+obj.departament);
-              if ($scope.list_departments[key].floor==obj.floor && $scope.list_departments[key].departament==obj.departament){
-                var tmpFloor=obj.floor;
-                var tmpDepto=obj.departament;
-                var pDepto= tmpDepto.toUpperCase();
-                inform.add("El Departamento: ["+tmpFloor+" - "+pDepto+"] se encuentra registrado.",{
-                  ttl:5000, type: 'warning'
-                });
-                $scope.isDeptoExist=true;
-                break;
-                //console.log($scope.isDeptoExist);
-              }else{
-                $scope.isDeptoExist=false;
-                //console.log($scope.isDeptoExist);
+        $scope.list_departments=[];
+        $scope.list_depto=[];
+        $scope.isDeptoExist=null;
+        $scope.showPagination=false;
+        $scope.addDeptoSingleFn = function (obj, opt){
+          //console.log(obj);
+          //console.log("addDeptoSingleFn => $scope.list_depto.length: "+$scope.list_depto.length);
+          if (opt=="new"){
+            if ($scope.list_depto.length<=0){
+              //console.log("length is equal 0 or less 0");
+              $scope.list_departments.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+              $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+            }else{
+              for (var key in  $scope.list_departments){
+               // console.log(key);
+                //console.log("Validando PISO: "+$scope.list_departments[key].floor+" == "+obj.floor);
+                //console.log("Validando DEPTO: "+$scope.list_departments[key].departament+" == "+obj.departament);
+                  if ($scope.list_departments[key].floor==obj.floor && $scope.list_departments[key].departament==obj.departament){
+                    var tmpFloor=obj.floor;
+                    var tmpDepto=obj.departament;
+                    var pDepto= tmpDepto.toUpperCase();
+                    inform.add("El Departamento: ["+tmpFloor+" - "+pDepto+"] se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });
+                    $scope.isDeptoExist=true;
+                    break;
+                    //console.log($scope.isDeptoExist);
+                  }else{
+                    $scope.isDeptoExist=false;
+                    //console.log($scope.isDeptoExist);
+                  }
               }
-          }
-          if(!$scope.isDeptoExist){
-              //console.log("ADD_NO_EXIST");
-                $scope.list_departments.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-                $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-          }
-        }
-      }else if (opt=="update"){
-        //$scope.list_departments.push({'idClientFk': obj.list_departments[key].idClientFk,'phoneTag':obj.list_departments[key].phoneTag, 'phoneContact':obj.list_departments[key].phoneContact});
-        if ($scope.list_depto.length<=0){
-          //console.log("length is equal 0 or less 0");
-          $scope.list_departments.push({'idClientFk':$scope.customer.update.idClient,'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-          $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-        }else{
-          for (var key in  $scope.list_departments){
-              // console.log(key);
-              //console.log("Validando PISO: "+$scope.list_departments[key].floor+" == "+obj.floor);
-              //console.log("Validando DEPTO: "+$scope.list_departments[key].departament+" == "+obj.departament);
-              if ($scope.list_departments[key].floor==obj.floor && $scope.list_departments[key].departament==obj.departament){
-                var tmpFloor=obj.floor;
-                var tmpDepto=obj.departament;
-                var pDepto= tmpDepto.toUpperCase();
-                inform.add("El Departamento: ["+tmpFloor+" - "+pDepto+"] se encuentra registrado.",{
-                  ttl:5000, type: 'success'
-                });
-                $scope.isDeptoExist=true;
-                break;
-                //console.log($scope.isDeptoExist);
-              }else{
-                $scope.isDeptoExist=false;
-                //console.log($scope.isDeptoExist);
+              if(!$scope.isDeptoExist){
+                  //console.log("ADD_NO_EXIST");
+                    $scope.list_departments.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+                    $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
               }
+            }
+          }else if (opt=="update"){
+            //$scope.list_departments.push({'idClientFk': obj.list_departments[key].idClientFk,'phoneTag':obj.list_departments[key].phoneTag, 'phoneContact':obj.list_departments[key].phoneContact});
+            if ($scope.list_depto.length<=0){
+              //console.log("length is equal 0 or less 0");
+              $scope.list_departments.push({'idClientFk':$scope.customer.update.idClient,'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+              $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+            }else{
+              for (var key in  $scope.list_departments){
+                  // console.log(key);
+                  //console.log("Validando PISO: "+$scope.list_departments[key].floor+" == "+obj.floor);
+                  //console.log("Validando DEPTO: "+$scope.list_departments[key].departament+" == "+obj.departament);
+                  if ($scope.list_departments[key].floor==obj.floor && $scope.list_departments[key].departament==obj.departament){
+                    var tmpFloor=obj.floor;
+                    var tmpDepto=obj.departament;
+                    var pDepto= tmpDepto.toUpperCase();
+                    inform.add("El Departamento: ["+tmpFloor+" - "+pDepto+"] se encuentra registrado.",{
+                      ttl:5000, type: 'success'
+                    });
+                    $scope.isDeptoExist=true;
+                    break;
+                    //console.log($scope.isDeptoExist);
+                  }else{
+                    $scope.isDeptoExist=false;
+                    //console.log($scope.isDeptoExist);
+                  }
+              }
+              if(!$scope.isDeptoExist){
+                  //console.log("ADD_NO_EXIST");
+                    $scope.list_departments.push({'idClientFk':$scope.customer.update.idClient,'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+                    $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
+              }
+            }      
           }
-          if(!$scope.isDeptoExist){
-              //console.log("ADD_NO_EXIST");
-                $scope.list_departments.push({'idClientFk':$scope.customer.update.idClient,'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-                $scope.list_depto.push({'floor':obj.floor, 'departament':obj.departament, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk});
-          }
-        }      
-      }
-      //console.log("OBJ A ADICIONAR:");
-      //console.log(obj);
-      //console.log("list_departments:");
-      //console.log($scope.list_departments);
-      //console.log("list_depto:");
-      //console.log($scope.list_depto);
-      $scope.enabledNextBtn();
-      $scope.dptoPaginationFn($scope.list_departments, 5);
-      console.info($scope.list_departments);
-    }
-    $scope.removeDeptoSingleFn = function (obj){
-      //console.log(obj);
-      for (var key in  $scope.list_departments){
-          if ($scope.list_departments[key].floor==obj.floor && $scope.list_departments[key].departament==obj.departament){
-              $scope.list_depto.splice(key,1);
-              $scope.list_departments.splice(key,1);
-          }
+          //console.log("OBJ A ADICIONAR:");
+          //console.log(obj);
+          //console.log("list_departments:");
+          //console.log($scope.list_departments);
+          //console.log("list_depto:");
+          //console.log($scope.list_depto);
+          $scope.enabledNextBtn();
           $scope.dptoPaginationFn($scope.list_departments, 5);
-      }
-      //console.log("OBJ A ELIMINAR:");
-      //console.log(obj);
-      //console.log("list_departments:");
-      //console.log($scope.list_departments);
-      //console.log("list_depto:");
-      //console.log($scope.list_depto);
-      $scope.enabledNextBtn();      
-    }
-    $scope.removeAllDeptoFn = function(){
-      for (var key in  $scope.list_depto){
-        $scope.list_depto.splice(key,1);
-        $scope.list_departments.splice(key,1);
-      }
-    }
-    $scope.list_department_multi={'floor':'','departament':'','correlacion':undefined,'unidad':undefined, 'idCategoryDepartamentFk':''};
-    $scope.list_depto_floors=[];
-    $scope.deptoUnidades =  [{idUnidad:1, unidad:'Letras'},
-                             {idUnidad:2, unidad:'Numeros'}];
-    $scope.deptoCorrelacion   =  [{id:1, nombre:'Letras A, B, C por piso', idUnidadKf: 1},
-                                  {id:2, nombre:'Numeros correlativos', idUnidadKf: 2},
-                                  {id:3, nombre:'Numeros correlativos por piso', idUnidadKf: 2}];   
-    var arrLetras=["A","B","C","D","E","F","G","I","H","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-    var departmentUnidad=0;                                  
-    $scope.addDeptoMultiFn = function(obj, opt){
-      if (opt=="new"){
+          console.info($scope.list_departments);
+        }
+        $scope.removeDeptoSingleFn = function (obj){
+          //console.log(obj);
+          for (var key in  $scope.list_departments){
+              if ($scope.list_departments[key].floor==obj.floor && $scope.list_departments[key].departament==obj.departament){
+                  $scope.list_depto.splice(key,1);
+                  $scope.list_departments.splice(key,1);
+              }
+              $scope.dptoPaginationFn($scope.list_departments, 5);
+          }
+          //console.log("OBJ A ELIMINAR:");
+          //console.log(obj);
+          //console.log("list_departments:");
+          //console.log($scope.list_departments);
+          //console.log("list_depto:");
+          //console.log($scope.list_depto);
+          $scope.enabledNextBtn();      
+        }
+      /**************************************************
+      *                MULTI FUNCTION                   *
+      ***************************************************/  
+          //$scope.loadMultiDeptosFn = function(){
+          //  $scope.list_depto_floors=[];
+          //  $scope.list_department_multi={'floor':'','departament':'','correlacion':undefined,'unidad':undefined, 'idCategoryDepartamentFk':''};
+          //  departmentUnidad=0;
+          //  $("#RegisterMultiDeptosModalCustomer").modal('toggle');
+          //    $('#RegisterMultiDeptosModalCustomer').on('shown.bs.modal', function () {
+          //      $('#garage_number').focus();
+          //    });
+          //}      
+          $scope.list_department_multi={'garage':'','floor':'','departament':'','correlacion':undefined,'unidad':undefined, 'idCategoryDepartamentFk':''};
           $scope.list_depto_floors=[];
-          departmentUnidad=0;
-          /*SUB FLOOR AND GARAGES */
-            //ADD THE FLOOR 0 AS A SUB FLOOR 
-            $scope.list_depto_floors.push({'idFloor':'co', 'deptos':[]});
-            //ADD THE FLOOR 0 AS A SUB FLOOR 
-            /*CALCULATE THE AMOUNT OF GARAGE BEFORE CREATE */
-            var total_garage=(obj.departament*obj.floor);
-            for (var g=0; g<total_garage; g++){
-              $scope.list_depto_floors[0].deptos.push({'idDepto':$scope.list_depto_floors[0].deptos.length+1, 'floor':$scope.list_depto_floors[0].idFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':false, 'categoryDepartament':[]});
+          $scope.deptoUnidades =  [{idUnidad:1, unidad:'Letras'},
+                                   {idUnidad:2, unidad:'Numeros'}];
+          $scope.deptoCorrelacion   =  [{id:1, nombre:'Letras A, B, C por piso', idUnidadKf: 1},
+                                        {id:2, nombre:'Numeros correlativos', idUnidadKf: 2},
+                                        {id:3, nombre:'Numeros correlativos por piso', idUnidadKf: 2}];   
+          var arrLetras=["A","B","C","D","E","F","G","I","H","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+          var departmentUnidad=0;  
+        /**************************************************
+        *              ADD FLOOR FUNCTION                 *
+        ***************************************************/  
+          $scope.addFloorFn = function(){
+            var nFloor= $scope.list_depto_floors.length;
+            $scope.list_depto_floors.push({'id':(nFloor-1)+1,'nameFloor':(nFloor-4)+1, 'deptos':[]});
+            if($scope.list_depto_floors.length>7){
+              setTimeout(function() {
+                $('.table-list-deptos > tbody > tr:last-child').find('.btn').focus();
+              }, 100);  
             }
-            for (var d in  $scope.list_depto_floors[0].deptos){
-              for (var item in $scope.rsCategoryDeptoData){
-                $scope.list_depto_floors[0].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
-              }
-            }
-          /*SUB FLOOR AND GARAGES */
+          }
+        /**************************************************
+        *              DEL FLOOR FUNCTION                 *
+        ***************************************************/   
+          $scope.delFloorFn = function(floor){
+            console.log("Piso seleccionado que sera Eliminado: "+floor.id);
+            $scope.list_depto_floors.splice(floor.id, 1);
+          }
+        /**************************************************
+        *          CREATE BUILDING & DEPTO FUNCTION       *
+        ***************************************************/                                      
+          $scope.addDeptoMultiFn = function(obj, opt){
+            $scope.list_department_multi.idCategoryDepartamentFk="1"; 
+            if (opt=="new"){
+                $scope.list_depto_floors=[];
+                departmentUnidad=0;
+                /*SUB FLOOR AND GARAGES */
+                  //ADD THE FLOOR 0 AS A SUB FLOOR 
+                  $scope.list_depto_floors.push({'id':0, 'nameFloor':'co', 'deptos':[]});
+                  $scope.list_depto_floors.push({'id':1,'nameFloor':'ba', 'deptos':[]});
+                  $scope.list_depto_floors.push({'id':2,'nameFloor':'lo', 'deptos':[]});
+                  //ADD THE FLOOR 0 AS A SUB FLOOR 
+                  /*CALCULATE THE AMOUNT OF GARAGE BEFORE CREATE */
+                  //var total_garage=obj.garage==""?(obj.departament*obj.floor):obj.garage;
+                  //for (var g=0; g<total_garage; g++){
+                  //  $scope.list_depto_floors[0].deptos.push({'idDepto':$scope.list_depto_floors[0].deptos.length+1, 'floor':$scope.list_depto_floors[0].nameFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':false, 'categoryDepartament':[]});
+                  //}
+                  //for (var d in  $scope.list_depto_floors[0].deptos){
+                  //  for (var item in $scope.rsCategoryDeptoData){
+                  //    $scope.list_depto_floors[0].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
+                  //  }
+                  //}
+                /*SUB FLOOR AND GARAGES */
 
-          /*FIRST FLOOR AND DEPTO PB */
-            //ADD THE FLOOR 1 AS A PB DEFAULT FLOOR
-            $scope.list_depto_floors.push({'idFloor':'pb', 'deptos':[]});
-            //ADD ONE DEPTO ON THE PB DEFAULT FLOOR
-            $scope.list_depto_floors[1].deptos.push({'idDepto':$scope.list_depto_floors[1].deptos.length+1, 'floor':$scope.list_depto_floors[1].idFloor, 'departament':($scope.list_depto_floors[1].deptos.length+1), 'idCategoryDepartamentFk': $scope.list_department_multi.idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':[]});
-              for (var item in $scope.rsCategoryDeptoData){
-                $scope.list_depto_floors[1].deptos[0].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
-              }
-          /*FIRST FLOOR AND DEPTO PB */
-          /*ALL FLOOR AND DEPTO AFTER PB */
-            for ( var i=1; i<=obj.floor; i++){
-              $scope.list_depto_floors.push({'idFloor':i, 'deptos':[]});
+                /*FIRST FLOOR AND DEPTO PB */
+                  //ADD THE FLOOR 1 AS A PB DEFAULT FLOOR
+                  $scope.list_depto_floors.push({'id':3,'nameFloor':'pb', 'deptos':[]});
+                  //ADD ONE DEPTO ON THE PB DEFAULT FLOOR
+                  $scope.list_depto_floors[3].deptos.push({'idDepto':$scope.list_depto_floors[3].deptos.length+1, 'unitNumber':'', 'floor':$scope.list_depto_floors[3].nameFloor, 'departament':($scope.list_depto_floors[3].deptos.length+1), 'idCategoryDepartamentFk': $scope.list_department_multi.idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[3].id});
+                    //console.log($scope.rsCategoryDeptoData);
+                    for (var item in $scope.rsCategoryDeptoData){
+                      $scope.list_depto_floors[3].deptos[0].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
+                    }
+                /*FIRST FLOOR AND DEPTO PB */
+                /*ALL FLOOR AND DEPTO AFTER PB */
+                  for ( var i=1; i<=obj.floor; i++){
+                    $scope.list_depto_floors.push({'id':(i+3),'nameFloor':i, 'deptos':[]});
+                  }
+                  l=1;
+                  for (var i=4; i<$scope.list_depto_floors.length; i++){
+                    for (var j=0; j<obj.departament; j++){
+                      /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
+                      if (obj.unidad==1 && obj.correlacion==1){
+                        departmentUnidad='';
+                        departmentUnidad=arrLetras[j];
+                        /* UNIDAD NUMEROS & CORRELATIVOS */
+                      }else if(obj.unidad==2 && obj.correlacion==2) {
+                        departmentUnidad=departmentUnidad+1;
+                        /* UNIDAD NUMEROS & CORRELATIVOS POR PISO*/
+                      }else if(obj.unidad==2 && obj.correlacion==3) {
+                          if(departmentUnidad==obj.departament){departmentUnidad=1}else{departmentUnidad=departmentUnidad+1;}
+                      }else{
+                        departmentUnidad=''
+                      }
+                      $scope.list_depto_floors[i].deptos.push({'idDepto':j+1, 'unitNumber':'', 'floor':$scope.list_depto_floors[i].nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[i].id});             
+                    }
+                    l++;
+                  }
+                  for (var i=4; i<$scope.list_depto_floors.length; i++){
+                    for (var d in  $scope.list_depto_floors[i].deptos){
+                      for (var item in $scope.rsCategoryDeptoData){
+
+                        $scope.list_depto_floors[i].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
+                      }
+                    }
+                  }          
+                /*ALL FLOOR AND DEPTO AFTER PB */
+                    console.log("Building Floor Length  : "+$scope.list_depto_floors.length);
+                    console.log("Building garage floor  : "+$scope.list_depto_floors[0].deptos.length);
+                    console.log("Building storage floor : "+$scope.list_depto_floors[1].deptos.length);
+                    console.log("Building stores floor  : "+$scope.list_depto_floors[2].deptos.length);
+                    console.log("Building Main floor    : "+$scope.list_depto_floors[3].deptos.length);
+                    console.log($scope.list_depto_floors);
+                    $scope.enabledNextBtn();
+            }else if (opt=="update"){
             }
-            l=1;
-            for (var i=2; i<$scope.list_depto_floors.length; i++){
-              for (var j=0; j<obj.departament; j++){
+          }
+        /**************************************************
+        *              ADD ONE DEPTO FUNCTION             *
+        ***************************************************/  
+          $scope.addOneDeptoMultiFn = function(obj, argCategoryDepartament){
+            
+            console.log("======================");
+            console.log("|    Add One Depto   |")
+            console.log("======================");
+            console.log("floorId["+obj.id+"] => floor: "+obj.nameFloor);
+            console.log("Qty of Units before add ["+obj.nameFloor+"]: "+obj.deptos.length);           
+            var floorsLength        =  obj.deptos.length;
+            if(obj.nameFloor!="pb" && obj.nameFloor!="co" && obj.nameFloor!="ba" && obj.nameFloor!="lo"){         
+              if ($scope.list_depto_floors[obj.id].deptos.length==0){
                 /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
-                if (obj.unidad==1 && obj.correlacion==1){
-                  departmentUnidad='';
-                  departmentUnidad=arrLetras[j];
-                  /* UNIDAD NUMEROS & CORRELATIVOS */
-                }else if(obj.unidad==2 && obj.correlacion==2) {
-                  departmentUnidad=departmentUnidad+1;
-                  /* UNIDAD NUMEROS & CORRELATIVOS POR PISO*/
-                }else if(obj.unidad==2 && obj.correlacion==3) {
-                    if(departmentUnidad==obj.departament){departmentUnidad=1}else{departmentUnidad=departmentUnidad+1;}
-                }else{
-                  departmentUnidad=''
-                }
-                $scope.list_depto_floors[i].deptos.push({'idDepto':j+1, 'floor':l, 'departament':departmentUnidad, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':[]});             
-              }
-              l++;
-            }
-            for (var i=1; i<$scope.list_depto_floors.length; i++){
-              for (var d in  $scope.list_depto_floors[i].deptos){
-                for (var item in $scope.rsCategoryDeptoData){
-
-                  $scope.list_depto_floors[i].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
-                }
-              }
-            }          
-          /*ALL FLOOR AND DEPTO AFTER PB */
-              console.log("Pisos Length: "+$scope.list_depto_floors.length);
-              console.log("Depto Length: "+$scope.list_depto_floors[1].deptos.length);
-              console.log($scope.list_depto_floors);
-      }else if (opt=="update"){
-      }
-    }
-    $scope.addOneDeptoMultiFn = function(obj){
-      var floorsLength        =  obj.deptos.length;
-      if(obj.idFloor!="pb" && obj.idFloor!="co"){
-        /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
                 if ($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1){
-                  departmentUnidad='';
-                  var arrIndex = arrLetras.indexOf(obj.deptos[floorsLength-1].departament);
-                  departmentUnidad=arrLetras[arrIndex+1];
-                  $scope.list_depto_floors[obj.idFloor+1].deptos.push({'idDepto':floorsLength-1+1, 'floor':obj.idFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': obj.deptos[floorsLength-1].idCategoryDepartamentFk, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-                  $scope.list_depto_floors[0].deptos.push({'idDepto':($scope.list_depto_floors[0].deptos.length+1), 'floor':$scope.list_depto_floors[0].idFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-                  /* UNIDAD NUMEROS & CORRELATIVOS */
-                }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {
+                  departmentUnidad='';                        
+                  departmentUnidad=arrLetras[0];
+                }else if($scope.list_department_multi.unidad==2 && ($scope.list_department_multi.correlacion==2 || $scope.list_department_multi.correlacion==3)){
                   departmentUnidad=0;
-                  $scope.list_depto_floors[obj.idFloor+1].deptos.push({'idDepto':floorsLength-1+1, 'floor':obj.idFloor, 'departament':'', 'idCategoryDepartamentFk': obj.deptos[floorsLength-1].idCategoryDepartamentFk, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-                  $scope.list_depto_floors[0].deptos.push({'idDepto':($scope.list_depto_floors[0].deptos.length+1), 'floor':$scope.list_depto_floors[0].idFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-                    for (var i=2; i<$scope.list_depto_floors.length; i++){
+                  departmentUnidad=departmentUnidad+1;
+                }                        
+                  $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                  for (var d in  $scope.list_depto_floors[obj.id].deptos){
+                    for (var item in $scope.rsCategoryDeptoData){
+                      $scope.list_depto_floors[obj.id].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
+                    }
+                  }
+                  if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {
+                    departmentUnidad=0;                                               
+                    for (var i=4; i<$scope.list_depto_floors.length; i++){
                       for (var d in  $scope.list_depto_floors[i].deptos){
                         departmentUnidad=departmentUnidad+1;
                         $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                       }
                     }   
-                  /* UNIDAD NUMEROS & CORRELATIVOS POR PISO*/
+                  }                      
+              }else{ //IF $scope.list_depto_floors[obj.nameFloor+1].deptos.length is bigger than 0
+                if ($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1){
+                  departmentUnidad='';
+                  var arrIndex = arrLetras.indexOf(obj.deptos[floorsLength-1].departament);
+                  departmentUnidad=arrLetras[arrIndex+1];
+                  $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength-1+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                  /* UNIDAD NUMEROS & CORRELATIVOS */
+                }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2){
+                  departmentUnidad=0;
+                  $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength-1+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':'', 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                    //$scope.list_depto_floors[0].deptos.push({'idDepto':($scope.list_depto_floors[0].deptos.length+1), 'floor':$scope.list_depto_floors[0].nameFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
+                      for (var i=4; i<$scope.list_depto_floors.length; i++){
+                        for (var d in  $scope.list_depto_floors[i].deptos){
+                          departmentUnidad=departmentUnidad+1;
+                          $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
+                        }
+                      }            
                 }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==3) {
-                    departmentUnidad=obj.deptos[floorsLength-1].departament+1;
-                    $scope.list_depto_floors[obj.idFloor+1].deptos.push({'idDepto':floorsLength+1, 'floor':obj.idFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': obj.deptos[floorsLength-1].idCategoryDepartamentFk, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-                    $scope.list_depto_floors[0].deptos.push({'idDepto':($scope.list_depto_floors[0].deptos.length+1), 'floor':$scope.list_depto_floors[0].idFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
+                  departmentUnidad=obj.deptos[floorsLength-1].departament+1;
+                  $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});    
+                }else {
+                    departmentUnidad=''
+                }         
+              }
+              /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
+            }else {
+              var varCategoryDepartament="";
+              var unitNumber='';
+              switch(obj.nameFloor){
+                case "co":
+                  varCategoryDepartament=2
+                  unitNumber = argCategoryDepartament;
+                break;
+                case "ba":
+                  varCategoryDepartament=3
+                  unitNumber = argCategoryDepartament;
+                break;
+                case "lo":
+                  varCategoryDepartament=4
+                  unitNumber = argCategoryDepartament;
+                break;
+                case "pb":
+                  varCategoryDepartament=argCategoryDepartament;
+                  unitNumber = ($scope.list_depto_floors[obj.id].deptos.length+1);
+                break;    
+              }
+                if ($scope.list_depto_floors[obj.id].deptos.length==0){
+                   $scope.list_depto_floors[obj.id].deptos.push({'idDepto':($scope.list_depto_floors[obj.id].deptos.length+1), 'unitNumber':'', 'floor':$scope.list_depto_floors[obj.id].nameFloor, 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
                 }else{
-                  departmentUnidad=''
-                }
-        /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
-      }else if(obj.idFloor=="pb"){
-        $scope.list_depto_floors[1].deptos.push({'idDepto':floorsLength+1, 'floor':obj.idFloor, 'departament':($scope.list_depto_floors[1].deptos.length+1), 'idCategoryDepartamentFk': $scope.list_department_multi.idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
+                  $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(obj.deptos.length+1), 'floor':obj.nameFloor, 'unitNumber':'', 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                }        
+            }     
+            //console.info("Floor selected data:");
+            //console.log(obj);
+            //console.info("Deparments on the Floor selected:");
+            //console.log(obj.deptos);
+            //console.info("The last Depto Category Data:");
+            //console.log(obj.deptos[floorsLength-1].categoryDepartament);
+            //console.log("Department length: "+floorsLength);
+            console.log("-----------------------------------");
+            console.log("Qty of Units before add ["+obj.nameFloor+"]: "+obj.deptos.length); 
+            $scope.porteriaExist=$scope.checkIsPorteriaExistFn(obj);
+          }
+        /**************************************************
+        *              DEL LAST DEPTO FUNCTION            *
+        ***************************************************/ 
+          $scope.deleteLastDeptoMultiFn = function(obj){
 
-      }else{
-        if ($scope.list_depto_floors[0].deptos.length==0){
-           $scope.list_depto_floors[0].deptos.push({'idDepto':$scope.list_depto_floors[0].deptos.length+1, 'floor':$scope.list_depto_floors[0].idFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':false, 'categoryDepartament':[]});
-            for (var d in  $scope.list_depto_floors[0].deptos){
-              for (var item in $scope.rsCategoryDeptoData){
-                $scope.list_depto_floors[0].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
+            //console.log(obj);
+            var floorsLength  =  obj.deptos.length;
+            var depto2Del     =  obj.deptos[floorsLength-1];
+            console.log("======================");
+            console.log("|  Remove Last Depto |")
+            console.log("======================");
+            console.log("floorId["+obj.id+"] => floor: "+obj.nameFloor);
+            console.log("floorId["+obj.id+"] => floor["+obj.nameFloor+"] => depto: "+depto2Del.idDepto);
+            if (obj.nameFloor=="co" || obj.nameFloor=="ba" || obj.nameFloor=="lo" || obj.nameFloor=="pb"){
+              $scope.list_depto_floors[obj.id].deptos.splice(-1);
+              console.log("Depto Successfully removed");
+            }else{
+
+              $scope.list_depto_floors[obj.id].deptos.splice(-1);
+              if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {
+                departmentUnidad=0;                                               
+                for (var i=4; i<$scope.list_depto_floors.length; i++){
+                  for (var d in  $scope.list_depto_floors[i].deptos){
+                    departmentUnidad=departmentUnidad+1;
+                    $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
+                  }
+                }               
               }
             }
-        }else{
-          $scope.list_depto_floors[0].deptos.push({'idDepto':floorsLength+1, 'floor':obj.idFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': obj.deptos[floorsLength-1].idCategoryDepartamentFk, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-        }        
-      }       
-      //console.info("Floor selected data:");
-      //console.log(obj);
-      //console.info("Deparments on the Floor selected:");
-      //console.log(obj.deptos);
-      //console.info("The last Depto Category Data:");
-      //console.log(obj.deptos[floorsLength-1].categoryDepartament);
-      //console.log("Department length: "+floorsLength);
-    }
-    $scope.deleteLastDeptoMultiFn = function(obj){
-      console.log("Piso seleccionado:");
-      console.log(obj);
-      var floorsLength  =  obj.deptos.length;
-      var depto2Del     =  obj.deptos[floorsLength-1];
-      var floorId = 0;
-      console.log("Departamento a eliminar:");
-      console.log(depto2Del); 
-      if (obj.idFloor=="co"){
-        floorId=0;
-        console.log("Piso seleccionado: "+floorId);
-        $scope.list_depto_floors[floorId].deptos.splice(-1);
-      }else if (obj.idFloor=="pb"){
-        floorId=1;
-        console.log("Piso seleccionado: "+floorId);
-        $scope.list_depto_floors[floorId].deptos.splice(-1);
-      }else{
-        floorId=obj.idFloor; 
-        console.log("Piso seleccionado: "+floorId);
-        $scope.list_depto_floors[0].deptos.splice(-1);
-        $scope.list_depto_floors[floorId+1].deptos.splice(-1);
-      }
-    }
-    $scope.deleteSelectedDeptoMultiFn = function(depto){
-      console.log("Depto seleccionado:");
-      console.log(depto);
-      var objArr = [],
-      indexArray=[],
-      arrIndex=0;
-      if(depto.floor!="pb" && depto.floor!="co"){
-        /* UNIDAD LETRAS/NUMEROS CORRELATIVAS POR PISO*/
-        if (($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1) || ($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==3)){
-          objArr     = $scope.list_depto_floors[depto.floor+1].deptos;
-          indexArray = objArr.map(function(o){return o.idDepto;});
-          arrIndex   = indexArray.indexOf(depto.idDepto);
-          $scope.list_depto_floors[0].deptos.splice(-1);
-          $scope.list_depto_floors[depto.floor+1].deptos.splice(arrIndex, 1);                  
-          /* UNIDAD NUMEROS CORRELATIVOS */
-        }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {
-          departmentUnidad= 0;
-          objArr          = $scope.list_depto_floors[depto.floor+1].deptos;
-          indexArray      = objArr.map(function(o){return o.idDepto;});
-          arrIndex        = indexArray.indexOf(depto.idDepto);
-          $scope.list_depto_floors[0].deptos.splice(-1);
-          $scope.list_depto_floors[depto.floor+1].deptos.splice(arrIndex, 1);                                                      
-            for (var i=2; i<$scope.list_depto_floors.length; i++){
-              for (var d in  $scope.list_depto_floors[i].deptos){
-                departmentUnidad=departmentUnidad+1;
-                $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
+             $("#btnDelDepto").tooltip('hide');
+          }
+        /**************************************************
+        *            DEL SELECTED DEPTO FUNCTION          *
+        ***************************************************/
+          $scope.deleteSelectedDeptoMultiFn = function(depto){
+            console.log("=========================");
+            console.log("| Remove selected Depto |")
+            console.log("=========================");
+            console.log("floorId["+depto.idFloor+"] => floor["+depto.floor+"] => depto: "+depto.idDepto);
+            objArr     = $scope.list_depto_floors[depto.idFloor].deptos;
+            indexArray = objArr.map(function(o){return o.idDepto;});
+            arrIndex   = indexArray.indexOf(depto.idDepto);
+            if(depto.floor!="co" && depto.floor!="ba" && depto.floor!="lo" && depto.floor!="pb"){
+                departmentUnidad=0;
+                $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                /* UNIDAD LETRAS/NUMEROS CORRELATIVAS POR PISO*/
+                if (($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1) || ($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==3)){
+                  for (var j=0; j<$scope.list_depto_floors[depto.idFloor].deptos.length;j++){
+                    if($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1){
+                      departmentUnidad='';
+                      departmentUnidad=arrLetras[j];
+                    }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==3){
+                      departmentUnidad=departmentUnidad+1;
+                    }
+
+                    $scope.list_depto_floors[depto.idFloor].deptos[j].departament=departmentUnidad;
+                  }                  
+                /* UNIDAD NUMEROS CORRELATIVOS */
+              }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {                                               
+                  for (var i=4; i<$scope.list_depto_floors.length; i++){
+                    for (var d in  $scope.list_depto_floors[i].deptos){
+                      departmentUnidad=departmentUnidad+1;
+                      $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
+                    }
+                  }   
+                
               }
-            }   
-          
-        }
-      }else if(depto.floor=="pb"){
-        objArr     = $scope.list_depto_floors[1].deptos;
-        indexArray = objArr.map(function(o){return o.idDepto;});
-        arrIndex   = (depto.idDepto-1);
-        $scope.list_depto_floors[1].deptos.splice(arrIndex, 1);
-        departmentUnidad=0; 
-        for (var d in  $scope.list_depto_floors[1].deptos){
-          departmentUnidad=departmentUnidad+1;
-          $scope.list_depto_floors[1].deptos[d].departament=departmentUnidad;
-        }          
-      }else{
-        objArr     = $scope.list_depto_floors[0].deptos;
-        indexArray = objArr.map(function(o){return o.idDepto;});
-        arrIndex   = indexArray.indexOf(depto.idDepto);
-        $scope.list_depto_floors[0].deptos.splice(arrIndex, 1);
-        departmentUnidad=0; 
-        for (var d in  $scope.list_depto_floors[0].deptos){
-          departmentUnidad=departmentUnidad+1;
-          $scope.list_depto_floors[0].deptos[d].departament=departmentUnidad;
-        }       
-      }  
-    }
-    $scope.selectDeptoDataFn = function(){
-      $scope.list_departments=[];
-      for (var f in $scope.list_depto_floors){
-        for (var d in  $scope.list_depto_floors[f].deptos){
-          $scope.list_departments.push({'floor':$scope.list_depto_floors[f].deptos[d].floor, 'departament':$scope.list_depto_floors[f].deptos[d].departament, 'idCategoryDepartamentFk': $scope.list_depto_floors[f].deptos[d].idCategoryDepartamentFk});
-        }
-      }
-      $scope.dptoPaginationFn($scope.list_departments, 5);
-      $scope.enabledNextBtn();
-      console.log($scope.list_departments);
-    }
+            }else{
+              $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+              if (depto.floor=="pb"){
+                departmentUnidad=0; 
+                for (var d in  $scope.list_depto_floors[depto.idFloor].deptos){
+                  departmentUnidad=departmentUnidad+1;
+                  $scope.list_depto_floors[depto.idFloor].deptos[d].departament=departmentUnidad;
+                }          
+              } 
+            } 
+          }
+        /**************************************************
+        *            ASSIGN UNIT NUMBER FUNCTION          *
+        ***************************************************/ 
+          $scope.objFloor="";
+          $scope.porteriaExist=false;
+          $scope.objFloor=[];
+          $scope.buildingUnit="";
+          $scope.assign2UnitFn = function(obj, opt, argBuildingUnit){
+
+            switch(opt){
+              case "open":
+                    $scope.objFloor=obj;
+                    console.log($scope.objFloor);
+                    var rsExistPort=$scope.checkIsPorteriaExistFn($scope.objFloor);
+                if ($scope.objFloor.nameFloor=="co" || $scope.objFloor.nameFloor=="ba" || $scope.objFloor.nameFloor=="lo"){
+                  $scope.isNotDeptoUnit=1;
+                  $("#BuildingUnit").modal('toggle');
+                }else{
+                  $scope.isNotDeptoUnit=0;
+                  console.info("Porteria existe: "+rsExistPort);
+                  if (rsExistPort){
+                    $scope.porteriaExist=true;
+                  }else{
+                    $scope.porteriaExist=false;
+                  }
+                  $("#BuildingUnit").modal('toggle');
+                }
+              break;
+              case "set":
+                if($scope.isNotDeptoUnit==1 && $scope.checkIsUnitExistFn($scope.objFloor, argBuildingUnit)){
+                  if ($scope.objFloor.nameFloor=="co"){var unitName="La Cochera";}else if ($scope.objFloor.nameFloor=="ba"){
+                    var unitName="La Baulera";}else{var unitName="El Local";}
+                  inform.add(unitName+' Numero: '+argBuildingUnit+', Ya se encuentra asignada. ',{ttl:2000, type: 'warning'});
+                }else{
+                  $scope.addOneDeptoMultiFn($scope.objFloor, argBuildingUnit);
+                }
+                $("#unit_number").val("");
+                $("#unit_number").focus();
+              break;
+            }
+          } 
+          $scope.checkIsPorteriaExistFn = function(obj){
+            for (var d in  obj.deptos){
+                if (obj.deptos[d].idCategoryDepartamentFk=="5"){
+                  var isPorteriaExist=true;
+                  break;
+                }else{
+                  var isPorteriaExist=false;
+                }
+              }
+              return isPorteriaExist;
+          }
+          $scope.checkIsUnitExistFn = function(obj, newUnit){
+            for (var d in  obj.deptos){
+                if (obj.deptos[d].departament==newUnit){
+                  var isUnitExist=true;
+                  break;
+                }else{
+                  var isUnitExist=false;
+                }
+              }
+              return isUnitExist;
+          }          
+          $scope.selectDeptoDataFn = function(){
+            $scope.list_departments=[];
+            for (var f in $scope.list_depto_floors){
+              for (var d in  $scope.list_depto_floors[f].deptos){
+                $scope.list_departments.push({'floor':$scope.list_depto_floors[f].deptos[d].floor, 'departament':$scope.list_depto_floors[f].deptos[d].departament, 'idCategoryDepartamentFk': $scope.list_depto_floors[f].deptos[d].idCategoryDepartamentFk, 'numberUNF':$scope.list_depto_floors[f].deptos[d].unitNumber});
+              }
+            }
+            //$scope.dptoPaginationFn($scope.list_departments, 5);
+            $scope.enabledNextBtn();
+            //console.log($scope.list_departments);
+          }
+          $scope.closeBuildingUnitModal = function(){
+            $("#BuildingUnit").modal('hide');
+          }
+          $scope.selectBuildingUnitFn = function(obj, opt, argBuildingUnit){
+            if (opt=="open"){
+              objFloor=obj;
+              $("#BuildingUnit").modal('toggle');
+            }else{
+              $("#BuildingUnit").modal('hide');
+              
+            } 
+          }
     /**************************************************
     *                                                 *
     *             OTHER FUNCTIONAL UNITS              *
     *                                                 *
     **************************************************/
-    $scope.selectotherFNAddressId = {};
-    $scope.otherFU = {'identificador':'','idTypeTaxFk':'','idProvinceFk':{}};
-    $scope.list_ofu=[];
-    $scope.otherFunctionalUnitsFn = function(opt, obj){
-      switch(opt){
-        case "openW":
-          $("#otherFuntionalUnits").modal('toggle');
-        break;
-        case "add":
-          $scope.otherFU = {'identificador':'','idTypeTaxFk':'','idProvinceFk':{}};
-          $scope.addOtherFNFn(obj,"new");
-        break;
-        case "update":
-          console.log(obj);
-        break;
-        case "remove":
-          console.log(obj);
-          $scope.removeOtherFNFn(obj);
-        break;
-      }
-    }
-    $scope.addOtherFNFn = function (obj, opt){
-      //console.log(obj);
-      //console.log("addDeptoSingleFn => $scope.list_depto.length: "+$scope.list_depto.length);
-      if (opt=="new"){
-        if ($scope.list_ofu.length<=0){
-          //console.log("length is equal 0 or less 0");
-          $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
-        }else{
-          for (var key in  $scope.list_ofu){
-               if ($scope.list_ofu[key].identificador==obj.identificador && $scope.list_ofu[key].idProvinceFk==obj.idProvinceFk.selected.idProvince){
-                var tmpIdentificador=obj.identificador;
-                var pIdentify= tmpIdentificador.toUpperCase();
-                inform.add("La Unidad funcional: ["+pIdentify+"] ya se encuentra cargada.",{
-                  ttl:5000, type: 'warning'
-                });
-                $scope.isOfuExist=true;
-                break;
-              }else{
-                $scope.isOfuExist=false;
-              }
-          }
-          if(!$scope.isOfuExist){
-              $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
-          }
-        }
-      }else if (opt=="update"){
-        if ($scope.list_ofu.length<=0){
-          $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
-        }else{
-          for (var key in  $scope.list_ofu){
-              if ($scope.list_ofu[key].identificador==obj.identificador && $scope.list_ofu[key].idProvinceFk==obj.idProvinceFk.selected.idProvince){
-                var tmpIdentificador=obj.identificador;
-                var pIdentify= tmpIdentificador.toUpperCase();
-                inform.add("La Unidad funcional: ["+pIdentify+"] ya se encuentra cargada.",{
-                  ttl:5000, type: 'warning'
-                });
-                $scope.isOfuExist=true;
-                break;
-              }else{
-                $scope.isOfuExist=false;
-              }
-          }
-          if(!$scope.isOfuExist){
-             $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
-          }
-        }      
-      }
-      //$scope.dptoPaginationFn($scope.list_ofu, 5);
-      console.info($scope.list_ofu);
+      $scope.selectotherFNAddressId = {};
       $scope.otherFU = {'identificador':'','idTypeTaxFk':'','idProvinceFk':{}};
-    }
-    $scope.removeOtherFNFn = function (obj){
-      //console.log(obj);
-      for (var key in  $scope.list_ofu){
-          if ($scope.list_ofu[key].identificador==obj.identificador && $scope.list_ofu[key].idProvinceFk==obj.idProvinceFk){
-              $scope.list_ofu.splice(key,1);
+      $scope.list_ofu=[];
+      $scope.otherFunctionalUnitsFn = function(opt, obj){
+        switch(opt){
+          case "openW":
+            $("#otherFuntionalUnits").modal('toggle');
+          break;
+          case "add":
+            $scope.otherFU = {'identificador':'','idTypeTaxFk':'','idProvinceFk':{}};
+            $scope.addOtherFNFn(obj,"new");
+          break;
+          case "update":
+            console.log(obj);
+          break;
+          case "remove":
+            console.log(obj);
+            $scope.removeOtherFNFn(obj);
+          break;
+        }
+      }
+      $scope.addOtherFNFn = function (obj, opt){
+        //console.log(obj);
+        //console.log("addDeptoSingleFn => $scope.list_depto.length: "+$scope.list_depto.length);
+        if (opt=="new"){
+          if ($scope.list_ofu.length<=0){
+            //console.log("length is equal 0 or less 0");
+            $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+          }else{
+            for (var key in  $scope.list_ofu){
+                 if ($scope.list_ofu[key].identificador==obj.identificador && $scope.list_ofu[key].idProvinceFk==obj.idProvinceFk.selected.idProvince){
+                  var tmpIdentificador=obj.identificador;
+                  var pIdentify= tmpIdentificador.toUpperCase();
+                  inform.add("La Unidad funcional: ["+pIdentify+"] ya se encuentra cargada.",{
+                    ttl:5000, type: 'warning'
+                  });
+                  $scope.isOfuExist=true;
+                  break;
+                }else{
+                  $scope.isOfuExist=false;
+                }
+            }
+            if(!$scope.isOfuExist){
+                $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+            }
           }
-          //$scope.dptoPaginationFn($scope.list_ofu, 5);
-      }    
-    }   
+        }else if (opt=="update"){
+          if ($scope.list_ofu.length<=0){
+            $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+          }else{
+            for (var key in  $scope.list_ofu){
+                if ($scope.list_ofu[key].identificador==obj.identificador && $scope.list_ofu[key].idProvinceFk==obj.idProvinceFk.selected.idProvince){
+                  var tmpIdentificador=obj.identificador;
+                  var pIdentify= tmpIdentificador.toUpperCase();
+                  inform.add("La Unidad funcional: ["+pIdentify+"] ya se encuentra cargada.",{
+                    ttl:5000, type: 'warning'
+                  });
+                  $scope.isOfuExist=true;
+                  break;
+                }else{
+                  $scope.isOfuExist=false;
+                }
+            }
+            if(!$scope.isOfuExist){
+               $scope.list_ofu.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+            }
+          }      
+        }
+        //$scope.dptoPaginationFn($scope.list_ofu, 5);
+        console.info($scope.list_ofu);
+        $scope.otherFU = {'identificador':'','idTypeTaxFk':'','idProvinceFk':{}};
+      }
+      $scope.removeOtherFNFn = function (obj){
+        //console.log(obj);
+        for (var key in  $scope.list_ofu){
+            if ($scope.list_ofu[key].identificador==obj.identificador && $scope.list_ofu[key].idProvinceFk==obj.idProvinceFk){
+                $scope.list_ofu.splice(key,1);
+            }
+            //$scope.dptoPaginationFn($scope.list_ofu, 5);
+        }    
+      }   
     /**************************************************
     *                                                 *
     *               PAGINATION SERVICE                *
     *                                                 *
     **************************************************/
-    $scope.vm = [{}];
-    $scope.paginationServiceFn = function(arrObj, setPageSize){
-        $scope.vm.listOfItems = arrObj;
-        $scope.vm.pager = {};
-        $scope.vm.setPage = setPage;
-        $scope.vm.setPageSize=setPageSize;
-        $scope.vm.setPage(1);
+      $scope.vm = [{}];
+      $scope.paginationServiceFn = function(arrObj, setPageSize){
+          $scope.vm.listOfItems = arrObj;
+          $scope.vm.pager = {};
+          $scope.vm.setPage = setPage;
+          $scope.vm.setPageSize=setPageSize;
+          $scope.vm.setPage(1);
 
-        function setPage(page) {
-          if (page < 1 || page > $scope.vm.pager.totalPages) {
-            return;
+          function setPage(page) {
+            if (page < 1 || page > $scope.vm.pager.totalPages) {
+              return;
+            }
+
+            // get pager object from service
+            $scope.vm.pager = PagerService.GetPager($scope.vm.listOfItems.length, page, $scope.vm.setPageSize);
+
+            // get current page of items
+            $scope.vm.items = $scope.vm.listOfItems.slice(
+              $scope.vm.pager.startIndex,
+              $scope.vm.pager.endIndex + 1
+            );
           }
-
-          // get pager object from service
-          $scope.vm.pager = PagerService.GetPager($scope.vm.listOfItems.length, page, $scope.vm.setPageSize);
-
-          // get current page of items
-          $scope.vm.items = $scope.vm.listOfItems.slice(
-            $scope.vm.pager.startIndex,
-            $scope.vm.pager.endIndex + 1
-          );
-        }
-    }
-    $scope.loadMultiDeptosFn = function(){
-      $scope.list_depto_floors=[];
-      $scope.list_department_multi={'floor':'','departament':'','correlacion':undefined,'unidad':undefined, 'idCategoryDepartamentFk':''};
-      departmentUnidad=0;
-      $("#RegisterMultiDeptosModalCustomer").modal('toggle');
-    }
+      }
     /**************************************************
     *                                                 *
     *            CUSTOMER PARTICULAR ADDRESS          *
     *                                                 *
     **************************************************/ 
-    $scope.list_particular_address={};
-    $scope.list_address_particular=[];
-    $scope.isPCA=false;   
+      $scope.list_particular_address={};
+      $scope.list_address_particular=[];
+      $scope.isPCA=false;   
       $scope.newParticularAddressFn = function(){
         $scope.isPCA = true;
+        $scope.list_particular_address={};
         $("#customerParticularAddress").modal('toggle');
+        $('#customerParticularAddress').on('shown.bs.modal', function () {
+          $('#addrText').focus();
+        });
       }
       $scope.addParticularAddressFn = function(opt, obj){
+        $scope.isCpartAddrExist=false;
         console.log($scope.list_particular_address);
-        var customerisBuilding=obj.isBuilding?1:0;
+        switch(obj.typeInmueble){
+          case "1":
+            var customerisBuilding=obj.isBuilding?1:0;
+            var department  = customerisBuilding==0?obj.floor+"-"+obj.depto:obj.depto.Depto;
+            var idDepartment= customerisBuilding==0?null:obj.depto.idDepto;
+            var nameAddress = customerisBuilding==0?obj.nameAddress:obj.address.selected.address;
+            var idProvince  = customerisBuilding==0?obj.idProvinceFk.selected.idProvince:obj.address.selected.idProvinceFk;
+            var idLocation  = customerisBuilding==0?obj.idLocationFk.selected.idLocation:obj.address.selected.idLocationFk;
+          break;
+          case "2":
+            var nameAddress = obj.nameAddress;
+            var idProvince  = obj.idProvinceFk.selected.idProvince;
+            var idLocation  = obj.idLocationFk.selected.idLocation;
+          break;
+          case "3":
+            var nameAddress = obj.nameAddress;
+            var idProvince  = obj.idProvinceFk.selected.idProvince;
+            var idLocation  = obj.idLocationFk.selected.idLocation;
+          break;
+        }
         //{"address":"TEST", "depto":"depto", "isBuilding":1, "idProvinceFk":1, "idLocationFk":1, "clarification":"TEST"}
         if (opt=="new"){
           if ($scope.list_address_particular.length<=0){
-            $scope.list_address_particular.push({"address":obj.nameAddress, "depto": obj.depto, "isBuilding":customerisBuilding, "idProvinceFk":obj.idProvinceFk.selected.idProvince, "idLocationFk":obj.idLocationFk.selected.idLocation, "clarification":obj.clarification});
+            $scope.list_address_particular.push({"address":nameAddress, "idParticularDepartamentKf":idDepartment, "depto": department, "isBuilding":customerisBuilding, "idProvinceFk":idProvince, "idLocationFk":idLocation, "idTipoInmuebleFk":obj.typeInmueble, "clarification":obj.clarification});
           }else{
             for (var key in  $scope.list_address_particular){
-                 if ($scope.list_address_particular[key].identificador==obj.identificador && $scope.list_address_particular[key].idProvinceFk==obj.idProvinceFk.selected.idProvince){
-                  var tmpIdentificador=obj.identificador;
-                  var pIdentify= tmpIdentificador.toUpperCase();
-                  inform.add("La Unidad funcional: ["+pIdentify+"] ya se encuentra cargada.",{
-                    ttl:5000, type: 'warning'
-                  });
-                  $scope.isOfuExist=true;
+              if (obj.typeInmueble=="1"){
+                $scope.validationRS=$scope.list_address_particular[key].idTipoInmuebleFk==obj.typeInmueble && $scope.list_address_particular[key].address==nameAddress && $scope.list_address_particular[key].depto==department?true:false;
+              }else{
+                $scope.validationRS=$scope.list_address_particular[key].idTipoInmuebleFk==obj.typeInmueble && $scope.list_address_particular[key].address==nameAddress?true:false;
+
+              }
+              if ($scope.validationRS){
+                  //var typeInmueble=obj.typeInmueble;
+                  //var pTypeInmueble= tmpDepartment.toUpperCase();
+                  if (obj.typeInmueble=="1"){
+                    inform.add("El Departamento: "+department+" en la direccion: "+nameAddress+" ya se encuentra registrado.",{
+                    //inform.add("La direccion adicional: ("+nameAddress+") y el departamento ("+pIdentify+"), ya se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });
+                  }else if (obj.typeInmueble=="2"){
+                    inform.add("La Casa en la direccion: "+nameAddress+" ya se encuentra registrada.",{
+                    //inform.add("La direccion adicional: ("+nameAddress+") y el departamento ("+pIdentify+"), ya se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });
+                  }else{
+                    inform.add("El Local en la direccion: "+nameAddress+" ya se encuentra registrado.",{
+                    //inform.add("La direccion adicional: ("+nameAddress+") y el departamento ("+pIdentify+"), ya se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });                    
+                  }
+                  $scope.isCpartAddrExist=true; /*Is Customer Particular Address exist */
                   break;
                 }else{
-                  $scope.isOfuExist=false;
+                  $scope.isCpartAddrExist=false;
                 }
             }
-            if(!$scope.isOfuExist){
-                $scope.list_address_particular.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+            if(!$scope.isCpartAddrExist){
+                $scope.list_address_particular.push({"address":nameAddress, "idParticularDepartamentKf":idDepartment, "depto": department, "isBuilding":customerisBuilding, "idProvinceFk":idProvince, "idLocationFk":idLocation, "idTipoInmuebleFk":obj.typeInmueble, "clarification":obj.clarification});
             }
           }
         }else if (opt=="update"){
           if ($scope.list_address_particular.length<=0){
-            $scope.list_address_particular.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+            $scope.list_address_particular.push({"address":nameAddress, "idParticularDepartamentKf":idDepartment, "depto": department, "isBuilding":customerisBuilding, "idProvinceFk":idProvince, "idLocationFk":idLocation, "idTipoInmuebleFk":obj.typeInmueble, "clarification":obj.clarification});
           }else{
             for (var key in  $scope.list_address_particular){
-                if ($scope.list_address_particular[key].identificador==obj.identificador && $scope.list_address_particular[key].idProvinceFk==obj.idProvinceFk.selected.idProvince){
-                  var tmpIdentificador=obj.identificador;
-                  var pIdentify= tmpIdentificador.toUpperCase();
-                  inform.add("La Unidad funcional: ["+pIdentify+"] ya se encuentra cargada.",{
-                    ttl:5000, type: 'warning'
-                  });
-                  $scope.isOfuExist=true;
+              if (obj.typeInmueble=="1"){
+                $scope.validationRS=$scope.list_address_particular[key].idTipoInmuebleFk==obj.typeInmueble && $scope.list_address_particular[key].address==nameAddress && $scope.list_address_particular[key].depto==department?true:false;
+              }else{
+                $scope.validationRS=$scope.list_address_particular[key].idTipoInmuebleFk==obj.typeInmueble && $scope.list_address_particular[key].address==nameAddress?true:false;
+
+              }
+              if ($scope.validationRS){
+                  //var typeInmueble=obj.typeInmueble;
+                  //var pTypeInmueble= tmpDepartment.toUpperCase();
+                  if (obj.typeInmueble=="1"){
+                    inform.add("El Departamento: "+department+" en la direccion: "+nameAddress+" ya se encuentra registrado.",{
+                    //inform.add("La direccion adicional: ("+nameAddress+") y el departamento ("+pIdentify+"), ya se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });
+                  }else if (obj.typeInmueble=="2"){
+                    inform.add("La Casa en la direccion: "+nameAddress+" ya se encuentra registrada.",{
+                    //inform.add("La direccion adicional: ("+nameAddress+") y el departamento ("+pIdentify+"), ya se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });
+                  }else{
+                    inform.add("El Local en la direccion: "+nameAddress+" ya se encuentra registrado.",{
+                    //inform.add("La direccion adicional: ("+nameAddress+") y el departamento ("+pIdentify+"), ya se encuentra registrado.",{
+                      ttl:5000, type: 'warning'
+                    });                    
+                  }
+                  $scope.isCpartAddrExist=true; /*Is Customer Particular Address exist */
                   break;
                 }else{
-                  $scope.isOfuExist=false;
+                  $scope.isCpartAddrExist=false;
                 }
             }
-            if(!$scope.isOfuExist){
-               $scope.list_address_particular.push({'identificador':obj.identificador, 'idTypeTaxFk':obj.idTypeTaxFk, 'idProvinceFk': obj.idProvinceFk.selected.idProvince});
+            if(!$scope.isCpartAddrExist){
+                $scope.list_address_particular.push({"idRegisteredAddressFk": idAddress, "address":nameAddress, "idParticularDepartamentKf":idDepartment, "depto": department, "isBuilding":customerisBuilding, "idProvinceFk":idProvince, "idLocationFk":idLocation, "idTipoInmuebleFk":obj.typeInmueble, "clarification":obj.clarification});
             }
           }              
         }
-      }        
+        if(!$scope.isCpartAddrExist){
+          $("#customerParticularAddress").modal('hide');
+        }
+        console.log($scope.list_address_particular);
+      }
+      $scope.removeParticularAddressFn = function (obj){
+        console.log(obj);
+          for (var key in  $scope.list_address_particular){
+              if ($scope.list_address_particular[key].typeInmueble==obj.typeInmueble && $scope.list_address_particular[key].address==obj.address){
+                    if (obj.typeInmueble=="1"){
+                    inform.add("El Departamento: "+obj.depto+" en la direccion: "+obj.address+" ha sido eliminado satisfactoriamente.",{
+                      ttl:5000, type: 'success'
+                    });
+                  }else if (obj.typeInmueble=="2"){
+                    inform.add("La Casa en la direccion: "+obj.address+" ha sido eliminado satisfactoriamente.",{
+                      ttl:5000, type: 'success'
+                    });
+                  }else{
+                    inform.add("El Local en la direccion: "+obj.address+" ha sido eliminado satisfactoriamente.",{
+                      ttl:5000, type: 'success'
+                    });                    
+                  } 
+                  $scope.list_address_particular.splice(key,1);                  
+              }
+          }   
+      }                
     /*************************************************/  
     /**************************************************
     *                                                 *
-    *                GET TYPE OF IVA                  *
+    *       GET CATEGORY TYPES OF BUILDING UNITS      *
     *                                                 *
     **************************************************/
-    $scope.rsCategoryDeptoData = {};
-    $scope.getCategoryDepartamentFn = function(){
-      UtilitiesServices.categoryDepartament().then(function(data){
-          $scope.rsCategoryDeptoData = data;
-          //console.log($scope.rsProfileData);
-      });
-    };
+      $scope.rsCategoryDeptoData = {};
+      $scope.getCategoryDepartamentFn = function(){
+        UtilitiesServices.categoryDepartament().then(function(data){
+            $scope.rsCategoryDeptoData = data;
+            //console.log($scope.rsProfileData);
+        });
+      };
+      $scope.customerTypeCustomer = function(){
+        $scope.customer.new.typeInmueble='';
+        $scope.enabledNextBtn();
+        console.info($scope.customer.new.idClientTypeFk);
+        if ($scope.customer.new.idClientTypeFk==undefined){
+          $("#idProfileKf").focusin(function(){
+            inform.add("Selecciona un tipo de cliente para continuar.",{
+              ttl:5000, type: 'warning'
+            });              
+          })
+        }else{
+          $("#tipo_inmueble").focus();
+        }
+        
+      }
+      $scope.customerTypeInmueble = function(){
+        $scope.customer.new.isNotCliente=false;
+        $scope.enabledNextBtn();
+        //$("#tipo_inmueble").focus();
+        //$("#customer_address").focus();
+
+      }
     /********************************************************************************************************************************************
     *                                                                                                                                           *
     *                                                                                                                                           *
@@ -8050,81 +8963,81 @@ $scope.slider = {
     *                MAIL PRINCIPAL                   *
     *                                                 *
     **************************************************/
-    $scope.smtp={mail: '', password: ''};
-    $scope.updateMailSmtp = function ($http, $scope){
-      console.log($scope.getSmtpMail2Update());
-      $http.post(serverHost+serverBackend+"User/updateMailSmtp", $scope.getSmtpMail2Update())
-          .then(function (sucess, data) {
-                $scope.smtpPwd="";
-                $scope.smtpMail="";
-                $scope.sysConfig('sys','dash');
-              inform.add('Configuracion de smtp email realizada con exito. ',{
-                      ttl:2000, type: 'success'
-                 });
-              $('#ModalSMTPEmail').modal('hide');
-              $('#ModalSMTPEmail').on('hidden.bs.modal', function (e) {
+      $scope.smtp={mail: '', password: ''};
+      $scope.updateMailSmtp = function ($http, $scope){
+        console.log($scope.getSmtpMail2Update());
+        $http.post(serverHost+serverBackend+"User/updateMailSmtp", $scope.getSmtpMail2Update())
+            .then(function (sucess, data) {
+                  $scope.smtpPwd="";
+                  $scope.smtpMail="";
                   $scope.sysConfig('sys','dash');
-              }); 
-              
-        },function (error, data,status) {
-                if(status == 404){alert("!Informacion "+status+data.error+"info");}
-                else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-                else{alert("Error !"+status+" Contacte a Soporte"+"error");}
-               
-        });
-    };
+                inform.add('Configuracion de smtp email realizada con exito. ',{
+                        ttl:2000, type: 'success'
+                   });
+                $('#ModalSMTPEmail').modal('hide');
+                $('#ModalSMTPEmail').on('hidden.bs.modal', function (e) {
+                    $scope.sysConfig('sys','dash');
+                }); 
+                
+          },function (error, data,status) {
+                  if(status == 404){alert("!Informacion "+status+data.error+"info");}
+                  else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+                  else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+                 
+          });
+      };
 
-    $scope.getSmtpMail2Update = function () {
+      $scope.getSmtpMail2Update = function () {
 
-      var mailsmtp =
-              {
-                    mail:
-                            {
-                                email    : $scope.smtp.mail,
-                                pass     : $scope.smtp.password
-                            }
-              };
-      return mailsmtp;
-    };
+        var mailsmtp =
+                {
+                      mail:
+                              {
+                                  email    : $scope.smtp.mail,
+                                  pass     : $scope.smtp.password
+                              }
+                };
+        return mailsmtp;
+      };
     /**************************************************/
     /**************************************************
     *                                                 *
     *                MAIL ALTERNOS                    *
     *                                                 *
     **************************************************/
-    $scope.updateSysParam = function ($http, $scope){
-      console.log($scope.getSysParam2Update());
-      $http.post(serverHost+serverBackend+"User/updateParam", $scope.getSysParam2Update())
-          .then(function (sucess, data) {
-                $scope.sysConfig('sys','dash');
-              inform.add('Configuracion Satisfactoria del correo del departamento de '+$scope.sysParam.msg,{
-                      ttl:2000, type: 'success'
-                 });
-              $('#ModalSetupEmail').modal('hide');
-              $('#ModalSetupEmail').on('hidden.bs.modal', function (e) {
+      $scope.updateSysParam = function ($http, $scope){
+        console.log($scope.getSysParam2Update());
+        $http.post(serverHost+serverBackend+"User/updateParam", $scope.getSysParam2Update())
+            .then(function (sucess, data) {
                   $scope.sysConfig('sys','dash');
-              }); 
-              
-        },function (error, data,status) {
-                if(status == 404){alert("!Informacion "+status+data.error+"info");}
-                else if(status == 203){alert("!Informacion "+status,data.error+"info");}
-                else{alert("Error !"+status+" Contacte a Soporte"+"error");}
-               
-        });
-    };
+                inform.add('Configuracion Satisfactoria del correo del departamento de '+$scope.sysParam.msg,{
+                        ttl:2000, type: 'success'
+                   });
+                $('#ModalSetupEmail').modal('hide');
+                $('#ModalSetupEmail').on('hidden.bs.modal', function (e) {
+                    $scope.sysConfig('sys','dash');
+                }); 
+                
+          },function (error, data,status) {
+                  if(status == 404){alert("!Informacion "+status+data.error+"info");}
+                  else if(status == 203){alert("!Informacion "+status,data.error+"info");}
+                  else{alert("Error !"+status+" Contacte a Soporte"+"error");}
+                 
+          });
+      };
 
-    $scope.getSysParam2Update = function () {
+      $scope.getSysParam2Update = function () {
 
-      var sysParam =
-              {
-                    param:
-                            {
-                                value       : $scope.sysParam.value,
-                                idParam     : $scope.sysParam.idParam
-                            }
-              };
-      return sysParam;
-    };
+        var sysParam =
+                {
+                      param:
+                              {
+                                  value       : $scope.sysParam.value,
+                                  idParam     : $scope.sysParam.idParam
+                              }
+                };
+        return sysParam;
+      };
     /**************************************************/
 
     /**************************************************
@@ -8132,586 +9045,588 @@ $scope.slider = {
     *               LIST SYS PROFILE                  *
     *                                                 *
     **************************************************/
-    $scope.rsProfileData = {};
-    $scope.getSysProfilesFn = function(search){
-      ProfileServices.listProfiles(search).then(function(data){
-          $scope.rsProfileData = data;
-          $scope.loadPagination($scope.rsProfileData, "idProfiles", "7");
-          //console.log($scope.rsProfileData);
-      });
-    };
+      $scope.rsProfileData = {};
+      $scope.getSysProfilesFn = function(search){
+        ProfileServices.listProfiles(search).then(function(data){
+            $scope.rsProfileData = data;
+            $scope.loadPagination($scope.rsProfileData, "idProfiles", "7");
+            //console.log($scope.rsProfileData);
+        });
+      };
     /**************************************************
     *                                                 *
     *                 LIST PRODUCTS                   *
     *                                                 *
     **************************************************/
-    $scope.rsProductsData = {};
-    $scope.getProductsFn = function(search, opt){
-      ProductsServices.listProducts(search).then(function(data){
-          $scope.rsProductsData = data;
-          if(opt==1){$scope.loadPagination($scope.rsProductsData, "idProduct", "10");}
-          //console.log($scope.rsProfileData);
-      });
-    };
+      $scope.rsProductsData = {};
+      $scope.getProductsFn = function(search, opt){
+        ProductsServices.listProducts(search).then(function(data){
+            $scope.rsProductsData = data;
+            if(opt==1){$scope.loadPagination($scope.rsProductsData, "idProduct", "10");}
+            //console.log($scope.rsProfileData);
+        });
+      };
 
     /**************************************************
     *                                                 *
     *           CLASSIFICATION PRODUCTS               *
     *                                                 *
     **************************************************/
-    $scope.rsClasProductsData = {};
-    $scope.getProductClassificationFn = function(){
-      ProductsServices.getProductClassification().then(function(data){
-          $scope.rsClasProductsData = data;
-          //$scope.loadPagination($scope.rsClasProductsData, "idProductClassification");
-          //console.log($scope.rsClasProductsData);
-      });
-    };
+      $scope.rsClasProductsData = {};
+      $scope.getProductClassificationFn = function(){
+        ProductsServices.getProductClassification().then(function(data){
+            $scope.rsClasProductsData = data;
+            //$scope.loadPagination($scope.rsClasProductsData, "idProductClassification");
+            //console.log($scope.rsClasProductsData);
+        });
+      };
 
     /**************************************************
     *                                                 *
     *             OPEN DEVICES PRODUCTS               *
     *                                                 *
     **************************************************/
-    $scope.rsOpenDeviceProductsData = {};
-    $scope.getDiviceOpening = function(){
-      ProductsServices.getDiviceOpening().then(function(data){
-          $scope.rsOpenDeviceProductsData = data;
-          //$scope.loadPagination($scope.rsOpenDeviceProductsData, "idProductClassification");
-          //console.log($scope.rsOpenDeviceProductsData);
-      });
-    };
-    $scope.list_id_divice=[];
-    $scope.list_divices=[];
-    $scope.isDeviceExist=null;
-    $scope.addDeviceOpeningFn = function (obj){
-      if ($scope.list_divices.length<=0){
-        //console.log("length is equal 0 or less 0");
-        $scope.list_id_divice.push({'idDiviceOpeningFk':obj.idDiviceOpening});
-        $scope.list_divices.push({'idDiviceOpeningFk':obj.idDiviceOpening, 'diviceOpening':obj.diviceOpening});
+      $scope.rsOpenDeviceProductsData = {};
+      $scope.getDiviceOpening = function(){
+        ProductsServices.getDiviceOpening().then(function(data){
+            $scope.rsOpenDeviceProductsData = data;
+            //$scope.loadPagination($scope.rsOpenDeviceProductsData, "idProductClassification");
+            //console.log($scope.rsOpenDeviceProductsData);
+        });
+      };
+      $scope.list_id_divice=[];
+      $scope.list_divices=[];
+      $scope.isDeviceExist=null;
+      $scope.addDeviceOpeningFn = function (obj){
+        if ($scope.list_divices.length<=0){
+          //console.log("length is equal 0 or less 0");
+          $scope.list_id_divice.push({'idDiviceOpeningFk':obj.idDiviceOpening});
+          $scope.list_divices.push({'idDiviceOpeningFk':obj.idDiviceOpening, 'diviceOpening':obj.diviceOpening});
 
-      }else{
-        for (var key in  $scope.list_id_divice){
-         // console.log(key);
-          //console.log("Validando: "+$scope.list_id_divice[key].idDiviceOpeningFk+" == "+obj.idDiviceOpening);
-            if ( $scope.list_id_divice[key].idDiviceOpeningFk==obj.idDiviceOpening){
-              inform.add("El Dispositivo "+obj.diviceOpening+" Ya se encuentra agregado.",{
-                ttl:5000, type: 'success'
-              });
-              $scope.isDeviceExist=true;
-              break;
-              //console.log($scope.isDeviceExist);
-            }else{
-              $scope.isDeviceExist=false;
-              //console.log($scope.isDeviceExist);
+        }else{
+          for (var key in  $scope.list_id_divice){
+           // console.log(key);
+            //console.log("Validando: "+$scope.list_id_divice[key].idDiviceOpeningFk+" == "+obj.idDiviceOpening);
+              if ( $scope.list_id_divice[key].idDiviceOpeningFk==obj.idDiviceOpening){
+                inform.add("El Dispositivo "+obj.diviceOpening+" Ya se encuentra agregado.",{
+                  ttl:5000, type: 'success'
+                });
+                $scope.isDeviceExist=true;
+                break;
+                //console.log($scope.isDeviceExist);
+              }else{
+                $scope.isDeviceExist=false;
+                //console.log($scope.isDeviceExist);
+              }
+          }
+            if(!$scope.isDeviceExist){
+                //console.log("ADD_NO_EXIST");
+                $scope.list_id_divice.push({'idDiviceOpeningFk':obj.idDiviceOpening});
+                $scope.list_divices.push({'idDiviceOpeningFk':obj.idDiviceOpening, 'diviceOpening':obj.diviceOpening});
             }
         }
-          if(!$scope.isDeviceExist){
-              //console.log("ADD_NO_EXIST");
-              $scope.list_id_divice.push({'idDiviceOpeningFk':obj.idDiviceOpening});
-              $scope.list_divices.push({'idDiviceOpeningFk':obj.idDiviceOpening, 'diviceOpening':obj.diviceOpening});
-          }
+        console.log("OBJ A ADICIONAR:");
+        console.log(obj);
+        console.log("list_id_divice:");
+        console.log($scope.list_id_divice);
+        console.log("list_divices:");
+        console.log($scope.list_divices);
       }
-      console.log("OBJ A ADICIONAR:");
-      console.log(obj);
-      console.log("list_id_divice:");
-      console.log($scope.list_id_divice);
-      console.log("list_divices:");
-      console.log($scope.list_divices);
-    }
-    $scope.removeDeviceOpeningFn = function (obj){
-      for (var key in  $scope.list_id_divice){
-          if ( $scope.list_id_divice[key].idDiviceOpeningFk==obj.idDiviceOpeningFk){
-              $scope.list_divices.splice(key,1);
-              $scope.list_id_divice.splice(key,1);
-          }
+      $scope.removeDeviceOpeningFn = function (obj){
+        for (var key in  $scope.list_id_divice){
+            if ( $scope.list_id_divice[key].idDiviceOpeningFk==obj.idDiviceOpeningFk){
+                $scope.list_divices.splice(key,1);
+                $scope.list_id_divice.splice(key,1);
+            }
+        }
+        console.log("OBJ A ELIMINAR:");
+        console.log(obj);
+        console.log("list_id_divice:");
+        console.log($scope.list_id_divice);
+        console.log("list_divices:");
+        console.log($scope.list_divices);
       }
-      console.log("OBJ A ELIMINAR:");
-      console.log(obj);
-      console.log("list_id_divice:");
-      console.log($scope.list_id_divice);
-      console.log("list_divices:");
-      console.log($scope.list_divices);
-    }
-    $scope.removeAllDevices = function(){
-      for (var key in  $scope.list_divices){
-        $scope.list_divices.splice(key,1);
-        $scope.list_id_divice.splice(key,1);
+      $scope.removeAllDevices = function(){
+        for (var key in  $scope.list_divices){
+          $scope.list_divices.splice(key,1);
+          $scope.list_id_divice.splice(key,1);
+        }
       }
-    }
     /**************************************************
     *                                                 *
     *                 NEW PRODUCT                     *
     *                                                 *
     **************************************************/
-    $scope.newProduct={product:{}};
-    $scope.addNewProductFn = function(){
-      $scope.newProduct.product.list_id_divice       = $scope.newProduct.product.idProductClassificationFk==3?$scope.list_id_divice:null;
-      $scope.newProduct.product.isNumberSerieFabric  = $scope.newProduct.product.isNumberSerieFabric==undefined?false:$scope.newProduct.product.isNumberSerieFabric;
-      $scope.newProduct.product.isNumberSerieInternal= $scope.newProduct.product.isNumberSerieInternal==undefined?false:$scope.newProduct.product.isNumberSerieInternal
-      $scope.newProduct.product.isDateExpiration     = $scope.newProduct.product.isDateExpiration==undefined?false:$scope.newProduct.product.isDateExpiration;
-      $scope.newProduct.product.isControlSchedule    = $scope.newProduct.product.idProductClassificationFk==1?$scope.newProduct.product.isControlSchedule:null;
-      console.log($scope.newProduct);
-      ProductsServices.newProduct($scope.newProduct).then(function(data){
-          $scope.rsNewProductData = data;
-          $('#newProduct').modal('hide');
-            if ($scope.rsNewProductData.status==200){
-              inform.add("Producto Cargado Satisfactoriamente.",{
-                ttl:5000, type: 'success'
-              });
-            }
-            $scope.getProductsFn("", 1);
-      });
-    }
+      $scope.newProduct={product:{}};
+      $scope.addNewProductFn = function(){
+        $scope.newProduct.product.list_id_divice       = $scope.newProduct.product.idProductClassificationFk==3?$scope.list_id_divice:null;
+        $scope.newProduct.product.isNumberSerieFabric  = $scope.newProduct.product.isNumberSerieFabric==undefined?false:$scope.newProduct.product.isNumberSerieFabric;
+        $scope.newProduct.product.isNumberSerieInternal= $scope.newProduct.product.isNumberSerieInternal==undefined?false:$scope.newProduct.product.isNumberSerieInternal
+        $scope.newProduct.product.isDateExpiration     = $scope.newProduct.product.isDateExpiration==undefined?false:$scope.newProduct.product.isDateExpiration;
+        $scope.newProduct.product.isControlSchedule    = $scope.newProduct.product.idProductClassificationFk==1?$scope.newProduct.product.isControlSchedule:null;
+        console.log($scope.newProduct);
+        ProductsServices.newProduct($scope.newProduct).then(function(data){
+            $scope.rsNewProductData = data;
+            $('#newProduct').modal('hide');
+              if ($scope.rsNewProductData.status==200){
+                inform.add("Producto Cargado Satisfactoriamente.",{
+                  ttl:5000, type: 'success'
+                });
+              }
+              $scope.getProductsFn("", 1);
+        });
+      }
     /**************************************************
     *                                                 *
     *                 UPDATE PRODUCT                  *
     *                                                 *
     **************************************************/
-    $scope.selectProductDataFn=function(obj){
-      $scope.list_id_divice = [];
-      $scope.list_divices   = [];
-      $scope.updateProduct.product.idProduct                 = obj.idProduct;
-      $scope.updateProduct.product.descriptionProduct        = obj.descriptionProduct;
-      $scope.updateProduct.product.codigoFabric              = obj.codigoFabric;
-      $scope.updateProduct.product.brand                     = obj.brand;
-      $scope.updateProduct.product.model                     = obj.model;
-      $scope.updateProduct.product.priceFabric               = obj.priceFabric;
-      $scope.updateProduct.product.isNumberSerieFabric       = obj.isNumberSerieFabric==1?true:false;
-      $scope.updateProduct.product.isNumberSerieInternal     = obj.isNumberSerieInternal==1?true:false;
-      $scope.updateProduct.product.isDateExpiration          = obj.isDateExpiration==1?true:false;
-      $scope.updateProduct.product.isControlSchedule         = obj.isControlSchedule==1?true:false;
-      $scope.updateProduct.product.idProductClassificationFk = obj.idProductClassificationFk;
-      $scope.update_ProductTemp_diviceOpening                = obj.diviceOpening;
-      
-      //console.log(obj.diviceOpening);
-      if (obj.diviceOpening.length>0){
-        for (var key in  obj.diviceOpening){
-          //console.log(obj.diviceOpening[key]);
-          $scope.list_id_divice.push({'idDiviceOpeningFk':obj.diviceOpening[key].idDiviceOpening});
-          $scope.list_divices.push({'idDiviceOpeningFk':obj.diviceOpening[key].idDiviceOpening, 'diviceOpening':obj.diviceOpening[key].diviceOpening});
+      $scope.selectProductDataFn=function(obj){
+        $scope.list_id_divice = [];
+        $scope.list_divices   = [];
+        $scope.updateProduct.product.idProduct                 = obj.idProduct;
+        $scope.updateProduct.product.descriptionProduct        = obj.descriptionProduct;
+        $scope.updateProduct.product.codigoFabric              = obj.codigoFabric;
+        $scope.updateProduct.product.brand                     = obj.brand;
+        $scope.updateProduct.product.model                     = obj.model;
+        $scope.updateProduct.product.priceFabric               = obj.priceFabric;
+        $scope.updateProduct.product.isNumberSerieFabric       = obj.isNumberSerieFabric==1?true:false;
+        $scope.updateProduct.product.isNumberSerieInternal     = obj.isNumberSerieInternal==1?true:false;
+        $scope.updateProduct.product.isDateExpiration          = obj.isDateExpiration==1?true:false;
+        $scope.updateProduct.product.isControlSchedule         = obj.isControlSchedule==1?true:false;
+        $scope.updateProduct.product.idProductClassificationFk = obj.idProductClassificationFk;
+        $scope.update_ProductTemp_diviceOpening                = obj.diviceOpening;
+        
+        //console.log(obj.diviceOpening);
+        if (obj.diviceOpening.length>0){
+          for (var key in  obj.diviceOpening){
+            //console.log(obj.diviceOpening[key]);
+            $scope.list_id_divice.push({'idDiviceOpeningFk':obj.diviceOpening[key].idDiviceOpening});
+            $scope.list_divices.push({'idDiviceOpeningFk':obj.diviceOpening[key].idDiviceOpening, 'diviceOpening':obj.diviceOpening[key].diviceOpening});
+          }
+        }else{
+          //console.log("obj.diviceOpening is empty");
         }
-      }else{
-        //console.log("obj.diviceOpening is empty");
+        $('#updateProduct').modal('show');
+        //console.log(obj);
       }
-      $('#updateProduct').modal('show');
-      //console.log(obj);
-    }
-    $scope.updateProduct={product:{}};
-    $scope.updateProductFn = function(){
-      $scope.updateProduct.product.list_id_divice       = $scope.updateProduct.product.idProductClassificationFk==3?$scope.list_id_divice:null;
-      $scope.updateProduct.product.isNumberSerieFabric  = $scope.updateProduct.product.isNumberSerieFabric==undefined?false:$scope.updateProduct.product.isNumberSerieFabric;
-      $scope.updateProduct.product.isNumberSerieInternal= $scope.updateProduct.product.isNumberSerieInternal==undefined?false:$scope.updateProduct.product.isNumberSerieInternal
-      $scope.updateProduct.product.isDateExpiration     = $scope.updateProduct.product.isDateExpiration==undefined?false:$scope.updateProduct.product.isDateExpiration;
-      $scope.updateProduct.product.isControlSchedule    = $scope.updateProduct.product.idProductClassificationFk==1?$scope.updateProduct.product.isControlSchedule:false;
+      $scope.updateProduct={product:{}};
+      $scope.updateProductFn = function(){
+        $scope.updateProduct.product.list_id_divice       = $scope.updateProduct.product.idProductClassificationFk==3?$scope.list_id_divice:null;
+        $scope.updateProduct.product.isNumberSerieFabric  = $scope.updateProduct.product.isNumberSerieFabric==undefined?false:$scope.updateProduct.product.isNumberSerieFabric;
+        $scope.updateProduct.product.isNumberSerieInternal= $scope.updateProduct.product.isNumberSerieInternal==undefined?false:$scope.updateProduct.product.isNumberSerieInternal
+        $scope.updateProduct.product.isDateExpiration     = $scope.updateProduct.product.isDateExpiration==undefined?false:$scope.updateProduct.product.isDateExpiration;
+        $scope.updateProduct.product.isControlSchedule    = $scope.updateProduct.product.idProductClassificationFk==1?$scope.updateProduct.product.isControlSchedule:false;
 
-      //console.log($scope.updateProduct);
-      ProductsServices.updateProduct($scope.updateProduct).then(function(data){
-          $scope.rsupdateProductData = data;
-          $('#updateProduct').modal('hide');
-            if ($scope.rsupdateProductData.status==200){
-              inform.add("Producto Actualizado Satisfactoriamente.",{
-                ttl:5000, type: 'success'
-              });
-            }
-            $scope.getProductsFn("",1);
-      });
-    }
-    /**************************************************
+        //console.log($scope.updateProduct);
+        ProductsServices.updateProduct($scope.updateProduct).then(function(data){
+            $scope.rsupdateProductData = data;
+            $('#updateProduct').modal('hide');
+              if ($scope.rsupdateProductData.status==200){
+                inform.add("Producto Actualizado Satisfactoriamente.",{
+                  ttl:5000, type: 'success'
+                });
+              }
+              $scope.getProductsFn("",1);
+        });
+      }
+      /**************************************************
     *                                                 *
     *                DELETE PRODUCT                   *
     *                                                 *
     **************************************************/
-    $scope.deleteProductFn = function(idProduct){
-      ProductsServices.deleteProduct(idProduct).then(function(data){
-        $scope.rsDelProductData=data;
-        console.log("STATUS: "+$scope.rsDelProductData.status);
-        console.log("MSG   : "+$scope.rsDelProductData.statusText);
-        console.log("DATA  : "+$scope.rsDelProductData.data);
-        if ($scope.rsDelProductData.status==200){
-          $scope.getProductsFn("",1);
-          inform.add("Producto Eliminado satisfactoriamente",{
-            ttl:5000, type: 'success'
-          });
-          
-        }
-        //console.log($scope.rsModulesData); 
-      });
-    }
+      $scope.deleteProductFn = function(idProduct){
+        ProductsServices.deleteProduct(idProduct).then(function(data){
+          $scope.rsDelProductData=data;
+          console.log("STATUS: "+$scope.rsDelProductData.status);
+          console.log("MSG   : "+$scope.rsDelProductData.statusText);
+          console.log("DATA  : "+$scope.rsDelProductData.data);
+          if ($scope.rsDelProductData.status==200){
+            $scope.getProductsFn("",1);
+            inform.add("Producto Eliminado satisfactoriamente",{
+              ttl:5000, type: 'success'
+            });
+            
+          }
+          //console.log($scope.rsModulesData); 
+        });
+      }
 
     /**************************************************
     *                                                 *
     *                GET SYS MODULES                  *
     *                                                 *
     **************************************************/
-    $scope.rsModulesData = {};
-    $scope.getSysModulesFn = function(){
       $scope.rsModulesData = {};
-      ProfileServices.getSysModules().then(function(data){
-          $scope.rsModulesData = data;
-          //console.log($scope.rsModulesData);
-      });
-    };
+      $scope.getSysModulesFn = function(){
+        $scope.rsModulesData = {};
+        ProfileServices.getSysModules().then(function(data){
+            $scope.rsModulesData = data;
+            //console.log($scope.rsModulesData);
+        });
+      };
     /**************************************************
     *                                                 *
     *                LOGOUT FUNCTION                  *
     *                                                 *
     **************************************************/
-    $scope.logout = function(){
-      $scope.rsJSON = " ";
-      localStorage.clear();
-      $scope.sysToken = false;
-      location.href = "index.html"
-    };
+      $scope.logout = function(){
+        $scope.rsJSON = " ";
+        localStorage.clear();
+        $scope.sysToken = false;
+        location.href = "index.html"
+      };
     /**************************************************/
     /**************************************************
     *                                                 *
     *                NEW SYS PROFILE                  *
     *                                                 *
     **************************************************/
-    $scope.checkBoxes={modulo: {}};
-    $scope.sysProfile={Name:''};
-    var newProfile={profile:{name:'', list_id_modules:[{}]}};
-    var listOfModules=[];
-    $scope.newSysProfileFn = function(){
-      console.clear();
-      i=0;
-      listOfModules=[];
-      var chkbModules = $scope.checkBoxes.modulo;
-      var firArrItem=Object.keys(chkbModules).length==1?Object.keys(chkbModules)[0]:null;
-      if ((Object.keys(chkbModules).length>1) || (Object.keys(chkbModules).length==1 && chkbModules[firArrItem]!=false)){
-        for (var key in chkbModules){
-          if (chkbModules[key]==true){
-            listOfModules.push({'idModuleFk':key});
-          }
-        }
-        if (listOfModules.length>0){
-          newProfile.profile.name=$scope.sysProfile.Name;
-          newProfile.profile.list_id_modules=listOfModules;
-          //console.log("Sending data to the API...");
-          ProfileServices.newSysProfile(newProfile).then(function(data){
-            var rsNewProfileData = data;
-            //console.log("STATUS: "+rsNewProfileData.status);
-            //console.log("MSG   : "+rsNewProfileData.statusText);
-            //console.log("DATA  : "+rsNewProfileData.data.response);
-            //console.log($scope.rsModulesData);
-            $('#newSysProfile').modal('hide');
-            if (rsNewProfileData.status==200){
-              inform.add("Perfil creado satisfactoriamente",{
-                ttl:5000, type: 'success'
-              });
+      $scope.checkBoxes={modulo: {}};
+      $scope.sysProfile={Name:''};
+      var newProfile={profile:{name:'', list_id_modules:[{}]}};
+      var listOfModules=[];
+      $scope.newSysProfileFn = function(){
+        console.clear();
+        i=0;
+        listOfModules=[];
+        var chkbModules = $scope.checkBoxes.modulo;
+        var firArrItem=Object.keys(chkbModules).length==1?Object.keys(chkbModules)[0]:null;
+        if ((Object.keys(chkbModules).length>1) || (Object.keys(chkbModules).length==1 && chkbModules[firArrItem]!=false)){
+          for (var key in chkbModules){
+            if (chkbModules[key]==true){
+              listOfModules.push({'idModuleFk':key});
             }
-            $scope.getSysProfilesFn("");
-          });
-          //console.log(newProfile);
+          }
+          if (listOfModules.length>0){
+            newProfile.profile.name=$scope.sysProfile.Name;
+            newProfile.profile.list_id_modules=listOfModules;
+            //console.log("Sending data to the API...");
+            ProfileServices.newSysProfile(newProfile).then(function(data){
+              var rsNewProfileData = data;
+              //console.log("STATUS: "+rsNewProfileData.status);
+              //console.log("MSG   : "+rsNewProfileData.statusText);
+              //console.log("DATA  : "+rsNewProfileData.data.response);
+              //console.log($scope.rsModulesData);
+              $('#newSysProfile').modal('hide');
+              if (rsNewProfileData.status==200){
+                inform.add("Perfil creado satisfactoriamente",{
+                  ttl:5000, type: 'success'
+                });
+              }
+              $scope.getSysProfilesFn("");
+            });
+            //console.log(newProfile);
+          }else{
+            inform.add('Selecciona un modulo como minimo para crear el perfil',{
+              ttl:5000, type: 'warning'
+            });
+          }
+          
         }else{
-          inform.add('Selecciona un modulo como minimo para crear el perfil',{
-            ttl:5000, type: 'warning'
-          });
-        }
-        
-      }else{
-          inform.add('Selecciona un modulo como minimo para crear el perfil',{
-            ttl:5000, type: 'warning'
-          });
-      }   
-    }
+            inform.add('Selecciona un modulo como minimo para crear el perfil',{
+              ttl:5000, type: 'warning'
+            });
+        }   
+      }
     /**************************************************
     *                                                 *
     *               UPDATE SYS PROFILE                *
     *                                                 *
     **************************************************/
-    $scope.chkBox={modulo: {}};
-    $scope.sysUpProfile={Name:''};
-    var updProfile={profile:{idProfiles:'', name:'', list_id_modules:[{}]}};
-    $scope.tmpSysModules = [];
-    $scope.selectProfileDataFn=function(obj){
-      console.clear();
-      $scope.tmpSysModules=obj;
-      console.log($scope.tmpSysModules);
-      var chkbModules = $scope.chkBox.modulo;
-      console.log($scope.chkBox.modulo);
-      /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
-      for (var key in chkbModules){
-          if (chkbModules[key]==true){
-            $scope.chkBox.modulo[key]=false;
-          }
-      }
-      $scope.sysUpProfile.Name=$scope.tmpSysModules.name;  
-      $('#updateSysProfile').modal('show');
-      console.log($scope.tmpSysModules.modules);
-      //console.log($scope.tmpSysModules.length);
-      $scope.chkBox.modulo.row
-      for (var i = 0; i < $scope.tmpSysModules.modules.length; i++) {
-        $scope.chkBox.modulo[$scope.tmpSysModules.modules[i].idModule]=true;
-      }
-      //console.log($scope.checkBoxes);
-    }
-    $scope.data2UpdateSysProfileFn=function(){
-      console.clear();
-      i=0;
-      var listOfModules=[];
-      var chkbModules = $scope.chkBox.modulo;
-      var firArrItem=Object.keys(chkbModules).length==1?Object.keys(chkbModules)[0]:null;
-      if ((Object.keys(chkbModules).length>1) || (Object.keys(chkbModules).length==1 && chkbModules[firArrItem]!=false)){
+      $scope.chkBox={modulo: {}};
+      $scope.sysUpProfile={Name:''};
+      var updProfile={profile:{idProfiles:'', name:'', list_id_modules:[{}]}};
+      $scope.tmpSysModules = [];
+      $scope.selectProfileDataFn=function(obj){
+        console.clear();
+        $scope.tmpSysModules=obj;
+        console.log($scope.tmpSysModules);
+        var chkbModules = $scope.chkBox.modulo;
+        console.log($scope.chkBox.modulo);
+        /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
         for (var key in chkbModules){
-          if (chkbModules[key]==true){
-            listOfModules.push({'idModuleFk':key});
-          }
-        }
-        if (listOfModules.length>0){
-          updProfile.profile.idProfiles=$scope.tmpSysModules.idProfiles;
-          updProfile.profile.name=$scope.sysUpProfile.Name;
-          updProfile.profile.list_id_modules=listOfModules;
-          console.log("Sending data to the API...");
-          $scope.updateSysProfileFn(updProfile,1);
-          //console.log(updProfile);
-        }else{
-          inform.add('Selecciona un modulo como minimo para crear el perfil',{
-            ttl:5000, type: 'warning'
-          });
-        }
-        
-      }else{
-          inform.add('Selecciona un modulo como minimo para crear el perfil',{
-            ttl:5000, type: 'warning'
-          });
-      } 
-    }
-    $scope.chkBox2={modulo: {}};
-    $scope.sysProfFound=false;
-    $scope.sysFindFn=function(string){
-      var output=[{idProfiles:'', nameProf: ''}];
-      var i=0;
-      if (string!=undefined && string!=""){
-        angular.forEach($scope.rsProfileData,function(sysProfile){
-          var sysIdProfile=sysProfile.name;
-          if(sysIdProfile.toLowerCase().indexOf(string.toLowerCase())>=0){
-            output.push({sysProfile});
-          }
-        });
-      }else{
-            $scope.filterSysProfile=null;
-            $scope.sysProfFound=false;
-      }
-      $scope.filterSysProfile=output;
-      console.info($scope.filterSysProfile);
-    }
-    $scope.fillTextbox=function(item){
-      $scope.tmpSysModules=item;
-      $scope.sysUpProfile.Name=item.name;
-      var chkbModules = $scope.chkBox2.modulo;
-      /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
-      for (var key in chkbModules){
-          if (chkbModules[key]==true){
-            $scope.chkBox2.modulo[key]=false;
-          }
-      }
-      console.log(item);
-      for (var i = 0; i < item.modules.length; i++) {
-        $scope.chkBox2.modulo[item.modules[i].idModule]=true;
-      }
-      $scope.filterSysProfile=null;
-      $scope.sysProfFound=true;
-    }
-    $scope.data2UpdateSysProfile2Fn=function(item){
-      console.clear();
-      i=0;
-      var listOfModules=[];
-      var chkbModules = $scope.chkBox2.modulo;
-      var firArrItem=Object.keys(chkbModules).length==1?Object.keys(chkbModules)[0]:null;
-      if ((Object.keys(chkbModules).length>1) || (Object.keys(chkbModules).length==1 && chkbModules[firArrItem]!=false)){
-        for (var key in chkbModules){
-          if (chkbModules[key]==true){
-            listOfModules.push({'idModuleFk':key});
-          }
-        }
-        if (listOfModules.length>0){
-          updProfile.profile.idProfiles=$scope.tmpSysModules.idProfiles;
-          updProfile.profile.name=$scope.sysUpProfile.Name;
-          updProfile.profile.list_id_modules=listOfModules;
-          console.log("Sending data to the API...");
-          $scope.updateSysProfileFn(updProfile,2);
-        }else{
-          inform.add('Selecciona un modulo como minimo para crear el perfil',{
-            ttl:5000, type: 'warning'
-          });
-        }
-        
-      }else{
-          inform.add('Selecciona un modulo como minimo para crear el perfil',{
-            ttl:5000, type: 'warning'
-          });
-      } 
-    }
-    $scope.rsUpdProfileData={};
-    $scope.updateSysProfileFn = function(dataProfile, opt){
-      ProfileServices.updateSysProfile(dataProfile).then(function(data){
-        $scope.rsUpdProfileData=data;
-        console.log("STATUS: "+$scope.rsUpdProfileData.status);
-        console.log("MSG   : "+$scope.rsUpdProfileData.statusText);
-        console.log("DATA  : "+$scope.rsUpdProfileData.data);
-        switch(opt){
-          case 1:
-            if ($scope.rsUpdProfileData.status==200){
-              $scope.getSysProfilesFn("");
-              $scope.tmpSysModules={};
-              $('#updateSysProfile').modal('hide');
-              inform.add("Perfil Actualizado satisfactoriamente",{
-                ttl:5000, type: 'success'
-              });
-              
+            if (chkbModules[key]==true){
+              $scope.chkBox.modulo[key]=false;
             }
-          break;
-          case 2:
-          if ($scope.rsUpdProfileData.status==200){
-              inform.add("Perfil Actualizado satisfactoriamente",{
-                ttl:5000, type: 'success'
-              });
-              $scope.getSysProfilesFn("");
+        }
+        $scope.sysUpProfile.Name=$scope.tmpSysModules.name;  
+        $('#updateSysProfile').modal('show');
+        console.log($scope.tmpSysModules.modules);
+        //console.log($scope.tmpSysModules.length);
+        $scope.chkBox.modulo.row
+        for (var i = 0; i < $scope.tmpSysModules.modules.length; i++) {
+          $scope.chkBox.modulo[$scope.tmpSysModules.modules[i].idModule]=true;
+        }
+        //console.log($scope.checkBoxes);
+      }
+      $scope.data2UpdateSysProfileFn=function(){
+        console.clear();
+        i=0;
+        var listOfModules=[];
+        var chkbModules = $scope.chkBox.modulo;
+        var firArrItem=Object.keys(chkbModules).length==1?Object.keys(chkbModules)[0]:null;
+        if ((Object.keys(chkbModules).length>1) || (Object.keys(chkbModules).length==1 && chkbModules[firArrItem]!=false)){
+          for (var key in chkbModules){
+            if (chkbModules[key]==true){
+              listOfModules.push({'idModuleFk':key});
+            }
+          }
+          if (listOfModules.length>0){
+            updProfile.profile.idProfiles=$scope.tmpSysModules.idProfiles;
+            updProfile.profile.name=$scope.sysUpProfile.Name;
+            updProfile.profile.list_id_modules=listOfModules;
+            console.log("Sending data to the API...");
+            $scope.updateSysProfileFn(updProfile,1);
+            //console.log(updProfile);
+          }else{
+            inform.add('Selecciona un modulo como minimo para crear el perfil',{
+              ttl:5000, type: 'warning'
+            });
+          }
+          
+        }else{
+            inform.add('Selecciona un modulo como minimo para crear el perfil',{
+              ttl:5000, type: 'warning'
+            });
+        } 
+      }
+      $scope.chkBox2={modulo: {}};
+      $scope.sysProfFound=false;
+      $scope.sysFindFn=function(string){
+        var output=[{idProfiles:'', nameProf: ''}];
+        var i=0;
+        if (string!=undefined && string!=""){
+          angular.forEach($scope.rsProfileData,function(sysProfile){
+            var sysIdProfile=sysProfile.name;
+            if(sysIdProfile.toLowerCase().indexOf(string.toLowerCase())>=0){
+              output.push({sysProfile});
+            }
+          });
+        }else{
               $scope.filterSysProfile=null;
               $scope.sysProfFound=false;
-              $scope.sysUpProfile.Name="";
-              $scope.tmpSysModules={};
-              $("#sysIdProfileKf").focus();
+        }
+        $scope.filterSysProfile=output;
+        console.info($scope.filterSysProfile);
+      }
+      $scope.fillTextbox=function(item){
+        $scope.tmpSysModules=item;
+        $scope.sysUpProfile.Name=item.name;
+        var chkbModules = $scope.chkBox2.modulo;
+        /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
+        for (var key in chkbModules){
+            if (chkbModules[key]==true){
+              $scope.chkBox2.modulo[key]=false;
             }
-          break;
         }
-        //console.log($scope.rsModulesData); 
-      });
-    }
-    $scope.deleteSysProfileFn = function(idProfile){
-      ProfileServices.deleteSysProfile(idProfile).then(function(data){
-        $scope.rsDelProfileData=data;
-        console.log("STATUS: "+$scope.rsDelProfileData.status);
-        console.log("MSG   : "+$scope.rsDelProfileData.statusText);
-        console.log("DATA  : "+$scope.rsDelProfileData.data);
-        if ($scope.rsDelProfileData.status==200){
-          $scope.getSysProfilesFn("");
-          inform.add("Perfil Eliminado satisfactoriamente",{
-            ttl:5000, type: 'success'
-          });
+        console.log(item);
+        for (var i = 0; i < item.modules.length; i++) {
+          $scope.chkBox2.modulo[item.modules[i].idModule]=true;
+        }
+        $scope.filterSysProfile=null;
+        $scope.sysProfFound=true;
+      }
+      $scope.data2UpdateSysProfile2Fn=function(item){
+        console.clear();
+        i=0;
+        var listOfModules=[];
+        var chkbModules = $scope.chkBox2.modulo;
+        var firArrItem=Object.keys(chkbModules).length==1?Object.keys(chkbModules)[0]:null;
+        if ((Object.keys(chkbModules).length>1) || (Object.keys(chkbModules).length==1 && chkbModules[firArrItem]!=false)){
+          for (var key in chkbModules){
+            if (chkbModules[key]==true){
+              listOfModules.push({'idModuleFk':key});
+            }
+          }
+          if (listOfModules.length>0){
+            updProfile.profile.idProfiles=$scope.tmpSysModules.idProfiles;
+            updProfile.profile.name=$scope.sysUpProfile.Name;
+            updProfile.profile.list_id_modules=listOfModules;
+            console.log("Sending data to the API...");
+            $scope.updateSysProfileFn(updProfile,2);
+          }else{
+            inform.add('Selecciona un modulo como minimo para crear el perfil',{
+              ttl:5000, type: 'warning'
+            });
+          }
           
-        }
-        //console.log($scope.rsModulesData); 
-      });
-    }
+        }else{
+            inform.add('Selecciona un modulo como minimo para crear el perfil',{
+              ttl:5000, type: 'warning'
+            });
+        } 
+      }
+      $scope.rsUpdProfileData={};
+      $scope.updateSysProfileFn = function(dataProfile, opt){
+        ProfileServices.updateSysProfile(dataProfile).then(function(data){
+          $scope.rsUpdProfileData=data;
+          console.log("STATUS: "+$scope.rsUpdProfileData.status);
+          console.log("MSG   : "+$scope.rsUpdProfileData.statusText);
+          console.log("DATA  : "+$scope.rsUpdProfileData.data);
+          switch(opt){
+            case 1:
+              if ($scope.rsUpdProfileData.status==200){
+                $scope.getSysProfilesFn("");
+                $scope.tmpSysModules={};
+                $('#updateSysProfile').modal('hide');
+                inform.add("Perfil Actualizado satisfactoriamente",{
+                  ttl:5000, type: 'success'
+                });
+                
+              }
+            break;
+            case 2:
+            if ($scope.rsUpdProfileData.status==200){
+                inform.add("Perfil Actualizado satisfactoriamente",{
+                  ttl:5000, type: 'success'
+                });
+                $scope.getSysProfilesFn("");
+                $scope.filterSysProfile=null;
+                $scope.sysProfFound=false;
+                $scope.sysUpProfile.Name="";
+                $scope.tmpSysModules={};
+                $("#sysIdProfileKf").focus();
+              }
+            break;
+          }
+          //console.log($scope.rsModulesData); 
+        });
+      }
+      $scope.deleteSysProfileFn = function(idProfile){
+        ProfileServices.deleteSysProfile(idProfile).then(function(data){
+          $scope.rsDelProfileData=data;
+          console.log("STATUS: "+$scope.rsDelProfileData.status);
+          console.log("MSG   : "+$scope.rsDelProfileData.statusText);
+          console.log("DATA  : "+$scope.rsDelProfileData.data);
+          if ($scope.rsDelProfileData.status==200){
+            $scope.getSysProfilesFn("");
+            inform.add("Perfil Eliminado satisfactoriamente",{
+              ttl:5000, type: 'success'
+            });
+            
+          }
+          //console.log($scope.rsModulesData); 
+        });
+      }
 
     /**************************************************
     *                                                 *
     *            CLEAR FORMS FUNCTION                 *
     *                                                 *
     **************************************************/
-    function cleanForms (){
+      function cleanForms (){
 
-        $scope.select.idAddressAtt        = "";
-        $scope.select.idAddressKf         = "";
-        $scope.select.nameAtt             = "";
-        $scope.tmp                        = {};
-        $scope.select.idDepartmentKf      = "";
-        $scope.typeTenant                 = 0;
-        $scope.tenant.namesTenant         = "";
-        $scope.tenant.addressTenant       = "";
-        $scope.tenant.movilPhoneTenant    = "";
-        $scope.tenant.emailTenant         = "";
-        $scope.tenant.localPhoneTenant    = "";
-        $scope.select.idTypeLostKf        = "";
-        $scope.txt.sruTenant              = "";
-        $scope.delivery.idTypeDeliveryKf  ="";
-        $scope.typeOfSwitch               ="";
-        $scope.quantity.qkuTenant         ="";
-        $scope.select.idCompanyKf         ="";
-        $scope.movilPhoneAdmin            ="";
-        $scope.localPhoneAdmin            ="";
-        $scope.emailAdmin                 ="";
-        $scope.chg                        = {newPwd1:'', newPwd2:''}
-        $scope.cost                       = {};
-        $scope.txt                        = {};
-        $scope.filterAddressKf            = {};
-        $scope.filterCompanyKf            = {};
-        $scope.selectIdAddressKf          = {};
-        $scope.selectCustomerAddressId    = {};
-        $scope.selectCustomerLocationId   = {};
-        $scope.selectnameProvinceBillingFk= {};
-        $scope.selectnameLocationBillingFk= {};
-        $scope.sysRegIdAddressKf          = {};
-        $scope.selectIdCompanyKf          = {};
-        $scope.select                     = {};
-        $scope.locationsId                = {};
-        $scope.statesId                   = {};
-        $scope.filterCustomerIdKf         = {};
-        $scope.dptoNotFound               = true;
-        $scope.companyFound               = false;
-        $scope.recordsFound               = false;
-        $scope.rusysconfig                = false;
-        $scope.ruclient                   = false;
-        $scope.noRecordsFound             = false;
-        $scope.formValidated              = false;
-        $scope.isEditTenantByAdmin        = false;
-        $scope.lostPaswd                  = false;
-        $scope.tenantNotFound             = false;
-        $scope.isEditTenant               = false;
-        $scope.showCount                  = false;
-        $scope.stepIndexTmp               =0;
-        $scope.removeOwnerDepto           =0;
-        $scope.manageTenantUser           =0;
-        $scope.listTenant                 ="";
-        $scope.filterMTenant              ="";
-        $scope.idDepartmentKf             ="";
-        $scope.select.idCompanyKf         ="";
-        $scope.select.idAddressAtt        ="";
-        $scope.select.idDepartmentKf      ="";
-        $scope.editAttendant              = false;
-        $scope.saveTenant                 = false;
-        $scope.saveAttendant              = false;
-        $scope.manageDepto                = 0;
-        $scope.collap                     = 0;
-        $scope.IsAttendant                = false;
-        $scope.idTypeTenantKf             = "";
-        $scope.ownerFound                 = false;
-        $scope.attendantFound             = false;
-        $scope.isAllowed                  = 0;
-        $scope.isHasTicket                = false;
-        $scope.IsTicket                   = false;
-        $scope.idDeptoKf                  ="";
-        $scope.IsSystem                   = false;
-        $scope.isMonitorActive            = false;
-        $scope.disabledSelect             = false;
-        $scope.isAttUpdated               = false;
-        $scope.changeSmtp                 = false;
-        $scope.isCollapsed                = true;
-        $scope.typeOption                 = 0;
-        $scope.emailFound                 = false;
-        $scope.idOpcionLowTicketKf        = 0;
-        $scope.sendNotify                 = "";
-        $scope.companykeychains = {};
-        $scope.sysRegidCompanyKf = {};
-        $scope.sysReg={};
-        $scope.sys = {email: ''};
-        $scope.third = {names:'', movilPhone:'', dni:''};
-        $scope.sysParam = {idParam: '', value:'', msg: ''};
-        $scope.o={idTypeOutherKf: '', email: '', detail: ''};
-        $scope.other={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther:'' };
-        $scope.att  ={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther:'' };
-        $scope.t    ={idTenant:'', fullNameTenant:'', idTypeKf:'', phoneNumberTenant:'', phoneNumberContactTenant:'', idDepartmentKf: '', emailTenant:''};
-        $scope.tk   ={};
-        $scope.dh = {filterSearch:'',filterTop:'',filterProfile:'',filterTenantKf: '',filterCompany: '',filterTypeTicket:'',filterAddress:'',filterStatus:'',filterOwnerKf:'',filterIdUser:''};
-        $scope.key = {};
-        $scope.dataK={keys:[]}; 
-        $scope.kItems={keys:[]}; 
-        $scope.sysCheckResult = false;
-        $scope.searchMyDeptos = false;
-        $scope.newDeparment   = false;
-        $scope.editComment    = false;
-        $scope.customerIdAddressKf = "";
-        /******Config Var*******/
-        $scope.contentUser    = false;
-        $scope.sysContent     = "";
-        $scope.msgTimer       = false;
-        $scope.mailFromKey    = false;
-        $scope.mailServiceTecnic = false;
-        $scope.mailCollection = false;
-    }
+          $scope.select.idAddressAtt        = "";
+          $scope.select.idAddressKf         = "";
+          $scope.select.nameAtt             = "";
+          $scope.tmp                        = {};
+          $scope.select.idDepartmentKf      = "";
+          $scope.typeTenant                 = 0;
+          $scope.tenant.namesTenant         = "";
+          $scope.tenant.addressTenant       = "";
+          $scope.tenant.movilPhoneTenant    = "";
+          $scope.tenant.emailTenant         = "";
+          $scope.tenant.localPhoneTenant    = "";
+          $scope.select.idTypeLostKf        = "";
+          $scope.txt.sruTenant              = "";
+          $scope.delivery.idTypeDeliveryKf  ="";
+          $scope.typeOfSwitch               ="";
+          $scope.quantity.qkuTenant         ="";
+          $scope.select.idCompanyKf         ="";
+          $scope.movilPhoneAdmin            ="";
+          $scope.localPhoneAdmin            ="";
+          $scope.emailAdmin                 ="";
+          $scope.chg                        = {newPwd1:'', newPwd2:''}
+          $scope.cost                       = {};
+          $scope.txt                        = {};
+          $scope.filterAddressKf            = {};
+          $scope.selectCustomerAdministrationId = {};
+          $scope.filterCompanyKf            = {};
+          $scope.selectIdAddressKf          = {};
+          $scope.selectCustomerAddressId    = {};
+          $scope.selectCustomerLocationId   = {};
+          $scope.selectnameProvinceBillingFk= {};
+          $scope.selectnameLocationBillingFk= {};
+          $scope.sysRegIdAddressKf          = {};
+          $scope.selectIdCompanyKf          = {};
+          $scope.select                     = {};
+          $scope.locationsId                = {};
+          $scope.statesId                   = {};
+          $scope.filterCustomerIdKf         = {};
+          $scope.dptoNotFound               = true;
+          $scope.companyFound               = false;
+          $scope.recordsFound               = false;
+          $scope.rusysconfig                = false;
+          $scope.ruclient                   = false;
+          $scope.noRecordsFound             = false;
+          $scope.formValidated              = false;
+          $scope.isEditTenantByAdmin        = false;
+          $scope.lostPaswd                  = false;
+          $scope.tenantNotFound             = false;
+          $scope.isEditTenant               = false;
+          $scope.showCount                  = false;
+          $scope.stepIndexTmp               =0;
+          $scope.removeOwnerDepto           =0;
+          $scope.manageTenantUser           =0;
+          $scope.listTenant                 ="";
+          $scope.filterMTenant              ="";
+          $scope.idDepartmentKf             ="";
+          $scope.select.idCompanyKf         ="";
+          $scope.select.idAddressAtt        ="";
+          $scope.select.idDepartmentKf      ="";
+          $scope.editAttendant              = false;
+          $scope.saveTenant                 = false;
+          $scope.saveAttendant              = false;
+          $scope.manageDepto                = 0;
+          $scope.collap                     = 0;
+          $scope.IsAttendant                = false;
+          $scope.idTypeTenantKf             = "";
+          $scope.ownerFound                 = false;
+          $scope.attendantFound             = false;
+          $scope.isAllowed                  = 0;
+          $scope.isHasTicket                = false;
+          $scope.IsTicket                   = false;
+          $scope.idDeptoKf                  ="";
+          $scope.IsSystem                   = false;
+          $scope.isMonitorActive            = false;
+          $scope.disabledSelect             = false;
+          $scope.isAttUpdated               = false;
+          $scope.changeSmtp                 = false;
+          $scope.isCollapsed                = true;
+          $scope.showInputs                 = false;
+          $scope.typeOption                 = 0;
+          $scope.emailFound                 = false;
+          $scope.idOpcionLowTicketKf        = 0;
+          $scope.sendNotify                 = "";
+          $scope.companykeychains = {};
+          $scope.sysRegidCompanyKf = {};
+          $scope.sysReg={};
+          $scope.sys = {email: ''};
+          $scope.third = {names:'', movilPhone:'', dni:''};
+          $scope.sysParam = {idParam: '', value:'', msg: ''};
+          $scope.o={idTypeOutherKf: '', email: '', detail: ''};
+          $scope.other={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther:'' };
+          $scope.att  ={idAttendant:'', fullNamesAtt: '', idAddressAtt:'', idTypeAttKf: '',emailAtt:'', phonelocalAtt: '',phoneMovilAtt: '', hoursWork:'', idDepartmentKf: '', descOther:'' };
+          $scope.t    ={idTenant:'', fullNameTenant:'', idTypeKf:'', phoneNumberTenant:'', phoneNumberContactTenant:'', idDepartmentKf: '', emailTenant:''};
+          $scope.tk   ={};
+          $scope.dh = {filterSearch:'',filterTop:'',filterProfile:'',filterTenantKf: '',filterCompany: '',filterTypeTicket:'',filterAddress:'',filterStatus:'',filterOwnerKf:'',filterIdUser:''};
+          $scope.key = {};
+          $scope.dataK={keys:[]}; 
+          $scope.kItems={keys:[]}; 
+          $scope.sysCheckResult = false;
+          $scope.searchMyDeptos = false;
+          $scope.newDeparment   = false;
+          $scope.editComment    = false;
+          $scope.customerIdAddressKf = "";
+          /******Config Var*******/
+          $scope.contentUser    = false;
+          $scope.sysContent     = "";
+          $scope.msgTimer       = false;
+          $scope.mailFromKey    = false;
+          $scope.mailServiceTecnic = false;
+          $scope.mailCollection = false;
+      }
     /**************************************************/
 
     /**************************************************
@@ -8719,23 +9634,23 @@ $scope.slider = {
     *              CLOSE FORMS FUNCTION               *
     *                                                 *
     **************************************************/
-    function closeAllDiv (){
-      $scope.rukeydown    = false;
-      $scope.rukeyup      = false;
-      $scope.ruservice    = false;
-      $scope.ruother      = false;
-      $scope.rucost       = false;
-      $scope.home         = false;
-      $scope.rucontact    = false;
-      $scope.rudepto      = false;
-      $scope.rusysconfig  = false;
-      $scope.rucompany    = false;
-      $scope.rucustomer   = false;
-      $scope.ruproduct    = false;
-      /* Variables usadas en las solicitudes */
-      $scope.btnBack=false;
-      $scope.btnShow=true;
-    }
+      function closeAllDiv (){
+        $scope.rukeydown    = false;
+        $scope.rukeyup      = false;
+        $scope.ruservice    = false;
+        $scope.ruother      = false;
+        $scope.rucost       = false;
+        $scope.home         = false;
+        $scope.rucontact    = false;
+        $scope.rudepto      = false;
+        $scope.rusysconfig  = false;
+        $scope.rucompany    = false;
+        $scope.rucustomer   = false;
+        $scope.ruproduct    = false;
+        /* Variables usadas en las solicitudes */
+        $scope.btnBack=false;
+        $scope.btnShow=true;
+      }
     /**************************************************/
 
     /**************************************************
@@ -8743,28 +9658,27 @@ $scope.slider = {
     *            SHOW/HIDE MODAL FUNCTION             *
     *                                                 *
     **************************************************/
-    $scope.closeModal = function(value){
+      $scope.closeModal = function(value){
 
-      switch (value){
-        case "t":
-          $('#RegisterModalTenant').modal('hide');
-        break;
-        case "u":
-          $('#RegisterModalUser').modal('hide');
-        break;
-        case "p":
-          $('#ProfileModalUser').modal('hide');
-        break;
-        case "up":
-          $('#EditModalUser').modal('hide');
-        break;
-        case "att":
-          $('#RegisterModalAtt').modal('hide');
-        break;
-        default:
+        switch (value){
+          case "t":
+            $('#RegisterModalTenant').modal('hide');
+          break;
+          case "u":
+            $('#RegisterModalUser').modal('hide');
+          break;
+          case "p":
+            $('#ProfileModalUser').modal('hide');
+          break;
+          case "up":
+            $('#EditModalUser').modal('hide');
+          break;
+          case "att":
+            $('#RegisterModalAtt').modal('hide');
+          break;
+          default:
+        }  
       }
-      
-    }
     /**************************************************/
 
     /**************************************************
@@ -8772,268 +9686,268 @@ $scope.slider = {
     *            SHOW/HIDE FORMS FUNCTION             *
     *                                                 *
     **************************************************/
-    $scope.div2Open="";
-    $scope.fnShowHide = function(divId, divAction) {
-      $scope.div2Open=divId;
-      $('.jumbotron [id^="m_"]').removeClass('active');
-      if (divId==null){
-          cleanForms();
-          closeAllDiv();
-       }else{     
-        switch (divId) {
-          case "uLogin":
-                closeAllDiv();
-              if(divAction=="open"){
-                $scope.uLogin = true;
-              }else{
-                closeAllDiv();
-              }
-          break;
-          case "user":
-                closeAllDiv();
-                cleanForms();
-              if(divAction=="open"){
-                $scope.userManage = true;
-              }else{
-                closeAllDiv();
-              }
-          break;
-          case "ruprofile":
-              if(divAction=="open"){
-                $('#ProfileModalUser').modal('toggle');
-                BindDataToForm('userProfile');
-                $scope.ruprofile = true;
-              }else{
-                closeAllDiv();
-              }
-            break; //
-          case "ruchpwd":
-              if(divAction=="open"){
-                $scope.chg = {newPwd1:'', newPwd2:''}
-                $('#PasswdModalUser').modal('toggle');
-              }else{
-                closeAllDiv();
-              }
-          break;
-          case "rucompany":
-              if(divAction=="open"){
-                $('#ProfileModalCompany').modal('toggle');
-                $scope.rucompany = true;
-              }
-          break;
-          case "rukeyup":
+      $scope.div2Open="";
+      $scope.fnShowHide = function(divId, divAction) {
+        $scope.div2Open=divId;
+        $('.jumbotron [id^="m_"]').removeClass('active');
+        if (divId==null){
+            cleanForms();
+            closeAllDiv();
+         }else{     
+          switch (divId) {
+            case "uLogin":
+                  closeAllDiv();
+                if(divAction=="open"){
+                  $scope.uLogin = true;
+                }else{
+                  closeAllDiv();
+                }
+            break;
+            case "user":
+                  closeAllDiv();
+                  cleanForms();
+                if(divAction=="open"){
+                  $scope.userManage = true;
+                }else{
+                  closeAllDiv();
+                }
+            break;
+            case "ruprofile":
+                if(divAction=="open"){
+                  $('#ProfileModalUser').modal('toggle');
+                  BindDataToForm('userProfile');
+                  $scope.ruprofile = true;
+                }else{
+                  closeAllDiv();
+                }
+              break; //
+            case "ruchpwd":
+                if(divAction=="open"){
+                  $scope.chg = {newPwd1:'', newPwd2:''}
+                  $('#PasswdModalUser').modal('toggle');
+                }else{
+                  closeAllDiv();
+                }
+            break;
+            case "rucompany":
+                if(divAction=="open"){
+                  $('#ProfileModalCompany').modal('toggle');
+                  $scope.rucompany = true;
+                }
+            break;
+            case "rukeyup":
+                  $('#m_pedidos').addClass('active');
+                  closeAllDiv();
+                  cleanForms();
+                  $scope.IsTicket = true;
+                  $scope.manageDepto = 0;
+                if(divAction=="open"){
+                  if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany}
+                  if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
+                  if($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
+                    $scope.refresSession($scope.sessionMail);
+                    $scope.getAllAddressByIdTenant();
+                    selectSwitch ('t');
+                  }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
+                    selectSwitch ('i');
+                    $scope.refresSession($scope.sessionMail);
+                    $scope.getAllAddressByIdTenant();
+                  }else{
+                    $scope.rukeyup = true; selectSwitch ('t');
+                  }
+                    
+                }else{
+                  closeAllDiv();
+                }
+            break;
+            case "rukeydown":
                 $('#m_pedidos').addClass('active');
                 closeAllDiv();
                 cleanForms();
                 $scope.IsTicket = true;
                 $scope.manageDepto = 0;
               if(divAction=="open"){
+                if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
+                if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
+                if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
+                    $scope.getAllAddressByIdTenant();
+                    selectSwitch ('t');
+                  }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
+                    selectSwitch ('i');
+                    $scope.refresSession($scope.sessionMail);
+                    $scope.getAllAddressByIdTenant();
+                  }else{$scope.rukeydown = true; selectSwitch ('t');}
+              }else{
+                closeAllDiv();
+              }
+            break;
+            case "ruservice":
+                $('#m_pedidos').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.IsTicket = true;
+                $scope.manageDepto = 0;
+              if(divAction=="open"){
+                $scope.ruservice = true;  
+                selectSwitch ('s');
+                BindDataToForm ('fservice');
+              }else{
+                closeAllDiv();
+                $scope.ruservice = false;
+              }
+            break;
+            case "ruother":
+                $('#m_pedidos').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.IsTicket = true;
+                $scope.manageDepto = 0;
+              if(divAction=="open"){
+                BindDataToForm('frmOther');
+                if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
+                if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
+                if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
+                    $scope.getAllAddressByIdTenant();
+                  }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
+                    $scope.refresSession($scope.sessionMail);
+                    $scope.getAllAddressByIdTenant();
+                  }else{$scope.ruother = true;}
+              }else{
+                closeAllDiv();
+                $scope.ruother = false;
+              }
+            break;
+            case "frmcontact":
+                $('#m_contact').addClass('active');
+                closeAllDiv();
+              if(divAction=="open"){
+                $scope.rucontact = true;
+              }else{
+                closeAllDiv();
+                $scope.rucontact = false;
+              }
+            break;
+            case "managedepto":
+                $('#m_depto').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.manageDepto = 1;
+              if(divAction=="open"){
                 if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany}
                 if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
-                if($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
-                  $scope.refresSession($scope.sessionMail);
+                if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
                   $scope.getAllAddressByIdTenant();
-                  selectSwitch ('t');
+                  $scope.rudepto = true;
                 }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
-                  selectSwitch ('i');
+                  $scope.rudepto = true;
                   $scope.refresSession($scope.sessionMail);
-                  $scope.getAllAddressByIdTenant();
-                }else{
-                  $scope.rukeyup = true; selectSwitch ('t');
-                }
+                  $scope.idAddressAtt=$scope.sessionNameAdress;
+                  $scope.namesTenant=$scope.sessionNames;
+                  $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
+                }else{$scope.rudepto = true;}
                   
               }else{
                 closeAllDiv();
               }
-          break;
-          case "rukeydown":
-              $('#m_pedidos').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.IsTicket = true;
-              $scope.manageDepto = 0;
-            if(divAction=="open"){
-              if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
-              if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
-              if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
+            break;
+            case "home":
+                $('#m_monitor').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.isMonitorActive = $scope.sysModules.idMonitor?true:false;
+              if(divAction=="open"){
+                if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;};
+                if ($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
                   $scope.getAllAddressByIdTenant();
-                  selectSwitch ('t');
-                }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
-                  selectSwitch ('i');
-                  $scope.refresSession($scope.sessionMail);
+                }
+                if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
                   $scope.getAllAddressByIdTenant();
-                }else{$scope.rukeydown = true; selectSwitch ('t');}
-            }else{
-              closeAllDiv();
-            }
-          break;
-          case "ruservice":
-              $('#m_pedidos').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.IsTicket = true;
-              $scope.manageDepto = 0;
-            if(divAction=="open"){
-              $scope.ruservice = true;  
-              selectSwitch ('s');
-              BindDataToForm ('fservice');
-            }else{
-              closeAllDiv();
-              $scope.ruservice = false;
-            }
-          break;
-          case "ruother":
-              $('#m_pedidos').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.IsTicket = true;
-              $scope.manageDepto = 0;
-            if(divAction=="open"){
-              BindDataToForm('frmOther');
-              if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
-              if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
-              if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
-                  $scope.getAllAddressByIdTenant();
-                }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
-                  $scope.refresSession($scope.sessionMail);
-                  $scope.getAllAddressByIdTenant();
-                }else{$scope.ruother = true;}
-            }else{
-              closeAllDiv();
-              $scope.ruother = false;
-            }
-          break;
-          case "frmcontact":
-              $('#m_contact').addClass('active');
-              closeAllDiv();
-            if(divAction=="open"){
-              $scope.rucontact = true;
-            }else{
-              closeAllDiv();
-              $scope.rucontact = false;
-            }
-          break;
-          case "managedepto":
-              $('#m_depto').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.manageDepto = 1;
-            if(divAction=="open"){
-              if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany}
-              if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
-              if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
-                $scope.getAllAddressByIdTenant();
-                $scope.rudepto = true;
-              }else if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
-                $scope.rudepto = true;
-                $scope.refresSession($scope.sessionMail);
-                $scope.idAddressAtt=$scope.sessionNameAdress;
-                $scope.namesTenant=$scope.sessionNames;
-                $scope.deptoTenant=$scope.getDeptoName($scope.sessionIdDeparmentKf);
-              }else{$scope.rudepto = true;}
-                
-            }else{
-              closeAllDiv();
-            }
-          break;
-          case "home":
-              $('#m_monitor').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.isMonitorActive = $scope.sysModules.idMonitor?true:false;
-            if(divAction=="open"){
-              if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;};
-              if ($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
-                $scope.getAllAddressByIdTenant();
-              }
-              if ($scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)){
-                $scope.getAllAddressByIdTenant();
+                }else{
+                  $scope.home = true;
+                }
+                //selectSwitch ('t');
               }else{
-                $scope.home = true;
+                closeAllDiv();
+              }        
+            break;
+            case "frmcost":
+                $('#m_pedidos').addClass('active');
+                closeAllDiv();
+                cleanForms();
+              if(divAction=="open"){
+                if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
+                if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
+                if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
+                    $scope.getAllAddressByIdTenant();
+                    $scope.rucost = true;
+                    selectSwitch ('t');
+                  }else if ($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
+                    selectSwitch ('i');
+                    $scope.rucost = true;
+                    $scope.idAddressAtt=$scope.sessionNameAdress;
+                    $scope.namesTenant=$scope.sessionNames;
+                    $scope.getKeyChains($scope.sessionidAddress); 
+                    $scope.getCostServiceData(3, $scope.sessionidAddress);
+                    }else{$scope.rucost = true;}
+              }else{
+                closeAllDiv();
               }
-              //selectSwitch ('t');
-            }else{
-              closeAllDiv();
-            }        
-          break;
-          case "frmcost":
-              $('#m_pedidos').addClass('active');
-              closeAllDiv();
-              cleanForms();
-            if(divAction=="open"){
-              if($scope.sessionidProfile!=1) {$scope.CompanyName=$scope.sessionNameCompany;}
-              if($scope.sessionidProfile==4) {$scope.officeListByCompnayID($scope.sessionidCompany);}
-              if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
-                  $scope.getAllAddressByIdTenant();
-                  $scope.rucost = true;
-                  selectSwitch ('t');
-                }else if ($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){ 
-                  selectSwitch ('i');
-                  $scope.rucost = true;
-                  $scope.idAddressAtt=$scope.sessionNameAdress;
-                  $scope.namesTenant=$scope.sessionNames;
-                  $scope.getKeyChains($scope.sessionidAddress); 
-                  $scope.getCostServiceData(3, $scope.sessionidAddress);
-                  }else{$scope.rucost = true;}
-            }else{
-              closeAllDiv();
-            }
-          break;
-          case "sysConfig":
-              $('#m_config').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.IsSystem=true;
-              $scope.manageDepto = 0;
-            if(divAction=="open"){
-              $scope.sysConfig('sys','dash', 'open');
-              $scope.rusysconfig = true;
-              $scope.getSysProfilesFn("");
-              $scope.getProductClassificationFn();
-              $scope.getDiviceOpening();
-              $scope.getProductsFn("",0);
-              $scope.getSysModulesFn();
-            }else{
-              closeAllDiv();
-              $scope.rusysconfig = false;
-            }
-            
-          break;
-          case "products":
-              $('#m_product').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.sysContent = "";
-              $scope.IsProduct=true;
-            if(divAction=="open"){
-              $scope.ruproduct = true;
-            }else{
-              closeAllDiv();
-              $scope.ruproduct = false;
-            }
-            
-          break;
-          case "customers":
-              $('#m_customers').addClass('active');
-              closeAllDiv();
-              cleanForms();
-              $scope.IsCustomer=true;
-              $scope.manageDepto = 0;
-            if(divAction=="open"){
-              $scope.switchCustomersFn('dashboard', '');
-              $scope.rucustomer = true;selectSwitch ("c");         
+            break;
+            case "sysConfig":
+                $('#m_config').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.IsSystem=true;
+                $scope.manageDepto = 0;
+              if(divAction=="open"){
+                $scope.sysConfig('sys','dash', 'open');
+                $scope.rusysconfig = true;
+                $scope.getSysProfilesFn("");
+                $scope.getProductClassificationFn();
+                $scope.getDiviceOpening();
+                $scope.getProductsFn("",0);
+                $scope.getSysModulesFn();
+              }else{
+                closeAllDiv();
+                $scope.rusysconfig = false;
+              }
+              
+            break;
+            case "products":
+                $('#m_product').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.sysContent = "";
+                $scope.IsProduct=true;
+              if(divAction=="open"){
+                $scope.ruproduct = true;
+              }else{
+                closeAllDiv();
+                $scope.ruproduct = false;
+              }
+              
+            break;
+            case "customers":
+                $('#m_customers').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.IsCustomer=true;
+                $scope.manageDepto = 0;
+              if(divAction=="open"){
+                $scope.switchCustomersFn('dashboard', '');
+                $scope.rucustomer = true;selectSwitch ("c");         
 
-            }else{
-              closeAllDiv();
-              $scope.rucustomer = false;
-            }
-            
-          break;
-          default: 
-            
+              }else{
+                closeAllDiv();
+                $scope.rucustomer = false;
+              }
+              
+            break;
+            default: 
+              
+          }
         }
       }
-    }
 
     /**************************************************/
 
@@ -9044,18 +9958,18 @@ $scope.slider = {
     **************************************************/
 
 
-    $scope.milisecondsPerDay = 1000 * 60 * 60 * 24;
+      $scope.milisecondsPerDay = 1000 * 60 * 60 * 24;
 
-    $scope.compareDaysIn2Dates = function(b){
-      var day1 = new Date(b);
-      var day2 = new Date();
-      var utc1 = Date.UTC(day1.getFullYear(), day1.getMonth(), day1.getDate());
-      var utc2 = Date.UTC(day2.getFullYear(), day2.getMonth(), day2.getDate());
+      $scope.compareDaysIn2Dates = function(b){
+        var day1 = new Date(b);
+        var day2 = new Date();
+        var utc1 = Date.UTC(day1.getFullYear(), day1.getMonth(), day1.getDate());
+        var utc2 = Date.UTC(day2.getFullYear(), day2.getMonth(), day2.getDate());
 
-       $scope.differentDays=Math.floor((utc2 - utc1) / $scope.milisecondsPerDay);
-       //console.log($scope.differentDays);
+         $scope.differentDays=Math.floor((utc2 - utc1) / $scope.milisecondsPerDay);
+         //console.log($scope.differentDays);
 
-    }
+      }
 
     /**************************************************/
 
@@ -9064,89 +9978,89 @@ $scope.slider = {
     *                    DASHBOARD                    * 
     *                                                 *
     **************************************************/
-    $scope.listTickt = 0;
-    $scope.filters={typeTicket: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', ticketStatus: ''};
+      $scope.listTickt = 0;
+      $scope.filters={typeTicket: '', topDH: '', searchFilter:'', idCompany: '', idAddress: '', ticketStatus: ''};
 
-    $scope.dhboard = function(){
-      /**********CHECK IF THERE ARE TMP DELIVERY OR CANCEL DATA APPROVED TO APPLY TO THE TICKETS ***********/
-      $scope.sysChkChangeOrCancel(0);
-      $scope.sysChkChangeOrCancel(1);
-      /******************************
-      *                             *
-      *       FILTER VARIABLES      *
-      *                             *
-      ******************************/
-      //$scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filters.idTypeTicketKf;
-      //$scope.dh.filterAddress = 0;
-      
-      $scope.filters.idAddress   = ($scope.sessionidProfile==1 && (!$scope.filterCompanyKf.selected || !$scope.filterAddressKf.selected)) || (($scope.sessionidProfile!=1)  && !$scope.filterAddressKf.selected) ? "" : $scope.filterAddressKf.selected.idAdress;
-      $scope.dh.filterAddress    = $scope.filters.idAddress;
-      $scope.dh.filterSearch     = $scope.filters.searchFilter;
-      $scope.dh.filterTop        = $scope.filters.topDH;
-      $scope.dh.filterProfile    = $scope.sessionidProfile;
-      $scope.dh.filterTenantKf   = $scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2) ? $scope.sessionIdUser :'';
-      if(($scope.sessionidProfile!=2  && $scope.sessionidProfile!=5) || ($scope.sessionidTypeTenant==6 && $scope.sessionidTypeTenant==1)){
-        $scope.filters.idCompany   = !$scope.filterCompanyKf.selected? "" : $scope.filterCompanyKf.selected.idCompany;
+      $scope.dhboard = function(){
+        /**********CHECK IF THERE ARE TMP DELIVERY OR CANCEL DATA APPROVED TO APPLY TO THE TICKETS ***********/
+        $scope.sysChkChangeOrCancel(0);
+        $scope.sysChkChangeOrCancel(1);
+        /******************************
+        *                             *
+        *       FILTER VARIABLES      *
+        *                             *
+        ******************************/
+        //$scope.filters.idTypeTicketKf= !$scope.filters.idTypeTicketKf ? 0 : $scope.filters.idTypeTicketKf;
+        //$scope.dh.filterAddress = 0;
+        
+        $scope.filters.idAddress   = ($scope.sessionidProfile==1 && (!$scope.filterCompanyKf.selected || !$scope.filterAddressKf.selected)) || (($scope.sessionidProfile!=1)  && !$scope.filterAddressKf.selected) ? "" : $scope.filterAddressKf.selected.idAdress;
+        $scope.dh.filterAddress    = $scope.filters.idAddress;
+        $scope.dh.filterSearch     = $scope.filters.searchFilter;
+        $scope.dh.filterTop        = $scope.filters.topDH;
+        $scope.dh.filterProfile    = $scope.sessionidProfile;
+        $scope.dh.filterTenantKf   = $scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2) ? $scope.sessionIdUser :'';
+        if(($scope.sessionidProfile!=2  && $scope.sessionidProfile!=5) || ($scope.sessionidTypeTenant==6 && $scope.sessionidTypeTenant==1)){
+          $scope.filters.idCompany   = !$scope.filterCompanyKf.selected? "" : $scope.filterCompanyKf.selected.idCompany;
+        }
+        $scope.dh.filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.filters.idCompany;
+        $scope.dh.filterTypeTicket = !$scope.filters.typeTicket?"":$scope.filters.typeTicket.idTypeTicket;
+        $scope.dh.filterStatus     = !$scope.filters.ticketStatus?"":$scope.filters.ticketStatus.idStatus;
+        $scope.dh.filterOwnerKf    = $scope.sessionidProfile==3?$scope.sessionIdUser:'';
+        $scope.dh.filterIdUser     = $scope.sessionidProfile!=1 && $scope.sessionidProfile!=2 && $scope.sessionidProfile!=4?$scope.sessionIdUser:'';
+        $scope.dh.filterIdAtt      = ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1) || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)?$scope.sessionIdUser:'';
+        //console.log($scope.dh);
+          $searchFilter= 
+          {
+               idUser            : $scope.dh.filterIdUser,
+               idOWnerKf           : $scope.dh.filterOwnerKf,
+               searchFilter        : $scope.dh.filterSearch,
+               topFilter           : $scope.dh.filterTop, 
+               idProfileKf         : $scope.dh.filterProfile,
+               idUserTenantKf      : $scope.dh.filterTenantKf,
+               idUserAttendantKf   : $scope.dh.filterIdAtt, 
+               idCompanyKf         : $scope.dh.filterCompany,
+               idTypeTicketKf      : $scope.dh.filterTypeTicket,
+               idAdress            : $scope.dh.filterAddress,
+               idStatusTicketKf    : $scope.dh.filterStatus
+          }
+          //console.log($scope.sessionIdUser);   
+          // N° de pedido EASY : 5420689
+          //console.log($searchFilter);
+          $http.post(serverHost+serverBackend+"Ticket/all", $searchFilter,setHeaderRequest())
+          .then(function (sucess, data) {
+                 $scope.listTickt =  sucess.data.response;
+                 $scope.totalTickets = $scope.listTickt.length;
+
+            },function (error, data,status) {
+                if(error.status == 203 || error.status == 404){
+                  console.log("Error Codigo["+error.status+"] - "+error.data.error);
+                  $scope.listTickt =  "";
+                  $scope.totalTickets = 0;
+                }else if(error.status==500){
+                  console.log("505: Internal Server Error")
+                  //console.log(error.data.error);
+                  $scope.listTickt =  "";
+                  $scope.totalTickets = 0;
+                }
+                if($scope.counterInformShow==1){
+                  inform.add('['+error.status+']: '+error.data.error,{
+                          ttl:5000, type: 'warning'
+                  });
+                }
+                $scope.counterInformShow=1;
+            });
       }
-      $scope.dh.filterCompany    = $scope.sessionidProfile == 2 || $scope.sessionidProfile == 4 ? $scope.sessionidCompany : $scope.filters.idCompany;
-      $scope.dh.filterTypeTicket = !$scope.filters.typeTicket?"":$scope.filters.typeTicket.idTypeTicket;
-      $scope.dh.filterStatus     = !$scope.filters.ticketStatus?"":$scope.filters.ticketStatus.idStatus;
-      $scope.dh.filterOwnerKf    = $scope.sessionidProfile==3?$scope.sessionIdUser:'';
-      $scope.dh.filterIdUser     = $scope.sessionidProfile!=1 && $scope.sessionidProfile!=2 && $scope.sessionidProfile!=4?$scope.sessionIdUser:'';
-      $scope.dh.filterIdAtt      = ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1) || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)?$scope.sessionIdUser:'';
-      //console.log($scope.dh);
-        $searchFilter= 
-        {
-             idUser            : $scope.dh.filterIdUser,
-             idOWnerKf           : $scope.dh.filterOwnerKf,
-             searchFilter        : $scope.dh.filterSearch,
-             topFilter           : $scope.dh.filterTop, 
-             idProfileKf         : $scope.dh.filterProfile,
-             idUserTenantKf      : $scope.dh.filterTenantKf,
-             idUserAttendantKf   : $scope.dh.filterIdAtt, 
-             idCompanyKf         : $scope.dh.filterCompany,
-             idTypeTicketKf      : $scope.dh.filterTypeTicket,
-             idAdress            : $scope.dh.filterAddress,
-             idStatusTicketKf    : $scope.dh.filterStatus
-        }
-        //console.log($scope.sessionIdUser);   
-        // N° de pedido EASY : 5420689
-        //console.log($searchFilter);
-        $http.post(serverHost+serverBackend+"Ticket/all", $searchFilter,setHeaderRequest())
-        .then(function (sucess, data) {
-               $scope.listTickt =  sucess.data.response;
-               $scope.totalTickets = $scope.listTickt.length;
 
-          },function (error, data,status) {
-              if(error.status == 203 || error.status == 404){
-                console.log("Error Codigo["+error.status+"] - "+error.data.error);
-                $scope.listTickt =  "";
-                $scope.totalTickets = 0;
-              }else if(error.status==500){
-                console.log("505: Internal Server Error")
-                //console.log(error.data.error);
-                $scope.listTickt =  "";
-                $scope.totalTickets = 0;
-              }
-              if($scope.counterInformShow==1){
-                inform.add('['+error.status+']: '+error.data.error,{
-                        ttl:5000, type: 'warning'
-                });
-              }
-              $scope.counterInformShow=1;
-          });
-    }
-
-    $scope.greaterThan = function(prop, val){
-        return function(item){
-          if (item[prop] > val) return true;
-        }
-    }
-    $scope.differentThan = function(prop, val){
-        return function(item){
-          if (item[prop] != val) return true;
-        }
-    }
+      $scope.greaterThan = function(prop, val){
+          return function(item){
+            if (item[prop] > val) return true;
+          }
+      }
+      $scope.differentThan = function(prop, val){
+          return function(item){
+            if (item[prop] != val) return true;
+          }
+      }
     $scope.checkBefore2Load = function(){
       $scope.sysLoadLStorage(); 
       $scope.refresSession($scope.sessionMail);
@@ -9165,6 +10079,8 @@ $scope.slider = {
               $scope.getAllLocationsFn();  
               $scope.getCustomerTypesFn();              
               $scope.getAgentsFn();
+              $scope.getZonesFn();
+              $scope.getBuildingsFn();
               $scope.getStatesFn();
               $scope.getTypeOfIVAFn();
               $scope.getCategoryDepartamentFn();
@@ -9182,8 +10098,6 @@ $scope.slider = {
         if ($scope.isMonitorActive){$scope.fnShowHide('home', 'open');}
     }
      /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
-
-
     $scope.fnLoadPhoneMask = function(){
         /**********************************************
         *               INPUT PHONE MASK              *
@@ -9195,7 +10109,7 @@ $scope.slider = {
         $('.input--dni').mask('99999999');
         $('.input--number').mask('99');
         $('.input--tel.input--dni').on('focus', function () {
-          console.log($(this).val());
+          //console.log($(this).val());
            if ($(this).val().length === 0) {
              $(this).val();
            }
@@ -9215,5 +10129,4 @@ $scope.slider = {
               }
           });
       }
-
 }); /*Cierre del JS ANGULAR*/

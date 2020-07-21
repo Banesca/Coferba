@@ -1,27 +1,64 @@
 <!-- CUSTOMER REGISTER FORM -->
-<div id="UpdateModalCustomer" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
+<div id="UpdateModalCustomer" class="modal fade bd-example-modal-lg" style="top: 10px;" role="dialog">
     <div class="modal-dialog modal-lg" >
       <div class="modal-content">
-            <div class="modal-header">
+          <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-              <h3 class="modal-title">ACTUALIZAR CLIENTE</h3>
+              <h3 class="modal-title"><i class="fas fa-pen-square"></i> CLIENTE: 
+                <span class="text-uppercase" style="font-weight: 600;">{{customer.update.name}}</span> [
+                <span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.update.idClientTypeFk==1">Administracion</span>
+                <span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.update.idClientTypeFk==2">Edificio</span>
+                <span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.update.idClientTypeFk==3">Empresa</span>
+                <span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.update.idClientTypeFk==4">Sucursal</span>
+                <span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.update.idClientTypeFk==5">Particular</span>]
+              </h3>
           </div>
         <div class="modal-body"  style="overflow-y: scroll;">
         <!-- FORM CONTAINER-->
         <form name="fUpdateCustomer" novalidate>
           <div ng-switch on="mySwitch">
-            <fieldset ng-switch-when="PASO 1: DATOS DE CLIENTE">
+            <fieldset ng-switch-when="PASO 1">
+              <!-- Left Colunm -->
               <div class="col-md-6">
                 <!-- Customer Type -->
-                <div class="form-group col-md-12"> 
+                <div class="form-group col-md-12" ng-class="
+                        { 
+                          'col-md-12':
+                          customer.update.idClientTypeFk=='' || customer.update.idClientTypeFk==undefined || customer.update.idClientTypeFk=='2',
+                          'col-md-6':
+                          (customer.update.idClientTypeFk!='' && customer.update.idClientTypeFk!=undefined && customer.update.idClientTypeFk!='2'),
+                          'has-success': 
+                          customer.update.idClientTypeFk!=undefined && fUpdateCustomer.update_customer_type.$valid,
+                          'has-error':  
+                          (customer.update.idClientTypeFk==undefined && fUpdateCustomer.update_customer_type.$touched),
+                        }"> 
                   <label style="padding-left: 15px;">Tipo de cliente</label>
                       <div class="input-group">
                           <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-                          <select name="update_idProfileKf" class="form-control" ng-change=" "  ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData " ng-model="customer.update.idClientTypeFk" required autofocus >
+                          <select name="update_customer_type" class="form-control" ng-change="customerTypeCustomer(); cleanCustomerFieldFn(); "  ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData " ng-model="customer.update.idClientTypeFk" required autofocus >
                             <option value="">Seleccione una opci&#243n</option>
                           </select>
                       </div>
                 </div>
+                <div class="form-group col-md-6" ng-if="(customer.update.idClientTypeFk!='' && customer.update.idClientTypeFk!=undefined && customer.update.idClientTypeFk!=2)" ng-class="
+                        { 'has-success': 
+                          customer.update.typeInmueble!=undefined && fUpdateCustomer.tipo_inmueble.$valid,
+                          'has-error':  
+                          (customer.update.typeInmueble==undefined) && fUpdateCustomer.tipo_inmueble.$touched,
+                        }"> 
+                    <label style="padding-left: 15px;">Tipo de inmueble</label>
+                        <div class="input-group " >
+                          <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+                          <select id="tipo_inmueble" name="update_tipo_inmueble" class="form-control" ng-change="customerTypeInmueble(); " ng-model="customer.update.typeInmueble" ng-required="(customer.update.idClientTypeFk!=2)" autofocus >
+                            <option value="">Inmueble</option>
+                            <option value="1">Edificio</option>
+                            <option value="2">Casa</option>
+                            <option value="3">Local</option>
+                          </select>
+                      </div>
+                  </div>
+                <!-- Customer Basic Inputs -->
+                <div ng-if="customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined" ng-include="'views/customer/comp_customerBasicInputs.html'"></div> 
                 <!-- Customer Name -->
                 <div class="form-group col-md-12">
                   <label style="padding-left: 15px;">Nombre</label>  
@@ -151,9 +188,9 @@
                           </tr> -->
                           <tr ng-repeat="item in list_schedule">
                             <td style="padding-top: 11px; width: 1%;">
-                              <label class="switch">
-                                <input type="checkbox" class="success" ng-click="item.id>=1?setScheduleTimeFn(item, 'update'):''" ng-required="!item.selected" ng-model="item.selected" id="modCheck-{{item.id}}">
-                                <span class="slider round nslider nround"></span>
+                              <label class="switch switch-3x">
+                                <input type="checkbox" class="success" ng-click="item.id>=2?setScheduleTimeFn(item, 'update'):''" ng-required="!item.selected" ng-model="item.selected" id="modCheck-{{item.id}}">
+                                <span class="slider slider-3x flat"></span>
                               </label>
                             </td>
                             <td style="font-size: 11px; padding-top: 11px; width: 5%;">
@@ -295,7 +332,7 @@
                 </div>                
               </div>    
             </fieldset>
-            <fieldset ng-switch-when="PASO 2: FINALIZAR REGISTRO">
+            <fieldset ng-switch-when="PASO 2">
               <div class="col-md-6">
                 <!-- General Comments -->
                 <div class="form-group col-md-12">

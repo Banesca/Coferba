@@ -51,12 +51,13 @@ class Zonas_model extends CI_Model {
             ->where('status', 1)
             ->get();
         $r     = $query->result_array();
-
-        foreach ($r as $key => $item) {
-            if ($item['status'] == 1) {
-                $r[$key]['status_descripcion'] = 'Activo';
-            } else {
-                $r[$key]['status_descripcion'] = 'Inactivo';
+         if ($query->num_rows() > 0) {
+            foreach ($r as $key => $item) {
+                if ($item['status'] == 1) {
+                    $r[$key]['status_descripcion'] = 'Activo';
+                } else {
+                    $r[$key]['status_descripcion'] = 'Inactivo';
+                }
             }
         }
         if ($query->num_rows() > 0) {

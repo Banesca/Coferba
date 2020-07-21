@@ -104,9 +104,22 @@ class Util extends REST_Controller {
         }
     }
 
-    public function department_get() {
+    public function getDepartmentsByCustomerId_get($id) {
+         if (!$id) {
+            $this->response(NULL, 404);
+        }
+        $rs = null;
+        $rs = $this->util_model->getDepartmentByCustomerId($id);
+
+        if (! is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+    public function tipoInmueble_get() {
         $user = null;
-        $user = $this->util_model->getDepartment();
+        $user = $this->util_model->getTipoInmueble();
 
         if (! is_null($user)) {
             $this->response($user, 200);
@@ -114,7 +127,6 @@ class Util extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
-
     public function adress_get() {
         $adressEdi = null;
         $adressEdi = $this->util_model->getAdressClientEdificio();

@@ -12,7 +12,16 @@
 						<!-- Select profile -->					  
 						<div class="form-group col-md-12">
 					    	<div class="inner-addon right-addon">
-					    		<select id="idProfileKf" name="idProfileKf" class="form-input" ng-class="{'input-login-error': register.idProfileKf=='' && !fNewUser.idProfileKf.$touched || register.idProfileKf=='' && fNewUser.idProfileKf.$touched || register.idProfileKf=='' && fNewUser.idProfileKf.$touched, 'input-login-success': register.idProfileKf!='' && fNewUser.idProfileKf.$valid}" ng-blur="inputCheckCss('idProfileKf', 's');" ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null; modalConfirmation();"  ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " ng-model="register.idProfileKf"  required autofocus />
+					    		<select 
+					    		id="idProfileKf" 
+					    		name="idProfileKf" 
+					    		class="form-input" 
+					    		ng-class="{'input-login-error': register.idProfileKf=='' && !fNewUser.idProfileKf.$touched || register.idProfileKf=='' && fNewUser.idProfileKf.$touched || register.idProfileKf=='' && fNewUser.idProfileKf.$touched, 'input-login-success': register.idProfileKf!='' && fNewUser.idProfileKf.$valid}" 
+					    		ng-blur="inputCheckCss('idProfileKf', 's');" 
+					    		ng-change="register.idTypeAttKf=null; register.idCompanyKf=null; selectIdAddressKf.selected=undefined; register.idDepartmentKf=null; modalConfirmation();"  
+					    		ng-options="item.idProfile as item.nameProfile for item in listProfile | filter:filterProfileUser " 
+					    		ng-model="register.idProfileKf"  
+					    		required autofocus />
 								<label>Perfil</label> 
 								<span class="bar"></span>
 							</div>

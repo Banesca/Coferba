@@ -88,7 +88,7 @@ body{
 }
 .nav-prof, 
 .nav-role{
-  color: rgba(255, 188, 87, 1);
+  color: rgba(0, 0, 0, 1);
 }
 .nav-user {
     color: rgba(255, 188, 87, 1);
@@ -293,7 +293,7 @@ body{
 .jumbotron table tr td > div p { margin-top:20px; margin-left:8px; font-weight:600; }
 .jumbotron.height-auto { height:auto; }
 .jumbotron{
-    background-color: rgba(255, 188, 87, 1);
+    background-color: rgba(255, 188, 87, 0.66);
     padding: 0;
 }
 
@@ -801,6 +801,37 @@ body{
 
 /*CUSTOMERS */
 /***********************************/
+.banner-no-rows{
+    border-radius: 4px;
+    opacity: 0.8;
+}
+.banner-no-rows-margin-15{
+  margin: 1.5em;
+}
+.banner-no-rows-padding-1{
+  padding: 1em;
+}
+.banner-no-rows-warning{
+  color: #f0ad4e;
+  border: 1px solid #f0ad4e;
+
+}
+.banner-no-rows h1,
+.banner-no-rows h2,
+.banner-no-rows h3,
+.banner-no-rows h4,
+.banner-no-rows h5{
+  font-weight: 600;
+}
+.banner-no-rows i{
+  font-size: 20px;
+}
+.input-error {
+    border: 1.5px solid red !important;
+}
+.input-success {
+    border: 1.1px solid #5cb85c !important;
+}
 .radio-customers {
     opacity: 0;
     position: absolute;   
@@ -886,6 +917,9 @@ body{
 .from-rigth-to-label{
   margin-left: 0.7em;
 }
+/*ng-switch animation*/
+
+/********************/
 /*USED FOR PHONE CONTACT POPUP WINDOW*/
 .from-left-from-label-2{
   padding-left: 30px;
@@ -1092,6 +1126,10 @@ input:checked + .slider-3x:before {
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }
+.well-checkbox-success{
+  border: 1px solid #3c763d !important;
+  background-color: #dff0d8;
+}
 .icon-bg-success{
   color: #8bc34a;
 }
@@ -1269,6 +1307,7 @@ input:checked + .slider-3x:before {
     flex-direction: column;
     padding-left: 0;
     margin-bottom: 0;
+    list-style: none;
 }
 .list-group-horizontal {
     -ms-flex-direction: row;
@@ -1294,9 +1333,27 @@ input:checked + .slider-3x:before {
     background-color: #777;
     color: #fff;
     table-layout:fixed;
+    border: 0 !important;
+    border-radius: 10px 10px 0 0;
 }
 .th-head{
+  vertical-align: middle;
   text-align: center;
+  border: 0 !important;
+  -webkit-box-shadow: 0px 7px 5px -2px rgba(0,0,0,.30);
+  -moz-box-shadow: 0px 7px 5px -2px rgba(0,0,0,.30);
+  box-shadow: 0px 7px 5px -2px rgba(0,0,0,.30);
+}
+.td-label-floor{
+  font-size: 20px; 
+  margin-left: -7px;
+}
+.porteria-created{
+  z-index: 9999;
+  font-size: 16px;
+  position: fixed;
+  top: 11.55em;
+  left: 19.91em;
 }
 .cpiso{}
 
@@ -1322,8 +1379,9 @@ input:checked + .slider-3x:before {
 /*tbody*/
 .fixed-body {
     display:block;
-    height:450px;
+    height:620px;
     overflow:auto;
+    box-shadow: 0px 4px 5px -2px rgba(0,0,0,.30);
 }
 .fixed-body tr{
     display:table;
@@ -1691,6 +1749,214 @@ input:checked + .slider-3x:before {
   font-size: 14px;
   font-weight: 600;
   padding:0px !important;
+}
+/********************************************/
+/*FORM STEP DEPARTMENTS FOR BUILDING CUSTOMER*/
+.card-depto-colum{
+  margin-top: 6px;
+}
+.card-depto{
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 0px;
+  cursor: pointer;
+  box-shadow: 0 ;
+  margin-bottom: 0px;
+  padding-bottom: 20px;
+  border-radius: 3px;
+}
+.card-depto-content{
+  padding: 0 20px 0 20px;
+  border-radius: 0 0 2px 2px;
+  position: inherit;
+  font-size: 5em;
+}
+.card-depto:hover{
+  transition: box-shadow .25s;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.card-depto-content:hover{
+  color: #777;
+  border-color: #fff;
+}
+.card-depto
+.card-depto-span{
+  font-size: 16px;
+  font-weight: 600;
+}
+.td-no-deptos > div > h4{
+  color:#f0ad4e;
+  padding-left: 12em;
+  font-weight: 600;
+}
+/*Margin Top 2.3% for td when there is not deptos created*/
+.td-marging-top-2{
+  margin-top: 2.3%;
+}
+.td-btn,
+.th-floor{
+  width: 8.6% !important;
+}
+.td-m-l-floor9{
+  margin-left: -2px;
+}
+.td-m-l-floor10{
+  margin-left: -8px;
+}
+.td-depto-1{
+  width: 95%;
+  vertical-align: middle;
+  padding: 5px;
+}
+.td-depto-2{
+  width: 95%;
+  vertical-align: middle;
+  padding: 5px;
+}
+.td-depto-1 input, 
+.td-depto-1 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  height: 34px;
+}
+.td-depto-2 input, 
+.td-depto-2 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-3 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-4 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-5 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-6 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-7 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-8 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-9 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.td-depto-10 input{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/*SELECT */
+.td-depto-3 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-4 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-5 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-6 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-7 select{
+  width: 100% !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-8 select{
+  width: 100% !important;
+  font-size: 12px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-9 select{
+  width: 100% !important;
+  font-size: 12px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+.td-depto-10 select{
+  width: 100% !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding:0px !important;
+  text-align: center;
+}
+
+.td-depto-1 button{
+  font-size: 16px;
+}
+/* COCHERAS */
+.label-co-pb{
+  margin-left: -0.4em;
+}
+.label-dpto-length-xs{
+  margin-left: -0.7em !important;
+}
+.label-dpto-length-xl{
+  margin-left: -0.99em !important;
+}
+.li-cochera-scroll{
+  overflow-x: auto;
+}
+.li-cochera{
+  padding: 5px !important;
+  padding-bottom: 10px !important;
+  width: 100% !important;
+  border: 1px solid #ddd !important;
 }
 /********************************************/
 /********************************************/

@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
-  $('body').tooltip({ selector: '[data-toggle="tooltip"]' });
-  $('body').popover({ selector: '[data-toggle="popover"]' });
+  $('body').tooltip({ selector: '[data-toggle="tooltip"]', trigger : 'hover' });
+
+  $('body').popover({ selector: '[data-toggle="popover"]', trigger : 'hover' });
   $('.input--tel').mask('(054) 9 99 9999-9999');
 
   $('.input--tel.only--numbers').on('focus', function () {
