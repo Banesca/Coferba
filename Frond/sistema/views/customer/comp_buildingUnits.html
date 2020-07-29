@@ -9,6 +9,7 @@
 		            	<span ng-if="objFloor.nameFloor=='co'">COCHERA</span>
 		            	<span ng-if="objFloor.nameFloor=='ba'">BAULERA</span>
 		            	<span ng-if="objFloor.nameFloor=='lo'">LOCAL</span>
+		            	<span ng-if="objFloor.nameFloor=='pb'">UNIDAD PB</span>
 		            </span>
 		            <span ng-if="isNotDeptoUnit==0" class="card-depto-span">SELECCIONA UNA UNIDAD</span>
             	</h3>
@@ -26,11 +27,12 @@
 				        </div>
 				    </div>
 				    <!-- Others-->
-				    <div class="col-md-6 card-depto-colum" ng-click="!porteriaExist?assign2UnitFn('','set','5'):''" >
-				    	<label ng-if="porteriaExist" class="label label-danger porteria-created">PORTERIA CREADA</label>
+				    <!-- ng-click="!porteriaExist?assign2UnitFn('','set','5'):''" 
+				    <label ng-if="porteriaExist" class="label label-danger porteria-created">PORTERIA CREADA</label>-->
+				    <div class="col-md-6 card-depto-colum" ng-click="assign2UnitFn('','set','5')" >
 				        <div class="card-depto cyan white-text">
 				            <div class="card-depto-content">
-				                <i  class="fas fa-home" style="padding-left: 0.25em;"></i>
+				            	<i class="fas fa-house-user" style="padding-left: 0.25em;"></i>
 				            </div>
 				             <span class="card-depto-span" style="margin-left: 38px;">PORTERIA</span>
 				        </div>
@@ -44,6 +46,7 @@
 				                <i ng-if="objFloor.nameFloor=='co'" class="fas fa-warehouse" style="padding-left: 0.25em;"></i>
 				                <i ng-if="objFloor.nameFloor=='ba'" class="fas fa-boxes" style="padding-left: 0.35em;"></i>
 				                <i ng-if="objFloor.nameFloor=='lo'" class="fas fa-store" style="padding-left: 0.29em;"></i>
+								<i ng-if="objFloor.nameFloor=='pb'" class="fas fa-home" style="padding-left: 0.29em;"></i>
 				            </div>
 				        <div class="col-md-12 form-group row">
     						<div class="col-xs-6"><input style="margin-left: 1em;" id="unit_number" autofocus="true" class="form-control input-sm input--number" ng-keydown="fnLoadPhoneMask()" ng-model="$parent.buildingUnit" type="text" ng-required="true" required="required" maxlength="2"></div>

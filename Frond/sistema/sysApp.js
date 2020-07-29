@@ -95,7 +95,7 @@ app.config(['$routeProvider', '$locationProvider',
 app.constant("serverHost","http://localhost/");
 //app.constant("serverHost","http://10.39.9.110/");
 app.constant("serverBackend","Coferba/Back/index.php/");
-app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8','Access-Control-Allow-Origin':'*'}});
+app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8'}});
 
 app.directive('passwordConfirm', ['$parse', function ($parse) {
  return {

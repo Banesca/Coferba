@@ -3,7 +3,7 @@
   	<div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
           	<div class="modal-header">
-          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+          		<button type="button" class="close" ng-click="modalConfirmation('closeCustomerWindow', 0, null)"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
             	<h3 class="modal-title">NUEVO CLIENTE 
             	<span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.new.idClientTypeFk==1"> Administracion</span>
             	<span class="text-uppercase" style="font-weight: 600;color: #f0ad4e !important;" ng-if="customer.new.idClientTypeFk==2"> Edificio</span>
@@ -170,8 +170,8 @@
 	                    		ng-disabled="fNewCustomer.$invalid" 
 	                    		class="btn btn-labeled btn-success">
 	                        Enviar<span class="btn-label-right"><i class="glyphicon glyphicon-send"></i> </span></button>	                        
-	                        <!--enabledNextBtn(); loadFieldsTo2Step(); -->
-	                    <button ng-click="enabledNextBtn(); incrementStep(); loadFieldsTo2Step('new');" ng-disabled="formValidated!=true"   ng-if="(customer.new.idClientTypeFk==5 && stepIndexTmp==0) || (customer.new.idClientTypeFk!=5 && btnShow)" class="btn btn-labeled btn-primary">
+	                        <!--enabledNextBtn(); loadFieldsTo2Step();  -->
+	                    <button ng-click="enabledNextBtn(); incrementStep(); loadFieldsTo2Step('new');"  ng-disabled="formValidated!=true"  ng-if="(customer.new.idClientTypeFk==5 && stepIndexTmp==0) || (customer.new.idClientTypeFk!=5 && btnShow)" class="btn btn-labeled btn-primary">
 	                        Siguiente<span class="btn-label-right"><i class="fas fa-arrow-circle-right"></i></span></button>
 	                </div>
 	                <div class="col-xs-1 col-sm-1 col-md-1 pull-left">

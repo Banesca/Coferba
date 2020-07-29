@@ -121,7 +121,7 @@ class Util_model extends CI_Model {
         $query = null;
         $rs    = null;
         $select="tb_client_departament.idClientDepartament AS idDepto, 
-                    CONCAT(tb_client_departament.floor,\"-\",tb_client_departament.departament) AS Depto,
+                    UPPER(CONCAT(tb_client_departament.floor,\"-\",tb_client_departament.departament)) AS Depto,
                     tb_clients.idClient AS idBuilding,
                     tb_clients.name AS Building";
         $where="tb_client_departament.idClientFk=".$id." AND tb_client_departament.idStatusFk<>0";
