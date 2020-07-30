@@ -351,9 +351,9 @@ class Client_model extends CI_Model {
 
                 //DEPARTAMENTOS
                 $this->db->select("*")->from("tb_client_departament");
-                $quuery = $this->db->where("tb_client_departament.idClientFk =", $row->idClient)->get();
+                $quuery = $this->db->where("tb_client_departament.idClientFk =", $id)->get();
 
-                $rs5                        = $quuery->result_array();
+                $rs5                    = $quuery->result_array();
                 $rs['list_departament'] = $rs5;
 
                 return $rs;
@@ -1410,7 +1410,7 @@ class Client_model extends CI_Model {
 
     }
 
-    public function getUserPorId($idClient = null) {
+    public function getCustomerById($idClient = null) {
         $quuery = null;
         $rs     = null;
 
@@ -1423,8 +1423,6 @@ class Client_model extends CI_Model {
 
 
             if ($quuery->num_rows() === 1) {
-                $rs = $quuery->row_array();
-
 
                 $this->db->select("*")->from("tb_client_schedule_atention");
                 $quuery = $this->db->where("tb_client_schedule_atention.idClienteFk =", $idClient)->get();

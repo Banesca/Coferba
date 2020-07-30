@@ -167,7 +167,7 @@ class Clientes extends REST_Controller {
         }
 
         $user = null;
-        $user = $this->client_model->getadmin($id);
+        $user = $this->client_model->getadmin($id, null, null, null);
 
         if (! is_null($user)) {
             $this->response($user, 200);
@@ -220,13 +220,13 @@ class Clientes extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
-    public function userPorId_get($idClient) {
+    public function customerById_get($idClient) {
         if (! $idClient) {
             $this->response(null, 404);
         }
 
         $user = null;
-        $user = $this->client_model->getUserPorId($idClient);
+        $user = $this->client_model->getCustomerById($idClient);
 
         if (! is_null($user)) {
             $this->response($user, 200);
