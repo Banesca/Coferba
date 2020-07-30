@@ -1,13 +1,13 @@
 <!-- LIST OF CUSTOMERS -->
-<table id="tableCustomer" class="table table-striped table-bordered table-condensed table-list table-responsive table-hover">
+<table ng-if="sysContent=='registeredCustomers'"  id="tableCustomer" class="table table-striped table-bordered table-condensed table-list table-responsive table-hover">
     <thead style=" background: #4d5d6f; color: white;">
       <tr style="text-align: center;">
           <th width="2%">ID</th>
-          <th width="20%"><i class="glyphicon glyphicon-user"> </i> Nombres</th>
-          <th width="20%"><i class="fas fa-file-signature"> </i> Raz&#243n Social</th>
-          <th width="20%"><i class="glyphicon glyphicon-envelope"> </i> Emails</th>
-          <th width="7%"><i class="glyphicon glyphicon-user"> </i>Tipo de cliente</th>
-          <th width="4%"><i class="glyphicon icon-flag"> </i> Status</th>
+          <th width="25%"><i class="glyphicon glyphicon-user"> </i> Nombres</th>
+          <th width="25%"><i class="fas fa-file-signature"> </i> Raz&#243n Social</th>
+          <!--<th width="20%"><i class="glyphicon glyphicon-envelope"> </i> Emails</th>-->
+          <th width="7%" style="vertical-align: middle;text-align: center;"><i class="glyphicon glyphicon-user"> </i>Tipo de cliente</th>
+          <th width="10%" style="vertical-align: middle;text-align: center;"><i class="glyphicon icon-flag"> </i> Status</th>
           <th ><i class="fas fa-ellipsis-h"> </i> Opciones</th>
           <!--<th><i class="glyphicon icon-calendar"> </i> Registrado</th>-->
       </tr>
@@ -40,15 +40,15 @@
         <td ng-trim="true" ng-if="item.idClientTypeFk!=2 && item.idClientTypeFk!=4 && item.idClientTypeFk!=5">{{item.businessName}}</td>
         <td ng-trim="true" ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4">{{item.address}}</td>
         <td ng-trim="true" ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4 || item.idClientTypeFk==5">{{item.billing_information[0].businessNameBilling}}</td>
-        <td>
+        <!--<td>
           <span ng-if="item.mailFronKey" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail Llaveros" class="fas fa-key"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class=" mailListItem" ngclipboard data-clipboard-text="{{item.mailFronKey}}"> {{item.mailFronKey}}</span></span>
 
           <span ng-if="item.mailServiceTecnic" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail servicios t&#233;cnico" class="fas fa-tools"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class="mailListItem" ngclipboard data-clipboard-text="{{item.mailServiceTecnic}}"> {{item.mailServiceTecnic}}</span></span>
 
           <span ng-if="item.mailCollection" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail Cobranzas" class="fas fa-dollar-sign"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class="mailListItem" ngclipboard data-clipboard-text="{{item.mailCollection}}"> {{item.mailCollection}}</span></span>
-        </td>
-        <td ng-trim="true">{{item.ClientType | uppercase}}</td>
-        <td> <!-- TD to Admins -->
+        </td>-->
+        <td ng-trim="true" style="vertical-align: middle;text-align: center;">{{item.ClientType | uppercase}}</td>
+        <td style="vertical-align: middle;text-align: center;"> <!-- TD to Admins -->
             <label ng-if="item.idStatusFk==1" class="label label-success">ACTIVO
             </label>
             <label ng-if="item.idStatusFk==0" class="label label-warning">INACTIVO
@@ -80,6 +80,74 @@
           </div>
           <button ng-click="switchCustomersFn('phonesandschedule', item)" class="btn btn-success  btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver telefonos & horario"><i class="glyphicon glyphicon-earphone"></i></button>
           <button ng-click="switchCustomersFn('seemails', item)" class="btn btn-warning btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver correos de contacto"><i class="fas fa-envelope-open-text"></i></button>
+        </td>        
+      </tr>
+      <!-- Show if there is not customer registered -->
+      <tr ng-if="pagedItems.length==0" >
+          <td colspan="6"><div class="col-md-12 col-md-offset-5"><span style="font-size: 18px; font-weight: 600; color: rgba(255, 188, 87, 1);">No hay clientes registrados</span></div>
+          </td>
+      </tr>
+       <!--<tr ng-if="searchboxfilter.length==0" class="animate-repeat" style="align-content: center;">no items found</tr>-->
+    </tbody>
+</table> 
+<!-- //LIST OF CUSTOMERS -->
+<!-- LIST OF CUSTOMERS NOT REGISTERED-->
+<table ng-if="sysContent=='registeredNotCustomers'" id="tableCustomer" class="table table-striped table-bordered table-condensed table-list table-responsive table-hover">
+    <thead style=" background: #4d5d6f; color: white;">
+      <tr style="text-align: center;">
+          <th width="2%">ID</th>
+          <th width="60%"><i class="glyphicon glyphicon-user"> </i> Nombres</th>
+          <!--<th width="20%"><i class="glyphicon glyphicon-envelope"> </i> Emails</th>-->
+          <th width="10%" style="vertical-align: middle;text-align: center;"><i class="glyphicon glyphicon-user"> </i>Tipo de cliente</th>
+          <th width="10%" style="vertical-align: middle;text-align: center;"><i class="glyphicon icon-flag"> </i> Status</th>
+          <th ><i class="fas fa-ellipsis-h"> </i> Opciones</th>
+          <!--<th><i class="glyphicon icon-calendar"> </i> Registrado</th>-->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Show if there is customer registered -->
+      <tr class="animate-repeat" style="align-content: center; cursor: pointer;" ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
+        <td>
+          <div class="btn-group">
+              <button ng-disabled="true" class="btn btn-secondary btn-sm">{{item.idClient}}</button>
+              <!--<span ng-if="
+              ((item.idProfileKf==5 || (item.idProfileKf==6 && item.idTypeTenantKf==2)) && (!item.idAddresKf && !item.idAdress) && !item.idDepartmentKf)" class="badge badge-notify">
+                <i data-toggle="tooltip" data-placement="right" title="Direccion y Depto incompletos" class="fas fa-map-marked-alt"> <i class="fas fa-home"></i></i>
+              </span>
+              <span ng-if="
+              ((item.idProfileKf==5 || (item.idProfileKf==6 && item.idTypeTenantKf==2)) && (item.idAddresKf || item.idAdress) && !item.idDepartmentKf)" class="badge badge-notify">
+                <i data-toggle="tooltip" data-placement="right" title="Depto. No seleccionado." class="fas fa-home"></i>
+              </span>
+              <span ng-if="
+              (!item.phoneLocalNumberUser && !item.phoneNumberUser)" class="badge badge-notify">
+              <i data-toggle="tooltip" data-placement="right" title="No posee numeros de tlf" class="fas fa-phone-slash"></i>
+              </span>-->
+          </div>
+          <!-- (item.idProfileKf==2 && (!item.idCompanyKf && !item.idCompany)) || 
+               (item.idProfileKf==4 && (!item.idCompanyKf && !item.idCompany)) || 
+               (item.idProfileKf==6 && ((!item.idCompanyKf && !item.idCompany) ||
+               (!item.idAddresKf && !item.idAdress)|| !item.idDepartmentKf-->
+        </td>
+        <td ng-trim="true" ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4">{{item.address}}</td>
+        <!--<td>
+          <span ng-if="item.mailFronKey" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail Llaveros" class="fas fa-key"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class=" mailListItem" ngclipboard data-clipboard-text="{{item.mailFronKey}}"> {{item.mailFronKey}}</span></span>
+
+          <span ng-if="item.mailServiceTecnic" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail servicios t&#233;cnico" class="fas fa-tools"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class="mailListItem" ngclipboard data-clipboard-text="{{item.mailServiceTecnic}}"> {{item.mailServiceTecnic}}</span></span>
+
+          <span ng-if="item.mailCollection" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail Cobranzas" class="fas fa-dollar-sign"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class="mailListItem" ngclipboard data-clipboard-text="{{item.mailCollection}}"> {{item.mailCollection}}</span></span>
+        </td>-->
+        <td ng-trim="true" style="vertical-align: middle;text-align: center;">{{item.ClientType | uppercase}}</td>
+        <td style="vertical-align: middle;text-align: center;"> <!-- TD to Admins -->
+            <label ng-if="item.idStatusFk==1" class="label label-success">ACTIVO
+            </label>
+            <label ng-if="item.idStatusFk==0" class="label label-warning">INACTIVO
+            </label>
+            <label ng-if="item.idStatusFk==-1" class="label label-danger"><del>ELIMINADO</del>
+            </label>
+        </td>
+        <td>
+          <button ng-click="" class="btn btn-success  btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver departamentos"><i class="icon-building"></i></button>
+          <button ng-click="" class="btn btn-warning btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Asociar consorcio"><i class="fas fa-sign-in-alt"></i></button>
         </td>        
       </tr>
       <!-- Show if there is not customer registered -->

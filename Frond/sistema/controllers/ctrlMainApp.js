@@ -4634,192 +4634,192 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     *                MENU DE OPCIONES                 *
     *                                                 *
     **************************************************/
-    $scope.modalConfirmation = function(opt, confirm, obj, group){
-    $scope.swMenu = opt;
-    $scope.vConfirm = confirm;
-    var tmpOpt=$scope.div2Open;
-    //console.log(tmpOpt);
-    $scope.mess2show="";
-      switch ($scope.swMenu){
-        case "tdown":
-          if (confirm==0){
-            console.log(confirm);
-            $scope.mess2show="Desea Solicitar una nueva llave?";
-            $('#confirmRequestModal').modal('toggle');
-          }else if (confirm==1){
-            $('.jumbotron [id^="m_"]').removeClass('active');
-            $('#m_pedidos').addClass('active');
-            $('#SubM_Pedidos').show();
-            $scope.fnShowHide('rukeyup', 'open');
-            $('#confirmRequestModal').modal('hide');
-          }
-          $('#confirmRequestModal').on('hide.bs.modal', function (e) {
-            $scope.dhboard();
-            $scope.fnShowHide('home','open');
-          });
-        break;
-        case "removet":
-          if (confirm==0){
-              if (($scope.sessionidProfile!=3 && $scope.sessionidProfile!=5 && $scope.sessionidProfile!=6 && obj.idTypeTenantKf!=0) || ($scope.sessionidProfile==3 && obj.idTypeTenantKf==2) || ($scope.sessionidProfile==6 && obj.idTypeTenantKf==2)){
-                $scope.mess2show="Esta seguro que desea dar de baja al Habitante?";
-              }else if ($scope.sessionidProfile==3 || $scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
-                $scope.mess2show="Esta seguro que desea darse de baja?";
-              }
-              if(($scope.sessionidProfile!=3 && obj.idTypeTenantKf!=0) || ($scope.sessionidProfile==3 && obj.idTypeTenantKf==2) || ($scope.sessionidProfile==6 && obj.idTypeTenantKf==2)){
-                  $scope.idTenantKf     =  obj.idUser;
-                  $scope.idDeparmentKf  =  $scope.idDeptoKf;
-                  $scope.typeTenantKf   =  obj.idTypeTenantKf;
-                  console.log("Manage Depto: "+$scope.manageDepto);
-                  console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO TENANT: '+$scope.typeTenantKf);
-                  console.log("DATOS DEL INQUILINO O PROPIETARIO A DAR DE BAJA");
-                  console.log(obj)
-                  $scope.checkTicketTenant($scope.idTenantKf);
-              }else if($scope.sessionidProfile==3 || $scope.sessionidProfile==6 || $scope.sessionidProfile==5){
-                  console.log("::::::: REMOVE AN DEPTO OWNER :::::::");
-                  $scope.idTenantKf     = $scope.sessionidTenantUser;
-                  $scope.idDeparmentKf  = obj.idDepartment;
-                  $scope.typeTenantKf   = $scope.sessionidTypeTenant;
-                  console.log("Manage Depto: "+$scope.manageDepto);
-                  console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO TENANT: '+$scope.typeTenantKf);
-                  console.log("DATOS DEL INQUILINO O PROPIETARIO A DAR DE BAJA");
-                  console.log(obj)
-                  $scope.checkTicketTenant($scope.idTenantKf);
-              }
-          }else if (confirm==1){
-            $scope.IsFnRemove=true;
-            if($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
-              $scope.sysUnAssignDep2Tenant()
-            }else{
-                $scope.fnRemoveTenant($http, $scope);
-            }
-            $('#confirmRequestModal').modal('hide');
-          }
-        break;
-        case "checkAddr":
-          if (confirm==0 && $scope.addrNoFound==1){
-            if (tmpOpt!="home"){
-              $scope.mess2show="No posee departamento autorizados, Desea registrar un departamento?";
-            }else{
-              $scope.mess2show="No registra tickets actualmente, Desea verificar si tiene un departmanto asociado?";
-            }
-            $('#confirmRequestModal').modal('toggle');
-          }else if(confirm==0 && $scope.addrNoFound==0 && $scope.sessionidProfile!=0){ 
-              if(tmpOpt=="rukeyup"){
-                if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
-                  $scope.sysCheckAddrIsInDebt($scope.ListTenantAddress);
-                  $scope.refresSession($scope.sessionMail);
-                  $scope.idAddressAtt=$scope.sessionNameAdress;
-                  $scope.namesTenant=$scope.sessionNames;
-                  if($scope.sessionidAddress){
-                    $scope.getKeyChains($scope.sessionidAddress); 
-                    $scope.getServicesValues($scope.sessionidAddress);
-                  }else{
-                     $scope.idAddressAtt="Consorcio no asignado";
-                  }
-                  if($scope.sessionidAddress && (!$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved>=0)){
-                    $scope.deptoTenant   =($scope.sessionidAddress && !$scope.sessionisDepartmentApproved) || ($scope.sessionidAddress && $scope.sessionisDepartmentApproved==0)?$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (No aprobado)":$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (Aprobado)";
-                  }else{
-                    $scope.deptoTenant = "Departamento no ha sido asignado."
-                  }
-                }else{
-                  $scope.rukeyup = true;
-                }
-              }else 
-              if(tmpOpt=="rukeydown"){
-                if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
-                  $scope.sysCheckAddrIsInDebt($scope.ListTenantAddress);
-                  $scope.refresSession($scope.sessionMail);
-                  $scope.idAddressAtt=$scope.sessionNameAdress;
-                  $scope.namesTenant=$scope.sessionNames;
-                  if($scope.sessionidAddress){
-                    $scope.getKeyChains($scope.sessionidAddress); 
-                    $scope.getServicesValues($scope.sessionidAddress);
-                  }else{
-                     $scope.idAddressAtt="Consorcio no asignado";
-                  }
-                  if($scope.sessionidAddress && (!$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved>=0)){
-                    $scope.deptoTenant   =($scope.sessionidAddress && !$scope.sessionisDepartmentApproved) || ($scope.sessionidAddress && $scope.sessionisDepartmentApproved==0)?$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (No aprobado)":$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (Aprobado)";
-                  }else{
-                    $scope.deptoTenant = "Departamento no ha sido asignado."
-                  }
-                }else{
-                  $scope.rukeydown = true;
-                }
-              }else 
-              if(tmpOpt=="home"){
-                $scope.home = true;
-              }else 
-              if(tmpOpt=="rucost"){
-                $scope.rucost=true;
-              }else
-              if(tmpOpt=="ruother"){
-                $scope.ruother=true;
-              }
-          }else if (confirm==1){
-            $('.jumbotron [id^="m_"]').removeClass('active');
-            $('#m_depto').addClass('active');
-            $('#SubM_Pedidos').hide();
-            $scope.fnShowHide('managedepto', 'open');
-            $('#confirmRequestModal').modal('hide');
-          }
-        break;
-        case "removeu":
-          if (confirm==0){
-              if ($scope.sessionidProfile==1 && obj.idUser!=0){
-                if (obj.idProfileKf){$scope.mess2show="El usuario ("+obj.fullNameUser+") bajo el perfil de "+obj.nameProfile+" sera Eliminado.     Confirmar?";}
-                  $scope.idUserKf   =  obj.idUser;
-                  $scope.argObj = obj;
-                  console.log('Usuario a eliminar ID: '+$scope.idUserKf+' BAJO EL NOMBRE: '+obj.fullNameUser);
-                  console.log("============================================================================")
-                  console.log($scope.argObj);
-              }      
-            $('#confirmRequestModal').modal('toggle');
-          }else if (confirm==1){
-                $scope.deleteUser($scope.argObj);
-            $('#confirmRequestModal').modal('hide');
-          }
-        break;
-        case "removeSysProf":
-          if (confirm==0){
-              if ($scope.sessionidProfile==1 && obj.idProfiles!=0){
-                $scope.idSysProf = obj.idProfiles;
-                $scope.mess2show="El Perfil "+obj.name+" sera Eliminado.     Confirmar?";
-                  console.log('Usuario a eliminar ID: '+obj.idProfiles+' BAJO EL NOMBRE: '+obj.name);
-                  console.log("============================================================================")
-                  console.log(obj);
-              }      
-            $('#confirmRequestModal').modal('toggle');
-          }else if (confirm==1){
-                $scope.deleteSysProfileFn($scope.idSysProf);
-            $('#confirmRequestModal').modal('hide');
-          }
-        break;
-        case "removeProduct":
-          if (confirm==0){
-              if ($scope.sessionidProfile==1 && obj.idProduct!=0){
-                $scope.idProducto = obj.idProduct;
-                $scope.mess2show="El Producto "+obj.descriptionProduct+" sera Eliminado.     Confirmar?";
-                  console.log('Producto a eliminar ID: '+obj.idProduct+' DESCRIPCION: '+obj.descriptionProduct);
-                  console.log("============================================================================")
-                  console.log(obj);
-              }      
-            $('#confirmRequestModal').modal('toggle');
-          }else if (confirm==1){
-                $scope.deleteProductFn($scope.idProducto);
-            $('#confirmRequestModal').modal('hide');
-          }
-        break;
-        case "closeCustomerWindow":
+        $scope.modalConfirmation = function(opt, confirm, obj, group){
+        $scope.swMenu = opt;
+        $scope.vConfirm = confirm;
+        var tmpOpt=$scope.div2Open;
+        //console.log(tmpOpt);
+        $scope.mess2show="";
+            switch ($scope.swMenu){
+          case "tdown":
             if (confirm==0){
-              $scope.mess2show="Se perderan todos los datos cargados para el registro actual, esta seguro que desea cancelar el registro?";    
+              console.log(confirm);
+              $scope.mess2show="Desea Solicitar una nueva llave?";
               $('#confirmRequestModal').modal('toggle');
             }else if (confirm==1){
+              $('.jumbotron [id^="m_"]').removeClass('active');
+              $('#m_pedidos').addClass('active');
+              $('#SubM_Pedidos').show();
+              $scope.fnShowHide('rukeyup', 'open');
               $('#confirmRequestModal').modal('hide');
-              $('#RegisterModalCustomer').modal('hide');
             }
-        default:
-      }
-    }
+            $('#confirmRequestModal').on('hide.bs.modal', function (e) {
+              $scope.dhboard();
+              $scope.fnShowHide('home','open');
+            });
+          break;
+          case "removet":
+            if (confirm==0){
+                if (($scope.sessionidProfile!=3 && $scope.sessionidProfile!=5 && $scope.sessionidProfile!=6 && obj.idTypeTenantKf!=0) || ($scope.sessionidProfile==3 && obj.idTypeTenantKf==2) || ($scope.sessionidProfile==6 && obj.idTypeTenantKf==2)){
+                  $scope.mess2show="Esta seguro que desea dar de baja al Habitante?";
+                }else if ($scope.sessionidProfile==3 || $scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+                  $scope.mess2show="Esta seguro que desea darse de baja?";
+                }
+                if(($scope.sessionidProfile!=3 && obj.idTypeTenantKf!=0) || ($scope.sessionidProfile==3 && obj.idTypeTenantKf==2) || ($scope.sessionidProfile==6 && obj.idTypeTenantKf==2)){
+                    $scope.idTenantKf     =  obj.idUser;
+                    $scope.idDeparmentKf  =  $scope.idDeptoKf;
+                    $scope.typeTenantKf   =  obj.idTypeTenantKf;
+                    console.log("Manage Depto: "+$scope.manageDepto);
+                    console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO TENANT: '+$scope.typeTenantKf);
+                    console.log("DATOS DEL INQUILINO O PROPIETARIO A DAR DE BAJA");
+                    console.log(obj)
+                    $scope.checkTicketTenant($scope.idTenantKf);
+                }else if($scope.sessionidProfile==3 || $scope.sessionidProfile==6 || $scope.sessionidProfile==5){
+                    console.log("::::::: REMOVE AN DEPTO OWNER :::::::");
+                    $scope.idTenantKf     = $scope.sessionidTenantUser;
+                    $scope.idDeparmentKf  = obj.idDepartment;
+                    $scope.typeTenantKf   = $scope.sessionidTypeTenant;
+                    console.log("Manage Depto: "+$scope.manageDepto);
+                    console.log('ID: '+$scope.idTenantKf+' ID DPTO: '+$scope.idDeparmentKf+' ID TIPO TENANT: '+$scope.typeTenantKf);
+                    console.log("DATOS DEL INQUILINO O PROPIETARIO A DAR DE BAJA");
+                    console.log(obj)
+                    $scope.checkTicketTenant($scope.idTenantKf);
+                }
+            }else if (confirm==1){
+              $scope.IsFnRemove=true;
+              if($scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+                $scope.sysUnAssignDep2Tenant()
+              }else{
+                  $scope.fnRemoveTenant($http, $scope);
+              }
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;
+          case "checkAddr":
+            if (confirm==0 && $scope.addrNoFound==1){
+              if (tmpOpt!="home"){
+                $scope.mess2show="No posee departamento autorizados, Desea registrar un departamento?";
+              }else{
+                $scope.mess2show="No registra tickets actualmente, Desea verificar si tiene un departmanto asociado?";
+              }
+              $('#confirmRequestModal').modal('toggle');
+            }else if(confirm==0 && $scope.addrNoFound==0 && $scope.sessionidProfile!=0){ 
+                if(tmpOpt=="rukeyup"){
+                  if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+                    $scope.sysCheckAddrIsInDebt($scope.ListTenantAddress);
+                    $scope.refresSession($scope.sessionMail);
+                    $scope.idAddressAtt=$scope.sessionNameAdress;
+                    $scope.namesTenant=$scope.sessionNames;
+                    if($scope.sessionidAddress){
+                      $scope.getKeyChains($scope.sessionidAddress); 
+                      $scope.getServicesValues($scope.sessionidAddress);
+                    }else{
+                       $scope.idAddressAtt="Consorcio no asignado";
+                    }
+                    if($scope.sessionidAddress && (!$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved>=0)){
+                      $scope.deptoTenant   =($scope.sessionidAddress && !$scope.sessionisDepartmentApproved) || ($scope.sessionidAddress && $scope.sessionisDepartmentApproved==0)?$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (No aprobado)":$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (Aprobado)";
+                    }else{
+                      $scope.deptoTenant = "Departamento no ha sido asignado."
+                    }
+                  }else{
+                    $scope.rukeyup = true;
+                  }
+                }else 
+                if(tmpOpt=="rukeydown"){
+                  if ($scope.sessionidProfile==5 ||($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2)){
+                    $scope.sysCheckAddrIsInDebt($scope.ListTenantAddress);
+                    $scope.refresSession($scope.sessionMail);
+                    $scope.idAddressAtt=$scope.sessionNameAdress;
+                    $scope.namesTenant=$scope.sessionNames;
+                    if($scope.sessionidAddress){
+                      $scope.getKeyChains($scope.sessionidAddress); 
+                      $scope.getServicesValues($scope.sessionidAddress);
+                    }else{
+                       $scope.idAddressAtt="Consorcio no asignado";
+                    }
+                    if($scope.sessionidAddress && (!$scope.sessionisDepartmentApproved || $scope.sessionisDepartmentApproved>=0)){
+                      $scope.deptoTenant   =($scope.sessionidAddress && !$scope.sessionisDepartmentApproved) || ($scope.sessionidAddress && $scope.sessionisDepartmentApproved==0)?$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (No aprobado)":$scope.getDeptoName($scope.sessionIdDeparmentKf)+" (Aprobado)";
+                    }else{
+                      $scope.deptoTenant = "Departamento no ha sido asignado."
+                    }
+                  }else{
+                    $scope.rukeydown = true;
+                  }
+                }else 
+                if(tmpOpt=="home"){
+                  $scope.home = true;
+                }else 
+                if(tmpOpt=="rucost"){
+                  $scope.rucost=true;
+                }else
+                if(tmpOpt=="ruother"){
+                  $scope.ruother=true;
+                }
+            }else if (confirm==1){
+              $('.jumbotron [id^="m_"]').removeClass('active');
+              $('#m_depto').addClass('active');
+              $('#SubM_Pedidos').hide();
+              $scope.fnShowHide('managedepto', 'open');
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;
+          case "removeu":
+            if (confirm==0){
+                if ($scope.sessionidProfile==1 && obj.idUser!=0){
+                  if (obj.idProfileKf){$scope.mess2show="El usuario ("+obj.fullNameUser+") bajo el perfil de "+obj.nameProfile+" sera Eliminado.     Confirmar?";}
+                    $scope.idUserKf   =  obj.idUser;
+                    $scope.argObj = obj;
+                    console.log('Usuario a eliminar ID: '+$scope.idUserKf+' BAJO EL NOMBRE: '+obj.fullNameUser);
+                    console.log("============================================================================")
+                    console.log($scope.argObj);
+                }      
+              $('#confirmRequestModal').modal('toggle');
+            }else if (confirm==1){
+                  $scope.deleteUser($scope.argObj);
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;
+          case "removeSysProf":
+            if (confirm==0){
+                if ($scope.sessionidProfile==1 && obj.idProfiles!=0){
+                  $scope.idSysProf = obj.idProfiles;
+                  $scope.mess2show="El Perfil "+obj.name+" sera Eliminado.     Confirmar?";
+                    console.log('Usuario a eliminar ID: '+obj.idProfiles+' BAJO EL NOMBRE: '+obj.name);
+                    console.log("============================================================================")
+                    console.log(obj);
+                }      
+              $('#confirmRequestModal').modal('toggle');
+            }else if (confirm==1){
+                  $scope.deleteSysProfileFn($scope.idSysProf);
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;
+          case "removeProduct":
+            if (confirm==0){
+                if ($scope.sessionidProfile==1 && obj.idProduct!=0){
+                  $scope.idProducto = obj.idProduct;
+                  $scope.mess2show="El Producto "+obj.descriptionProduct+" sera Eliminado.     Confirmar?";
+                    console.log('Producto a eliminar ID: '+obj.idProduct+' DESCRIPCION: '+obj.descriptionProduct);
+                    console.log("============================================================================")
+                    console.log(obj);
+                }      
+              $('#confirmRequestModal').modal('toggle');
+            }else if (confirm==1){
+                  $scope.deleteProductFn($scope.idProducto);
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;
+          case "closeCustomerWindow":
+              if (confirm==0){
+                $scope.mess2show="Se perderan todos los datos cargados para el registro actual, esta seguro que desea cancelar el registro?";    
+                $('#confirmRequestModal').modal('toggle');
+              }else if (confirm==1){
+                $('#confirmRequestModal').modal('hide');
+                $('#RegisterModalCustomer').modal('hide');
+              }
+          default:
+            }
+        }
 
     /**************************************************
     *                                                 *
@@ -6434,7 +6434,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     ********************************************************************************************************************************************/
     $scope.isNewCustomer=false;
     $scope.defArrForCustomersFn = function(){
-      $scope.stepIndexTmp=0;selectSwitch ("c"); 
+      $scope.stepIndexTmp=0;
+      selectSwitch ("c"); 
       $scope.list_phones=[];
       $scope.list_depto_floors=[];
       $scope.list_phone_contact=[];
@@ -6515,12 +6516,25 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
       $scope.list_address_particular=[];
     }
     $scope.defArrForCustomersFn();   
-    $scope.switchCustomersFn = function(fnOpt, fnObj){
+    $scope.switchCustomersFn = function(opt1, fnObj, opt2){
       var cObj = !fnObj || fnObj==undefined ? null : fnObj;
-      switch (fnOpt){
+      switch (opt1){
         case "dashboard":
-          $scope.getCustomerListFn("",1);
-          $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
+          switch (opt2){
+            case "registered":
+              $scope.sysContent = "";
+              $scope.getCustomerListFn("registered",1);
+              $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
+              $scope.sysContent = 'registeredCustomers';
+            break;
+            case "unregistered":
+              $scope.sysContent = "";
+              $scope.getCustomerListFn("notRegistered",1);
+              $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
+              $scope.sysContent = 'registeredNotCustomers';
+            break;
+          }
+          
         break; 
         case "new":
           $scope.isNewCustomer=true;
@@ -7104,14 +7118,24 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     /**************************************************/ 
     /**************************************************
     *                                                 *
-    *                 LIST CUSTOMER                   *
+    *           LIST CUSTOMER REGISTERED              *
     *                                                 *
     **************************************************/
       $scope.rsCustomerListData = {};
       $scope.rsFrmCustomerListData = {};
       $scope.rsCustomerListByTypeData = {};
+      $scope.jsonCustomerRegistered={
+            "searchFilter":"",
+            "isNotCliente":"0"
+      };
+      $scope.jsonCustomerNotRegistered={
+            "searchFilter":"",
+            "idClientTypeFk":"2",
+            "isNotCliente":"1"
+      };
       $scope.getCustomerListFn = function(search, opt){
-        CustomerServices.getCustomerList(search).then(function(data){
+        var jsonSearch = !search || search=="" ||  search=="registered" ? $scope.jsonCustomerRegistered : $scope.jsonCustomerNotRegistered;
+        CustomerServices.getCustomerList(jsonSearch).then(function(data){
             $scope.rsCustomerListData = data;
             $scope.rsFrmCustomerListData = data.status==404?$scope.rsFrmCustomerListData=[]:data;
             $scope.rsCustomerListByTypeData  = data.status==404?$scope.rsCustomerListByTypeData=[]:data;
@@ -10066,7 +10090,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 $scope.IsCustomer=true;
                 $scope.manageDepto = 0;
               if(divAction=="open"){
-                $scope.switchCustomersFn('dashboard', '');
                 $scope.rucustomer = true;selectSwitch ("c");         
 
               }else{

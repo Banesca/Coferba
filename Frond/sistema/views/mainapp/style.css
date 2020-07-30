@@ -801,6 +801,9 @@ body{
 
 /*CUSTOMERS */
 /***********************************/
+.text-badge{
+  text-align: center;
+}
 .banner-no-rows{
     border-radius: 4px;
     opacity: 0.8;
@@ -2039,6 +2042,38 @@ input:checked + .slider-3x:before {
 @media screen and (min-width: 1214px) and (max-width: 1381px) {
   .filter-bar-sticker{
     margin-top: -6px;
+  }
+}
+@media screen and (min-width: 1281px) and (max-width: 1368px) {
+  .text-badge  [class~=registered-customer]{
+    font-size: 11px !important;
+    font-weight: 100;
+    margin-left: -10px;
+  }
+  .text-badge  [class~=not-registered-customer]{
+    font-size: 10px !important;
+    font-weight: 100;
+    margin-left: -12px;
+  }
+  .text-badge [class~=new-customer]{
+    font-size: 12px !important;
+    font-weight: 700;
+  }
+}
+@media screen and (min-width: 1201px) and (max-width: 1280px) {
+  .text-badge  [class~=registered-customer]{
+    font-size: 10px !important;
+    font-weight: 100;
+    margin-left: -11.3px;
+  }
+  .text-badge  [class~=not-registered-customer]{
+    font-size: 9px !important;
+    font-weight: 100;
+    margin-left: -13px;
+  }
+  .text-badge [class~=new-customer]{
+    font-size: 12px !important;
+    font-weight: 700;
   }
 }
 @media screen and (min-width: 1201px) and (max-width: 1213px) {
