@@ -150,7 +150,11 @@ class Client_model extends CI_Model {
     public function searchAddress($address, $idProvince, $idLocation) {
         $user = null;
         $this->db->select("*")->from("tb_clients");
-        $where="address=\"$address\" AND idProvinceFk=\"$idProvince\" AND idLocationFk=\"$idLocation\"";
+        if ($idProvince!=null && $idLocation!=null){
+            $where="address=\"$address\" AND idProvinceFk=\"$idProvince\" AND idLocationFk=\"$idLocation\"";
+        }else{
+            $where="address=\"$address\"";
+        }
         $this->db->where($where);
         $query = $this->db->where("tb_clients.idClientTypeFk =", 2)->get();
 
@@ -475,6 +479,8 @@ class Client_model extends CI_Model {
                     'observationCollection'   => $client['observationCollection'],
                     'observation'             => $client['observation'],
                     'idStatusFk'              => 1,
+                    'departmentUnit'          => $client['departmentUnit'],
+                    'departmentCorrelation'   => $client['departmentCorrelation'], 
                     'idZonaFk'                => @$client['idZonaFk'],
                 ]
             );
@@ -571,6 +577,8 @@ class Client_model extends CI_Model {
                 'observation'             => $client['observation'],
                 'idStatusFk'              => $client['idStatusFk'],
                 'idZonaFk'                => @$client['idZonaFk'],
+                'departmentUnit'          => $client['departmentUnit'],
+                'departmentCorrelation'   => $client['departmentCorrelation'],
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
@@ -1107,40 +1115,6 @@ class Client_model extends CI_Model {
     public function addParticular($client) {
         $idClientDepartamentFk = null;
         $idDepartmentKf = null;
-        if ($client['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
-            $idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
-            if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
-                $this->db->insert('tb_clients', [
-                        'idClientTypeFk' => 2,
-                        'name'           => $client['address'],
-                        'address'        => $client['address'],
-                        'isNotCliente'   => 1,
-                        'idStatusFk'     => 0,
-                        'addressLat'     => $client['addressLat'],
-                        'addressLon'     => $client['addressLon'],
-                        'idLocationFk'   => $client['idLocationFk'],
-                        'idProvinceFk'   => $client['idProvinceFk'],
-                    ]
-                );
-                $idClientDepartamentFk = $this->db->insert_id();
-                    //  DEPARTAMENTO
-                    $this->db->insert('tb_client_departament', [
-                            'idClientFk'              => $idClientDepartamentFk,
-                            'floor'                   => $client['floor'],
-                            'departament'             => $client['department'],
-                            'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-                            'idStatusFk'              => 1,
-                            'numberUNF'               => $client['numberUNF'],
-                        ]
-                    );
-                $idDepartmentKf = $this->db->insert_id();
-            } else {
-                $idDepartmentKf = $this->getDepartmentId($idClientDepartamentFk[0]['idClient'], $client['floor'],$client['department']);
-            }
-        }else{
-             $idDepartmentKf = $client['idDepartmentFk'];
-        }
-
         $user = null;
 
         $this->db->select("*")->from("tb_clients");
@@ -1162,10 +1136,10 @@ class Client_model extends CI_Model {
                     'idProvinceFk'          => $client['idProvinceFk'],
                     'observation'           => $client['observation'],
                     'mailServiceTecnic'     => $client['mailServiceTecnic'],
-                    'mobile'                => $client['mobile'],
+                    'phoneMobile'           => $client['mobile'],
+                    'phoneLocal'            => $client['local'],
                     'mailCollection'        => $client['mailCollection'],
-                    'idZonaFk'              => @$client['idZonaFk'],
-                    'idClientDepartamentFk' => @$idDepartmentKf,
+
                 ]
             );
 
@@ -1183,21 +1157,7 @@ class Client_model extends CI_Model {
                     ]
                 );
 
-                if (count(@$client['list_address_particular']) > 0
-                    && count(@$client['list_phone_contact']) > 0
-                ) {
-
-
-                    //  TELEFONOS DE CONTACTO
-                    foreach (@$client['list_phone_contact'] as $valor) {
-
-                        $this->db->insert('tb_client_phone_contact', [
-                                'idClientFk'   => $idClientFk,
-                                'phoneTag'     => $valor['phoneTag'],
-                                'phoneContact' => $valor['phoneContact'],
-                            ]
-                        );
-                    }
+                if (count(@$client['list_address_particular']) > 0) {
 
                     //  DIRECCIONES DE UN PARTICULAR
                     foreach ($client['list_address_particular'] as $valor) {
@@ -1248,6 +1208,7 @@ class Client_model extends CI_Model {
                                 'clarification'             => $valor['clarification'],
                                 'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
                                 'idParticularDepartamentFk' => @$idDepartmentKf,
+                                'idTipoInmuebleFk'          => $valor['idZonaFk'],
                             ]
                         );
                     }
@@ -1270,40 +1231,7 @@ class Client_model extends CI_Model {
     public function updateParticular($client) {
         $idClientDepartamentFk = null;
         $idDepartmentKf = null;
-        if ($client['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
-            $idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
-            if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
-                $this->db->insert('tb_clients', [
-                        'idClientTypeFk' => 2,
-                        'name'           => $client['address'],
-                        'address'        => $client['address'],
-                        'isNotCliente'   => 1,
-                        'idStatusFk'     => 0,
-                        'addressLat'     => $client['addressLat'],
-                        'addressLon'     => $client['addressLon'],
-                        'idLocationFk'   => $client['idLocationFk'],
-                        'idProvinceFk'   => $client['idProvinceFk'],
-                    ]
-                );
-                $idClientDepartamentFk = $this->db->insert_id();
-                    //  DEPARTAMENTO
-                    $this->db->insert('tb_client_departament', [
-                            'idClientFk'              => $idClientDepartamentFk,
-                            'floor'                   => $client['floor'],
-                            'departament'             => $client['department'],
-                            'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-                            'idStatusFk'              => 1,
-                            'numberUNF'               => $client['numberUNF'],
-                        ]
-                    );
-                $idDepartmentKf = $this->db->insert_id();
-            } else {
-                $idDepartmentKf = $this->getDepartmentId($idClientDepartamentFk[0]['idClient'], $client['floor'],$client['department']);
-            }
-        }else{
-             $idDepartmentKf = $client['idDepartmentFk'];
-        }
-
+        
         $this->db->set(
             [
                 'name'                  => $client['name'],
@@ -1315,10 +1243,9 @@ class Client_model extends CI_Model {
                 'idProvinceFk'          => $client['idProvinceFk'],
                 'observation'           => $client['observation'],
                 'mailServiceTecnic'     => $client['mailServiceTecnic'],
-                'mobile'                => $client['mobile'],
+                'phoneMobile'           => $client['mobile'],
+                'phoneLocal'            => $client['local'],
                 'mailCollection'        => $client['mailCollection'],
-                'idZonaFk'              => @$client['idZonaFk'],
-                'idClientDepartamentFk' => @$idClientDepartamentFk,
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
@@ -1334,23 +1261,9 @@ class Client_model extends CI_Model {
         )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
-        if (count(@$client['list_address_particular']) > 0
-            && count(@$client['list_phone_contact']) > 0
-        ) {
+        if (count(@$client['list_address_particular']) > 0){
 
-
-            $this->db->delete('tb_client_phone_contact', [ 'idClientFk' => $client['idClient'] ]);
-
-            foreach ($client['list_phone_contact'] as $valor) {
-
-                $this->db->insert('tb_client_phone_contact', [
-                    'idClientFk'   => $valor['idClientFk'],
-                    'phoneTag'     => $valor['phoneTag'],
-                    'phoneContact' => $valor['phoneContact'],
-                ]);
-            }
-
-            $this->db->delete('tb_client_users', [ 'idClientFk' => $client['idClient'] ]);
+            $this->db->delete('list_address_particular', [ 'idClientFk' => $client['idClient'] ]);
 
                      //DIRECCIONES DE UN PARTICULAR
                     foreach ($client['list_address_particular'] as $valor) {
@@ -1392,14 +1305,16 @@ class Client_model extends CI_Model {
                                 $idDepartmentKf = $client['idDepartmentFk'];
                         }
                         $this->db->insert('tb_client_address_particular', [
-                                'idClientFk'    => $idClientFk,
-                                'address'       => $valor['address'],
-                                'depto'         => $valor['depto'],
-                                'isBuilding'    => $valor['isBuilding'],
-                                'idProvinceFk'  => $valor['idProvinceFk'],
-                                'idLocationFk'  => $valor['idLocationFk'],
-                                'clarification' => $valor['clarification'],
+                                'idClientFk'                => $idClientFk,
+                                'address'                   => $valor['address'],
+                                'depto'                     => $valor['depto'],
+                                'isBuilding'                => $valor['isBuilding'],
+                                'idProvinceFk'              => $valor['idProvinceFk'],
+                                'idLocationFk'              => $valor['idLocationFk'],
+                                'clarification'             => $valor['clarification'],
+                                'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
                                 'idParticularDepartamentFk' => @$idDepartmentKf,
+                                'idTipoInmuebleFk'          => $valor['idZonaFk'],
                             ]
                         );
                     }

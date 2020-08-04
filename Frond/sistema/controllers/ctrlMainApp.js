@@ -6443,6 +6443,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
       $scope.list_departments = [];
       $scope.list_address_particular=[];
       $scope.formValidated=false;
+      $scope.rsAddress_API_Data_Main = [];
+      $scope.rsAddress_API_Data_Payment = [];
+      $scope.rsAddress_API_Data_PCA = [];
       $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'companyData':{}, 'select':{'main':{},'payment':{}, 'particular':{}, 'company':{}}};
       $scope.customer.select.main = {'address':{}, 'department':'', 'province':{}, 'location':{}}
       $scope.customer.select.payment = {'address':{}, 'department':'', 'province':{}, 'location':{}}
@@ -6472,7 +6475,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                             'floor':'',
                             'department':'',
                             'idCategoryDepartamentFk':'',
-                            'numberUNF':'', 
+                            'numberUNF':'',
+                            'departmentUnit':'',
+                            'departmentCorrelation':'', 
                             'billing_information':{
                                 'businessNameBilling':'', 
                                 'cuitBilling':'', 
@@ -6634,7 +6639,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     //Printing the current array before add the customer
                     console.log($scope.customer.new);
                     //Send the customer data to the addcustomer service
-                    //$scope.fnAddCustomerFn($scope.customer.new);        
+                    $scope.fnAddCustomerFn($scope.customer.new);        
               break;
               case "2": //BUILDING CUSTOMER
                     //Getting the customer schedule setting
@@ -6657,10 +6662,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     $scope.customer.new.idDepartmentFk                            = null;
                     $scope.customer.new.idTipoInmuebleFk                          = null;
                     $scope.customer.new.name                                      = $scope.customer.new.address;
+                    $scope.customer.new.departmentUnit                            = $scope.list_department_multi.unidad;
+                    $scope.customer.new.departmentCorrelation                     = $scope.list_department_multi.correlacion;
                     //Printing the current array before add the customer
                     console.log($scope.customer.new);
                     //Send the customer data to the addcustomer service
-                    //$scope.fnAddCustomerFn($scope.customer.new);                     
+                    $scope.fnAddCustomerFn($scope.customer.new);                     
               break;
               case "3": //COMPANY CUSTOMER
                     $scope.customer.new.list_departament                            = {};
@@ -6696,7 +6703,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     //Printing the current array before add the customer
                     console.log($scope.customer.new);
                     //Send the customer data to the addcustomer service
-                    //$scope.fnAddCustomerFn($scope.customer.new);                      
+                    $scope.fnAddCustomerFn($scope.customer.new);                      
               break;
               case "4": //BRANCH CUSTOMER
                     $scope.customer.new.list_departament                          = {};
@@ -6733,7 +6740,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     //Printing the current array before add the customer
                     console.log($scope.customer.new);
                     //Send the customer data to the addcustomer service
-                    //$scope.fnAddCustomerFn($scope.customer.new);                      
+                    $scope.fnAddCustomerFn($scope.customer.new);                      
               break;
               case "5": //PARTICULAR CUSTOMER
 
@@ -6771,7 +6778,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     //Printing the current array before add the customer
                     console.log($scope.customer.new);
                     //Send the customer data to the addcustomer service
-                    //$scope.fnAddCustomerFn($scope.customer.new);                      
+                    $scope.fnAddCustomerFn($scope.customer.new);                      
               break;                    
               default:
             }
@@ -7115,7 +7122,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     $scope.list_client_user.splice(key,1);
                   }
                 }      
-    /**************************************************/ 
+    /**************************************************/
+    /**************************************************
+    *            SHOW ONLY ADMIN AND COMPANY          *
+    *                 CUSTOMER OPTIONS                *
+    **************************************************/
+      $scope.filterCustomerType = function(item){
+          return item.idClientTypeFk == 1 ||  item.idClientTypeFk == 3;
+      }; 
     /**************************************************
     *                                                 *
     *           LIST CUSTOMER REGISTERED              *
@@ -7176,10 +7190,16 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     *                                                 *
     **************************************************/
       $scope.rsCustomerTypeData = {};
+      $scope.rsCustomerTypeFilterData = [];
       $scope.getCustomerTypesFn = function(){
         CustomerServices.getCustomerType().then(function(data){
-            $scope.rsCustomerTypeData = data;
-            //console.log($scope.rsCustomerTypeData);
+          for (var type in data){
+            if(data[type].idClientType==1 || data[type].idClientType==3){
+              $scope.rsCustomerTypeFilterData.push(data[type]);
+            }
+          }
+           $scope.rsCustomerTypeData = data;
+            //console.log($scope.rsCustomerTypeFilterData);
         });
       };
     $scope.list_id_user=[];
@@ -7491,30 +7511,92 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             //console.log($scope.rsLocations_API_Data);
         });
       };        
+    
+    /**************************************************
+    *                                                 *
+    *         GET ADDRESS ID BY ADDRESS Name          *
+    *                                                 *
+    **************************************************/
+      $scope.idProvinceFk=null;
+     $scope.getAddressIdByNameFn = function(addressName){
+        //$scope.idProvinceFk=null;
+        addressServices.getProvinceIdByName(addressName).then(function(data){
+          $scope.idProvinceFk=data;
+          if (!$scope.addrrSelected && $scope.customer.new.nameAddress!=''){
+            $scope.getAddressByNameFn($scope.customer.new.nameAddress,'main');
+          }
+            
+        });
+     }
     /**************************************************
     *                                                 *
     *              GET ADDRESS BY Name                *
+    *                   API LOCAL                     *
+    **************************************************/
+      var searchAddress={};
+      var rsJsonData={};
+      $scope.searchAddressByNameFn = function(item, opt1, opt2){
+        if ($scope.customer.new.typeInmueble=='1'){
+          var nameAddress=item.calle.nombre+" "+item.altura.valor;
+          searchAddress.address=nameAddress;
+          blockUI.start('Verificando direccion: '+nameAddress);
+          $timeout(function() {
+            addressServices.checkIfBuildingExistByAddressName(searchAddress).then(function(data){
+              rsJsonData=data;
+              console.log(rsJsonData)
+                if(rsJsonData.status==200){
+                  blockUI.message('Direccion: '+nameAddress+' encontrada.');
+                  $timeout(function() {
+                    $scope.fillData(item, opt1, opt2, rsJsonData);
+                  }, 1500);
+                }else{
+                  blockUI.message('Direccion: '+nameAddress+' no encontrada en el sistema.');
+                  $timeout(function() {
+                    $scope.fillData(item, opt1, opt2, rsJsonData);
+                  }, 1500);
+                } 
+            });   
+          }, 1500);
+        }else{
+          $scope.fillData(item, opt1, opt2, null);
+        }
+    
+      }
+    /**************************************************
     *                                                 *
+    *              GET ADDRESS BY Name                *
+    *                   API GOB AR                    *
     **************************************************/
       $scope.rsAddress_API_Data_Main = {}; $scope.rsAddress_API_Data_Payment = {}; $scope.rsAddress_API_Data_PCA = {};
       $scope.getAddressByNameFn = function(name, opt){
+        $scope.rsAddress_API_Data_Main = {}; $scope.rsAddress_API_Data_Payment = {}; $scope.rsAddress_API_Data_PCA = {};
         var twoNumber_patt=/^(?=(?:\D*\d){2})[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
+        var idProvinceFk = $scope.idProvinceFk!=undefined || $scope.idProvinceFk!=null?$scope.idProvinceFk:null;
         if (twoNumber_patt.test(name)){
-          addressServices.getAddressByName(name).then(function(data){
-            switch(opt){
-              case "main":
-                $scope.rsAddress_API_Data_Main = data; //Main = Principal Customer Address
-              break;
-              case "payment":
-                $scope.rsAddress_API_Data_Payment = data; //Payment = Payment Customer Address
-              break;
-              case "particular":
-                $scope.rsAddress_API_Data_PCA = data;  //PCA = Particular Customer Address
-              break;
+          addressServices.getAddressByName(name, idProvinceFk).then(function(data){
+            if(data!=null){
+              switch(opt){
+                case "main":
+                  $scope.rsAddress_API_Data_Main = data; //Main = Principal Customer Address
+                break;
+                case "payment":
+                  $scope.rsAddress_API_Data_Payment = data; //Payment = Payment Customer Address
+                break;
+                case "particular":
+                  $scope.rsAddress_API_Data_PCA = data;  //PCA = Particular Customer Address
+                break;
+              }
+                //console.log($scope.rsProfileData);
+                $scope.addrrSelected=false;
+                $scope.enabledNextBtn();
+            }else{
+              //inform.add('Contacte al area de soporte para informar el inconveniente. ',{
+                  //ttl:4000, type: 'info'
+              //});
+              inform.add('Direccion no encontrada en la API del Servicio de Normalizacion de Datos Geograficos. ',{
+                  ttl:4000, type: 'danger'
+              });
             }
-              //console.log($scope.rsProfileData);
-              $scope.addrrSelected=false;
-              $scope.enabledNextBtn();
           });
         }else{
             switch(opt){
@@ -7534,18 +7616,39 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         }
       };
       $scope.addrrSelected=false;
-      $scope.fillData=function(item, opt1, opt2){
+      $scope.fillData=function(item, opt1, opt2, obj){
         switch (opt1){
           case "address":
             switch(opt2){
               case "new":
-                $scope.customer.new.nameAddress=item.calle.nombre+" "+item.altura.valor;              
-                $scope.customer.new.address=item.calle.nombre+" "+item.altura.valor;
-                $scope.customer.new.addressLat=item.ubicacion.lat;
-                $scope.customer.new.addressLon=item.ubicacion.lon;
-                $scope.rsAddress_API_Data_Main=null;
-                $scope.addrrSelected=true;
-                $scope.enabledNextBtn();
+                if(obj.status==200){
+                  $scope.customer.new.isNotCliente=true;                  
+                  $scope.customer.select.main.address.selected={address:obj.data.address};
+                  $scope.rsAddress_API_Data_Main=null;
+                  $timeout(function() {
+                    $scope.getBuildingsDeptosFn(obj.data.idClient);
+                  }, 1500);
+                  blockUI.message('Cargando departamento de '+obj.data.address);
+                  $timeout(function() {
+                    blockUI.stop();
+                  }, 1500);
+                  inform.add('La direccion '+obj.data.address+', se encuentra registrada. ',{
+                      ttl:4000, type: 'success'
+                  });
+
+                }else{
+                  blockUI.message('Complete los campos restantes.');
+                  $scope.customer.new.nameAddress=item.calle.nombre+" "+item.altura.valor;              
+                  $scope.customer.new.address=item.calle.nombre+" "+item.altura.valor;
+                  $scope.customer.new.addressLat=item.ubicacion.lat;
+                  $scope.customer.new.addressLon=item.ubicacion.lon;
+                  $scope.rsAddress_API_Data_Main=null;
+                  $scope.addrrSelected=true;
+                  $timeout(function() {
+                    blockUI.stop();
+                  }, 1500);
+                }
+                  $scope.enabledNextBtn();
               break;
               case "update":
                 $scope.customer.update.nameAddress=item.calle.nombre+" "+item.altura.valor;
@@ -8151,12 +8254,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               /*SUB FLOOR AND GARAGES */
               //ADD THE FLOOR 1 AS A PB DEFAULT FLOOR
               $scope.list_depto_floors.push({'id':3,'nameFloor':'pb', 'deptos':[]});
-              /*ALL FLOOR AND DEPTO AFTER PB */
+              /*ALL FLOOR AND DEPTO AFTER LO */
               for ( var i=1; i<=obj.floor; i++){
                   $scope.list_depto_floors.push({'id':(i+3),'nameFloor':i.toString(), 'deptos':[]});
               }
               l=1;
-              for (var i=4; i<$scope.list_depto_floors.length; i++){
+              for (var i=3; i<$scope.list_depto_floors.length; i++){
                 for (var j=0; j<obj.departament; j++){
                   /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
                   if (obj.unidad==1 && obj.correlacion==1){
@@ -8175,7 +8278,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 }
                 l++;
               }
-              for (var i=4; i<$scope.list_depto_floors.length; i++){
+              for (var i=3; i<$scope.list_depto_floors.length; i++){
                 for (var d in  $scope.list_depto_floors[i].deptos){
                   for (var item in $scope.rsCategoryDeptoData){
 
@@ -8210,7 +8313,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             console.log("Category of unit to be add in the floor: ["+obj.nameFloor+"]: "+argCategoryDepartament);    
 
             var floorsLength        =  obj.deptos.length;
-            if(obj.nameFloor!="pb" && obj.nameFloor!="co" && obj.nameFloor!="ba" && obj.nameFloor!="lo"){         
+            if(obj.nameFloor!="co" && obj.nameFloor!="ba" && obj.nameFloor!="lo"){         
               if ($scope.list_depto_floors[obj.id].deptos.length==0){
                 /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
                 if ($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1){
@@ -8234,7 +8337,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     }
                     if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2){
                       departmentUnidad=0;                                               
-                      for (var i=4; i<$scope.list_depto_floors.length; i++){
+                      for (var i=1; i<$scope.list_depto_floors.length; i++){
                         for (var d in  $scope.list_depto_floors[i].deptos){
                           departmentUnidad=departmentUnidad+1;
                           $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
@@ -8285,9 +8388,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength-1+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':'', 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }                    
                     //$scope.list_depto_floors[0].deptos.push({'idDepto':($scope.list_depto_floors[0].deptos.length+1), 'floor':$scope.list_depto_floors[0].nameFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
-                      for (var i=4; i<$scope.list_depto_floors.length; i++){
+                      for (var i=3; i<$scope.list_depto_floors.length; i++){
                         for (var d in  $scope.list_depto_floors[i].deptos){
-                          if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5"){
+                          if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
                             departmentUnidad=departmentUnidad+1;
                             $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                           }
@@ -8336,11 +8439,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 case "lo":
                   varCategoryDepartament="4"
                   unitNumber = argCategoryDepartament;
-                break;
-                case "pb":
-                  varCategoryDepartament="1";
-                  unitNumber = argCategoryDepartament;
-                break;    
+                break;   
               }
                 if ($scope.list_depto_floors[obj.id].deptos.length==0){
                    $scope.list_depto_floors[obj.id].deptos.push({'idDepto':($scope.list_depto_floors[obj.id].deptos.length+1), 'unitNumber':'', 'floor':$scope.list_depto_floors[obj.id].nameFloor, 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
@@ -8389,7 +8488,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 departmentUnidad=0;                                               
                 for (var i=4; i<$scope.list_depto_floors.length; i++){
                   for (var d in  $scope.list_depto_floors[i].deptos){
-                    if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5"){
+                    if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
                       departmentUnidad=departmentUnidad+1;
                       $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                     }
@@ -8451,7 +8550,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {                                               
                   for (var i=4; i<$scope.list_depto_floors.length; i++){
                     for (var d in  $scope.list_depto_floors[i].deptos){
-                      if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5"){
+                      if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
                         departmentUnidad=departmentUnidad+1;
                         $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                       }

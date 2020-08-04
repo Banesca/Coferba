@@ -9,7 +9,6 @@
 		            	<span ng-if="objFloor.nameFloor=='co'">COCHERA</span>
 		            	<span ng-if="objFloor.nameFloor=='ba'">BAULERA</span>
 		            	<span ng-if="objFloor.nameFloor=='lo'">LOCAL</span>
-		            	<span ng-if="objFloor.nameFloor=='pb'">UNIDAD PB</span>
 		            </span>
 		            <span ng-if="isNotDeptoUnit==0" class="card-depto-span">SELECCIONA UNA UNIDAD</span>
             	</h3>
@@ -26,7 +25,7 @@
 				            <span class="card-depto-span" style="margin-left: 14px;">DEPARTAMENTO</span>
 				        </div>
 				    </div>
-				    <!-- Others-->
+				    <!-- Porteria-->
 				    <!-- ng-click="!porteriaExist?assign2UnitFn('','set','5'):''" 
 				    <label ng-if="porteriaExist" class="label label-danger porteria-created">PORTERIA CREADA</label>-->
 				    <div class="col-md-6 card-depto-colum" ng-click="assign2UnitFn('','set','5')" >
@@ -37,6 +36,15 @@
 				             <span class="card-depto-span" style="margin-left: 38px;">PORTERIA</span>
 				        </div>
 				    </div>
+				    <!-- Departament Mix-->
+				    <div class="col-md-6 card-depto-colum" ng-click="assign2UnitFn('','set','6')" >
+				        <div class="card-depto cyan white-text">
+				            <div class="card-depto-content">
+				            	<i class="fas fa-building" style="padding-left: 0.25em;"></i>
+				            </div>
+				             <span class="card-depto-span" style="margin-left: 38px;">DEPARTMENTO MIXTO</span>
+				        </div>
+				    </div>				   
 				</div>
 				<div ng-if="isNotDeptoUnit==1" class="col-md-12"> 
 					<!-- Units differents than department and porteria-->                         

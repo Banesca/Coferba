@@ -4,6 +4,7 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
   function($http, tokenSystem, $timeout, serverHost, serverBackend, serverHeaders){
       var addressResult=0;
       var rsJsonAddress = {};
+      var rsJson={};
       var checkResult =0;
       return {
           /* CHECK ADDRESS IF IN DEBT */
@@ -24,6 +25,7 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
           },
           /* GET ALL BUILDINGS CUSTOMERS */
           getBuildings: function() {
+            rsJson={};
             //console.log("[Address Services]: Get Agents ");
               return $http({
                     method : "GET",
@@ -38,6 +40,7 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
           },
           /* GET ALL BUILDINGS DEPARTMENTS BY ID*/
           getBuildingsDeptos: function(id) {
+            rsJson={};
             //console.log("[Address Services]: Get Agents ");
               return $http({
                     method : "GET",
@@ -51,6 +54,7 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
             });   
           },
           getLocations: function(idProvince) {
+            rsJson={};
             //console.log("[Address Services]: Get Locations of province id:"+idProvince);
               return $http({
                     method : "GET",
@@ -64,6 +68,7 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
             });   
           },
           getAllLocations: function() {
+            rsJson={};
             //console.log("[Address Services]: Get Locations:");
               return $http({
                     method : "GET",
@@ -78,11 +83,28 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
             });   
           },
           /*API GOB AR */
+          getProvinceIdByName: function(provinceName) {
+            rsJson={};
+            console.log("[Address Services]: Get Province ID By his Name: "+provinceName);
+              return $http({
+                    method : "GET",
+                    url : "https://apis.datos.gob.ar/georef/api/provincias?nombre="+provinceName+"&campos=id,nombre"
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data.provincias[0].id;
+                    console.log("Provincia: "+provinceName+" ID: "+rsJson);
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          /*API GOB AR */
           getLocationsByName: function(locationName) {
+            rsJson={};
             //console.log("[Address Services]: Get Locations By Name: "+locationName);
               return $http({
                     method : "GET",
-                    url : "https://apis.datos.gob.ar/georef/api/localidades?provincia="+locationName+"&campos=nombre&max=100"
+                    url : "https://apis.datos.gob.ar/georef/api/localidades?provincia="+locationName+"&campos=id,nombre"
                   }).then(function mySuccess(response) {
                     rsJson=response.data.localidades;
                     return rsJson;
@@ -92,19 +114,39 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
             });   
           },
           /*API GOB AR */
-          getAddressByName: function(addressName) {
+          getAddressByName: function(addressName, idProvince) {
+            rsJson={};
             //console.log("[Address Services]: Get Address By name");
+            var API_url=idProvince==null || idProvince==''?"https://apis.datos.gob.ar/georef/api/direcciones?direccion=":"https://apis.datos.gob.ar/georef/api/direcciones?provincia="+idProvince+"&direccion=";
               return $http({
                     method : "GET",
-                    url : "https://apis.datos.gob.ar/georef/api/direcciones?direccion="+addressName
+                    url : API_url+addressName+"&campos=provincia, localidad_censal, ubicacion, nomenclatura&exacto=true"
                   }).then(function mySuccess(response) {
-                    rsJson=response.data.direcciones;
+                    rsJson=response.data.direcciones.length>0?response.data.direcciones:null;
                     return rsJson;
                   },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
+                    console.log("Error: "+response.data.errores.codigo_interno);
+                    console.log("Error: "+response.data.errores.mensaje); 
                     return response;
             });   
-          }, 
+          },
+          /*API LOCAL */
+          checkIfBuildingExistByAddressName: function(jsonAddr) {
+            rsJson={};
+            console.log("[Address Services]: chek if a Building Exist by Address name");
+            console.log(jsonAddr);
+              return $http.post(serverHost+serverBackend+"Clientes/searchAddress",jsonAddr)
+                .then(function mySucess(response, status, data) {
+                  rsJson.status=response.status;
+                  rsJson.data=response.data[0];
+                  return rsJson;
+              },function myError(response, error) { 
+                console.log("Error: "+response.status+" ["+response.statusText+"]");
+                rsJson.status=response.status;
+                rsJson.data=response.error;   
+                return rsJson;
+              }); 
+          },  
           /*API GOB AR */   
           getStates_API: function() {
             //console.log("[Address Services]: Get States ");

@@ -51,7 +51,8 @@
                     <h3 ng-if="sysContent=='registeredCustomers'" class="panel-title">CLIENTES REGISTRADOS</h3>
                     <h3 ng-if="sysContent=='registeredNotCustomers'" class="panel-title">CLIENTES NO REGISTRADOS</h3>
                   </div>
-                    <div ng-if="sysContent=='registeredCustomers'" class="panel-body">
+                    <!--REGISTERED CUSTOMER PANEL -->
+                    <div id="custRegistered" ng-if="sysContent=='registeredCustomers'" class="panel-body">
                   	  <!-- ROW WITH THE FILTERS USED TO DISPLAY DATA IN THE TABLE -->
                       <div  class="row">
                       	<div class="form-group">
@@ -66,7 +67,7 @@
                                   <label style="padding-left: 15px;">Tipo de Cliente</label>
                                   <div class="input-group">
                                       <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                      <select  name="filterTypeOfClient" ng-change="search(filterTypeOfClient.ClientType, true); getCustomersListByTypeFn(filterTypeOfClient.idClientType); onSelectCallback()" ng-options="(item.ClientType | uppercase) for item in rsCustomerTypeData " ng-disabled="rsCustomerListData.status==404"  class="form-control" ng-model="$parent.filterTypeOfClient">
+                                      <select  name="filterTypeOfClient" ng-change="getCustomersListByTypeFn(filterTypeOfClient.idClientType); onSelectCallback()" ng-options="(item.ClientType | uppercase) for item in rsCustomerTypeFilterData" ng-disabled="rsCustomerListData.status==404"  class="form-control" ng-model="$parent.filterTypeOfClient">
                                           <option value="" >Todos</option>
                                       </select>
                                   </div>
@@ -74,9 +75,9 @@
                               <!-- Company Name-->    
                               <div class="col-md-3 col-sm-6">
                                   <label class="clf-p-left">
-                                    <span ng-if="filterTypeOfClient.idClientType==1">Cliente Administracion </span>
+                                    <span ng-if="filterTypeOfClient.idClientType==1">Administraciones </span>
                                     <span ng-if="filterTypeOfClient.idClientType==2">Cliente Edificio</span>
-                                    <span ng-if="filterTypeOfClient.idClientType==3">Cliente Empresa </span>
+                                    <span ng-if="filterTypeOfClient.idClientType==3">Empresas </span>
                                     <span ng-if="filterTypeOfClient.idClientType==4">Cliente Sucursal </span>
                                     <span ng-if="filterTypeOfClient.idClientType==5">Cliente Particular </span>
                                     <span ng-if="filterTypeOfClient.idClientType=='' || filterTypeOfClient.idClientType==undefined">Cliente </span>
@@ -84,9 +85,9 @@
                                   <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-file-signature"></i></span>
                                             <ui-select name="new_admin_id" 
-                                                        ng-disabled="rsCustomerListData.status==404" 
+                                                        ng-disabled="rsCustomerListData.status==404 || (filterTypeOfClient=='' || filterTypeOfClient==undefined)" 
                                                         class="dropdown-select" 
-                                                        ng-change="search(filterCustomerIdKf.selected.name, true);" 
+                                                        ng-change="searchCustomersById(filterCustomerIdKf.selected.name, true);" 
                                                         ng-model="filterCustomerIdKf.selected"  
                                                         autofocus>
                                                 <ui-select-match placeholder="Seleccione una opci&#243n">{{$select.selected.name | uppercase}}</ui-select-match>
@@ -127,7 +128,8 @@
                         </div>
                       <!-- //PAGINATION -->
                     </div>
-                    <div ng-if="sysContent=='registeredNotCustomers'" class="panel-body">
+                    <!--NOT REGISTERED CUSTOMER PANEL -->
+                    <div id="custNotRegistered" ng-if="sysContent=='registeredNotCustomers'" class="panel-body">
                       <div class="clear-fix"></div>
                       <!-- TABLE LIST WHERE IS DISPLAYED THE CUSTOMER -->
                       <div ng-include="'views/customer/listCustomers.html'"></div>

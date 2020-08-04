@@ -27,9 +27,9 @@
 									<div class="form-group" ng-class="
 								  			{	
 								  				'col-md-12':
-								  				customer.new.idClientTypeFk=='' || customer.new.idClientTypeFk==undefined || customer.new.idClientTypeFk=='2',
+								  				customer.new.idClientTypeFk=='' || customer.new.idClientTypeFk==undefined || customer.new.idClientTypeFk=='2' || customer.new.idClientTypeFk=='5',
 								  				'col-md-6':
-								  				(customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!='2'),
+								  				(customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!='2' && customer.new.idClientTypeFk!='5'),
 								  				'has-success': 
 								  				customer.new.idClientTypeFk!=undefined && fNewCustomer.customer_type.$valid,
 								  			 	'has-error':  
@@ -38,12 +38,12 @@
 									  <label style="padding-left: 15px;">Tipo de cliente</label>
 										    <div class="input-group " >
 									    		<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-										    	<select id="customer_type" name="customer_type" class="form-control" ng-change="customerTypeCustomer(); cleanCustomerFieldFn(); "  ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData " ng-model="customer.new.idClientTypeFk" required autofocus >
+										    	<select style="padding-left: 0px;" id="customer_type" name="customer_type" class="form-control" ng-change="customerTypeCustomer(); cleanCustomerFieldFn(); "  ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData " ng-model="customer.new.idClientTypeFk" required autofocus >
 											    	<option value="">Cliente</option>
 										    	</select>
 											</div>
 									</div>
-									<div class="form-group col-md-6" ng-if="(customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!=2)" ng-class="
+									<div class="form-group col-md-6" ng-if="(customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!='2' && customer.new.idClientTypeFk!='5')" ng-class="
 								  			{	'has-success': 
 								  				customer.new.typeInmueble!=undefined && fNewCustomer.tipo_inmueble.$valid,
 								  			 	'has-error':  
@@ -81,11 +81,13 @@
 								<!-- Customer Basic Inputs -->
 								<div ng-if="customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined" ng-include="'views/customer/comp_customerBasicInputs.html'"></div>	
 								<!-- Address list-->
-								<div ng-if="customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined" ng-include="'views/customer/comp_addressInputs.html'"></div>	
+								<div ng-if="customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!='5'" ng-include="'views/customer/comp_addressInputs.html'"></div>
+								<!-- DIRECCIONES DE UN PARTICULAR -->
+								<div ng-if="customer.new.idClientTypeFk==5" ng-include="'views/customer/comp_particularAddress.html'"></div>		
 								<!-- Administration list-->
 				                <div ng-include="'views/customer/comp_companiesList.html'"></div>
 								<!-- Zone -->
-								<div ng-if="customer.new.idClientTypeFk==2 || customer.new.idClientTypeFk==4" ng-include="'views/customer/comp_zoneInput.html'"></div>				                 				                											          							
+								<div ng-if="customer.new.idClientTypeFk==2 || customer.new.idClientTypeFk==4" ng-include="'views/customer/comp_zoneInput.html'"></div>
 							</div>
 							<!-- Right Colunm -->
 							<div ng-class="customer.new.idClientTypeFk==undefined || customer.new.idClientTypeFk==''?'col-md-12': 'col-md-6'">
@@ -119,9 +121,7 @@
 							</div>		
 						</fieldset>
 						<fieldset class="animate-switch" ng-init="enabledNextBtn();" ng-switch-when="PASO 2">
-							<div class="col-md-6">
-								<!-- DIRECCIONES DE UN PARTICULAR -->
-								<div ng-if="customer.new.idClientTypeFk==5" ng-include="'views/customer/comp_particularAddress.html'"></div>		
+							<div class="col-md-6">		
 								<!-- Mails -->
 								<div ng-include="'views/customer/comp_customerMails.html'"></div>					       									
 							</div>
@@ -170,7 +170,7 @@
 	                    		ng-disabled="fNewCustomer.$invalid" 
 	                    		class="btn btn-labeled btn-success">
 	                        Enviar<span class="btn-label-right"><i class="glyphicon glyphicon-send"></i> </span></button>	                        
-	                        <!--enabledNextBtn(); loadFieldsTo2Step();  -->
+	                        <!--enabledNextBtn(); loadFieldsTo2Step();  ng-disabled="formValidated!=true"-->
 	                    <button ng-click="enabledNextBtn(); incrementStep(); loadFieldsTo2Step('new');"  ng-disabled="formValidated!=true"  ng-if="(customer.new.idClientTypeFk==5 && stepIndexTmp==0) || (customer.new.idClientTypeFk!=5 && btnShow)" class="btn btn-labeled btn-primary">
 	                        Siguiente<span class="btn-label-right"><i class="fas fa-arrow-circle-right"></i></span></button>
 	                </div>

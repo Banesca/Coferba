@@ -42,7 +42,7 @@
 			ng-required="(customer.new.idClientTypeFk==2) || ((customer.new.idClientTypeFk!=2) && !customer.new.isNotCliente && customer.new.typeInmueble!='')" />
       	</div>			                  	
 		<ul class="list-group" ng-if="rsAddress_API_Data_Main.length>0">
-			<li class="list-group-item" ng-repeat="item in rsAddress_API_Data_Main" ng-click="fillData(item, 'address', 'new')">{{item.calle.nombre}} {{item.altura.valor}}, {{item.provincia.nombre}}</li>
+			<li class="list-group-item" ng-repeat="item in rsAddress_API_Data_Main" ng-click="searchAddressByNameFn(item, 'address', 'new')">{{item.calle.nombre}} {{item.altura.valor}}, {{item.provincia.nombre}}</li>
 		</ul>
 	</div>
 	<!-- floor number for a building that is going to register as a Non-customer -->
@@ -103,7 +103,7 @@
               			 ng-change="getBuildingsDeptosFn(customer.select.main.address.selected.idClient); enabledNextBtn(); customer.select.main.department=''" 
               			 ng-model="customer.select.main.address.selected" autofocus>
 
-                  <ui-select-match allow-clear="true" placeholder="Selecciona un edificio">{{$select.selected.address}}</ui-select-match>
+                  <ui-select-match allow-clear="true" placeholder="Selecciona un edificio">{{$select.selected.address | uppercase}}</ui-select-match>
                     <ui-select-choices repeat="item in rsBuildingAddressData | filter: $select.search">
                       <div ng-bind-html="item.address | highlight: $select.search"></div>
                         <small ng-bind-html="item.province | highlight: $select.search"></small>
@@ -155,9 +155,8 @@
                 <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
                     <ui-select name="new_province" 
                     			class="dropdown-select" 
-                    			ng-disabled="!customer.new.nameAddress" 
                     			ng-model="customer.select.main.province.selected"  
-                    			ng-change="getLocationByIdFn(customer.select.main.province.selected.idProvince); getCurrentAddrVal(customer.select.main.province.selected, customer.select.main.location.selected); enabledNextBtn();" 
+                    			ng-change="getAddressIdByNameFn(customer.select.main.province.selected.province);getLocationByIdFn(customer.select.main.province.selected.idProvince); getCurrentAddrVal(customer.select.main.province.selected, customer.select.main.location.selected); enabledNextBtn();" 
                     			required="(customer.new.idClientTypeFk==2) || ((customer.new.idClientTypeFk!=2) && !customer.new.isNotCliente && customer.new.typeInmueble!='')" autofocus>
                         <ui-select-match placeholder="Seleccione una provincia">{{$select.selected.province | uppercase}}</ui-select-match>
                         <ui-select-choices repeat="item in rsStatesData | filter: $select.search">
@@ -184,7 +183,7 @@
                     <ui-select name="new_Localidad" 
                     			class="dropdown-select" 
                     			ng-model="customer.select.main.location.selected" 
-                    			ng-disabled="!customer.select.main.province.selected.idProvince" 
+                    			ng-disabled="!customer.select.main.province.selected.idProvince  && !customer.new.nameAddress" 
                     			required="(customer.new.idClientTypeFk==2) || ((customer.new.idClientTypeFk!=2) && !customer.new.isNotCliente && customer.new.typeInmueble!='')" 
                     			ng-change="getCurrentAddrVal(customer.select.main.province.selected, customer.select.main.location.selected); enabledNextBtn();" 
                     			autofocus>
