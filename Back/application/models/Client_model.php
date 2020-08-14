@@ -196,7 +196,7 @@ class Client_model extends CI_Model {
 
         $idClientDepartamentFk = null;
         if ($client['idTipoInmuebleFk'] == '1') { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
-            $idClientDepartamentFk = $this->searchAddress($client['address']);
+            $idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
             if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
                 $this->db->insert('tb_clients', [
                         'idClientTypeFk' => 2,
@@ -264,7 +264,7 @@ class Client_model extends CI_Model {
             foreach ($client['list_schedule_atention'] as $valor) {
 
                 $this->db->insert('tb_client_schedule_atention', [
-                    'idClienteFk' => $valor['idClienteFk'],
+                    'idClienteFk' => $client['idClient'],
                     'day'         => $valor['day'],
                     'fronAm'      => $valor['fronAm'],
                     'toAm'        => $valor['toAm'],
@@ -278,7 +278,7 @@ class Client_model extends CI_Model {
             foreach ($client['list_phone_contact'] as $valor) {
 
                 $this->db->insert('tb_client_phone_contact', [
-                    'idClientFk'   => $valor['idClientFk'],
+                    'idClientFk'   => $client['idClient'],
                     'phoneTag'     => $valor['phoneTag'],
                     'phoneContact' => $valor['phoneContact'],
                 ]);
@@ -288,19 +288,18 @@ class Client_model extends CI_Model {
 
 
             foreach ($client['list_client_user'] as $valor) {
-
                 $this->db->insert('tb_client_users', [
-                        'idClientFk' => $valor['idClienteFk'],
+                        'idClientFk' => $client['idClient'],
                         'idUserFk'   => $valor['idUserFk'],
                     ]
                 );
             }
 
             if (count(@$client['list_emails']) > 0) {
-                $this->db->delete('list_emails', [ 'idClientFk' => $client['idClient'] ]);
+                $this->db->delete('tb_client_mails', [ 'idClientFk' => $client['idClient'] ]);
                 foreach ($client['list_emails'] as $valor) {
                     $this->db->insert('tb_client_mails', [
-                            'idClientFk'     => $idClientFk,
+                            'idClientFk'     => $client['idClient'],
                             'mailTag'        => $valor['mailTag'],
                             'mailContact'    => $valor['mailContact'],
                             'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
@@ -309,8 +308,6 @@ class Client_model extends CI_Model {
                     );
                 }
             }
-
-
             return true;
         }
 
@@ -676,17 +673,17 @@ class Client_model extends CI_Model {
             foreach ($client['list_phone_contact'] as $valor) {
 
                 $this->db->insert('tb_client_phone_contact', [
-                    'idClientFk'   => $valor['idClientFk'],
+                    'idClientFk'   => $client['idClient'],
                     'phoneTag'     => $valor['phoneTag'],
                     'phoneContact' => $valor['phoneContact'],
                 ]);
             }
 
             if (count(@$client['list_emails']) > 0) {
-                $this->db->delete('list_emails', [ 'idClientFk' => $client['idClient'] ]);
+                $this->db->delete('tb_client_mails', [ 'idClientFk' => $client['idClient'] ]);
                 foreach ($client['list_emails'] as $valor) {
                     $this->db->insert('tb_client_mails', [
-                            'idClientFk'     => $idClientFk,
+                            'idClientFk'     => $client['idClient'],
                             'mailTag'        => $valor['mailTag'],
                             'mailContact'    => $valor['mailContact'],
                             'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
@@ -859,10 +856,22 @@ class Client_model extends CI_Model {
                         'name'           => $client['address'],
                         'address'        => $client['address'],
                         'isNotCliente'   => 1,
-                        /*'addressLat'              => $client['addressLat'],
-                        'addressLon'              => $client['addressLon'],
-                        'idLocationFk'            => $client['idLocationFk'],
-                        'idProvinceFk'            => $client['idProvinceFk'],*/
+                        'idStatusFk'     => 0,
+                        'addressLat'     => $client['addressLat'],
+                        'addressLon'     => $client['addressLon'],
+                        'idLocationFk'   => $client['idLocationFk'],
+                        'idProvinceFk'   => $client['idProvinceFk'],
+                    ]
+                );
+                //$idClientDepartamentFk = $this->db->insert_id();
+                //  DEPARTAMENTO
+                $this->db->insert('tb_client_departament', [
+                        'idClientFk'              => $idClientDepartamentFk,
+                        'floor'                   => $client['floor'],
+                        'departament'             => $client['department'],
+                        'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
+                        'idStatusFk'              => 1,
+                        'numberUNF'               => $client['numberUNF'],
                     ]
                 );
                 $idClientDepartamentFk = $this->db->insert_id();
@@ -962,10 +971,10 @@ class Client_model extends CI_Model {
             }
 
             if (count(@$client['list_emails']) > 0) {
-                $this->db->delete('list_emails', [ 'idClientFk' => $client['idClient'] ]);
+                $this->db->delete('tb_client_mails', [ 'idClientFk' => $client['idClient'] ]);
                 foreach ($client['list_emails'] as $valor) {
                     $this->db->insert('tb_client_mails', [
-                            'idClientFk'     => $idClientFk,
+                            'idClientFk'     => $client['idClient'],
                             'mailTag'        => $valor['mailTag'],
                             'mailContact'    => $valor['mailContact'],
                             'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
@@ -1173,13 +1182,13 @@ class Client_model extends CI_Model {
         )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
-        if (count(@$client['list_schedule_atention']) > 0 || count(@$client['list_emails']) > 0) {
+        if (count(@$client['list_schedule_atention']) > 0 && count(@$client['list_emails']) > 0) {
             $this->db->delete('tb_client_schedule_atention', [ 'idClienteFk' => $client['idClient'] ]);
 
             foreach ($client['list_schedule_atention'] as $valor) {
 
                 $this->db->insert('tb_client_schedule_atention', [
-                    'idClienteFk' => $valor['idClienteFk'],
+                    'idClienteFk' =>$client['idClient'],
                     'day'         => $valor['day'],
                     'fronAm'      => $valor['fronAm'],
                     'toAm'        => $valor['toAm'],
@@ -1189,10 +1198,10 @@ class Client_model extends CI_Model {
             }
 
             if (count(@$client['list_emails']) > 0) {
-                $this->db->delete('list_emails', [ 'idClientFk' => $client['idClient'] ]);
+                $this->db->delete('tb_client_mails', [ 'idClientFk' => $client['idClient'] ]);
                 foreach ($client['list_emails'] as $valor) {
                     $this->db->insert('tb_client_mails', [
-                            'idClientFk'     => $idClientFk,
+                            'idClientFk'     => $client['idClient'],
                             'mailTag'        => $valor['mailTag'],
                             'mailContact'    => $valor['mailContact'],
                             'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
@@ -1209,6 +1218,7 @@ class Client_model extends CI_Model {
     }
 
     // ****************  //
+
 
 
     // PARTICULAR //
@@ -1264,7 +1274,7 @@ class Client_model extends CI_Model {
                         $idClientDepartamentFk = null;
                         $idDepartmentKf        = null;
                         //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
-                        if ($valor['idTipoInmuebleFk'] == '1' && ($valor['idDepartmentFk'] == null || $valor['idDepartmentFk'] == "")) {
+                        if ($valor['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) {
                             $idClientDepartamentFk = $this->searchAddress($valor['address'], $valor['idProvinceFk'], $valor['idLocationFk']);
                             if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
                                 $this->db->insert('tb_clients', [
@@ -1363,14 +1373,14 @@ class Client_model extends CI_Model {
 
         if (count(@$client['list_address_particular']) > 0) {
 
-            $this->db->delete('list_address_particular', [ 'idClientFk' => $client['idClient'] ]);
+            $this->db->delete('tb_client_address_particular', [ 'idClientFk' => $client['idClient'] ]);
 
             //DIRECCIONES DE UN PARTICULAR
             foreach ($client['list_address_particular'] as $valor) {
                 $idClientDepartamentFk = null;
                 $idDepartmentKf        = null;
                 //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
-                if ($valor['idTipoInmuebleFk'] == '1' && ($valor['idDepartmentFk'] == null || $valor['idDepartmentFk'] == "")) {
+                if ($valor['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) {
                     $idClientDepartamentFk = $this->searchAddress($valor['address'], $valor['idProvinceFk'], $valor['idLocationFk']);
                     if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
                         $this->db->insert('tb_clients', [
@@ -1405,7 +1415,7 @@ class Client_model extends CI_Model {
                     $idDepartmentKf = $client['idDepartmentFk'];
                 }
                 $this->db->insert('tb_client_address_particular', [
-                        'idClientFk'                => $idClientFk,
+                        'idClientFk'                => $client['idClient'],
                         'address'                   => $valor['address'],
                         'depto'                     => $valor['depto'],
                         'isBuilding'                => $valor['isBuilding'],
