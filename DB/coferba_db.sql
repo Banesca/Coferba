@@ -382,22 +382,25 @@ CREATE TABLE `tb_client_address_particular` (
   `clarification` varchar(200) DEFAULT NULL,
   `idParticularDepartamentKf` int(11) DEFAULT NULL COMMENT 'Id del departamento dependiendo del tipo de inmueble',
   `idZonaFk` varchar(255) DEFAULT NULL,
+  `idTipoInmuebleFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAddressParticular`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_address_particular` */
 
-insert  into `tb_client_address_particular`(`idAddressParticular`,`idClientFk`,`address`,`depto`,`isBuilding`,`idProvinceFk`,`idLocationFk`,`clarification`,`idParticularDepartamentKf`,`idZonaFk`) values 
-(1,12,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(2,12,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(3,12,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(4,12,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(5,21,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(6,21,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(7,28,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(8,28,'TEST','depto',1,1,1,'TEST',NULL,NULL),
-(9,29,'TEST2','depto',1,1,1,'TEST',NULL,NULL),
-(10,29,'TEST3','depto',1,1,1,'TEST',NULL,NULL);
+insert  into `tb_client_address_particular`(`idAddressParticular`,`idClientFk`,`address`,`depto`,`isBuilding`,`idProvinceFk`,`idLocationFk`,`clarification`,`idParticularDepartamentKf`,`idZonaFk`,`idTipoInmuebleFk`) values 
+(1,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(2,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(3,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(4,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(5,21,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(6,21,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(7,28,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(8,28,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(9,29,'TEST2','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(10,29,'TEST3','depto',1,1,1,'TEST',NULL,NULL,NULL),
+(11,106,'TEST','ddfg',1,1,1,'5',1,'1',1),
+(13,1,'TEST','ddfg',1,1,1,'5',1,'1',1);
 
 /*Table structure for table `tb_client_authorizing` */
 
@@ -427,7 +430,7 @@ CREATE TABLE `tb_client_billing_information` (
   `idProvinceBillingFk` int(11) DEFAULT NULL,
   `idTypeTaxFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idBillingInfo`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_billing_information` */
 
@@ -500,7 +503,23 @@ insert  into `tb_client_billing_information`(`idBillingInfo`,`idClientFk`,`busin
 (66,88,'text','text',1,1,1),
 (67,89,'text','text',1,1,1),
 (68,90,'text','text',1,1,1),
-(69,91,'text','text',1,1,1);
+(69,91,'text','text',1,1,1),
+(70,92,'text','text',1,1,1),
+(71,93,'text','text',1,1,1),
+(72,94,'text','text',1,1,1),
+(73,95,'text','text',1,1,1),
+(74,96,'text','text',1,1,1),
+(75,97,'text','text',1,1,1),
+(76,98,'text','text',1,1,1),
+(77,99,'text','text',1,1,1),
+(78,100,'text','text',1,1,1),
+(79,101,'text','text',1,1,1),
+(80,102,'text','text',1,1,1),
+(81,103,'text','text',1,1,1),
+(82,104,'text','text',1,1,1),
+(83,105,'text','text',1,1,1),
+(84,106,'text','text',1,1,1),
+(85,107,'text','text',1,1,1);
 
 /*Table structure for table `tb_client_camera` */
 
@@ -552,7 +571,7 @@ CREATE TABLE `tb_client_departament` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `numberUNF` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientDepartament`)
-) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_departament` */
 
@@ -702,7 +721,11 @@ insert  into `tb_client_departament`(`idClientDepartament`,`idClientFk`,`floor`,
 (148,90,'1','departament',0,1,'2020-08-12 15:15:43',1),
 (149,90,'1','departament',0,1,'2020-08-12 15:15:43',1),
 (150,91,'1','departament',0,1,'2020-08-12 15:16:09',1),
-(151,91,'1','departament',0,1,'2020-08-12 15:16:09',1);
+(151,91,'1','departament',0,1,'2020-08-12 15:16:09',1),
+(152,100,'1','departament',0,1,'2020-08-14 00:11:36',1),
+(153,100,'1','departament',0,1,'2020-08-14 00:11:36',1),
+(164,1,'1','departament',0,1,'2020-08-14 00:18:33',1),
+(165,1,'1','departament',0,1,'2020-08-14 00:18:33',1);
 
 /*Table structure for table `tb_client_files_list` */
 
@@ -745,7 +768,7 @@ CREATE TABLE `tb_client_mails` (
   `idTipoDeMailFk` int(11) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idClientMail`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_client_mails` */
 
@@ -763,7 +786,17 @@ insert  into `tb_client_mails`(`idClientMail`,`idClientFk`,`mailTag`,`mailContac
 (11,88,'prueba','prueba@gail.conm',1,0),
 (12,89,'prueba','prueba@gail.conm',1,0),
 (13,90,'prueba','prueba@gail.conm',1,0),
-(14,91,'prueba','prueba@gail.conm',1,0);
+(17,98,'prueba','prueba@gail.conm',1,0),
+(18,99,'prueba','prueba@gail.conm',1,0),
+(19,100,'prueba','prueba@gail.conm',1,0),
+(20,NULL,'prueba','prueba@gail.conm',1,0),
+(21,NULL,'prueba','prueba@gail.conm',1,0),
+(22,NULL,'prueba','prueba@gail.conm',1,0),
+(23,NULL,'prueba','prueba@gail.conm',1,0),
+(24,NULL,'prueba','prueba@gail.conm',1,0),
+(26,91,'prueba','prueba@gail.conm',1,0),
+(30,107,'prueba','prueba@gail.conm',1,0),
+(34,1,'prueba','prueba@gail.conm',1,0);
 
 /*Table structure for table `tb_client_phone_contact` */
 
@@ -775,7 +808,7 @@ CREATE TABLE `tb_client_phone_contact` (
   `phoneContact` varchar(80) DEFAULT NULL,
   `idClientFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientPhoneFk`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_phone_contact` */
 
@@ -814,7 +847,27 @@ insert  into `tb_client_phone_contact`(`idClientPhoneFk`,`phoneTag`,`phoneContac
 (147,NULL,'text',81),
 (148,NULL,'text2',81),
 (149,'123123','text',82),
-(150,'123123','text',82);
+(150,'123123','text',82),
+(151,'123123','text',NULL),
+(152,'123123','text2',NULL),
+(161,'123123','text',99),
+(162,'123123','text',99),
+(163,'123123','text',NULL),
+(164,'123123','text',NULL),
+(165,'123123','text',NULL),
+(166,'123123','text',NULL),
+(171,'123123','text',91),
+(172,'123123','text2',91),
+(173,'123123','text',NULL),
+(174,'123123','text',NULL),
+(175,'123123','text',107),
+(176,'123123','text',107),
+(177,'123123','text',NULL),
+(178,'123123','text',NULL),
+(179,'123123','text',NULL),
+(180,'123123','text',NULL),
+(183,'123123','text',1),
+(184,'123123','text',1);
 
 /*Table structure for table `tb_client_schedule_atention` */
 
@@ -829,7 +882,7 @@ CREATE TABLE `tb_client_schedule_atention` (
   `fronPm` time DEFAULT NULL,
   `toPm` time DEFAULT NULL,
   PRIMARY KEY (`idScheduleAtention`)
-) ENGINE=InnoDB AUTO_INCREMENT=475 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=527 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_schedule_atention` */
 
@@ -1014,8 +1067,24 @@ insert  into `tb_client_schedule_atention`(`idScheduleAtention`,`idClienteFk`,`d
 (470,89,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
 (471,90,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
 (472,90,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(473,91,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(474,91,'text','00:00:00','00:00:00','00:00:00','00:00:00');
+(475,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(476,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(487,98,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(488,98,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(489,99,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(490,99,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(491,100,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(492,100,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(505,91,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(506,91,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(515,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(516,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(517,107,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(518,107,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(519,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(520,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(525,1,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
+(526,1,'text','00:00:00','00:00:00','00:00:00','00:00:00');
 
 /*Table structure for table `tb_client_services` */
 
@@ -1427,7 +1496,7 @@ CREATE TABLE `tb_client_ufc` (
   `idClientFk` int(11) DEFAULT NULL,
   `idTypeTaxFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idUfd`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_ufc` */
 
@@ -1435,7 +1504,9 @@ insert  into `tb_client_ufc`(`idUfd`,`identificador`,`idProvinceFk`,`idClientFk`
 (1,'test1',1,14,1),
 (2,'test2',1,14,1),
 (7,'EDITADO 111',1,4,1),
-(8,'test2',1,4,1);
+(8,'test2',1,4,1),
+(17,'test1',1,1,1),
+(18,'test2',1,1,1);
 
 /*Table structure for table `tb_client_users` */
 
@@ -1447,31 +1518,17 @@ CREATE TABLE `tb_client_users` (
   `idUserFk` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idClientUsers`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_users` */
 
 insert  into `tb_client_users`(`idClientUsers`,`idClientFk`,`idUserFk`,`created_at`) values 
 (1,2,1,NULL),
 (2,2,2,NULL),
-(7,1,1,NULL),
-(8,1,2,NULL),
 (11,5,1,NULL),
 (12,5,2,NULL),
-(13,1,1,NULL),
-(14,1,2,NULL),
-(15,1,1,NULL),
-(16,1,2,NULL),
-(17,1,1,NULL),
-(18,1,2,NULL),
 (19,14,1,NULL),
 (20,14,2,NULL),
-(21,1,1,NULL),
-(22,1,2,NULL),
-(23,1,1,NULL),
-(24,1,2,NULL),
-(25,1,1,NULL),
-(26,1,2,NULL),
 (27,19,1,NULL),
 (28,19,2,NULL),
 (29,20,1,NULL),
@@ -1493,7 +1550,21 @@ insert  into `tb_client_users`(`idClientUsers`,`idClientFk`,`idUserFk`,`created_
 (45,81,1,NULL),
 (46,81,2,NULL),
 (47,82,1,NULL),
-(48,82,2,NULL);
+(48,82,2,NULL),
+(49,NULL,1,NULL),
+(50,NULL,2,NULL),
+(59,99,1,NULL),
+(60,99,2,NULL),
+(61,91,1,NULL),
+(62,91,2,NULL),
+(63,NULL,1,NULL),
+(64,NULL,2,NULL),
+(65,107,1,NULL),
+(66,107,2,NULL),
+(67,NULL,1,NULL),
+(68,NULL,2,NULL),
+(73,1,1,NULL),
+(74,1,2,NULL);
 
 /*Table structure for table `tb_clients` */
 
@@ -1531,7 +1602,7 @@ CREATE TABLE `tb_clients` (
   `departmentUnit` int(11) DEFAULT NULL COMMENT 'Designacion de Edificio Tipos {Letras o Numeros}',
   `departmentCorrelation` int(11) DEFAULT NULL COMMENT 'Designacion de correlacion {por piso o todo el edificio}',
   PRIMARY KEY (`idClient`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_clients` */
 
@@ -1575,7 +1646,23 @@ insert  into `tb_clients`(`idClient`,`idClientTypeFk`,`name`,`address`,`addressL
 (88,2,'empresa54666','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:13:50',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
 (89,2,'empresa546636','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:15:03',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
 (90,2,'empresa5466326','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:15:43',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
-(91,2,'empresa54663e26','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:16:09',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1);
+(91,1,'35gh3j5gh','text2','text','text',1,'text2','text',1,1,'',NULL,NULL,'text','text','2020-08-12 15:16:09',NULL,1,'text',0,1,'text','text',1,1,72,NULL,1,1),
+(92,5,'TEST PARdTICaULRa2','TEST',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-08-13 09:44:07',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(93,5,'TEST PARdTIC4aULRa2','TEST','54','-4',1,NULL,NULL,1,1,NULL,NULL,NULL,'asdas',NULL,'2020-08-13 09:46:49',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(94,5,'TEST PARdTIC4aULRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:47:33',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(95,5,'TEST PARdTIC4aUweLRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:48:12',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(96,5,'TEST PARdTIC4a2UweLRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:49:55',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(97,5,'TEST PARdTIC4a2UweLfRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:51:55',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(98,4,'TESTs53','TEST','TEST','TEST',NULL,NULL,NULL,1,1,'',NULL,NULL,'TEST',NULL,'2020-08-14 00:10:46',NULL,1,NULL,1,NULL,'TEST','TEST',1,1,131,NULL,NULL,NULL),
+(99,3,'jorg04e','TEST','TEST','TEST',1,'TEST','TEST',1,1,'',NULL,NULL,'TEST','TEST','2020-08-14 00:11:03',NULL,1,NULL,0,NULL,'TEST','TEST',NULL,1,131,NULL,NULL,NULL),
+(100,2,'empresa54663e26','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-14 00:11:36',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
+(101,5,'TEST PARdTIC4a2UweLf6Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 12:08:30',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(102,5,'TEST PARdTIC4a2UweLf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 12:11:50',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(103,5,'TEST PARdTIC4a24UweLf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:19:05',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(104,5,'TEST PARdTIC4a24Uwe4Lf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:21:15',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(105,5,'TEST PARdTIC4a24Uw4e4Lf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:21:39',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(106,5,'TEST PARdTIC4a24Uw33eLf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:23:42',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(107,3,'jorge04e','TEST','TEST','TEST',1,'TEST','TEST',1,1,'',NULL,NULL,'TEST','TEST','2020-08-14 13:26:21',NULL,1,NULL,0,NULL,'TEST','TEST',NULL,1,131,NULL,NULL,NULL);
 
 /*Table structure for table `tb_clients_phones` */
 

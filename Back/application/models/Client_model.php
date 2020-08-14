@@ -308,6 +308,7 @@ class Client_model extends CI_Model {
                     );
                 }
             }
+
             return true;
         }
 
@@ -357,7 +358,7 @@ class Client_model extends CI_Model {
                 $this->db->select("*")->from("tb_client_mails");
                 $quuery = $this->db->where("tb_client_mails.idClientFk =", $id)->get();
 
-                $rs6                      = $quuery->result_array();
+                $rs6               = $quuery->result_array();
                 $rs['list_emails'] = $rs6;
 
 
@@ -442,6 +443,13 @@ class Client_model extends CI_Model {
 
                     $rs3                        = $quuery->result_array();
                     $rs[$i]['list_client_user'] = $rs3;
+
+
+                    $this->db->select("*")->from("tb_client_mails");
+                    $quuery = $this->db->where("tb_client_mails.idClientFk =", $row->idClient)->get();
+
+                    $rs6                   = $quuery->result_array();
+                    $rs[$i]['list_emails'] = $rs6;
 
 
                     // DATOS DE FACTURCION
@@ -849,7 +857,7 @@ class Client_model extends CI_Model {
 
         $idClientDepartamentFk = null;
         if ($client['idTipoInmuebleFk'] == '1') { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
-            $idClientDepartamentFk = $this->searchAddress($client['address']);
+            $idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
             if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
                 $this->db->insert('tb_clients', [
                         'idClientTypeFk' => 2,
@@ -924,7 +932,7 @@ class Client_model extends CI_Model {
             foreach ($client['list_schedule_atention'] as $valor) {
 
                 $this->db->insert('tb_client_schedule_atention', [
-                    'idClienteFk' => $valor['idClienteFk'],
+                    'idClienteFk' => $client['idClient'],
                     'day'         => $valor['day'],
                     'fronAm'      => $valor['fronAm'],
                     'toAm'        => $valor['toAm'],
@@ -938,7 +946,7 @@ class Client_model extends CI_Model {
             foreach ($client['list_phone_contact'] as $valor) {
 
                 $this->db->insert('tb_client_phone_contact', [
-                    'idClientFk'   => $valor['idClientFk'],
+                    'idClientFk'   => $client['idClient'],
                     'phoneTag'     => $valor['phoneTag'],
                     'phoneContact' => $valor['phoneContact'],
                 ]);
@@ -950,7 +958,7 @@ class Client_model extends CI_Model {
             foreach ($client['list_client_user'] as $valor) {
 
                 $this->db->insert('tb_client_users', [
-                        'idClientFk' => $valor['idClienteFk'],
+                        'idClientFk' => $client['idClient'],
                         'idUserFk'   => $valor['idUserFk'],
                     ]
                 );
@@ -1188,7 +1196,7 @@ class Client_model extends CI_Model {
             foreach ($client['list_schedule_atention'] as $valor) {
 
                 $this->db->insert('tb_client_schedule_atention', [
-                    'idClienteFk' =>$client['idClient'],
+                    'idClienteFk' => $client['idClient'],
                     'day'         => $valor['day'],
                     'fronAm'      => $valor['fronAm'],
                     'toAm'        => $valor['toAm'],
@@ -1218,7 +1226,6 @@ class Client_model extends CI_Model {
     }
 
     // ****************  //
-
 
 
     // PARTICULAR //
@@ -1317,8 +1324,8 @@ class Client_model extends CI_Model {
                                 'idLocationFk'              => $valor['idLocationFk'],
                                 'clarification'             => $valor['clarification'],
                                 'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
-                                'idParticularDepartamentFk' => @$idDepartmentKf,
-                                'idTipoInmuebleFk'          => $valor['idZonaFk'],
+                                'idParticularDepartamentKf' => @$idDepartmentKf,
+                                'idZonaFk'                  => $valor['idZonaFk'],
                             ]
                         );
                     }
@@ -1423,8 +1430,8 @@ class Client_model extends CI_Model {
                         'idLocationFk'              => $valor['idLocationFk'],
                         'clarification'             => $valor['clarification'],
                         'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
-                        'idParticularDepartamentFk' => @$idDepartmentKf,
-                        'idTipoInmuebleFk'          => $valor['idZonaFk'],
+                        'idParticularDepartamentKf' => @$idDepartmentKf,
+                        'idZonaFk'                  => $valor['idZonaFk'],
                     ]
                 );
             }
@@ -1465,7 +1472,7 @@ class Client_model extends CI_Model {
                 $this->db->select("*")->from("tb_client_mails");
                 $quuery = $this->db->where("tb_client_mails.idClientFk =", $idClient)->get();
 
-                $rs7                      = $quuery->result_array();
+                $rs7               = $quuery->result_array();
                 $rs['list_emails'] = $rs7;
 
 
