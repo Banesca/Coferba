@@ -74,7 +74,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
                         container: 'body',
                         placement:'auto right',
                         trigger: 'manual',
-                        title: '<div>Soporte coferba</div>',
+                        title: '<div>TASS seguridad</div>',
                         template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
                         html: true
                 }); 
@@ -115,7 +115,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
                 container: 'body',
                 placement:'auto right',
                 trigger: 'manual',
-                title: '<div>Soporte coferba</div>',
+                title: '<div>TASS seguridad</div>',
                 template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title pop-warning"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
                 html: true
         }); 
@@ -223,7 +223,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
               container: 'body',
               placement:'auto right',
               trigger: 'manual',
-              title: '<div>Soporte coferba</div>',
+              title: '<div>TASS seguridad</div>',
               template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"><button type="button" class="btn btn-sm btn-success modalYes">Si</button>&nbsp<button type="button" class="btn btn-sm btn-danger modalNo" data-dismiss="modal">No</button></div></div>',
               html: true
           }); 

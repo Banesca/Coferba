@@ -54,10 +54,29 @@ moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$ti
                   return response;
                 })  
           },
-          updateAdminCustomer: function(data) {
+          updateCustomer: function(data) {
             rsCustomer.client = data;
+            var switchOption = rsCustomer.client.idClientTypeFk;
+            switch(switchOption){
+              case "1": //ADMINISTRATION CUSTOMER
+                typeOfCustomer="updateadmin";
+              break;
+              case "2": //BUILDING CUSTOMER
+                typeOfCustomer="updatebuilding";
+              break;
+              case "3": //COMPANY CUSTOMER
+                typeOfCustomer="updatecompany";
+              break;
+              case "4": //BRANCH  CUSTOMER
+                typeOfCustomer="updatebranch";
+              break;
+              case "5": //PARTICULAR  CUSTOMER
+                typeOfCustomer="updateparticular";
+              break;
+              default:
+            }
             //console.log("[Customer Services] => new: "+rsCustomer.client.name);
-              return $http.post(serverHost+serverBackend+"Clientes/updateadmin",rsCustomer,serverHeaders)
+              return $http.post(serverHost+serverBackend+"Clientes/"+typeOfCustomer,rsCustomer,serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJson=response;
                   return rsJson;
@@ -69,7 +88,7 @@ moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$ti
           getCustomerList: function(searchFilter) {
             var sFilter=searchFilter;
             var sMsg=searchFilter==null||searchFilter==undefined?"All":searchFilter;
-            //console.log("[Profile Services] => criterio de busqueda: "+sMsg);
+            //console.log("[Customer Services] => criterio de busqueda: "+sMsg);
               return $http.post(serverHost+serverBackend+"Clientes/search",sFilter,serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJson=response.data;
@@ -79,5 +98,31 @@ moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$ti
                   return response;
                 })  
           },
+          getCustomersById: function(id) {
+            //console.log("[Customer Services] => get customer by id: "+sMsg);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Clientes/findadmin/"+id
+                  }).then(function mySuccess(response) {
+                  rsJson=response.data;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                })  
+          },          
+          getCustomersListByCustomerId: function(id) {
+            //console.log("[Customer Services] => Listado de clientes asociado a un cliente: "+sMsg);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Clientes/customersById/"+id
+                  }).then(function mySuccess(response) {
+                  rsJson=response.data;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                })  
+          },        
       }
 }]);

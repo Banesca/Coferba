@@ -134,6 +134,21 @@ class Util_model extends CI_Model {
 
         return $rs;
     }
+    public function getCustomerIdByDepartmentsId($id) {
+
+        $query = null;
+        $rs    = null;
+        $query = $this->db->select("*")->from("tb_client_departament")
+            ->where("tb_client_departament.idClientDepartament =", $id)
+            ->get();
+ 
+        $rs = $query->result_array();
+        if ($query->num_rows() > 0) {
+            $rs = $query->row();
+            $rs= $this->getDepartmentByCustomerId($rs->idClientFk);
+        }          
+        return $rs;
+    }    
     public function getTipoInmueble() {
 
         $query = null;
@@ -147,7 +162,19 @@ class Util_model extends CI_Model {
 
         return $rs;
     }
+    public function getTypeOfMails() {
 
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_tipo_mails")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
     public function getAdressClientEdificio() {
 
         $query = null;

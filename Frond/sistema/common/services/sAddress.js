@@ -53,6 +53,21 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
                     return response;
             });   
           },
+          /* GET ALL BUILDINGS DEPARTMENTS BY ID*/
+          getBuildingsDeptosFromDeptoId: function(id) {
+            rsJson={};
+            //console.log("[Address Services]: Get building deptos from depto id ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/getCustomerIdByDepartmentsId/"+id
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },          
           getLocations: function(idProvince) {
             rsJson={};
             //console.log("[Address Services]: Get Locations of province id:"+idProvince);

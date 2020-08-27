@@ -1,6 +1,10 @@
 <!-- Schedule Atention -->
 <div class="well-checkbox" style="margin-left: 0px; margin-right: 0px;">
-	<label class="from-left-from-label">HORARIO DE ATENCION </label>
+	<div id="schedule_info" class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  Existen valores precargados en el dia Lunes.
+	</div>
+	<label class="from-left-from-label" >HORARIO DE ATENCION </label>
   	<table>
         <tr ng-repeat="item in list_schedule">
         	<td style="padding-top: 11px; width: 1%;">

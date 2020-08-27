@@ -61,5 +61,31 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     return response;
             });   
           },
+          typeOfMails: function() {
+            console.log("[Utilities Services]: Get Type of Mails");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/typeOfMails"
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          typeOfProperty: function() {
+            console.log("[Utilities Services]: Get Type of Property");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/tipoInmueble"
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },         
       }
 }]);

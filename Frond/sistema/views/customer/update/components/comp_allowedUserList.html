@@ -1,5 +1,5 @@
-<div class="col-md-12" ng-if="(customer.new.idClientTypeFk!=5)">	          		
-<label class="clf-p-left">Usuario a autorizar <span style="margin-left: 120px;"> <button ng-disabled="authUser==0 || authUser==undefined" ng-click="addAuthUserFn(authUser.selected)" class="btn btn-sm btn-success"><i class="fas fa-plus"></i>Agregar</button></label>  
+<div class="col-md-12" ng-if="(customer.update.idClientTypeFk!=5 && customer.update.idClientTypeFk!=4)">	          		
+<label class="clf-p-left">Usuario a autorizar <span style="margin-left: 120px;"> <button ng-disabled="authUser.selected==undefined" ng-click="addAuthUserFn(authUser.selected, 'update')" class="btn btn-sm btn-success"><i class="fas fa-plus"></i>Agregar</button></label>  
 <div class="selectContainer">
     <div class="input-group">
       <span class="input-group-addon"><i class="fas fa-lock-open"></i></span>
@@ -22,7 +22,7 @@
 	      <tr ng-repeat="user in list_users">
 	        <td style="width: 200%"><span class="text-muted text-uppercase text-box">{{user.fullNameUser}} </span></td>
 	            <td style="padding-bottom: 5px;">
-	              <button ng-click="removeAuthUserFn(user)" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i> Eliminar</button>
+	              <button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removeAuthUserFn(user)" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i> Eliminar</button>
 	            </td>
 	        </tr>
 	    </table>

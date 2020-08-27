@@ -59,7 +59,7 @@
                               <!-- Filter Search -->          
                               <div class="col-md-4 col-sm-12 col-xs-12">	            
                               	<div class="input-group search-box-rule col-md-12 col-sm-12 col-xs-12">
-                                		<input type="text" class="form-control" ng-change="search(searchboxfilter, false)" ng-disabled="rsCustomerListData.status==404"  ng-model="searchboxfilter" placeholder="Buscar..." style="border-radius: 4px;">
+                                		<input type="text" class="form-control" ng-disabled="rsCustomerListData.status==404" ng-change="search(searchboxfilter, false)"  ng-model="searchboxfilter" placeholder="Buscar..." style="border-radius: 4px;">
                               	</div>
                               </div>
                               <!-- Filter Type of Tenant For Admins ng-if="sysContent=='customer'"-->
@@ -67,7 +67,12 @@
                                   <label style="padding-left: 15px;">Tipo de Cliente</label>
                                   <div class="input-group">
                                       <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                                      <select  name="filterTypeOfClient" ng-change="getCustomersListByTypeFn(filterTypeOfClient.idClientType); onSelectCallback()" ng-options="(item.ClientType | uppercase) for item in rsCustomerTypeFilterData" ng-disabled="rsCustomerListData.status==404"  class="form-control" ng-model="$parent.filterTypeOfClient">
+                                      <select  name="filterTypeOfClient" 
+                                               ng-change="getCustomersListByTypeFn(filterTypeOfClient.idClientType); onSelectCallback();" 
+                                               ng-options="(item.ClientType | uppercase) for item in rsCustomerTypeFilterData" 
+                                               ng-disabled="rsCustomerListData.status==404"  
+                                               class="form-control" 
+                                               ng-model="$parent.filterTypeOfClient">
                                           <option value="" >Todos</option>
                                       </select>
                                   </div>
@@ -85,13 +90,13 @@
                                   <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-file-signature"></i></span>
                                             <ui-select name="new_admin_id" 
-                                                        ng-disabled="rsCustomerListData.status==404 || (filterTypeOfClient=='' || filterTypeOfClient==undefined)" 
+                                                        ng-disabled="(filterTypeOfClient=='' || filterTypeOfClient==undefined)" 
                                                         class="dropdown-select" 
-                                                        ng-change="searchCustomersById(filterCustomerIdKf.selected.name, true);" 
-                                                        ng-model="filterCustomerIdKf.selected"  
+                                                        ng-change="getLisOfCustomersByIdFn(filterCustomerIdFk.selected.idClient, true);" 
+                                                        ng-model="filterCustomerIdFk.selected"  
                                                         autofocus>
                                                 <ui-select-match placeholder="Seleccione una opci&#243n">{{$select.selected.name | uppercase}}</ui-select-match>
-                                                <ui-select-choices repeat="item in rsCustomerListByTypeData | filter: $select.search">
+                                                <ui-select-choices allow-clear="true" repeat="item in rsCustomerListByTypeData | filter: $select.search">
                                                   <div ng-bind-html="item.name | highlight: $select.search"></div>
                                                   <small>Razon Social: </small>
                                                   <small ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4 || item.idClientTypeFk==5" ng-bind-html="item.billing_information[0].businessNameBilling | highlight: $select.search" ng-bind-html="item.billing_information[0].businessNameBilling | highlight: $select.search"></small>
@@ -121,9 +126,14 @@
                 	    </div>
                       <div class="clear-fix"></div>
                       <!-- TABLE LIST WHERE IS DISPLAYED THE CUSTOMER -->
-                      <div ng-include="'views/customer/listCustomers.html'"></div>
+                      <div ng-include="'views/customer/list/listCustomers.html'"></div>
                       <!-- PAGINATION -->
-                        <div>
+                        <div ng-if="rsCustomerListData.length>=10" style="text-align: center;">
+                              <!--<dir-pagination-controls
+                                max-size="10"
+                                direction-links="true"
+                                boundary-links="true" >
+                            </dir-pagination-controls>-->
                             <div ng-if="rsCustomerListData.length>10" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>  
                         </div>
                       <!-- //PAGINATION -->
@@ -132,10 +142,15 @@
                     <div id="custNotRegistered" ng-if="sysContent=='registeredNotCustomers'" class="panel-body">
                       <div class="clear-fix"></div>
                       <!-- TABLE LIST WHERE IS DISPLAYED THE CUSTOMER -->
-                      <div ng-include="'views/customer/listCustomers.html'"></div>
+                      <div ng-include="'views/customer/list/listCustomers.html'"></div>
                       <!-- PAGINATION -->
-                        <div>
-                            <div ng-if="rsCustomerListData.length>10" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>  
+                        <div ng-if="rsCustomerListData.length>=10" style="text-align: center;">
+                          <div ng-if="rsCustomerListData.length>10" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>  
+                              <!--<dir-pagination-controls
+                                max-size="10"
+                                direction-links="true"
+                                boundary-links="true" >
+                            </dir-pagination-controls>-->
                         </div>
                       <!-- //PAGINATION -->
                     </div>                  
@@ -145,12 +160,16 @@
       </div>
   </div>
 </div>
-<div ng-include="'views/customer/formAuthUser.html'"></div>
-<div ng-include="'views/customer/formAttachCustomerFiles.html'"></div>
-<div ng-include="'views/customer/formRegisterCustomer.html'"></div>
-<div ng-include="'views/customer/formUpdateCustomer.html'"></div>
-<div ng-include="'views/customer/phonesandschedule.html'"></div>
-<div ng-include="'views/customer/mailscontact.html'"></div>
-<div ng-include="'views/customer/multiLoadDepto.html'"></div>
-<div ng-include="'views/customer/otherFunctionalUnits.html'"></div>
-<div ng-include="'views/customer/customer_particular_address.html'"></div>
+<div ng-include="'views/customer/list/formAuthUser.html'"></div>
+<div ng-include="'views/customer/list/phonesandschedule.html'"></div>
+<div ng-include="'views/customer/list/mailscontact.html'"></div>
+<div ng-include="'views/customer/list/multiLoadDepto.html'"></div>
+<div ng-include="'views/customer/list/listDepartments.html'"></div>
+<div ng-include="'views/customer/list/listParticularAddress.html'"></div>
+
+<div ng-include="'views/customer/new/formAttachCustomerFiles.html'"></div>
+<div ng-include="'views/customer/new/formRegisterCustomer.html'"></div>
+
+<div ng-include="'views/customer/update/formUpdateCustomer.html'"></div>
+
+

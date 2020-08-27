@@ -16,6 +16,7 @@ var app = angular.module('systemApp', ["module.LoginUser",
                                             "ui.bootstrap",
                                        "angularFileUpload",
                                              "ngclipboard",
+                   "angularUtils.directives.dirPagination",
                                              "angularCSS"]);
 /**************************************************************************
 *                                                                         *
@@ -44,7 +45,9 @@ app.config(function(blockUIConfig) {
       blockUIConfig.autoInjectBodyBlock = true;  
       blockUIConfig.autoBlock = true;
 });
-
+app.config(function(paginationTemplateProvider) {
+    paginationTemplateProvider.setPath('views/pagination/dirPagination-tpl.html');
+});
 
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {

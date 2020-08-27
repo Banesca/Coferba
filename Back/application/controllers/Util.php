@@ -117,9 +117,32 @@ class Util extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+    public function getCustomerIdByDepartmentsId_get($id) {
+         if (!$id) {
+            $this->response(NULL, 404);
+        }
+        $rs = null;
+        $rs = $this->util_model->getCustomerIdByDepartmentsId($id);
+
+        if (! is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
     public function tipoInmueble_get() {
         $user = null;
         $user = $this->util_model->getTipoInmueble();
+
+        if (! is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+    public function typeOfMails_get() {
+        $user = null;
+        $user = $this->util_model->getTypeOfMails();
 
         if (! is_null($user)) {
             $this->response($user, 200);

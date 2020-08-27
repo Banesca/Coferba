@@ -1,3 +1,6 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
 body{
   font-style: normal;
 }
@@ -12,6 +15,14 @@ body{
   width: 90.9% !important;
   font-weight: 600;
 } 
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
 /*UI SELECT FOR NO ITEM FOUND RULE*/
 .navbar-inverse .navbar-nav>.open>a, 
 .navbar-inverse .navbar-nav>.open>a:focus, 
@@ -1300,8 +1311,28 @@ input:checked + .slider-3x:before {
   font-weight: 545;
 }
 
-
+/*DEPARTMENT UNIT WINDOW */
+.win-d-unit-1x{
+  width: 450px; 
+  margin-left: 6em;
+}
+.win-d-unit-3x{
+  width: 705px; 
+  margin-left: -2em;
+}
 /*T A B L E   L I S T   D E P A R M E N T S */
+
+/*PERMISSION ROLE RO*/
+.listDeptoCo-RO{
+  padding-top: 25px !important;
+}
+.listDepto-RO{
+  padding-top: 10px !important;
+  padding-bottom: 0px !important;;
+}
+
+
+
 /*Departments*/
 .list-group-depto {
     display: -ms-flexbox;
@@ -1756,7 +1787,7 @@ input:checked + .slider-3x:before {
 /********************************************/
 /*FORM STEP DEPARTMENTS FOR BUILDING CUSTOMER*/
 .card-depto-colum{
-  margin-top: 6px;
+  margin-top: 10px;
 }
 .card-depto{
   position: relative;
@@ -2526,7 +2557,7 @@ input:checked + .slider-3x:before {
     display: none;
   }
   .input-group > .ui-select-bootstrap.dropdown {
-      /*margin-left: -1.5em;*/
+    /*margin-left: -1.5em !important;*/
   }
   .show-tag-1, .show-tag-2{
     display: none;
