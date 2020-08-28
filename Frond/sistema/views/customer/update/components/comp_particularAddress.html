@@ -17,7 +17,7 @@
               		<label style="cursor: pointer;font-size: 100%;padding-top: 8px;" ng-if="addr.idTipoInmuebleFk==1">{{addr.depto | uppercase}}</label>
               	</span></td>				                            
            		<td style="width: 11%;padding-bottom: 5px;">					                           
-                  <button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removeParticularAddressFn(addr)" class="btn btn-sm btn-danger">
+                  <button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="modalConfirmation('removeParticularAddress', 0, addr)" class="btn btn-sm btn-danger">
                     <i class="fas fa-trash-alt"></i></button>
                 </td>                                                                         
             </tr>

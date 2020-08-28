@@ -21,8 +21,9 @@
 	    <table ng-if="list_users.length>0">
 	      <tr ng-repeat="user in list_users">
 	        <td style="width: 200%"><span class="text-muted text-uppercase text-box">{{user.fullNameUser}} </span></td>
+	        <td style="width: 10%; padding-bottom: 5px; padding-right: 2px;"><button data-toggle="tooltip" data-placement="top" title="Ver usuario" ng-click="showCurrentUserInfoFn(user.idUserFk)" class="btn btn-sm btn-info"><i style="font-size: 14px;" class="fas fa-info-circle"></i></button></td>
 	            <td style="padding-bottom: 5px;">
-	              <button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removeAuthUserFn(user)" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i> Eliminar</button>
+	              <button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="modalConfirmation('removeAuthUser', 0, user);" class="btn btn-sm btn-danger"><i style="font-size: 14px;" class="fas fa-user-times"></i> </button>
 	            </td>
 	        </tr>
 	    </table>

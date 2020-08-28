@@ -24,7 +24,7 @@
 	      		</td>					                    	
 	      		<td style="width: 150%"><span class="text-muted text-box"><label style="font-size: 100%" class="label label-info">{{phone.phoneContact}}</label></span></td>
 	          	<td style="padding-bottom: 5px;">
-	            	<button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removePhoneNumFn(phone); enabledNextBtn();" class="btn btn-sm btn-danger"><i class="fas fa-phone-slash"></i></button>
+	            	<button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="modalConfirmation('removePhoneNum', 0, phone);" class="btn btn-sm btn-danger"><i class="fas fa-phone-slash"></i></button>
 
 	          	</td>
 	      	</tr>

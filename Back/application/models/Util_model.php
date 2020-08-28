@@ -146,8 +146,9 @@ class Util_model extends CI_Model {
         if ($query->num_rows() > 0) {
             $rs = $query->row();
             $rs= $this->getDepartmentByCustomerId($rs->idClientFk);
+            return $rs;
         }          
-        return $rs;
+
     }    
     public function getTipoInmueble() {
 

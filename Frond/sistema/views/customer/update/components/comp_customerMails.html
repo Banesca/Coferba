@@ -1,6 +1,6 @@
 <!-- Mails List -->
 <div class="form-group col-md-12">
-	<label class="clf-p-left">Correo de contactos <button style="margin-left: 100px;" ng-disabled="(!fUpdateCustomer.contact_mail.$valid) || (contactMails.idTipoDeMailFk=='' || contactMails.idTipoDeMailFk==undefined)" ng-click="addMailContactFn(contactMails, 'new'); contactMails.idTipoDeMailFk=undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button> </label>  
+	<label class="clf-p-left">Correo de contactos <button style="margin-left: 100px;" ng-disabled="(!fUpdateCustomer.contact_mail.$valid) || (contactMails.idTipoDeMailFk=='' || contactMails.idTipoDeMailFk==undefined)" ng-click="addMailContactFn(contactMails, 'update'); contactMails.idTipoDeMailFk=undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button> </label>  
 	<div class="input-group" ng-init="getTypeOfMailsFn();">
 		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>  
 		<select style="width: 42%; font-size: 12px;" name="typeMail" class="form-control" ng-options="item.idTipoMail as item.descripcion for item in rsTypeOfMailsData" ng-disabled="(customer.update.idClientTypeFk==5)" ng-change="enabledNextBtn()" ng-model="contactMails.idTipoDeMailFk" ng-required="list_mails.length==0" autofocus >
@@ -26,7 +26,7 @@
 	      		</td>					                    	
 	      		<td style="width: 150%"><span class="text-muted text-box"><label style="font-size: 100%" class="label label-info">{{mail.mailContact}}</label></span></td>
 	          	<td style="padding-bottom: 5px;">
-	            	<button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removemailNumFn(mail); enabledNextBtn();" class="btn btn-sm btn-danger"><i style="font-size: 14px;" class="fas fa-minus-circle"></i></button>
+	            	<button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="modalConfirmation('removeMail', 0, mail);" class="btn btn-sm btn-danger"><i style="font-size: 14px;" class="fas fa-minus-circle"></i></button>
 
 	          	</td>
 	      	</tr>
