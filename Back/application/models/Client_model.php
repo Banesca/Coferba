@@ -881,6 +881,7 @@ class Client_model extends CI_Model {
                 );
 
                 if (count(@$client['list_schedule_atention']) > 0
+                    || count(@$client['list_phone_contact']) > 0
                 ) {
 
                     // HORARIOS
@@ -897,7 +898,15 @@ class Client_model extends CI_Model {
                         );
                     }
 
+                    foreach ($client['list_phone_contact'] as $valor) {
 
+                        $this->db->insert('tb_client_phone_contact', [
+                                'idClientFk'   => $idClientFk,
+                                'phoneTag'     => $valor['phoneTag'],
+                                'phoneContact' => $valor['phoneContact'],
+                            ]
+                        );
+                    }
                 }
                 if (count(@$client['list_emails']) > 0) {
                     foreach ($client['list_emails'] as $valor) {
@@ -992,7 +1001,7 @@ class Client_model extends CI_Model {
         )->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
 
-        if (count(@$client['list_schedule_atention']) > 0 && count(@$client['list_emails']) > 0) {
+        if (count(@$client['list_schedule_atention']) > 0 && count(@$client['list_emails']) > 0 || count(@$client['list_phone_contact']) > 0) {
             $this->db->delete('tb_client_schedule_atention', [ 'idClienteFk' => $client['idClient'] ]);
 
             foreach ($client['list_schedule_atention'] as $valor) {
@@ -1007,6 +1016,17 @@ class Client_model extends CI_Model {
                 ]);
             }
 
+            $this->db->delete('tb_client_phone_contact', [ 'idClientFk' => $client['idClient'] ]);
+
+            foreach ($client['list_phone_contact'] as $valor) {
+
+                $this->db->insert('tb_client_phone_contact', [
+                    'idClientFk'   => $client['idClient'],
+                    'phoneTag'     => $valor['phoneTag'],
+                    'phoneContact' => $valor['phoneContact'],
+                ]);
+            }
+            
             if (count(@$client['list_emails']) > 0) {
                 $this->db->delete('tb_client_mails', [ 'idClientFk' => $client['idClient'] ]);
                 foreach ($client['list_emails'] as $valor) {

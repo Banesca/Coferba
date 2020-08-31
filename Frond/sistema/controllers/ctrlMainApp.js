@@ -6463,6 +6463,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     *                                                                                                                                           *
     ********************************************************************************************************************************************/
     $scope.isNewCustomer=false;
+    $scope.isUpdateCustomer=false;
     $scope.filterTypeOfClient='';
     $scope.defArrForCustomersFn = function(){
       $scope.btnBack=false;
@@ -6592,6 +6593,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               $scope.getCustomerListFn("registered",1);
               $scope.filterTypeOfClient='';
               $scope.filterCustomerIdFk.selected=undefined;
+              $scope.isNewCustomer=false;
+              $scope.isUpdateCustomer=false;
               //$scope.customerPaginationFn($scope.rsCustomerListData, 10);
               $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
               $scope.sysContent = 'registeredCustomers';
@@ -6601,6 +6604,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               $scope.getCustomerListFn("notRegistered",1);
               $scope.filterTypeOfClient=undefined;
               $scope.filterCustomerIdFk.selected=undefined;
+              $scope.isNewCustomer=false;
+              $scope.isUpdateCustomer=false;
               $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
               $scope.sysContent = 'registeredNotCustomers';
             break;
@@ -6609,6 +6614,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         break; 
         case "new":
           $scope.isNewCustomer=true;
+          $scope.isUpdateCustomer=false;
           $scope.setScheduleListFn();
           $scope.defArrForCustomersFn();  
           $scope.getCustomerListFn("", 2);        
@@ -6623,6 +6629,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         break; 
         case "edit":
           $scope.isNewCustomer=false;
+          $scope.isUpdateCustomer=true;
           $scope.setScheduleListFn();
           $scope.defArrForCustomersFn();
           $scope.getCustomerListFn("", 2);
@@ -6660,10 +6667,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         case "services":
           //Services client function
         break;                                      
-        case "authUsers":
-          $scope.getUserLists(); 
-          $('#authorizedUsers').modal('toggle'); 
+        case "allowedUsers":
+          $scope.isNewCustomer=false;
+          $scope.isUpdateCustomer=true;
+          $scope.customerDataFn(cObj,'allowedUsers'); 
         break;
+        case "allowedUsers_update":       
+          $scope.customerDataFn(cObj,'allowedUsers_update'); 
+        break;allowedUsers_apply
         case "uploadFiles":
           $('#attachCustomerFiles').modal('toggle');
         break;
@@ -6874,6 +6885,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   //$('#RegisterModalCustomer').modal('hide');
                 }
                   $scope.getCustomerListFn("",1);
+                  $scope.isNewCustomer=false;
+                  $scope.isUpdateCustomer=false;
                 //console.log($scope.rsLocations_API_Data);
             });
           };
@@ -7411,11 +7424,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                       $scope.customer.update.list_client_user                          = $scope.list_client_user;
                       if ($scope.customer.update.idTipoInmuebleFk==1 && $scope.customer.update.isNotCliente==true){
                         $scope.customer.update.idClientDepartamentFk                   = $scope.customer.select.main.department;
-                        $scope.customer.update.address                                 = $scope.customer.select.main.address.selected.address;
-                        $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk;
-                        $scope.customer.update.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk;
+                        $scope.customer.update.address                                 = $scope.customer.select.main.address.selected.address;                                                
                         $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk==undefined?$scope.customer.update.idProvinceFk:$scope.customer.select.main.address.selected.idProvinceFk;
                         $scope.customer.update.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk==undefined?$scope.customer.update.idLocationFk:$scope.customer.select.main.address.selected.idLocationFk;
+                        $scope.customer.update.addressLat                              = $scope.customer.update.addressLat;
+                        $scope.customer.update.addressLon                              = $scope.customer.update.addressLon;                        
 
                       }else{
                         $scope.customer.update.idDepartmentFk                          = null;
@@ -7451,10 +7464,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                       if ($scope.customer.update.idTipoInmuebleFk==1 && $scope.customer.update.isNotCliente==true){
                         $scope.customer.update.idClientDepartamentFk                   = $scope.customer.select.main.department;
                         $scope.customer.update.address                                 = $scope.customer.select.main.address.selected.address;
-                        $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk;
-                        $scope.customer.update.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk;
                         $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.address.selected.idProvinceFk==undefined?$scope.customer.update.idProvinceFk:$scope.customer.select.main.address.selected.idProvinceFk;
                         $scope.customer.update.idLocationFk                            = $scope.customer.select.main.address.selected.idLocationFk==undefined?$scope.customer.update.idLocationFk:$scope.customer.select.main.address.selected.idLocationFk;
+                        $scope.customer.update.addressLat                              = $scope.customer.update.addressLat;
+                        $scope.customer.update.addressLon                              = $scope.customer.update.addressLon;
+
 
                       }else{
                         $scope.customer.update.idDepartmentFk                          = null;
@@ -7571,7 +7585,34 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     //console.log("obj.list_phone_contact is empty");
                   }
                   $('#AddressParticularCustomer').modal('toggle');                       
-                break;                                            
+                break;
+                case "allowedUsers":                                    
+                  //USERS                  
+                  $scope.customer.info    = obj;
+                  $scope.customer.info.billing_information=obj.billing_information[0];
+                  console.info($scope.customer.info);
+                  $scope.customer.info.billing_information.nameAddress=$scope.customer.info.billing_information.businessAddress;
+                  console.info($scope.customer.info);  
+                  $scope.list_users       = [];
+                  $scope.list_client_user = [];
+                  if (obj.list_client_user.length>0){
+                    for (var user in  obj.list_client_user){
+                      //console.log(obj.list_client_user[key]);
+                      $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                      $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                    }
+                  }
+                  $('#allowedUsers').modal('toggle');                       
+                break;
+                case "allowedUsers_update":
+                  $scope.customer.info.list_client_user = [];
+                  $scope.customer.info.list_client_user = $scope.list_client_user;
+                  //Printing the current array before add the customer
+                  console.log($scope.customer.info);
+                  //Send the customer data to the addcustomer service
+                  $scope.updateCustomerFn($scope.customer.info);
+                  $('#allowedUsers').modal('hide');                   
+                break;
                 default:
                   console.info("-------------------------");
                   console.info("    showCustomerFields   ");
@@ -7599,6 +7640,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   //$('#RegisterModalCustomer').modal('hide');
                 }
                   $scope.getCustomerListFn("",1);
+                  $scope.isNewCustomer=false;
+                  $scope.isUpdateCustomer=false;
+                  $scope.isArrChanged=false                  
                 //console.log($scope.rsLocations_API_Data);
             });
           };                
@@ -8540,6 +8584,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 $scope.list_users.push({'idUserFk':obj.idUser, 'fullNameUser':obj.fullNameUser, 'idClientFk':$scope.customer.update.idClient});
               }
           }
+          if($scope.isNewCustomer==false && $scope.isUpdateCustomer==false){
+            $scope.isArrChanged=true;
+          }else{
+            $scope.isArrChanged=false;
+          }          
         }
         //console.log("OBJ A ADICIONAR:");
         //console.log(obj);
@@ -8549,12 +8598,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         //console.log($scope.list_users);
         $scope.authUser.selected=undefined;
       }
+      $scope.isArrChanged=false;
       $scope.removeAuthUserFn = function (obj){
         //console.log($scope.list_client_user);
         for (var key in  $scope.list_client_user){
             if ( $scope.list_client_user[key].idUserFk==obj.idUserFk){
                 $scope.list_users.splice(key,1);
                 $scope.list_client_user.splice(key,1);
+                if($scope.isNewCustomer==false && $scope.isUpdateCustomer==false){
+                  $scope.isArrChanged=true;
+                }else{
+                  $scope.isArrChanged=false;
+                }
             }
         }
         //console.log("OBJ A ELIMINAR:");
@@ -8568,13 +8623,20 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           $scope.list_client_user.splice(key,1);
         }
       }          
+      $scope.closeAllowedUsersFn = function(){
+        $("#allowedUsers").modal('hide');
+        $("#allowedUsers").on('hidden.bs.modal', function () {
+          $scope.getCustomerListFn("",1);
+        }); 
+       
+      }          
 
     /**************************************************
     *                                                 *
     *            AUTH USER INFO CUSTOMER              *
     *                                                 *
     **************************************************/
-    $scope.allowedUsers = {}
+      $scope.allowedUsers = {}
       $scope.showCurrentUserInfoFn = function(idUser){
         //console.log("Usuario ID: "+idUser);
         for (var key in $scope.rsList.clientUser){
@@ -8584,7 +8646,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           }
         }
         $("#allowedUserInfo").modal('toggle');
-        $('#allowedUserInfo').on('shown.bs.modal', function () {
+        $("#allowedUserInfo").on('shown.bs.modal', function () {
           $('#cancelModalWindow').focus();
         });        
       }
@@ -8746,8 +8808,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           //$scope.list_mails_contact.push({'idClientFk': obj.list_mails_contact[key].idClientFk,'phoneTag':obj.list_mails_contact[key].phoneTag, 'phoneContact':obj.list_mails_contact[key].phoneContact});
           if ($scope.list_mails.length<=0){
             //console.log("length is equal 0 or less 0");
-            $scope.list_mails_contact.push({'idClienteFk':$scope.customer.update.idClient, 'mailTag':null, 'mailContact':obj.mailContact, 'idTipoDeMailFk': obj.idTipoDeMailFk, 'status':obj.status});
-            $scope.list_mails.push({'idClienteFk':$scope.customer.update.idClient, 'mailTag':null, 'typeName':typeName, 'mailContact':obj.mailContact, 'idTipoDeMailFk': obj.idTipoDeMailFk, 'status':obj.status});
+            $scope.list_mails_contact.push({'idClienteFk':$scope.customer.update.idClient, 'mailTag':null, 'mailContact':obj.mailContact, 'idTipoDeMailFk': obj.idTipoDeMailFk, 'status':1});
+            $scope.list_mails.push({'idClienteFk':$scope.customer.update.idClient, 'mailTag':null, 'typeName':typeName, 'mailContact':obj.mailContact, 'idTipoDeMailFk': obj.idTipoDeMailFk, 'status':1});
           }else{
             for (var key in  $scope.list_mails_contact){
              // console.log(key);
@@ -10139,10 +10201,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
 
               }
               if(fnAction=="save"){
-                  $scope.salesMail    = "";
-                  $scope.payrollMail  = "";
-                  $scope.supportMail  = "";
-                  $scope.adminMail    = "";
+                $scope.salesMail    = "";
+                $scope.payrollMail  = "";
+                $scope.supportMail  = "";
+                $scope.adminMail    = "";
                 switch ($scope.sys.idTypeOutherKf){
                   case "1":
                     $scope.sysParam.idParam = 7;
@@ -10180,6 +10242,25 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   $scope.updateServiceCost($http, $scope, i)
                 }
               }
+            break;
+            case "zones":
+                switch (fnAction){
+                  case "dash":
+                    $scope.sysContent = "";
+                    $scope.loadPagination($scope.rsZonesData, "idZona", "10");
+                    $scope.sysContent = 'sysZones';
+                  break;
+                  case "newZone":
+                    $('#newZone').modal('toggle');
+                  break;
+                  case "updateZone":
+                    $scope.sysUpProfile.Name="";
+                    $scope.filterSysProfile=null;
+                    $scope.sysProfFound=false;
+                    $('#updateSysProfile2').modal('show');
+                  break;
+                  default:
+                }
             break;
             case "products":
                 switch (fnAction){
@@ -10900,6 +10981,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           $scope.mailFromKey                = false;
           $scope.mailServiceTecnic          = false;
           $scope.mailCollection             = false;
+          $scope.isArrChanged               = false;
 
           $scope.allowAction                ={'edit':{}, 'delete':{}}
       }
@@ -11183,6 +11265,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 $scope.getDiviceOpening();
                 $scope.getProductsFn("",0);
                 $scope.getSysModulesFn();
+                $scope.getZonesFn();
               }else{
                 closeAllDiv();
                 $scope.rusysconfig = false;
@@ -11382,6 +11465,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         $('.input--time').mask('00:00');
         $('.input--dni').mask('99999999');
         $('.input--number').mask('99');
+        $('.input--decimal').mask('999999,99');
         $('.input--tel.input--dni').on('focus', function () {
           //console.log($(this).val());
            if ($(this).val().length === 0) {

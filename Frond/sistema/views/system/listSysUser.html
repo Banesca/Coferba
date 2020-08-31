@@ -19,11 +19,11 @@
         <td ng-if="item.idProfileKf!=1">N/A</td>
         <td style="align-content: center;" ng-if="item.name"><label class="label label-default">{{item.name}}</label></td>
         <td> <!-- TD to Admins -->
-            <label ng-if="item.idStatusKf==1 || item.idStatus==1" class="label label-success">ACTIVO
+            <label ng-if="item.idStatusKf==1" class="label label-success">ACTIVO
             </label>
-            <label ng-if="item.idStatusKf==0 || item.idStatus==0" class="label label-warning">INACTIVO
+            <label ng-if="item.idStatusKf==0" class="label label-warning">INACTIVO
             </label>
-            <label ng-if="item.idStatusKf==-1 || item.idStatus==-1" class="label label-danger"><del>ELIMINADO</del>
+            <label ng-if="item.idStatusKf==-1" class="label label-danger"><del>ELIMINADO</del>
             </label>
         </td>
         <td>{{item.dateCreated | dateToISO | date:'MM/dd/yyyy'}}</td>

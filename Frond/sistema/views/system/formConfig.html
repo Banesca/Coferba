@@ -23,12 +23,18 @@
                       <a href=""><i class="fa fa-globe fa-lg"></i> Servicios <span class="arrow"></span></a>
                     </li>  
                     <ul class="sub-menu collapse" id="service">
-                      <li ng-click="sysConfig('sys','smtp', 'open')">SMTP Mail</li>
-                      <li ng-click="sysConfig('sys','mails', 'open')">Correos Alternos</li>
-                      <li ng-click="sysConfig('sys','services', 'open')">Costos de Gestion</li>
+                      <li ng-click="sysConfig('sys','services', 'open')">Gestios de Costos</li>
+                      <li ng-click="sysConfig('sys','zones', 'dash')">Gestion de Zonas</li>
                     </ul>
+                    <li data-toggle="collapse" data-target="#config_sys" class="collapsed">
+                      <a href=""><i class="fa fa-globe fa-lg"></i> Configuraciones de Sistema <span class="arrow"></span></a>
+                    </li>  
+                    <ul class="sub-menu collapse" id="config_sys">
+                      <li ng-click="sysConfig('sys','smtp', 'open')">SMTP Mail</li>
+                      <li ng-click="sysConfig('sys','mails', 'open')">Correos alternos</li>
+                    </ul>                    
                    <li data-toggle="collapse" data-target="#sysusers" class="collapsed">
-                      <a href=""><i class="fas fa-users-cog fas-lg"></i>Sistema <span class="arrow"></span></a>
+                      <a href=""><i class="fas fa-users-cog fas-lg"></i>Usuarios del Sistema <span class="arrow"></span></a>
                     </li>  
                     <ul class="sub-menu collapse" id="sysusers">
                       <li ng-click="sysConfig('sys','sysUsers', 'dash')">Usuarios del Sistema</li>
@@ -59,7 +65,7 @@
 		<!--<div class="">
 			<h3 style="color: black;">&nbsp <span class="glyphicon icon-cogs icon-2x"></span> Administracion del Sistema &nbsp <span style="cursor: pointer;" data-toggle="tooltip" data-placement="right" title="Volver al dashboard" ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att' || sysContent=='company' || sysContent=='sysProfile' || sysContent=='products' || sysContent=='sysUsers'" ng-click="sysConfig('sys','dash','open')" ><i class="glyphicon glyphicon-share-alt"></i></span></h3> 
 		</div>-->
-		<div ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att' || sysContent=='company' || sysContent=='sysProfile' || sysContent=='products' || sysContent=='sysUsers'" class="pull-left col-md-12">
+		<div ng-if="sysContent=='user' || sysContent=='tenant' || sysContent=='att' || sysContent=='company' || sysContent=='sysProfile' || sysContent=='products' || sysContent=='sysUsers' || sysContent=='sysZones'" class="pull-left col-md-12">
 		    <div  class="panel panel-default">
 		        <div class="panel-heading">
 		          <h3 ng-if="sysContent=='user'" class="panel-title">USUARIOS</h3>
@@ -69,6 +75,7 @@
 		          <h3 ng-if="sysContent=='sysProfile'" class="panel-title">PERFILES DEL SISTEMA</h3>
 		          <h3 ng-if="sysContent=='sysUsers'" class="panel-title">USUARIOS DEL SISTEMA</h3>
 		          <h3 ng-if="sysContent=='products'" class="panel-title">PRODUCTOS</h3>
+		          <h3 ng-if="sysContent=='sysZones'" class="panel-title">GESTION DE ZONAS</h3>
 		        </div>
 		          	<div class="panel-body">
 			          	<!-- ROW WITH THE FILTERS USED TO DISPLAY DATA IN THE TABLE -->
@@ -207,7 +214,8 @@
 		                        		<!-- New Profile button -->
 	                                    <button ng-if="sysContent=='sysProfile'" data-toggle="tooltip" data-placement="top" title="Nuevo Perfil" type="button" class="btn btn-md btn-labeled btn-info" ng-click="sysConfig('sys','sysProfile', 'newProfile')"><span class="btn-label"><i class="fas fa-id-card-alt"></i> </span>Nuevo</button>  
 	                                    <!-- New Produc button -->
-	                                    <button ng-if="sysContent=='products'" data-toggle="tooltip" data-placement="top" title="Nuevo Producto" type="button" class="btn btn-md btn-labeled btn-info" ng-click="sysConfig('sys','products', 'newProduct')"><span class="btn-label"><i class="fas fa-box-open"></i> </span>Nuevo</button>  
+	                                    <button ng-if="sysContent=='products'" data-toggle="tooltip" data-placement="top" title="Nuevo Producto" type="button" class="btn btn-md btn-labeled btn-info" ng-click="sysConfig('sys','products', 'newProduct')"><span class="btn-label"><i class="fas fa-box-open"></i> </span>Nuevo</button> 
+	                                    <button ng-if="sysContent=='sysZones'" data-toggle="tooltip" data-placement="top" title="Nueva Zona" type="button" class="btn btn-md btn-labeled btn-info" ng-click="sysConfig('sys','zones', 'newZone')"><span class="btn-label"><i class="fas fa-map"></i> </span>Nuevo</button> 
 			                    	</div>
 			                    </div>
 				        	</div>
@@ -227,22 +235,11 @@
 				            <div ng-if="sysContent=='products'" ng-include="'views/products/listProducts.html'"></div>
 				            <!-- TABLE LIST WHERE IS DISPLAYED SYS USERS -->
 							<div ng-if="sysContent=='sysUsers'" ng-include="'views/system/listSysUser.html'"></div>
+							<!-- TABLE LIST WHERE IS DISPLAYED SYS USERS -->
+							<div ng-if="sysContent=='sysZones'" ng-include="'views/system/zones/manageZones.html'"></div>							
     				        <!-- PAGINATION -->
 				            <div>
-            	              	<ul class="pager">
-					                <li ng-class="{disabled: currentPage == 0}">
-					                  <a href ng-click="prevPage()">« Anterior</a>
-					                </li>
-					                <!--<li ng-repeat="n in range(pagedItems.length)[currentPage]"
-					                    ng-class="{active: n == currentPage}"
-					                    ng-click="setPage()">
-					                  <a href ng-bind="n + 1">1</a>
-					                </li>-->
-					                <span style="margin-top:-5px" class="badge badge-success">{{currentPage+1}} / {{pagedItems.length}}</span>
-					                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
-					                  <a href ng-click="nextPage()">Siguiente »</a>
-					                </li>
-					            </ul>
+                            <div style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>
 			        		</div>
 			        	</div>
 		        	</div>
@@ -442,524 +439,13 @@
 		</div>
 	</div>
 </div>
-<!-- NEW SYS PROFILE -->
-<div id="newSysProfile" style="top: 130px;" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-          	<div class="modal-header">
-          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-            	<h3 class="modal-title">NUEVO PERFIL</h3>
-        	</div>
-    		<div class="modal-body"  style="overflow-y: scroll;">
-				<!-- FORM CONTAINER-->
-				<form class="form-horizontal" name="fNewSysProfile" novalidate>
-					<fieldset>
-						<!-- Form Profile Name -->
-						<div class="form-group col-md-12">
-						  <label class="clf-size clf-p-left">Nombre del Perfil</label>  
-							  <div class="col-xs-12">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="fas fa-id-badge"></i></span>
-									  <input  name="profileName" autofocus="true" placeholder="Nombre" class="form-control input-font-size" ng-model="sysProfile.Name"  type="text" required autofocus/>
-								  </div>
-							  </div>
-						</div>
-						<div class="form-group col-md-12">
-							<div class="col-md-3 col-sm-3 item" ng-repeat="item in rsModulesData">
-								<div class="hero-widget well well-sm">
-					            	<div class="icon">
-					                 	<i ng-if="item.name=='monitor'" class="fas fa-tachometer-alt" 
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='llaveros'" class="icon-file-text" 
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='edificios'" class="icon-building" 
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='configuracion'" class="icon-cogs" 
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='perfil de usuario'" class="fas fa-user-circle"
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='cliente'" class="fas fa-users-cog" 
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='servicio'" class="fas fa-cubes" 
-					                 		ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='producto'" class="fas fa-sitemap" 
-					                 	ng-class="checkBoxes.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					            	</div>
-					            	<div class="text">
-					                	<span class="text-muted text-uppercase text-box">{{item.name}}</span>
-					            	</div>
-					            	<div class="options">
-								        <label class="switch switch-3x">
-								          <input type="checkbox" class="success" ng-checked="moduleCheck" ng-model="checkBoxes.modulo[item.idModule]" id="moduleCheck-{{item.idModule}}">
-								          <span class="slider slider-3x round"></span>
-								        </label>
-					            	</div>
-					        	</div>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-				<div class="clearfix"> </div> 
-			</div>
-			<!-- Actions Button ng-click="newSysProfileFn()"-->
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="newSysProfileFn()" ng-disabled="fNewSysProfile.$invalid" class="btn btn-labeled btn-success">
-                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Guardar</button>
-                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
-                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
-                    </div>
-                </div>
-            </div>
-		</div>
-	</div>
-</div>
-<!-- // NEW SYS PROFILE -->
-<!-- UPDATE SYS PROFILE -->
-<div id="updateSysProfile" style="top: 130px;" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-          	<div class="modal-header">
-          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-            	<h3 class="modal-title">MODIFICAR PERFIL</h3>
-        	</div>
-    		<div class="modal-body"  style="overflow-y: scroll;">
-				<!-- FORM CONTAINER-->
-				<form class="form-horizontal" name="fUpdateSysProfile" novalidate>
-					<fieldset>
-						<!-- Form Profile Name -->
-						<div class="form-group col-md-12">
-						  <label class="clf-size clf-p-left">Nombre del Perfil</label>  
-							  <div class="col-xs-12">
-								  <div class="input-group">
-									  <span class="input-group-addon"><i class="fas fa-id-badge"></i></span>
-									  <input  name="profileName" autofocus="true" placeholder="Nombre" class="form-control input-font-size" ng-model="sysUpProfile.Name"  type="text" required autofocus/>
-								  </div>
-							  </div>
-						</div>
-						<div class="form-group col-md-12">
-							<div class="col-md-3 col-sm-3 item" ng-repeat="item in rsModulesData">
-								<div class="hero-widget well well-sm">
-					            	<div class="icon">
-					                 	<i ng-if="item.name=='monitor'" class="fas fa-tachometer-alt" 
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='llaveros'" class="icon-file-text" 
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='edificios'" class="icon-building" 
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='configuracion'" class="icon-cogs" 
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='perfil de usuario'" class="fas fa-user-circle"
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='cliente'" class="fas fa-users-cog" 
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='servicio'" class="fas fa-cubes" 
-					                 		ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='producto'" class="fas fa-sitemap" 
-					                 	ng-class="chkBox.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					            	</div>
-					            	<div class="text">
-					                	<span class="text-muted text-uppercase text-box">{{item.name}}</span>
-					            	</div>
-					            	<div class="options">
-								        <label class="switch switch-3x">
-								          <input type="checkbox" class="success sysProfChecks" ng-model="chkBox.modulo[item.idModule]" id="modCheck-{{item.idModule}}">
-								          <span class="slider slider-3x round"></span>
-								        </label>
-					            	</div>
-					        	</div>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-				<div class="clearfix"> </div> 
-			</div>
-			<!-- Actions Button ng-click="newSysProfileFn()"-->
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="data2UpdateSysProfileFn()" ng-disabled="fUpdateSysProfile.$invalid" class="btn btn-labeled btn-success">
-                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Actualizar</button>
-                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
-                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
-                    </div>
-                </div>
-            </div>
-		</div>
-	</div>
-</div>
-<!-- // UPDATE SYS PROFILE -->
-<!-- UPDATE SYS PROFILE 2-->
-<div id="updateSysProfile2" style="top: 130px;" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-          	<div class="modal-header">
-          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-            	<h3 class="modal-title">MODIFICAR PERFIL</h3>
-        	</div>
-    		<div class="modal-body"  style="overflow-y: scroll;">
-				<!-- FORM CONTAINER-->
-				<form class="form-horizontal" name="fUpdateSysProfile2" novalidate>
-					<fieldset>
-			            <div class="form-group col-md-12" >
-			              	<label class="clf-size clf-p-left">Perfil</label>  
-		                  	<div class="input-group s-ui-width s-ui-m-left">
-								<input type="text" name="sysIdProfileKf" id="sysIdProfileKf" ng-model="sysUpProfile.Name" ng-keyup="sysFindFn(sysUpProfile.Name)" class="form-control input-font-size" required="true" />
-								<ul class="list-group">
-									<li class="list-group-item" ng-repeat="item in filterSysProfile" ng-click="fillTextbox(item.sysProfile)">{{item.sysProfile.name}}</li>
-								</ul>
-		                  	</div>
-			            </div>  
-						<!-- Form Profile Name -->
-						<div ng-if="sysProfFound" class="form-group col-md-12">
-							<div class="col-md-3 col-sm-3 item" ng-repeat="item in rsModulesData">
-								<div class="hero-widget well well-sm">
-					            	<div class="icon">
-					                 	<i ng-if="item.name=='monitor'" class="fas fa-tachometer-alt" 
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='llaveros'" class="icon-file-text" 
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='edificios'" class="icon-building" 
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='configuracion'" class="icon-cogs" 
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='perfil de usuario'" class="fas fa-user-circle"
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='cliente'" class="fas fa-users-cog" 
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='servicio'" class="fas fa-cubes" 
-					                 		ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					                 	<i ng-if="item.name=='producto'" class="fas fa-sitemap" 
-					                 	ng-class="chkBox2.modulo[item.idModule]?'icon-bg-success':'icon-bg-disabled'"></i>
-					            	</div>
-					            	<div class="text">
-					                	<span class="text-muted text-uppercase text-box">{{item.name}}</span>
-					            	</div>
-					            	<div class="options">
-								        <label class="switch switch-3x">
-								          <input type="checkbox" class="success sysProfChecks" ng-model="chkBox2.modulo[item.idModule]" id="moduloCheck-{{item.idModule}}">
-								          <span class="slider slider-3x round "></span>
-								        </label>
-					            	</div>
-					        	</div>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-				<div class="clearfix"> </div> 
-			</div>
-			<!-- Actions Button ng-click="newSysProfileFn()"-->
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="data2UpdateSysProfile2Fn(item.sysProfile)" ng-disabled="fUpdateSysProfile2.$invalid" class="btn btn-labeled btn-success">
-                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Actualizar</button>
-                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
-                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
-                    </div>
-                </div>
-            </div>
-		</div>
-	</div>
-</div>
-<!-- // UPDATE SYS PROFILE -->
-<!-- SETUP EMAIL -->
-<div id="ModalSMTPEmail" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-          	<div class="modal-header">
-            	<h3 class="modal-title">CONFIGURACION DE CORREO SMTP<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-        	</div>
-			<div class="modal-body" style="overflow-y: scroll;">
-				<div class="container-fluid">
-					<form class="form-horizontal" name="frmsmtpMail" ng-submit="sysConfig('smtp', 'save')">
-						<fieldset>
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Correo SMTP</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span ng-if="changeSmtp" class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								  		<input ng-if="changeSmtp" id="smtpMail" placeholder="Correo principal" class="form-control" ng-model="smtp.mail" type="mail" required autofocus />
-								    </div>
-								    <div ng-show="smtpMail" class="alert alert-info" role="alert">
-										<strong>Mail Actual: </strong>{{smtpMail}}
-									</div>
-									<div ng-show="!smtpMail" class="alert alert-warning" role="alert">
-										<strong>Mail Actual: </strong>Sin Asignar.
-									</div>
-								</div>
-							</div>
-							<!-- Password-->
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Contrase&#241a</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span ng-show="changeSmtp==true" class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								  		<input ng-show="changeSmtp==true" id="passwordSmtp" placeholder="Contrase&#241a" class="form-control" ng-model="smtp.password" minlength="8" type="password" required autofocus />
-								    </div>
-								    <div ng-show="smtpPwd" class="alert alert-info" role="alert">
-										<strong>Clave Actual: </strong>Asignada
-									</div>
-									<div ng-show="!smtpPwd" class="alert alert-warning" role="alert">
-										<strong>Clave Actual: </strong>Sin Asignar.
-									</div>
-								</div>
-							</div>
-							<!-- Actions Button -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4">
-							  	<input type="button" ng-if="!changeSmtp" ng-click="changeVar(1)" class="btn btn-primary" value="Cambiar" />
-							    <button ng-show="changeSmtp" type="submit" class="btn btn-success" ><i class="glyphicon glyphicon-save"> </i> Guardar</button>
 
-							  </div>
-							</div>
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- SETUP EMAIL -->
-<div id="ModalSetupEmail" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-          	<div class="modal-header">
-            	<h3 class="modal-title">CONFIGURACION DE CORREOS<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-        	</div>
-			<div class="modal-body" style="overflow-y: scroll;">
-				<div class="container-fluid">
-					<form class="form-horizontal" name="frmMails" ng-submit="sysConfig('mails', 'save')">
-						<fieldset>
-							<!-- Select Category -->
-							<div class="form-group"> 
-							  	<label class="col-md-4 control-label">Departamento</label>
-							    <div class="col-md-4 selectContainer">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-										    <select name="idTypeOutherKf" class="form-control" placeholder="Tipo de Consulta" ng-options="item.idTypeOuther as item.TypeOuther for item in listTypeQuery | filter: filterSelect('idTypeOuther', 2)"" ng-model="sys.idTypeOutherKf" required autofocus ><option value="">Selecione una opcion</option></select>
-								  	</div>
-								</div>
-							</div>
-							<div class="form-group">
-							  <label class="col-md-4 control-label">Email</label>  
-							    <div class="col-md-4">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								  		<input placeholder="Email" class="form-control" ng-model="sys.email" type="mail" required autofocus />
-								    </div>
-								</div>
-							</div>
-							<!-- Actions Button -->
-							<div class="form-group">
-							  <label class="col-md-4 control-label"></label>
-							  <div class="col-md-4">
-							    <button type="submit" class="btn btn-success" ><i class="glyphicon glyphicon-save"> </i> Guardar</button>
 
-							  </div>
-							</div>
-						</fieldset>
-					</form>
-					<div class="clearfix"> </div> 
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- SETUP SERVICES COST -->
-<div id="ModalServiceCost" class="modal fade bd-example-modal-lg" style="top: 120px;" role="dialog">
-  	<div class="modal-dialog modal-lg" >
-	    <div class="modal-content">
-          	<div class="modal-header">
-            	<h3 class="modal-title">COSTOS DE SERVICIOS<a data-dismiss="modal" class="close"><i title="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></a></h3>
-        	</div>
-    		<div class="modal-body" style="height: 700px; overflow-y: scroll;">
-			<!-- FORM CONTAINER-->
-			<div>
-				<form class="form-horizontal" name="frmCost">
-				<fieldset>
-					<!-- Company Name-->    
-					<div class="container-fluid" ng-show="sessionidProfile!=3"> 
-						<div class="row">   
-							<div class="col-md-9 col-md-offset-3">
-							  <label class="col-xs-12">Administracion</label>
-							    <div class="col-md-8">
-								    <div class="input-group">
-								        <span class="input-group-addon"><i class="icon-suitcase"></i></span>
-								  		<input ng-show="sessionidProfile!=1" name="CompanyName"  disabled class="form-control" ng-model="$parent.CompanyName" />
-									    <ui-select ng-show="sessionidProfile==1" name="idCompanyKf" ng-show="sessionidProfile==1" ng-required="sessionidProfile==1" ng-model="selectIdCompanyKf.selected" on-select="onSelectCallback()" ng-change="officeListByCompnayID(selectIdCompanyKf.selected.idCompany);">
-			                          		<ui-select-match allow-clear="true" placeholder="Seleccione una administracion">{{$select.selected.nameCompany}}</ui-select-match>
-			                            	<ui-select-choices repeat="item in listCompany | filter: $select.search">
-			                              		<div ng-bind-html="item.nameCompany | highlight: $select.search"></div>
-			                                		<small ng-bind-html="item.mail_admin | highlight: $select.search"></small>
-			                            	</ui-select-choices>
-			                        	</ui-select>
-								    </div>
-							  	</div>
-							</div>
-						</div>
-					</div>
-					<!-- Address for Admins -->
-					<div class="container-fluid" ng-show="sessionidProfile!=3"> 
-						<div class="row">   
-							<div class="col-md-9 col-md-offset-3">
-							  	<label class="col-xs-12">Direcci&#243n del Consorcio</label>
-								    <div class="col-md-8">
-									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon icon-building"></i></span>
-				                            <ui-select name="idAddressAtt" ng-disabled="!companyFound" ng-change="getCostServiceData(4, selectIdAddressKf.selected.idAdress); getKeyChains(selectIdAddressKf.selected.idAdress);" ng-required="sessionidProfile!=4" ng-model="selectIdAddressKf.selected" autofocus>
-							                  	<ui-select-match allow-clear="true" placeholder="Seleccione una direccion">{{$select.selected.nameAdress}}</ui-select-match>
-							                    <ui-select-choices repeat="item in listOffice | filter: $select.search">
-							                      <div ng-bind-html="item.nameAdress | highlight: $select.search"></div>
-							                        <!--<small>Costo de Gestion: </small><small ng-bind-html="item.priceManagement | highlight: $select.search"></small>
-							                        <small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>
-													getServicesValues(selectIdAddressKf.selected.idAdress); 
-													getKeyChains(selectIdAddressKf.selected.idAdress);
-							                        -->
-							                    </ui-select-choices>
-							                </ui-select>
-									    </div>
-								  	</div>
-							</div>
-						</div>
-					</div>
-					<!-- Address for Onwers-->
-					<div class="container-fluid" ng-show="sessionidProfile==3"> 
-						<div class="row">   
-							<div class="col-md-9 col-md-offset-3">
-							  	<label class="col-xs-12">Direcci&#243n del Consorcio</label>
-								    <div class="col-md-8">
-									    <div class="input-group">
-									        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-									  		<select name="idAddressAtt" class="form-control" ng-change="getCostServiceData(3, select.idAddressAtt); getKeyChains(select.idAddressAtt);"  ng-options="item.idAdress as item.nameAdress for item in ListTenantAddress" ng-required="sessionidProfile!=3" ng-model="select.idAddressAtt" autofocus >
-											    <option value="">Seleccione un consorcio</option>
-										    </select>
-									    </div>
-								  	</div>
-							</div>
-						</div>
-					</div>
-					<div><ul><i class="divider"></li></ul></div>
-					<div ng-if="!selectIdAddressKf.selected.idAdress && !select.idAddressAtt">
-						<div class="alert alert-info alert-dismissible" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<i class="glyphicon glyphicon-info-sign"></i><span> <strong>INFO: </strong>Selecciona una dieccion de un consorcio para conocer los costos.</span>
-						</div>
-					</div>
-					<div ng-if="sssselectIdAddressKf.selected.idAdress || ssssselect.idAddressAtt">
-						<!-- Service-->
-						<div class="container-fluid">
-							<div class="row">
-			  				    <div class="col-md-6 col-md-offset-3">
-								    <div ng-if="costService!=0" class="alert alert-info" role="alert">
-										<strong>Costo Gestion (Alta / Baja): </strong><span class="pull-right">{{costService}} <i class="glyphicon glyphicon-edit"></i></span>
 
-									</div>
-									<div ng-if="costService==0" class="alert alert-warning" role="alert">
-										<strong>Costo Servicio: </strong><span class="pull-right">Valor No Asignado. <i class="glyphicon glyphicon-exclamation-sign"></i></span>
-										
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Key-->
-						<div class="container-fluid"> 
-							<div class="row"> 
-							    <div class="col-md-6 col-md-offset-3">
-								    <div ng-if="costKey!=0" class="alert alert-info" role="alert">
-										<strong>Costo de Llave: </strong><span class="pull-right">{{costKey}} <i class="glyphicon icon-key"></i></span>
-									</div>
-									<div ng-if="costKey==0" class="alert alert-warning" role="alert">
-										<strong>Costo Llave: </strong><span class="pull-right">Valor No Asignado. <i class="glyphicon glyphicon-exclamation-sign"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Delivery-->
-						<div class="container-fluid">
-							<div class="row">
-							   	<div class="col-md-6 col-md-offset-3">
-								    <div ng-if="costDelivery!=0" class="alert alert-info" role="alert">
-										<strong>Costo de Envio: </strong><span class="pull-right">{{costDelivery}} <i class="glyphicon icon-truck"></i></span>
-									</div>
-									<div ng-if="costDelivery==0" class="alert alert-warning" role="alert">
-										<strong>Costo Envio: </strong><span class="pull-right">Valor No Asignado. <i class="fas fa-ban"></i></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div ng-if="selectIdAddressKf.selected.idAdress || select.idAddressAtt" class="container-fluid justify-content-md-center col-md-12 col-md-offset-3">
-						<div class="col-md-3">    	    
-							<div class="cost-widget well well-sm">
-				            	<div class="cost-icon">
-				                 	<i class="fas fa-edit"></i>
-				            	</div>
-				            	<div class="text">
-				                	<h4 class="text-muted">Costo Gestion</h4>
-				            	</div>
-				            	<div class="options">
-				                <span data-toggle="tooltip" data-placement="bottom" title="Costo de gestion" class="badge badge-light">{{costService}}</span>
-				            	</div>
-				        	</div>
-				        </div>
-						<!--<div class="col-md-3">    	    
-							<div class="hero-widget well well-sm">
-				            	<div class="icon">
-				                 	<i class="fas fa-key"></i>
-				            	</div>
-				            	<div class="text">
-				                	<h4 class="text-muted">Costo de Llave</h4>
-				            	</div>
-				            	<div class="options">
-				                <span data-toggle="tooltip" data-placement="bottom" title="Costo de Llave" class="badge badge-light">{{costKey}}</span>
-				            	</div>
-				        	</div>
-				        </div>-->
-						<div class="col-md-3">    	    
-							<div class="cost-widget well well-sm">
-				            	<div class="cost-icon">
-				                 	<i class="fas fa-truck"></i>
-				            	</div>
-				            	<div class="text">
-				                	<h4 class="text-muted">Costo de Envio</h4>
-				            	</div>
-				            	<div class="options">
-				                	<span data-toggle="tooltip" data-placement="bottom" title="Costo de envio" class="badge badge-light">{{costDelivery}}</span>
-				            	</div>
-				        	</div>
-				        </div>
-				    </div>
-				</fieldset>
-				</form>
-			</div>
-			<div class="col-md-8 col-md-offset-2" ng-if="selectIdAddressKf.selected.idAdress || select.idAddressAtt || sessionidProfile==5 ">
-				<h3 style="text-align: center;">Tipos de Llaveros Disponibles</h3>
-		      	<div class="modal-body pre-scrollable">
-    				<table class="table  table-striped ">
-	                    <thead style=" background: #4d5d6f; color: white;">
-	                        <tr >
-	                            <th>N°</th>
-	                            <th>Descripcion</th>
-	                            <th>Costo</th>
-	                    </thead>
-	                    <tbody >
-	                        <tr style="align-content: center;" ng-repeat="keys in keyChains">
-	                        
-	                        	<td>{{$index+1}}</td>
-		                        <td><span ng-if="keys.item=='Llaveros'"><i class="fas fa-key"> </i></span>
-		                        	<span ng-if="keys.item=='Sticket Vehicular'"><i class="fas fa-car"> </i></span>
-		                        	<span ng-if="keys.item=='Credencial Movil'"><i class="fas fa-mobile-alt"> </i></span>{{keys.item}}</td>
-		                        <td>$ {{keys.value}}</td>
-		                    </tr>
-		                </tbody>
-    				</table>
-				</div>
-			</div>
-			</div>
-		</div>
-	</div>
-</div>
+
+<div ng-include="'views/system/services/listCostOfServices.html'"></div>
+<div ng-include="'views/system/config/mailsSetup.html'"></div>
+<div ng-include="'views/system/config/smtpSetup.html'"></div>
+
+<div ng-include="'views/system/sysprofiles/newSysProfile.html'"></div>
+<div ng-include="'views/system/sysprofiles/updateSysProfile.html'"></div>

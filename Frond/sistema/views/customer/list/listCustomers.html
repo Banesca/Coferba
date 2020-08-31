@@ -78,11 +78,11 @@
                 <li role="presentation"><div class="divider"></div></li>-->
                 <li><a href="" ng-click="switchCustomersFn('remove', item)"><i title="Eliminar Usuario" class="fas fa-user-times"></i> Eliminar</a></li>
                 <li role="presentation"><div class="divider"></div>
-        				<li><a href="" ng-click="switchCustomersFn('services', item)"><i title="Eliminar Usuario" class="fas fa-globe"></i> Servicios</a></li>
+        				<li><a href="" ng-click="switchCustomersFn('services', item)"><i title="Servicios" class="fas fa-globe"></i> Servicios</a></li>
         				<li role="presentation"><div class="divider"></div></li>	 
-        				<li><a href="" ng-click="switchCustomersFn('authUsers', item)"><i title="Eliminar Usuario" class="fas fa-user-check"></i> Autorizados</a></li>
+        				<li><a href="" ng-click="switchCustomersFn('allowedUsers', item)"><i title="Usuarios autorizados" class="fas fa-user-check"></i> Autorizados</a></li>
         				<li role="presentation"><div class="divider"></div></li>
-        				<li><a href="" ng-click="switchCustomersFn('uploadFiles', item)"><i title="Eliminar Usuario" class="fas fa-paperclip"></i> Adjuntos</a></li>               	
+        				<li><a href="" ng-click="switchCustomersFn('uploadFiles', item)"><i title="Subir archivos" class="fas fa-paperclip"></i> Adjuntos</a></li>               	
               </ul>             	
           </div>
           <button ng-click="switchCustomersFn('phonesandschedule', item)" class="btn btn-success  btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver telefonos & horario"><i class="glyphicon glyphicon-earphone"></i></button>
@@ -153,7 +153,7 @@
             </label>
         </td>
         <td>
-          <button ng-click="" class="btn btn-success  btn-sm btn-sm" data-toggle="tooltip" data-placement="top" title="Ver departamentos"><i class="icon-building"></i></button>
+          <button ng-click="switchCustomersFn('departments', item)" class="btn btn-success  btn-sm btn-sm" data-toggle="tooltip" data-placement="top" title="Ver departamentos"><i class="icon-building"></i></button>
           <button ng-click="" class="btn btn-warning btn-sm btn-sm" data-toggle="tooltip" data-placement="top" title="Asociar consorcio"><i class="fas fa-sign-in-alt"></i></button>
         </td>        
       </tr>
