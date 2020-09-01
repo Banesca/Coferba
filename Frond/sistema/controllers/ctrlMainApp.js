@@ -4845,7 +4845,21 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   $scope.removeAuthUserFn($scope.removeAuthUser);
               $('#confirmRequestModal').modal('hide');
             }
-          break;                    
+          break;
+          case "removeZone":
+            if (confirm==0){
+                $scope.removeZone=obj;
+                    $scope.mess2show="La zona ("+obj.n_zona+") "+obj.descripcion+" sera eliminada.     Confirmar?";                                        
+                  
+                    console.log('Zona a remover ID: '+obj.idZona);
+                    console.log("============================================================================");
+                    //console.log(obj);     
+              $('#confirmRequestModal').modal('toggle');
+            }else if (confirm==1){
+                  $scope.deleteZoneFn($scope.removeZone);
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;
           default:
             }
         }
@@ -6480,6 +6494,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
       $scope.list_address_particular=[];
       $scope.list_mails_contact=[];
       $scope.list_mails=[];
+      $scope.list_client_user = [];
       $scope.formValidated=false;
       $scope.idProvinceFk=null;
       $scope.rsAddress_API_Data_Main = [];
@@ -6580,6 +6595,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
       $scope.list_address_particular=[];
       $scope.list_mails_contact=[];
       $scope.list_mails=[];
+      $scope.list_client_user = [];
       $scope.idProvinceFk=null;
     }
     $scope.defArrForCustomersFn();   
@@ -7412,6 +7428,36 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                       //Send the customer data to the addcustomer service
                       $scope.updateCustomerFn($scope.customer.update);    
                     break;
+                    case "2": //BUILDING CUSTOMER
+                          //Getting the customer schedule setting
+                          $scope.customer.update.list_schedule_atention                    = $scope.list_schedule_time_orderBy;
+                          //Getting the customer phones contact list
+                          $scope.customer.update.list_phone_contact                        = $scope.list_phone_contact;
+                          //Getting the department that was created
+                          $scope.selectDeptoDataFn();
+                          $scope.customer.update.list_departament                          = $scope.list_departments;
+                          //Getting the customer Mail list
+                          $scope.customer.update.list_emails                               = $scope.list_mails_contact;
+                          //Getting the authorized user to the new customer
+                          $scope.customer.update.list_client_user                          = $scope.list_client_user;
+                          $scope.customer.update.idProvinceFk                              = $scope.customer.select.main.province.selected.idProvince;
+                          $scope.customer.update.idLocationFk                              = $scope.customer.select.main.location.selected.idLocation;
+                          $scope.customer.update.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
+                          $scope.customer.update.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                          //Assigning the default value to 0
+                          $scope.customer.update.isNotCliente                              = 0;
+                          $scope.customer.update.idClientAdminFk                           = $scope.customer.select.company.selected.idClient;
+                          $scope.customer.update.idClientCompaniFk                         = null;
+                          $scope.customer.update.idDepartmentFk                            = null;
+                          $scope.customer.update.idTipoInmuebleFk                          = null;
+                          $scope.customer.update.name                                      = $scope.customer.update.address;
+                          $scope.customer.update.departmentUnit                            = $scope.list_department_multi.unidad;
+                          $scope.customer.update.departmentCorrelation                     = $scope.list_department_multi.correlacion;
+                          //Printing the current array before add the customer
+                          console.log($scope.customer.update);
+                          //Send the customer data to the addcustomer service
+                          $scope.updateCustomerFn($scope.customer.update);                     
+                    break;                    
                     case "3": //COMPANY CUSTOMER
                       //Getting the customer schedule setting
                       $scope.customer.update.list_schedule_atention                    = $scope.list_schedule_time_orderBy;
@@ -8045,12 +8091,128 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     *                                                 *
     **************************************************/
       $scope.rsZonesData = {};
-      $scope.getZonesFn = function(){
+      $scope.getZonesFn = function(opt){
         UtilitiesServices.getZones().then(function(data){
             $scope.rsZonesData = data;
+            if(opt==1){$scope.loadPagination($scope.rsZonesData, "idZona", "10");}
             //console.log($scope.rsProfileData);
         });
       };
+    /**************************************************
+    *                                                 *
+    *                    ADD ZONE                     *
+    *                                                 *
+    **************************************************/
+      $scope.zone={'new':{}, 'update':{}};
+      $scope.rsNewZonesData ={};
+      $scope.zones={'new':{'zona':{}}, 'update':{'zona':{}}};
+      $scope.addNewZoneFn = function(obj){
+        $scope.zones.new.zona.n_zona=obj.zoneNumber;
+        $scope.zones.new.zona.costo_envio=obj.costDelivery;
+        $scope.zones.new.zona.valor_envio=obj.priceDelivery;
+        $scope.zones.new.zona.descripcion=obj.description;
+        UtilitiesServices.addNewZone($scope.zones.new).then(function(data){
+            $scope.rsNewZonesData = data;
+            if($scope.rsNewZonesData.status==200){
+              console.log("Zone Successfully Created");
+              inform.add('Registro de nueva zona realizado con exito. ',{
+                    ttl:2000, type: 'success'
+              });
+              $('#newZoneModal').modal('hide');
+              $scope.zone={'new':{}, 'update':{}};
+              $scope.zones={'new':{'zona':{}}, 'update':{'zona':{}}};
+            }else if($scope.rsNewZonesData.status==203){
+              console.log("Zone already exist, contact administrator");
+              inform.add('INFO: La zona ya se encuentra registrado. ',{
+                    ttl:2000, type: 'warning'
+              });
+              //$('#RegisterModalCustomer').modal('hide');
+            }else if($scope.rsNewZonesData.status==500){
+              console.log("Zone not Created, contact administrator");
+              inform.add('Error: [500] Contacta al area de soporte. ',{
+                    ttl:2000, type: 'danger'
+              });
+              //$('#RegisterModalCustomer').modal('hide');
+            }            
+           $scope.getZonesFn("1");
+
+        });
+      };
+    /**************************************************
+    *                                                 *
+    *                   SELECT ZONE                   *
+    *                                                 *
+    **************************************************/ 
+      $scope.selectZoneFn = function(obj){
+        $('#updateZoneModal').modal('toggle');
+          $scope.zone.update.zoneNumber=obj.n_zona;
+          $scope.zone.update.costDelivery=obj.costo_envio;
+          $scope.zone.update.priceDelivery=obj.valor_envio;
+          $scope.zone.update.description=obj.descripcion;
+          $scope.zone.update.idZona=obj.idZona;
+          
+      }     
+    /**************************************************
+    *                                                 *
+    *                   UPDATE ZONE                   *
+    *                                                 *
+    **************************************************/
+      $scope.rsUpdatedZone={};
+      $scope.zones={'new':{'zona':{}}, 'update':{'zona':{}}};
+      $scope.updateZoneFn = function(obj){
+        $scope.zones.update.zona.idZona=$scope.zone.update.idZona;
+        $scope.zones.update.zona.n_zona=obj.zoneNumber;
+        $scope.zones.update.zona.costo_envio=obj.costDelivery;
+        $scope.zones.update.zona.valor_envio=obj.priceDelivery;
+        $scope.zones.update.zona.descripcion=obj.description;
+        console.log($scope.zones.update);
+        UtilitiesServices.updateZone($scope.zones.update).then(function(data){
+            $scope.rsUpdatedZone = data;
+            if($scope.rsUpdatedZone.status==200){
+              console.log("Zone Successfully updated");
+              inform.add('Modificacion de zona realizado con exito. ',{
+                    ttl:2000, type: 'success'
+              });
+              $('#updateZoneModal').modal('hide');
+              $scope.zone={'new':{}, 'update':{}};
+              $scope.zones={'new':{'zona':{}}, 'update':{'zona':{}}};
+              }else if($scope.rsUpdatedZone.status==500){
+              console.log("Zone not updated, contact administrator");
+              inform.add('Error: [500] Contacta al area de soporte. ',{
+                    ttl:2000, type: 'danger'
+              });
+              //$('#RegisterModalCustomer').modal('hide');
+            }            
+           $scope.getZonesFn("1");
+
+        });
+      };
+    /**************************************************
+    *                                                 *
+    *                   DELETE ZONE                   *
+    *                                                 *
+    **************************************************/
+      $scope.rsDeletedZone={};
+      $scope.deleteZoneFn = function(obj){
+        var idZona = obj.idZona;
+        UtilitiesServices.deleteZone(idZona).then(function(data){
+            $scope.rsDeletedZone = data;
+            if($scope.rsDeletedZone.status==200){
+              console.log("Zone Successfully deleted");
+              inform.add('Eliminacion de la zona realizado con exito. ',{
+                    ttl:2000, type: 'success'
+              });
+              }else if($scope.rsDeletedZone.status==500){
+              console.log("Zone not deleted, contact administrator");
+              inform.add('Error: [500] Contacta al area de soporte. ',{
+                    ttl:2000, type: 'danger'
+              });
+              //$('#RegisterModalCustomer').modal('hide');
+            }            
+           $scope.getZonesFn("1");
+
+        });
+      };      
     /**************************************************
     *                                                 *
     *                GET BUILDINGS                    *
@@ -10251,13 +10413,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     $scope.sysContent = 'sysZones';
                   break;
                   case "newZone":
-                    $('#newZone').modal('toggle');
+                    $('#newZoneModal').modal('toggle');
                   break;
                   case "updateZone":
-                    $scope.sysUpProfile.Name="";
-                    $scope.filterSysProfile=null;
-                    $scope.sysProfFound=false;
-                    $('#updateSysProfile2').modal('show');
+                    $('#updateZoneModal').modal('show');
                   break;
                   default:
                 }

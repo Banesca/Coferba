@@ -27,11 +27,12 @@
             </label>
         </td>
         <td>
-          <button ng-click="" data-toggle="tooltip" data-placement="right" title="Editar Zona" type="button" class="btn btn-info btn-xs"><i class="fas fa-pen-square"></i></button>
-          <button ng-if="item.idStatus!='0'" ng-click="modalConfirmation('removeZona', 0, item)" data-toggle="tooltip" data-placement="right" title="Eliminar Zona" type="button" class="btn btn-danger btn-xs"><i class="fas fa-minus-square"></i></button>
+          <button ng-click="selectZoneFn(item);" data-toggle="tooltip" data-placement="right" title="Editar Zona" type="button" class="btn btn-info btn-xs"><i class="fas fa-pen-square"></i></button>
+          <button ng-if="item.idStatus!='0'" ng-click="modalConfirmation('removeZone', 0, item)" data-toggle="tooltip" data-placement="right" title="Eliminar Zona" type="button" class="btn btn-danger btn-xs"><i class="fas fa-minus-square"></i></button>
         </td>
       </tr>
        <!--<tr ng-if="searchboxfilter.length==0" class="animate-repeat" style="align-content: center;">no items found</tr>-->
     </tbody>
 </table>
-<div ng-include="'views/system/zones/newZone.html'"></div> 
+<div ng-include="'views/system/zones/newZone.html'"></div>
+<div ng-include="'views/system/zones/updateZone.html'"></div> 

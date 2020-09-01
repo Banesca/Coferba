@@ -34,7 +34,41 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     return response;
             });   
           },      
-
+          addNewZone: function(zona) {
+            console.log("[Utilities Services] => Add New Zone ");
+              return $http.post(serverHost+serverBackend+"Zonas/add",zona,serverHeaders)
+                .then(function mySucess(response, status) {
+                  rsJson=response;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                })  
+          },
+          updateZone: function(zona) {
+            console.log("[Utilities Services] => Update Zone ");
+              return $http.post(serverHost+serverBackend+"Zonas/edit",zona,serverHeaders)
+                .then(function mySucess(response, status) {
+                  rsJson=response;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                })  
+          },
+          deleteZone: function(id) {
+            console.log("[Utilities Services] => Delete Zone: "+id);
+              return $http({
+                    method : "DELETE",
+                    url : serverHost+serverBackend+"Zonas/delete/"+id
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },          
           getTypeOfIVA: function() {
             //console.log("[Utilities Services]: Get Type of iva ");
               return $http({

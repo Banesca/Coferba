@@ -1,14 +1,14 @@
 <!-- pager -->
 <ul ng-if="pagedItems.length" class="pagination">
   <li ng-class="{disabled:currentPage === 0}">
-    <a ng-click="prevPage()" aria-label="Previous"><span aria-hidden="true"><i class="far fa-arrow-alt-circle-left"></i> Anterior</span></a>
+    <a ng-click="prevPage()" aria-label="Previous" style="cursor: pointer;"><span aria-hidden="true"><i class="far fa-arrow-alt-circle-left"></i> Anterior</span></a>
   </li>
   <!--<li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
     <a ng-click="vm.setPage(page)">{{page}}</a>
   </li>-->
   <li><span style="background-color: #28a745;color: #fff;">{{currentPage+1}} / {{pagedItems.length}}</span></li>
   <li ng-class="{disabled:currentPage == pagedItems.length - 1}">
-    <a ng-click="nextPage()" aria-label="Next">
+    <a ng-click="nextPage()" aria-label="Next" style="cursor: pointer;">
       <span aria-hidden="true">Siguiente <i class="far fa-arrow-alt-circle-right"></i></span></a>
   </li>
 </ul>
