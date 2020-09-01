@@ -390,7 +390,7 @@ class Client_model extends CI_Model {
                         }
                     }
                     //  USUARIOS DEL CONSORCIO
-                     if (isset($client['list_client_user']) && count($client['list_client_user']) > 0) {
+                    if (isset($client['list_client_user']) && count($client['list_client_user']) > 0) {
                         foreach ($client['list_client_user'] as $valor) {
 
                             $this->db->insert('tb_client_users', [
@@ -409,9 +409,10 @@ class Client_model extends CI_Model {
                                 'status'         => 1,
                             ]
                         );
-                    }                    
+                    }
 
                 }
+
                 return 1;
             } else {
                 return 0;
@@ -480,20 +481,37 @@ class Client_model extends CI_Model {
             }
 
 
-            $this->db->delete('tb_client_departament', [ 'idClientFk' => $client['idClient'] ]);
+            //$this->db->delete('tb_client_departament', [ 'idClientFk' => $client['idClient'] ]);
 
             //  DEPARTAMENTO
             foreach ($client['list_departament'] as $valor) {
+                if ($valor['idClientDepartament'] == 0) { //si el valor es 0 entonces se crea un nuevo registro
 
-                $this->db->insert('tb_client_departament', [
-                        'idClientFk'              => $client['idClient'],
-                        'floor'                   => $valor['floor'],
-                        'departament'             => $valor['departament'],
-                        'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-                        'idStatusFk'              => 1,
-                        'numberUNF'               => $valor['numberUNF'],
-                    ]
-                );
+                    $this->db->insert('tb_client_departament', [
+                            'idClientFk'              => $client['idClient'],
+                            'floor'                   => $valor['floor'],
+                            'departament'             => $valor['departament'],
+                            'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
+                            'idStatusFk'              => 1,
+                            'numberUNF'               => $valor['numberUNF'],
+                            //'idStatusFk'              => $valor['idStatusFk'],
+                        ]
+                    );
+
+                } else { //si no pues edito
+
+                    $this->db->set(
+                        [
+                            //'idClientFk'              => $client['idClient'],
+                            'floor'                   => $valor['floor'],
+                            'departament'             => $valor['departament'],
+                            'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
+                            'numberUNF'               => $valor['numberUNF'],
+                            'idStatusFk'              => $valor['idStatusFk'],
+
+                        ]
+                    )->where("idClientDepartament", $valor['idClientDepartament'])->update("tb_client_departament");
+                }
             }
             //  TELEFONOS
             $this->db->delete('tb_client_phone_contact', [ 'idClientFk' => $client['idClient'] ]);
@@ -608,7 +626,7 @@ class Client_model extends CI_Model {
                 $this->db->insert('tb_client_billing_information', [
                         'idClientFk'          => $idClientFk,
                         'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-                        'businessAddress'     => $client['billing_information']['nameAddress'],                        
+                        'businessAddress'     => $client['billing_information']['nameAddress'],
                         'cuitBilling'         => $client['billing_information']['cuitBilling'],
                         'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
                         'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
@@ -665,7 +683,7 @@ class Client_model extends CI_Model {
                                 'status'         => 1,
                             ]
                         );
-                    }                    
+                    }
                 }
 
                 return 1;
@@ -871,7 +889,7 @@ class Client_model extends CI_Model {
                     'observationCollection'   => $client['observationCollection'],
                     'observation'             => $client['observation'],
                     'idZonaFk'                => @$client['idZonaFk'],
-                    'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],                    
+                    'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
                     'idClientDepartamentFk'   => @$idDepartmentKf,
                 ]
             );
@@ -929,8 +947,9 @@ class Client_model extends CI_Model {
                                 'status'         => 1,
                             ]
                         );
-                    }                    
+                    }
                 }
+
                 return 1;
             } else {
                 return 0;
@@ -993,7 +1012,7 @@ class Client_model extends CI_Model {
                 'observationCollection'   => $client['observationCollection'],
                 'observation'             => $client['observation'],
                 'idZonaFk'                => @$client['idZonaFk'],
-                'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],                
+                'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
                 'idClientDepartamentFk'   => @$idClientDepartamentFk,
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
@@ -1114,7 +1133,7 @@ class Client_model extends CI_Model {
                 );
 
                 if (count(@$client['list_address_particular']) > 0
-                    && count(@$client['list_phone_contact']) > 0 
+                    && count(@$client['list_phone_contact']) > 0
                 ) {
 
                     //  TELEFONOS DE CONTACTO
@@ -1225,8 +1244,8 @@ class Client_model extends CI_Model {
 
 
         if (count(@$client['list_address_particular']) > 0
-            && count(@$client['list_phone_contact']) > 0 
-        ){
+            && count(@$client['list_phone_contact']) > 0
+        ) {
 
             //TELEFONOS DE CONTACTO
             $this->db->delete('tb_client_phone_contact', [ 'idClientFk' => $client['idClient'] ]);
@@ -1301,8 +1320,8 @@ class Client_model extends CI_Model {
     }
 
     public function getCustomersById($idClient = null) {
-        $quuery      = null;
-        $rs          = null;
+        $quuery = null;
+        $rs     = null;
         if (! is_null($idClient)) {
 
             $this->db->select("*")->from("tb_clients");
@@ -1313,26 +1332,26 @@ class Client_model extends CI_Model {
             if ($quuery->num_rows() === 1) {
                 //$rs["client"] = $quuery->row_array();
                 //SEARCH BUILDING AND BRANCH
-                $where="tb_clients.idClientAdminFk=".$idClient." OR tb_clients.idClientCompaniFk=".$idClient;
+                $where = "tb_clients.idClientAdminFk=".$idClient." OR tb_clients.idClientCompaniFk=".$idClient;
                 $this->db->select("*")->from("tb_clients");
                 $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
                 $quuery = $this->db->where($where)->get();
                 if ($quuery->num_rows() > 0) {
                     $rs = $quuery->result_array();
-                    $i = 0;
+                    $i  = 0;
                     foreach ($quuery->result() as &$row) {
 
                         $this->db->select("*")->from("tb_client_schedule_atention");
                         $quuery = $this->db->where("tb_client_schedule_atention.idClienteFk =", $row->idClient)->get();
 
-                        $rs1 = $quuery->result_array();
+                        $rs1                              = $quuery->result_array();
                         $rs[$i]['list_schedule_atention'] = $rs1;
 
 
                         $this->db->select("*")->from("tb_client_phone_contact");
                         $quuery = $this->db->where("tb_client_phone_contact.idClientFk =", $row->idClient)->get();
 
-                        $rs2 = $quuery->result_array();
+                        $rs2                          = $quuery->result_array();
                         $rs[$i]['list_phone_contact'] = $rs2;
 
 
@@ -1340,7 +1359,7 @@ class Client_model extends CI_Model {
                         $this->db->join('tb_user', 'tb_user.idUser = tb_client_users.idUserFk', 'inner');
                         $quuery = $this->db->where("tb_client_users.idClientFk =", $row->idClient)->get();
 
-                        $rs3 = $quuery->result_array();
+                        $rs3                        = $quuery->result_array();
                         $rs[$i]['list_client_user'] = $rs3;
 
 
@@ -1348,7 +1367,7 @@ class Client_model extends CI_Model {
                         $this->db->join('tb_tipo_mails', 'tb_tipo_mails.idTipoMail = tb_client_mails.idTipoDeMailFk', 'left');
                         $quuery = $this->db->where("tb_client_mails.idClientFk =", $row->idClient)->get();
 
-                        $rs4 = $quuery->result_array();
+                        $rs4                   = $quuery->result_array();
                         $rs[$i]['list_emails'] = $rs4;
 
 
@@ -1359,7 +1378,7 @@ class Client_model extends CI_Model {
                         $this->db->join('tb_province', 'tb_province.idProvince = tb_client_billing_information.idProvinceBillingFk', 'inner');
                         $quuery = $this->db->where("tb_client_billing_information.idClientFk =", $row->idClient)->get();
 
-                        $rs5 = $quuery->result_array();
+                        $rs5                           = $quuery->result_array();
                         $rs[$i]['billing_information'] = $rs5;
 
                         //DEPARTAMENTOS
@@ -1367,13 +1386,15 @@ class Client_model extends CI_Model {
                         $this->db->join('tb_category_departament', 'tb_category_departament.idCategoryDepartament = tb_client_departament.idCategoryDepartamentFk', 'left');
                         $quuery = $this->db->where("tb_client_departament.idClientFk =", $row->idClient)->get();
 
-                        $rs6 = $quuery->result_array();
+                        $rs6                        = $quuery->result_array();
                         $rs[$i]['list_departament'] = $rs6;
 
                         $i++;
                     }
+
                     return $rs;
                 }
+
                 return null;
             }
 
@@ -1562,7 +1583,7 @@ class Client_model extends CI_Model {
                     $this->db->join('tb_province', 'tb_province.idProvince = tb_client_billing_information.idProvinceBillingFk', 'inner');
                     $quuery = $this->db->where("tb_client_billing_information.idClientFk =", $row->idClient)->get();
 
-                    $rs5                          = $quuery->result_array();
+                    $rs5                           = $quuery->result_array();
                     $rs[$i]['billing_information'] = $rs5;
 
                     //DEPARTAMENTOS
@@ -1576,7 +1597,7 @@ class Client_model extends CI_Model {
                     $this->db->select("*")->from("tb_client_address_particular");
                     $quuery = $this->db->where("tb_client_address_particular.idClientFk =", $row->idClient)->get();
 
-                    $rs7                        = $quuery->result_array();
+                    $rs7                               = $quuery->result_array();
                     $rs[$i]['list_address_particular'] = $rs7;
 
                     $i++;

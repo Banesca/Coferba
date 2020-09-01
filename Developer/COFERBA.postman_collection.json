@@ -548,6 +548,26 @@
 					"response": []
 				},
 				{
+					"name": "Editar Cliente EDIFICIO",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 1,\n\t\t\"idStatusFk\": 1,\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"departmentUnit\": 1,\n\t\t\"departmentCorrelation\": 1,\n\t\t\"name\": \"empresa54663e26\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n            \"nameAddress\":\"as\"\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n                \"idClientDepartament\":1050,\n\t\t\t\t\"floor\": \"5\",\n\t\t\t\t\"departament\": \"departament2\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"2\",\n\t\t\t\t\"numberUNF\": 5,\n                \"idStatusFk\":-1\n\t\t\t},\n\t\t\t{\n                \"idClientDepartament\":1068,\n\t\t\t\t\"floor\": \"6\",\n\t\t\t\t\"departament\": \"departament3\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"3\",\n\t\t\t\t\"numberUNF\": 1,\n                \"idStatusFk\":1\n\t\t\t},\n            {\n                \"idClientDepartament\":0,\n\t\t\t\t\"floor\": \"6\",\n\t\t\t\t\"departament\": \"departament4\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"3\",\n\t\t\t\t\"numberUNF\": 1,\n                \"idStatusFk\":1\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n        \"list_client_user\":[\n            {\n                \"idUserFk\":1\n            }\n        ]\n\t}\n}"
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatebuilding"
+					},
+					"response": []
+				},
+				{
 					"name": "Crear Cliente EDIFICIO",
 					"request": {
 						"method": "POST",
@@ -561,27 +581,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 1,\n\t\t\"idStatusFk\": 1,\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"departmentUnit\": 1,\n\t\t\"departmentCorrelation\": 1,\n\t\t\"name\": \"empresa54663e26\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\": 1\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t]\n\t}\n}"
-						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatebuilding"
-					},
-					"response": []
-				},
-				{
-					"name": "Editar  Cliente EDIFICIO",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\":1,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"departmentUnit\":1,\n\t\t\"departmentCorrelation\":1,\n\t\t\"name\": \"empresa54663e26\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\":1\n\t\t\t}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\":1,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"departmentUnit\":1,\n\t\t\"departmentCorrelation\":1,\n\t\t\"name\": \"empresa5466a3eaa26\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n            \"nameAddress\":\"a\"\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n            \n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\":1\n\t\t\t},\n\t\t\t{\n            \n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\":1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/building"
 					},
