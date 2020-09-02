@@ -7101,7 +7101,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         //DEPARTMENTS
                         $scope.rolePermission="rw";
                         $scope.list_depto_floors=[];              
-                        $scope.list_floor="";                                                
+                        $scope.list_floor=""; 
+                        $scope.floorExist=null;                                               
                         $scope.list_department_multi.unidad=$scope.customer.update.departmentUnit;
                         $scope.list_department_multi.correlacion=$scope.customer.update.departmentCorrelation;
                         var i=3;
@@ -7110,23 +7111,39 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         $scope.list_depto_floors.push({'id':1,'nameFloor':'ba', 'deptos':[]});
                         $scope.list_depto_floors.push({'id':2,'nameFloor':'lo', 'deptos':[]});
                         $scope.list_depto_floors.push({'id':3,'nameFloor':'pb', 'deptos':[]});
+                        //FLOORS
                         for (var floor in $scope.customer.update.list_departament){
                           if ($scope.customer.update.list_departament[floor].floor!="co" && $scope.customer.update.list_departament[floor].floor!="ba" && $scope.customer.update.list_departament[floor].floor!="lo" && $scope.customer.update.list_departament[floor].floor!="pb"){
                             if($scope.customer.update.list_departament[floor].floor!=$scope.list_floor){
                               $scope.list_floor=$scope.customer.update.list_departament[floor].floor
-                              $scope.list_depto_floors.push({'id':(i+1),'nameFloor':$scope.customer.update.list_departament[floor].floor, 'deptos':[]});
+                              if($scope.list_depto_floors.length==4){
+                                $scope.list_depto_floors.push({'id':(i+1),'nameFloor':$scope.customer.update.list_departament[floor].floor, 'deptos':[]});
+                              }else{
+                                for (var cfloor in $scope.list_depto_floors){
+                                  if($scope.list_depto_floors[cfloor].nameFloor==$scope.list_floor){
+                                    $scope.floorExist=true;
+                                    break;                              
+                                  }else{
+                                    $scope.floorExist=false;
+                                  }
+                                }
+                                if($scope.floorExist!=true && $scope.floorExist!=null){
+                                  $scope.list_depto_floors.push({'id':(i+1),'nameFloor':$scope.customer.update.list_departament[floor].floor, 'deptos':[]});
+                                }
+                              }
                               i++;
                             }
                           }
                         }console.log($scope.list_depto_floors);
                         var d=0;
+                        //DEPTOS
                         for (arrList in $scope.list_depto_floors){
                            d=0;
                           for (var depto in $scope.customer.update.list_departament){
 
                               if($scope.customer.update.list_departament[depto].floor==$scope.list_depto_floors[arrList].nameFloor){
                                 //$scope.list_depto_floors[d].deptos.push($scope.customer.update.list_departament[depto]);
-                                $scope.list_depto_floors[arrList].deptos.push({'idClientFk':$scope.customer.update.list_departament[depto].idClientFk, 'idDepto':(d+1), 'unitNumber':$scope.customer.update.list_departament[depto].numberUNF, 'floor':$scope.customer.update.list_departament[depto].floor, 'departament':$scope.customer.update.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.update.list_departament[depto].idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
+                                $scope.list_depto_floors[arrList].deptos.push({'idClientDepartament':$scope.customer.update.list_departament[depto].idClientDepartament, 'idDepto':(d+1), 'unitNumber':$scope.customer.update.list_departament[depto].numberUNF, 'floor':$scope.customer.update.list_departament[depto].floor, 'departament':$scope.customer.update.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.update.list_departament[depto].idCategoryDepartamentFk, 'idStatusFk':$scope.customer.update.list_departament[depto].idStatusFk, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
                               }
                               d++;
                           }
@@ -7599,18 +7616,51 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   $scope.list_depto_floors=[];              
                   $scope.customer.info = obj;
                   $scope.list_floor="";
-                  var i=0;
+                  $scope.floorExist=null;
+                  var i=3;
                   //console.log($scope.customer.info.list_departament);
+                  $scope.list_depto_floors.push({'id':0,'nameFloor':'co', 'deptos':[]});
+                  $scope.list_depto_floors.push({'id':1,'nameFloor':'ba', 'deptos':[]});
+                  $scope.list_depto_floors.push({'id':2,'nameFloor':'lo', 'deptos':[]});
+                  $scope.list_depto_floors.push({'id':3,'nameFloor':'pb', 'deptos':[]});
+                  //FLOORS
                   for (var floor in $scope.customer.info.list_departament){
-                    if($scope.customer.info.list_departament[floor].floor!=$scope.list_floor){
-                      $scope.list_floor=$scope.customer.info.list_departament[floor].floor
-                      $scope.list_depto_floors.push({'id':(i+1),'nameFloor':$scope.customer.info.list_departament[floor].floor, 'deptos':[]});
-                      i++;
+                    if ($scope.customer.info.list_departament[floor].floor!="co" && $scope.customer.info.list_departament[floor].floor!="ba" && $scope.customer.info.list_departament[floor].floor!="lo" && $scope.customer.info.list_departament[floor].floor!="pb"){
+                      if($scope.customer.info.list_departament[floor].floor!=$scope.list_floor){
+                        $scope.list_floor=$scope.customer.info.list_departament[floor].floor
+                        if($scope.list_depto_floors.length==4){
+                          $scope.list_depto_floors.push({'id':(i+1),'nameFloor':$scope.customer.info.list_departament[floor].floor, 'deptos':[]});
+                        }else{
+                          for (var cfloor in $scope.list_depto_floors){
+                            if($scope.list_depto_floors[cfloor].nameFloor==$scope.list_floor){
+                              $scope.floorExist=true;
+                              break;                              
+                            }else{
+                              $scope.floorExist=false;
+                            }
+                          }
+                          if($scope.floorExist!=true && $scope.floorExist!=null){
+                            $scope.list_depto_floors.push({'id':(i+1),'nameFloor':$scope.customer.info.list_departament[floor].floor, 'deptos':[]});
+                          }
+                        }
+                        
+                        i++;
+                      }
                     }
-                    if($scope.customer.info.list_departament[floor].floor==$scope.list_floor){
-                      $scope.list_depto_floors[i-1].deptos.push($scope.customer.info.list_departament[floor]);             
+                  }console.log($scope.list_depto_floors);
+                  var d=0;
+                  //DEPTOS
+                  for (arrList in $scope.list_depto_floors){
+                     d=0;
+                    for (var depto in $scope.customer.info.list_departament){
+
+                        if($scope.customer.info.list_departament[depto].floor==$scope.list_depto_floors[arrList].nameFloor){
+                          //$scope.list_depto_floors[d].deptos.push($scope.customer.info.list_departament[depto]);
+                          $scope.list_depto_floors[arrList].deptos.push({'idClientDepartament':$scope.customer.info.list_departament[depto].idClientDepartament, 'idDepto':(d+1), 'unitNumber':$scope.customer.info.list_departament[depto].numberUNF, 'floor':$scope.customer.info.list_departament[depto].floor, 'departament':$scope.customer.info.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.info.list_departament[depto].idCategoryDepartamentFk, 'idStatusFk':$scope.customer.info.list_departament[depto].idStatusFk, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
+                        }
+                        d++;
                     }
-                  }
+                  }console.log($scope.list_depto_floors);
                   //console.log($scope.list_depto_floors);
                   $('#DepartmentsCustomer').modal('toggle');                      
                 break;
@@ -8036,7 +8086,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               for (var user in  obj.list_client_user){
                 //console.log(obj.list_client_user[key]);
                 $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser});
-                $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUsers});
+                $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser});
               }
             }
             //console.log($scope.customer.companyData);
@@ -9531,11 +9581,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 }
                   if(argCategoryDepartament=="5"){
                     $scope.porteriaCount=($scope.porteriaCount+1)
-                    $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+$scope.porteriaCount, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+$scope.porteriaCount, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});                    
                   }else if(argCategoryDepartament=="6"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[obj.id].id});
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else{
-                    $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
                   }
                   for (var d in  $scope.list_depto_floors[obj.id].deptos){
                     for (var item in $scope.rsCategoryDeptoData){
@@ -9547,7 +9597,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     departmentUnidad=0;                                               
                     for (var i=1; i<$scope.list_depto_floors.length; i++){
                       for (var d in  $scope.list_depto_floors[i].deptos){
-                        if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
+                        if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1"){
                           departmentUnidad=departmentUnidad+1;
                           $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                         }
@@ -9559,24 +9609,24 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   departmentUnidad='';               
                   $scope.poUnit=0;
                   for (var unit in $scope.list_depto_floors[obj.id].deptos){
-                    if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5"){
+                    if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
                       $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
-                    }else if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk!="6"){
+                    }else if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
                       $scope.unitId=$scope.list_depto_floors[obj.id].deptos[unit].departament;
                     }
                   }
                   //var arrIndex = arrLetras.indexOf(obj.deptos[floorsLength-1].departament);
-                  if(argCategoryDepartament=="5"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                    if(argCategoryDepartament=="5"){
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament, 'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else if(argCategoryDepartament=="6"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else{
                     var indexArray=[],
                     arrIndex=0;
                     indexArray = arrLetras;
                     arrIndex   = indexArray.indexOf($scope.unitId);
                     departmentUnidad=arrLetras[arrIndex+1];
-                    $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0,'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }
                   //REORDEN DE LOS ID'S DE LAS UNIDADES DEL PISO
                   $scope.unitNumberId=0;
@@ -9589,21 +9639,21 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   departmentUnidad=0;
                   $scope.poUnit=0;
                   for (var unit in $scope.list_depto_floors[obj.id].deptos){
-                    if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5"){
+                    if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
                       $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
                     }
                   }
                   if(argCategoryDepartament=="5"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else if(argCategoryDepartament=="6"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else{
-                    $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength-1+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':'', 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength-1+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':'', 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }                    
                     //$scope.list_depto_floors[0].deptos.push({'idDepto':($scope.list_depto_floors[0].deptos.length+1), 'floor':$scope.list_depto_floors[0].nameFloor, 'departament':($scope.list_depto_floors[0].deptos.length+1), 'idCategoryDepartamentFk': '2', 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament});
                       for (var i=3; i<$scope.list_depto_floors.length; i++){
                         for (var d in  $scope.list_depto_floors[i].deptos){
-                          if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
+                          if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1"){
                             departmentUnidad=departmentUnidad+1;
                             $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                           }
@@ -9621,13 +9671,21 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                     }
                   }
                   if(argCategoryDepartament=="5"){
+                      if ($scope.isNewCustomer==true){
                         $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      }else{
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      }
                   }else if(argCategoryDepartament=="6"){
+                      if ($scope.isNewCustomer==true){
                         $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      }else{
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      }
                   }else{
                     departmentUnidad=($scope.unitId+1);
-                    $scope.list_depto_floors[obj.id].deptos.push({'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
-                  }
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                  } 
                   //REORDEN DE LOS ID'S DE LAS UNIDADES DEL PISO
                   $scope.unitNumberId=0;
                   for (var uni in $scope.list_depto_floors[obj.id].deptos){
@@ -9647,9 +9705,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               varCategoryDepartament=argCategoryDepartament;
               unitNumber=deptoUnit;
                 if ($scope.list_depto_floors[obj.id].deptos.length==0){
-                   $scope.list_depto_floors[obj.id].deptos.push({'idDepto':($scope.list_depto_floors[obj.id].deptos.length+1), 'unitNumber':'', 'floor':$scope.list_depto_floors[obj.id].nameFloor, 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                   $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':($scope.list_depto_floors[obj.id].deptos.length+1), 'unitNumber':'', 'floor':$scope.list_depto_floors[obj.id].nameFloor, 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
                 }else{
-                  $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(obj.deptos.length+1), 'floor':obj.nameFloor, 'unitNumber':'', 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                  $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(obj.deptos.length+1), 'floor':obj.nameFloor, 'unitNumber':'', 'departament':unitNumber, 'idCategoryDepartamentFk': varCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
                 }        
             }     
             //console.info("Floor selected data:");
@@ -9683,16 +9741,24 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             console.log("floorId["+obj.id+"] => floor: "+obj.nameFloor);
             console.log("floorId["+obj.id+"] => floor["+obj.nameFloor+"] => depto: "+depto2Del.idDepto);
             if (obj.nameFloor=="co" || obj.nameFloor=="ba" || obj.nameFloor=="lo"){
-              $scope.list_depto_floors[obj.id].deptos.splice(-1);
+                if($scope.isNewCustomer==true){
+                  $scope.list_depto_floors[obj.id].deptos.splice(-1);
+                }else{
+                  $scope.list_depto_floors[obj.id].deptos[depto2Del].idStatusFk="-1";
+                }
               console.log("Depto Successfully removed");
             }else{
-              $scope.list_depto_floors[obj.id].deptos.splice(-1);
+                if($scope.isNewCustomer==true){
+                  $scope.list_depto_floors[obj.id].deptos.splice(-1);
+                }else{
+                  $scope.list_depto_floors[obj.id].deptos[depto2Del].idStatusFk="-1";
+                }
               /* UNIDAD EN NUMEROS CORRELATIVOS POR EDIFICIO*/
               if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {
                 departmentUnidad=0;                                               
                 for (var i=3; i<$scope.list_depto_floors.length; i++){
                   for (var d in  $scope.list_depto_floors[i].deptos){
-                    if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
+                    if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1"){
                       departmentUnidad=departmentUnidad+1;
                       $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                     }
@@ -9740,7 +9806,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             arrIndex   = indexArray.indexOf(depto.idDepto);
             if(depto.floor!="co" && depto.floor!="ba" && depto.floor!="lo"){
                 departmentUnidad=0;
-                $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                if($scope.isNewCustomer==true){
+                  $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                }else{
+                  $scope.list_depto_floors[depto.idFloor].deptos[arrIndex].idStatusFk="-1";
+                }
+                
                 /* UNIDAD LETRAS/NUMEROS CORRELATIVAS POR PISO*/
                 /*if (($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1) || ($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==3)){
                   for (var j=0; j<$scope.list_depto_floors[depto.idFloor].deptos.length;j++){
@@ -9757,7 +9828,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {                                               
                   for (var i=3; i<$scope.list_depto_floors.length; i++){
                     for (var d in  $scope.list_depto_floors[i].deptos){
-                      if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6"){
+                      if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1" ){
                         departmentUnidad=departmentUnidad+1;
                         $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                       }
@@ -9766,7 +9837,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 
               }
             }else{
-              $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                if($scope.isNewCustomer==true){
+                  $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                }else{
+                  $scope.list_depto_floors[depto.idFloor].deptos[arrIndex].idStatusFk="-1";
+                }
              // if (depto.floor=="pb"){
              //   departmentUnidad=0; 
              //   for (var d in  $scope.list_depto_floors[depto.idFloor].deptos){
@@ -9852,7 +9927,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           } 
           $scope.checkIsPorteriaExistFn = function(obj){
             for (var d in  obj.deptos){
-                if (obj.deptos[d].idCategoryDepartamentFk=="5"){
+                if (obj.deptos[d].idCategoryDepartamentFk=="5" && obj.deptos[d].idStatusFk=="1"){
                   var isPorteriaExist=true;
                   break;
                 }else{
@@ -9863,7 +9938,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           }
           $scope.checkIsUnitExistFn = function(obj, newUnit){
             for (var d in  obj.deptos){
-                if (obj.deptos[d].departament==newUnit){
+                if (obj.deptos[d].departament==newUnit && obj.deptos[d].idStatusFk=="1"){
                   var isUnitExist=true;
                   break;
                 }else{
@@ -9879,7 +9954,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             $scope.list_departments=[];
             for (var f in $scope.list_depto_floors){
               for (var d in  $scope.list_depto_floors[f].deptos){
-                $scope.list_departments.push({'floor':$scope.list_depto_floors[f].deptos[d].floor, 'departament':$scope.list_depto_floors[f].deptos[d].departament, 'idCategoryDepartamentFk': $scope.list_depto_floors[f].deptos[d].idCategoryDepartamentFk, 'numberUNF':$scope.list_depto_floors[f].deptos[d].unitNumber});
+                $scope.list_departments.push({'idClientDepartament':$scope.list_depto_floors[f].deptos[d].idClientDepartament,'floor':$scope.list_depto_floors[f].deptos[d].floor, 'departament':$scope.list_depto_floors[f].deptos[d].departament, 'idCategoryDepartamentFk': $scope.list_depto_floors[f].deptos[d].idCategoryDepartamentFk, 'numberUNF':$scope.list_depto_floors[f].deptos[d].unitNumber, 'idStatusFk':$scope.list_depto_floors[f].deptos[d].idStatusFk});
               }
             }
             //$scope.dptoPaginationFn($scope.list_departments, 5);
