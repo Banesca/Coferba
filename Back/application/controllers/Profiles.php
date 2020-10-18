@@ -86,7 +86,7 @@ class Profiles extends REST_Controller {
 	
 	public function search_post() {
 
-		$searchFilter = $this->post('filter');
+		$searchFilter = $this->post('searchFilter');
 		
 
         $user = $this->profiles_model->get(null, $searchFilter);

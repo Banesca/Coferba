@@ -452,8 +452,32 @@ class Services_model extends CI_Model {
    return null;
 }
 }*/
+    /*GET LIST OF TYPE OF SERVICES*/
+     public function getTypeOfServices() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_client_type_services")->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+    /*GET LIST OF ACCESS CONTROL DOORS */
+     public function accessCtrlDoors() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_access_control_door")->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }    
 }
 
-?>
-
-	 
+?> 

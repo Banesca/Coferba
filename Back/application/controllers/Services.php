@@ -249,7 +249,26 @@ class Services extends REST_Controller
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }*/
+    public function typeOfServices_get() {
+        $service = null;
+        $service = $this->services_model->getTypeOfServices();
 
+        if (! is_null($service)) {
+            $this->response($service, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }    
+    public function accessCtrlDoors_get() {
+        $service = null;
+        $service = $this->services_model->accessCtrlDoors();
+
+        if (! is_null($service)) {
+            $this->response($service, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }    
 }
 
 ?>

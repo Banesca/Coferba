@@ -220,13 +220,13 @@ class Clientes extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
-    public function customersById_get($idClient) {
+    public function listCustomersById_get($idClient) {
         if (! $idClient) {
             $this->response(null, 404);
         }
 
         $user = null;
-        $user = $this->client_model->getCustomersById($idClient);
+        $user = $this->client_model->getListCustomersById($idClient);
 
         if (! is_null($user)) {
             $this->response($user, 200);
