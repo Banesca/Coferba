@@ -15,7 +15,7 @@
 			          <th class="th-head th-floor" style="padding-left: 5px;border-right: 1px solid #ddd !important; "><button ng-if="rolePermission=='rw'" data-toggle="tooltip" data-placement="right" title="Nuevo Piso" ng-click="addFloorFn()" class="btn btn-sm btn-success"><i class="fas fa-layer-group"></i> Piso</button></th>
 			          <th class="th-head text-uppercase" colspan="{{list_depto_floors[2].deptos.length}}"><i class="fas fa-grip-horizontal"> </i> Departamentos</th>
 			        </thead>
-			        <tbody class="fixed-body" style="height: auto !important;">					        	
+			        <tbody class="fixed-body">					        	
 				        <tr id="floor-{{floor.nameFloor}}" ng-repeat="floor in list_depto_floors">	
 				        <!-- CELL CONTROL {{floor.deptos.length}}-->			                    	
 				          	<td class="td-btn"  ng-class="{
@@ -111,8 +111,8 @@
 					          		<span>
 					          			<label ng-if="depto.idCategoryDepartamentFk=='3'" style="cursor: pointer; font-size:  14px;padding-left: 5px;" data-toggle="tooltip" data-placement="right" title="Unidad funcional" class="label" ng-class="{'label-warning': depto.unitNumber=='' || depto.unitNumber=='0', 'label-success':depto.unitNumber!='' && depto.unitNumber!='0'}">
 					          				<i  class="fas fa-tag"> </i> 		          				
-					          				<span ng-if="depto.unitNumber!='' && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
-					          				<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
+					          				<span ng-if="depto.unitNumber!=null && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
+											<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
 					          			</label>			          							          			
 					          		</span>
 						         </div>
@@ -137,8 +137,8 @@
 					          		<span>
 					          			<label ng-if="depto.idCategoryDepartamentFk=='4'" style="cursor: pointer; font-size:  14px;padding-left: 5px;" data-toggle="tooltip" data-placement="right" title="Unidad funcional" class="label" ng-class="{'label-warning': depto.unitNumber=='' || depto.unitNumber=='0', 'label-success':depto.unitNumber!='' && depto.unitNumber!='0'}">
 					          				<i  class="fas fa-tag"> </i> 
-					          				<span ng-if="depto.unitNumber!='' && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
-					          				<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
+					          				<span ng-if="depto.unitNumber!=null && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
+											<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
 					          			</label>
 					          		</span>
 						         </div>
@@ -161,8 +161,8 @@
 					          	<div class="form-inline col-xs-12 nopadding-containter">
 					          		<span>
 					          			<label ng-if="depto.idCategoryDepartamentFk=='1' || depto.idCategoryDepartamentFk=='6'" style="cursor: pointer; font-size:  12px;padding-left: 5px;" data-toggle="tooltip" data-placement="right" title="Unidad funcional" class="label" ng-class="{'label-warning': depto.unitNumber=='' || depto.unitNumber=='0', 'label-success':depto.unitNumber!='' && depto.unitNumber!='0'}"><i  class="fas fa-tag"> </i> 
-					          				<span ng-if="depto.unitNumber!='' && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
-					          				<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
+					          				<span ng-if="depto.unitNumber!=null && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
+											<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
 					          			</label>
 					          		</span>
 					          	</div>
@@ -175,8 +175,8 @@
 					          		<span>
 					          			<label ng-if="depto.idCategoryDepartamentFk=='5'" style="cursor: pointer; font-size:  12px;padding-left: 5px;" data-toggle="tooltip" data-placement="right" title="Unidad funcional" class="label" ng-class="{'label-warning': depto.unitNumber=='' || depto.unitNumber=='0', 'label-success':depto.unitNumber!='' && depto.unitNumber!='0'}">
 					          				<i  class="fas fa-tag"> </i> 
-					          				<span ng-if="depto.unitNumber!='' && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
-					          				<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
+					          				<span ng-if="depto.unitNumber!=null && depto.unitNumber!='0'">{{depto.unitNumber}}</span>
+											<span ng-if="depto.unitNumber=='' || depto.unitNumber=='0'">N/A</span>
 					          			</label>			          							          			
 					          		</span>
 						         </div>

@@ -73,7 +73,7 @@ th {
   background-color: #fcf8e3;
   border-bottom: 1px solid #faebcc;
 }
-.popover{
+.popover-custom{
     min-width: 100%; /* Max Width of the popover (depending on the container!) */
     border-radius: 0px;
     padding: 0px;
@@ -107,6 +107,9 @@ th {
     cursor: pointer;
 }
 /***********************************/
+/*   Radio button custom default   */
+/***********************************/
+
 .radio-custom {
     opacity: 0;
     position: absolute;   
@@ -129,18 +132,15 @@ th {
     border: 5px solid #ddd;
     display: inline-block;
     vertical-align: middle;
+    text-align: center;
     width: 40px;
     height: 40px;
     padding: 2px;
     margin-right: 10px;
-    text-align: center;
 }
-
-
 .radio-custom + .radio-custom-label:before {
     border-radius: 100%;
 }
-
 .radio-custom:checked + .radio-custom-label:before {
     content: "\f00c";
     font-family: 'FontAwesome';
@@ -154,6 +154,64 @@ th {
   outline: 0px solid #ddd; /* focus style */
 }
 /**************************/
+/***********************************/
+/* Radio button custom default 2X  */
+/***********************************/
+.radio-2x {
+    opacity: 0;
+    position: absolute;
+    width: 13.33333333%;
+    margin-top: 1em;
+}
+
+.radio-2x, .radio-2x-label {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.radio-2x-label {
+    position: relative;
+}
+
+.radio-2x + .radio-2x-label:before {
+    content: '';
+    background: #fff;
+    border: 3px solid #ddd;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+}
+.radio-2x + .radio-2x-label:before {
+    border-radius: 100%;
+}
+.radio-2x:checked + .radio-2x-label:before {
+    color:green;
+    border: 3px rgba(255, 188, 87, 0.66);
+    background-color: rgba(255, 188, 87, 0.66);
+}
+
+.radio-2x:focus + .radio-2x-label {
+  outline: 0px solid #ddd; /* focus style */
+}
+/**********************************************************/
+.customer-frame{
+    line-height: 1.6;
+    margin-bottom: 20px;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(125,119,125,1);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgba(125,119,125,1);
+    box-shadow: inset 0px 0px 5px 0px rgba(125,119,125,0.2);
+    background-color: #f5f5f5;
+}
+.customer-frame span{
+  font-size: 18px;
+}
+/**********************************************************/
+
 .badge-notify{
    background-color:#ffc107;
    color: black;
@@ -164,8 +222,19 @@ th {
    z-index: 999;
 }
 
-/**************************/
-
+/***********************************/
+/*  contract services panel size   */
+/***********************************/
+.srvs-panel-head{
+    font-size: 16px;
+    font-weight: 700;
+}
+/***********************************/
+/*  table row spacing between      */
+/***********************************/
+.tr-space-5>td{
+  padding-bottom: 5px;
+}
 /***********************************/
 .icon-size
 {
@@ -500,11 +569,23 @@ th {
     .cost-widget { text-align: left; padding-top: 20px; padding-bottom: 20px;}
     .cost-widget .options, .text {text-align: center; margin-top: 10px;}
     .depto-widget { text-align: left; padding-top: 20px; padding-bottom: 20px;}
+    .srvs-widget {padding: 0px !important; text-align: left; padding-bottom: 20px !important;}
+    .well .srvs-icon i{ display: block; font-size: 36px; line-height: 76px; color: #8a6d3b;}
+    .well .srvs-icon {margin-top: -2.9em;}
     .well .depto-icon i{ display: block; font-size: 76px; line-height: 76px; color: #28a745; margin-bottom: 15px; text-align: center;}
+    
     .well:hover .depto-icon i {display: block; color: #f5f5f5;}
     .well-bg:hover { background-color: #28a745;}
     .depto-widget .text{text-align: center;}
     
+/***********************/
+/*    well warning     */
+/***********************/
+  .well-warning{
+    background-color: #fcf8e3; 
+    color: #8a6d3b;
+    border-color: #faebcc;
+  }
     /*  */
 
     .depto-warning {
@@ -1126,6 +1207,18 @@ input:checked + .slider-3x:before {
 .n-padding-r{
   padding-right: 0px !important;
 }
+.n-margin-l{
+  margin-left: 0px !important;
+} 
+.n-margin-r{
+  margin-right: 0px !important;
+}
+.n-margin-t{
+  margin-top: 0px !important;
+} 
+.n-margin-b{
+  margin-bottom: 0px !important;
+}
 .c-allign-td{
   text-align: center;
 }
@@ -1219,7 +1312,9 @@ input:checked + .slider-3x:before {
 .product_content {
     top: -2.2em;
 }
-
+.default-sys-color {
+  color: rgba(255, 188, 87, 1)!important;
+}
 .product-warning {
   color: #ffc107!important;
 }

@@ -8,7 +8,8 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
                                                    "services.Ticket", 
                                                   "services.Address",
                                                 "services.Customers", 
-                                               "systemServices.Mail",  
+                                               "systemServices.Mail",
+                                                  "services.service", 
                                                          "ui.select",
                                                  "angularFileUpload", 
                                                 "services.Utilities",
@@ -133,16 +134,6 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
         });
       };
   });
-  moduleMainApp.directive('showCode', function () {
-    return {
-      scope: {
-        jsFile: '@',
-        htmlFile: '@'
-      },
-      templateUrl: 'show-code.html'
-    };
-  });
-
   moduleMainApp.directive('clickableLabel', function () {
     return {
       restrict: 'E',
@@ -194,9 +185,9 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
           return items;
       };
   });
-
+/*************************************************/
 //Controller.$inject = ['$scope'];
-moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, serverHost, serverBackend, $window, FileUploader, UtilitiesServices, PagerService, $cookies){
+moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, serverHost, serverBackend, $window, FileUploader, UtilitiesServices, PagerService, $cookies){
     /**************************************************************/
       $scope.redirectSuccessfull = false;
       $scope.counT  =5;
@@ -227,7 +218,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             $scope.sysModules.idCliente=true;
           break;
           case "7":
-            $scope.sysModules.idServicio=true;
+            $scope.sysModules.idServices=true;
           break;
           case "8":
             $scope.sysModules.idProducto=true;
@@ -4860,6 +4851,40 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               $('#confirmRequestModal').modal('hide');
             }
           break;
+          case "removeDepto":
+            if (confirm==0){
+                $scope.removeDepto=obj;
+                var deptoUpper =obj.departament;
+                var floorUpper =obj.floor;
+                  switch(obj.idCategoryDepartamentFk){
+                    case "1":
+                      $scope.mess2show="El departamento   : "+deptoUpper.toString().toUpperCase()+"    Piso: "+floorUpper.toString().toUpperCase()+" sera eliminado.     Confirmar?";
+                    break;
+                    case "2":
+                      $scope.mess2show="La Cochera   : "+deptoUpper.toString().toUpperCase()+"    Piso: "+floorUpper.toString().toUpperCase()+" sera eliminada.     Confirmar?";
+                    break;
+                    case "3":
+                      $scope.mess2show="La Baulera   : "+deptoUpper.toString().toUpperCase()+"    Piso: "+floorUpper.toString().toUpperCase()+" sera eliminada.     Confirmar?";
+                    break;
+                    case "4":
+                      $scope.mess2show="El Local   : "+deptoUpper.toString().toUpperCase()+"    Piso: "+floorUpper.toString().toUpperCase()+" sera eliminado.     Confirmar?";
+                    break;
+                    case "5":
+                      $scope.mess2show="La unidad Porteria   : "+deptoUpper.toString().toUpperCase()+"    Piso: "+floorUpper.toString().toUpperCase()+"  sera eliminada.     Confirmar?";
+                    break;
+                    case "6":
+                      $scope.mess2show="El departamento   : "+deptoUpper.toString().toUpperCase()+"    Piso: "+floorUpper.toString().toUpperCase()+" sera eliminado.     Confirmar?";
+                    break;                    
+                  }
+                    console.log('Depto a remover ID: '+obj.idDepto);
+                    console.log("============================================================================");
+                    //console.log(obj);     
+              $('#confirmRequestModal').modal('toggle');
+            }else if (confirm==1){
+                  $scope.deleteSelectedDeptoMultiFn($scope.removeDepto);
+              $('#confirmRequestModal').modal('hide');
+            }
+          break;          
           default:
             }
         }
@@ -6478,6 +6503,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     ********************************************************************************************************************************************/
     $scope.isNewCustomer=false;
     $scope.isUpdateCustomer=false;
+    $scope.isInfoCustomer=false;
     $scope.filterTypeOfClient='';
     $scope.defArrForCustomersFn = function(){
       $scope.btnBack=false;
@@ -6503,6 +6529,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
       $scope.geoLocation = {'address':'','addressLat':'', 'addressLon':'', 'option':''};
       $scope.tmpAddres = {'province':{},'location':{}};
       $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'companyData':{}, 'particular':{}, 'select':{'main':{},'payment':{}, 'company':{}}};
+      $scope.contract = {'new':{}, 'update':{}, 'info':{}, 'select':{'main':{},'date':{}, 'codes':{}}};
       $scope.customer.select.main = {'address':{}, 'department':'', 'province':{'selected':undefined}, 'location':{'selected':undefined}, }
       $scope.customer.select.payment = {'address':{}, 'department':'', 'province':{'selected':undefined}, 'location':{'selected':undefined}}
       $scope.customer.particular    = {'isBuilding':false,'typeInmueble':'', 'nameAddress':'', 'address':'', 'floor':'','clarification':'', 'depto':'', 'select':{}}
@@ -6681,7 +6708,26 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           $scope.customerDataFn(cObj,'particularAddress');
         break;
         case "services":
-          //Services client function
+          switch (opt2){
+            case "new_contract":
+              $scope.defArrForCustomersFn();
+              $('#RegisterCustomerContract').modal({backdrop: 'static', keyboard: false});
+                $('#RegisterCustomerContract').on('shown.bs.modal', function () {
+                    $('#inputDatePick').focus();
+              });
+              //console.log(cObj)
+              $scope.contract.new.idClient=cObj.idClient;
+            break;
+            case "new_contract_service":
+              $('#ServiceUnit').modal();
+              $('#serviceType').focus();
+              $scope.contract.new.idClient=cObj.idClient;
+            break; 
+            case "new_service":
+              $('#RegisterCustomerService').modal();
+              $scope.contract.new.idClient=cObj.idClient;
+            break;                       
+          }
         break;                                      
         case "allowedUsers":
           $scope.isNewCustomer=false;
@@ -6694,6 +6740,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         case "uploadFiles":
           $('#attachCustomerFiles').modal('toggle');
         break;
+        case "info":
+          $scope.isInfoCustomer=true;
+          $scope.customer.info={};
+          $scope.customer.info.isNotCliente=false;
+          $scope.customerDataFn(cObj,'info'); 
+        break;        
         default:
       }
     }
@@ -7007,8 +7059,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         if (obj.list_client_user.length>0){
                           for (var user in  obj.list_client_user){
                             //console.log(obj.list_client_user[key]);
-                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_emails[key].idClientFk});
-                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_emails[key].idClientFk});
+                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_client_user[user].idClientFk});
                           }
                         }
                         $('#UpdateModalCustomer').modal({backdrop: 'static', keyboard: false});
@@ -7045,9 +7097,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
 
                         //COMPANY RELATED
                         var arrCompany=[]
-                        arrCompany=$scope.getCustomerBusinessNameByIdFn($scope.customer.update.idClientAdminFk);
-                        //console.log(arrCompany[0]);
-                        $scope.customer.select.company.selected= {'idClient':arrCompany[0].idClient, 'businessName':arrCompany[0].businessName}
+                        arrCompany=$scope.getCustomerBusinessNameByIdFn($scope.customer.update.idClientAdminFk);                        
+                        console.log(arrCompany);
+                        if (arrCompany.length==1){
+                          $scope.customer.select.company.selected= {'idClient':arrCompany[0].idClient, 'businessName':arrCompany[0].businessName}
+                        }
                         if($scope.customer.update.idClientDepartamentFk){
                             $scope.getBuildingsDeptosFn($scope.customer.update.idClientDepartamentFk);
                             $scope.customer.select.main.department=$scope.customer.update.idClientDepartamentFk;
@@ -7138,15 +7192,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         var d=0;
                         //DEPTOS
                         for (arrList in $scope.list_depto_floors){
-                           d=0;
-                          for (var depto in $scope.customer.update.list_departament){
+                            d=0;
+                            for (var depto in $scope.customer.update.list_departament){
 
-                              if($scope.customer.update.list_departament[depto].floor==$scope.list_depto_floors[arrList].nameFloor){
-                                //$scope.list_depto_floors[d].deptos.push($scope.customer.update.list_departament[depto]);
-                                $scope.list_depto_floors[arrList].deptos.push({'idClientDepartament':$scope.customer.update.list_departament[depto].idClientDepartament, 'idDepto':(d+1), 'unitNumber':$scope.customer.update.list_departament[depto].numberUNF, 'floor':$scope.customer.update.list_departament[depto].floor, 'departament':$scope.customer.update.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.update.list_departament[depto].idCategoryDepartamentFk, 'idStatusFk':$scope.customer.update.list_departament[depto].idStatusFk, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
-                              }
-                              d++;
-                          }
+                                if($scope.customer.update.list_departament[depto].floor==$scope.list_depto_floors[arrList].nameFloor){
+                                  //$scope.list_depto_floors[d].deptos.push($scope.customer.update.list_departament[depto]);
+                                  $scope.list_depto_floors[arrList].deptos.push({'idClientDepartament':$scope.customer.update.list_departament[depto].idClientDepartament, 'idDepto':(d+1), 'unitNumber':$scope.customer.update.list_departament[depto].numberUNF, 'floor':$scope.customer.update.list_departament[depto].floor, 'departament':$scope.customer.update.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.update.list_departament[depto].idCategoryDepartamentFk, 'idStatusFk':$scope.customer.update.list_departament[depto].idStatusFk, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
+                                }
+                                d++;
+                            }
                         }console.log($scope.list_depto_floors);
                         //USERS
                         $scope.list_id_user = [];
@@ -7154,8 +7208,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         if (obj.list_client_user.length>0){
                           for (var user in  obj.list_client_user){
                             //console.log(obj.list_client_user[key]);
-                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_emails[key].idClientFk});
-                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_emails[key].idClientFk});
+                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_client_user[user].idClientFk});
                           }
                         }                              
                         
@@ -7250,8 +7304,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         if (obj.list_client_user.length>0){
                           for (var user in  obj.list_client_user){
                             //console.log(obj.list_client_user[key]);
-                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_emails[key].idClientFk});
-                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_emails[key].idClientFk});
+                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_client_user[user].idClientFk});
                           }
                         }
                         $('#UpdateModalCustomer').modal({backdrop: 'static', keyboard: false});
@@ -7351,8 +7405,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         if (obj.list_client_user.length>0){
                           for (var user in  obj.list_client_user){
                             //console.log(obj.list_client_user[key]);
-                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_emails[key].idClientFk});
-                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_emails[key].idClientFk});
+                            $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                            $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_client_user[user].idClientFk});
                           }
                         }
                         $('#UpdateModalCustomer').modal({backdrop: 'static', keyboard: false});
@@ -7709,6 +7763,100 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   $scope.updateCustomerFn($scope.customer.info);
                   $('#allowedUsers').modal('hide');                   
                 break;
+                case "info": //ADMINISTRATION OR COMPANY CUSTOMER
+                    $scope.customer.info=obj;
+                    $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
+                    $scope.customer.info.billing_information=obj.billing_information[0];
+                    var chekbDays = $scope.chekBox.row;
+                    /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
+                    for (var key in chekbDays){
+                        if (chekbDays[key]==true){
+                          $scope.chekBox.row[key]=false;
+                        }
+                    }
+                    var arrProvince  = [];
+                    var arrLocation = [];                              
+                    arrProvince = $scope.getCustomerProvinceNameFromIdFn($scope.customer.info.idProvinceFk);
+                    arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.info.idLocationFk, $scope.customer.info.idProvinceFk);
+                    $scope.customer.select.main.province.selected = {idProvince: arrProvince[0].idProvince, province: arrProvince[0].province};
+                    $scope.customer.select.main.location.selected = {idLocation: arrLocation[0].idLocation, location: arrLocation[0].location};
+
+                    $scope.customer.info.nameAddress=$scope.customer.info.idClientDepartamentFk==null||$scope.customer.info.idClientDepartamentFk==''?$scope.customer.info.address:'';
+                    $scope.customer.select.main.address.selected=$scope.customer.info.idClientDepartamentFk!=null?{address:$scope.customer.info.address}:undefined;
+
+                    if($scope.customer.info.idClientDepartamentFk){
+                      $scope.customer.info.isNotCliente=true;
+                      $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.info.idClientDepartamentFk);
+                      $scope.customer.select.main.department=$scope.customer.info.idClientDepartamentFk;
+                    }else{
+                      $scope.customer.info.isNotCliente=false;
+                      $scope.addrrSelected=true;
+                    }
+                    //blockUI.message('Cargando telefonos del cliente '+obj.list_phone_contact.length);
+                    //PHONES
+                    $scope.list_phone_contact=[];
+                    $scope.list_phones=[];  
+                    if (obj.list_phone_contact.length>0){
+                      for (var key in  obj.list_phone_contact){
+                        //console.log(obj.list_phone_contact[key]);
+                        $scope.list_phone_contact.push(obj.list_phone_contact[key]);
+                        $scope.list_phones.push(obj.list_phone_contact[key]);
+                      }
+                    }
+                    //blockUI.message('Cargando correos del cliente '+obj.list_emails.length);
+                    //MAILS
+                    $scope.list_mails_contact=[];
+                    $scope.list_mails=[];
+                    var typeName = '';
+                    if (obj.list_emails.length>0){
+                      for (var key in  obj.list_emails){
+                        for (var type in $scope.rsTypeOfMailsData){
+                          if ($scope.rsTypeOfMailsData[type].idTipoMail==obj.list_emails[key].idTipoDeMailFk){
+                            typeName= $scope.rsTypeOfMailsData[type].descripcion;
+                          }
+                        }
+                        $scope.list_mails_contact.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
+                        $scope.list_mails.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
+                      }
+                    }
+                    //blockUI.message('Cargando horarios del cliente '+$scope.tmpVars.list_schedule_atention.length);
+                    //SCHEDULE
+                    for (var i = 0; i < $scope.tmpVars.list_schedule_atention.length; i++) {
+                      if($scope.tmpVars.list_schedule_atention[i].day==$scope.list_schedule[i].day){
+                        //Load the data to the list that will be render in the frontend
+                        $scope.list_schedule[i].fronAm    = $scope.tmpVars.list_schedule_atention[i].fronAm;
+                        $scope.list_schedule[i].toAm      = $scope.tmpVars.list_schedule_atention[i].toAm;
+                        $scope.list_schedule[i].fronPm    = $scope.tmpVars.list_schedule_atention[i].fronPm;
+                        $scope.list_schedule[i].toPm      = $scope.tmpVars.list_schedule_atention[i].toPm;
+                        $scope.list_schedule[i].selected  = true;
+                        //Load the data to a temp array to handle the schedule
+                        $scope.list_schedule_atention.push({
+                            'idScheduleAtention':$scope.tmpVars.list_schedule_atention[i].idScheduleAtention,
+                            'idClienteFk':$scope.tmpVars.list_schedule_atention[i].idClienteFk, 
+                            'day':$scope.tmpVars.list_schedule_atention[i].day, 
+                            'fronAm':$scope.tmpVars.list_schedule_atention[i].fronAm, 
+                            'toAm':$scope.tmpVars.list_schedule_atention[i].toAm, 
+                            'fronPm':$scope.tmpVars.list_schedule_atention[i].fronPm, 
+                            'toPm':$scope.tmpVars.list_schedule_atention[i].toPm});
+                      }
+                    }
+                    //blockUI.message('Cargando usuarios autorizados del cliente '+obj.list_client_user.length);
+                    //USERS
+                    $scope.list_users       = [];
+                    $scope.list_client_user = [];
+                    if (obj.list_client_user.length>0){
+                      for (var user in  obj.list_client_user){
+                        //console.log(obj.list_client_user[key]);
+                        $scope.list_client_user.push({'idUserFk':obj.list_client_user[user].idUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                        $scope.list_users.push({'idUserFk':obj.list_client_user[user].idUser, 'fullNameUser':obj.list_client_user[user].fullNameUser,'idClientFk': obj.list_client_user[user].idClientFk});
+                      }
+                    }
+                    $('#InfoModalCustomer').modal({backdrop: 'static', keyboard: false});
+                    $('#InfoModalCustomer').on('shown.bs.modal', function () {
+                    });
+                    console.info($scope.customer.info);                              
+                    $scope.enabledNextBtn();                   
+                break;                
                 default:
                   console.info("-------------------------");
                   console.info("    showCustomerFields   ");
@@ -7728,6 +7876,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                         ttl:2000, type: 'success'
                   });
                   $('#UpdateModalCustomer').modal('hide');
+                }else if($scope.rsJsonData.status==404){
+                  console.log("not found, contact administrator");
+                  inform.add('Error: [404] Contacta al area de soporte. ',{
+                        ttl:2000, type: 'danger'
+                  });
+                  //$('#RegisterModalCustomer').modal('hide');
                 }else if($scope.rsJsonData.status==500){
                   console.log("Customer not Created, contact administrator");
                   inform.add('Error: [500] Contacta al area de soporte. ',{
@@ -7770,7 +7924,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
           $scope.getCustomerBusinessNameByIdFn = function(clientId){
             console.log("getCustomerBusinessNameByIdFn: "+clientId);
             var arrCompanySelect = [];
-            //console.log($scope.rsCustomerListData);
+            console.log($scope.rsCustomerListData);
             for (var key in  $scope.rsCustomerListData){
                 if ($scope.rsCustomerListData[key].idClient==clientId){
                     arrCompanySelect.push({'idClient':$scope.rsCustomerListData[key].idClient, 'businessName':$scope.rsCustomerListData[key].businessName});
@@ -7779,7 +7933,22 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             }
             //console.log(arrCompanySelect);
             return arrCompanySelect;
-          }                
+          }
+
+          $scope.getZoneNameFn = function(zoneId){
+            console.log("getZoneNameFn: "+zoneId);
+            $scope.zoneInfo={}
+            console.log($scope.rsZonesData);
+            for (var key in  $scope.rsZonesData){
+                if ($scope.rsZonesData[key].idZona==zoneId){
+                    $scope.zoneInfo.n_zona=$scope.rsZonesData[key].n_zona;
+                    $scope.zoneInfo.descripcion=$scope.rsZonesData[key].descripcion;
+                    break;
+                }
+            }
+            //console.log($scope.zoneInfo);
+            return $scope.zoneInfo;
+          }              
     /**************************************************/
     /**************************************************
     *            SHOW ONLY ADMIN AND COMPANY          *
@@ -8071,13 +8240,16 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             //MAILS
             $scope.list_mails_contact=[];
             $scope.list_mails=[];
-            for (var mail in $scope.customer.companyData.list_emails){
-              $scope.list_mails_contact.push({'mailTag':obj.list_emails[mail].mailTag, 'mailContact':obj.list_emails[mail].mailContact, 'idTipoDeMailFk': obj.list_emails[mail].idTipoDeMailFk});
-              for (var type in $scope.rsTypeOfMailsData){
-                if ($scope.rsTypeOfMailsData[type].idTipoMail==obj.list_emails[mail].idTipoDeMailFk){
-                  typeName= $scope.rsTypeOfMailsData[type].descripcion;
-                  $scope.list_mails.push({'mailTag':obj.list_emails[mail].mailTag, 'typeName':typeName, 'mailContact':obj.list_emails[mail].mailContact, 'idTipoDeMailFk': obj.list_emails[mail].idTipoDeMailFk});
+            var typeName = '';
+            if (obj.list_emails.length>0){
+              for (var key in  obj.list_emails){
+                for (var type in $scope.rsTypeOfMailsData){
+                  if ($scope.rsTypeOfMailsData[type].idTipoMail==obj.list_emails[key].idTipoDeMailFk){
+                    typeName= $scope.rsTypeOfMailsData[type].descripcion;
+                  }
                 }
+                $scope.list_mails_contact.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
+                $scope.list_mails.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
               }
             }
             //USERS
@@ -8123,6 +8295,23 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             $scope.customer.companyData={};
           }
       }    
+    
+    /**************************************************
+    *                                                 *
+    *           GET SELECTED COMPANY BY ID            *
+    *                                                 *
+    **************************************************/
+      $scope.rsCustomerData={};
+      $scope.getCustomersByIdFn = function(opt, obj){
+        console.log(obj);
+         CustomerServices.getCustomersById(obj.idClient).then(function(data){
+            $scope.rsCustomerData = data;
+            if($scope.rsCustomerData){
+              $scope.switchCustomersFn(opt, $scope.rsCustomerData);
+            }
+            //console.log($scope.rsProfileData);
+        });
+      }
     /**************************************************
     *                                                 *
     *                     GET AGENTS                  *
@@ -8354,11 +8543,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
     *                                                 *
     **************************************************/
       $scope.rsLocations_API_Data = {};
-      console.info("Length: "+$scope.rsLocations_API_Data.length);
       $scope.getLocationByNameFn = function(name){
         addressServices.getLocationsByName(name).then(function(data){
             $scope.rsLocations_API_Data = data;
             //console.log($scope.rsLocations_API_Data);
+            console.info("getLocationByNameFn => rsLocations_API_Data =>Length: "+$scope.rsLocations_API_Data.length);
         });
       };
     /**************************************************
@@ -9319,7 +9508,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               $scope.addrrSelected=true;
               $scope.customer.update.billing_information.businessNameBilling = $scope.customer.update.billing_information.businessNameBilling;           
               $scope.customer.update.billing_information.cuitBilling         = $scope.customer.update.billing_information.cuitBilling;
-              $scope.customer.update.billing_information.nameAddress         = $scope.customer.update.billing_information.businessAddress;
+              $scope.customer.update.billing_information.nameAddress         = ($scope.customer.update.idClientTypeFk=="2" || $scope.customer.update.idClientTypeFk=="4") && ($scope.customer.update.billing_information.businessAddress=='' || $scope.customer.update.billing_information.businessAddress==null)?$scope.customer.update.address:$scope.customer.update.billing_information.businessAddress;
               $scope.customer.update.billing_information.idTypeTaxFk         = $scope.customer.update.billing_information.idTypeTaxFk;
               $scope.customer.select.payment.province.selected               = {idProvince: $scope.customer.update.billing_information.idProvinceBillingFk, province: $scope.customer.update.billing_information.province};
               $scope.customer.select.payment.location.selected               = {idLocation: $scope.customer.update.billing_information.idLocationBillingFk, location: $scope.customer.update.billing_information.location};
@@ -9530,7 +9719,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   }else{
                     departmentUnidad=''
                   }
-                  $scope.list_depto_floors[i].deptos.push({'idDepto':j+1, 'unitNumber':'', 'floor':$scope.list_depto_floors[i].nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk, 'enabled':false, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[i].id});             
+                  $scope.list_depto_floors[i].deptos.push({'idDepto':j+1, 'unitNumber':'', 'floor':$scope.list_depto_floors[i].nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': obj.idCategoryDepartamentFk, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[i].id});             
                 }
                 l++;
               }
@@ -9571,55 +9760,66 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
             var floorsLength       =  obj.deptos.length;
             if(obj.nameFloor!="co" && obj.nameFloor!="ba" && obj.nameFloor!="lo"){         
               if ($scope.list_depto_floors[obj.id].deptos.length==0){
-                /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
+                  $scope.poUnit=0;
+                  $scope.porteriaCount=0;                
+                  /* UNIDAD LETRAS & CORRELATIVAS POR PISO*/
                 if ($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1){
                   departmentUnidad='';                        
                   departmentUnidad=arrLetras[0];
                 }else if($scope.list_department_multi.unidad==2 && ($scope.list_department_multi.correlacion==2 || $scope.list_department_multi.correlacion==3)){
                   departmentUnidad=0;
-                  departmentUnidad=departmentUnidad+1;
+                  departmentUnidad=(departmentUnidad+1);
                 }
-                  if(argCategoryDepartament=="5"){
-                    $scope.porteriaCount=($scope.porteriaCount+1)
-                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+$scope.porteriaCount, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});                    
-                  }else if(argCategoryDepartament=="6"){
-                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[obj.id].id});
-                  }else{
-                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                if(argCategoryDepartament=="5"){
+                  $scope.porteriaCount=($scope.porteriaCount+1)
+                  $scope.poUnit=($scope.poUnit+1)
+                    $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+$scope.porteriaCount, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});                    
+                }else if(argCategoryDepartament=="6"){
+                    $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[obj.id].id});
+                }else{
+                    $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':false, 'idStatusFk':1, 'categoryDepartament':[], 'idFloor':$scope.list_depto_floors[obj.id].id});
+                }
+                for (var d in  $scope.list_depto_floors[obj.id].deptos){
+                  for (var item in $scope.rsCategoryDeptoData){
+                    $scope.list_depto_floors[obj.id].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
                   }
-                  for (var d in  $scope.list_depto_floors[obj.id].deptos){
-                    for (var item in $scope.rsCategoryDeptoData){
-                      $scope.list_depto_floors[obj.id].deptos[d].categoryDepartament.push({'idCategoryDepartament':$scope.rsCategoryDeptoData[item].idCategoryDepartament, 'categoryDepartament':$scope.rsCategoryDeptoData[item].categoryDepartament});
-                    }
-                  }
-                  // UNIDAD EN NUMEROS CORRELATIVOS EN EL EDIFICIO
-                  if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2){
-                    departmentUnidad=0;                                               
-                    for (var i=1; i<$scope.list_depto_floors.length; i++){
-                      for (var d in  $scope.list_depto_floors[i].deptos){
-                        if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1"){
-                          departmentUnidad=departmentUnidad+1;
-                          $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
-                        }
+                }
+                // UNIDAD EN NUMEROS CORRELATIVOS EN EL EDIFICIO
+                if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2){
+                  departmentUnidad=0;                                               
+                  for (var i=1; i<$scope.list_depto_floors.length; i++){
+                    for (var d in  $scope.list_depto_floors[i].deptos){
+                      if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1"){
+                        departmentUnidad=departmentUnidad+1;
+                        $scope.list_depto_floors[i].deptos[d].departament=departmentUnidad;
                       }
-                    }   
-                  }              
+                    }
+                  }   
+                }              
               }else{ //IF $scope.list_depto_floors[obj.nameFloor+1].deptos.length is bigger than 0
                 if ($scope.list_department_multi.unidad==1 && $scope.list_department_multi.correlacion==1){
                   departmentUnidad='';               
                   $scope.poUnit=0;
+                  $scope.porteriaCount=0;
                   for (var unit in $scope.list_depto_floors[obj.id].deptos){
                     if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
-                      $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
+                      if ($scope.isNewCustomer==true){
+                        $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
+                      }else{
+                        var poUnitString=$scope.list_depto_floors[obj.id].deptos[unit].departament;                        
+                        $scope.poUnit=poUnitString.substr(3, 1);                        
+                      }
                     }else if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
                       $scope.unitId=$scope.list_depto_floors[obj.id].deptos[unit].departament;
                     }
                   }
                   //var arrIndex = arrLetras.indexOf(obj.deptos[floorsLength-1].departament);
                     if(argCategoryDepartament=="5"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament, 'idFloor':$scope.list_depto_floors[obj.id].id});
+                        $scope.porteriaCount=parseInt($scope.poUnit)+1;
+                        $scope.poUnit = parseInt($scope.poUnit)+1;
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.porteriaCount, 'departament':'PO-'+$scope.poUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament, 'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else if(argCategoryDepartament=="6"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                      $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else{
                     var indexArray=[],
                     arrIndex=0;
@@ -9632,19 +9832,29 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   $scope.unitNumberId=0;
                   for (var uni in $scope.list_depto_floors[obj.id].deptos){
                     $scope.unitNumberId=($scope.unitNumberId+1);
-                    $scope.list_depto_floors[obj.id].deptos[uni].idDepto=$scope.unitNumberId;
+                    if($scope.list_depto_floors[obj.id].deptos[uni].idStatusFk=="1"){
+                      $scope.list_depto_floors[obj.id].deptos[uni].idDepto=$scope.unitNumberId;
+                    }
                   }                    
                   // UNIDAD EN NUMEROS CORRELATIVOS EN EL EDIFICIO
                 }else if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2){
                   departmentUnidad=0;
                   $scope.poUnit=0;
+                  $scope.porteriaCount=0;
                   for (var unit in $scope.list_depto_floors[obj.id].deptos){
                     if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
-                      $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
+                      if ($scope.isNewCustomer==true){
+                        $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
+                      }else{
+                        var poUnitString=$scope.list_depto_floors[obj.id].deptos[unit].departament;                        
+                        $scope.poUnit=poUnitString.substr(3, 1);
+                      }
                     }
                   }
                   if(argCategoryDepartament=="5"){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
+                        $scope.porteriaCount=parseInt($scope.poUnit)+1;
+                        $scope.poUnit = parseInt($scope.poUnit)+1;
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.poUnit, 'departament':'PO-'+$scope.poUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else if(argCategoryDepartament=="6"){
                         $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else{
@@ -9664,33 +9874,40 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                   departmentUnidad=0;
                   $scope.poUnit=0;
                   for (var unit in $scope.list_depto_floors[obj.id].deptos){
-                    if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5"){
-                      $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
-                    }else if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk!="6"){
+                    if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk=="5" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
+                      if ($scope.isNewCustomer==true){
+                        $scope.poUnit=$scope.list_depto_floors[obj.id].deptos[unit].poNumber;
+                      }else{
+                        var poUnitString=$scope.list_depto_floors[obj.id].deptos[unit].departament;                        
+                        $scope.poUnit=poUnitString.substr(3, 1);
+                      }
+                    }else if ($scope.list_depto_floors[obj.id].deptos[unit].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[obj.id].deptos[unit].idStatusFk=="1"){
                       $scope.unitId=$scope.list_depto_floors[obj.id].deptos[unit].departament;
+                    }else{
+                      //console.log("entro al ultimo else");
+                      departmentUnidad=(departmentUnidad+1);
+                      $scope.unitId=0;
+                      //console.log(departmentUnidad);
                     }
                   }
                   if(argCategoryDepartament=="5"){
-                      if ($scope.isNewCustomer==true){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
-                      }else{
-                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':($scope.poUnit+1), 'departament':'PO-'+($scope.poUnit+1), 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
-                      }
+                        $scope.porteriaCount=parseInt($scope.poUnit)+1;
+                        $scope.poUnit = parseInt($scope.poUnit)+1;                    
+                        $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'poNumber':$scope.poUnit, 'departament':'PO-'+$scope.poUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   }else if(argCategoryDepartament=="6"){
-                      if ($scope.isNewCustomer==true){
-                        $scope.list_depto_floors[obj.id].deptos.push({'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
-                      }else{
                         $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':(floorsLength+1), 'unitNumber':'', 'floor':obj.nameFloor, 'departament':deptoUnit, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
-                      }
                   }else{
-                    departmentUnidad=($scope.unitId+1);
+
+                      departmentUnidad=($scope.unitId+1);
                       $scope.list_depto_floors[obj.id].deptos.push({'idClientDepartament':0, 'idDepto':floorsLength+1, 'unitNumber':'', 'floor':obj.nameFloor, 'departament':departmentUnidad, 'idCategoryDepartamentFk': argCategoryDepartament, 'enabled':obj.deptos[floorsLength-1].enabled, 'idStatusFk':1, 'categoryDepartament':obj.deptos[floorsLength-1].categoryDepartament,'idFloor':$scope.list_depto_floors[obj.id].id});
                   } 
                   //REORDEN DE LOS ID'S DE LAS UNIDADES DEL PISO
                   $scope.unitNumberId=0;
                   for (var uni in $scope.list_depto_floors[obj.id].deptos){
                     $scope.unitNumberId=($scope.unitNumberId+1);
-                    $scope.list_depto_floors[obj.id].deptos[uni].idDepto=$scope.unitNumberId;
+                    if($scope.list_depto_floors[obj.id].deptos[uni].idStatusFk=="1"){
+                      $scope.list_depto_floors[obj.id].deptos[uni].idDepto=$scope.unitNumberId;
+                    }
                   }                    
                 }else{
                     departmentUnidad=''
@@ -9711,7 +9928,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
                 }        
             }     
             //console.info("Floor selected data:");
-            //console.log(obj);
+            console.log($scope.list_depto_floors);
             //console.info("Deparments on the Floor selected:");
             //console.log(obj.deptos);
             //console.info("The last Depto Category Data:");
@@ -9797,7 +10014,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               break;
             }
             var floorUpper=depto.floor
-            $scope.jsonMsg.delete.floor=floorUpper.toUpperCase();
+            $scope.jsonMsg.delete.floor=String(floorUpper).toUpperCase();
             $scope.jsonMsg.delete.depto=depto.departament;
             $scope.jsonMsg.delete.msg="Eliminado del Piso:"+$scope.jsonMsg.delete.floor+", la unidad: "+$scope.jsonMsg.delete.unit+" - "+$scope.jsonMsg.delete.depto+".";
             console.log("floorId["+depto.idFloor+"] => floor["+depto.floor+"] => depto: "+depto.idDepto);
@@ -10279,6 +10496,443 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         //$("#customer_address").focus();
 
       }
+    
+    /**************************************************
+    *                                                 *
+    *                 SEARCH CUSTOMERS                *
+    *                                                 *
+    **************************************************/
+      $scope.searchCustomerFound=false;
+      $scope.customerSearch={'name':'', 'typeClient':''};
+      $scope.findCustomerFn=function(string){
+        var output=[];
+        var i=0;
+        if (string!=undefined && string!=""){
+          angular.forEach($scope.rsCustomerListData,function(customer){
+            var customerName=customer.name;
+            var customerId=customer.idClient;
+            var customerType=customer.idClientType;
+            if($scope.customerSearch.typeClient!="all"){
+                if(customerType==$scope.customerSearch.typeClient && (customerId.toLowerCase().indexOf(string.toLowerCase())>=0 || customerName.toLowerCase().indexOf(string.toLowerCase())>=0)){
+                  output.push({customer});
+                }
+            }else{
+              if(customerId.toLowerCase().indexOf(string.toLowerCase())>=0 || customerName.toLowerCase().indexOf(string.toLowerCase())>=0){
+                  output.push({customer});
+              }
+            }
+          });
+        }else{
+              $scope.listCustomerFound=null;
+              $scope.searchCustomerFound=false;
+        }
+        $scope.listCustomerFound=output;
+        console.info($scope.listCustomerFound);
+      }
+       $scope.list_tmp_services=[
+                        {
+                          id          :1,
+                          service     :'Control de Acceso',
+                          createAt    :'20/05/2020',
+                          ActivateAt  :'25/05/2020',
+                          idStatusFk  :1
+                        },{
+                          id          :2,
+                          service     :'Camaras',
+                          createAt    :'20/06/2020',
+                          ActivateAt  :'25/06/2020',
+                          idStatusFk  :1
+                        },{
+                          id          :3,
+                          service     :'Totem',
+                          createAt    :'20/07/2020',
+                          ActivateAt  :'25/07/2020',
+                          idStatusFk  :0
+                        }
+                        ];
+       $scope.list_tmp_contracts=[
+                        {
+                          id          :1,
+                          contract    :'INTEGRA 3.0',
+                          services    :[
+                          {
+                            serviceType :'1',
+                            cantidad    :'4',
+                            status      :1
+                          },{
+                            serviceType :'2',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'3',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'4',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'5',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'6',
+                            cantidad    :'1',
+                            status      :1
+                          }
+                          ],
+                          createAt    :'20/05/2020',
+                          ActivateAt  :'25/05/2020',
+                          idStatusFk  :1
+                        },{
+                          id          :2,
+                          contract     :'INTEGRA 2.0',
+                          services    :[
+                          {
+                            serviceType :'1',
+                            cantidad    :'4',
+                            status      :1
+                          },{
+                            serviceType :'2',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'3',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'4',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'5',
+                            cantidad    :'1',
+                            status      :1
+                          },{
+                            serviceType :'6',
+                            cantidad    :'1',
+                            status      :1
+                          }
+                          ],
+                          createAt    :'20/06/2020',
+                          ActivateAt  :'25/06/2020',
+                          idStatusFk  :1
+                        },{
+                          id          :3,
+                          contract     :'MANTENIMIENTO EQUIPO INSTALADO',
+                          services    :[
+                          {
+                            serviceType :'1',
+                            cantidad    :'4',
+                            status      :1
+                          },{
+                            serviceType :'2',
+                            cantidad    :'1',
+                            status      :0
+                          },{
+                            serviceType :'3',
+                            cantidad    :'1',
+                            status      :0
+                          },{
+                            serviceType :'4',
+                            cantidad    :'1',
+                            status      :0
+                          },{
+                            serviceType :'5',
+                            cantidad    :'1',
+                            status      :0
+                          },{
+                            serviceType :'6',
+                            cantidad    :'1',
+                            status      :0
+                          }
+                          ],
+                          createAt    :'20/07/2020',
+                          ActivateAt  :'25/07/2020',
+                          idStatusFk  :0
+                        }
+                        ];                        
+      $scope.customerFound={};
+      $scope.loadCustomerFieldsFn=function(obj){
+        $scope.customerFound={};
+        //console.log("loadCustomerFieldsFn")
+        //console.log(obj);
+        $scope.customerFound=obj;
+        $scope.customerFound.billing_information=obj.billing_information[0];
+        $scope.customerSearch.name=obj.name;
+        //COMPANY RELATED
+        var arrCompany=[]
+        if($scope.customerFound.idClientType=="2" || $scope.customerFound.idClientType=="4"){
+          var companyBusinessName = $scope.customerFound.idClientAdminFk==null?$scope.customerFound.idClientCompaniFk:$scope.customerFound.idClientAdminFk;
+          arrCompany=$scope.getCustomerBusinessNameByIdFn(companyBusinessName); 
+          $scope.customerFound.companyBusinessName=arrCompany[0].businessName;
+        }
+        var zonaInfo=$scope.getZoneNameFn($scope.customerFound.idZonaFk);
+        
+        $scope.customerFound.zona=zonaInfo.n_zona==undefined?null:zonaInfo;
+        $scope.listCustomerFound=null;
+        $scope.searchCustomerFound=true;
+        $scope.loadPagination($scope.list_tmp_services, "id", "10");
+        $scope.loadPagination($scope.list_tmp_contracts, "id", "10");
+        console.log($scope.customerFound);
+      }
+
+    /**************************************************
+    *                                                 *
+    *           SERVICES CONTRACTS CUSTOMERS          *
+    *                                                 *
+    **************************************************/
+      $scope.service_contract_list=[];
+      $scope.list_services=[];
+      $scope.list_services=[{
+        "id": "1",
+        "idServiceTypeFk": "1",
+        "serviceName":"CONTROL DE ACCESO",
+        "serviceItems":[{
+          "id": "1",
+          "qtty": null,
+          "idAccCrtlDoor":"1",
+          "itemName":"Principal",
+          "itemAclaracion":"Puerta Principal"
+        },{
+          "id": "2",
+          "qtty": null,
+          "idAccCrtlDoor":"6",
+          "itemName":"Sum",
+          "itemAclaracion":"Puerta de seguridad"
+        }]
+      },{
+        "id": "2",
+        "idServiceTypeFk": "2",
+        "serviceName":"INTERNET",
+        "serviceItems":[{
+          "id": "1",
+          "qtty": null,
+          "itemName":"CableModem",
+          "itemAclaracion":null
+        },{
+          "id": "2",
+          "qtty": null,
+          "itemName":"M2M",
+          "itemAclaracion":null
+        },{
+          "id": "2",
+          "qtty": null,
+          "itemName":"4G/LTE",
+          "itemAclaracion":null
+        }]
+      },{
+        "id": "4",
+        "idServiceTypeFk": "3",
+        "serviceName":"TOTEM",
+        "serviceItems":[{
+          "id": "1",
+          "qtty": 8,
+          "itemName":null,
+          "itemAclaracion":null
+        },{
+          "id": "2",
+          "qtty": 16,
+          "itemName":null,
+          "itemAclaracion":null
+        }]
+      },{
+        "id": "6",
+        "idServiceTypeFk": "4",
+        "serviceName":"CAMARAS",
+        "serviceItems":[{
+          "id": "1",
+          "qtty": 16,
+          "itemName":null,
+          "itemAclaracion":null
+        },{
+          "id": "2",
+          "qtty": 16,
+          "itemName":null,
+          "itemAclaracion":null
+        }]
+      },{
+        "id": "5",
+        "idServiceTypeFk": "5",
+        "serviceName":"ALARMAS",
+        "serviceItems":[{
+          "id": "1",
+          "qtty": null,
+          "itemName":null,
+          "itemAclaracion":null
+        }]
+      },{
+        "id": "6",
+        "idServiceTypeFk": "6",
+        "serviceName":"APP MONITOREO",
+        "serviceItems":[{
+          "id": "1",
+          "qtty": null,
+          "itemName":null,
+          "itemAclaracion":null
+        }]
+      }];
+      $scope.list_services_tmp=[];
+      $scope.isServiceExist=false;
+      $scope.addServiceArrFn = function (opt, obj){
+        /*Validate if the type of service is access control or internet */
+        if (obj.serviceType.idClientTypeServices=="1"){
+          var itemName=obj.serviceItems.accCrtlDoor.titulo;
+        }else if (obj.serviceType.idClientTypeServices=="2"){
+          var itemName=obj.serviceItems.internetType;
+        }else if (obj.serviceType.idClientTypeServices>="3" && obj.serviceType.idClientTypeServices<="4"){
+          var itemName="CAMARAS";
+        }else{
+          var itemName=obj.serviceType.clientTypeServices
+        }
+        if (opt=="new"){
+          if ($scope.list_services_tmp.length<=0){                        
+            $scope.list_services_tmp.push({'id':0, 'idServiceType':obj.serviceType.idClientTypeServices, 'serviceName':obj.serviceType.clientTypeServices, 'serviceItems':[]});
+            if (obj.serviceType.idClientTypeServices!="5" && obj.serviceType.idClientTypeServices!="6"){
+              var itemAclaration=obj.serviceType.idClientTypeServices=="1"?obj.serviceItems.itemAclaracion:null;
+              var idCrtlDoor=obj.serviceType.idClientTypeServices=="1"?obj.serviceItems.accCrtlDoor.idAccessControlDoor:null;
+              var itemQtty=obj.serviceType.idClientTypeServices=="3" || obj.serviceType.idClientTypeServices=="4"?obj.serviceItems.qtty:null;
+              $scope.list_services_tmp[0].serviceItems.push({'id':0, 'qtty':itemQtty, 'idAccCrtlDoor':idCrtlDoor,'itemName':itemName, 'itemAclaracion':itemAclaration, 'idServiceTypeFk':obj.serviceType.idClientTypeServices});
+              inform.add("El item: "+itemName+" del servicio: "+obj.serviceType.clientTypeServices+", ha sido agregado.",{
+                      ttl:5000, type: 'success'
+              });              
+            }else{
+               inform.add("El Servicio: "+obj.serviceType.clientTypeServices+" ha sido agregado.",{
+                      ttl:5000, type: 'success'
+                });
+            }
+           Math.round(  )
+            console.log($scope.list_services_tmp)
+          }else{
+            for (var key in  $scope.list_services_tmp){
+              
+                if ($scope.list_services_tmp[key].idServiceType==obj.serviceType.idClientTypeServices){
+                  if (obj.serviceType.idClientTypeServices=="5" || obj.serviceType.idClientTypeServices=="6"){
+                    var ptag= itemName.toUpperCase();
+                    inform.add("El Servicio: "+ptag+", ya ha sido agregado.",{
+                      ttl:5000, type: 'warning'
+                    });
+                  }
+                    $scope.isServiceExist=true;
+                  break;
+                }else{
+                  $scope.isServiceExist=false;
+                }
+            }
+            if(!$scope.isServiceExist){
+              var idNumb=($scope.list_services_tmp.length);
+              $scope.list_services_tmp.push({'id':idNumb, 'idServiceType':obj.serviceType.idClientTypeServices, 'serviceName':obj.serviceType.clientTypeServices, 'serviceItems':[]});
+              
+              if (obj.serviceType.idClientTypeServices!="5" && obj.serviceType.idClientTypeServices!="6"){
+                for (var key in  $scope.list_services_tmp){
+                  if ($scope.list_services_tmp[key].idServiceType==obj.serviceType.idClientTypeServices){
+                    var itemAclaration=obj.serviceType.idClientTypeServices=="1"?obj.serviceItems.itemAclaracion:null;
+                    var idCrtlDoor=obj.serviceType.idClientTypeServices=="1"?obj.serviceItems.accCrtlDoor.idAccessControlDoor:null;
+                    var itemQtty=obj.serviceType.idClientTypeServices=="3" || obj.serviceType.idClientTypeServices=="4"?obj.serviceItems.qtty:null;
+                    $scope.list_services_tmp[key].serviceItems.push({'id':0, 'qtty':itemQtty, 'idAccCrtlDoor':idCrtlDoor,'itemName':itemName, 'itemAclaracion':itemAclaration, 'idServiceTypeFk':obj.serviceType.idClientTypeServices});
+                    inform.add("El item: "+itemName+" del servicio: "+obj.serviceType.clientTypeServices+", ha sido agregado.",{
+                            ttl:5000, type: 'success'
+                    });                      
+                  }
+                }                    
+              }else{
+                    inform.add("El Servicio: "+obj.serviceType.clientTypeServices+" ha sido agregado.",{
+                      ttl:5000, type: 'success'
+                    });
+              }
+            }else if($scope.isServiceExist && obj.serviceType.idClientTypeServices!="5" && obj.serviceType.idClientTypeServices!="6"){
+              for (var key in  $scope.list_services_tmp){
+                if ($scope.list_services_tmp[key].idServiceType==obj.serviceType.idClientTypeServices){
+                  var idItemNumb=($scope.list_services_tmp[key].serviceItems.length);
+                  var itemAclaration=obj.serviceType.idClientTypeServices=="1"?obj.serviceItems.itemAclaracion:null;
+                  var idCrtlDoor=obj.serviceType.idClientTypeServices=="1"?obj.serviceItems.accCrtlDoor.idAccessControlDoor:null;
+                  var itemQtty=obj.serviceType.idClientTypeServices=="3" || obj.serviceType.idClientTypeServices=="4"?obj.serviceItems.qtty:null;
+                  $scope.list_services_tmp[key].serviceItems.push({'id':idItemNumb, 'qtty':itemQtty, 'idAccCrtlDoor':idCrtlDoor,'itemName':itemName, 'itemAclaracion':itemAclaration, 'idServiceTypeFk':obj.serviceType.idClientTypeServices});
+                    inform.add("El item: "+itemName+" del servicio: "+obj.serviceType.clientTypeServices+", ha sido agregado.",{
+                      ttl:5000, type: 'success'
+                    });  
+                }
+              }
+            }
+            console.log($scope.list_services_tmp)
+          }
+        }else if (opt=="update"){
+          //$scope.camera_contract_list.push({'idClientFk': obj.camera_contract_list[key].idClientFk,'phoneTag':obj.camera_contract_list[key].phoneTag, 'phoneContact':obj.camera_contract_list[key].phoneContact});
+          if ($scope.list_services_items.length<=0){
+            //console.log("length is equal 0 or less 0");
+            $scope.camera_contract_list.push({'idClientFk':$scope.customer.update.idClient,'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+            $scope.list_services_items.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+          }else{
+            for (var key in  $scope.camera_contract_list){
+             // console.log(key);
+              //console.log("Validando: "+$scope.camera_contract_list[key].phoneContact+" == "+obj.phoneContact);
+                if ($scope.camera_contract_list[key].phoneContact==obj.phoneContact && $scope.camera_contract_list[key].phoneTag==obj.phoneTag){
+                  var tmpTag=$scope.camera_contract_list[key].phoneTag;
+                  var ptag= tmpTag.toUpperCase();
+                  inform.add("El Numero de contacto: "+obj.phoneContact+", se encuentra agregado como contacto "+ptag,{
+                    ttl:5000, type: 'success'
+                  });
+                  $scope.isPhoneExist=true;
+                  break;
+                  //console.log($scope.isPhoneExist);
+                }else{
+                  $scope.isPhoneExist=false;
+                  //console.log($scope.isPhoneExist);
+                }
+            }
+            if(!$scope.isPhoneExist){
+                //console.log("ADD_NO_EXIST");
+                  $scope.camera_contract_list.push({'idClientFk':$scope.customer.update.idClient,'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+                  $scope.list_services_items.push({'phoneTag':obj.phoneTag, 'phoneContact':obj.phoneContact});
+            }
+          }      
+        }
+      }  
+      $scope.closeServicePanel=function(){
+        $scope.searchCustomerFound=false;
+        $scope.customerSearch={Name:''};
+        $scope.customerFound={};
+        $('#customerSearch').focus();
+        $scope.getCustomerListFn("","");
+        $scope.customerSearch.typeClient="all"
+      }
+      $scope.removeServiceArrFn = function(obj, item){
+        console.log(obj);
+        console.log(item);
+        objArr     = $scope.list_services_tmp[obj.id].serviceItems;
+        indexArray = objArr.map(function(o){return o.id;});
+        arrIndex   = indexArray.indexOf(item.id);
+        $scope.list_services_tmp[obj.id].serviceItems.splice(arrIndex, 1);
+      }
+    /**************************************************
+    *                                                 *
+    *              NEW CUSTOMERS CONTRACT             *
+    *                                                 *
+    **************************************************/
+
+    /**************************************************
+    *                                                 *
+    *              GET TYPE OF SERVICES               *
+    *                                                 *
+    **************************************************/
+      $scope.rsServiceTypeData = {};
+      $scope.getTypeOfServicesFn = function(){
+        serviceServices.getTypeOfServices().then(function(data){
+            $scope.rsServiceTypeData = data;
+        });
+      };
+
+    /**************************************************
+    *                                                 *
+    *            GET ACCESS CRTL DOOR LIST            *
+    *                                                 *
+    **************************************************/
+      $scope.rsAccCrtlDoorListData = {};
+      $scope.getAccessCtrlDoorListFn = function(){
+        serviceServices.accessCtrlDoors().then(function(data){
+            $scope.rsAccCrtlDoorListData = data;
+        });
+      };      
     /********************************************************************************************************************************************
     *                                                                                                                                           *
     *                                                                                                                                           *
@@ -11239,6 +11893,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
         $scope.rucompany    = false;
         $scope.rucustomer   = false;
         $scope.ruproduct    = false;
+        $scope.ruservices   = false;
         /* Variables usadas en las solicitudes */
         $scope.btnBack=false;
         $scope.btnShow=true;
@@ -11535,6 +12190,29 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               }
               
             break;
+            case "services":
+                $('#m_services').addClass('active');
+                closeAllDiv();
+                cleanForms();
+                $scope.IsCustomerServices=true;
+                $scope.searchCustomerFound=false;
+                $scope.customerSearch={Name:''};
+                $scope.customerFound={};                
+                $scope.manageDepto = 0;
+                $scope.customerSearch.typeClient="all";
+                $scope.getZonesFn();
+                $scope.getCustomerListFn("","");
+                $scope.getTypeOfServicesFn();
+                $scope.getAccessCtrlDoorListFn();
+              if(divAction=="open"){
+                $scope.ruservices = true;        
+
+              }else{
+                closeAllDiv();
+                $scope.rucustomer = false;
+              }
+              
+            break;            
             default: 
               
           }
@@ -11674,7 +12352,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $location, $an
               $scope.getStatesFn();
               $scope.getTypeOfIVAFn();
               $scope.getCategoryDepartamentFn();
-              $scope.getCustomerListFn("",1);
+              $scope.getCustomerListFn("","");
               $scope.getCustomerTypesFn();
           /*PENDIENTE PASAR TODOS ESTOS DATOS A VARIABLES LOCALES PARA MEJORAR LA PERFORMANCE */        
 

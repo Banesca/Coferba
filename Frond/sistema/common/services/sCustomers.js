@@ -115,7 +115,7 @@ moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$ti
             //console.log("[Customer Services] => Listado de clientes asociado a un cliente: "+sMsg);
               return $http({
                     method : "GET",
-                    url : serverHost+serverBackend+"Clientes/customersById/"+id
+                    url : serverHost+serverBackend+"Clientes/listCustomersById/"+id
                   }).then(function mySuccess(response) {
                   rsJson=response.data;
                   return rsJson;

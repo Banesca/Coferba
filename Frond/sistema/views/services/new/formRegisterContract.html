@@ -1,0 +1,168 @@
+<!-- CUSTOMER CONTRACT FORM -->
+<div id="RegisterCustomerContract" class="modal fade bd-example-modal-lg" style="top: 130px;" role="dialog">
+  	<div class="modal-dialog modal-lg" >
+	    <div class="modal-content">
+          	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+            	<h3 class="modal-title"><i class="product-success fas fa-file-signature"></i> NUEVO CONTRATO</h3>
+        	</div>
+    		<div class="modal-body"  style="overflow-y: scroll; padding-bottom: 0px;">
+				<!-- FORM CONTAINER-->
+				<form class="form-horizontal" name="fCustomerNewContract" novalidate>
+					<fieldset>
+					<!-- Sign Date -->					  
+					<div class="form-group col-md-6" >  
+					  	<label style="padding-left: 15px;">Fecha de vigencia</label>
+					    <div class="col-xs-12 selectContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
+				    			<input id="inputDatePick" name="contractDate" type="text" class="form-control" ng-model="contract.new.fecha" />
+				    		</div>
+				    	</div>
+					</div>
+					<!-- Contract Number -->
+					<div class="form-group col-md-6">
+					  <label style="padding-left: 15px;">N° de Contraro</label>  
+						  <div class="col-xs-12">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fas fa-file-contract"></i></span>
+								<input style="width: 25%" id="customerID" name="customer_ID" autofocus="true" class="form-control" ng-model="contract.new.idClient" type="text" ng-readonly="true" />  
+								<select style="width: 50%" name="ContractCode" class="form-control" ng-model="contract.new.code" autofocus >
+								    	<option class="text-uppercase" value="">Selecci&#243n codigo</option>
+										<option class="text-uppercase" value="3NC/APP"> 3NC/APP</option>
+										<option class="text-uppercase" value="2NC"> 2NC</option>
+										<option class="text-uppercase" value="2NC/APP"> 2NC/APP</option>
+										<option class="text-uppercase" value="1NC"> 1NC</option>
+										<option class="text-uppercase" value="1NC/APP"> 1NC/APP</option>
+										<option class="text-uppercase" value="4NC"> 4NC</option>
+										<option class="text-uppercase" value="4/1PNC"> 4/1PNC</option>
+										<option class="text-uppercase" value="4/1NC"> 4/1NC</option>
+										<option class="text-uppercase" value="4/2PNC"> 4/2PNC</option>
+										<option class="text-uppercase" value="4/3NC"> 4/3NC</option>
+										<option class="text-uppercase" value="4/3PNC"> 4/3PNC</option>
+										<option class="text-uppercase" value="5/2NC"> 5/2NC</option>
+										<option class="text-uppercase" value="5/3NC"> 5/3NC</option>
+										<option class="text-uppercase" value="5/4NC"> 5/4NC</option>
+										<option class="text-uppercase" value="2NM"> 2NM</option>
+										<option class="text-uppercase" value="2NM/APP"> 2NM/APP</option>
+										<option class="text-uppercase" value="1NM"> 1NM</option>
+										<option class="text-uppercase" value="1NM/APP"> 1NM/APP</option>
+										<option class="text-uppercase" value="4NM"> 4NM</option>
+										<option class="text-uppercase" value="AN-INTER"> AN-INTER</option>
+										<option class="text-uppercase" value="AN-APP"> AN-APP</option>
+										<option class="text-uppercase" value="AN-LTE"> AN-LTE</option>
+							    </select>
+							    								  				
+							  	<input style="width: 25%" id="ContractCode6Digits" name="ContractCode6Digits" autofocus="true" class="form-control input--phone" ng-keydown="fnLoadPhoneMask()" ng-model="contract.new.ContractCode6Digits" type="text" autofocus/>
+						  </div>
+						</div>																		
+					</div>
+					<!-- Contract Type-->
+					<!--ng-options="item.idDepartment as item.departmentFloor for item in ListDpto"-->
+					<div class="form-group col-md-6">
+					  <label style="padding-left: 15px;">Forma de contratacion</label>  
+					    <div class="col-xs-12 selectContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-border-style"></i></span>
+						  		<select name="contract_type" 
+						  				class="form-control" 
+						  				ng-model="contract.new.contractType" autofocus >
+								    <option value=""></option>
+									<option class="text-uppercase" value="1">VENTA</option>
+									<option class="text-uppercase" value="2">COMODATO</option>
+									<option class="text-uppercase" value="3">INTEGRA 3.0 – COMODATO</option>
+									<option class="text-uppercase" value="4">INTEGRA 2.0 – VENTA</option>
+									<option class="text-uppercase" value="5">INTEGRA 2.0 – COMODATO</option>
+									<option class="text-uppercase" value="6">MANTENIMIENTO EQUIPO INSTALADO</option>								    
+							    </select>
+						    </div>
+					  	</div>
+					</div>					
+					<!-- Maintenance Type-->
+					<!--ng-options="item.idDepartment as item.departmentFloor for item in ListDpto"-->
+					<div class="form-group col-md-6">
+					  <label style="padding-left: 15px;">Tipo de mantenimiento</label>  
+					    <div class="col-xs-12 selectContainer">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-screwdriver"></i></span>
+						  		<select name="contract_mnt_type" 
+						  				class="form-control" 
+						  				ng-model="contract.new.contractMntType" autofocus >
+								    <option value=""></option>
+									<option class="text-uppercase" value="1">MANO DE OBRA Y MATERIALES</option>
+									<option class="text-uppercase" value="2">SOLO MANO DE OBRA</option>
+									<option class="text-uppercase" value="3">MIXTO</option>								    
+							    </select>
+						    </div>
+					  	</div>
+					</div>					
+					<!-- SERVICES -->
+					<div class="form-group form-inline col-md-12">
+					    <label style="padding-left: 15px;">Servicios
+					    	<button style="margin-left: 120px;" data-toggle="tooltip" data-placement="right" title="Agregar servicio" ng-click="switchCustomersFn('services', customerFound, 'new_contract_service');" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button>
+							<button style="margin-left: 120px;" data-toggle="tooltip" data-placement="right" title="Agregar servicio test" ng-click="switchCustomersFn('services', customerFound, 'new_service');" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Servicio Test</button> 					    	 
+					    </label>									
+					</div>
+					<div class="form-group col-md-12" style="padding:10px 10px 0px 10px;">
+						<div ng-repeat="srvs in list_services" class="col-md-6" style="margin:5px 0px 25px 0px;">
+					    	<div class="col-xs-12 srvs-widget well-warning well well-md n-margin-b">
+		                        <div class="col-md-2 srvs-icon">
+		                            <span><i ng-class="{
+												'fas fa-door-open': srvs.idServiceTypeFk=='1',
+												'fas fa-network-wired': srvs.idServiceTypeFk=='2',
+												'fas fa-video': srvs.idServiceTypeFk=='3' || srvs.idServiceTypeFk=='4',
+												'fas fa-bell': srvs.idServiceTypeFk=='5',
+												'fas fa-code-branch': srvs.idServiceTypeFk=='6'
+											   }"></i>
+									</span>
+		                        </div>
+
+								<div class="text-badge" style="margin-top: 10px;">
+									<span class="srvs-panel-head"> {{srvs.serviceName | uppercase}}</span>
+								</div>
+								<div class="col-md-12">
+							        <table>
+							          	<tr ng-repeat="item in srvs.serviceItems">                              
+							              	<td style="width: 1%;padding: 0 10px 0 10px;"><label style="font-size: 75%" class="label label-default">{{$index+1}}</label></td>
+							              	<td ng-if="srvs.idServiceTypeFk!='1' && srvs.idServiceTypeFk!='2'" style="width: 20%; padding-top: 7px;"><span class="text-muted text-box">
+							              		<label style="font-size: 100%;">{{srvs.serviceName | uppercase}}</label></span></td>
+							              	<td ng-if="srvs.idServiceTypeFk=='1' || srvs.idServiceTypeFk=='2'" style="width: 20%; padding-top: 7px;"><span class="text-muted text-box">
+							              		<label style="font-size: 100%;">{{item.itemName | uppercase}}</label></span></td>	
+							              	<td ng-if="srvs.idServiceTypeFk=='3' || srvs.idServiceTypeFk=='4'" style="width: 10%;"><span class="text-muted text-box">
+							              		<label class="badge badge-warning" data-toggle="tooltip" data-placement="right" title="n° de camaras" style="cursor: pointer;font-size: 100%;margin-top: 8px;">{{item.qtty | uppercase}}</label>
+							              	</span></td>
+							              	<td ng-if="item.itemAclaracion!=null" style="width: 10%; cursor: pointer;"><span data-toggle="tooltip" data-placement="right" title="{{item.itemAclaracion | uppercase}}" class="text-muted text-box">
+							              		<i class="far fa-sticky-note"></i>
+							              	</span></td>
+								          	<td style="padding-bottom: 5px; width: 10%; cursor: pointer;">
+								            	<button data-toggle="tooltip" data-placement="right" title="Eliminar" ng-click="removeContractServiceFn(); enabledNextBtn();" class="btn btn-xs btn-danger"><i class="fas fa-minus-circle"></i></button>
+
+								          	</td>							              	
+							            </tr>
+							        </table>									
+								</div>
+					    	</div>							
+						</div>                                    
+					</div>
+					</fieldset>
+				</form>
+				<div class="clearfix"> </div> 
+			</div>
+			<!-- Actions Button -->
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                        <button type="submit" ng-click="sysRegisterContractFn()" ng-disabled="fCustomerNewContract.$invalid" class="btn btn-labeled btn-success">
+                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
+                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+<!-- // CUSTOMER CONTRACT FORM -->
+
+
+<div ng-include="'views/services/new/components/comp_serviceUnits.html'"></div>

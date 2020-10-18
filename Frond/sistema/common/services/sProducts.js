@@ -16,7 +16,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
                   rsJson=response.data;
                   return rsJson;
                 },function myError(response) { 
-                  console.log("Error: "+response.data.error); 
+                  console.log("Error: "+response); 
                   return response;
                 })  
           },
@@ -29,7 +29,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
                     rsJson=response.data;
                     return rsJson;
                   },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
+                    console.log("Error: "+response); 
                     return response;
             });   
           },
@@ -42,7 +42,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
                     rsJson=response.data;
                     return rsJson;
                   },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
+                    console.log("Error: "+response); 
                     return response;
             });   
           },

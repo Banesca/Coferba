@@ -1,9 +1,9 @@
 <!-- Mails List -->
 <div class="form-group col-md-12">
-	<label class="clf-p-left">Correo de contactos <button style="margin-left: 100px;" ng-disabled="(!fUpdateCustomer.contact_mail.$valid) || (contactMails.idTipoDeMailFk=='' || contactMails.idTipoDeMailFk==undefined)" ng-click="addMailContactFn(contactMails, 'update'); contactMails.idTipoDeMailFk=undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button> </label>  
+	<label class="clf-p-left">Correo de contactos <button style="margin-left: 135px;" ng-disabled="(!fUpdateCustomer.contact_mail.$valid) || (contactMails.idTipoDeMailFk=='' || contactMails.idTipoDeMailFk==undefined)" ng-click="addMailContactFn(contactMails, 'update'); contactMails.idTipoDeMailFk=undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button> </label>  
 	<div class="input-group" ng-init="getTypeOfMailsFn();">
 		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>  
-		<select style="width: 42%; font-size: 12px;" name="typeMail" class="form-control" ng-options="item.idTipoMail as item.descripcion for item in rsTypeOfMailsData" ng-disabled="(customer.update.idClientTypeFk==5)" ng-change="enabledNextBtn()" ng-model="contactMails.idTipoDeMailFk" ng-required="list_mails.length==0" autofocus >
+		<select style="width: 42%; padding-left: 2px; font-size: 12px;" name="typeMail" class="form-control" ng-options="item.idTipoMail as item.descripcion for item in rsTypeOfMailsData" ng-disabled="(customer.update.idClientTypeFk==5)" ng-change="enabledNextBtn()" ng-model="contactMails.idTipoDeMailFk" ng-required="list_mails.length==0" autofocus >
 		    	<option class="text-uppercase" value="">Selecci&#243n Tipo</option>
 	    </select>
 	    								  				

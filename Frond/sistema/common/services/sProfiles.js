@@ -16,7 +16,7 @@ moduleProfilesServices.service("ProfileServices", ['$http', 'tokenSystem', '$tim
                   rsJson=response.data;
                   return rsJson;
                 },function myError(response) { 
-                  console.log("Error: "+response.data.error); 
+                  console.log("Error: "+response.error); 
                   return response;
                 })  
           },
@@ -29,7 +29,7 @@ moduleProfilesServices.service("ProfileServices", ['$http', 'tokenSystem', '$tim
                     rsJson=response.data.response;
                     return rsJson;
                   },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
+                    console.log("Error: "+response.error); 
                     return response;
             });   
           },
@@ -42,7 +42,7 @@ moduleProfilesServices.service("ProfileServices", ['$http', 'tokenSystem', '$tim
                     rsJson=response.data;
                     return rsJson;
                   },function myError(response) { 
-                    console.log("Error: "+response.data.error); 
+                    console.log("Error: "+response.error); 
                     return response;
             });   
           },

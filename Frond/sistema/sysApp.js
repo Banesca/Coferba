@@ -95,6 +95,7 @@ app.config(['$routeProvider', '$locationProvider',
         });
 }]);
 //app.constant("serverHost","http://192.168.0.6/");
+//app.constant("serverHost","http://192.168.0.197/");
 app.constant("serverHost","http://localhost/");
 //app.constant("serverHost","http://10.39.9.110/");
 app.constant("serverBackend","Coferba/Back/index.php/");

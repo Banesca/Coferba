@@ -121,12 +121,12 @@
 		                    <br>Clientes
 		                 	</a>
 		              	</li>
-		               	<!--<li id="m_services" class="icon-m" ng-if="sysModules.idCliente">
+		               	<li id="m_services" class="icon-m" ng-if="sysModules.idServices">
 		                 	<a  ng-click="fnShowHide('services', 'open')"> 
 		                    <i style="margin-left: -0.58em" class="fas fa-tools icon-4x"></i>
 		                    <br>Servicios
 		                 	</a>
-		              	</li>-->
+		              	</li>
 		               	<li id="m_config" class="icon-m" ng-if="sysModules.idConfiguracion">
 		                 	<a  ng-click="fnShowHide('sysConfig', 'open')"> 
 		                    <i style="margin-left: -0.4em" class="icon-cogs icon-4x"></i>
@@ -167,7 +167,7 @@
 			<div ng-if="rucontact" ng-include="'views/contact/formContact.html'"></div>
 			<div ng-if="rucost" ng-include="'views/tickets/formCost.html'"></div>
 			<div ng-if="rucustomer" ng-include="'views/customer/customers.html'"></div>
-			<!--<div ng-if="ruservices" ng-include="'views/customer/services/services.html'"></div>-->
+			<div ng-if="ruservices" ng-include="'views/services/services.html'"></div>
 			<div ng-if="ruproduct" ng-include="'views/products/frmProducts.html'"></div>
 			<div ng-show="home" ng-include="'views/monitor/monitor.html'" class="ng-scope" style="width: 100%;"></div>
 			<!--//REQUEST FORM FOR NO REGISTERED USERS -->
