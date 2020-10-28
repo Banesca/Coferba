@@ -131,8 +131,7 @@ class Product_model extends CI_Model
 				return $rs;
 			}
 			return null;
-		}else
-		{ 
+		}else {
 
 			$this->db->select("*")->from("tb_products");
 			$this->db->join('tb_products_classification', 'tb_products_classification.idProductClassification = tb_products.idProductClassificationFk', 'inner');

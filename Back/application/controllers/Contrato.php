@@ -1,0 +1,60 @@
+<?php if (! defined('BASEPATH'))
+    exit('No direct script access allowed');
+require APPPATH.'/libraries/REST_Controller.php';
+
+class Contrato extends REST_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('contrato_model');
+    }
+
+    public function add_post() {
+
+        $res = $this->contrato_model->add($this->post('contrato'));
+
+        if ($res == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } elseif ($res == 0) {
+            $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+        } elseif ($res == 2) {
+            $this->response([ 'response' => "Contrato ya se encuentra registrado" ], 203);
+        }
+    }
+
+    public function update_put() {
+
+        $res = $this->contrato_model->update($this->put('contrato'));
+
+        if ($res == 1) {
+            $this->response([ 'response' => "Actualización exitosa" ], 200);
+        } elseif ($res == 0) {
+            $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+        } elseif ($res == 2) {
+            $this->response([ 'response' => "Contrato ya se encuentra registrado" ], 203);
+        }
+    }
+
+    public function delete_delete($id) {
+
+        $rs = $this->client_model->delete($id);
+        if (! is_null($rs)) {
+            $this->response("Eliminado", 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
+
+    public function get_get() {
+
+        $user = $this->contrato_model->get();
+
+        if (! is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
+}

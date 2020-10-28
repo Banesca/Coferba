@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1dae5d8e-92d6-4d33-a2fa-c1fb115d5754",
+		"_postman_id": "c7ae513a-2a19-4a40-bd5c-f850a88b5637",
 		"name": "COFERBA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -1042,26 +1042,6 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
-				},
-				{
-					"name": "getTypeOfServices",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost/Coferba/Back/index.php/Services/typeOfServices",
-						"description": "Api del gobierno de la ciudad para buscar una direccion"
-					},
-					"response": []
-				},
-				{
-					"name": "getAccessCtrlDoors",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost/Coferba/Back/index.php/Services/accessCtrlDoors",
-						"description": "Api del gobierno de la ciudad para buscar una direccion"
-					},
-					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -1144,6 +1124,87 @@
 							}
 						],
 						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/delete/1"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Contratos",
+			"item": [
+				{
+					"name": "Agregar Contrato",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"2\",\r\n                \"serviceName\": \"INTERNET\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CableModem\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"M2M\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"3\",\r\n                \"serviceName\": \"TOTEM\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"3\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"4\",\r\n                \"serviceName\": \"CAMARAS\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"16\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    },\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"5\",\r\n                \"serviceName\": \"ALARMAS\",\r\n                \"serviceItems\": []\r\n            },\r\n            {\r\n                \"idServiceType\": \"6\",\r\n                \"serviceName\": \"APP MONITOREO\",\r\n                \"serviceItems\": []\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/add"
+					},
+					"response": []
+				},
+				{
+					"name": "EditarContrato",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idContrato\": 3,\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiciosDelContrato\": 13,\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO1\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"idServiciosDelContratoCuerpo\": 15,\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta1\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"idServiciosDelContratoCuerpo\": 16,\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera1\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta1\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/update"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar contratos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"2\",\r\n                \"serviceName\": \"INTERNET\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CableModem\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"M2M\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"3\",\r\n                \"serviceName\": \"TOTEM\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"3\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"4\",\r\n                \"serviceName\": \"CAMARAS\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"16\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    },\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"5\",\r\n                \"serviceName\": \"ALARMAS\",\r\n                \"serviceItems\": []\r\n            },\r\n            {\r\n                \"idServiceType\": \"6\",\r\n                \"serviceName\": \"APP MONITOREO\",\r\n                \"serviceItems\": []\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/get"
 					},
 					"response": []
 				}
