@@ -56,5 +56,17 @@ class Contrato extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+    public function getIdClient_get($ididClientFk) {
+        if (!$ididClientFk) {
+            $this->response(NULL, 404);
+        }
+        $user = $this->contrato_model->getIdClient($ididClientFk);
+
+        if (! is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
 
 }

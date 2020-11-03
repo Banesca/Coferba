@@ -123,6 +123,42 @@ class Contrato_model extends CI_Model {
         return $contratos1;
 
     }
+    public function getIdClient($idClientFk) {
+        $contratos  = $this->db->select("*")
+            ->from("tb_contratos")
+            ->where('idClientFk', $idClientFk)
+            ->get();
+        $contratos1 = null;
+        if ($contratos->num_rows() > 0) {
+            $contratos1 = $contratos->result_array();
+            foreach ($contratos->result_array() as $key => $contrato) {
+                $cabecera = $this->db->select("*")
+                    ->from("tb_servicios_del_contrato_cabecera")
+                    ->where('idContratoFk', $contrato['idContrato'])->get();
+                if ($cabecera->num_rows() > 0) {
+                    //return $contratos;
+                    $contratos1[$key]['services'] = $cabecera->result_array();
+
+                    //return $contratos1;
+                    foreach ($cabecera->result_array() as $key2 => $cabecera1) {
+
+                        $cuerpo = $this->db->select("*")
+                            ->from("tb_servicios_del_contrato_cuerpo")
+                            ->where('idServiciosDelContratoFk', $cabecera1['idServiciosDelContrato'])->get();
+                        if ($cuerpo->num_rows() > 0) {
+                            $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array();
+                        }
+
+                    }
+
+
+                }
+            }
+        }
+
+        return $contratos1;
+
+    }
 
     public function delete($idClient) {
 

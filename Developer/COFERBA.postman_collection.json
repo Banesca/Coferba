@@ -310,9 +310,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"product\":\n\t{\n\t\t\"descriptionProduct\":\"2Ejemdplo3\",\n\t\t\"codigoFabric\":\"Ejemplo\",\n\t\t\"brand\":\"Ejemplo\",\n\t\t\"model\":\"Ejemplo\",\n\t\t\"idProductClassificationFk\":5,\n\t\t\"isNumberSerieFabric\":true,\n\t\t\"isNumberSerieInternal\":false,\n\t\t\"isDateExpiration\":true,\n\t\t\"isControlSchedule\":true,\n\t\t\"priceFabric\":120.38,\n\t\t\"list_id_divice\":[\n\t\t\t{\"idDiviceOpeningFk\":2},\n\t\t\t{\"idDiviceOpeningFk\":3},\n\t\t\t{\"idDiviceOpeningFk\":4},\n\t\t\t{\"idDiviceOpeningFk\":5}\n\t\t]\n\t}\n}"
+							"raw": "{\n    \"product\": {\n        \"descriptionProduct\": \"2Ejemdplo53\",\n        \"codigoFabric\": \"Ejemplo\",\n        \"brand\": \"Ejemplo\",\n        \"model\": \"Ejemplo\",\n        \"idProductClassificationFk\": 5,\n        \"isNumberSerieFabric\": true,\n        \"isNumberSerieInternal\": false,\n        \"isDateExpiration\": true,\n        \"isControlSchedule\": true,\n        \"priceFabric\": 120.38,\n        \"numberSerieFabric\": \"6766\",\n        \"numberSerieInternal\": \"8789\",\n        \"dateExpiration\": \"2018-01-02\",\n        \"list_id_divice\": [\n            {\n                \"idDiviceOpeningFk\": 2\n            },\n            {\n                \"idDiviceOpeningFk\": 3\n            },\n            {\n                \"idDiviceOpeningFk\": 4\n            },\n            {\n                \"idDiviceOpeningFk\": 5\n            }\n        ]\n    }\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Product"
 					},
 					"response": []
 				},
@@ -330,7 +330,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"product\":\n\t{\n\t\t\"idProduct\":\"1\",\n\t\t\"descriptionProduct\":\"2Ejemplo3111\",\n\t\t\"codigoFabric\":\"Ejemplo\",\n\t\t\"brand\":\"Ejemplo\",\n\t\t\"model\":\"Ejemplo\",\n\t\t\"idProductClassificationFk\":5,\n\t\t\"isNumberSerieFabric\":true,\n\t\t\"isNumberSerieInternal\":false,\n\t\t\"isDateExpiration\":true,\n\t\t\"isControlSchedule\":true,\n\t\t\"priceFabric\":120.38,\n\t\t\"list_id_divice\":[\n\t\t\t{\"idDiviceOpeningFk\":2},\n\t\t\t{\"idDiviceOpeningFk\":3},\n\t\t\t{\"idDiviceOpeningFk\":4},\n\t\t\t{\"idDiviceOpeningFk\":5}\n\t\t]\n\t}\n}"
+							"raw": "{\n    \"product\": {\n        \"idProduct\": \"1\",\n        \"descriptionProduct\": \"2Ejemplo3111\",\n        \"codigoFabric\": \"Ejemplo\",\n        \"brand\": \"Ejemplo\",\n        \"model\": \"Ejemplo\",\n        \"idProductClassificationFk\": 5,\n        \"isNumberSerieFabric\": true,\n        \"isNumberSerieInternal\": false,\n        \"isDateExpiration\": true,\n        \"isControlSchedule\": true,\n        \"priceFabric\": 120.38,\n        \"numberSerieFabric\": \"\",\n        \"numberSerieInternal\": \"\",\n        \"dateExpiration\": \"\",\n        \"list_id_divice\": [\n            {\n                \"idDiviceOpeningFk\": 2\n            },\n            {\n                \"idDiviceOpeningFk\": 3\n            },\n            {\n                \"idDiviceOpeningFk\": 4\n            },\n            {\n                \"idDiviceOpeningFk\": 5\n            }\n        ]\n    }\n}"
 						},
 						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/update"
 					},
@@ -1205,6 +1205,33 @@
 							}
 						},
 						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/get"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar contratos por idCliente",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"2\",\r\n                \"serviceName\": \"INTERNET\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CableModem\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"M2M\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"3\",\r\n                \"serviceName\": \"TOTEM\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"3\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"4\",\r\n                \"serviceName\": \"CAMARAS\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"16\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    },\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"5\",\r\n                \"serviceName\": \"ALARMAS\",\r\n                \"serviceItems\": []\r\n            },\r\n            {\r\n                \"idServiceType\": \"6\",\r\n                \"serviceName\": \"APP MONITOREO\",\r\n                \"serviceItems\": []\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/getIdClient/82"
 					},
 					"response": []
 				}
