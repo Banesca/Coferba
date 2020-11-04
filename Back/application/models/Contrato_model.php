@@ -123,6 +123,7 @@ class Contrato_model extends CI_Model {
         return $contratos1;
 
     }
+
     public function getIdClient($idClientFk) {
         $contratos  = $this->db->select("*")
             ->from("tb_contratos")
@@ -132,26 +133,44 @@ class Contrato_model extends CI_Model {
         if ($contratos->num_rows() > 0) {
             $contratos1 = $contratos->result_array();
             foreach ($contratos->result_array() as $key => $contrato) {
+                $r = [
+                    "tb_client_services_access_control",
+                    "tb_client_services_internet",
+                    "tb_client_services_totem",
+                    "tb_client_services_camera",
+                    "tb_client_services_alarms",
+                    "tb_client_services_smart_panic",
+                ];
+
                 $cabecera = $this->db->select("*")
                     ->from("tb_servicios_del_contrato_cabecera")
                     ->where('idContratoFk', $contrato['idContrato'])->get();
                 if ($cabecera->num_rows() > 0) {
                     //return $contratos;
-                    $contratos1[$key]['services'] = $cabecera->result_array();
-
+                    $rr                           = $cabecera->result_array();
+                    $contratos1[$key]['services'] = $rr;
                     //return $contratos1;
-                    foreach ($cabecera->result_array() as $key2 => $cabecera1) {
+                    foreach ($rr as $key2 => $cabecera1) {
+                        //return $rr[0]['idServiceType'];
 
                         $cuerpo = $this->db->select("*")
                             ->from("tb_servicios_del_contrato_cuerpo")
                             ->where('idServiciosDelContratoFk', $cabecera1['idServiciosDelContrato'])->get();
                         if ($cuerpo->num_rows() > 0) {
+
+                            $servicios = $this->db->select("*")
+                                ->from($r[$rr[$key2]['idServiceType'] - 1])
+                                ->where('idContracAssociated_SE', $contrato['idContrato'])
+                                ->get();
+                            $cantidad  = count($cuerpo->result_array());
+                            if (count($servicios->result_array()) > 0) {
+                                $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
+                            }
+                            $contratos1[$key]['services'][$key2]['disponible'] = $cantidad;
+
                             $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array();
                         }
-
                     }
-
-
                 }
             }
         }
@@ -165,6 +184,7 @@ class Contrato_model extends CI_Model {
         $this->db->set([ 'idStatusFk' => -1 ])
             ->where("idClient", $idClient)
             ->update("tb_clients");
+
         return true;
 
     }
@@ -173,3 +193,5 @@ class Contrato_model extends CI_Model {
 }
 
 ?>
+
+
