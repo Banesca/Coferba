@@ -161,6 +161,17 @@ class Util extends REST_Controller {
         }
     }
 
+    public function tipoServiciosInternet_get() {
+
+        $result = $this->util_model->getTypeServicesInternet();
+
+        if (! is_null($result)) {
+            $this->response($result, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
 }
 
 ?>

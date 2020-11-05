@@ -200,6 +200,19 @@ class Util_model extends CI_Model {
         return $rs;
     }
 
+    public function getTypeServicesInternet() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_tipos_servicios_internet")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
 
 }
 

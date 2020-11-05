@@ -3886,6 +3886,23 @@ insert  into `tb_tipo_mails`(`idTipoMail`,`descripcion`) values
 (5,'GUARDIA'),
 (6,'EMERGENCIA');
 
+/*Table structure for table `tb_tipos_servicios_internet` */
+
+DROP TABLE IF EXISTS `tb_tipos_servicios_internet`;
+
+CREATE TABLE `tb_tipos_servicios_internet` (
+  `idTipoServicioInternet` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTipoServicioInternet`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_tipos_servicios_internet` */
+
+insert  into `tb_tipos_servicios_internet`(`idTipoServicioInternet`,`nombre`) values 
+(1,'Cable Modem'),
+(2,'M2M'),
+(3,'4G/LTE');
+
 /*Table structure for table `tb_tmp_delivery_data` */
 
 DROP TABLE IF EXISTS `tb_tmp_delivery_data`;
