@@ -33,6 +33,20 @@ class Services_model extends CI_Model {
             ]
         );
 
+        $id = $this->db->insert_id();
+        if (isset($item['adicional'])) {
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                    ]
+                );
+            }
+        }
+
         if ($this->db->affected_rows() === 1) {
             return 1;
         } else {
@@ -59,6 +73,20 @@ class Services_model extends CI_Model {
                 'nroSerieManufacturer'   => $item['nroSerieManufacturer'],
             ]
         );
+        $id = $this->db->insert_id();
+        if (isset($item['adicional'])) {
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                    ]
+                );
+            }
+        }
+
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -115,7 +143,19 @@ class Services_model extends CI_Model {
         if (count($item['battery_install']) > 0) {
             $this->insertServiceBatteryAccessControl($item['battery_install'], $id);  //se crean las baterias
         }
-
+        $id = $this->db->insert_id();
+        if (isset($item['adicional'])) {
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                    ]
+                );
+            }
+        }
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -129,20 +169,33 @@ class Services_model extends CI_Model {
         $idClientServicesFk = $this->insertService($item); // CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_smart_panic', [
-                'idClientServicesFk'         => $idClientServicesFk,
-                'name'                       => $item['name'],
-                'idContracAssociated_SE'     => $item['idContracAssociated_SE'],
-                'dateUp'                     => $item['dateUp'],
-                'dateDown'                   => $item['dateDown'],
-                'idTypeMaintenanceFk'        => $item['idTypeMaintenanceFk'],
+                'idClientServicesFk'      => $idClientServicesFk,
+                'name'                    => $item['name'],
+                'idContracAssociated_SE'  => $item['idContracAssociated_SE'],
+                'dateUp'                  => $item['dateUp'],
+                'dateDown'                => $item['dateDown'],
+                'idTypeMaintenanceFk'     => $item['idTypeMaintenanceFk'],
                 'idCompanyMonitorFK'      => $item['idCompanyMonitorFK'],
-                'sucribeNumber'              => $item['sucribeNumber'],
-                'idDetinationOfLicenseFk'    => $item['idDetinationOfLicenseFk'],
-                'idDepartmentFk'             => $item['idDepartmentFk'],
-                'countNewLicense'            => $item['countNewLicense'],
-                'observation'                => $item['observation'],
+                'sucribeNumber'           => $item['sucribeNumber'],
+                'idDetinationOfLicenseFk' => $item['idDetinationOfLicenseFk'],
+                'idDepartmentFk'          => $item['idDepartmentFk'],
+                'countNewLicense'         => $item['countNewLicense'],
+                'observation'             => $item['observation'],
             ]
         );
+        $id = $this->db->insert_id();
+        if (isset($item['adicional'])) {
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                    ]
+                );
+            }
+        }
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -193,6 +246,19 @@ class Services_model extends CI_Model {
         if (count($item['backup_energy']) > 0) {
             $this->insertServiceEnergy($item['backup_energy'], $id);// CREAMOS las opciones de energia
         }
+        $id = $this->db->insert_id();
+        if (isset($item['adicional'])) {
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                    ]
+                );
+            }
+        }
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -235,6 +301,19 @@ class Services_model extends CI_Model {
             ]
         );
 
+        $id = $this->db->insert_id();
+        if (isset($item['adicional'])) {
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                    ]
+                );
+            }
+        }
         if ($this->db->affected_rows() === 1) {
             return 1;
         } else {
@@ -453,7 +532,7 @@ class Services_model extends CI_Model {
 }
 }*/
     /*GET LIST OF TYPE OF SERVICES*/
-     public function getTypeOfServices() {
+    public function getTypeOfServices() {
 
         $query = null;
         $rs    = null;
@@ -465,8 +544,9 @@ class Services_model extends CI_Model {
 
         return $rs;
     }
+
     /*GET LIST OF ACCESS CONTROL DOORS */
-     public function accessCtrlDoors() {
+    public function accessCtrlDoors() {
 
         $query = null;
         $rs    = null;
@@ -477,7 +557,7 @@ class Services_model extends CI_Model {
         }
 
         return $rs;
-    }    
+    }
 }
 
 ?> 

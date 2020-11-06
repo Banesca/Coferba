@@ -14,8 +14,6 @@ class Product_model extends CI_Model {
         $this->db->select("*")->from("tb_products");
         $query = $this->db->where("tb_products.descriptionProduct =", $product['descriptionProduct'])->get();
         if ($query->num_rows() < 1) {
-
-
             $this->db->insert('tb_products', [
                     'descriptionProduct'        => $product['descriptionProduct'],
                     'codigoFabric'              => $product['codigoFabric'],
@@ -27,9 +25,6 @@ class Product_model extends CI_Model {
                     'isDateExpiration'          => $product['isDateExpiration'],
                     'isControlSchedule'         => $product['isControlSchedule'],
                     'priceFabric'               => $product['priceFabric'],
-                    'numberSerieFabric'         => $product['numberSerieFabric'],
-                    'numberSerieInternal'       => $product['numberSerieInternal'],
-                    'dateExpiration'            => $product['dateExpiration'],
                 ]
             );
 
@@ -73,9 +68,6 @@ class Product_model extends CI_Model {
                 'isDateExpiration'          => $product['isDateExpiration'],
                 'isControlSchedule'         => $product['isControlSchedule'],
                 'priceFabric'               => $product['priceFabric'],
-                'numberSerieFabric'         => $product['numberSerieFabric'],
-                'numberSerieInternal'       => $product['numberSerieInternal'],
-                'dateExpiration'            => $product['dateExpiration'],
             ]
         )->where("idProduct", $product['idProduct'])->update("tb_products");
 

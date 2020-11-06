@@ -70,12 +70,9 @@ class Profiles_model extends CI_Model
 		}
 
 		public function delete($idProfiles) {
-
 			$this->db->set(
 				array('idStatus' =>  -1))->where("idProfiles", $idProfiles)->update("tb_profiles"); 
 			return true;
-					
-			
 		}
 
 		public function get($id = null, $searchFilter = null) {
