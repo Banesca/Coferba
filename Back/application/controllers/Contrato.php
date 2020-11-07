@@ -45,7 +45,6 @@ class Contrato extends REST_Controller {
         }
     }
 
-
     public function get_get() {
 
         $user = $this->contrato_model->get();
@@ -56,11 +55,25 @@ class Contrato extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+
     public function getIdClient_get($ididClientFk) {
         if (!$ididClientFk) {
             $this->response(NULL, 404);
         }
         $user = $this->contrato_model->getIdClient($ididClientFk);
+
+        if (! is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+    public function getIdContrato_get($idContrato,$idServicesType) {
+        //$this->response([$idContrato,$idServicesType], 200);
+        if (!$idContrato) {
+            $this->response(NULL, 404);
+        }
+        $user = $this->contrato_model->getDisponibilidadPorContrato($idContrato,$idServicesType);
 
         if (! is_null($user)) {
             $this->response($user, 200);
