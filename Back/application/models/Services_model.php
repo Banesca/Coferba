@@ -375,7 +375,6 @@ class Services_model extends CI_Model {
         return true;
     }
 
-
     public function insertServiceEnergy($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_backup_energy', [
@@ -557,6 +556,76 @@ class Services_model extends CI_Model {
         }
 
         return $rs;
+    }
+
+    public function getPorIdContrato($idContrato) {
+
+        $query         = null;
+        $controlAcceso = null;
+        $camaras       = null;
+        $smartPanic    = null;
+        $internet      = null;
+        $toten         = null;
+        $alarmas       = null;
+
+        $query = $this->db->select("*")
+            ->from("tb_client_services_access_control")
+            ->where('idContracAssociated_SE', $idContrato)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $controlAcceso = $query->result_array();
+        }
+
+        $query = $this->db->select("*")
+            ->from("tb_client_services_internet")
+            ->where('idContracAssociated_SE', $idContrato)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $internet = $query->result_array();
+        }
+
+        $query = $this->db->select("*")
+            ->from("tb_client_services_totem")
+            ->where('idContracAssociated_SE', $idContrato)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $toten = $query->result_array();
+        }
+
+        $query = $this->db->select("*")
+            ->from("tb_client_services_smart_panic")
+            ->where('idContracAssociated_SE', $idContrato)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $smartPanic = $query->result_array();
+        }
+
+        $query = $this->db->select("*")
+            ->from("tb_client_services_camera")
+            ->where('idContracAssociated_SE', $idContrato)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $camaras = $query->result_array();
+        }
+
+        $query = $this->db->select("*")
+            ->from("tb_client_services_alarms")
+            ->where('idContracAssociated_SE', $idContrato)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $alarmas = $query->result_array();
+        }
+
+        $todo = [
+            'controlAcceso' => $controlAcceso,
+            'camaras'       => $camaras,
+            'smartPanic'    => $smartPanic,
+            'internet'      => $internet,
+            'toten'         => $toten,
+            'alarmas'       => $alarmas,
+        ];
+
+        return $todo;
     }
 }
 

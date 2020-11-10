@@ -258,7 +258,8 @@ class Services extends REST_Controller
         } else {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
-    }    
+    }
+
     public function accessCtrlDoors_get() {
         $service = null;
         $service = $this->services_model->accessCtrlDoors();
@@ -268,7 +269,20 @@ class Services extends REST_Controller
         } else {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
-    }    
+    }
+
+    public function getPorIdContrato_get($idContrato) {
+        if (!$idContrato) {
+            $this->response(NULL, 404);
+        }
+        $service = $this->services_model->getPorIdContrato($idContrato);
+
+        if (! is_null($service)) {
+            $this->response($service, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
 }
 
 ?>
