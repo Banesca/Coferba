@@ -136,8 +136,8 @@ class Contrato_model extends CI_Model {
                 $r = [
                     "tb_client_services_access_control",
                     "tb_client_services_internet",
-                    "tb_client_services_totem",
-                    "tb_client_services_camera",
+                    "tb_client_services_totem", //
+                    "tb_client_services_camera", //
                     "tb_client_services_alarms",
                     "tb_client_services_smart_panic",
                 ];
@@ -191,8 +191,8 @@ class Contrato_model extends CI_Model {
                 $r = [
                     "tb_client_services_access_control",
                     "tb_client_services_internet",
-                    "tb_client_services_totem",
-                    "tb_client_services_camera",
+                    "tb_client_services_totem", //
+                    "tb_client_services_camera", //
                     "tb_client_services_alarms",
                     "tb_client_services_smart_panic",
                 ];
@@ -215,54 +215,86 @@ class Contrato_model extends CI_Model {
                             ->where('idServiciosDelContratoFk', $cabecera1['idServiciosDelContrato'])
                             ->get();
 
+
                         if ($cuerpo->num_rows() > 0) {
                             $servicios = $this->db->select("*")
                                 ->from($r[$rr[$key2]['idServiceType'] - 1])
                                 ->where('idContracAssociated_SE', $contrato['idContrato'])
                                 ->get();
-                            //return $servicios->result_array();
-                            $cantidad  = 0;
-                            if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera' || $r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera') {
+                            // return $servicios->result_array();
+                            // exit();
+                            $cantidad = 0;
+                            if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera') {
                                 //return $cuerpo->result_array();
-                                    //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
-                                $er       = $servicios->result_array();
+                                //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
+                                $er = $servicios->result_array();
 
                                 //exit();
                                 if (count($er) > 0) {
-                                   foreach ($er as $item1) {
-                                       $cantidad += $item1['maxCamera'];
-                                   }
-                                    $cantidad = count($cuerpo->result_array()) - $cantidad;
+                                    foreach ($er as $item1) {
+                                        $cantidad += $item1['maxCamera'];
+                                    }
+                                    $cantidad1 = 0;
+                                    $rea       = $cuerpo->result_array();
+                                    foreach ($rea as $item1) {
+                                        // return $item1['qtty'];
+                                        // exit();
+                                        $cantidad1 += $item1['qtty'];
+                                    }
+                                    // return $cantidad;
+                                    // exit();
+                                    $cantidad = $cantidad1 - $cantidad;
                                 }
                             } else {
-                                $cantidad = count($cuerpo->result_array());
+                                if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_totem') {
+                                    //return $cuerpo->result_array();
+                                    //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
+                                    $er = $servicios->result_array();
+
+                                    //exit();
+                                    if (count($er) > 0) {
+                                        foreach ($er as $item1) {
+                                            $cantidad += $item1['maxCamera'];
+                                        }
+                                        $cantidad1 = 0;
+                                        $rea       = $cuerpo->result_array();
+                                        foreach ($rea as $item1) {
+                                            $cantidad1 += $item1['qtty'];
+                                        }
+                                        $cantidad = $cantidad1 - $cantidad;
+                                    }
+                                } else {
+
+                                    $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
+                                }
                             }
-                            if (count($servicios->result_array()) > 0) {
-                                $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
-                            }
+                            // if (count($servicios->result_array()) > 0) {
+                            //     $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
+                            // }
                             $contratos1[$key]['services'][$key2]['disponible'] = $cantidad;
 
                             $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array();
                         }
                     }
+                }
+            }
         }
+
+        return $contratos1;
+
     }
-}
 
-return $contratos1;
 
-}
+    public
+    function delete($idClient) {
 
-public
-function delete($idClient) {
+        $this->db->set([ 'idStatusFk' => -1 ])
+            ->where("idClient", $idClient)
+            ->update("tb_clients");
 
-    $this->db->set([ 'idStatusFk' => -1 ])
-        ->where("idClient", $idClient)
-        ->update("tb_clients");
+        return true;
 
-    return true;
-
-}
+    }
 
 
 }
