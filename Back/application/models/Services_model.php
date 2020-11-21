@@ -134,8 +134,6 @@ class Services_model extends CI_Model {
                 'pass'                    => $item['pass'],
                 'portHttp'                => $item['portHttp'],
 
-                'emergencyButton'         => $item['emergencyButton'],
-                'offKey'                  => $item['offKey'],
                 'locationEmergencyButton' => $item['locationEmergencyButton'],
                 'locationOffKey'          => $item['locationOffKey'],
 

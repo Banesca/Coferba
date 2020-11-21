@@ -165,6 +165,18 @@ class Seeds_model extends CI_Model
             return null;
      }
 
+     public function getTypeContratos() {
+        $quuery = null;
+        $rs = null;
+
+        $quuery =  $this->db->select("*")->from("tb_type_contrato")->get();
+        if ($quuery->num_rows() > 0) {
+            $rs = $quuery->result_array();
+            return $rs;
+        }
+            return null;
+     }
+
 
 	 
 

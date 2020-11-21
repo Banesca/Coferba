@@ -290,7 +290,7 @@ CREATE TABLE `tb_battery_install_access_control` (
   KEY `idBatteryFk` (`idBatteryFk`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_1` FOREIGN KEY (`idClientServicesAccessControlFk`) REFERENCES `tb_client_services_access_control` (`idClientServicesAccessControl`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_2` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_battery_install_access_control` */
 
@@ -300,7 +300,9 @@ insert  into `tb_battery_install_access_control`(`idBatteryInstallAccessControl`
 (16,30,1),
 (17,30,2),
 (18,31,1),
-(19,31,2);
+(19,31,2),
+(20,32,1),
+(21,32,2);
 
 /*Table structure for table `tb_battery_install_alarm` */
 
@@ -1442,8 +1444,6 @@ CREATE TABLE `tb_client_services_access_control` (
   `passVpn` varchar(100) DEFAULT NULL,
   `pass` varchar(100) DEFAULT NULL,
   `portHttp` decimal(10,0) DEFAULT NULL,
-  `emergencyButton` int(11) DEFAULT NULL,
-  `offKey` int(11) DEFAULT NULL,
   `locationEmergencyButton` varchar(255) DEFAULT NULL,
   `locationOffKey` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesAccessControl`),
@@ -1461,14 +1461,15 @@ CREATE TABLE `tb_client_services_access_control` (
   CONSTRAINT `tb_client_services_access_control_ibfk_5` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_type_maintenance` (`idTypeMaintenance`),
   CONSTRAINT `tb_client_services_access_control_ibfk_6` FOREIGN KEY (`idEmergencyButtonFk`) REFERENCES `tb_emergency_button` (`idEmergencyButton`),
   CONSTRAINT `tb_client_services_access_control_ibfk_7` FOREIGN KEY (`idShutdownKeyFk`) REFERENCES `tb_shutdown_key` (`idShutdownKey`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_access_control` */
 
-insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`,`idDoorFk`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idAccessControlFk`,`idInputReaderFk`,`locationGabinet`,`idFontFk`,`aclaration`,`idTypeMaintenanceFk`,`lock`,`ouputReader`,`ouputButom`,`isOuputReader`,`isOuputButom`,`isBlocklingScrew`,`idEmergencyButtonFk`,`idShutdownKeyFk`,`acaration2`,`portNumberRouter`,`addressClient`,`addressVpn`,`user`,`useVpn`,`passVpn`,`pass`,`portHttp`,`emergencyButton`,`offKey`,`locationEmergencyButton`,`locationOffKey`) values 
-(29,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL,NULL,NULL),
-(30,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL,NULL,NULL),
-(31,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL,NULL,NULL);
+insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`,`idDoorFk`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idAccessControlFk`,`idInputReaderFk`,`locationGabinet`,`idFontFk`,`aclaration`,`idTypeMaintenanceFk`,`lock`,`ouputReader`,`ouputButom`,`isOuputReader`,`isOuputButom`,`isBlocklingScrew`,`idEmergencyButtonFk`,`idShutdownKeyFk`,`acaration2`,`portNumberRouter`,`addressClient`,`addressVpn`,`user`,`useVpn`,`passVpn`,`pass`,`portHttp`,`locationEmergencyButton`,`locationOffKey`) values 
+(29,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL),
+(30,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL),
+(31,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL),
+(32,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1',1,NULL,NULL);
 
 /*Table structure for table `tb_client_services_alarms` */
 
@@ -1597,15 +1598,15 @@ CREATE TABLE `tb_client_services_camera` (
 /*Data for the table `tb_client_services_camera` */
 
 insert  into `tb_client_services_camera`(`idClientServicesCamera`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`idDvrNvr_tb_prod_classFk`,`location`,`locationLat`,`locationLon`,`maxCamera`,`numberPortRouter`,`addressVpn`,`nroPort1`,`nroPort2`,`namePort1`,`namePort2`,`observation`,`addessClient`,`addessClientLat`,`addessClientLot`,`portHttp`,`namePort`,`port`,`idClientServicesFk`) values 
-(16,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',10,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(17,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',2,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(18,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',9,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(19,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',5,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(29,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',8,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,43),
-(30,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',12,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,45),
-(31,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',102,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,52),
-(32,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',2,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,53),
-(33,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',3,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,61),
+(16,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(17,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(18,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(19,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
+(29,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,43),
+(30,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,45),
+(31,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,52),
+(32,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,53),
+(33,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,61),
 (34,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',3,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,61);
 
 /*Table structure for table `tb_client_services_gps` */
@@ -1738,9 +1739,12 @@ CREATE TABLE `tb_client_services_totem` (
   `numberPortInter` varchar(100) DEFAULT NULL,
   `observatioGeneral` text,
   PRIMARY KEY (`idClientServicesTotem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_totem` */
+
+insert  into `tb_client_services_totem`(`idClientServicesTotem`,`idClientServicesFk`,`name`,`idContracAssociated_SE`,`item_SE`,`date`,`idCompanyFk`,`dvr_nvr`,`addresss`,`latAddress`,`lonAddress`,`maxCamera`,`idTotenModelFk`,`tipeMaintenance_SE`,`dateDown`,`numerFertilizer`,`numberPort`,`addreesVpn`,`namePort1`,`numberPort1`,`namePort2`,`numberPort2`,`addressClientInter`,`portHttpInter`,`namePortInter`,`numberPortInter`,`observatioGeneral`) values 
+(2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tb_client_type` */
 
@@ -2147,7 +2151,7 @@ CREATE TABLE `tb_detalles_control_acceso` (
   `idProductoFk` int(11) DEFAULT NULL,
   `idServicesFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idControlAcceso`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_detalles_control_acceso` */
 
@@ -2163,7 +2167,9 @@ insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,
 (10,'645fghgfh','34456hgfh5','',8,10),
 (11,'45fghgfh','834456hgfh5','',5,10),
 (12,'645fghgfh','34456hgfh5','',8,19),
-(13,'45fghgfh','834456hgfh5','',5,19);
+(13,'45fghgfh','834456hgfh5','',5,19),
+(14,'645fghgfh','34456hgfh5','',8,21),
+(15,'45fghgfh','834456hgfh5','',5,21);
 
 /*Table structure for table `tb_detination_of_license` */
 
@@ -3645,7 +3651,7 @@ CREATE TABLE `tb_servicios_del_contrato_cuerpo` (
   `itemAclaracion` varchar(255) DEFAULT NULL,
   `idServiceTypeFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idServiciosDelContratoCuerpo`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_servicios_del_contrato_cuerpo` */
 
@@ -3654,16 +3660,16 @@ insert  into `tb_servicios_del_contrato_cuerpo`(`idServiciosDelContratoCuerpo`,`
 (2,1,NULL,2,'Cochera','Prueba aclaracion puerta',1),
 (3,2,NULL,NULL,'CableModem',NULL,2),
 (4,2,NULL,NULL,'M2M',NULL,2),
-(5,3,'0',NULL,'CAMARAS',NULL,3),
-(6,4,'0',NULL,'CAMARAS',NULL,4),
-(7,4,'0',NULL,'CAMARAS',NULL,4),
+(5,3,'11',NULL,'CAMARAS',NULL,3),
+(6,4,'10',NULL,'CAMARAS',NULL,4),
+(7,4,'5',NULL,'CAMARAS',NULL,4),
 (8,7,NULL,1,'Principal','Prueba aclaracion puerta',1),
 (9,7,NULL,2,'Cochera','Prueba aclaracion puerta',1),
 (10,8,NULL,NULL,'CableModem',NULL,2),
 (11,8,NULL,NULL,'M2M',NULL,2),
 (12,9,'8',NULL,'CAMARAS',NULL,3),
-(13,10,'0',NULL,'CAMARAS',NULL,4),
-(14,10,'0',NULL,'CAMARAS',NULL,4),
+(13,10,'1',NULL,'CAMARAS',NULL,4),
+(14,10,'2',NULL,'CAMARAS',NULL,4),
 (15,11,'0',NULL,'CAMARAS',NULL,4),
 (16,12,'0',NULL,'CAMARAS',NULL,4),
 (17,3,'0',NULL,'CAMARAS',NULL,3),
@@ -3676,7 +3682,9 @@ insert  into `tb_servicios_del_contrato_cuerpo`(`idServiciosDelContratoCuerpo`,`
 (24,4,'0',NULL,'CAMARAS',NULL,4),
 (25,4,'0',NULL,'CAMARAS',NULL,4),
 (26,4,'0',NULL,'CAMARAS',NULL,4),
-(27,4,'0',NULL,'CAMARAS',NULL,4);
+(27,4,'0',NULL,'CAMARAS',NULL,4),
+(28,1,NULL,2,'Cochera','Prueba aclaracion puerta',1),
+(29,1,NULL,2,'Cochera','Prueba aclaracion puerta',1);
 
 /*Table structure for table `tb_shutdown_key` */
 
@@ -4006,6 +4014,26 @@ insert  into `tb_type_attendant`(`idTyepeAttendant`,`nameTypeAttendant`) values
 (4,'Ayudante'),
 (5,'Intendente');
 
+/*Table structure for table `tb_type_contrato` */
+
+DROP TABLE IF EXISTS `tb_type_contrato`;
+
+CREATE TABLE `tb_type_contrato` (
+  `idTypeContrato` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTypeContrato`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_type_contrato` */
+
+insert  into `tb_type_contrato`(`idTypeContrato`,`description`) values 
+(1,'VENTA'),
+(2,'COMODATO'),
+(3,'INTEGRA 3.0 – COMODATO'),
+(4,'INTEGRA 2.0 – VENTA'),
+(5,'INTEGRA 2.0 – COMODATO'),
+(6,'MANTENIMIENTO EQUIPO INSTALADO');
+
 /*Table structure for table `tb_type_delivery` */
 
 DROP TABLE IF EXISTS `tb_type_delivery`;
@@ -4064,12 +4092,14 @@ CREATE TABLE `tb_type_maintenance` (
   `idTypeMaintenance` int(11) NOT NULL AUTO_INCREMENT,
   `typeMaintenance` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idTypeMaintenance`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_type_maintenance` */
 
 insert  into `tb_type_maintenance`(`idTypeMaintenance`,`typeMaintenance`) values 
-(1,'PRUEBA DE TIPO DE MANTENIMIENTO');
+(1,'MANO DE OBRA Y MATERIALES'),
+(2,'SOLO MANO DE OBRA'),
+(3,'MIXTO');
 
 /*Table structure for table `tb_type_outher` */
 

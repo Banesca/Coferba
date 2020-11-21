@@ -105,6 +105,34 @@
 						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/CategoryDepartament"
 					},
 					"response": []
+				},
+				{
+					"name": "Tipo de mantenimiento",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeMaintenance"
+					},
+					"response": []
+				},
+				{
+					"name": "Tipos de contrato",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/typeContrato"
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -989,7 +1017,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"1\",\n        \"idDoorFk\": \"1\",\n        \"idContracAssociated_SE\": \"1\",\n        \"dateUp\": \"1\",\n        \"dateDown\": \"1\",\n        \"idAccessControlFk\": \"1\",\n        \"idInputReaderFk\": \"1\",\n        \"locationGabinet\": \"1\",\n        \"idFontFk\": \"1\",\n        \"aclaration\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"lock\": \"1\",\n        \"ouputReader\": \"1\",\n        \"ouputButom\": \"1\",\n        \"isOuputReader\": \"1\",\n        \"isOuputButom\": \"1\",\n        \"isBlocklingScrew\": \"1\",\n        \"idEmergencyButtonFk\": \"1\",\n        \"idShutdownKeyFk\": \"1\",\n        \"acaration2\": \"1\",\n        \"portNumberRouter\": \"1\",\n        \"addressClient\": \"1\",\n        \"addressVpn\": \"1\",\n        \"user\": \"1\",\n        \"useVpn\": \"1\",\n        \"passVpn\": \"1\",\n        \"pass\": \"1\",\n        \"portHttp\": \"1\",\n        \"emergencyButton\": null,\n        \"offKey\": null,\n        \"locationEmergencyButton\": null,\n        \"locationOffKey\": null,\n        \"battery_install\": [\n            {\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
+									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"1\",\n        \"idDoorFk\": \"1\",\n        \"idContracAssociated_SE\": \"1\",\n        \"dateUp\": \"1\",\n        \"dateDown\": \"1\",\n        \"idAccessControlFk\": \"1\",\n        \"idInputReaderFk\": \"1\",\n        \"locationGabinet\": \"1\",\n        \"idFontFk\": \"1\",\n        \"aclaration\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"lock\": \"1\",\n        \"ouputReader\": \"1\",\n        \"ouputButom\": \"1\",\n        \"isOuputReader\": \"1\",\n        \"isOuputButom\": \"1\",\n        \"isBlocklingScrew\": \"1\",\n        \"idEmergencyButtonFk\": \"1\",\n        \"idShutdownKeyFk\": \"1\",\n        \"acaration2\": \"1\",\n        \"portNumberRouter\": \"1\",\n        \"addressClient\": \"1\",\n        \"addressVpn\": \"1\",\n        \"user\": \"1\",\n        \"useVpn\": \"1\",\n        \"passVpn\": \"1\",\n        \"pass\": \"1\",\n        \"portHttp\": \"1\",\n        \"locationEmergencyButton\": null,\n        \"locationOffKey\": null,\n        \"battery_install\": [\n            {\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
 								"url": "http://localhost/Coferba/Back/index.php/Services/addaccescontrol"
 							},

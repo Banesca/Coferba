@@ -228,43 +228,47 @@ class Contrato_model extends CI_Model {
                                 //return $cuerpo->result_array();
                                 //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
                                 $er = $servicios->result_array();
-
+                                $cantidad_servicio=0;
                                 //exit();
                                 if (count($er) > 0) {
                                     foreach ($er as $item1) {
-                                        $cantidad += $item1['maxCamera'];
+                                        $cantidad_servicio += $item1['maxCamera'];
                                     }
-                                    $cantidad1 = 0;
-                                    $rea       = $cuerpo->result_array();
+                                }
+                                $rea = $cuerpo->result_array();
+                                if (count($rea) > 0) {
+                                    $cantidad_contrato = 0;
                                     foreach ($rea as $item1) {
                                         // return $item1['qtty'];
                                         // exit();
-                                        $cantidad1 += $item1['qtty'];
+                                        $cantidad_contrato += $item1['qtty'];
                                     }
                                     // return $cantidad;
                                     // exit();
-                                    $cantidad = $cantidad1 - $cantidad;
+                                    $cantidad = $cantidad_contrato - $cantidad_servicio;
                                 }
                             } else {
                                 if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_totem') {
                                     //return $cuerpo->result_array();
                                     //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
                                     $er = $servicios->result_array();
-
+                                    $cantidad_servicio=0;
                                     //exit();
                                     if (count($er) > 0) {
                                         foreach ($er as $item1) {
-                                            $cantidad += $item1['maxCamera'];
+                                            $cantidad_servicio += $item1['maxCamera'];
                                         }
-                                        $cantidad1 = 0;
-                                        $rea       = $cuerpo->result_array();
+                                    }
+                                    $rea = $cuerpo->result_array();
+                                    if (count($rea) > 0) {
+                                        $cantidad_contrato = 0;
+
                                         foreach ($rea as $item1) {
-                                            $cantidad1 += $item1['qtty'];
+                                            $cantidad_contrato += $item1['qtty'];
                                         }
-                                        $cantidad = $cantidad1 - $cantidad;
+                                        $cantidad = $cantidad_contrato - $cantidad_servicio;
                                     }
                                 } else {
-
                                     $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
                                 }
                             }
@@ -285,8 +289,7 @@ class Contrato_model extends CI_Model {
     }
 
 
-    public
-    function delete($idClient) {
+    public function delete($idClient) {
 
         $this->db->set([ 'idStatusFk' => -1 ])
             ->where("idClient", $idClient)

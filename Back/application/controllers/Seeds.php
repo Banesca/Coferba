@@ -140,6 +140,16 @@ class Seeds extends REST_Controller {
 			}
 		}
 
+		public function typeContrato_get() {
+
+			$user = $this->seeds_model->getTypeContratos();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
 
 		
 	
