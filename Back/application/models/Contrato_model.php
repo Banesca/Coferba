@@ -152,20 +152,71 @@ class Contrato_model extends CI_Model {
                     //return $contratos1;
                     foreach ($rr as $key2 => $cabecera1) {
                         //return $rr[0]['idServiceType'];
-
                         $cuerpo = $this->db->select("*")
                             ->from("tb_servicios_del_contrato_cuerpo")
-                            ->where('idServiciosDelContratoFk', $cabecera1['idServiciosDelContrato'])->get();
-                        if ($cuerpo->num_rows() > 0) {
+                            ->where('idServiciosDelContratoFk', $cabecera1['idServiciosDelContrato'])
+                            ->get();
 
+
+                        if ($cuerpo->num_rows() > 0) {
                             $servicios = $this->db->select("*")
                                 ->from($r[$rr[$key2]['idServiceType'] - 1])
                                 ->where('idContracAssociated_SE', $contrato['idContrato'])
                                 ->get();
-                            $cantidad  = count($cuerpo->result_array());
-                            if (count($servicios->result_array()) > 0) {
-                                $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
+                            // return $servicios->result_array();
+                            // exit();
+                            $cantidad = 0;
+                            if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera') {
+                                //return $cuerpo->result_array();
+                                //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
+                                $er = $servicios->result_array();
+                                $cantidad_servicio=0;
+                                //exit();
+                                if (count($er) > 0) {
+                                    foreach ($er as $item1) {
+                                        $cantidad_servicio += $item1['maxCamera'];
+                                    }
+                                }
+                                $rea = $cuerpo->result_array();
+                                if (count($rea) > 0) {
+                                    $cantidad_contrato = 0;
+                                    foreach ($rea as $item1) {
+                                        // return $item1['qtty'];
+                                        // exit();
+                                        $cantidad_contrato += $item1['qtty'];
+                                    }
+                                    // return $cantidad;
+                                    // exit();
+                                    $cantidad = $cantidad_contrato - $cantidad_servicio;
+                                }
+                            } else {
+                                if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_totem') {
+                                    //return $cuerpo->result_array();
+                                    //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
+                                    $er = $servicios->result_array();
+                                    $cantidad_servicio=0;
+                                    //exit();
+                                    if (count($er) > 0) {
+                                        foreach ($er as $item1) {
+                                            $cantidad_servicio += $item1['maxCamera'];
+                                        }
+                                    }
+                                    $rea = $cuerpo->result_array();
+                                    if (count($rea) > 0) {
+                                        $cantidad_contrato = 0;
+
+                                        foreach ($rea as $item1) {
+                                            $cantidad_contrato += $item1['qtty'];
+                                        }
+                                        $cantidad = $cantidad_contrato - $cantidad_servicio;
+                                    }
+                                } else {
+                                    $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
+                                }
                             }
+                            // if (count($servicios->result_array()) > 0) {
+                            //     $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
+                            // }
                             $contratos1[$key]['services'][$key2]['disponible'] = $cantidad;
 
                             $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array();
