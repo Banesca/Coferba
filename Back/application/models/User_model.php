@@ -15,7 +15,7 @@ class User_model extends CI_Model
 		
         //echo(sha1(md5($user['passwordUser'])));
         
-        
+        //return sha1(md5($user['']));
 
 		/* verificamos el usuario  */
 		$this->db->select("*")->from("tb_user");

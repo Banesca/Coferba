@@ -84,7 +84,6 @@ class Services extends REST_Controller
 
     public function addsmartpanic_post()
     {
-
         $product = null;
         if (! $this->post('service')) {
             $this->response(null, 404);
@@ -152,7 +151,6 @@ class Services extends REST_Controller
 
     public function addtotem_post()
     {
-
         $product = null;
         if (! $this->post('service')) {
             $this->response(null, 404);
@@ -249,6 +247,17 @@ class Services extends REST_Controller
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }*/
+    public function servicesPorIdContrato_get($idContrato) {
+        $service = null;
+        $service = $this->services_model->getServicesPorIdContrato($idContrato);
+
+        if (! is_null($service)) {
+            $this->response($service, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
     public function typeOfServices_get() {
         $service = null;
         $service = $this->services_model->getTypeOfServices();
@@ -276,6 +285,19 @@ class Services extends REST_Controller
             $this->response(NULL, 404);
         }
         $service = $this->services_model->getPorIdContrato($idContrato);
+
+        if (! is_null($service)) {
+            $this->response($service, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
+    public function getServicesPorIdCliente_get($idClientFk) {
+        if (!$idClientFk) {
+            $this->response(NULL, 404);
+        }
+        $service = $this->services_model->getServicesPorIdCliente($idClientFk);
 
         if (! is_null($service)) {
             $this->response($service, 200);
