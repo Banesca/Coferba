@@ -30,6 +30,9 @@ class Services_model extends CI_Model {
                 'passAdmin'              => $item['passAdmin'],
                 "userWifi"               => $item['userWifi'],
                 "passWifi"               => $item['passWifi'],
+                "macAddress"             => $item['macAddress'],
+                "numberLine"             => $item['numberLine'],
+                "numberChip"             => $item['numberChip'],
                 //'nroSerieInternal'       => $item['nroSerieInternal'],
                 //'nroSerieManufacturer'   => $item['nroSerieManufacturer'],
             ]
