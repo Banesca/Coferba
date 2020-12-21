@@ -14,22 +14,24 @@ class Services_model extends CI_Model {
         $this->db->insert('tb_client_services_internet', [
                 'idClientServicesFk'     => $idClientServicesFk,
                 'idTypeInternetFk'       => $item['idTypeInternetFk'],
-                'typeMaintenance'        => $item['typeMaintenance'],
+                'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'], //
                 'idServiceFk'            => $item['idServiceFk'],
                 'idServiceAsociateFk'    => $item['idServiceAsociateFk'],
                 'idRouterInternetFk'     => $item['idRouterInternetFk'],
-                'numberSeria'            => $item['numberSeria'],
+                //'numberSeria'            => $item['numberSeria'],
                 'userAdmin'              => $item['userAdmin'],
                 'idContracAssociated_SE' => $item['idContracAssociated_SE'],
                 'idInternetCompanyFk'    => $item['idInternetCompanyFk'],
-                'modenMark'              => $item['modenMark'],
+                'idModemInternetFk'      => $item['idModemInternetFk'],
                 'dateDown'               => $item['dateDown'],
                 'dateUp'                 => $item['dateUp'],
                 'isDown'                 => $item['isDown'],
                 'port'                   => $item['port'],
                 'passAdmin'              => $item['passAdmin'],
-                'nroSerieInternal'       => $item['nroSerieInternal'],
-                'nroSerieManufacturer'   => $item['nroSerieManufacturer'],
+                "userWifi"               => $item['userWifi'],
+                "passWifi"               => $item['passWifi'],
+                //'nroSerieInternal'       => $item['nroSerieInternal'],
+                //'nroSerieManufacturer'   => $item['nroSerieManufacturer'],
             ]
         );
 
@@ -148,6 +150,7 @@ class Services_model extends CI_Model {
 
         $id = $this->db->insert_id();
         $this->updatedService($idClientServicesFk, $id);
+
         if (count($item['battery_install']) > 0) {
             $this->insertServiceBatteryAccessControl($item['battery_install'], $id);  //se crean las baterias
         }
@@ -289,27 +292,26 @@ class Services_model extends CI_Model {
                 'item_SE'                => $item['item_SE'],
                 'date'                   => $item['date'],
                 'idCompanyFk'            => $item['idCompanyFk'],
-                'dvr_nvr'                => $item['dvr_nvr'],
+                'idDvr_nvrFk'            => $item['idDvr_nvrFk'],
                 'addresss'               => $item['addresss'],
-                'latAddress'             => $item['latAddress'],
-                'lonAddress'             => $item['lonAddress'],
-                'maxCamera'              => $item['maxCamera'],
-                'idTotenModelFk'         => $item['idTotenModelFk'],
-                'tipeMaintenance_SE'     => $item['tipeMaintenance_SE'],
-                'dateDown'               => $item['dateDown'],
-                'numerFertilizer'        => $item['numerFertilizer'],
-                'numberPort'             => $item['numberPort'],
-                'addreesVpn'             => $item['addreesVpn'],
-                'namePort1'              => $item['namePort1'],
-                'numberPort1'            => $item['numberPort1'],
-                'namePort2'              => $item['namePort2'],
-                'numberPort2'            => $item['numberPort2'],
-                'addressClientInter'     => $item['addressClientInter'],
-                'portHttpInter'          => $item['portHttpInter'],
-                'namePortInter'          => $item['namePortInter'],
-                'numberPortInter'        => $item['numberPortInter'],
-                'observatioGeneral'      => $item['observatioGeneral'],
-                'idClientServicesFk'     => $idClientServicesFk,
+
+                'maxCamera'          => $item['maxCamera'],
+                'idTotenModelFk'     => $item['idTotenModelFk'],
+                'tipeMaintenance_SE' => $item['tipeMaintenance_SE'],
+                'dateDown'           => $item['dateDown'],
+                'numerFertilizer'    => $item['numerFertilizer'],
+                'numberPort'         => $item['numberPort'],
+                'addreesVpn'         => $item['addreesVpn'],
+                'namePort1'          => $item['namePort1'],
+                'numberPort1'        => $item['numberPort1'],
+                'namePort2'          => $item['namePort2'],
+                'numberPort2'        => $item['numberPort2'],
+                'addressClientInter' => $item['addressClientInter'],
+                'portHttpInter'      => $item['portHttpInter'],
+                'namePortInter'      => $item['namePortInter'],
+                'numberPortInter'    => $item['numberPortInter'],
+                'observatioGeneral'  => $item['observatioGeneral'],
+                'idClientServicesFk' => $idClientServicesFk,
             ]
         );
 
@@ -328,6 +330,16 @@ class Services_model extends CI_Model {
                 );
             }
         }
+        // if (count($item['clients']) > 0) {
+        //     $this->insertServiceUser($item['clients'], $id);  //se crean los usuarios dvr
+        // }
+        // if (count($item['cameras']) > 0) {
+        //     $this->insertServiceCamera($item['cameras'], $id); //CREAMOS las camaras
+        // }
+        // if (count($item['backup_energy']) > 0) {
+        //     $this->insertServiceEnergy($item['backup_energy'], $id); //CREAMOS las opciones de energia
+        // }
+
         if ($this->db->affected_rows() === 1) {
             return 1;
         } else {
@@ -343,6 +355,8 @@ class Services_model extends CI_Model {
                     'name'                     => $item['name'],
                     'user'                     => $item['user'],
                     'pass'                     => $item['pass'],
+                    'userProfile'              => @$item['userProfile'],
+                    'qrBase64'                 => @$item['qrBase64'],
                 ]
             );
         }
@@ -441,26 +455,95 @@ class Services_model extends CI_Model {
     public function getServicesPorIdContrato($idContrato) {
 
         /*se definen todas las tablas de los servicios*/
-        $tablas    = [
+        $tablas     = [
             "access_control" => "tb_client_services_access_control",
             "internet"       => "tb_client_services_internet",
             "totem"          => "tb_client_services_totem",
             "camera"         => "tb_client_services_camera",
-            "alarms"         => "tb_client_services_alarms",
+            //"alarms"         => "tb_client_services_alarms",
             "smart_panic"    => "tb_client_services_smart_panic",
         ];
+        $relaciones = [
+            'tb_client_services_access_control' => [
+                'idDoorFk'            => 'tb_access_control_door',
+                'idAccessControlFk'   => 'tb_products',
+                'idInputReaderFk'     => 'tb_products',
+                'idTypeMaintenanceFk' => 'tb_products',
+                'idEmergencyButtonFk' => 'tb_products',
+                'idShutdownKeyFk'     => 'tb_products',
+                'idClientServicesFk'  => 'tb_clients',
+                'ouputReader'         => 'tb_products',
+                'ouputButom'          => 'tb_products',
+                'lock'                => 'tb_products',
+                'battery_install'     => [
+                    'idBatteryFk' => 'tb_products',
+                ],
+            ],
+            'tb_client_services_internet'       => [
+                'idClientServicesFk'     => 'tb_clients',
+                'idTypeInternetFk'       => 'tb_tipos_servicios_internet',
+                'idServiceFk'            => 'tb_type_internet',
+                'idServiceAsociateFk'    => 'tb_client_services',
+                'idRouterInternetFk'     => 'tb_products',
+                'idModemInternetFk'      => 'tb_products',
+                'idContracAssociated_SE' => 'tb_contratos',
+                'idInternetCompanyFk'    => 'tb_internet_company',
+            ],
+            'tb_client_services_totem'          => [
+                'idClientServicesFk'     => 'tb_clients',
+                'idContracAssociated_SE' => 'tb_contratos',
+                'idCompanyFk'            => 'tb_monitor_company',
+                'idTotenModelFk'         => 'tb_totem_model',
+            ],
+            'tb_client_services_camera'         => [
+                'idContracAssociated_SE'   => 'tb_contratos',
+                'idTypeMaintenanceFk'      => 'tb_type_maintenance',
+                'idDvrNvr_tb_prod_classFk' => 'tb_products',
+            ],
+            'tb_client_services_alarms'         => [
+                'idContracAssociated_SE' => 'tb_contratos',
+                'idTypeMaintenanceFk'    => 'tb_type_maintenance',
+            ],
+            'tb_client_services_smart_panic'    => [
+                'idClientServicesFk'      => 'tb_clients',
+                'idContracAssociated_SE'  => 'tb_contratos',
+                'idTypeMaintenanceFk'     => 'tb_type_maintenance',
+                'idCompanyMonitorFK'      => 'tb_monitor_company',
+                'idDetinationOfLicenseFk' => 'tb_detination_of_license',
+                'idDepartmentFk'          => 'tb_client_departament',
+            ],
+
+        ];
+
         $servicios = null;
         $array_axu = [];
         /*se recorre el arreglo de las tablas*/
         foreach ($tablas as $key => $tabla) {
             //return [$key,$tabla];
+            // foreach ($relaciones as $data) {
+            //
+            // }
             $servicios = $this->db->select("*")
                 ->from($tabla)
-                ->where('idContracAssociated_SE', $idContrato)
-                ->get();
+                ->join('tb_client_services', 'tb_client_services.idClientServices = '.$tabla.'.idClientServicesFk', 'LEFT')
+                ->join('tb_client_type_services', 'tb_client_type_services.idClientTypeServices = tb_client_services.idTipeServiceFk', 'LEFT');
+
+            if ($tabla == 'tb_client_services_access_control') {
+                $servicios=$this->db->join('tb_access_control_door', 'tb_access_control_door.idAccessControlDoor = tb_client_services_access_control.idDoorFk', 'LEFT');
+            }
+
+            if ($tabla == 'tb_client_services_internet') {
+                $servicios=$this->db->join('tb_tipos_servicios_internet', 'tb_tipos_servicios_internet.idTipoServicioInternet = tb_client_services_internet.idTypeInternetFk', 'LEFT');
+            }
+            $servicios=$this->db->where('idContracAssociated_SE', $idContrato);
+            $servicios=$this->db->get();
 
             if ($servicios->num_rows() > 0) {
-                array_push($array_axu, [ 'servicio' => $key, 'data' => $servicios->result_array() ]);
+                // array_push($array_axu, [ 'servicio' => $key, 'data' => $servicios->result_array() ]);
+                foreach ($servicios->result_array() as $item) {
+                    array_push($array_axu,  $item);
+                }
+
             }
         }
 
@@ -476,7 +559,7 @@ class Services_model extends CI_Model {
             "internet"       => "tb_client_services_internet",
             "totem"          => "tb_client_services_totem",
             "camera"         => "tb_client_services_camera",
-            "alarms"         => "tb_client_services_alarms",
+            //"alarms"         => "tb_client_services_alarms",
             "smart_panic"    => "tb_client_services_smart_panic",
         ];
         $pivotes   = null;
@@ -490,28 +573,28 @@ class Services_model extends CI_Model {
 
 
         if ($pivotes->num_rows() > 0) {
-            $r=$pivotes->result_array();
+            $r = $pivotes->result_array();
             foreach ($r as $key => $pivote) {
                 //buscando el servicio
-                if (!is_null($pivote['nameDataBase']) && !is_null($pivote['nameId']) && !is_null($pivote['idServicesFk'])) {
+                if (! is_null($pivote['nameDataBase']) && ! is_null($pivote['nameId']) && ! is_null($pivote['idServicesFk'])) {
                     //return $pivote;
                     $servicios = $this->db->select("*")
                         ->from($pivote['nameDataBase'])
                         ->where($pivote['nameId'], $pivote['idServicesFk'])
                         ->get();
 
-                    $clientes = $this->db->select("*")
-                        ->from('tb_clients')
-                        ->where('idClient', $pivote['idClientFk'])
-                        ->get();
-                   // return $servicios;
+                    // $clientes = $this->db->select("*")
+                    //     ->from('tb_clients')
+                    //     ->where('idClient', $pivote['idClientFk'])
+                    //     ->get();
+                    // return $servicios;
 
                     if ($servicios->num_rows() > 0) {
                         $r[$key]['service'] = $servicios->result_array();
                     }
-                    if ($clientes->num_rows() > 0) {
-                        $r[$key]['client'] = $clientes->result_array();
-                    }
+                    // if ($clientes->num_rows() > 0) {
+                    //     $r[$key]['client'] = $clientes->result_array();
+                    // }
                 }
 
             }
