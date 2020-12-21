@@ -220,7 +220,6 @@ class Services_model extends CI_Model {
     }
 
     public function addcamera($item) {
-        return $item;
         $idClientServicesFk = $this->insertService($item['services'], 'tb_client_services_camera', 'idClientServicesCamera'); //CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_camera', [
@@ -468,52 +467,51 @@ class Services_model extends CI_Model {
         ];
         $relaciones = [
             'tb_client_services_access_control' => [
-                'idDoorFk'            => 'tb_access_control_door',
-                'idAccessControlFk'   => 'tb_products',
-                'idInputReaderFk'     => 'tb_products',
-                'idTypeMaintenanceFk' => 'tb_products',
-                'idEmergencyButtonFk' => 'tb_products',
-                'idShutdownKeyFk'     => 'tb_products',
-                'idClientServicesFk'  => 'tb_clients',
-                'ouputReader'         => 'tb_products',
-                'ouputButom'          => 'tb_products',
-                'lock'                => 'tb_products',
-                'battery_install'     => [
-                    'idBatteryFk' => 'tb_products',
-                ],
+                'idDoorFk'            => [ 'tb_access_control_door', 'idAccessControlDoor' ],
+                'idAccessControlFk'   => [ 'tb_products', 'idProduct' ],
+                'idInputReaderFk'     => [ 'tb_products', 'idProduct' ],
+                'idTypeMaintenanceFk' => [ 'tb_products', 'idProduct' ],
+                'idEmergencyButtonFk' => [ 'tb_products', 'idProduct' ],
+                'idShutdownKeyFk'     => [ 'tb_products', 'idProduct' ],
+                'idClientServicesFk'  => [ 'tb_clients', 'idClient' ],
+                'ouputReader'         => [ 'tb_products', 'idProduct' ],
+                'ouputButom'          => [ 'tb_products', 'idProduct' ],
+                'lock'                => [ 'tb_products', 'idProduct' ],
+                'idBatteryFk'         => [ 'tb_products', 'idProduct' ],
+
             ],
             'tb_client_services_internet'       => [
-                'idClientServicesFk'     => 'tb_clients',
-                'idTypeInternetFk'       => 'tb_tipos_servicios_internet',
-                'idServiceFk'            => 'tb_type_internet',
-                'idServiceAsociateFk'    => 'tb_client_services',
-                'idRouterInternetFk'     => 'tb_products',
-                'idModemInternetFk'      => 'tb_products',
-                'idContracAssociated_SE' => 'tb_contratos',
-                'idInternetCompanyFk'    => 'tb_internet_company',
+                'idClientServicesFk'     => [ 'tb_clients', 'idClient' ],
+                'idTypeInternetFk'       => [ 'tb_tipos_servicios_internet', 'idTipoServicioInternet' ],
+                'idServiceFk'            => [ 'tb_type_internet', 'idTypeInternet' ],
+                'idServiceAsociateFk'    => [ 'tb_client_services', 'idClientServices' ],
+                'idRouterInternetFk'     => [ 'tb_products', 'idProduct' ],
+                'idModemInternetFk'      => [ 'tb_products', 'idProduct' ],
+                'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
+                'idInternetCompanyFk'    => [ 'tb_internet_company', 'idInternetCompany' ],
             ],
             'tb_client_services_totem'          => [
-                'idClientServicesFk'     => 'tb_clients',
-                'idContracAssociated_SE' => 'tb_contratos',
-                'idCompanyFk'            => 'tb_monitor_company',
-                'idTotenModelFk'         => 'tb_totem_model',
+                'idClientServicesFk'     => [ 'tb_clients', 'idClient' ],
+                'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
+                'idCompanyFk'            => [ 'tb_monitor_company', 'idMonitorCompany' ],
+                'idTotenModelFk'         => [ 'tb_totem_model', 'idTotenModel' ],
             ],
             'tb_client_services_camera'         => [
-                'idContracAssociated_SE'   => 'tb_contratos',
-                'idTypeMaintenanceFk'      => 'tb_type_maintenance',
-                'idDvrNvr_tb_prod_classFk' => 'tb_products',
+                'idContracAssociated_SE'   => [ 'tb_contratos', 'idContrato' ],
+                'idTypeMaintenanceFk'      => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
+                'idDvrNvr_tb_prod_classFk' => [ 'tb_products', 'idProduct' ],
             ],
             'tb_client_services_alarms'         => [
-                'idContracAssociated_SE' => 'tb_contratos',
-                'idTypeMaintenanceFk'    => 'tb_type_maintenance',
+                'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
             ],
             'tb_client_services_smart_panic'    => [
-                'idClientServicesFk'      => 'tb_clients',
-                'idContracAssociated_SE'  => 'tb_contratos',
-                'idTypeMaintenanceFk'     => 'tb_type_maintenance',
-                'idCompanyMonitorFK'      => 'tb_monitor_company',
-                'idDetinationOfLicenseFk' => 'tb_detination_of_license',
-                'idDepartmentFk'          => 'tb_client_departament',
+                'idClientServicesFk'      => [ 'tb_clients', 'idClient' ],
+                'idContracAssociated_SE'  => [ 'tb_contratos', 'idContrato' ],
+                'idTypeMaintenanceFk'     => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
+                'idCompanyMonitorFK'      => [ 'tb_monitor_company', 'idMonitorCompany' ],
+                'idDetinationOfLicenseFk' => [ 'tb_detination_of_license', 'idDetinationOfLicense' ],
+                'idDepartmentFk'          => [ 'tb_client_departament', 'idClientDepartament' ],
             ],
 
         ];
@@ -523,9 +521,7 @@ class Services_model extends CI_Model {
         /*se recorre el arreglo de las tablas*/
         foreach ($tablas as $key => $tabla) {
             //return [$key,$tabla];
-            // foreach ($relaciones as $data) {
-            //
-            // }
+
             $servicios = $this->db->select("*")
                 ->from($tabla)
                 ->join('tb_client_services', 'tb_client_services.idClientServices = '.$tabla.'.idClientServicesFk', 'LEFT')
@@ -533,6 +529,7 @@ class Services_model extends CI_Model {
 
             if ($tabla == 'tb_client_services_access_control') {
                 $servicios = $this->db->join('tb_access_control_door', 'tb_access_control_door.idAccessControlDoor = tb_client_services_access_control.idDoorFk', 'LEFT');
+                $servicios = $this->db->join('tb_battery_install_access_control', 'tb_battery_install_access_control.idClientServicesAccessControlFk = tb_client_services_access_control.idClientServicesAccessControl', 'LEFT');
             }
 
             if ($tabla == 'tb_client_services_internet') {
@@ -543,7 +540,47 @@ class Services_model extends CI_Model {
 
             if ($servicios->num_rows() > 0) {
                 // array_push($array_axu, [ 'servicio' => $key, 'data' => $servicios->result_array() ]);
-                foreach ($servicios->result_array() as $item) {
+
+                foreach ($servicios->result_array() as $key => $item) {
+                    foreach ($relaciones as $tabla1 => $data) {
+                        foreach ($data as $id => $item3) {
+
+                            if ($tabla == $tabla1) {
+                                $dataG = $this->db->select("*")
+                                    ->from($item3[0])
+                                    ->where($item3[1], $item[$id])
+                                    ->get();
+                                $aux   = [];
+
+                                if ($dataG->num_rows() > 0) {
+                                    foreach ($dataG->result_array() as $ite2) {
+                                        array_push($aux, $ite2);
+                                    }
+                                    $item[$id.'_array'] = $aux;
+
+                                }
+                            }
+
+
+                        }
+                    }
+
+                    // if ($tabla == 'tb_client_services_access_control') {
+                    //     $idTipeServiceFk = $this->db->select("*")
+                    //         ->from('tb_products')
+                    //         ->where('idProduct', $item['idAccessControlFk'])
+                    //         ->get();
+                    //     $aux             = [];
+                    //
+                    //     if ($idTipeServiceFk->num_rows() > 0) {
+                    //         foreach ($idTipeServiceFk->result_array() as $ite2) {
+                    //             array_push($aux, $ite2);
+                    //         }
+                    //         $item['idTipeServiceFk_array'] = $aux;
+                    //
+                    //     }
+                    // }
+
                     array_push($array_axu, $item);
                 }
 
