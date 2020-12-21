@@ -529,19 +529,19 @@ class Services_model extends CI_Model {
                 ->join('tb_client_type_services', 'tb_client_type_services.idClientTypeServices = tb_client_services.idTipeServiceFk', 'LEFT');
 
             if ($tabla == 'tb_client_services_access_control') {
-                $servicios=$this->db->join('tb_access_control_door', 'tb_access_control_door.idAccessControlDoor = tb_client_services_access_control.idDoorFk', 'LEFT');
+                $servicios = $this->db->join('tb_access_control_door', 'tb_access_control_door.idAccessControlDoor = tb_client_services_access_control.idDoorFk', 'LEFT');
             }
 
             if ($tabla == 'tb_client_services_internet') {
-                $servicios=$this->db->join('tb_tipos_servicios_internet', 'tb_tipos_servicios_internet.idTipoServicioInternet = tb_client_services_internet.idTypeInternetFk', 'LEFT');
+                $servicios = $this->db->join('tb_tipos_servicios_internet', 'tb_tipos_servicios_internet.idTipoServicioInternet = tb_client_services_internet.idTypeInternetFk', 'LEFT');
             }
-            $servicios=$this->db->where('idContracAssociated_SE', $idContrato);
-            $servicios=$this->db->get();
+            $servicios = $this->db->where('idContracAssociated_SE', $idContrato);
+            $servicios = $this->db->get();
 
             if ($servicios->num_rows() > 0) {
                 // array_push($array_axu, [ 'servicio' => $key, 'data' => $servicios->result_array() ]);
                 foreach ($servicios->result_array() as $item) {
-                    array_push($array_axu,  $item);
+                    array_push($array_axu, $item);
                 }
 
             }
@@ -569,6 +569,7 @@ class Services_model extends CI_Model {
         $pivotes = $this->db->select("*")
             ->from('tb_client_services')
             ->where('idClientFk', $idClientFk)
+            ->join('tb_client_type_services', 'tb_client_type_services.idClientTypeServices = tb_client_services.idTipeServiceFk', 'LEFT')
             ->get();
 
 
@@ -580,8 +581,17 @@ class Services_model extends CI_Model {
                     //return $pivote;
                     $servicios = $this->db->select("*")
                         ->from($pivote['nameDataBase'])
-                        ->where($pivote['nameId'], $pivote['idServicesFk'])
-                        ->get();
+                        ->where($pivote['nameId'], $pivote['idServicesFk']);
+
+
+                    if ($pivote['nameDataBase'] == 'tb_client_services_access_control') {
+                        $servicios = $this->db->join('tb_access_control_door', 'tb_access_control_door.idAccessControlDoor = tb_client_services_access_control.idDoorFk', 'LEFT');
+                    }
+
+                    if ($pivote['nameDataBase'] == 'tb_client_services_internet') {
+                        $servicios = $this->db->join('tb_tipos_servicios_internet', 'tb_tipos_servicios_internet.idTipoServicioInternet = tb_client_services_internet.idTypeInternetFk', 'LEFT');
+                    }
+                    $servicios = $this->db->get();
 
                     // $clientes = $this->db->select("*")
                     //     ->from('tb_clients')
