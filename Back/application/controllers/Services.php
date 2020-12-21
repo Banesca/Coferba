@@ -305,6 +305,19 @@ class Services extends REST_Controller
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+
+    public function getAditionalIdServicesFk_get($idServicesFk) {
+        if (!$idServicesFk) {
+            $this->response(NULL, 404);
+        }
+        $service = $this->services_model->getAditionalIdCliente($idServicesFk);
+
+        if (! is_null($service)) {
+            $this->response($service, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
 }
 
 ?>

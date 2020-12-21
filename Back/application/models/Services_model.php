@@ -50,6 +50,7 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
@@ -92,6 +93,7 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
@@ -166,6 +168,7 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
@@ -207,6 +210,7 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
@@ -271,6 +275,7 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
@@ -328,6 +333,7 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
@@ -869,6 +875,21 @@ class Services_model extends CI_Model {
         ];
 
         return $todo;
+    }
+
+    public function getAditionalIdCliente($idServicesFk){
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")
+            ->from("tb_detalles_control_acceso")
+            ->where('idServicesFk',$idServicesFk)
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
     }
 }
 
