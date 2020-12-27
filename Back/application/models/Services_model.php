@@ -159,7 +159,7 @@ class Services_model extends CI_Model {
         if (count($item['battery_install']) > 0) {
             $this->insertServiceBatteryAccessControl($item['battery_install'], $id);  //se crean las baterias
         }
-        $id = $this->db->insert_id();
+        //$id = $this->db->insert_id();
         if (isset($item['adicional'])) {
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
