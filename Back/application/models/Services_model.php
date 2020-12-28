@@ -49,7 +49,7 @@ class Services_model extends CI_Model {
                         "numberSerieInternal" => $item1['numberSerieInternal'],
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
-                        "idServicesFk"        => $id,
+                        "idServicesFk"        => $idClientServicesFk,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -92,7 +92,7 @@ class Services_model extends CI_Model {
                         "numberSerieInternal" => $item1['numberSerieInternal'],
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
-                        "idServicesFk"        => $id,
+                        "idServicesFk"        => $idClientServicesFk,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -167,7 +167,7 @@ class Services_model extends CI_Model {
                         "numberSerieInternal" => $item1['numberSerieInternal'],
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
-                        "idServicesFk"        => $id,
+                        "idServicesFk"        => $idClientServicesFk,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -209,7 +209,7 @@ class Services_model extends CI_Model {
                         "numberSerieInternal" => $item1['numberSerieInternal'],
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
-                        "idServicesFk"        => $id,
+                        "idServicesFk"        => $idClientServicesFk,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -274,7 +274,7 @@ class Services_model extends CI_Model {
                         "numberSerieInternal" => $item1['numberSerieInternal'],
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
-                        "idServicesFk"        => $id,
+                        "idServicesFk"        => $idClientServicesFk,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -290,7 +290,7 @@ class Services_model extends CI_Model {
 
     public function addTotem($item) {
 
-        $this->insertServiceUser($item);
+        //$this->insertServiceUser($item);
         $idClientServicesFk = $this->insertService($item, 'tb_client_services_totem', 'idClientServicesTotem'); // CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_totem', [
@@ -301,29 +301,38 @@ class Services_model extends CI_Model {
                 'idCompanyFk'            => $item['idCompanyFk'],
                 'idDvr_nvrFk'            => $item['idDvr_nvrFk'],
                 'addresss'               => $item['addresss'],
-
-                'maxCamera'          => $item['maxCamera'],
-                'idTotenModelFk'     => $item['idTotenModelFk'],
-                'tipeMaintenance_SE' => $item['tipeMaintenance_SE'],
-                'dateDown'           => $item['dateDown'],
-                'numerFertilizer'    => $item['numerFertilizer'],
-                'numberPort'         => $item['numberPort'],
-                'addreesVpn'         => $item['addreesVpn'],
-                'namePort1'          => $item['namePort1'],
-                'numberPort1'        => $item['numberPort1'],
-                'namePort2'          => $item['namePort2'],
-                'numberPort2'        => $item['numberPort2'],
-                'addressClientInter' => $item['addressClientInter'],
-                'portHttpInter'      => $item['portHttpInter'],
-                'namePortInter'      => $item['namePortInter'],
-                'numberPortInter'    => $item['numberPortInter'],
-                'observatioGeneral'  => $item['observatioGeneral'],
-                'idClientServicesFk' => $idClientServicesFk,
+                'maxCamera'              => $item['maxCamera'],
+                'idTotenModelFk'         => $item['idTotenModelFk'],
+                'tipeMaintenance_SE'     => $item['tipeMaintenance_SE'],
+                'dateDown'               => $item['dateDown'],
+                'numerFertilizer'        => $item['numerFertilizer'],
+                'numberPort'             => $item['numberPort'],
+                'addreesVpn'             => $item['addreesVpn'],
+                'namePort1'              => $item['namePort1'],
+                'numberPort1'            => $item['numberPort1'],
+                'namePort2'              => $item['namePort2'],
+                'numberPort2'            => $item['numberPort2'],
+                'addressClientInter'     => $item['addressClientInter'],
+                'portHttpInter'          => $item['portHttpInter'],
+                'namePortInter'          => $item['namePortInter'],
+                'numberPortInter'        => $item['numberPortInter'],
+                'observatioGeneral'      => $item['observatioGeneral'],
+                'idClientServicesFk'     => $idClientServicesFk,
             ]
         );
 
         $id = $this->db->insert_id();
         $this->updatedService($idClientServicesFk, $id);
+
+        if (count($item['clients']) > 0) {
+            $this->insertServiceUser($item['clients'], $id);  //se crean los usuarios
+        }
+        if (count($item['cameras']) > 0) {
+            $this->insertServiceCamera($item['cameras'], $id); //CREAMOS las camaras
+        }
+        if (count($item['backup_energy']) > 0) {
+            $this->insertServiceEnergy($item['backup_energy'], $id); //CREAMOS las opciones de energia
+        }
 
         if (isset($item['adicional'])) {
             foreach ($item['adicional'] as $item1) {
@@ -332,21 +341,12 @@ class Services_model extends CI_Model {
                         "numberSerieInternal" => $item1['numberSerieInternal'],
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
-                        "idServicesFk"        => $id,
+                        "idServicesFk"        => $idClientServicesFk,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
             }
         }
-        // if (count($item['clients']) > 0) {
-        //     $this->insertServiceUser($item['clients'], $id);  //se crean los usuarios dvr
-        // }
-        // if (count($item['cameras']) > 0) {
-        //     $this->insertServiceCamera($item['cameras'], $id); //CREAMOS las camaras
-        // }
-        // if (count($item['backup_energy']) > 0) {
-        //     $this->insertServiceEnergy($item['backup_energy'], $id); //CREAMOS las opciones de energia
-        // }
 
         if ($this->db->affected_rows() === 1) {
             return 1;
@@ -877,13 +877,13 @@ class Services_model extends CI_Model {
         return $todo;
     }
 
-    public function getAditionalIdCliente($idServicesFk){
+    public function getAditionalIdCliente($idServicesFk) {
         $query = null;
         $rs    = null;
 
         $query = $this->db->select("*")
             ->from("tb_detalles_control_acceso")
-            ->where('idServicesFk',$idServicesFk)
+            ->where('idServicesFk', $idServicesFk)
             ->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
