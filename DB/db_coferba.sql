@@ -291,7 +291,7 @@ CREATE TABLE `tb_battery_install_access_control` (
   KEY `idBatteryFk` (`idBatteryFk`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_1` FOREIGN KEY (`idClientServicesAccessControlFk`) REFERENCES `tb_client_services_access_control` (`idClientServicesAccessControl`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_2` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_battery_install_access_control` */
 
@@ -330,7 +330,17 @@ insert  into `tb_battery_install_access_control`(`idBatteryInstallAccessControl`
 (48,75,9),
 (49,76,9),
 (50,77,9),
-(51,78,9);
+(51,78,9),
+(52,79,9),
+(53,80,9),
+(54,81,9),
+(55,82,9),
+(56,83,9),
+(57,84,9),
+(58,85,9),
+(59,86,9),
+(60,87,9),
+(61,88,9);
 
 /*Table structure for table `tb_battery_install_alarm` */
 
@@ -1419,7 +1429,7 @@ CREATE TABLE `tb_client_services` (
   PRIMARY KEY (`idClientServices`),
   KEY `idTipeServiceFk` (`idTipeServiceFk`),
   CONSTRAINT `tb_client_services_ibfk_1` FOREIGN KEY (`idTipeServiceFk`) REFERENCES `tb_type_services` (`idTypeServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services` */
 
@@ -1476,7 +1486,22 @@ insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeService
 (92,250,1,'tb_client_services_access_control',75,'idClientServicesAccessControl'),
 (93,251,1,'tb_client_services_access_control',76,'idClientServicesAccessControl'),
 (94,251,1,'tb_client_services_access_control',77,'idClientServicesAccessControl'),
-(95,251,1,'tb_client_services_access_control',78,'idClientServicesAccessControl');
+(95,251,1,'tb_client_services_access_control',78,'idClientServicesAccessControl'),
+(96,251,1,'tb_client_services_access_control',79,'idClientServicesAccessControl'),
+(97,251,1,'tb_client_services_access_control',80,'idClientServicesAccessControl'),
+(98,251,1,'tb_client_services_access_control',81,'idClientServicesAccessControl'),
+(99,251,1,'tb_client_services_access_control',82,'idClientServicesAccessControl'),
+(100,252,1,'tb_client_services_access_control',83,'idClientServicesAccessControl'),
+(101,252,1,'tb_client_services_access_control',84,'idClientServicesAccessControl'),
+(102,252,1,'tb_client_services_access_control',85,'idClientServicesAccessControl'),
+(103,300,1,'tb_client_services_access_control',86,'idClientServicesAccessControl'),
+(104,301,1,'tb_client_services_access_control',87,'idClientServicesAccessControl'),
+(105,302,1,'tb_client_services_access_control',88,'idClientServicesAccessControl'),
+(106,1,1,'tb_client_services_smart_panic',12,'idClientServicesSmartPanic'),
+(107,1,1,'tb_client_services_smart_panic',13,'idClientServicesSmartPanic'),
+(108,1,1,'tb_client_services_smart_panic',14,'idClientServicesSmartPanic'),
+(109,1,1,'tb_client_services_smart_panic',15,'idClientServicesSmartPanic'),
+(110,1,1,'tb_client_services_smart_panic',16,'idClientServicesSmartPanic');
 
 /*Table structure for table `tb_client_services_access_control` */
 
@@ -1529,7 +1554,7 @@ CREATE TABLE `tb_client_services_access_control` (
   CONSTRAINT `tb_client_services_access_control_ibfk_5` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_products` (`idProduct`),
   CONSTRAINT `tb_client_services_access_control_ibfk_6` FOREIGN KEY (`idEmergencyButtonFk`) REFERENCES `tb_products` (`idProduct`),
   CONSTRAINT `tb_client_services_access_control_ibfk_7` FOREIGN KEY (`idShutdownKeyFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_access_control` */
 
@@ -1565,7 +1590,17 @@ insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`
 (75,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',92),
 (76,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',93),
 (77,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',94),
-(78,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',95);
+(78,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',95),
+(79,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',96),
+(80,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',97),
+(81,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',98),
+(82,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',99),
+(83,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',100),
+(84,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',101),
+(85,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',102),
+(86,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',103),
+(87,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',104),
+(88,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',105);
 
 /*Table structure for table `tb_client_services_alarms` */
 
@@ -1787,7 +1822,7 @@ CREATE TABLE `tb_client_services_smart_panic` (
   KEY `idDepartmentFk` (`idDepartmentFk`),
   CONSTRAINT `tb_client_services_smart_panic_ibfk_1` FOREIGN KEY (`idDetinationOfLicenseFk`) REFERENCES `tb_detination_of_license` (`idDetinationOfLicense`),
   CONSTRAINT `tb_client_services_smart_panic_ibfk_2` FOREIGN KEY (`idDepartmentFk`) REFERENCES `tb_department` (`idDepartment`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_smart_panic` */
 
@@ -1797,7 +1832,12 @@ insert  into `tb_client_services_smart_panic`(`idClientServicesSmartPanic`,`idCl
 (8,56,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
 (9,57,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
 (10,62,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
-(11,76,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba');
+(11,76,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
+(12,106,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
+(13,107,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
+(14,108,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
+(15,109,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
+(16,110,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba');
 
 /*Table structure for table `tb_client_services_totem` */
 
@@ -2242,7 +2282,7 @@ CREATE TABLE `tb_detalles_control_acceso` (
   `idServicesFk` int(11) DEFAULT NULL,
   `optAux` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idControlAcceso`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_detalles_control_acceso` */
 
@@ -2436,7 +2476,61 @@ insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,
 (188,'123123213213','123213213213213',NULL,10,51,'exit'),
 (189,'2132131231233','1232132121321',NULL,12,51,NULL),
 (190,'213123123123','12321312321',NULL,13,51,NULL),
-(191,'2131232321313','1232132132113','12/21/2133',9,51,NULL);
+(191,'2131232321313','1232132132113','12/21/2133',9,51,NULL),
+(192,'12312312312312','123123213123123',NULL,7,52,NULL),
+(193,'123123123123213','12312312312312',NULL,6,52,NULL),
+(194,'123123123123','123213123123',NULL,10,52,'entrance'),
+(195,'12321321312','123213213123','12/31/2321',8,52,NULL),
+(196,'123123213213','123213213213213',NULL,10,52,'exit'),
+(197,'2132131231233','1232132121321',NULL,12,52,NULL),
+(198,'213123123123','12321312321',NULL,13,52,NULL),
+(199,'2131232321313','1232132132113','12/21/2133',9,52,NULL),
+(200,'12312312312312','123123213123123',NULL,7,53,NULL),
+(201,'123123123123213','12312312312312',NULL,6,53,NULL),
+(202,'123123123123','123213123123',NULL,10,53,'entrance'),
+(203,'12321321312','123213213123','12/31/2321',8,53,NULL),
+(204,'123123213213','123213213213213',NULL,10,53,'exit'),
+(205,'2132131231233','1232132121321',NULL,12,53,NULL),
+(206,'213123123123','12321312321',NULL,13,53,NULL),
+(207,'2131232321313','1232132132113','12/21/2133',9,53,NULL),
+(208,'12312312312312','123123213123123',NULL,7,54,NULL),
+(209,'123123123123213','12312312312312',NULL,6,54,NULL),
+(210,'123123123123','123213123123',NULL,10,54,'entrance'),
+(211,'12321321312','123213213123','12/31/2321',8,54,NULL),
+(212,'123123213213','123213213213213',NULL,10,54,'exit'),
+(213,'2132131231233','1232132121321',NULL,12,54,NULL),
+(214,'213123123123','12321312321',NULL,13,54,NULL),
+(215,'2131232321313','1232132132113','12/21/2133',9,54,NULL),
+(216,'12312312312312','123123213123123',NULL,7,82,NULL),
+(217,'123123123123213','12312312312312',NULL,6,82,NULL),
+(218,'123123123123','123213123123',NULL,10,82,'entrance'),
+(219,'12321321312','123213213123','12/31/2321',8,82,NULL),
+(220,'123123213213','123213213213213',NULL,10,82,'exit'),
+(221,'2132131231233','1232132121321',NULL,12,82,NULL),
+(222,'213123123123','12321312321',NULL,13,82,NULL),
+(223,'2131232321313','1232132132113','12/21/2133',9,82,NULL),
+(224,'12312312312312','123123213123123',NULL,7,83,NULL),
+(225,'123123123123213','12312312312312',NULL,6,83,NULL),
+(226,'12312312312312','123123213123123',NULL,7,84,NULL),
+(227,'123123123123213','12312312312312',NULL,6,84,NULL),
+(228,'12312312312312','123123213123123',NULL,7,102,NULL),
+(229,'123123123123213','12312312312312',NULL,6,102,NULL),
+(230,'12312312312312','123123213123123',NULL,7,103,NULL),
+(231,'123123123123213','12312312312312',NULL,6,103,NULL),
+(232,'12312312312312','123123213123123',NULL,7,104,NULL),
+(233,'123123123123213','12312312312312',NULL,6,104,NULL),
+(234,'12','123',NULL,7,105,NULL),
+(235,'456','789',NULL,6,105,NULL),
+(236,'645fghgfh','34456hgfh5','',8,106,NULL),
+(237,'45fghgfh','834456hgfh5','',5,106,NULL),
+(238,'645fghgfh','34456hgfh5','',8,107,NULL),
+(239,'45fghgfh','834456hgfh5','',5,107,NULL),
+(240,'645fghgfh','34456hgfh5','',8,108,NULL),
+(241,'45fghgfh','834456hgfh5','',5,108,NULL),
+(242,'645fghgfh','34456hgfh5','',8,109,NULL),
+(243,'45fghgfh','834456hgfh5','',5,109,NULL),
+(244,'645fghgfh','34456hgfh5','',8,110,NULL),
+(245,'45fghgfh','834456hgfh5','',5,110,NULL);
 
 /*Table structure for table `tb_detination_of_license` */
 
@@ -4002,6 +4096,22 @@ insert  into `tb_shutdown_key`(`idShutdownKey`,`titulo`) values
 (2,'TECLA DE APAGADO 2'),
 (3,'TECLA DE APAGADO 3');
 
+/*Table structure for table `tb_sistemas_operativos` */
+
+DROP TABLE IF EXISTS `tb_sistemas_operativos`;
+
+CREATE TABLE `tb_sistemas_operativos` (
+  `idSistemaOperativo` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idSistemaOperativo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_sistemas_operativos` */
+
+insert  into `tb_sistemas_operativos`(`idSistemaOperativo`,`descripcion`) values 
+(1,'IOS'),
+(2,'ANDROID');
+
 /*Table structure for table `tb_smart_panic_license_pivote` */
 
 DROP TABLE IF EXISTS `tb_smart_panic_license_pivote`;
@@ -4556,23 +4666,20 @@ CREATE TABLE `tb_user_license` (
   `fullName` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
-  `key` varchar(100) DEFAULT NULL,
-  `isAndroidOperantSystem` tinyint(1) DEFAULT '1',
+  `keyword` varchar(100) DEFAULT NULL,
+  `idOS` tinyint(1) DEFAULT '1',
   `profileUser` int(11) DEFAULT NULL,
   `idClientServicesSmartPanicFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idUserLicense`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_user_license` */
 
-insert  into `tb_user_license`(`idUserLicense`,`fullName`,`email`,`phone`,`key`,`isAndroidOperantSystem`,`profileUser`,`idClientServicesSmartPanicFk`) values 
-(1,'1','1','1','1',1,1,NULL),
-(2,'1','1','1','1',1,1,NULL),
-(3,'1','1','1','1',1,1,NULL),
-(4,'1','1','1','1',1,1,NULL),
-(5,'1','1','1','1',1,1,NULL),
-(6,'1','1','1','1',1,1,NULL),
-(7,'1','1','1','1',1,1,NULL);
+insert  into `tb_user_license`(`idUserLicense`,`fullName`,`email`,`phone`,`keyword`,`idOS`,`profileUser`,`idClientServicesSmartPanicFk`) values 
+(12,'1','1','1','1',1,1,15),
+(13,'1','1','1','1',1,1,15),
+(14,'1','1','1','1',1,1,16),
+(15,'1','1','1','1',1,1,16);
 
 /*Table structure for table `tb_zonas` */
 

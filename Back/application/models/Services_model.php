@@ -202,6 +202,9 @@ class Services_model extends CI_Model {
         );
         $id = $this->db->insert_id();
         $this->updatedService($idClientServicesFk, $id);
+
+        $this->insertLicence($item['licenses'],$id);
+
         if (isset($item['adicional'])) {
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
@@ -305,7 +308,6 @@ class Services_model extends CI_Model {
                 'idTotenModelFk'         => $item['idTotenModelFk'],
                 'tipeMaintenance_SE'     => $item['tipeMaintenance_SE'],
                 'dateDown'               => $item['dateDown'],
-                'numerFertilizer'        => $item['numerFertilizer'],
                 'numberPort'             => $item['numberPort'],
                 'addreesVpn'             => $item['addreesVpn'],
                 'namePort1'              => $item['namePort1'],
@@ -437,16 +439,20 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertLicence($item) {
-        $this->db->insert('tb_user_license', [
-                "fullName"               => $item['fullName'],
-                "email"                  => $item['email'],
-                "phone"                  => $item['phone'],
-                "key"                    => $item['key'],
-                "isAndroidOperantSystem" => $item['isAndroidOperantSystem'],
-                "profileUser"            => $item['profileUser'],
-            ]
-        );
+    public function insertLicence($items,$id) {
+        foreach ($items as $item) {
+            $this->db->insert('tb_user_license', [
+                    "fullName"                     => $item['fullName'],
+                    "email"                        => $item['email'],
+                    "phone"                        => $item['phone'],
+                    "keyword"                      => $item['keyword'],
+                    "idOS"                         => $item['idOS'],
+                    "profileUser"                  => $item['profileUser'],
+                    "idClientServicesSmartPanicFk" => $id,
+                ]
+            );
+        }
+
 
         $id  = $this->db->insert_id();
         $res = null;
