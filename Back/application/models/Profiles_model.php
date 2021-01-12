@@ -109,7 +109,7 @@ class Profiles_model extends CI_Model
    
 		  
 					/* Busqueda por filtro */
-					if (!is_null($searchFilter['searchFilter'])) 
+					if (isset($searchFilter['searchFilter'])) 
 					{
 						$this->db->like('tb_profiles.name', $searchFilter['searchFilter']);
 					}

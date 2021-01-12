@@ -5,6 +5,7 @@ class Util_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+        $this->load->helper(array('form', 'url'));
     }
 
     public function getClientType() {
@@ -213,7 +214,15 @@ class Util_model extends CI_Model {
 
         return $rs;
     }
+    public function upload_post() {
 
+        $rs = $this->util_model->upload($this->post('image_file'));
+        if (!is_null($rs)) {
+            $this->response("Uploaded", 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 }
 
 ?>

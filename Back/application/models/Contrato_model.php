@@ -166,6 +166,7 @@ class Contrato_model extends CI_Model {
                             // return $servicios->result_array();
                             // exit();
                             $cantidad = 0;
+                            $cantidad_contratado = 0;
                             if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera') {
                                 //return $cuerpo->result_array();
                                 //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
@@ -184,6 +185,7 @@ class Contrato_model extends CI_Model {
                                         // return $item1['qtty'];
                                         // exit();
                                         $cantidad_contrato += $item1['qtty'];
+                                        $cantidad_contratado += $item1['qtty'];
                                     }
                                     // return $cantidad;
                                     // exit();
@@ -204,9 +206,9 @@ class Contrato_model extends CI_Model {
                                     $rea = $cuerpo->result_array();
                                     if (count($rea) > 0) {
                                         $cantidad_contrato = 0;
-
                                         foreach ($rea as $item1) {
                                             $cantidad_contrato += $item1['qtty'];
+                                            $cantidad_contratado += $item1['qtty'];
                                         }
                                         $cantidad = $cantidad_contrato - $cantidad_servicio;
                                     }
@@ -217,6 +219,7 @@ class Contrato_model extends CI_Model {
                             // if (count($servicios->result_array()) > 0) {
                             //     $cantidad = count($cuerpo->result_array()) - count($servicios->result_array());
                             // }
+                            $contratos1[$key]['services'][$key2]['contratado'] = $cantidad_contratado;
                             $contratos1[$key]['services'][$key2]['disponible'] = $cantidad;
 
                             $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array();

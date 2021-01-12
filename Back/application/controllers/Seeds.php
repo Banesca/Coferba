@@ -150,7 +150,25 @@ class Seeds extends REST_Controller {
 			}
 		}
 
+		public function monitorCompany_get() {
 
+			$user = $this->seeds_model->getMonitorCompany();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
+
+		public function totemModel_get() {
+
+			$user = $this->seeds_model->getTotemModel();
+			if (!is_null($user)) {
+				$this->response($user, 200);
+			} else {
+				$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+			}
+		}
 		
 	
 	}

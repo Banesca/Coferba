@@ -227,32 +227,32 @@ class Services_model extends CI_Model {
     }
 
     public function addcamera($item) {
-        $idClientServicesFk = $this->insertService($item['services'], 'tb_client_services_camera', 'idClientServicesCamera'); //CREAMOS EL SERVICIO
+        $idClientServicesFk = $this->insertService($item, 'tb_client_services_camera', 'idClientServicesCamera'); //CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_camera', [
-                'name'                     => $item['services']['name'],
-                'idContracAssociated_SE'   => $item['services']['idContracAssociated_SE'],
-                'idTypeMaintenanceFk'      => $item['services']['idTypeMaintenanceFk'],
-                'dateUp'                   => $item['services']['dateUp'],
-                'dateDown'                 => $item['services']['dateDown'],
-                'idDvrNvr_tb_prod_classFk' => $item['services']['idDvrNvr_tb_prod_classFk'],
-                'location'                 => $item['services']['location'],
-                //'locationLat'              => $item['services']['locationLat'],
-                //'locationLon'              => $item['services']['locationLon'],
-                'maxCamera'                => $item['services']['maxCamera'],
-                'numberPortRouter'         => $item['services']['numberPortRouter'],
-                'addressVpn'               => $item['services']['addressVpn'],
-                'nroPort1'                 => $item['services']['nroPort1'],
-                'nroPort2'                 => $item['services']['nroPort2'],
-                'namePort1'                => $item['services']['namePort1'],
-                'namePort2'                => $item['services']['namePort2'],
-                'observation'              => $item['services']['observation'],
-                'addessClient'             => $item['services']['addessClient'],
-                //'addessClientLat'          => $item['services']['addessClientLat'],
-                //'addessClientLot'          => $item['services']['addessClientLot'],
-                'portHttp'                 => $item['services']['portHttp'],
-                'namePort'                 => $item['services']['namePort'],
-                'port'                     => $item['services']['port'],
+                'name'                     => $item['name'],
+                'idContracAssociated_SE'   => $item['idContracAssociated_SE'],
+                'idTypeMaintenanceFk'      => $item['idTypeMaintenanceFk'],
+                'dateUp'                   => $item['dateUp'],
+                'dateDown'                 => $item['dateDown'],
+                'idDvrNvr_tb_prod_classFk' => $item['idDvrNvr_tb_prod_classFk'],
+                'location'                 => $item['location'],
+                //'locationLat'              => $item['locationLat'],
+                //'locationLon'              => $item['locationLon'],
+                'maxCamera'                => $item['maxCamera'],
+                'numberPortRouter'         => $item['numberPortRouter'],
+                'addressVpn'               => $item['addressVpn'],
+                'nroPort1'                 => $item['nroPort1'],
+                'nroPort2'                 => $item['nroPort2'],
+                'namePort1'                => $item['namePort1'],
+                'namePort2'                => $item['namePort2'],
+                'observation'              => $item['observation'],
+                'addessClient'             => $item['addessClient'],
+                //'addessClientLat'          => $item['addessClientLat'],
+                //'addessClientLot'          => $item['addessClientLot'],
+                'portHttp'                 => $item['portHttp'],
+                'namePort'                 => $item['namePort'],
+                'port'                     => $item['port'],
                 'idClientServicesFk'       => $idClientServicesFk,
             ]
         );
@@ -624,7 +624,7 @@ class Services_model extends CI_Model {
             ->join('tb_client_type_services', 'tb_client_type_services.idClientTypeServices = tb_client_services.idTipeServiceFk', 'LEFT')
             ->get();
 
-
+        $r=null;
         if ($pivotes->num_rows() > 0) {
             $r = $pivotes->result_array();
             foreach ($r as $key => $pivote) {
@@ -751,7 +751,7 @@ class Services_model extends CI_Model {
 
 
                 /* Busqueda por filtro */
-    /*	if (!is_null($searchFilter['searchFilter']))
+    /*  if (!is_null($searchFilter['searchFilter']))
         {
             $this->db->like('tb_products.descriptionProduct', $searchFilter['searchFilter']);
         }

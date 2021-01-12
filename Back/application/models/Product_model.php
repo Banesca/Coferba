@@ -31,17 +31,17 @@ class Product_model extends CI_Model {
 
             if ($this->db->affected_rows() === 1) {
                 $idProductFk = $this->db->insert_id();
+                if (@$product['list_id_divice']!=null){
+                    if (count(@$product['list_id_divice']) > 0) {
+                        foreach ($product['list_id_divice'] as $valor) {
 
-                if (count(@$product['list_id_divice']) > 0) {
-                    foreach ($product['list_id_divice'] as $valor) {
-
-                        $this->db->insert('tb_products_divice_opening', [
-                                'idProductFk'       => $idProductFk,
-                                'idDiviceOpeningFk' => $valor['idDiviceOpeningFk'] ]
-                        );
+                            $this->db->insert('tb_products_divice_opening', [
+                                    'idProductFk'       => $idProductFk,
+                                    'idDiviceOpeningFk' => $valor['idDiviceOpeningFk'] ]
+                            );
+                        }
                     }
                 }
-
                 return 1;
             } else {
                 return 0;
@@ -137,7 +137,7 @@ class Product_model extends CI_Model {
 
 
             /* Busqueda por filtro */
-            if (! is_null($searchFilter['searchFilter'])) {
+            if (isset($searchFilter['searchFilter'])) {
                 $this->db->like('tb_products.descriptionProduct', $searchFilter['searchFilter']);
             }
 
@@ -170,6 +170,32 @@ class Product_model extends CI_Model {
 
             return null;
         }
+    }
+
+    public function getProducts4Service() {
+        $this->db->select("*")->from("tb_products_classification");
+        $queryTypeProduct = $this->db->order_by("tb_products_classification.idProductClassification", "ASC")->get();
+        $i = 0;
+        if ($queryTypeProduct->num_rows() > 0) {
+
+            foreach ($queryTypeProduct->result() as &$rowType) {
+
+                $producTypeName = $rowType->classification;
+                $producTypeId = $rowType->idProductClassification;
+
+                $this->db->select("*")->from("tb_products");
+                $this->db->join('tb_products_classification', 'tb_products_classification.idProductClassification = tb_products.idProductClassificationFk', 'inner');
+                $where_and="tb_products.idProductClassificationFk =".$rowType->idProductClassification." AND tb_products.idStatusFk !=-1";
+                $rs[$i]['idProductType']    = $producTypeId;
+                $rs[$i]['productTypeName']  = $producTypeName;
+                $queryProducts = $this->db->where($where_and)->get();
+                $rs2                     = $queryProducts->result_array();
+                $rs[$i]['products'] = $rs2;
+                $i++;    
+            }
+            return $rs;
+        }
+
     }
 }
 

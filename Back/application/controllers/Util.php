@@ -171,7 +171,24 @@ class Util extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+    public function uploadFile_post() {
 
+                $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'gif|jpg|png';
+                $config['max_size']             = 2048;
+                $config['max_width']            = 1024;
+                $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('profile_image')) {
+            $error = array('error' => $this->upload->display_errors());
+            return $error;
+        } else {
+            //$data = array('image_metadata' => $this->upload->data());
+            return true;            
+        }
+    }
 }
 
 ?>

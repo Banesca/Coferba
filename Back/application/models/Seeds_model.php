@@ -176,8 +176,28 @@ class Seeds_model extends CI_Model
         }
             return null;
      }
+     public function getMonitorCompany() {
+        $quuery = null;
+        $rs = null;
 
+        $quuery =  $this->db->select("*")->from("tb_monitor_company")->get();
+        if ($quuery->num_rows() > 0) {
+            $rs = $quuery->result_array();
+            return $rs;
+        }
+            return null;
+     }
+     public function getTotemModel() {
+        $quuery = null;
+        $rs = null;
 
+        $quuery =  $this->db->select("*")->from("tb_totem_model")->get();
+        if ($quuery->num_rows() > 0) {
+            $rs = $quuery->result_array();
+            return $rs;
+        }
+            return null;
+     }
 	 
 
     

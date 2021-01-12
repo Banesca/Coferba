@@ -76,6 +76,16 @@ class Product extends REST_Controller {
             $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
         }
     }
+	public function getProducts4Service_get() {
+        $rs = null;
+        $rs = $this->product_model->getProducts4Service();
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+	}    
 	
 	}
 ?>
