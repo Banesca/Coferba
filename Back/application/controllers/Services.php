@@ -1,18 +1,34 @@
 <?php if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
-require APPPATH . '/libraries/REST_Controller.php';
+require APPPATH.'/libraries/REST_Controller.php';
 
-class Services extends REST_Controller
-{
-    public function __construct()
-    {
+class Services extends REST_Controller {
+    public function __construct() {
         parent::__construct();
         $this->load->model('services_model');
     }
+    public function addalarm_post() {
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
 
-    public function addinternet_post()
-    {
+        $product = $this->services_model->addalarm($this->post('service'));
+
+        if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+    public function addinternet_post() {
 
         $product = null;
         if (! $this->post('service')) {
@@ -22,20 +38,19 @@ class Services extends REST_Controller
         $product = $this->services_model->addinternet($this->post('service'));
 
         if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
+            $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
             } else {
                 if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
                 }
             }
         }
     }
 
-    public function addgps_post()
-    {
+    public function addgps_post() {
 
         //$this->response($this->post('service'));
 
@@ -47,20 +62,19 @@ class Services extends REST_Controller
         $product = $this->services_model->addgps($this->post('service'));
 
         if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
+            $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
             } else {
                 if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
                 }
             }
         }
     }
 
-    public function addaccescontrol_post()
-    {
+    public function addaccescontrol_post() {
 
         $product = null;
         if (! $this->post('service')) {
@@ -70,20 +84,19 @@ class Services extends REST_Controller
         $product = $this->services_model->addaccescontrol($this->post('service'));
 
         if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
+            $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
             } else {
                 if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
                 }
             }
         }
     }
 
-    public function addsmartpanic_post()
-    {
+    public function addsmartpanic_post() {
         $product = null;
         if (! $this->post('service')) {
             $this->response(null, 404);
@@ -92,43 +105,20 @@ class Services extends REST_Controller
         $product = $this->services_model->addsmartpanic($this->post('service'));
 
         if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
+            $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
             } else {
                 if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
                 }
             }
         }
     }
 
-    public function addalarm_post()
-    {
 
-        $product = null;
-        if (! $this->post('service')) {
-            $this->response(null, 404);
-        }
-
-        $product = $this->services_model->addalarm($this->post('service'));
-
-        if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
-        } else {
-            if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
-            } else {
-                if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
-                }
-            }
-        }
-    }
-
-    public function addcamera_post()
-    {
+    public function addcamera_post() {
         $product = null;
         if (! $this->post('service')) {
             $this->response(null, 404);
@@ -137,20 +127,19 @@ class Services extends REST_Controller
         $product = $this->services_model->addcamera($this->post('service'));
 
         if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
+            $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
             } else {
                 if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
                 }
             }
         }
     }
 
-    public function addtotem_post()
-    {
+    public function addtotem_post() {
         $product = null;
         if (! $this->post('service')) {
             $this->response(null, 404);
@@ -159,13 +148,13 @@ class Services extends REST_Controller
         $product = $this->services_model->addtotem($this->post('service'));
 
         if ($product == 1) {
-            $this->response(['response' => "Registro exitoso"], 200);
+            $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
-                $this->response(['error' => "ERROR INESPERADO"], 500);
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
             } else {
                 if ($product == 2) {
-                    $this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
                 }
             }
         }
@@ -178,7 +167,7 @@ class Services extends REST_Controller
             $this->response(null, 404);
         }
 
-        $product= json_decode($this->services_model->insertLicence($this->post('service')));
+        $product = json_decode($this->services_model->insertLicence($this->post('service')));
 
         if ($product->res == 1) {
             $this->response(
@@ -197,6 +186,7 @@ class Services extends REST_Controller
             }
         }
     }
+
     /*
     public function update_post() {
 
@@ -281,8 +271,8 @@ class Services extends REST_Controller
     }
 
     public function getPorIdContrato_get($idContrato) {
-        if (!$idContrato) {
-            $this->response(NULL, 404);
+        if (! $idContrato) {
+            $this->response(null, 404);
         }
         $service = $this->services_model->getPorIdContrato($idContrato);
 
@@ -294,8 +284,8 @@ class Services extends REST_Controller
     }
 
     public function getServicesPorIdCliente_get($idClientFk) {
-        if (!$idClientFk) {
-            $this->response(NULL, 404);
+        if (! $idClientFk) {
+            $this->response(null, 404);
         }
         $service = $this->services_model->getServicesPorIdCliente($idClientFk);
 
@@ -307,8 +297,8 @@ class Services extends REST_Controller
     }
 
     public function getAditionalIdServicesFk_get($idServicesFk) {
-        if (!$idServicesFk) {
-            $this->response(NULL, 404);
+        if (! $idServicesFk) {
+            $this->response(null, 404);
         }
         $service = $this->services_model->getAditionalIdCliente($idServicesFk);
 
