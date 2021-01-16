@@ -314,7 +314,7 @@ CREATE TABLE `tb_battery_install_access_control` (
   KEY `idBatteryFk` (`idBatteryFk`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_1` FOREIGN KEY (`idClientServicesAccessControlFk`) REFERENCES `tb_client_services_access_control` (`idClientServicesAccessControl`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_2` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_battery_install_access_control` */
 
@@ -365,7 +365,8 @@ insert  into `tb_battery_install_access_control`(`idBatteryInstallAccessControl`
 (60,87,9),
 (61,88,9),
 (62,89,9),
-(63,90,9);
+(63,90,9),
+(64,91,9);
 
 /*Table structure for table `tb_battery_install_alarm` */
 
@@ -1538,7 +1539,7 @@ CREATE TABLE `tb_client_services` (
   PRIMARY KEY (`idClientServices`),
   KEY `idTipeServiceFk` (`idTipeServiceFk`),
   CONSTRAINT `tb_client_services_ibfk_1` FOREIGN KEY (`idTipeServiceFk`) REFERENCES `tb_type_services` (`idTypeServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services` */
 
@@ -1655,7 +1656,11 @@ insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeService
 (154,1,1,'tb_client_services_camera',40,'idClientServicesCamera'),
 (155,1,1,'tb_client_services_camera',41,'idClientServicesCamera'),
 (156,1,1,'tb_client_services_camera',42,'idClientServicesCamera'),
-(157,1,1,'tb_client_services_camera',43,'idClientServicesCamera');
+(157,1,1,'tb_client_services_camera',43,'idClientServicesCamera'),
+(158,68,1,'tb_client_services_internet',5,'idClientServicesInternet'),
+(159,68,2,'tb_client_services_internet',6,'idClientServicesInternet'),
+(160,68,2,'tb_client_services_internet',7,'idClientServicesInternet'),
+(161,71,1,'tb_client_services_access_control',91,'idClientServicesAccessControl');
 
 /*Table structure for table `tb_client_services_access_control` */
 
@@ -1708,7 +1713,7 @@ CREATE TABLE `tb_client_services_access_control` (
   CONSTRAINT `tb_client_services_access_control_ibfk_5` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_products` (`idProduct`),
   CONSTRAINT `tb_client_services_access_control_ibfk_6` FOREIGN KEY (`idEmergencyButtonFk`) REFERENCES `tb_products` (`idProduct`),
   CONSTRAINT `tb_client_services_access_control_ibfk_7` FOREIGN KEY (`idShutdownKeyFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_access_control` */
 
@@ -1756,7 +1761,8 @@ insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`
 (87,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',104),
 (88,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',105),
 (89,1,1,'12/01/2021',NULL,7,10,'Sala de maquinas',8,'Prueba de aclaracion',1,'6','10',NULL,1,NULL,1,12,13,'Prueba de tornillo bloqueado','8','localhost','localhost','admin','admin','admin','admin',8080,'Prueba ubicacion pulsador de emergencia','Prueba ubicacion tecla de apagado',111),
-(90,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',116);
+(90,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',116),
+(91,3,3,'21/12/2020',NULL,1,10,'123123123213123',8,'1212312123213213',1,'6','10',NULL,1,NULL,1,12,13,'213213213123','123123123123','1233123123','3123213213','3213123123','123123123','123123213','3123123',123123123,'1231231313','123123123123',161);
 
 /*Table structure for table `tb_client_services_alarms` */
 
@@ -1957,14 +1963,17 @@ CREATE TABLE `tb_client_services_internet` (
   `numberLine` varchar(255) DEFAULT NULL,
   `numberChip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesInternet`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_internet` */
 
 insert  into `tb_client_services_internet`(`idClientServicesInternet`,`idClientServicesFk`,`idTypeInternetFk`,`idTypeMaintenanceFk`,`idServiceFk`,`idServiceAsociateFk`,`idRouterInternetFk`,`userAdmin`,`idContracAssociated_SE`,`idInternetCompanyFk`,`idModemInternetFk`,`dateDown`,`dateUp`,`isDown`,`port`,`passAdmin`,`userWifi`,`passWifi`,`macAddress`,`numberLine`,`numberChip`) values 
 (1,90,1,'psa',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1',NULL,NULL,NULL),
 (2,91,1,'psa',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
-(4,113,1,'1',1,111,20,'admin',1,1,'19',NULL,'12/01/2021',NULL,8,'admin','admin','admin','we-e2-34-2r-d2-33',NULL,NULL);
+(4,113,1,'1',1,111,20,'admin',1,1,'19',NULL,'12/01/2021',NULL,8,'admin','admin','admin','we-e2-34-2r-d2-33',NULL,NULL),
+(5,158,1,'1',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
+(6,159,1,'1',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
+(7,160,1,'1',1,1,1,'1',10,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad');
 
 /*Table structure for table `tb_client_services_smart_panic` */
 
@@ -2525,7 +2534,7 @@ CREATE TABLE `tb_detalles_control_acceso` (
   `idServicesFk` int(11) DEFAULT NULL,
   `optAux` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idControlAcceso`)
-) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=288 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_detalles_control_acceso` */
 
@@ -2807,7 +2816,15 @@ insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,
 (276,'645fghgfh','34456hgfh5','',8,156,NULL),
 (277,'45fghgfh','834456hgfh5','',5,156,NULL),
 (278,'645fghgfh','34456hgfh5','',8,157,NULL),
-(279,'45fghgfh','834456hgfh5','',5,157,NULL);
+(279,'45fghgfh','834456hgfh5','',5,157,NULL),
+(280,'ttt645fghgfh','677734456hgfh5','',8,158,NULL),
+(281,'9oo45fghgfh','834456hgfh5','',5,158,NULL),
+(282,'ttt645fghgfh','677734456hgfh5','',8,159,NULL),
+(283,'9oo45fghgfh','834456hgfh5','',5,159,NULL),
+(284,'ttt645fghgfh','677734456hgfh5','',8,160,NULL),
+(285,'9oo45fghgfh','834456hgfh5','',5,160,NULL),
+(286,'12','123',NULL,7,161,NULL),
+(287,'456','789',NULL,6,161,NULL);
 
 /*Table structure for table `tb_detination_of_license` */
 
