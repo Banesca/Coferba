@@ -552,11 +552,21 @@ class Services_model extends CI_Model {
                 'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
                 'idCompanyFk'            => [ 'tb_monitor_company', 'idMonitorCompany' ],
                 'idTotenModelFk'         => [ 'tb_totem_model', 'idTotenModel' ],
+                'fk'                     => [
+                    [ 'tb_cameras_totem', 'idClientServicesCameraTotemFk' ],
+                    [ 'tb_client_totem', 'idClientServicesTotemFk' ],
+                    [ 'tb_backup_energy_totem', 'idClientServicesTotemFk' ],
+                ],
             ],
             'tb_client_services_camera'         => [
-                'idContracAssociated_SE'   => [ 'tb_contratos', 'idContrato' ],
-                'idTypeMaintenanceFk'      => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
-                'idDvr_nvrFk' => [ 'tb_products', 'idProduct' ],
+                'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
+                'idDvr_nvrFk'            => [ 'tb_products', 'idProduct' ],
+                'fk'                     => [
+                    [ 'tb_cameras', 'idClientServicesCameraFk' ],
+                    [ 'tb_client_camera', 'idClientServicesCameraFk' ],
+                    [ 'tb_backup_energy', 'idClientServicesFk' ],
+                ],
             ],
             'tb_client_services_alarms'         => [
                 'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
@@ -596,26 +606,57 @@ class Services_model extends CI_Model {
             $servicios = $this->db->get();
 
             if ($servicios->num_rows() > 0) {
-                // array_push($array_axu, [ 'servicio' => $key, 'data' => $servicios->result_array() ]);
-
                 foreach ($servicios->result_array() as $key => $item) {
                     foreach ($relaciones as $tabla1 => $data) {
                         foreach ($data as $id => $item3) {
-
                             if ($tabla == $tabla1) {
-                                $dataG = $this->db->select("*")
-                                    ->from($item3[0])
-                                    ->where($item3[1], $item[$id])
-                                    ->get();
-                                $aux   = [];
-
-                                if ($dataG->num_rows() > 0) {
-                                    foreach ($dataG->result_array() as $ite2) {
-                                        array_push($aux, $ite2);
+                                if ($tabla == "tb_client_services_camera" && $id == 'fk') {
+                                    foreach ($data[$id] as $idFk => $item3Fk) {
+                                        $dataG = $this->db->select("*")
+                                            ->from($item3Fk[0])
+                                            ->where($item3Fk[1], $item['idClientServicesCamera'])
+                                            ->get();
+                                        $aux   = [];
+                                        if ($dataG->num_rows() > 0) {
+                                            foreach ($dataG->result_array() as $ite2) {
+                                                array_push($aux, $ite2);
+                                            }
+                                            $item[$item3Fk[0].'_array'] = $aux;
+                                        }
                                     }
-                                    $item[$id.'_array'] = $aux;
+
+                                } else {
+                                    if ($tabla == "tb_client_services_totem" && $id == 'fk') {
+                                        foreach ($data[$id] as $idFk => $item3Fk) {
+                                            $dataG = $this->db->select("*")
+                                                ->from($item3Fk[0])
+                                                ->where($item3Fk[1], $item['idClientServicesTotem'])
+                                                ->get();
+                                            $aux   = [];
+                                            if ($dataG->num_rows() > 0) {
+                                                foreach ($dataG->result_array() as $ite2) {
+                                                    array_push($aux, $ite2);
+                                                }
+                                                $item[$item3Fk[0].'_array'] = $aux;
+                                            }
+                                        }
+
+                                    } else {
+                                        $dataG = $this->db->select("*")
+                                            ->from($item3[0])
+                                            ->where($item3[1], $item[$id])
+                                            ->get();
+                                        $aux   = [];
+                                        if ($dataG->num_rows() > 0) {
+                                            foreach ($dataG->result_array() as $ite2) {
+                                                array_push($aux, $ite2);
+                                            }
+                                            $item[$id.'_array'] = $aux;
+                                        }
+                                    }
 
                                 }
+
                             }
 
 
