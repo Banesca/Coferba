@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a755bcc7-3fb2-4169-967c-0679370d9c21",
+		"_postman_id": "c7ae513a-2a19-4a40-bd5c-f850a88b5637",
 		"name": "COFERBA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -493,6 +493,51 @@
 						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/tipoServiciosInternet"
 					},
 					"response": []
+				},
+				{
+					"name": "Destinos de la licencia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/DetinationLicense"
+					},
+					"response": []
+				},
+				{
+					"name": "Tipos de conexion remota",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getTipeConetionRemote"
+					},
+					"response": []
+				},
+				{
+					"name": "Tipos de clientes - alarmas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getTypeAlarmClient"
+					},
+					"response": []
+				},
+				{
+					"name": "servicios adicionales - alarmas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getAlarmServicesAditionals"
+					},
+					"response": []
+				},
+				{
+					"name": "formato de transmision - alarmas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getFormatoTransmision"
+					},
+					"response": []
 				}
 			]
 		},
@@ -945,9 +990,32 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"service\": {\n    \"idClientFk\": \"110\",\n    \"idTipeServiceFk\": \"4\",\n    \"name\": \"1\",\n    \"idContracAssociated_SE\": \"1\",\n    \"idTypeMaintenanceFk\": \"1\",\n    \"dateUp\": \"2020-03-21\",\n    \"dateDown\": null,\n    \"idDvrNvr_tb_prod_classFk\": \"1\",\n    \"location\": \"1\",\n    //\"locationLat\": \"1\",\n    //\"locationLon\": \"1\",\n    \"maxCamera\": \"1\",\n    \"numberPortRouter\": \"1\",\n    \"addressVpn\": \"1\",\n    \"nroPort1\": \"1\",\n    \"nroPort2\": \"1\",\n    \"namePort1\": \"1\",\n    \"namePort2\": \"1\",\n    \"observation\": \"1\",\n    \"addessClient\": \"1\",\n    //\"addessClientLat\": \"1\",\n    //\"addessClientLot\": \"1\",\n    \"portHttp\": \"1\",\n    \"namePort\": \"1\",\n    \"port\": \"1\",\n    \"cameras\": [\n        {\n            \"portCamera\": \"21\",\n            \"coveredArea\": \"2\",\n            \"locationCamera\": \"venezuela\",\n            \"nroSerieCamera\": \"5\",\n            \"nroFabricCamera\": \"48\",\n            \"dateExpireCamera\": \"2020-03-20\",\n            \"idProductFk\": 1\n        },\n        {\n            \"portCamera\": \"20\",\n            \"coveredArea\": \"1\",\n            \"locationCamera\": \"venezuela\",\n            \"nroSerieCamera\": \"4\",\n            \"nroFabricCamera\": \"47\",\n            \"dateExpireCamera\": \"2020-03-21\",\n            \"idProductFk\": 1\n        }\n    ],\n    \"clients\": [\n        {\n            \"idClientFk\": \"1\",\n            \"name\": \"ale\",\n            \"user\": \"aleUser\",\n            \"pass\": \"1234\",\n            \"userProfile\":\"\",\n            \"qrBase64\":\"\"\n        },\n        {\n            \"idClientFk\": \"1\",\n            \"name\": \"ale\",\n            \"user\": \"aleUser\",\n            \"pass\": \"1234\",\n            \"userProfile\":\"\",\n            \"qrBase64\":\"\"\n        }\n    ],\n    \"backup_energy\": [\n        {\n            \"description\": \"nota adicional\",\n            \"idBatteryFk\": \"1\"\n        },\n        {\n            \"description\": \"nota adicional\",\n            \"idBatteryFk\": \"2\"\n        }\n    ],\n    \"adicional\": [\n        {\n            \"numberSerieFabric\": \"645fghgfh\",\n            \"numberSerieInternal\": \"34456hgfh5\",\n            \"dateExpiration\": \"\",\n            \"idProductoFk\": 8\n        },\n        {\n            \"numberSerieFabric\": \"45fghgfh\",\n            \"numberSerieInternal\": \"834456hgfh5\",\n            \"dateExpiration\": \"\",\n            \"idProductoFk\": 5\n        }]\n    }\n}"
+									"raw": "{\n    \"service\": {\n        \"services\": {\n            \"idClientFk\": \"1\",\n            \"idTipeServiceFk\": \"1\",\n            \"name\": \"1\",\n            \"idContracAssociated_SE\": \"1\",\n            \"idTypeMaintenanceFk\": \"1\",\n            \"dateUp\": \"2020-03-21\",\n            \"dateDown\": \"2020-03-21\",\n            \"idDvrNvr_tb_prod_classFk\": \"1\",\n            \"location\": \"1\",\n            //\"locationLat\": \"1\",\n            //\"locationLon\": \"1\",\n            \"maxCamera\": \"1\",\n            \"numberPortRouter\": \"1\",\n            \"addressVpn\": \"1\",\n            \"nroPort1\": \"1\",\n            \"nroPort2\": \"1\",\n            \"namePort1\": \"1\",\n            \"namePort2\": \"1\",\n            \"observation\": \"1\",\n            \"addessClient\": \"1\",\n            //\"addessClientLat\": \"1\",\n            //\"addessClientLot\": \"1\",\n            \"portHttp\": \"1\",\n            \"namePort\": \"1\",\n            \"port\": \"1\"\n        },\n        \"cameras\": [\n            {\n                \"portCamera\": \"21\",\n                \"coveredArea\": \"2\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"5\",\n                \"nroFabricCamera\": \"48\",\n                \"dateExpireCamera\": \"2020-03-20\",\n                \"idProductFk\": 1\n            },\n            {\n                \"portCamera\": \"20\",\n                \"coveredArea\": \"1\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"4\",\n                \"nroFabricCamera\": \"47\",\n                \"dateExpireCamera\": \"2020-03-21\",\n                \"idProductFk\": 1\n            }\n        ],\n        \"clients\": [\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\":\"\",\n                \"qrBase64\":\"\"\n            },\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\":\"\",\n                \"qrBase64\":\"\"\n            }\n        ],\n        \"backup_energy\": [\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
 								"url": "http://localhost/Coferba/Back/index.php/Services/addcamera"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Totem",
+					"item": [
+						{
+							"name": "add",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"service\": {\n        \"services\": {\n            \"idClientFk\": \"1\",\n            \"idTipeServiceFk\": \"1\",\n            \"name\": \"1\",\n            \"idContracAssociated_SE\": \"1\",\n            \"idTypeMaintenanceFk\": \"1\",\n            \"dateUp\": \"2020-03-21\",\n            \"dateDown\": \"2020-03-21\",\n            \"idDvrNvr_tb_prod_classFk\": \"1\",\n            \"location\": \"1\",\n            //\"locationLat\": \"1\",\n            //\"locationLon\": \"1\",\n            \"maxCamera\": \"1\",\n            \"numberPortRouter\": \"1\",\n            \"addressVpn\": \"1\",\n            \"nroPort1\": \"1\",\n            \"nroPort2\": \"1\",\n            \"namePort1\": \"1\",\n            \"namePort2\": \"1\",\n            \"observation\": \"1\",\n            \"addessClient\": \"1\",\n            //\"addessClientLat\": \"1\",\n            //\"addessClientLot\": \"1\",\n            \"portHttp\": \"1\",\n            \"namePort\": \"1\",\n            \"port\": \"1\"\n        },\n        \"cameras\": [\n            {\n                \"portCamera\": \"21\",\n                \"coveredArea\": \"2\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"5\",\n                \"nroFabricCamera\": \"48\",\n                \"dateExpireCamera\": \"2020-03-20\",\n                \"idProductFk\": 1\n            },\n            {\n                \"portCamera\": \"20\",\n                \"coveredArea\": \"1\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"4\",\n                \"nroFabricCamera\": \"47\",\n                \"dateExpireCamera\": \"2020-03-21\",\n                \"idProductFk\": 1\n            }\n        ],\n        \"clients\": [\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\":\"657567\",\n                \"qrBase64\":\"67876jghjghj\"\n            },\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\":\"567\",\n                \"qrBase64\":\"787gj\"\n            }\n        ],\n        \"backup_energy\": [\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
+								},
+								"url": "http://localhost/Coferba/Back/index.php/Services/addtotem"
 							},
 							"response": []
 						}
@@ -1014,14 +1082,19 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"1\",\n        \"name\": \"Nombre de Prueba\",\n        \"idContracAssociated_SE\": \"1\",\n        \"dateUp\": \"2020-04-01\",\n        \"dateDown\": \"2020-04-01\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"idCompanyMonitorFK\": \"1\",\n        \"sucribeNumber\": \"1\",\n        \"idDetinationOfLicenseFk\": \"1\",\n        \"idDepartmentFk\": \"1\",\n        \"countNewLicense\": \"1\",\n        \"observation\": \"Observación de prueba\",\n        \"licenses\": [\n            {\n                \"idUserLincese\": \"1\"\n            },\n            {\n                \"idUserLincese\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
+									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"1\",\n        \"name\": \"Nombre de Prueba\",\n        \"idContracAssociated_SE\": \"1\",\n        \"dateUp\": \"2020-04-01\",\n        \"dateDown\": \"2020-04-01\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"idCompanyMonitorFK\": \"1\",\n        \"sucribeNumber\": \"1\",\n        \"idDetinationOfLicenseFk\": \"1\",\n        \"idDepartmentFk\": \"1\",\n        \"countNewLicense\": \"1\",\n        \"observation\": \"Observación de prueba\",\n        \"licenses\": [\n            {\n                \"isUserSystem\": false,\n                \"fullName\": \"1\",\n                \"email\": \"1\",\n                \"phone\": \"1\",\n                \"keyword\": \"1\",\n                \"idOS\": \"1\",\n                \"profileUser\": \"1\"\n            },\n            {\n                \"isUserSystem\": false,\n                \"fullName\": \"1\",\n                \"email\": \"1\",\n                \"phone\": \"1\",\n                \"keyword\": \"1\",\n                \"idOS\": \"1\",\n                \"profileUser\": \"1\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
 								"url": "http://localhost/Coferba/Back/index.php/Services/addsmartpanic"
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "ALARMA",
+					"item": [
 						{
-							"name": "asignar_licencia",
+							"name": "add",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -1032,9 +1105,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"service\":{\n\t\t\"fullName\":\"1\",\n\t\t\"email\":\"1\",\n\t\t\"phone\":\"1\",\n\t\t\"key\":\"1\",\n\t\t\"isAndroidOperantSystem\":\"1\",\n\t\t\"profileUser\":\"1\"\n\t}\n}"
+									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"5\",\n        \"name\": \"prueba\",\n        \"idContracAssociatedFk\": \"200\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateUp\": \"2020-04-25\",\n        \"dateDown\": \"2020-04-25\",\n        \"companyMonitor\": \"1\",\n        \"numberPay\": \"44ghh-4\",\n        \"alarmPanel\": \"1\",\n        \"alarmKeyboard\": \"1\",\n        \"panelAlarm\": \"1\",\n        \"keyboardAlarm\": \"1\",\n        \"countZoneIntaled\": \"1\",\n        \"idTypeConectionRemote\": 1,\n        \"observation\": \"3434\",\n        \"tipo_conexion_remoto\": [\n            {\n                \"idTipoConexionRemoto\": 1,\n                \"data\": {\n                    \"company\": \"3454\",\n                    \"line\": \"ertert\"\n                }\n            },\n            {\n                \"idTipoConexionRemoto\": 2,\n                \"data\": {\n                    \"moduleIp\": \"rrttt\",\n                    \"nroSerieFrabric\": \"7klkl-klk\",\n                    \"nroSerieInternal\": \"nutyt-tytyll\",\n                    \"ip\": \"192.168.0.1\",\n                    \"codeProgrm\": \"123\",\n                    \"portProgrm\": \"43\",\n                    \"passwordAcces\": \"1232244\",\n                    \"codePart1\": \"123\",\n                    \"codePart2\": \"321\"\n                }\n            },\n            {\n                \"idTipoConexionRemoto\": 3,\n                \"data\": {\n                    \"moduleGprs\": \"1\",\n                    \"nroSerieFrabric\": \"klñk90\",\n                    \"nroSerieInternal\": \"null\",\n                    \"codeProgram\": \"1233\",\n                    \"portProgram\": \"2244\",\n                    \"passwordAcces\": \"121\",\n                    \"codePart1\": \"122\",\n                    \"codePart2\": \"11222\"\n                }\n            }\n        ],\n        \"adicional\": [\n            {\n                \"fk_idTipoCliente\": \"null\",\n                \"fk_idEncargado\": \"null\",\n                \"telefono\": \"null\",\n                \"calles_laterales\": \"null\",\n                \"calle_trasera\": \"null\",\n                \"fk_idServiciosAdicionales\": \"null\",\n                \"mail_reporte\": \"null\",\n                \"fk_idFranjaHoraria\": \"null\",\n                \"fk_idFormatoTransmision\": 1,\n                \"fk_idAutomarcado\": \"null\",\n                \"horario_automarcado\": \"\",\n                \"n_usuario_asalto\": \"null\",\n                \"contraseña_asalto\": \"null\",\n                \"comisaria\": \"null\",\n                \"tlf_comisaria\": \"null\",\n                \"servicio_emergencia_medica\": \"null\",\n                \"n_de_socio\": \"null\",\n                \"plan\": \"null\",\n                \"observacion_general\": \"null\",\n                \"franjas_horarias\": [\n                    {\n                        \"dia\": \"lunes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"martes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"miercoles\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"jueves\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"viernes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"sabado\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"domingo\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    }\n                ],\n                \"personas_para_dar_aviso\": [\n                    {\n                        \"fk_idUserSystema\": \"null\",\n                        \"nombre_apellido\": \"a\",\n                        \"vinculo\": \"null\",\n                        \"palabra_clave\": \"null\",\n                        \"telefono\": \"null\",\n                        \"numero_del_usuario\": \"null\"\n                    }\n                ],\n                \"personas_para_verificar_en_el_lugar\": [\n                    {\n                        \"fk_idUserSystema\": \"null\",\n                        \"nombre_apellido\": \"as\",\n                        \"vinculo\": \"null\",\n                        \"telefono\": \"null\",\n                        \"numero_del_usuario\": \"null\"\n                    }\n                ]\n            }\n        ],\n        \"sensores_de_alarmas\": [\n            {\n                \"numberZoneSensor\": \"null\",\n                \"area\": \"null\",\n                \"nroZoneTamper\": \"null\",\n                \"locationLon\": \"null\",\n                \"idDvr\": \"null\",\n                \"idCameraFk\": \"null\",\n                \"nroInterno\": \"null\",\n                \"nroFrabric\": \"null\"\n            }\n        ],\n        \"baterias_instaladas\": [\n            {\n                \"nroInternal\": null,\n                \"nroFabric\": null,\n                \"dateExpired\": null,\n                \"isControlSchedule\": null,\n                \"fkidClientServicesAlarms\": null\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addlicencia"
+								"url": "http://localhost/Coferba/Back/index.php/Services/addalarm"
 							},
 							"response": []
 						}
@@ -1056,14 +1129,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"2\",\r\n                \"serviceName\": \"INTERNET\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CableModem\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"M2M\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"3\",\r\n                \"serviceName\": \"TOTEM\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"3\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"4\",\r\n                \"serviceName\": \"CAMARAS\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"16\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    },\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"5\",\r\n                \"serviceName\": \"ALARMAS\",\r\n                \"serviceItems\": []\r\n            },\r\n            {\r\n                \"idServiceType\": \"6\",\r\n                \"serviceName\": \"APP MONITOREO\",\r\n                \"serviceItems\": []\r\n            }\r\n        ]\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://tass.sytes.net/Coferba/Back/index.php/services/servicesPorIdContrato/3"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/services/servicesPorIdContrato/1"
 					},
 					"response": []
 				},
@@ -1083,14 +1156,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"2\",\r\n                \"serviceName\": \"INTERNET\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CableModem\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"M2M\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"3\",\r\n                \"serviceName\": \"TOTEM\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"3\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"4\",\r\n                \"serviceName\": \"CAMARAS\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"16\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    },\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"5\",\r\n                \"serviceName\": \"ALARMAS\",\r\n                \"serviceItems\": []\r\n            },\r\n            {\r\n                \"idServiceType\": \"6\",\r\n                \"serviceName\": \"APP MONITOREO\",\r\n                \"serviceItems\": []\r\n            }\r\n        ]\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://tass.sytes.net/Coferba/Back/index.php/services/getServicesPorIdCliente/109"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/services/getServicesPorIdCliente/1"
 					},
 					"response": []
 				},
@@ -1110,14 +1183,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"contrato\": {\r\n        \"idClientFk\": \"109\",\r\n        \"fechaFirmaVigencia\": \"01/10/2020\",\r\n        \"fechaFirmaActivacion\": \"10/10/2020\",\r\n        \"numeroContrato\": \"109-3NC/APP-051020\",\r\n        \"contratoType\": \"3\",\r\n        \"maintenanceType\": \"3\",\r\n        \"idStatusFk\": \"1\",\r\n        \"services\": [\r\n            {\r\n                \"idServiceType\": \"1\",\r\n                \"serviceName\": \"CONTROL DE ACCESO\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"1\",\r\n                        \"itemName\": \"Principal\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": \"2\",\r\n                        \"itemName\": \"Cochera\",\r\n                        \"itemAclaracion\": \"Prueba aclaracion puerta\",\r\n                        \"idServiceTypeFk\": \"1\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"2\",\r\n                \"serviceName\": \"INTERNET\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CableModem\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    },\r\n                    {\r\n                        \"qtty\": null,\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"M2M\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"2\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"3\",\r\n                \"serviceName\": \"TOTEM\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"3\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"4\",\r\n                \"serviceName\": \"CAMARAS\",\r\n                \"serviceItems\": [\r\n                    {\r\n                        \"qtty\": \"16\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    },\r\n                    {\r\n                        \"qtty\": \"8\",\r\n                        \"idAccCrtlDoor\": null,\r\n                        \"itemName\": \"CAMARAS\",\r\n                        \"itemAclaracion\": null,\r\n                        \"idServiceTypeFk\": \"4\"\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"idServiceType\": \"5\",\r\n                \"serviceName\": \"ALARMAS\",\r\n                \"serviceItems\": []\r\n            },\r\n            {\r\n                \"idServiceType\": \"6\",\r\n                \"serviceName\": \"APP MONITOREO\",\r\n                \"serviceItems\": []\r\n            }\r\n        ]\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://tass.sytes.net/Coferba/Back/index.php/services/getAditionalIdServicesFk/97"
+						"url": "http://127.0.0.1/Coferba/Back/index.php/services/getAditionalIdServicesFk/51"
 					},
 					"response": []
 				}

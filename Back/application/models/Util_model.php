@@ -226,7 +226,62 @@ class Util_model extends CI_Model {
         }
 
         return $rs;
-    }    
+    }
+
+    public function getTipeConetionRemote() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_tipo_conexion_remoto")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getTypeAlarmClient() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_alarm_type_client")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+
+    public function getAlarmServicesAditionals() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_alarm_services_aditionals")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
+    public function getFormatoTransmision() {
+
+        $query = null;
+        $rs    = null;
+
+        $query = $this->db->select("*")->from("tb_formato_transmision")
+            ->get();
+        if ($query->num_rows() > 0) {
+            $rs = $query->result_array();
+        }
+
+        return $rs;
+    }
     public function upload_post() {
 
         $rs = $this->util_model->upload($this->post('image_file'));

@@ -9,13 +9,14 @@ class Services extends REST_Controller {
         $this->load->model('services_model');
     }
     public function addalarm_post() {
+        //$this->response($this->post('service'), 200);
         $product = null;
         if (! $this->post('service')) {
             $this->response(null, 404);
         }
 
         $product = $this->services_model->addalarm($this->post('service'));
-
+        //$this->response($product);
         if ($product == 1) {
             $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
@@ -28,6 +29,7 @@ class Services extends REST_Controller {
             }
         }
     }
+
     public function addinternet_post() {
 
         $product = null;
@@ -116,7 +118,6 @@ class Services extends REST_Controller {
             }
         }
     }
-
 
     public function addcamera_post() {
         $product = null;
@@ -309,5 +310,8 @@ class Services extends REST_Controller {
         }
     }
 }
+
+
+
 
 ?>

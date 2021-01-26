@@ -387,7 +387,8 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceBatteryAccessControl($product, $id) {
+    public
+    function insertServiceBatteryAccessControl($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_battery_install_access_control', [
                     "idClientServicesAccessControlFk" => $id,
@@ -399,7 +400,8 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertService($product, $nameDataBase, $nameId) {
+    public
+    function insertService($product, $nameDataBase, $nameId) {
         $this->db->insert('tb_client_services', [
                 'idClientFk'      => $product['idClientFk'],
                 'idTipeServiceFk' => $product['idTipeServiceFk'],
@@ -411,7 +413,8 @@ class Services_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function updatedService($idClientServices, $idServicesFk) {
+    public
+    function updatedService($idClientServices, $idServicesFk) {
         $this->db->set(
             [
                 'idServicesFk' => $idServicesFk,
@@ -421,7 +424,8 @@ class Services_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function insertServiceCamera($product, $id) {
+    public
+    function insertServiceCamera($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_cameras', [
                     "idClientServicesCameraFk" => $id,
@@ -439,7 +443,8 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceCameraTotem($product, $id) {
+    public
+    function insertServiceCameraTotem($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_cameras_totem', [
                     "idClientServicesCameraTotemFk" => $id,
@@ -458,7 +463,8 @@ class Services_model extends CI_Model {
     }
 
 
-    public function insertServiceEnergy($product, $id) {
+    public
+    function insertServiceEnergy($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_backup_energy', [
                     "idClientServicesFk" => $id,
@@ -471,7 +477,8 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceEnergyTotem($product, $id) {
+    public
+    function insertServiceEnergyTotem($product, $id) {
         foreach ($product as $item) {
             $this->db->insert('tb_backup_energy_totem', [
                     "idClientServicesTotemFk" => $id,
@@ -484,7 +491,8 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertLicence($items, $id) {
+    public
+    function insertLicence($items, $id) {
         foreach ($items as $item) {
             $this->db->insert('tb_user_license', [
                     "fullName"                     => $item['fullName'],
@@ -511,7 +519,8 @@ class Services_model extends CI_Model {
         return json_encode([ 'id' => $id, 'res' => $res ]);
     }
 
-    public function getServicesPorIdContrato($idContrato) {
+    public
+    function getServicesPorIdContrato($idContrato) {
 
         /*se definen todas las tablas de los servicios*/
         $tablas     = [
@@ -589,7 +598,7 @@ class Services_model extends CI_Model {
         foreach ($tablas as $key => $tabla) {
             //return [$key,$tabla];
 
-            $servicios = $this->db->select("*")
+            $servicios = $this->db->select(" * ")
                 ->from($tabla)
                 ->join('tb_client_services', 'tb_client_services.idClientServices = '.$tabla.'.idClientServicesFk', 'LEFT')
                 ->join('tb_client_type_services', 'tb_client_type_services.idClientTypeServices = tb_client_services.idTipeServiceFk', 'LEFT');
@@ -612,7 +621,7 @@ class Services_model extends CI_Model {
                             if ($tabla == $tabla1) {
                                 if ($tabla == "tb_client_services_camera" && $id == 'fk') {
                                     foreach ($data[$id] as $idFk => $item3Fk) {
-                                        $dataG = $this->db->select("*")
+                                        $dataG = $this->db->select(" * ")
                                             ->from($item3Fk[0])
                                             ->where($item3Fk[1], $item['idClientServicesCamera'])
                                             ->get();
@@ -628,7 +637,7 @@ class Services_model extends CI_Model {
                                 } else {
                                     if ($tabla == "tb_client_services_totem" && $id == 'fk') {
                                         foreach ($data[$id] as $idFk => $item3Fk) {
-                                            $dataG = $this->db->select("*")
+                                            $dataG = $this->db->select(" * ")
                                                 ->from($item3Fk[0])
                                                 ->where($item3Fk[1], $item['idClientServicesTotem'])
                                                 ->get();
@@ -642,7 +651,7 @@ class Services_model extends CI_Model {
                                         }
 
                                     } else {
-                                        $dataG = $this->db->select("*")
+                                        $dataG = $this->db->select(" * ")
                                             ->from($item3[0])
                                             ->where($item3[1], $item[$id])
                                             ->get();
@@ -664,7 +673,7 @@ class Services_model extends CI_Model {
                     }
 
                     // if ($tabla == 'tb_client_services_access_control') {
-                    //     $idTipeServiceFk = $this->db->select("*")
+                    //     $idTipeServiceFk = $this->db->select(" * ")
                     //         ->from('tb_products')
                     //         ->where('idProduct', $item['idAccessControlFk'])
                     //         ->get();
@@ -689,7 +698,8 @@ class Services_model extends CI_Model {
 
     }
 
-    public function getServicesPorIdCliente($idClientFk) {
+    public
+    function getServicesPorIdCliente($idClientFk) {
 
         /*se definen todas las tablas de los servicios*/
         $tablas    = [
@@ -704,7 +714,7 @@ class Services_model extends CI_Model {
         $array_axu = [];
         /*se recorre el arreglo de las tablas*/
 
-        $pivotes = $this->db->select("*")
+        $pivotes = $this->db->select(" * ")
             ->from('tb_client_services')
             ->where('idClientFk', $idClientFk)
             ->join('tb_client_type_services', 'tb_client_type_services.idClientTypeServices = tb_client_services.idTipeServiceFk', 'LEFT')
@@ -717,7 +727,7 @@ class Services_model extends CI_Model {
                 //buscando el servicio
                 if (! is_null($pivote['nameDataBase']) && ! is_null($pivote['nameId']) && ! is_null($pivote['idServicesFk'])) {
                     //return $pivote;
-                    $servicios = $this->db->select("*")
+                    $servicios = $this->db->select(" * ")
                         ->from($pivote['nameDataBase'])
                         ->where($pivote['nameId'], $pivote['idServicesFk']);
 
@@ -731,7 +741,7 @@ class Services_model extends CI_Model {
                     }
                     $servicios = $this->db->get();
 
-                    // $clientes = $this->db->select("*")
+                    // $clientes = $this->db->select(" * ")
                     //     ->from('tb_clients')
                     //     ->where('idClient', $pivote['idClientFk'])
                     //     ->get();
@@ -807,19 +817,19 @@ class Services_model extends CI_Model {
         if (!is_null($id))
         {
 
-            $this->db->select("*")->from("tb_products");
+            $this->db->select(" * ")->from("tb_products");
             $this->db->join('tb_products_classification', 'tb_products_classification.idProductClassification = tb_products.idProductClassificationFk', 'inner');
-            $quuery = $this->db->where("tb_products.idProduct =", $id)->get();
+            $quuery = $this->db->where("tb_products.idProduct = ", $id)->get();
 
 
             if ($quuery->num_rows() === 1) {
                 $rs =  $quuery->row_array();
 
 
-                $this->db->select("*")->from("tb_products_divice_opening");
+                $this->db->select(" * ")->from("tb_products_divice_opening");
                 $this->db->join('tb_products', 'tb_products.idProduct = tb_products_divice_opening.idProductFk', 'inner');
                 $this->db->join('tb_divice_opening', 'tb_divice_opening.idDiviceOpening = tb_products_divice_opening.idDiviceOpeningFk', 'inner');
-                $quuery = $this->db->where("tb_products_divice_opening.idProductFk =", $id)->get();
+                $quuery = $this->db->where("tb_products_divice_opening.idProductFk = ", $id)->get();
 
                 $rs2 =  $quuery->result_array();
 
@@ -831,9 +841,9 @@ class Services_model extends CI_Model {
         }else
         {
 
-            $this->db->select("*")->from("tb_products");
+            $this->db->select(" * ")->from("tb_products");
             $this->db->join('tb_products_classification', 'tb_products_classification.idProductClassification = tb_products.idProductClassificationFk', 'inner');
-            $this->db->where("tb_products.idStatusFk !=", -1);
+            $this->db->where("tb_products.idStatusFk != ", -1);
 
 
                 /* Busqueda por filtro */
@@ -855,10 +865,10 @@ class Services_model extends CI_Model {
         $i = 0;
         foreach ($quuery->result() as &$row){
 
-            $this->db->select("*")->from("tb_products_divice_opening");
+            $this->db->select(" * ")->from("tb_products_divice_opening");
             $this->db->join('tb_products', 'tb_products.idProduct = tb_products_divice_opening.idProductFk', 'inner');
             $this->db->join('tb_divice_opening', 'tb_divice_opening.idDiviceOpening = tb_products_divice_opening.idDiviceOpeningFk', 'inner');
-            $quuery = $this->db->where("tb_products_divice_opening.idProductFk =", $row->idProduct)->get();
+            $quuery = $this->db->where("tb_products_divice_opening.idProductFk = ", $row->idProduct)->get();
 
             $rs2 =  $quuery->result_array();
             $rs[$i]['diviceOpening'] =  $rs2;
@@ -877,7 +887,7 @@ class Services_model extends CI_Model {
         $query = null;
         $rs    = null;
 
-        $query = $this->db->select("*")->from("tb_client_type_services")->get();
+        $query = $this->db->select(" * ")->from("tb_client_type_services")->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
         }
@@ -891,7 +901,7 @@ class Services_model extends CI_Model {
         $query = null;
         $rs    = null;
 
-        $query = $this->db->select("*")->from("tb_access_control_door")->get();
+        $query = $this->db->select(" * ")->from("tb_access_control_door")->get();
         if ($query->num_rows() > 0) {
             $rs = $query->result_array();
         }
@@ -909,7 +919,7 @@ class Services_model extends CI_Model {
         $toten         = null;
         $alarmas       = null;
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_client_services_access_control")
             ->where('idContracAssociated_SE', $idContrato)
             ->get();
@@ -917,7 +927,7 @@ class Services_model extends CI_Model {
             $controlAcceso = $query->result_array();
         }
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_client_services_internet")
             ->where('idContracAssociated_SE', $idContrato)
             ->get();
@@ -925,7 +935,7 @@ class Services_model extends CI_Model {
             $internet = $query->result_array();
         }
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_client_services_totem")
             ->where('idContracAssociated_SE', $idContrato)
             ->get();
@@ -933,7 +943,7 @@ class Services_model extends CI_Model {
             $toten = $query->result_array();
         }
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_client_services_smart_panic")
             ->where('idContracAssociated_SE', $idContrato)
             ->get();
@@ -941,7 +951,7 @@ class Services_model extends CI_Model {
             $smartPanic = $query->result_array();
         }
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_client_services_camera")
             ->where('idContracAssociated_SE', $idContrato)
             ->get();
@@ -949,10 +959,11 @@ class Services_model extends CI_Model {
             $camaras = $query->result_array();
         }
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_client_services_alarms")
             ->where('idContracAssociated_SE', $idContrato)
             ->get();
+
         if ($query->num_rows() > 0) {
             $alarmas = $query->result_array();
         }
@@ -973,7 +984,7 @@ class Services_model extends CI_Model {
         $query = null;
         $rs    = null;
 
-        $query = $this->db->select("*")
+        $query = $this->db->select(" * ")
             ->from("tb_detalles_control_acceso")
             ->where('idServicesFk', $idServicesFk)
             ->get();
@@ -984,63 +995,247 @@ class Services_model extends CI_Model {
         return $rs;
     }
 
+
     public function addalarm($item) {
         $idClientServicesFk = $this->insertService($item, 'tb_client_services_alarms', 'idClientServicesAlarms'); //CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_alarms', [
-                "name"                   => $item['name'],
-                "idContracAssociated_SE" => $item['idContracAssociated_SE'],
-                "idTypeMaintenanceFk"    => $item['idTypeMaintenanceFk'],
-                "dateUp"                 => $item['dateUp'],
-                "dateDown"               => $item['dateDown'],
-                "companyMonitor"         => $item['companyMonitor'],
-                "numberPay"              => $item['numberPay'],
-                "alarmPanel"             => $item['alarmPanel'], //producto
-                "alarmKeyboard"          => $item['alarmKeyboard'], //producto
-                "panelAlarm"             => $item['panelAlarm'],
-                "keyboardAlarm"          => $item['keyboardAlarm'],
-                "countZoneIntaled"       => $item['countZoneIntaled'],
-                "isLinePhone"            => $item['isLinePhone'],
-                "isModuleIp"             => $item['isModuleIp'],
-                "isModuleGps"            => $item['isModuleGps'],
-                "observation"            => $item['observation'],
-                'idClientServicesFk'     => $idClientServicesFk,
+                "name"                  => $item['name'],
+                "idContracAssociatedFk" => $item['idContracAssociatedFk'],
+                "idTypeMaintenanceFk"   => $item['idTypeMaintenanceFk'],
+                "dateUp"                => $item['dateUp'],
+                "dateDown"              => $item['dateDown'],
+                "companyMonitor"        => $item['companyMonitor'],
+                "numberPay"             => $item['numberPay'],
+                "alarmPanel"            => $item['alarmPanel'], //producto
+                "alarmKeyboard"         => $item['alarmKeyboard'], //producto
+                "panelAlarm"            => $item['panelAlarm'],
+                "keyboardAlarm"         => $item['keyboardAlarm'],
+                "countZoneIntaled"      => $item['countZoneIntaled'],
+                "idTypeConectionRemote" => $item['idTypeConectionRemote'], // 1, 2, 3
+                "observation"           => $item['observation'],
+                'idClientServicesFk'    => $idClientServicesFk,
             ]
         );
 
 
         $id = $this->db->insert_id();
-        // $this->updatedService($idClientServicesFk, $id);
+        $this->updatedService($idClientServicesFk, $id);
 
-        // if (count($item['clients']) > 0) {
-        //     $this->insertServiceUser($item['clients'], $id);  //se crean los usuarios dvr
-        // }
-        // if (count($item['cameras']) > 0) {
-        //     $this->insertServiceCamera($item['cameras'], $id); //CREAMOS las camaras
-        // }
-        // if (count($item['backup_energy']) > 0) {
-        //     $this->insertServiceEnergy($item['backup_energy'], $id); //CREAMOS las opciones de energia
-        // }
-        // $id = $this->db->insert_id();
-        // if (isset($item['adicional'])) {
-        //     foreach ($item['adicional'] as $item1) {
-        //         $this->db->insert('tb_detalles_control_acceso', [
-        //                 "numberSerieFabric"   => $item1['numberSerieFabric'],
-        //                 "numberSerieInternal" => $item1['numberSerieInternal'],
-        //                 "dateExpiration"      => $item1['dateExpiration'],
-        //                 "idProductoFk"        => $item1['idProductoFk'],
-        //                 "idServicesFk"        => $idClientServicesFk,
-        //                 "optAux"              => @$item1['optAux'],
-        //             ]
-        //         );
-        //     }
-        // }
+        if (count($item['adicional']) > 0) {
+            $this->insertDatosAdicionalesAlarmas($item['adicional'], $id, $item['idClientFk']);
+        }
+        if (count($item['sensores_de_alarmas']) > 0) {
+            $this->insertSensoresDeAlarmas($item['sensores_de_alarmas'], $id);
+        }
+
+        if (count($item['baterias_instaladas']) > 0) {
+            $this->insertBateriasInstaladasAlarmas($item['baterias_instaladas'], $id);
+        }
+        if (count($item['tipo_conexion_remoto']) > 0) {
+            $this->insertTipoConexionRemotoAlarmas($item['tipo_conexion_remoto'], $id);
+        }
+
 
         if ($this->db->affected_rows() === 1) {
             return 1;
         } else {
             return 0;
         }
+    }
+
+    public function insertDatosAdicionalesAlarmas($data, $id) {
+        foreach ($data as $item) {
+            $this->db->insert('tb_datos_adicionales_alarmas', [
+                    "fk_idTipoCliente"           => $item['fk_idTipoCliente'],
+                    "fk_idEncargado"             => $item['fk_idEncargado'],
+                    "telefono"                   => $item['telefono'],
+                    "calles_laterales"           => $item['calles_laterales'],
+                    "calle_trasera"              => $item['calle_trasera'],
+                    "fk_idServiciosAdicionales"  => $item['fk_idServiciosAdicionales'],
+                    "mail_reporte"               => $item['mail_reporte'],
+                    "fk_idFormatoTransmision"    => $item['fk_idFormatoTransmision'],
+                    "fk_idAutomarcado"           => $item['fk_idAutomarcado'],
+                    "n_usuario_asalto"           => $item['n_usuario_asalto'],
+                    "contraseña_asalto"          => $item['contraseña_asalto'],
+                    "comisaria"                  => $item['comisaria'],
+                    "tlf_comisaria"              => $item['tlf_comisaria'],
+                    "servicio_emergencia_medica" => $item['servicio_emergencia_medica'],
+                    "n_de_socio"                 => $item['n_de_socio'],
+                    "plan"                       => $item['plan'],
+                    "observacion_general"        => $item['observacion_general'],
+                    "horario_automarcado"        => $item['horario_automarcado'],
+                    "fkidClientServicesAlarms"   => $id,
+                ]
+
+            );
+            $id = $this->db->insert_id();
+
+            if (count($item['franjas_horarias']) > 0) {
+                $this->insertFranjasHorariasAlarmas($item['franjas_horarias'], $id);
+            }
+
+            if (count($item['personas_para_dar_aviso']) > 0) {
+                $this->insertPersonasParaDarAvisoAlarmas($item['personas_para_dar_aviso'], $id);
+            }
+
+            if (count($item['personas_para_verificar_en_el_lugar']) > 0) {
+                $this->insertPersonasParaVerificarEnElLugarAlarmas($item['personas_para_verificar_en_el_lugar'], $id);
+            }
+        }
+
+        return true;
+    }
+
+    public function insertFranjasHorariasAlarmas($data, $id) {
+        foreach ($data as $item) {
+            $this->db->insert('tb_franja_horaria_alarmas', [
+                    // 'idClientFk'               => isset($item['idClientFk']) ? $item['idClientFk'] : null,
+                    "dia"                      => $item['dia'],
+                    "desde1"                   => $item['desde1'],
+                    "hasta1"                   => $item['hasta1'],
+                    "desde2"                   => $item['desde2'],
+                    "hasta2"                   => $item['hasta2'],
+                    "fk_idDatoAdicionalAlarma" => $id,
+                ]
+            );
+        }
+
+        return true;
+    }
+
+    public function insertSensoresDeAlarmas($data, $id) {
+        foreach ($data as $item) {
+            $this->db->insert('tb_sensors_alarm', [
+                    "numberZoneSensor"         => $item["numberZoneSensor"],
+                    "area"                     => $item["area"],
+                    "nroZoneTamper"            => $item["nroZoneTamper"],
+                    "locationLon"              => $item["locationLon"],
+                    "idDvr"                    => $item["idDvr"],
+                    "idCameraFk"               => $item["idCameraFk"],
+                    "nroInterno"               => $item["nroInterno"],
+                    "nroFrabric"               => $item["nroFrabric"],
+                    //"idClientServicesAlarmsFk" => $id,
+                    "fkidClientServicesAlarms" => $id,
+                ]
+            );
+        }
+
+        return true;
+    }
+
+    public function insertBateriasInstaladasAlarmas($data, $id) {
+        foreach ($data as $item) {
+            $this->db->insert('tb_alarm_batery', [
+                    "nroInternal"              => $item['nroInternal'],
+                    "nroFabric"                => $item['nroFabric'],
+                    "dateExpired"              => $item['dateExpired'],
+                    "isControlSchedule"        => $item['isControlSchedule'],
+                    "fkidClientServicesAlarms" => $id,
+                ]
+            );
+        }
+
+
+        return true;
+    }
+
+    public function insertTipoConexionRemotoAlarmas($data, $id) {
+        foreach ($data as $item) {
+            if ($item['idTipoConexionRemoto'] >= 1 && $item['idTipoConexionRemoto'] <= 3) {
+                $result = $this->db->select("*")
+                    ->from('tb_tipo_conexion_remoto')
+                    ->where('idTipoConexionRemoto', $item['idTipoConexionRemoto'])
+                    ->get();
+
+                if ($result->num_rows() > 0) {
+                    $rs = $result->result_array();
+
+                    if ($item['idTipoConexionRemoto'] == 1) {
+                        $this->db->insert($rs[0]['tabla'], [
+                                "company"                  => $item['data']['company'],
+                                "line"                     => $item['data']['line'],
+                                //"idClientServicesAlarmsFk" => $item['idClientServicesAlarmsFk'],
+                                "fk_idDatoAdicionalAlarma" => $id,
+
+                            ]
+                        );
+                    }
+
+                    if ($item['idTipoConexionRemoto'] == 2) {
+                        $this->db->insert($rs[0]['tabla'], [
+                                "moduleIp"                 => $item['data']['moduleIp'],
+                                "nroSerieFrabric"          => $item['data']['nroSerieFrabric'],
+                                "nroSerieInternal"         => $item['data']['nroSerieInternal'],
+                                "ip"                       => $item['data']['ip'],
+                                "codeProgrm"               => $item['data']['codeProgrm'],
+                                "portProgrm"               => $item['data']['portProgrm'],
+                                "passwordAcces"            => $item['data']['passwordAcces'],
+                                "codePart1"                => $item['data']['codePart1'],
+                                "codePart2"                => $item['data']['codePart2'],
+                                //"idClientServicesAlarmsFk" => $item['idClientServicesAlarmsFk'],
+                                "fk_idDatoAdicionalAlarma" => $id,
+
+                            ]
+                        );
+                    }
+
+                    if ($item['idTipoConexionRemoto'] == 3) {
+                        $this->db->insert($rs[0]['tabla'], [
+                                //"idClientServicesAlarmsFk" => $item['idClientServicesAlarmsFk'],
+                                "moduleGprs"               => $item['data']['moduleGprs'],
+                                "nroSerieFrabric"          => $item['data']['nroSerieFrabric'],
+                                "nroSerieInternal"         => $item['data']['nroSerieInternal'],
+                                "codeProgram"              => $item['data']['codeProgram'],
+                                "portProgram"              => $item['data']['portProgram'],
+                                "passwordAcces"            => $item['data']['passwordAcces'],
+                                "codePart1"                => $item['data']['codePart1'],
+                                "codePart2"                => $item['data']['codePart2'],
+                                "fk_idDatoAdicionalAlarma" => $id,
+
+                            ]
+                        );
+                    }
+                }
+            }
+
+
+        }
+
+        return true;
+    }
+
+    public function insertPersonasParaDarAvisoAlarmas($data, $id) {
+        foreach ($data as $item) {
+            $this->db->insert('tb_personas_para_dar_aviso_alarmas', [
+                    "fk_idUserSystema"         => @$item["fk_idUserSystema"],
+                    "nombre_apellido"          => @$item["nombre_apellido"],
+                    "vinculo"                  => $item["vinculo"],
+                    "palabra_clave"            => $item["palabra_clave"],
+                    "telefono"                 => $item["telefono"],
+                    "numero_del_usuario"       => $item["numero_del_usuario"],
+                    "fk_idDatoAdicionalAlarma" => $id,
+                ]
+            );
+        }
+
+        return true;
+    }
+
+    public function insertPersonasParaVerificarEnElLugarAlarmas($data, $id) {
+        foreach ($data as $item) {
+            $this->db->insert('tb_personas_para_verificar_en_lugar', [
+                    "fk_idUserSystema"         => @$item["fk_idUserSystema"],
+                    "nombre_apellido"          => @$item["nombre_apellido"],
+                    "vinculo"                  => $item["vinculo"],
+                    "telefono"                 => $item["telefono"],
+                    "numero_del_usuario"       => $item["numero_del_usuario"],
+                    "fk_idDatoAdicionalAlarma" => $id,
+                ]
+            );
+        }
+
+        return true;
     }
 }
 
