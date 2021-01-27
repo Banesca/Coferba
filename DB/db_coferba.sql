@@ -108,7 +108,7 @@ CREATE TABLE `tb_alarm_batery` (
   `isControlSchedule` int(11) DEFAULT NULL,
   `fkidClientServicesAlarms` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmBatery`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_batery` */
 
@@ -131,7 +131,9 @@ insert  into `tb_alarm_batery`(`idAlarmBatery`,`nroInternal`,`nroFabric`,`dateEx
 (16,NULL,NULL,NULL,NULL,27),
 (17,NULL,NULL,NULL,NULL,28),
 (18,NULL,NULL,NULL,NULL,29),
-(19,NULL,NULL,NULL,NULL,30);
+(19,NULL,NULL,NULL,NULL,30),
+(20,NULL,NULL,NULL,NULL,31),
+(21,NULL,NULL,NULL,NULL,32);
 
 /*Table structure for table `tb_alarm_line_phone` */
 
@@ -144,12 +146,14 @@ CREATE TABLE `tb_alarm_line_phone` (
   `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmLinePhone`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_line_phone` */
 
 insert  into `tb_alarm_line_phone`(`idAlarmLinePhone`,`company`,`line`,`idClientServicesAlarmsFk`,`fk_idDatoAdicionalAlarma`) values 
-(5,'3454','ertert',NULL,30);
+(5,'3454','ertert',NULL,30),
+(6,'3454','ertert',NULL,31),
+(7,'3454','ertert',NULL,32);
 
 /*Table structure for table `tb_alarm_module_gps` */
 
@@ -168,12 +172,14 @@ CREATE TABLE `tb_alarm_module_gps` (
   `codePart2` varchar(200) DEFAULT NULL,
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmModuleGps`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_module_gps` */
 
 insert  into `tb_alarm_module_gps`(`idAlarmModuleGps`,`idClientServicesAlarmsFk`,`moduleGprs`,`nroSerieFrabric`,`nroSerieInternal`,`codeProgram`,`portProgram`,`passwordAcces`,`codePart1`,`codePart2`,`fk_idDatoAdicionalAlarma`) values 
-(5,NULL,'1','klñk90','null','1233','2244','121','122','11222',30);
+(5,NULL,'1','klñk90','null','1233','2244','121','122','11222',30),
+(6,NULL,'1','klñk90','null','1233','2244','121','122','11222',31),
+(7,NULL,'1','klñk90','null','1233','2244','121','122','11222',32);
 
 /*Table structure for table `tb_alarm_module_ip` */
 
@@ -193,12 +199,14 @@ CREATE TABLE `tb_alarm_module_ip` (
   `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmModuleIp`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_module_ip` */
 
 insert  into `tb_alarm_module_ip`(`idAlarmModuleIp`,`moduleIp`,`nroSerieFrabric`,`nroSerieInternal`,`ip`,`codeProgrm`,`portProgrm`,`passwordAcces`,`codePart1`,`codePart2`,`idClientServicesAlarmsFk`,`fk_idDatoAdicionalAlarma`) values 
-(5,'null','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,30);
+(5,'null','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,30),
+(6,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,31),
+(7,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,32);
 
 /*Table structure for table `tb_alarm_person_alert` */
 
@@ -1578,7 +1586,7 @@ CREATE TABLE `tb_client_services` (
   PRIMARY KEY (`idClientServices`),
   KEY `idTipeServiceFk` (`idTipeServiceFk`),
   CONSTRAINT `tb_client_services_ibfk_1` FOREIGN KEY (`idTipeServiceFk`) REFERENCES `tb_type_services` (`idTypeServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services` */
 
@@ -1729,7 +1737,11 @@ insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeService
 (188,1,5,'tb_client_services_alarms',27,'idClientServicesAlarms'),
 (189,1,5,'tb_client_services_alarms',28,'idClientServicesAlarms'),
 (190,1,5,'tb_client_services_alarms',29,'idClientServicesAlarms'),
-(191,1,5,'tb_client_services_alarms',30,'idClientServicesAlarms');
+(191,1,5,'tb_client_services_alarms',30,'idClientServicesAlarms'),
+(192,1,5,'tb_client_services_alarms',31,'idClientServicesAlarms'),
+(193,1,5,'tb_client_services_alarms',32,'idClientServicesAlarms'),
+(194,68,2,'tb_client_services_internet',9,'idClientServicesInternet'),
+(195,1,1,'tb_client_services_internet',10,'idClientServicesInternet');
 
 /*Table structure for table `tb_client_services_access_control` */
 
@@ -1840,7 +1852,7 @@ DROP TABLE IF EXISTS `tb_client_services_alarms`;
 CREATE TABLE `tb_client_services_alarms` (
   `idClientServicesAlarms` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
-  `idContracAssociatedFk` int(11) DEFAULT NULL,
+  `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
   `dateUp` varchar(255) DEFAULT NULL,
   `dateDown` varchar(255) DEFAULT NULL,
@@ -1855,11 +1867,11 @@ CREATE TABLE `tb_client_services_alarms` (
   `idClientServicesFk` int(11) DEFAULT NULL,
   `idTypeConectionRemote` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesAlarms`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_alarms` */
 
-insert  into `tb_client_services_alarms`(`idClientServicesAlarms`,`name`,`idContracAssociatedFk`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`companyMonitor`,`numberPay`,`alarmPanel`,`alarmKeyboard`,`panelAlarm`,`keyboardAlarm`,`countZoneIntaled`,`observation`,`idClientServicesFk`,`idTypeConectionRemote`) values 
+insert  into `tb_client_services_alarms`(`idClientServicesAlarms`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`companyMonitor`,`numberPay`,`alarmPanel`,`alarmKeyboard`,`panelAlarm`,`keyboardAlarm`,`countZoneIntaled`,`observation`,`idClientServicesFk`,`idTypeConectionRemote`) values 
 (5,'',0,0,'','','','','','','','',0,'',120,NULL),
 (6,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',167,NULL),
 (7,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',168,NULL),
@@ -1885,7 +1897,9 @@ insert  into `tb_client_services_alarms`(`idClientServicesAlarms`,`name`,`idCont
 (27,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',188,1),
 (28,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',189,1),
 (29,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',190,1),
-(30,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',191,1);
+(30,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',191,1),
+(31,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',192,1),
+(32,'prueba',200,1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',193,1);
 
 /*Table structure for table `tb_client_services_alarms_aditional` */
 
@@ -2055,18 +2069,20 @@ CREATE TABLE `tb_client_services_internet` (
   `numberLine` varchar(255) DEFAULT NULL,
   `numberChip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesInternet`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_internet` */
 
 insert  into `tb_client_services_internet`(`idClientServicesInternet`,`idClientServicesFk`,`idTypeInternetFk`,`idTypeMaintenanceFk`,`idServiceFk`,`idServiceAsociateFk`,`idRouterInternetFk`,`userAdmin`,`idContracAssociated_SE`,`idInternetCompanyFk`,`idModemInternetFk`,`dateDown`,`dateUp`,`isDown`,`port`,`passAdmin`,`userWifi`,`passWifi`,`macAddress`,`numberLine`,`numberChip`) values 
-(1,90,1,'psa',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1',NULL,NULL,NULL),
+(1,90,1,'1',1,1,1,'1',10,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasds54sdsd4455ad'),
 (2,91,1,'psa',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
 (4,113,1,'1',1,111,20,'admin',1,1,'19',NULL,'12/01/2021',NULL,8,'admin','admin','admin','we-e2-34-2r-d2-33',NULL,NULL),
 (5,158,1,'1',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
 (6,159,1,'1',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
 (7,160,1,'1',1,1,1,'1',10,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
-(8,164,1,'1',1,1,1,'1',10,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad');
+(8,164,1,'1',1,1,1,'1',10,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
+(9,194,1,'1',1,1,1,'1',10,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad'),
+(10,195,1,'psa',1,1,1,'1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1','12:23:a4:34:ag:12','+569113234235','asdasdsad');
 
 /*Table structure for table `tb_client_services_smart_panic` */
 
@@ -2536,7 +2552,7 @@ CREATE TABLE `tb_datos_adicionales_alarmas` (
   `horario_automarcado` varchar(255) DEFAULT NULL,
   `fkidClientServicesAlarms` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDatoAdicionalAlarma`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_datos_adicionales_alarmas` */
 
@@ -2565,7 +2581,9 @@ insert  into `tb_datos_adicionales_alarmas`(`idDatoAdicionalAlarma`,`fk_idTipoCl
 (23,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',27),
 (24,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',28),
 (25,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',29),
-(26,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',30);
+(26,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',30),
+(27,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',31),
+(28,0,0,'null','null','null',0,'null',1,0,'null','null','null','null','null','null','null','null','',32);
 
 /*Table structure for table `tb_department` */
 
@@ -2663,13 +2681,13 @@ CREATE TABLE `tb_detalles_control_acceso` (
   `idServicesFk` int(11) DEFAULT NULL,
   `optAux` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idControlAcceso`)
-) ENGINE=InnoDB AUTO_INCREMENT=298 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=308 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_detalles_control_acceso` */
 
 insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,`numberSerieInternal`,`dateExpiration`,`idProductoFk`,`idServicesFk`,`optAux`) values 
-(2,'645fghgfh','34456hgfh5','',8,14,NULL),
-(3,'45fghgfh','834456hgfh5','',5,14,NULL),
+(2,'454','6775454sdf445734456hgfh5','',8,NULL,NULL),
+(3,'9oo454sertetretedf4fghgfh','555556666','',5,14,NULL),
 (4,'ttt645fghgfh','677734456hgfh5','',8,12,NULL),
 (5,'9oo45fghgfh','834456hgfh5','',5,12,NULL),
 (6,'645fghgfh','34456hgfh5','',8,26,NULL),
@@ -2822,8 +2840,6 @@ insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,
 (153,'2131232321313','1232132132113','12/21/2133',9,47,NULL),
 (154,'ttt645fghgfh','677734456hgfh5','',8,21,NULL),
 (155,'9oo45fghgfh','834456hgfh5','',5,21,NULL),
-(156,'ttt645fghgfh','677734456hgfh5','',8,1,NULL),
-(157,'9oo45fghgfh','834456hgfh5','',5,1,NULL),
 (158,'ttt645fghgfh','677734456hgfh5','',8,2,NULL),
 (159,'9oo45fghgfh','834456hgfh5','',5,2,NULL),
 (160,'12312312312312','123123213123123',NULL,7,48,NULL),
@@ -2963,7 +2979,13 @@ insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,
 (294,'645fghgfh','34456hgfh5','',8,165,NULL),
 (295,'45fghgfh','834456hgfh5','',5,165,NULL),
 (296,'645fghgfh','34456hgfh5','',8,166,NULL),
-(297,'45fghgfh','834456hgfh5','',5,166,NULL);
+(297,'45fghgfh','834456hgfh5','',5,166,NULL),
+(298,'ttt645fghgfh','677734456hgfh5','',8,194,NULL),
+(299,'9oo45fghgfh','834456hgfh5','',5,194,NULL),
+(300,'ttt645fghgfh','677734456hgfh5','',8,195,NULL),
+(301,'9oo45fghgfh','834456hgfh5','',5,195,NULL),
+(306,'454','6775454sdf445734456hgfh5','',8,90,NULL),
+(307,'9oo454sertetretedf4fghgfh','555556666','',5,90,NULL);
 
 /*Table structure for table `tb_detination_of_license` */
 
@@ -3065,9 +3087,25 @@ CREATE TABLE `tb_franja_horaria_alarmas` (
   `hasta2` varchar(255) DEFAULT NULL,
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_franja_horaria`)
-) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_franja_horaria_alarmas` */
+
+insert  into `tb_franja_horaria_alarmas`(`id_franja_horaria`,`dia`,`desde1`,`hasta1`,`desde2`,`hasta2`,`fk_idDatoAdicionalAlarma`) values 
+(170,'lunes','07:00','12:00','17:00','20:00',27),
+(171,'martes','07:00','12:00','17:00','20:00',27),
+(172,'miercoles','07:00','12:00','17:00','20:00',27),
+(173,'jueves','07:00','12:00','17:00','20:00',27),
+(174,'viernes','07:00','12:00','17:00','20:00',27),
+(175,'sabado','07:00','12:00','17:00','20:00',27),
+(176,'domingo','07:00','12:00','17:00','20:00',27),
+(177,'lunes','07:00','12:00','17:00','20:00',28),
+(178,'martes','07:00','12:00','17:00','20:00',28),
+(179,'miercoles','07:00','12:00','17:00','20:00',28),
+(180,'jueves','07:00','12:00','17:00','20:00',28),
+(181,'viernes','07:00','12:00','17:00','20:00',28),
+(182,'sabado','07:00','12:00','17:00','20:00',28),
+(183,'domingo','07:00','12:00','17:00','20:00',28);
 
 /*Table structure for table `tb_input_reader` */
 
@@ -4127,7 +4165,7 @@ CREATE TABLE `tb_personas_para_dar_aviso_alarmas` (
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   `nombre_apellido` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idPersona_aviso`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_personas_para_dar_aviso_alarmas` */
 
@@ -4192,7 +4230,9 @@ insert  into `tb_personas_para_dar_aviso_alarmas`(`idPersona_aviso`,`fk_idUserSy
 (58,0,'null','null','null','null',23,'a'),
 (59,0,'null','null','null','null',24,'a'),
 (60,0,'null','null','null','null',25,'a'),
-(61,0,'null','null','null','null',26,'a');
+(61,0,'null','null','null','null',26,'a'),
+(62,0,'null','null','null','null',27,'a'),
+(63,0,'null','null','null','null',28,'a');
 
 /*Table structure for table `tb_personas_para_verificar_en_lugar` */
 
@@ -4207,7 +4247,7 @@ CREATE TABLE `tb_personas_para_verificar_en_lugar` (
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   `nombre_apellido` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idPersona_aviso_lugar`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_personas_para_verificar_en_lugar` */
 
@@ -4229,7 +4269,9 @@ insert  into `tb_personas_para_verificar_en_lugar`(`idPersona_aviso_lugar`,`fk_i
 (15,0,'null','null','null',23,'as'),
 (16,0,'null','null','null',24,'as'),
 (17,0,'null','null','null',25,'as'),
-(18,0,'null','null','null',26,'as');
+(18,0,'null','null','null',26,'as'),
+(19,0,'null','null','null',27,'as'),
+(20,0,'null','null','null',28,'as');
 
 /*Table structure for table `tb_pick_receive` */
 
@@ -4537,7 +4579,7 @@ CREATE TABLE `tb_sensors_alarm` (
   `nroFrabric` varchar(200) DEFAULT NULL,
   `fkidClientServicesAlarms` int(11) DEFAULT NULL,
   PRIMARY KEY (`idSensorsAlarm`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_sensors_alarm` */
 
@@ -4560,7 +4602,9 @@ insert  into `tb_sensors_alarm`(`idSensorsAlarm`,`numberZoneSensor`,`area`,`nroZ
 (16,'null','null','null','null',0,0,'null','null',27),
 (17,'null','null','null','null',0,0,'null','null',28),
 (18,'null','null','null','null',0,0,'null','null',29),
-(19,'null','null','null','null',0,0,'null','null',30);
+(19,'null','null','null','null',0,0,'null','null',30),
+(20,'null','null','null','null',0,0,'null','null',31),
+(21,'null','null','null','null',0,0,'null','null',32);
 
 /*Table structure for table `tb_services` */
 

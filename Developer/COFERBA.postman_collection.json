@@ -972,6 +972,24 @@
 								"url": "http://localhost/Coferba/Back/index.php/Services/addinternet"
 							},
 							"response": []
+						},
+						{
+							"name": "edit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"service\": {\n        \"idClientServicesInternet\": 1,\n        \"idTypeInternetFk\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"idServiceFk\": \"1\",\n        \"idServiceAsociateFk\": \"1\",\n        \"idRouterInternetFk\": \"1\",\n        \"userAdmin\": \"1\",\n        \"idContracAssociated_SE\": \"10\",\n        \"idInternetCompanyFk\": \"1\",\n        \"idModemInternetFk\": \"1\",\n        \"dateDown\": \"2020-03-19\",\n        \"dateUp\": \"2020-03-19\",\n        \"isDown\": \"1\",\n        \"port\": \"1\",\n        \"passAdmin\": \"1\",\n        \"userWifi\": \"1\",\n        \"passWifi\": \"1\",\n        \"macAddress\": \"12:23:a4:34:ag:12\",\n        \"numberLine\": \"+569113234235\",\n        \"numberChip\": \"asdasds54sdsd4455ad\",\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"454\",\n                \"numberSerieInternal\": \"6775454sdf445734456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"9oo454sertetretedf4fghgfh\",\n                \"numberSerieInternal\": \"555556666\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}\n"
+								},
+								"url": "http://localhost/Coferba/Back/index.php/Services/editInternet"
+							},
+							"response": []
 						}
 					]
 				},

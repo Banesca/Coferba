@@ -8,6 +8,7 @@ class Services extends REST_Controller {
         parent::__construct();
         $this->load->model('services_model');
     }
+
     public function addalarm_post() {
         //$this->response($this->post('service'), 200);
         $product = null;
@@ -40,6 +41,29 @@ class Services extends REST_Controller {
         $product = $this->services_model->addinternet($this->post('service'));
 
         if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+
+    public function editInternet_post() {
+
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        //$this->response($this->post('service'), 200);
+        $product = $this->services_model->editInternet($this->post('service'));
+
+        if ($product) {
             $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
             if ($product == 0) {
@@ -310,8 +334,6 @@ class Services extends REST_Controller {
         }
     }
 }
-
-
 
 
 ?>
