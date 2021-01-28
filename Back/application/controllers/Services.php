@@ -31,6 +31,28 @@ class Services extends REST_Controller {
         }
     }
 
+    public function editAlarm_post() {
+        //$this->response($this->post('service'), 200);
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        $product = $this->services_model->editAlarm($this->post('service'));
+        //$this->response($product);
+        if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+
     public function addinternet_post() {
 
         $product = null;
@@ -122,6 +144,28 @@ class Services extends REST_Controller {
         }
     }
 
+    public function editAccescontrol_post() {
+
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        $product = $this->services_model->editAccescontrol($this->post('service'));
+
+        if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+
     public function addsmartpanic_post() {
         $product = null;
         if (! $this->post('service')) {
@@ -129,6 +173,27 @@ class Services extends REST_Controller {
         }
 
         $product = $this->services_model->addsmartpanic($this->post('service'));
+
+        if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+
+    public function editSmartpanic_post() {
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        $product = $this->services_model->editSmartpanic($this->post('service'));
 
         if ($product == 1) {
             $this->response([ 'response' => "Registro exitoso" ], 200);
@@ -164,6 +229,27 @@ class Services extends REST_Controller {
         }
     }
 
+    public function editCamera_post() {
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        $product = $this->services_model->editCamera($this->post('service'));
+
+        if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+
     public function addtotem_post() {
         $product = null;
         if (! $this->post('service')) {
@@ -171,6 +257,27 @@ class Services extends REST_Controller {
         }
 
         $product = $this->services_model->addtotem($this->post('service'));
+
+        if ($product == 1) {
+            $this->response([ 'response' => "Registro exitoso" ], 200);
+        } else {
+            if ($product == 0) {
+                $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+            } else {
+                if ($product == 2) {
+                    $this->response([ 'response' => "Elemento ya se encuentra registrado" ], 203);
+                }
+            }
+        }
+    }
+
+    public function editTotem_post() {
+        $product = null;
+        if (! $this->post('service')) {
+            $this->response(null, 404);
+        }
+
+        $product = $this->services_model->editTotem($this->post('service'));
 
         if ($product == 1) {
             $this->response([ 'response' => "Registro exitoso" ], 200);

@@ -236,6 +236,80 @@ class Services_model extends CI_Model {
         }
     }
 
+    public function editAccescontrol($item) {
+
+        //$idClientServicesFk = $this->insertService($item, 'tb_client_services_access_control', 'idClientServicesAccessControl'); // CREAMOS EL SERVICIO
+
+        $this->db->set(
+            [
+                'idDoorFk'                => $item['idDoorFk'],
+                'idContracAssociated_SE'  => $item['idContracAssociated_SE'],
+                'dateUp'                  => $item['dateUp'],
+                'dateDown'                => $item['dateDown'],
+                'idAccessControlFk'       => $item['idAccessControlFk'],
+                'idInputReaderFk'         => $item['idInputReaderFk'],
+                'locationGabinet'         => $item['locationGabinet'],
+                'idFontFk'                => $item['idFontFk'],
+                'aclaration'              => $item['aclaration'],
+                'idTypeMaintenanceFk'     => $item['idTypeMaintenanceFk'],
+                'lock'                    => $item['lock'],
+                'ouputReader'             => $item['ouputReader'],
+                'ouputButom'              => $item['ouputButom'],
+                'isOuputReader'           => $item['isOuputReader'],
+                'isOuputButom'            => $item['isOuputButom'],
+                'isBlocklingScrew'        => $item['isBlocklingScrew'],
+                'idEmergencyButtonFk'     => $item['idEmergencyButtonFk'],
+                'idShutdownKeyFk'         => $item['idShutdownKeyFk'],
+                'acaration2'              => $item['acaration2'],
+                'portNumberRouter'        => $item['portNumberRouter'],
+                'addressClient'           => $item['addressClient'],
+                'addressVpn'              => $item['addressVpn'],
+                'user'                    => $item['user'],
+                'useVpn'                  => $item['useVpn'],
+                'passVpn'                 => $item['passVpn'],
+                'pass'                    => $item['pass'],
+                'portHttp'                => $item['portHttp'],
+                'locationEmergencyButton' => $item['locationEmergencyButton'],
+                'locationOffKey'          => $item['locationOffKey'],
+            ]
+        )->where("idClientServicesAccessControl", $item['idClientServicesAccessControl'])->update("tb_client_services_access_control");
+
+        $data = $this->db->select("idClientServicesFk")
+            ->from('tb_client_services_access_control')
+            ->where("idClientServicesAccessControl", $item['idClientServicesAccessControl'])
+            ->get();
+
+        $id = 0;
+        if ($data->num_rows() > 0) {
+            $id = $data->result_array()[0]['idClientServicesFk'];
+        }
+
+        if ($id == 0) {
+            return 0;
+        }
+
+        if (count($item['battery_install']) > 0) {
+            $this->insertServiceBatteryAccessControl($item['battery_install'], $item['idClientServicesAccessControl'], true);  //se crean las baterias
+        }
+
+        if (isset($item['adicional'])) {
+            $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
+                    ]
+                );
+            }
+        }
+
+        return true;
+    }
+
     public function addsmartpanic($item) {
 
         $idClientServicesFk = $this->insertService($item, 'tb_client_services_smart_panic', 'idClientServicesSmartPanic'); // CREAMOS EL SERVICIO
@@ -268,6 +342,70 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $idClientServicesFk,
+                        "optAux"              => @$item1['optAux'],
+                    ]
+                );
+            }
+        }
+
+        if ($this->db->affected_rows() === 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editSmartpanic($item) {
+
+        //$idClientServicesFk = $this->insertService($item, 'tb_client_services_smart_panic', 'idClientServicesSmartPanic'); // CREAMOS EL SERVICIO
+
+
+        $this->db->set(
+            [
+                'name'                    => $item['name'],
+                'idContracAssociated_SE'  => $item['idContracAssociated_SE'],
+                'dateUp'                  => $item['dateUp'],
+                'dateDown'                => $item['dateDown'],
+                'idTypeMaintenanceFk'     => $item['idTypeMaintenanceFk'],
+                'idCompanyMonitorFK'      => $item['idCompanyMonitorFK'],
+                'sucribeNumber'           => $item['sucribeNumber'],
+                'idDetinationOfLicenseFk' => $item['idDetinationOfLicenseFk'],
+                'idDepartmentFk'          => $item['idDepartmentFk'],
+                'countNewLicense'         => $item['countNewLicense'],
+                'observation'             => $item['observation'],
+            ]
+        )->where("idClientServicesSmartPanic", $item['idClientServicesSmartPanic'])->update("tb_client_services_smart_panic");
+
+        $data = $this->db->select("idClientServicesFk")
+            ->from('tb_client_services_smart_panic')
+            ->where("idClientServicesSmartPanic", $item['idClientServicesSmartPanic'])
+            ->get();
+
+        //return $data;
+
+        $id = 0;
+        if ($data->num_rows() > 0) {
+            //return $data->result_array();
+            $id = $data->result_array()[0]['idClientServicesFk'];
+        }
+        if ($id == 0) {
+            return 0;
+        }
+
+        //$id = $this->db->insert_id();
+        //$this->updatedService($idClientServicesFk, $id);
+
+        $this->insertLicence($item['licenses'], $item['idClientServicesSmartPanic'], true);
+
+        if (isset($item['adicional'])) {
+            $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -329,6 +467,81 @@ class Services_model extends CI_Model {
                         "dateExpiration"      => $item1['dateExpiration'],
                         "idProductoFk"        => $item1['idProductoFk'],
                         "idServicesFk"        => $idClientServicesFk,
+                        "optAux"              => @$item1['optAux'],
+                    ]
+                );
+            }
+        }
+
+        if ($this->db->affected_rows() === 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editCamera($item) {
+        //$idClientServicesFk = $this->insertService($item, 'tb_client_services_camera', 'idClientServicesCamera'); //CREAMOS EL SERVICIO
+
+        $this->db->set(
+            [
+                'name'                   => $item['name'],
+                'idContracAssociated_SE' => $item['idContracAssociated_SE'],
+                'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'],
+                'dateUp'                 => $item['dateUp'],
+                'dateDown'               => $item['dateDown'],
+                'idDvr_nvrFk'            => $item['idDvr_nvrFk'],
+                'location'               => $item['location'],
+                'maxCamera'              => $item['maxCamera'],
+                'numberPortRouter'       => $item['numberPortRouter'],
+                'addressVpn'             => $item['addressVpn'],
+                'nroPort1'               => $item['nroPort1'],
+                'nroPort2'               => $item['nroPort2'],
+                'namePort1'              => $item['namePort1'],
+                'namePort2'              => $item['namePort2'],
+                'observation'            => $item['observation'],
+                'addessClient'           => $item['addessClient'],
+                'portHttp'               => $item['portHttp'],
+                'namePort'               => $item['namePort'],
+                'port'                   => $item['port'],
+            ]
+        )->where("idClientServicesCamera", $item['idClientServicesCamera'])->update("tb_client_services_camera");
+
+        $data = $this->db->select("idClientServicesFk")
+            ->from('tb_client_services_camera')
+            ->where("idClientServicesCamera", $item['idClientServicesCamera'])
+            ->get();
+
+        //return $data;
+
+        $id = 0;
+        if ($data->num_rows() > 0) {
+            //return $data->result_array();
+            $id = $data->result_array()[0]['idClientServicesFk'];
+        }
+        if ($id == 0) {
+            return 0;
+        }
+
+        if (count($item['clients']) > 0) {
+            $this->insertServiceUser($item['clients'], $item['idClientServicesCamera'], true);  //se crean los usuarios dvr
+        }
+        if (count($item['cameras']) > 0) {
+            $this->insertServiceCamera($item['cameras'], $item['idClientServicesCamera'], true); //CREAMOS las camaras
+        }
+        if (count($item['backup_energy']) > 0) {
+            $this->insertServiceEnergy($item['backup_energy'], $item['idClientServicesCamera'], true); //CREAMOS las opciones de energia
+        }
+
+        if (isset($item['adicional'])) {
+            $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
                         "optAux"              => @$item1['optAux'],
                     ]
                 );
@@ -408,7 +621,92 @@ class Services_model extends CI_Model {
         }
     }
 
-    public function insertServiceUser($product, $id) {
+    public function editTotem($item) {
+
+        $this->db->set(
+            [
+                'name'                   => $item['name'],
+                'idContracAssociated_SE' => $item['idContracAssociated_SE'],
+                'dateUp'                 => $item['dateUp'],
+                'idCompanyFk'            => $item['idCompanyFk'],
+                'idDvr_nvrFk'            => $item['idDvr_nvrFk'],
+                'addessClient'           => $item['addessClient'],
+                'maxCamera'              => $item['maxCamera'],
+                'idTotenModelFk'         => $item['idTotenModelFk'],
+                'tipeMaintenance_SE'     => $item['idTypeMaintenanceFk'],
+                'dateDown'               => $item['dateDown'],
+                'numberPortRouter'       => $item['numberPortRouter'],
+                'addreesVpn'             => $item['addressVpn'],
+                'namePort1'              => $item['namePort1'],
+                'numberPort1'            => $item['nroPort1'],
+                'namePort2'              => $item['namePort2'],
+                'numberPort2'            => $item['nroPort2'],
+                'addressClientInter'     => $item['addessClient'],
+                'portHttpInter'          => $item['portHttp'],
+                'namePortInter'          => $item['namePort'],
+                'numberPortInter'        => $item['port'],
+                'observation'            => $item['observation'],
+                'numberAbonado'          => $item['numberAbonado'],
+            ]
+        )->where("idClientServicesTotem", $item['idClientServicesTotem'])->update("tb_client_services_totem");
+
+
+        //$id = $this->db->insert_id();
+        //$this->updatedService($idClientServicesFk, $id);
+
+        $data = $this->db->select("idClientServicesFk")
+            ->from('tb_client_services_totem')
+            ->where("idClientServicesTotem", $item['idClientServicesTotem'])
+            ->get();
+
+        //return $data;
+
+        $id = 0;
+        if ($data->num_rows() > 0) {
+            //return $data->result_array();
+            $id = $data->result_array()[0]['idClientServicesFk'];
+        }
+        if ($id == 0) {
+            return 0;
+        }
+
+
+        if (count($item['clients']) > 0) {
+            $this->insertServiceUserTotem($item['clients'], $item['idClientServicesTotem'], true);  //se crean los usuarios
+        }
+        if (count($item['cameras']) > 0) {
+            $this->insertServiceCameraTotem($item['cameras'], $item['idClientServicesTotem'], true); //CREAMOS las camaras
+        }
+        if (count($item['backup_energy']) > 0) {
+            $this->insertServiceEnergyTotem($item['backup_energy'], $item['idClientServicesTotem'], true); //CREAMOS las opciones de energia
+        }
+
+        if (isset($item['adicional'])) {
+            $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $id,
+                        "optAux"              => @$item1['optAux'],
+                    ]
+                );
+            }
+        }
+
+        if ($this->db->affected_rows() === 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function insertServiceUser($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_client_camera', [ 'idClientServicesCameraFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_client_camera', [
                     'idClientFk'               => isset($item['idClientFk']) ? $item['idClientFk'] : null,
@@ -425,7 +723,10 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceUserTotem($product, $id) {
+    public function insertServiceUserTotem($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_client_totem', [ 'idClientServicesTotemFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_client_totem', [
                     'idClientFk'              => isset($item['idClientFk']) ? $item['idClientFk'] : null,
@@ -442,7 +743,10 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceBatteryAccessControl($product, $id) {
+    public function insertServiceBatteryAccessControl($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_battery_install_access_control', [ 'idClientServicesAccessControlFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_battery_install_access_control', [
                     "idClientServicesAccessControlFk" => $id,
@@ -476,7 +780,10 @@ class Services_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function insertServiceCamera($product, $id) {
+    public function insertServiceCamera($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_cameras', [ 'idClientServicesCameraFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_cameras', [
                     "idClientServicesCameraFk" => $id,
@@ -494,7 +801,10 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceCameraTotem($product, $id) {
+    public function insertServiceCameraTotem($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_cameras_totem', [ 'idClientServicesCameraTotemFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_cameras_totem', [
                     "idClientServicesCameraTotemFk" => $id,
@@ -512,7 +822,10 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceEnergy($product, $id) {
+    public function insertServiceEnergy($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_backup_energy', [ 'idClientServicesFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_backup_energy', [
                     "idClientServicesFk" => $id,
@@ -525,7 +838,10 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertServiceEnergyTotem($product, $id) {
+    public function insertServiceEnergyTotem($product, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_backup_energy_totem', [ 'idClientServicesTotemFk' => $id ]);
+        }
         foreach ($product as $item) {
             $this->db->insert('tb_backup_energy_totem', [
                     "idClientServicesTotemFk" => $id,
@@ -538,7 +854,10 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public function insertLicence($items, $id) {
+    public function insertLicence($items, $id, $borrar = false) {
+        if ($borrar) {
+            $this->db->delete('tb_user_license', [ 'idClientServicesSmartPanicFk' => $id ]);
+        }
         foreach ($items as $item) {
             $this->db->insert('tb_user_license', [
                     "fullName"                     => $item['fullName'],
@@ -584,7 +903,7 @@ class Services_model extends CI_Model {
                 'idTypeMaintenanceFk' => [ 'tb_products', 'idProduct' ],
                 'idEmergencyButtonFk' => [ 'tb_products', 'idProduct' ],
                 'idShutdownKeyFk'     => [ 'tb_products', 'idProduct' ],
-                'idClientServicesFk'  => [ 'tb_clients', 'idClient' ],
+                //'idClientServicesFk'  => [ 'tb_clients', 'idClient' ],
                 'ouputReader'         => [ 'tb_products', 'idProduct' ],
                 'ouputButom'          => [ 'tb_products', 'idProduct' ],
                 'lock'                => [ 'tb_products', 'idProduct' ],
@@ -1142,6 +1461,69 @@ class Services_model extends CI_Model {
         }
         if (count($item['tipo_conexion_remoto']) > 0) {
             $this->insertTipoConexionRemotoAlarmas($item['tipo_conexion_remoto'], $id);
+        }
+
+
+        if ($this->db->affected_rows() === 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editAlarm($item) {
+        //$idClientServicesFk = $this->insertService($item, 'tb_client_services_alarms', 'idClientServicesAlarms'); //CREAMOS EL SERVICIO
+
+        $this->db->set(
+            [
+                "name"                   => $item['name'],
+                "idContracAssociated_SE" => $item['idContracAssociatedFk'],
+                "idTypeMaintenanceFk"    => $item['idTypeMaintenanceFk'],
+                "dateUp"                 => $item['dateUp'],
+                "dateDown"               => $item['dateDown'],
+                "companyMonitor"         => $item['companyMonitor'],
+                "numberPay"              => $item['numberPay'],
+                "alarmPanel"             => $item['alarmPanel'], //producto
+                "alarmKeyboard"          => $item['alarmKeyboard'], //producto
+                "panelAlarm"             => $item['panelAlarm'],
+                "keyboardAlarm"          => $item['keyboardAlarm'],
+                "countZoneIntaled"       => $item['countZoneIntaled'],
+                "idTypeConectionRemote"  => $item['idTypeConectionRemote'], // 1, 2, 3
+                "observation"            => $item['observation'],
+            ]
+        )->where("idClientServicesAlarms", $item['idClientServicesAlarms'])->update("tb_client_services_alarms");
+
+        $data = $this->db->select("idClientServicesFk")
+            ->from('tb_client_services_alarms')
+            ->where("idClientServicesAlarms", $item['idClientServicesAlarms'])
+            ->get();
+
+        //return $data;
+
+        $id = 0;
+        if ($data->num_rows() > 0) {
+            //return $data->result_array();
+            $id = $data->result_array()[0]['idClientServicesFk'];
+        }
+        if ($id == 0) {
+            return 0;
+        }
+
+
+        $id = $this->db->insert_id();
+        $this->updatedService($idClientServicesFk, $id);
+
+        if (count($item['adicional']) > 0) {
+            $this->insertDatosAdicionalesAlarmas($item['adicional'], $item['idClientServicesAlarms'], $item['idClientFk'],true);
+        }
+        if (count($item['sensores_de_alarmas']) > 0) {
+            $this->insertSensoresDeAlarmas($item['sensores_de_alarmas'], $item['idClientServicesAlarms'],true);
+        }
+        if (count($item['baterias_instaladas']) > 0) {
+            $this->insertBateriasInstaladasAlarmas($item['baterias_instaladas'], $item['idClientServicesAlarms'],true);
+        }
+        if (count($item['tipo_conexion_remoto']) > 0) {
+            $this->insertTipoConexionRemotoAlarmas($item['tipo_conexion_remoto'], $item['idClientServicesAlarms'],true);
         }
 
 
