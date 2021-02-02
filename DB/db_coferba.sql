@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-02-2021 a las 04:44:51
+-- Tiempo de generación: 02-02-2021 a las 06:08:29
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -1559,7 +1559,8 @@ INSERT INTO `tb_client_services` (`idClientServices`, `idClientFk`, `idTipeServi
 (164, 113, 6, 'tb_client_services_smart_panic', 17, 'idClientServicesSmartPanic'),
 (165, 111, 6, 'tb_client_services_smart_panic', NULL, 'idClientServicesSmartPanic'),
 (166, 111, 6, 'tb_client_services_smart_panic', NULL, 'idClientServicesSmartPanic'),
-(167, 111, 6, 'tb_client_services_smart_panic', 20, 'idClientServicesSmartPanic');
+(167, 111, 6, 'tb_client_services_smart_panic', 20, 'idClientServicesSmartPanic'),
+(168, 113, 6, 'tb_client_services_smart_panic', 21, 'idClientServicesSmartPanic');
 
 -- --------------------------------------------------------
 
@@ -1813,7 +1814,8 @@ CREATE TABLE `tb_client_services_smart_panic` (
 --
 
 INSERT INTO `tb_client_services_smart_panic` (`idClientServicesSmartPanic`, `idClientServicesFk`, `name`, `idContracAssociated_SE`, `dateUp`, `dateDown`, `idTypeMaintenanceFk`, `idCompanyMonitorFK`, `sucribeNumber`, `idDetinationOfLicenseFk`, `idDepartmentFk`, `idParticularAddressFk`, `countNewLicense`, `observation`) VALUES
-(20, 167, 'APP MONITOR Prueba', 4, '02/02/2021', NULL, 1, 1, '1122334455', 1, 1163, NULL, 2, 'probando');
+(20, 167, 'APP MONITOR Prueba', 4, '02/02/2021', NULL, 1, 1, '1122334455', 1, 1163, NULL, 2, 'probando'),
+(21, 168, 'APP MONITOR', 5, '02/02/2021', NULL, 1, 1, '1122334455', NULL, NULL, 27, 2, 'Probando');
 
 -- --------------------------------------------------------
 
@@ -4605,7 +4607,8 @@ CREATE TABLE `tb_user_license` (
 
 INSERT INTO `tb_user_license` (`idUserLicense`, `fullName`, `email`, `phone`, `keyword`, `idOS`, `profileUser`, `idClientServicesSmartPanicFk`) VALUES
 (16, 'Daniela Durango', 'daniela.durango@hotmail.com', '11234234234324', 'prueba', 1, 0, 17),
-(17, 'David Eduardo Rincon', 'davideduardo.luengo@hotmail.com', '112342342344', 'prueba', 1, 0, 20);
+(17, 'David Eduardo Rincon', 'davideduardo.luengo@hotmail.com', '112342342344', 'prueba', 1, 0, 20),
+(18, 'Daniela Durango', 'daniela.durango@gmail.com', '112233344545334', 'prueba', 1, 0, 21);
 
 -- --------------------------------------------------------
 
@@ -5537,7 +5540,7 @@ ALTER TABLE `tb_client_schedule_atention`
 -- AUTO_INCREMENT de la tabla `tb_client_services`
 --
 ALTER TABLE `tb_client_services`
-  MODIFY `idClientServices` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `idClientServices` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_client_services_access_control`
@@ -5579,7 +5582,7 @@ ALTER TABLE `tb_client_services_internet`
 -- AUTO_INCREMENT de la tabla `tb_client_services_smart_panic`
 --
 ALTER TABLE `tb_client_services_smart_panic`
-  MODIFY `idClientServicesSmartPanic` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idClientServicesSmartPanic` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_client_services_totem`
@@ -5945,7 +5948,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT de la tabla `tb_user_license`
 --
 ALTER TABLE `tb_user_license`
-  MODIFY `idUserLicense` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idUserLicense` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_zonas`

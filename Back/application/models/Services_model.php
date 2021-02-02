@@ -970,6 +970,10 @@ class Services_model extends CI_Model {
                 'idCompanyMonitorFK'      => [ 'tb_monitor_company', 'idMonitorCompany' ],
                 'idDetinationOfLicenseFk' => [ 'tb_detination_of_license', 'idDetinationOfLicense' ],
                 'idDepartmentFk'          => [ 'tb_client_departament', 'idClientDepartament' ],
+                'idParticularAddressFk'   => [ 'tb_client_address_particular', 'idAddressParticular' ],
+                'fk'                     => [
+                    [ 'tb_user_license', 'idClientServicesSmartPanicFk' ],
+                ],                
             ],
 
         ];
@@ -992,6 +996,9 @@ class Services_model extends CI_Model {
 
             if ($tabla == 'tb_client_services_internet') {
                 $servicios = $this->db->join('tb_tipos_servicios_internet', 'tb_tipos_servicios_internet.idTipoServicioInternet = tb_client_services_internet.idTypeInternetFk', 'LEFT');
+            }
+            if ($tabla == 'tb_client_services_smart_panic') {
+                $servicios = $this->db->join('tb_user_license', 'tb_user_license.idClientServicesSmartPanicFk = tb_client_services_smart_panic.idClientServicesSmartPanic', 'LEFT');
             }
             $servicios = $this->db->where('idContracAssociated_SE', $idContrato);
             $servicios = $this->db->get();
@@ -1022,6 +1029,21 @@ class Services_model extends CI_Model {
                                             $dataG = $this->db->select(" * ")
                                                 ->from($item3Fk[0])
                                                 ->where($item3Fk[1], $item['idClientServicesTotem'])
+                                                ->get();
+                                            $aux   = [];
+                                            if ($dataG->num_rows() > 0) {
+                                                foreach ($dataG->result_array() as $ite2) {
+                                                    array_push($aux, $ite2);
+                                                }
+                                                $item[$item3Fk[0].'_array'] = $aux;
+                                            }
+                                        }
+
+                                    } else if ($tabla == "tb_client_services_smart_panic" && $id == 'fk') {
+                                        foreach ($data[$id] as $idFk => $item3Fk) {
+                                            $dataG = $this->db->select(" * ")
+                                                ->from($item3Fk[0])
+                                                ->where($item3Fk[1], $item['idClientServicesSmartPanicFk'])
                                                 ->get();
                                             $aux   = [];
                                             if ($dataG->num_rows() > 0) {
