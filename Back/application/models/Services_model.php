@@ -325,6 +325,7 @@ class Services_model extends CI_Model {
                 'sucribeNumber'           => $item['sucribeNumber'],
                 'idDetinationOfLicenseFk' => $item['idDetinationOfLicenseFk'],
                 'idDepartmentFk'          => $item['idDepartmentFk'],
+                'idParticularAddressFk'   => $item['idParticularAddressFk'],
                 'countNewLicense'         => $item['countNewLicense'],
                 'observation'             => $item['observation'],
             ]
