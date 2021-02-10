@@ -8,7 +8,7 @@ class Services_model extends CI_Model {
     }
 
     public function addinternet($item) {
-
+        $idClientServicesFk = 0;
         $idClientServicesFk = $this->insertService($item, 'tb_client_services_internet', 'idClientServicesInternet');  // CREAMOS EL SERVICIO
 
         $this->db->insert('tb_client_services_internet', [
@@ -89,17 +89,17 @@ class Services_model extends CI_Model {
             ]
         )->where("idClientServicesInternet", $item['idClientServicesInternet'])->update("tb_client_services_internet");
 
-        $data = $this->db->select(" idClientServicesFk ")
+        $data               = $this->db->select(" idClientServicesFk ")
             ->from('tb_client_services_internet')
             ->where("idClientServicesInternet", $item['idClientServicesInternet'])
             ->get();
-        $idClientServicesFk;
+        $idClientServicesFk = 0;
         if ($data->num_rows() > 0) {
             $idClientServicesFk = $data->result_array()[0]['idClientServicesFk'];
         }
 
         if (isset($item['adicional'])) {
-            $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $item['idClientServicesInternet'] ]);
+            $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $idClientServicesFk ]);
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
                         "numberSerieFabric"   => $item1['numberSerieFabric'],
@@ -910,6 +910,9 @@ class Services_model extends CI_Model {
                 'ouputButom'          => [ 'tb_products', 'idProduct' ],
                 'lock'                => [ 'tb_products', 'idProduct' ],
                 'idBatteryFk'         => [ 'tb_products', 'idProduct' ],
+                'fk'                  => [
+                    [ 'tb_detalles_control_acceso', 'idServicesFk' ],
+                ],
 
             ],
             'tb_client_services_internet'       => [
@@ -921,6 +924,9 @@ class Services_model extends CI_Model {
                 'idModemInternetFk'      => [ 'tb_products', 'idProduct' ],
                 'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
                 'idInternetCompanyFk'    => [ 'tb_internet_company', 'idInternetCompany' ],
+                'fk'                     => [
+                    [ 'tb_detalles_control_acceso', 'idServicesFk' ],
+                ],
             ],
             'tb_client_services_totem'          => [
                 'idClientServicesFk'     => [ 'tb_clients', 'idClient' ],
@@ -931,6 +937,7 @@ class Services_model extends CI_Model {
                     [ 'tb_cameras_totem', 'idClientServicesCameraTotemFk' ],
                     [ 'tb_client_totem', 'idClientServicesTotemFk' ],
                     [ 'tb_backup_energy_totem', 'idClientServicesTotemFk' ],
+                    [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
             ],
             'tb_client_services_camera'         => [
@@ -941,6 +948,7 @@ class Services_model extends CI_Model {
                     [ 'tb_cameras', 'idClientServicesCameraFk' ],
                     [ 'tb_client_camera', 'idClientServicesCameraFk' ],
                     [ 'tb_backup_energy', 'idClientServicesFk' ],
+                    [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
             ],
             'tb_client_services_alarms'         => [
@@ -976,6 +984,7 @@ class Services_model extends CI_Model {
                 'idParticularAddressFk'   => [ 'tb_client_address_particular', 'idAddressParticular' ],
                 'fk'                      => [
                     [ 'tb_user_license', 'idClientServicesSmartPanicFk' ],
+                    [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
             ],
 
@@ -996,14 +1005,12 @@ class Services_model extends CI_Model {
                 $servicios = $this->db->join('tb_access_control_door', 'tb_access_control_door.idAccessControlDoor = tb_client_services_access_control.idDoorFk', 'LEFT');
                 $servicios = $this->db->join('tb_battery_install_access_control', 'tb_battery_install_access_control.idClientServicesAccessControlFk = tb_client_services_access_control.idClientServicesAccessControl', 'LEFT');
             }
-
             if ($tabla == 'tb_client_services_internet') {
                 $servicios = $this->db->join('tb_tipos_servicios_internet', 'tb_tipos_servicios_internet.idTipoServicioInternet = tb_client_services_internet.idTypeInternetFk', 'LEFT');
             }
             if ($tabla == 'tb_client_services_smart_panic') {
                 $servicios = $this->db->join('tb_user_license', 'tb_user_license.idClientServicesSmartPanicFk = tb_client_services_smart_panic.idClientServicesSmartPanic', 'LEFT');
             }
-
             if ($tabla == 'tb_client_services_alarms') {
                 $servicios = $this->db->join('tb_datos_adicionales_alarmas', 'tb_datos_adicionales_alarmas.fkidClientServicesAlarms = tb_client_services_alarms.idClientServicesAlarms', 'LEFT');
             }
@@ -1014,6 +1021,10 @@ class Services_model extends CI_Model {
                 foreach ($servicios->result_array() as $key => $item) {
                     foreach ($relaciones as $tabla1 => $data) {
                         foreach ($data as $id => $item3) {
+                            // if ($tabla1=="tb_client_services_access_control") {
+                            //     return $item3;
+                            // }
+
                             if ($tabla == $tabla1) {
                                 if ($tabla == "tb_client_services_camera" && $id == 'fk') {
                                     foreach ($data[$id] as $idFk => $item3Fk) {
@@ -1026,7 +1037,19 @@ class Services_model extends CI_Model {
                                             foreach ($dataG->result_array() as $ite2) {
                                                 array_push($aux, $ite2);
                                             }
-                                            $item[$item3Fk[0].'_array'] = $aux;
+                                            if ($item3Fk[0] == 'tb_detalles_control_acceso') {
+                                                $dataG2 = $this->db->select(" * ")
+                                                    ->from($item3Fk[0])
+                                                    ->where($item3Fk[1], $item['idClientServices'])
+                                                    ->get();
+                                                $aux    = [];
+                                                foreach ($dataG2->result_array() as $ite22) {
+                                                    array_push($aux, $ite22);
+                                                }
+                                                $item['adicional'] = $aux;
+                                            } else {
+                                                $item[$item3Fk[0].'_array'] = $aux;
+                                            }
                                         }
                                     }
 
@@ -1042,7 +1065,19 @@ class Services_model extends CI_Model {
                                                 foreach ($dataG->result_array() as $ite2) {
                                                     array_push($aux, $ite2);
                                                 }
-                                                $item[$item3Fk[0].'_array'] = $aux;
+                                                if ($item3Fk[0] == 'tb_detalles_control_acceso') {
+                                                    $dataG2 = $this->db->select(" * ")
+                                                        ->from($item3Fk[0])
+                                                        ->where($item3Fk[1], $item['idClientServices'])
+                                                        ->get();
+                                                    $aux    = [];
+                                                    foreach ($dataG2->result_array() as $ite22) {
+                                                        array_push($aux, $ite22);
+                                                    }
+                                                    $item['adicional'] = $aux;
+                                                } else {
+                                                    $item[$item3Fk[0].'_array'] = $aux;
+                                                }
                                             }
                                         }
 
@@ -1057,7 +1092,19 @@ class Services_model extends CI_Model {
                                                 foreach ($dataG->result_array() as $ite2) {
                                                     array_push($aux, $ite2);
                                                 }
-                                                $item[$item3Fk[0].'_array'] = $aux;
+                                                if ($item3Fk[0] == 'tb_detalles_control_acceso') {
+                                                    $dataG2 = $this->db->select(" * ")
+                                                        ->from($item3Fk[0])
+                                                        ->where($item3Fk[1], $item['idClientServices'])
+                                                        ->get();
+                                                    $aux    = [];
+                                                    foreach ($dataG2->result_array() as $ite22) {
+                                                        array_push($aux, $ite22);
+                                                    }
+                                                    $item['adicional'] = $aux;
+                                                } else {
+                                                    $item[$item3Fk[0].'_array'] = $aux;
+                                                }
                                             }
                                         }
 
@@ -1065,10 +1112,8 @@ class Services_model extends CI_Model {
                                         if ($tabla == "tb_client_services_alarms" && $id == 'fk') {
                                             foreach ($data[$id] as $idFk => $item3Fk) {
                                                 foreach ($item3Fk as $idFk2 => $item3Fk2) {
-
                                                     if ($idFk2 === "fk") {
                                                         foreach ($item3Fk[$idFk2] as $idFk3 => $item3Fk3) {
-
                                                             $dataG = $this->db->select(" * ")
                                                                 ->from($item3Fk3[0])
                                                                 ->where($item3Fk3[1], $item['idDatoAdicionalAlarma'])
@@ -1082,65 +1127,134 @@ class Services_model extends CI_Model {
                                                             }
                                                         }
                                                     } else {
-                                                        $dataG = $this->db->select(" * ")
-                                                            ->from($item3Fk2[0])
-                                                            ->where($item3Fk2[1], $item['idClientServicesAlarms'])
-                                                            ->get();
-
-                                                        $aux = [];
-                                                        $aux = "";
-                                                        if ($dataG->num_rows() > 0) {
-                                                            foreach ($dataG->result_array() as $ite2) {
-                                                                $aux = $ite2;
+                                                        if ($item3Fk2[0] == 'tb_datos_adicionales_alarmas') {
+                                                            //return $item3Fk2;
+                                                            $dataG2 = $this->db->select(" * ")
+                                                                ->from($item3Fk2[0])
+                                                                ->where($item3Fk2[1], $item['idClientServicesAlarms'])
+                                                                ->get();
+                                                            $aux    = [];
+                                                            foreach ($dataG2->result_array() as $ite22) {
+                                                                array_push($aux, $ite22);
                                                             }
-                                                            $item[$item3Fk2[0].'_array'] = $aux;
+                                                            $item['adicional'] = $aux;
+                                                        } else {
+                                                            $dataG = $this->db->select(" * ")
+                                                                ->from($item3Fk2[0])
+                                                                ->where($item3Fk2[1], $item['idClientServicesAlarms'])
+                                                                ->get();
+
+                                                            $aux = [];
+                                                            $aux = "";
+                                                            if ($dataG->num_rows() > 0) {
+                                                                foreach ($dataG->result_array() as $ite2) {
+                                                                    $aux = $ite2;
+                                                                }
+
+                                                                $item[$item3Fk2[0].'_array'] = $aux;
+                                                            }
                                                         }
+
                                                     }
                                                 }
 
                                             }
 
                                         } else {
-                                            $dataG = $this->db->select(" * ")
-                                                ->from($item3[0])
-                                                ->where($item3[1], $item[$id])
-                                                ->get();
-                                            $aux   = [];
-                                            if ($dataG->num_rows() > 0) {
-                                                foreach ($dataG->result_array() as $ite2) {
-                                                    array_push($aux, $ite2);
+                                            if ($tabla == "tb_client_services_internet" && $id == 'fk') {
+                                                foreach ($data[$id] as $idFk => $item3Fk) {
+
+                                                    $dataG = $this->db->select(" * ")
+                                                        ->from($item3Fk[0])
+                                                        ->where($item3Fk[1], $item['idClientServicesInternet'])
+                                                        ->get();
+                                                    $aux   = [];
+                                                    if ($dataG->num_rows() > 0) {
+                                                        foreach ($dataG->result_array() as $ite2) {
+                                                            array_push($aux, $ite2);
+                                                        }
+                                                        if ($item3Fk[0] == 'tb_detalles_control_acceso') {
+                                                            $dataG2 = $this->db->select(" * ")
+                                                                ->from($item3Fk[0])
+                                                                ->where($item3Fk[1], $item['idClientServices'])
+                                                                ->get();
+                                                            $aux    = [];
+                                                            foreach ($dataG2->result_array() as $ite22) {
+                                                                array_push($aux, $ite22);
+                                                            }
+                                                            $item['adicional'] = $aux;
+                                                        } else {
+                                                            $item[$item3Fk[0].'_array'] = $aux;
+                                                        }
+                                                    }
                                                 }
-                                                $item[$id.'_array'] = $aux;
+
+                                            } else {
+                                                if ($tabla == "tb_client_services_access_control" && $id == 'fk') {
+                                                    //return $item['idClientServicesAccessControl'];
+                                                    //return $item3[0];
+                                                    foreach ($data[$id] as $idFk => $item3Fk) {
+                                                        //return $item['idClientServices'];
+
+                                                        $dataG = $this->db->select(" * ")
+                                                            ->from($item3Fk[0])
+                                                            ->where($item3Fk[1], $item['idClientServicesAccessControl'])
+                                                            ->get();
+                                                        $aux   = [];
+                                                        //return $dataG->num_rows();
+                                                        if ($item3Fk[0] == 'tb_detalles_control_acceso') {
+                                                            $dataG2 = $this->db->select(" * ")
+                                                                ->from($item3Fk[0])
+                                                                ->where($item3Fk[1], $item['idClientServices'])
+                                                                ->get();
+                                                            //return $dataG2->result_array();
+                                                            $aux = [];
+                                                            foreach ($dataG2->result_array() as $ite212) {
+                                                                array_push($aux, $ite212);
+                                                            }
+                                                            $item['adicional'] = $aux;
+                                                        } else {
+                                                            if ($dataG->num_rows() > 0) {
+                                                                $aux = [];
+                                                                foreach ($dataG->result_array() as $ite2) {
+                                                                    array_push($aux, $ite2);
+                                                                }
+
+                                                                $item[$item3Fk[0].'_array'] = $aux;
+
+                                                            }
+                                                        }
+
+
+                                                    }
+
+                                                } else {
+                                                    //return $item[$id];
+                                                    $dataG = $this->db->select(" * ")
+                                                        ->from($item3[0])
+                                                        ->where($item3[1], $item[$id])
+                                                        ->get();
+                                                    //return $dataG->result_array();
+                                                    $aux = [];
+                                                    if ($dataG->num_rows() > 0) {
+                                                        foreach ($dataG->result_array() as $ite2) {
+                                                            array_push($aux, $ite2);
+                                                        }
+                                                        $item[$id.'_array'] = $aux;
+                                                    }
+                                                }
+
                                             }
+
                                         }
 
                                     }
                                 }
-
-
                             }
                         }
                     }
-
-                    // if ($tabla == 'tb_client_services_access_control') {
-                    //     $idTipeServiceFk = $this->db->select(" * ")
-                    //         ->from('tb_products')
-                    //         ->where('idProduct', $item['idAccessControlFk'])
-                    //         ->get();
-                    //     $aux             = [];
-                    //
-                    //     if ($idTipeServiceFk->num_rows() > 0) {
-                    //         foreach ($idTipeServiceFk->result_array() as $ite2) {
-                    //             array_push($aux, $ite2);
-                    //         }
-                    //         $item['idTipeServiceFk_array'] = $aux;
-                    //
-                    //     }
-                    // }
-
                     array_push($array_axu, $item);
                 }
-
             }
         }
 
@@ -1148,8 +1262,7 @@ class Services_model extends CI_Model {
 
     }
 
-    public
-    function getServicesPorIdCliente($idClientFk) {
+    public function getServicesPorIdCliente($idClientFk) {
 
         /*se definen todas las tablas de los servicios*/
         $tablas    = [
@@ -1157,7 +1270,7 @@ class Services_model extends CI_Model {
             "internet"       => "tb_client_services_internet",
             "totem"          => "tb_client_services_totem",
             "camera"         => "tb_client_services_camera",
-            //"alarms"         => "tb_client_services_alarms",
+            "alarms"         => "tb_client_services_alarms",
             "smart_panic"    => "tb_client_services_smart_panic",
         ];
         $pivotes   = null;
@@ -1477,7 +1590,7 @@ class Services_model extends CI_Model {
         $this->updatedService($idClientServicesFk, $id);
 
         if (count($item['adicional']) > 0) {
-           $this->insertDatosAdicionalesAlarmas($item['adicional'], $id);
+            $this->insertDatosAdicionalesAlarmas($item['adicional'], $id);
         }
         if (count($item['sensores_de_alarmas']) > 0) {
             $this->insertSensoresDeAlarmas($item['sensores_de_alarmas'], $id);
@@ -1538,7 +1651,7 @@ class Services_model extends CI_Model {
         // $this->updatedService($idClientServicesFk, $id);
 
         if (count($item['adicional']) > 0) {
-           return $this->insertDatosAdicionalesAlarmas($item['adicional'], $item['idClientServicesAlarms'], true);
+            return $this->insertDatosAdicionalesAlarmas($item['adicional'], $item['idClientServicesAlarms'], true);
         }
         if (count($item['sensores_de_alarmas']) > 0) {
             $this->insertSensoresDeAlarmas($item['sensores_de_alarmas'], $item['idClientServicesAlarms'], true);
@@ -1621,8 +1734,7 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public
-    function insertSensoresDeAlarmas($data, $id, $borrar = false) {
+    public function insertSensoresDeAlarmas($data, $id, $borrar = false) {
         if ($borrar) {
             $this->db->delete('tb_sensors_alarm', [ 'fkidClientServicesAlarms' => $id ]);
         }
@@ -1645,8 +1757,7 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public
-    function insertBateriasInstaladasAlarmas($data, $id, $borrar = false) {
+    public function insertBateriasInstaladasAlarmas($data, $id, $borrar = false) {
         if ($borrar) {
             $this->db->delete('tb_alarm_batery', [ 'fkidClientServicesAlarms' => $id ]);
         }
@@ -1730,8 +1841,7 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public
-    function insertPersonasParaDarAvisoAlarmas($data, $id, $idOriginal, $borrar = false) {
+    public function insertPersonasParaDarAvisoAlarmas($data, $id, $idOriginal, $borrar = false) {
         if ($borrar) {
             $this->db->delete('tb_personas_para_dar_aviso_alarmas', [ 'fk_idDatoAdicionalAlarma' => $idOriginal ]);
         }
@@ -1751,8 +1861,7 @@ class Services_model extends CI_Model {
         return true;
     }
 
-    public
-    function insertPersonasParaVerificarEnElLugarAlarmas($data, $id, $idOriginal, $borrar = false) {
+    public function insertPersonasParaVerificarEnElLugarAlarmas($data, $id, $idOriginal, $borrar = false) {
         if ($borrar) {
             $this->db->delete('tb_personas_para_verificar_en_lugar', [ 'fk_idDatoAdicionalAlarma' => $idOriginal ]);
         }
