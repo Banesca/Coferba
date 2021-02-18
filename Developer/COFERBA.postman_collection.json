@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "c7ae513a-2a19-4a40-bd5c-f850a88b5637",
 		"name": "COFERBA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -18,7 +18,23 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"InternetCompany"
+							]
+						}
 					},
 					"response": []
 				},
@@ -32,7 +48,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/Modules"
+						"url": {
+							"raw": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/Modules",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"Modules"
+							]
+						}
 					},
 					"response": []
 				},
@@ -46,7 +79,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/ProductClassification"
+						"url": {
+							"raw": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/ProductClassification",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"ProductClassification"
+							]
+						}
 					},
 					"response": []
 				},
@@ -60,7 +110,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/DiviceOpening"
+						"url": {
+							"raw": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/DiviceOpening",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"DiviceOpening"
+							]
+						}
 					},
 					"response": []
 				},
@@ -74,7 +141,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/TypeServices"
+						"url": {
+							"raw": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/TypeServices",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"TypeServices"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,7 +172,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/ClientType"
+						"url": {
+							"raw": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/ClientType",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"ClientType"
+							]
+						}
 					},
 					"response": []
 				},
@@ -102,7 +203,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/CategoryDepartament"
+						"url": {
+							"raw": "http://127.0.0.1/alejandro/Coferba/Back/index.php/seeds/CategoryDepartament",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"CategoryDepartament"
+							]
+						}
 					},
 					"response": []
 				},
@@ -116,7 +234,23 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeMaintenance"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeMaintenance",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"TypeMaintenance"
+							]
+						}
 					},
 					"response": []
 				},
@@ -130,7 +264,23 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/typeContrato"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/typeContrato",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"seeds",
+								"typeContrato"
+							]
+						}
 					},
 					"response": []
 				}
@@ -155,7 +305,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"pofile\":\n\t{\n\t\t\"name\":\"PERFIL dos\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"}\n\t\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles"
+							]
+						}
 					},
 					"response": []
 				},
@@ -175,7 +341,24 @@
 							"mode": "raw",
 							"raw": "{\n\t\"pofile\":\n\t{\n\t\n\t\t\"idProfiles\":\"8\",\n\t\t\"name\":\"PERFIL edd edite\",\n\t\t\"list_id_modules\":[\n\t\t\t{\"idModuleFk\":\"1\"},\n\t\t\t{\"idModuleFk\":\"2\"},\n\t\t\t{\"idModuleFk\":\"4\"},\n\t\t\t{\"idModuleFk\":\"7\"}\n\t\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/update"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"update"
+							]
+						}
 					},
 					"response": []
 				},
@@ -195,7 +378,25 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/delete/8"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/delete/8",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"delete",
+								"8"
+							]
+						}
 					},
 					"response": []
 				},
@@ -211,7 +412,25 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/find/8"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/find/8",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"find",
+								"8"
+							]
+						}
 					},
 					"response": []
 				},
@@ -227,7 +446,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/modules"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/modules",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"modules"
+							]
+						}
 					},
 					"response": []
 				},
@@ -247,7 +483,24 @@
 							"mode": "raw",
 							"raw": "{\n\t\"searchFilter\":\"\"\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/search"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"search"
+							]
+						}
 					},
 					"response": []
 				},
@@ -267,7 +520,25 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/deletemodule/20"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/profiles/deletemodule/20",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"profiles",
+								"deletemodule",
+								"20"
+							]
+						}
 					},
 					"response": []
 				}
@@ -292,7 +563,21 @@
 							"mode": "raw",
 							"raw": "{\n  \"user\":\n  {\n    \"fullNameUser\" : \"soporte@coferba.com.ar\",\n    \"passwordUser\" : \"12345\"\n    }\n}"
 						},
-						"url": "http://localhost:8888/Coferba/Back/index.php/User/auth"
+						"url": {
+							"raw": "http://localhost:8888/Coferba/Back/index.php/User/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"User",
+								"auth"
+							]
+						}
 					},
 					"response": []
 				},
@@ -312,7 +597,20 @@
 							"mode": "raw",
 							"raw": "{\n  \n  \"user\":\n  {\n        \"fullNameUser\" : \"prueba\",\n\t    \"emailUser\" : \"sfsdfdsfdfds\",\n\t    \"phoneNumberUser\" : \"prueba\",\n\t    \"addresUser\" : \"prueba\",\n\t    \"passwordUser\" : \"prueba\",\n\t    \"idProfileKf\" : \"1\",\n\t    \"rezonSocial\" : \"prueba\",\n\t    \"idSysProfileFk\":8,\n\t    \"idTypeTenantKf\": 0\n  }\n}"
 						},
-						"url": "http://localhost:8888/Coferba/Back/index.php/User"
+						"url": {
+							"raw": "http://localhost:8888/Coferba/Back/index.php/User",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"User"
+							]
+						}
 					},
 					"response": []
 				}
@@ -337,7 +635,22 @@
 							"mode": "raw",
 							"raw": "{\n    \"product\": {\n        \"descriptionProduct\": \"2Ejemdplo53\",\n        \"codigoFabric\": \"Ejemplo\",\n        \"brand\": \"Ejemplo\",\n        \"model\": \"Ejemplo\",\n        \"idProductClassificationFk\": 5,\n        \"isNumberSerieFabric\": true,\n        \"isNumberSerieInternal\": false,\n        \"isDateExpiration\": true,\n        \"isControlSchedule\": true,\n        \"priceFabric\": 120.38,\n        \"numberSerieFabric\": \"6766\",\n        \"numberSerieInternal\": \"8789\",\n        \"dateExpiration\": \"2018-01-02\",\n        \"list_id_divice\": [\n            {\n                \"idDiviceOpeningFk\": 2\n            },\n            {\n                \"idDiviceOpeningFk\": 3\n            },\n            {\n                \"idDiviceOpeningFk\": 4\n            },\n            {\n                \"idDiviceOpeningFk\": 5\n            }\n        ]\n    }\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Product"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Product"
+							]
+						}
 					},
 					"response": []
 				},
@@ -357,7 +670,24 @@
 							"mode": "raw",
 							"raw": "{\n    \"product\": {\n        \"idProduct\": \"1\",\n        \"descriptionProduct\": \"2Ejemplo3111\",\n        \"codigoFabric\": \"Ejemplo\",\n        \"brand\": \"Ejemplo\",\n        \"model\": \"Ejemplo\",\n        \"idProductClassificationFk\": 5,\n        \"isNumberSerieFabric\": true,\n        \"isNumberSerieInternal\": false,\n        \"isDateExpiration\": true,\n        \"isControlSchedule\": true,\n        \"priceFabric\": 120.38,\n        \"numberSerieFabric\": \"\",\n        \"numberSerieInternal\": \"\",\n        \"dateExpiration\": \"\",\n        \"list_id_divice\": [\n            {\n                \"idDiviceOpeningFk\": 2\n            },\n            {\n                \"idDiviceOpeningFk\": 3\n            },\n            {\n                \"idDiviceOpeningFk\": 4\n            },\n            {\n                \"idDiviceOpeningFk\": 5\n            }\n        ]\n    }\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/update"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Product",
+								"update"
+							]
+						}
 					},
 					"response": []
 				},
@@ -377,7 +707,24 @@
 							"mode": "raw",
 							"raw": "{\n\t\"searchFilter\":\"\"\n}"
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/search"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Product",
+								"search"
+							]
+						}
 					},
 					"response": []
 				},
@@ -397,7 +744,25 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/delete/1"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Product",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -413,7 +778,25 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/find/5"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Product/find/5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Product",
+								"find",
+								"5"
+							]
+						}
 					},
 					"response": []
 				}
@@ -427,7 +810,24 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/agent"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/agent",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"agent"
+							]
+						}
 					},
 					"response": []
 				},
@@ -436,7 +836,24 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/clientType"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/clientType",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"clientType"
+							]
+						}
 					},
 					"response": []
 				},
@@ -445,7 +862,24 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/localidad"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/localidad",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"localidad"
+							]
+						}
 					},
 					"response": []
 				},
@@ -454,7 +888,25 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/provincia/1"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/provincia/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"provincia",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -463,7 +915,24 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/taxtype"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Util/taxtype",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"taxtype"
+							]
+						}
 					},
 					"response": []
 				},
@@ -472,7 +941,21 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost/alejandro/Coferba/Back/index.php/Util/agent"
+						"url": {
+							"raw": "http://localhost/alejandro/Coferba/Back/index.php/Util/agent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"alejandro",
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"agent"
+							]
+						}
 					},
 					"response": []
 				},
@@ -481,7 +964,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/adress"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/adress",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"adress"
+							]
+						}
 					},
 					"response": []
 				},
@@ -490,7 +989,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/tipoServiciosInternet"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/tipoServiciosInternet",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"tipoServiciosInternet"
+							]
+						}
 					},
 					"response": []
 				},
@@ -499,7 +1014,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/DetinationLicense"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/DetinationLicense",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"DetinationLicense"
+							]
+						}
 					},
 					"response": []
 				},
@@ -508,7 +1039,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getTipeConetionRemote"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/getTipeConetionRemote",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"getTipeConetionRemote"
+							]
+						}
 					},
 					"response": []
 				},
@@ -517,7 +1064,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getTypeAlarmClient"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/getTypeAlarmClient",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"getTypeAlarmClient"
+							]
+						}
 					},
 					"response": []
 				},
@@ -526,7 +1089,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getAlarmServicesAditionals"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/getAlarmServicesAditionals",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"getAlarmServicesAditionals"
+							]
+						}
 					},
 					"response": []
 				},
@@ -535,7 +1114,23 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Util/getFormatoTransmision"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Util/getFormatoTransmision",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Util",
+								"getFormatoTransmision"
+							]
+						}
 					},
 					"response": []
 				}
@@ -560,7 +1155,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\":null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\":1,\n\t\t\n\t\t\"idClientTypeFk\": 1,\n\t\t\"name\": \"te1ddxgfhghjh4hltfgj554545tasd\",\n\t\t\"address\": \"text22\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"text2\",\n\t\t\"CUIT\": \"text\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mobile\": \"text\",\n\t\t\"mail\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"pageWeb\": \"text\",\n\t\t\"idStatusFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"isNotCliente\": 0,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"idZonaFk\": \"1\",\n\t\t\"idTipoInmuebleFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/admin"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/admin",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"admin"
+							]
+						}
 					},
 					"response": []
 				},
@@ -580,7 +1191,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\": 1,\n\t\t\"idClientTypeFk\": 5,\n\t\t\"name\": \"TEST PARdTIC4a24Uw33eLf16Rqa2\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"54\",\n\t\t\"addressLon\": \"-4\",\n\t\t\"idAgentFk\": \"1\",\n\t\t\"idStatusFk\": \"2\",\n\t\t\"idLocationFk\": \"1\",\n\t\t\"idProvinceFk\": \"1\",\n\t\t\"observation\": \"asdas\",\n\t\t\"mobile\": \"32424234\",\n\t\t\"local\": \"23424324324\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_address_particular\": [\n\t\t\t{\n\t\t\t\t\"address\": \"TEST\",\n\t\t\t\t\"addressLat\": \"TEST\",\n\t\t\t\t\"addressLon\": \"TEST\",\n\t\t\t\t\"idLocationFk\": 1,\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idZonaFk\": \"1\",\n\t\t\t\t\"idTipoInmuebleFk\": \"1\",\n\t\t\t\t\"depto\": \"ddfg\",\n\t\t\t\t\"isBuilding\": \"1\",\n\t\t\t\t\"clarification\": \"5\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/particular"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/particular",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"particular"
+							]
+						}
 					},
 					"response": []
 				},
@@ -600,7 +1227,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\":null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\":1,\n\n\t\t\"idClientTypeFk\": 4,\n\t\t\"name\": \"TESTs3\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"idTipoInmuebleFk\":\"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/branch"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/branch",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"branch"
+							]
+						}
 					},
 					"response": []
 				},
@@ -620,7 +1263,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\":null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\":1,\n\n\t\t\"idClientTypeFk\": 3,\n\t\t\"name\": \"jorg0e\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"TEST\",\n\t\t\"CUIT\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"pageWeb\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"idTipoInmuebleFk\":\"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2\n\t\t\t}\n\t\t],\n\t\t\"list_oter_ufc\": [\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test1\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test2\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/company"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/company",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"company"
+							]
+						}
 					},
 					"response": []
 				},
@@ -640,7 +1299,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idClient\": 1,\n\t\t\"idStatusFk\": 1,\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"departmentUnit\": 1,\n\t\t\"departmentCorrelation\": 1,\n\t\t\"name\": \"empresa54663e26\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n            \"nameAddress\":\"as\"\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n                \"idClientDepartament\":1050,\n\t\t\t\t\"floor\": \"5\",\n\t\t\t\t\"departament\": \"departament2\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"2\",\n\t\t\t\t\"numberUNF\": 5,\n                \"idStatusFk\":-1\n\t\t\t},\n\t\t\t{\n                \"idClientDepartament\":1068,\n\t\t\t\t\"floor\": \"6\",\n\t\t\t\t\"departament\": \"departament3\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"3\",\n\t\t\t\t\"numberUNF\": 1,\n                \"idStatusFk\":1\n\t\t\t},\n            {\n                \"idClientDepartament\":0,\n\t\t\t\t\"floor\": \"6\",\n\t\t\t\t\"departament\": \"departament4\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"3\",\n\t\t\t\t\"numberUNF\": 1,\n                \"idStatusFk\":1\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n        \"list_client_user\":[\n            {\n                \"idUserFk\":1\n            }\n        ]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatebuilding"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatebuilding",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"updatebuilding"
+							]
+						}
 					},
 					"response": []
 				},
@@ -660,7 +1335,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\":1,\n\t\t\"idClientTypeFk\": 2,\n\t\t\"departmentUnit\":1,\n\t\t\"departmentCorrelation\":1,\n\t\t\"name\": \"empresa5466a3eaa26\",\n\t\t\"address\": \"caba\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1,\n            \"nameAddress\":\"a\"\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_departament\": [\n\t\t\t{\n            \n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\":1\n\t\t\t},\n\t\t\t{\n            \n\t\t\t\t\"floor\": \"1\",\n\t\t\t\t\"departament\": \"departament\",\n\t\t\t\t\"idCategoryDepartamentFk\": \"idCategoryDepartamentFk\",\n\t\t\t\t\"numberUNF\":1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/building"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/building",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"building"
+							]
+						}
 					},
 					"response": []
 				},
@@ -680,7 +1371,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idClient\":91,\n\t\t\"idDepartmentFk\":null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\":1,\n\t\t\n\t\t\"idClientTypeFk\": 1,\n\t\t\"name\": \"35gh3j5gh\",\n\t\t\"address\": \"text2\",\n\t\t\"addressLat\": \"text\",\n\t\t\"addressLon\": \"text\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"text2\",\n\t\t\"CUIT\": \"text\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mobile\": \"text\",\n\t\t\"mail\": \"text\",\n\t\t\"observation\": \"text\",\n\t\t\"pageWeb\": \"text\",\n\t\t\"idStatusFk\": 1,\n\t\t\"mailFronKey\": \"text\",\n\t\t\"observationOrderKey\": \"text\",\n\t\t\"isNotCliente\": 0,\n\t\t\"idClientAdminFk\": 1,\n\t\t\"mailServiceTecnic\": \"text\",\n\t\t\"observationSericeTecnic\": \"text\",\n\t\t\"mailCollection\": \"text\",\n\t\t\"observationCollection\": \"text\",\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"idZonaFk\": \"1\",\n\t\t\"idTipoInmuebleFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text2\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updateadmin"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updateadmin",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"updateadmin"
+							]
+						}
 					},
 					"response": []
 				},
@@ -700,7 +1407,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idClient\":1,\n\t\t\"idDepartmentFk\": 1,\n\t\t\"idClientTypeFk\": 5,\n\t\t\"name\": \"TEST PARdTIC4a24Uw336eLf16Rqa2\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"54\",\n\t\t\"addressLon\": \"-4\",\n\t\t\"idAgentFk\": \"1\",\n\t\t\"idStatusFk\": \"2\",\n\t\t\"idLocationFk\": \"1\",\n\t\t\"idProvinceFk\": \"1\",\n\t\t\"observation\": \"asdas\",\n\t\t\"mobile\": \"32424234\",\n\t\t\"local\": \"23424324324\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_address_particular\": [\n\t\t\t{\n\t\t\t\t\"address\": \"TEST\",\n\t\t\t\t\"addressLat\": \"TEST\",\n\t\t\t\t\"addressLon\": \"TEST\",\n\t\t\t\t\"idLocationFk\": 1,\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idZonaFk\": \"1\",\n\t\t\t\t\"idTipoInmuebleFk\": \"1\",\n\t\t\t\t\"depto\": \"ddfg\",\n\t\t\t\t\"isBuilding\": \"1\",\n\t\t\t\t\"clarification\": \"5\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updateparticular"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updateparticular",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"updateparticular"
+							]
+						}
 					},
 					"response": []
 				},
@@ -720,7 +1443,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idClient\": 1,\n\t\t\"idClientTypeFk\": 4,\n\t\t\"name\": \"TESTs53\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"isNotCliente\": 1,\n\t\t\"idClientCompaniFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"idTipoInmuebleFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatebranch"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatebranch",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"updatebranch"
+							]
+						}
 					},
 					"response": []
 				},
@@ -740,7 +1479,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"client\": {\n\t\t\"idClient\":1,\n\t\t\"idDepartmentFk\": null,\n\t\t\"floor\": \"1\",\n\t\t\"department\": \"A\",\n\t\t\"idCategoryDepartamentFk\": \"1\",\n\t\t\"numberUNF\": 1,\n\t\t\"idClientTypeFk\": 3,\n\t\t\"name\": \"jorge304e\",\n\t\t\"address\": \"TEST\",\n\t\t\"addressLat\": \"TEST\",\n\t\t\"addressLon\": \"TEST\",\n\t\t\"idAgentFk\": 1,\n\t\t\"businessName\": \"TEST\",\n\t\t\"CUIT\": \"TEST\",\n\t\t\"idLocationFk\": 1,\n\t\t\"idProvinceFk\": 1,\n\t\t\"mailServiceTecnic\": \"TEST\",\n\t\t\"observationSericeTecnic\": \"TEST\",\n\t\t\"mailCollection\": \"TEST\",\n\t\t\"observationCollection\": \"TEST\",\n\t\t\"pageWeb\": \"TEST\",\n\t\t\"observation\": \"TEST\",\n\t\t\"idZonaFk\": \"1\",\n\t\t\"idTipoInmuebleFk\": \"1\",\n\t\t\"billing_information\": {\n\t\t\t\"businessNameBilling\": \"text\",\n\t\t\t\"cuitBilling\": \"text\",\n\t\t\t\"idLocationBillingFk\": 1,\n\t\t\t\"idProvinceBillingFk\": 1,\n\t\t\t\"idTypeTaxFk\": 1\n\t\t},\n\t\t\"list_emails\": [\n\t\t\t{\n\t\t\t\t\"mailTag\": \"prueba\",\n\t\t\t\t\"mailContact\": \"prueba@gail.conm\",\n\t\t\t\t\"idTipoDeMailFk\": \"1\",\n\t\t\t\t\"status\": 0\n\t\t\t}\n\t\t],\n\t\t\"list_schedule_atention\": [\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"day\": \"text\",\n\t\t\t\t\"fronAm\": \"text\",\n\t\t\t\t\"toAm\": \"text\",\n\t\t\t\t\"fronPm\": \"text\",\n\t\t\t\t\"toPm\": \"text\"\n\t\t\t}\n\t\t],\n\t\t\"list_phone_contact\": [\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"phoneContact\": \"text\",\n\t\t\t\t\"phoneTag\": \"123123\"\n\t\t\t}\n\t\t],\n\t\t\"list_client_user\": [\n\t\t\t{\n\t\t\t\t\"idUserFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idUserFk\": 2\n\t\t\t}\n\t\t],\n\t\t\"list_oter_ufc\": [\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test1\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"idClientFk\": 1,\n\t\t\t\t\"identificador\": \"test2\",\n\t\t\t\t\"idProvinceFk\": 1,\n\t\t\t\t\"idTypeTaxFk\": 1\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatecompany"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/updatecompany",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"updatecompany"
+							]
+						}
 					},
 					"response": []
 				},
@@ -760,7 +1515,25 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/delete/1"
+						"url": {
+							"raw": "http://127.0.0.1:8888/Coferba/Back/index.php/Clientes/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8888",
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -776,7 +1549,24 @@
 								"value": "application/json"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/findadmin/91"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/findadmin/91",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"findadmin",
+								"91"
+							]
+						}
 					},
 					"response": []
 				},
@@ -796,7 +1586,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"filter\":\"prueba\",\n\t\"idClientTypeFk\":null,\n\t\"isNotCliente\":null\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/search"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"search"
+							]
+						}
 					},
 					"response": []
 				},
@@ -816,7 +1622,23 @@
 							"mode": "raw",
 							"raw": "{\n\t\"address\": \"text\"\n}"
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Clientes/searchAddress"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/searchAddress",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Clientes",
+								"searchAddress"
+							]
+						}
 					},
 					"response": []
 				}
@@ -841,7 +1663,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeGps"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeGps",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"TypeGps"
+											]
+										}
 									},
 									"response": []
 								},
@@ -855,7 +1693,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/AlarmServicesAditionals"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/AlarmServicesAditionals",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"AlarmServicesAditionals"
+											]
+										}
 									},
 									"response": []
 								},
@@ -869,7 +1723,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"InternetCompany"
+											]
+										}
 									},
 									"response": []
 								}
@@ -893,7 +1763,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeInternet"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/TypeInternet",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"TypeInternet"
+											]
+										}
 									},
 									"response": []
 								},
@@ -907,7 +1793,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/Services"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/Services",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"Services"
+											]
+										}
 									},
 									"response": []
 								},
@@ -921,7 +1823,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/AlarmServicesAditionals"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/AlarmServicesAditionals",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"AlarmServicesAditionals"
+											]
+										}
 									},
 									"response": []
 								},
@@ -935,7 +1853,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/RouterInternet"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/RouterInternet",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"RouterInternet"
+											]
+										}
 									},
 									"response": []
 								},
@@ -949,7 +1883,23 @@
 												"value": "application/json"
 											}
 										],
-										"url": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany"
+										"url": {
+											"raw": "http://127.0.0.1/Coferba/Back/index.php/seeds/InternetCompany",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"seeds",
+												"InternetCompany"
+											]
+										}
 									},
 									"response": []
 								}
@@ -969,7 +1919,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"2\",\n        \"idTypeInternetFk\": \"1\",\n        \"idTypeMaintenanceFk\": \"psa\",\n        \"idServiceFk\": \"1\",\n        \"idServiceAsociateFk\": \"1\",\n        \"idRouterInternetFk\": \"1\",\n        \"userAdmin\": \"1\",\n        \"idContracAssociated_SE\": \"58547922\",\n        \"idInternetCompanyFk\": \"1\",\n        \"idModemInternetFk\": \"1\",\n        \"dateDown\": \"2020-03-19\",\n        \"dateUp\": \"2020-03-19\",\n        \"isDown\": \"1\",\n        \"port\": \"1\",\n        \"passAdmin\": \"1\",\n        \"userWifi\": \"1\",\n        \"passWifi\": \"1\",\n        \"macAddress\": \"12:23:a4:34:ag:12\",\n        \"numberLine\": \"+569113234235\",\n        \"numberChip\": \"asdasdsad\",\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"ttt645fghgfh\",\n                \"numberSerieInternal\": \"677734456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"9oo45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addinternet"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/addinternet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"addinternet"
+									]
+								}
 							},
 							"response": []
 						},
@@ -987,7 +1950,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientServicesInternet\": 1,\n        \"idTypeInternetFk\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"idServiceFk\": \"1\",\n        \"idServiceAsociateFk\": \"1\",\n        \"idRouterInternetFk\": \"1\",\n        \"userAdmin\": \"1\",\n        \"idContracAssociated_SE\": \"10\",\n        \"idInternetCompanyFk\": \"1\",\n        \"idModemInternetFk\": \"1\",\n        \"dateDown\": \"2020-03-19\",\n        \"dateUp\": \"2020-03-19\",\n        \"isDown\": \"1\",\n        \"port\": \"1\",\n        \"passAdmin\": \"1\",\n        \"userWifi\": \"1\",\n        \"passWifi\": \"1\",\n        \"macAddress\": \"12:23:a4:34:ag:12\",\n        \"numberLine\": \"+569113234235\",\n        \"numberChip\": \"asdasds54sdsd4455ad\",\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"454\",\n                \"numberSerieInternal\": \"6775454sdf445734456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"9oo454sertetretedf4fghgfh\",\n                \"numberSerieInternal\": \"555556666\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}\n"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/editInternet"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/editInternet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"editInternet"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1010,7 +1986,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"11\",\n        \"idTipeServiceFk\": \"4\",\n        \"name\": \"1\",\n        \"idContracAssociated_SE\": \"14555\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateUp\": \"2020-03-21\",\n        \"dateDown\": \"2020-03-21\",\n        \"idDvr_nvrFk\": \"1\",\n        \"location\": \"1\",\n        \"maxCamera\": \"1\",\n        \"numberPortRouter\": \"1\",\n        \"addressVpn\": \"1\",\n        \"nroPort1\": \"1\",\n        \"nroPort2\": \"1\",\n        \"namePort1\": \"1\",\n        \"namePort2\": \"1\",\n        \"observation\": \"1\",\n        \"addessClient\": \"1\",\n        \"portHttp\": \"1\",\n        \"namePort\": \"1\",\n        \"port\": \"1\",\n        \"cameras\": [\n            {\n                \"portCamera\": \"21\",\n                \"coveredArea\": \"2\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"5\",\n                \"nroFabricCamera\": \"48\",\n                \"dateExpireCamera\": \"2020-03-20\",\n                \"idProductFk\": 1\n            },\n            {\n                \"portCamera\": \"20\",\n                \"coveredArea\": \"1\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"4\",\n                \"nroFabricCamera\": \"47\",\n                \"dateExpireCamera\": \"2020-03-21\",\n                \"idProductFk\": 1\n            }\n        ],\n        \"clients\": [\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"\",\n                \"qrBase64\": \"\"\n            },\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"\",\n                \"qrBase64\": \"\"\n            }\n        ],\n        \"backup_energy\": [\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addcamera"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/addcamera",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"addcamera"
+									]
+								}
 							},
 							"response": []
 						},
@@ -1028,7 +2017,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientServicesCamera\":1,\n        \"name\": \"1\",\n        \"idContracAssociated_SE\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateUp\": \"2020-03-21\",\n        \"dateDown\": \"2020-03-21\",\n        \"idDvr_nvrFk\": \"1\",\n        \"location\": \"1\",\n        \"maxCamera\": \"1\",\n        \"numberPortRouter\": \"1\",\n        \"addressVpn\": \"1\",\n        \"nroPort1\": \"1\",\n        \"nroPort2\": \"1\",\n        \"namePort1\": \"1\",\n        \"namePort2\": \"1\",\n        \"observation\": \"1\",\n        \"addessClient\": \"1\",\n        \"portHttp\": \"1\",\n        \"namePort\": \"1\",\n        \"port\": \"1\",\n        \"cameras\": [\n            {\n                \"portCamera\": \"21\",\n                \"coveredArea\": \"2\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"5\",\n                \"nroFabricCamera\": \"48\",\n                \"dateExpireCamera\": \"2020-03-20\",\n                \"idProductFk\": 1\n            },\n            {\n                \"portCamera\": \"20\",\n                \"coveredArea\": \"1\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"4\",\n                \"nroFabricCamera\": \"47\",\n                \"dateExpireCamera\": \"2020-03-21\",\n                \"idProductFk\": 1\n            }\n        ],\n        \"clients\": [\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"\",\n                \"qrBase64\": \"\"\n            },\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"\",\n                \"qrBase64\": \"\"\n            }\n        ],\n        \"backup_energy\": [\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/editCamera"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/editCamera",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"editCamera"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1051,7 +2053,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"200\",\n        \"idTipeServiceFk\": \"3\",\n        \"name\": \"nombre de prueba\",\n        \"idContracAssociated_SE\": \"1888\",\n        \"dateUp\": \"2018-10-29\",\n        \"idCompanyFk\": \"1\",\n        \"idDvr_nvrFk\": \"1\",\n        \"addessClient\": \"1\",\n        \"maxCamera\": \"1\",\n        \"idTotenModelFk\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateDown\": \"2018-10-29\",\n        \"numberPortRouter\": \"1\",\n        \"addressVpn\": \"1\",\n        \"namePort1\": \"1\",\n        \"nroPort1\": \"1\",\n        \"namePort2\": \"1\",\n        \"nroPort2\": \"1\",\n        \"addressClientInter\": \"1\",\n        \"portHttp\": \"1\",\n        \"namePort\": \"1\",\n        \"port\": \"1\",\n        \"observation\": \"1\",\n        \"numberAbonado\": \"1\",\n        \"cameras\": [\n            {\n                \"portCamera\": \"21\",\n                \"coveredArea\": \"2\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"5\",\n                \"nroFabricCamera\": \"48\",\n                \"dateExpireCamera\": \"2020-03-20\",\n                \"idProductFk\": 1\n            },\n            {\n                \"portCamera\": \"20\",\n                \"coveredArea\": \"1\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"4\",\n                \"nroFabricCamera\": \"47\",\n                \"dateExpireCamera\": \"2020-03-21\",\n                \"idProductFk\": 1\n            }\n        ],\n        \"clients\": [\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"657567\",\n                \"qrBase64\": \"67876jghjghj\"\n            },\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"567\",\n                \"qrBase64\": \"787gj\"\n            }\n        ],\n        \"backup_energy\": [\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addtotem"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/addtotem",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"addtotem"
+									]
+								}
 							},
 							"response": []
 						},
@@ -1069,7 +2084,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientServicesTotem\":21,\n        \"name\": \"nombre de prueba2\",\n        \"idContracAssociated_SE\": \"1888\",\n        \"dateUp\": \"2018-10-29\",\n        \"idCompanyFk\": \"1\",\n        \"idDvr_nvrFk\": \"1\",\n        \"addessClient\": \"1\",\n        \"maxCamera\": \"1\",\n        \"idTotenModelFk\": \"1\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateDown\": \"2018-10-29\",\n        \"numberPortRouter\": \"1\",\n        \"addressVpn\": \"1\",\n        \"namePort1\": \"1\",\n        \"nroPort1\": \"1\",\n        \"namePort2\": \"1\",\n        \"nroPort2\": \"1\",\n        \"addressClientInter\": \"1\",\n        \"portHttp\": \"1\",\n        \"namePort\": \"1\",\n        \"port\": \"1\",\n        \"observation\": \"1fggfgfg hh\",\n        \"numberAbonado\": \"1\",\n        \"cameras\": [\n            {\n                \"portCamera\": \"21\",\n                \"coveredArea\": \"2\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"5\",\n                \"nroFabricCamera\": \"48\",\n                \"dateExpireCamera\": \"2020-03-20\",\n                \"idProductFk\": 1\n            },\n            {\n                \"portCamera\": \"20\",\n                \"coveredArea\": \"1\",\n                \"locationCamera\": \"venezuela\",\n                \"nroSerieCamera\": \"4\",\n                \"nroFabricCamera\": \"47\",\n                \"dateExpireCamera\": \"2020-03-21\",\n                \"idProductFk\": 1\n            }\n        ],\n        \"clients\": [\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"657567\",\n                \"qrBase64\": \"67876jghjghj\"\n            },\n            {\n                \"idClientFk\": \"1\",\n                \"name\": \"ale\",\n                \"user\": \"aleUser\",\n                \"pass\": \"1234\",\n                \"userProfile\": \"567\",\n                \"qrBase64\": \"787gj\"\n            }\n        ],\n        \"backup_energy\": [\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"1\"\n            },\n            {\n                \"description\": \"nota adicional\",\n                \"idBatteryFk\": \"2\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"64445fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"4544fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/editTotem"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/editTotem",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"editTotem"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1090,9 +2118,22 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"service\":{\n    \"idClientFk\":\"110\",\n    \"idTipeServiceFk\":\"1\",\n    \"idDoorFk\":\"3\",\n    \"idContracAssociated_SE\":\"3\",\n    \"dateUp\":\"12/32/3211\",\n    \"dateDown\":null,  \n    \"idAccessControlFk\":\"1\",\n    \"idInputReaderFk\":\"10\",\n    \"locationGabinet\":\"123123123213123\",\n    \"idFontFk\":\"8\",\n    \"aclaration\":\"1212312123213213\",\n    \"idTypeMaintenanceFk\":\"1\",\n    \"lock\":\"6\",\n    \"ouputReader\":\"10\",\n    \"ouputButom\":null,\n    \"isOuputReader\":\"1\",\n    \"isOuputButom\":null,  \n    \"isBlocklingScrew\":\"1\",\n    \"idEmergencyButtonFk\":\"12\",\n    \"idShutdownKeyFk\":\"13\",\n    \"acaration2\":\"213213213123\",\n    \"portNumberRouter\":\"123123123123\",\n    \"addressClient\":\"1233123123\",\n    \"addressVpn\":\"3123213213\",\n    \"user\":\"3213123123\",\n    \"useVpn\":\"123123123\",\n    \"passVpn\":\"123123213\",\n    \"pass\":\"3123123\",\n    \"portHttp\":\"123123123\",\n    \"locationEmergencyButton\":\"1231231313\",\n    \"locationOffKey\":\"123123123123\",\n    \"battery_install\":[\n        {\n        \"idBatteryFk\":\"9\"\n        }],\n    \"adicional\":[\n        {\n            \"idProductoFk\":\"7\",\n            \"numberSerieFabric\":\"12312312312312\",\n            \"numberSerieInternal\":\"123123213123123\",\n            \"dateExpiration\":null\n        },{\n            \"idProductoFk\":\"6\",\n            \"numberSerieFabric\":\"123123123123213\",\n            \"numberSerieInternal\":\"12312312312312\",\n            \"dateExpiration\":null\n        },{\n            \"idProductoFk\":\"10\",\n            \"numberSerieFabric\":\"123123123123\",\n            \"numberSerieInternal\":\"123213123123\",\n            \"dateExpiration\":null,\"optAux\":\"entrance\"\n        },{\n            \"idProductoFk\":\"8\",\n            \"numberSerieFabric\":\"12321321312\",\n            \"numberSerieInternal\":\"123213213123\",\n            \"dateExpiration\":\"12/31/2321\"\n        },{\n            \"idProductoFk\":\"10\",\n            \"numberSerieFabric\":\"123123213213\",\n            \"numberSerieInternal\":\"123213213213213\",\n            \"dateExpiration\":null,\"optAux\":\"exit\"\n        },{\n            \"idProductoFk\":\"12\",\n            \"numberSerieFabric\":\"2132131231233\",\n            \"numberSerieInternal\":\"1232132121321\",\n            \"dateExpiration\":null\n        },{\n            \"idProductoFk\":\"13\",\n            \"numberSerieFabric\":\"213123123123\",\n            \"numberSerieInternal\":\"12321312321\",\n            \"dateExpiration\":null\n        },{\n            \"idProductoFk\":\"9\",\n            \"numberSerieFabric\":\"2131232321313\",\n            \"numberSerieInternal\":\"1232132132113\",\n            \"dateExpiration\":\"12/21/2133\"\n        }]\n    }\n}"
+									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"110\",\n        \"idTipeServiceFk\": \"1\",\n        \"idDoorFk\": \"3\",\n        \"idContracAssociated_SE\": \"58\",\n        \"dateUp\": \"12/32/3211\",\n        \"dateDown\": null,\n        \"idAccessControlFk\": \"1\",\n        \"idInputReaderFk\": \"10\",\n        \"locationGabinet\": \"123123123213123\",\n        \"idFontFk\": \"8\",\n        \"aclaration\": \"1212312123213213\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"lock\": \"6\",\n        \"ouputReader\": \"10\",\n        \"ouputButom\": null,\n        \"isOuputReader\": \"1\",\n        \"isOuputButom\": null,\n        \"isBlocklingScrew\": \"1\",\n        \"idEmergencyButtonFk\": \"12\",\n        \"idShutdownKeyFk\": \"13\",\n        \"acaration2\": \"213213213123\",\n        \"portNumberRouter\": \"123123123123\",\n        \"addressClient\": \"1233123123\",\n        \"addressVpn\": \"3123213213\",\n        \"user\": \"3213123123\",\n        \"useVpn\": \"123123123\",\n        \"passVpn\": \"123123213\",\n        \"pass\": \"3123123\",\n        \"portHttp\": \"123123123\",\n        \"locationEmergencyButton\": \"1231231313\",\n        \"locationOffKey\": \"123123123123\",\n        \"battery_install\": [\n            {\n                \"idBatteryFk\": \"9\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"idProductoFk\": \"7\",\n                \"numberSerieFabric\": \"12312312312312\",\n                \"numberSerieInternal\": \"123123213123123\",\n                \"dateExpiration\": null\n            },\n            {\n                \"idProductoFk\": \"6\",\n                \"numberSerieFabric\": \"123123123123213\",\n                \"numberSerieInternal\": \"12312312312312\",\n                \"dateExpiration\": null\n            },\n            {\n                \"idProductoFk\": \"10\",\n                \"numberSerieFabric\": \"123123123123\",\n                \"numberSerieInternal\": \"123213123123\",\n                \"dateExpiration\": null,\n                \"optAux\": \"entrance\"\n            },\n            {\n                \"idProductoFk\": \"8\",\n                \"numberSerieFabric\": \"12321321312\",\n                \"numberSerieInternal\": \"123213213123\",\n                \"dateExpiration\": \"12/31/2321\"\n            },\n            {\n                \"idProductoFk\": \"10\",\n                \"numberSerieFabric\": \"123123213213\",\n                \"numberSerieInternal\": \"123213213213213\",\n                \"dateExpiration\": null,\n                \"optAux\": \"exit\"\n            },\n            {\n                \"idProductoFk\": \"12\",\n                \"numberSerieFabric\": \"2132131231233\",\n                \"numberSerieInternal\": \"1232132121321\",\n                \"dateExpiration\": null\n            },\n            {\n                \"idProductoFk\": \"13\",\n                \"numberSerieFabric\": \"213123123123\",\n                \"numberSerieInternal\": \"12321312321\",\n                \"dateExpiration\": null\n            },\n            {\n                \"idProductoFk\": \"9\",\n                \"numberSerieFabric\": \"2131232321313\",\n                \"numberSerieInternal\": \"1232132132113\",\n                \"dateExpiration\": \"12/21/2133\"\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addaccescontrol"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/addaccescontrol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"addaccescontrol"
+									]
+								}
 							},
 							"response": []
 						},
@@ -1110,7 +2151,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientServicesAccessControl\": 96,\n        \"idDoorFk\": \"4\",\n        \"idContracAssociated_SE\": \"347557\",\n        \"dateUp\": \"2020-11-24\",\n        \"dateDown\": null,\n        \"idAccessControlFk\": \"1\",\n        \"idInputReaderFk\": \"10\",\n        \"locationGabinet\": \"123123123213123\",\n        \"idFontFk\": \"8\",\n        \"aclaration\": \"1212312123213213\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"lock\": \"6\",\n        \"ouputReader\": \"10\",\n        \"ouputButom\": null,\n        \"isOuputReader\": \"1\",\n        \"isOuputButom\": null,\n        \"isBlocklingScrew\": \"1\",\n        \"idEmergencyButtonFk\": \"12\",\n        \"idShutdownKeyFk\": \"13\",\n        \"acaration2\": \"213213213123\",\n        \"portNumberRouter\": \"123123123123\",\n        \"addressClient\": \"1233123123\",\n        \"addressVpn\": \"3123213213\",\n        \"user\": \"3213123123\",\n        \"useVpn\": \"123123123\",\n        \"passVpn\": \"123123213\",\n        \"pass\": \"3123123\",\n        \"portHttp\": \"123123123\",\n        \"locationEmergencyButton\": \"1231231313\",\n        \"locationOffKey\": \"123123123123\",\n        \"battery_install\": [\n            {\n                \"idBatteryFk\": \"9\"\n            },\n            {\n                \"idBatteryFk\": \"10\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"idProductoFk\": \"7\",\n                \"numberSerieFabric\": \"12312312312312\",\n                \"numberSerieInternal\": \"123123213123123\",\n                \"dateExpiration\": null\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/editAccescontrol"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/editAccescontrol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"editAccescontrol"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1127,7 +2181,20 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"url": "http://localhost/Coferba/Back/index.php/Util/detinationLicense"
+										"url": {
+											"raw": "http://localhost/Coferba/Back/index.php/Util/detinationLicense",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"Util",
+												"detinationLicense"
+											]
+										}
 									},
 									"response": []
 								},
@@ -1136,7 +2203,20 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"url": "http://localhost/Coferba/Back/index.php/Util/department"
+										"url": {
+											"raw": "http://localhost/Coferba/Back/index.php/Util/department",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"path": [
+												"Coferba",
+												"Back",
+												"index.php",
+												"Util",
+												"department"
+											]
+										}
 									},
 									"response": []
 								}
@@ -1156,7 +2236,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"6\",\n        \"name\": \"Nombre de Prueba\",\n        \"idContracAssociated_SE\": \"1\",\n        \"dateUp\": \"2020-04-01\",\n        \"dateDown\": \"2020-04-01\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"idCompanyMonitorFK\": \"1\",\n        \"sucribeNumber\": \"1\",\n        \"idDetinationOfLicenseFk\": \"1\",\n        \"idDepartmentFk\": \"1\",\n        \"countNewLicense\": \"1\",\n        \"observation\": \"Observación de prueba\",\n        \"idParticularAddressFk\":\"2\",\n        \"licenses\": [\n            {\n                \"idUserSystem\": false,\n                \"fullName\": \"1\",\n                \"email\": \"1\",\n                \"phone\": \"1\",\n                \"keyword\": \"1\",\n                \"idOS\": \"1\",\n                \"profileUser\": \"1\"\n            },\n            {\n                \"idUserSystem\": false,\n                \"fullName\": \"1\",\n                \"email\": \"1\",\n                \"phone\": \"1\",\n                \"keyword\": \"1\",\n                \"idOS\": \"1\",\n                \"profileUser\": \"1\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addsmartpanic"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/addsmartpanic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"addsmartpanic"
+									]
+								}
 							},
 							"response": []
 						},
@@ -1174,7 +2267,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientServicesSmartPanic\": 6,\n        \"name\": \"Nombre de Prueba\",\n        \"idContracAssociated_SE\": \"1111\",\n        \"dateUp\": \"2020-04-01\",\n        \"dateDown\": \"2020-04-01\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"idCompanyMonitorFK\": \"1\",\n        \"sucribeNumber\": \"1\",\n        \"idDetinationOfLicenseFk\": \"1\",\n        \"idDepartmentFk\": \"1\",\n        \"countNewLicense\": \"1\",\n        \"observation\": \"Observación de prueba\",\n        \"idParticularAddressFk\": \"2\",\n        \"licenses\": [\n            {\n                \"isUserSystem\": false,\n                \"fullName\": \"1\",\n                \"email\": \"1\",\n                \"phone\": \"1\",\n                \"keyword\": \"1\",\n                \"idOS\": \"1\",\n                \"profileUser\": \"1\"\n            },\n            {\n                \"isUserSystem\": false,\n                \"fullName\": \"1\",\n                \"email\": \"1\",\n                \"phone\": \"1\",\n                \"keyword\": \"1\",\n                \"idOS\": \"1\",\n                \"profileUser\": \"1\"\n            }\n        ],\n        \"adicional\": [\n            {\n                \"numberSerieFabric\": \"645fghgfh\",\n                \"numberSerieInternal\": \"34456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 8\n            },\n            {\n                \"numberSerieFabric\": \"45fghgfh\",\n                \"numberSerieInternal\": \"834456hgfh5\",\n                \"dateExpiration\": \"\",\n                \"idProductoFk\": 5\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/editSmartpanic"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/editSmartpanic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"editSmartpanic"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1197,7 +2303,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientFk\": \"1\",\n        \"idTipeServiceFk\": \"5\",\n        \"name\": \"prueba\",\n        \"idContracAssociatedFk\": \"87745\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateUp\": \"2020-04-25\",\n        \"dateDown\": \"2020-04-25\",\n        \"companyMonitor\": \"1\",\n        \"numberPay\": \"44ghh-4\",\n        \"alarmPanel\": \"1\",\n        \"alarmKeyboard\": \"1\",\n        \"panelAlarm\": \"1\",\n        \"keyboardAlarm\": \"1\",\n        \"countZoneIntaled\": \"1\",\n        \"idTypeConectionRemote\": 1,\n        \"observation\": \"3434\",\n        \"tipo_conexion_remoto\": [\n            {\n                \"idTipoConexionRemoto\": 1,\n                \"data\": {\n                    \"company\": \"3454\",\n                    \"line\": \"ertert\"\n                }\n            },\n            {\n                \"idTipoConexionRemoto\": 2,\n                \"data\": {\n                    \"moduleIp\": \"rrttt\",\n                    \"nroSerieFrabric\": \"7klkl-klk\",\n                    \"nroSerieInternal\": \"nutyt-tytyll\",\n                    \"ip\": \"192.168.0.1\",\n                    \"codeProgrm\": \"123\",\n                    \"portProgrm\": \"43\",\n                    \"passwordAcces\": \"1232244\",\n                    \"codePart1\": \"123\",\n                    \"codePart2\": \"321\"\n                }\n            },\n            {\n                \"idTipoConexionRemoto\": 3,\n                \"data\": {\n                    \"moduleGprs\": \"1\",\n                    \"nroSerieFrabric\": \"klñk90\",\n                    \"nroSerieInternal\": \"null\",\n                    \"codeProgram\": \"1233\",\n                    \"portProgram\": \"2244\",\n                    \"passwordAcces\": \"121\",\n                    \"codePart1\": \"122\",\n                    \"codePart2\": \"11222\"\n                }\n            }\n        ],\n        \"adicional\": [\n            {\n                \"fk_idTipoCliente\": \"1\",\n                \"fk_idEncargado\": \"1\",\n                \"telefono\": \"0416-454000\",\n                \"calles_laterales\": \"no\",\n                \"calle_trasera\": \"no\",\n                \"fk_idServiciosAdicionales\": \"null\",\n                \"mail_reporte\": \"asa@as.com\",\n                \"fk_idFormatoTransmision\": 1,\n                \"fk_idAutomarcado\": \"1\",\n                \"horario_automarcado\": \"De 08:00 a 16:00\",\n                \"n_usuario_asalto\": \"1\",\n                \"contraseña_asalto\": \"454545\",\n                \"comisaria\": \"null\",\n                \"tlf_comisaria\": \"445-454545\",\n                \"servicio_emergencia_medica\": \"null\",\n                \"n_de_socio\": \"null\",\n                \"plan\": \"null\",\n                \"observacion_general\": \"nota adicional\",\n                \"franjas_horarias\": [\n                    {\n                        \"dia\": \"lunes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"martes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"miercoles\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"jueves\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"viernes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"sabado\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"domingo\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    }\n                ],\n                \"personas_para_dar_aviso\": [\n                    {\n                        \"fk_idUserSystema\": \"null\",\n                        \"nombre_apellido\": \"a\",\n                        \"vinculo\": \"null\",\n                        \"palabra_clave\": \"null\",\n                        \"telefono\": \"null\",\n                        \"numero_del_usuario\": \"null\"\n                    }\n                ],\n                \"personas_para_verificar_en_el_lugar\": [\n                    {\n                        \"fk_idUserSystema\": \"null\",\n                        \"nombre_apellido\": \"as\",\n                        \"vinculo\": \"null\",\n                        \"telefono\": \"null\",\n                        \"numero_del_usuario\": \"null\"\n                    }\n                ]\n            }\n        ],\n        \"sensores_de_alarmas\": [\n            {\n                \"numberZoneSensor\": \"null\",\n                \"area\": \"null\",\n                \"nroZoneTamper\": \"null\",\n                \"locationLon\": \"null\",\n                \"idDvr\": \"null\",\n                \"idCameraFk\": \"null\",\n                \"nroInterno\": \"null\",\n                \"nroFrabric\": \"null\"\n            }\n        ],\n        \"baterias_instaladas\": [\n            {\n                \"nroInternal\": null,\n                \"nroFabric\": null,\n                \"dateExpired\": null,\n                \"isControlSchedule\": null,\n                \"fkidClientServicesAlarms\": null\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/addalarm"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/addalarm",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"addalarm"
+									]
+								}
 							},
 							"response": []
 						},
@@ -1215,7 +2334,20 @@
 									"mode": "raw",
 									"raw": "{\n    \"service\": {\n        \"idClientServicesAlarms\":49,\n        \"name\": \"prueba\",\n        \"idContracAssociatedFk\": \"87745\",\n        \"idTypeMaintenanceFk\": \"1\",\n        \"dateUp\": \"2020-04-25\",\n        \"dateDown\": \"2020-04-25\",\n        \"companyMonitor\": \"1\",\n        \"numberPay\": \"44ghh-4\",\n        \"alarmPanel\": \"1\",\n        \"alarmKeyboard\": \"1\",\n        \"panelAlarm\": \"1\",\n        \"keyboardAlarm\": \"1\",\n        \"countZoneIntaled\": \"1\",\n        \"idTypeConectionRemote\": 1,\n        \"observation\": \"3434\",\n        \"tipo_conexion_remoto\": [\n            {\n                \"idTipoConexionRemoto\": 1,\n                \"data\": {\n                    \"company\": \"3454\",\n                    \"line\": \"ertert\"\n                }\n            },\n            {\n                \"idTipoConexionRemoto\": 2,\n                \"data\": {\n                    \"moduleIp\": \"rrttt\",\n                    \"nroSerieFrabric\": \"7klkl-klk\",\n                    \"nroSerieInternal\": \"nutyt-tytyll\",\n                    \"ip\": \"192.168.0.1\",\n                    \"codeProgrm\": \"123\",\n                    \"portProgrm\": \"43\",\n                    \"passwordAcces\": \"1232244\",\n                    \"codePart1\": \"123\",\n                    \"codePart2\": \"321\"\n                }\n            },\n            {\n                \"idTipoConexionRemoto\": 3,\n                \"data\": {\n                    \"moduleGprs\": \"1\",\n                    \"nroSerieFrabric\": \"klñk90\",\n                    \"nroSerieInternal\": \"null\",\n                    \"codeProgram\": \"1233\",\n                    \"portProgram\": \"2244\",\n                    \"passwordAcces\": \"121\",\n                    \"codePart1\": \"122\",\n                    \"codePart2\": \"11222\"\n                }\n            }\n        ],\n        \"adicional\": [\n            {\n               \"fk_idTipoCliente\": \"1\",\n                \"fk_idEncargado\": \"1\",\n                \"telefono\": \"0416-454000\",\n                \"calles_laterales\": \"no\",\n                \"calle_trasera\": \"no\",\n                \"fk_idServiciosAdicionales\": \"null\",\n                \"mail_reporte\": \"asa@as.com\",\n                \"fk_idFormatoTransmision\": 1,\n                \"fk_idAutomarcado\": \"1\",\n                \"horario_automarcado\": \"De 08:00 a 16:00\",\n                \"n_usuario_asalto\": \"1\",\n                \"contraseña_asalto\": \"454545\",\n                \"comisaria\": \"null\",\n                \"tlf_comisaria\": \"445-454545\",\n                \"servicio_emergencia_medica\": \"null\",\n                \"n_de_socio\": \"null\",\n                \"plan\": \"null\",\n                \"observacion_general\": \"nota adicional 2\",\n                \"franjas_horarias\": [\n                    {\n                        \"dia\": \"lunes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"martes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"miercoles\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"jueves\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"viernes\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"sabado\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    },\n                    {\n                        \"dia\": \"domingo\",\n                        \"desde1\": \"07:00\",\n                        \"hasta1\": \"12:00\",\n                        \"desde2\": \"17:00\",\n                        \"hasta2\": \"20:00\"\n                    }\n                ],\n                \"personas_para_dar_aviso\": [\n                    {\n                        \"fk_idUserSystema\": \"null\",\n                        \"nombre_apellido\": \"a\",\n                        \"vinculo\": \"null\",\n                        \"palabra_clave\": \"null\",\n                        \"telefono\": \"null\",\n                        \"numero_del_usuario\": \"null\"\n                    }\n                ],\n                \"personas_para_verificar_en_el_lugar\": [\n                    {\n                        \"fk_idUserSystema\": \"null\",\n                        \"nombre_apellido\": \"as\",\n                        \"vinculo\": \"null\",\n                        \"telefono\": \"null\",\n                        \"numero_del_usuario\": \"null\"\n                    }\n                ]\n            }\n        ],\n        \"sensores_de_alarmas\": [\n            {\n                \"numberZoneSensor\": \"null\",\n                \"area\": \"null\",\n                \"nroZoneTamper\": \"null\",\n                \"locationLon\": \"null\",\n                \"idDvr\": \"null\",\n                \"idCameraFk\": \"null\",\n                \"nroInterno\": \"null\",\n                \"nroFrabric\": \"null\"\n            }\n        ],\n        \"baterias_instaladas\": [\n            {\n                \"nroInternal\": null,\n                \"nroFabric\": null,\n                \"dateExpired\": null,\n                \"isControlSchedule\": null,\n                \"fkidClientServicesAlarms\": null\n            }\n        ]\n    }\n}"
 								},
-								"url": "http://localhost/Coferba/Back/index.php/Services/editAlarm"
+								"url": {
+									"raw": "http://localhost/Coferba/Back/index.php/Services/editAlarm",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"Back",
+										"index.php",
+										"Services",
+										"editAlarm"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1244,7 +2376,24 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/services/servicesPorIdContrato/87745"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/services/servicesPorIdContrato/58",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"services",
+								"servicesPorIdContrato",
+								"58"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1271,7 +2420,24 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/services/getServicesPorIdCliente/1"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/services/getServicesPorIdCliente/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"services",
+								"getServicesPorIdCliente",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1286,7 +2452,24 @@
 								"type": "text"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/services/getAditionalIdServicesFk/1"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/services/getAditionalIdServicesFk/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"services",
+								"getAditionalIdServicesFk",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1315,7 +2498,23 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/add"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Zonas/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Zonas",
+								"add"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1339,7 +2538,23 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/edit"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Zonas/edit",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Zonas",
+								"edit"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1354,7 +2569,23 @@
 								"type": "text"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/listar"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Zonas/listar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Zonas",
+								"listar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1369,7 +2600,24 @@
 								"type": "text"
 							}
 						],
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Zonas/delete/1"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Zonas/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Zonas",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1398,7 +2646,23 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/add"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Contrato/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Contrato",
+								"add"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1422,7 +2686,23 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/update"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Contrato/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Contrato",
+								"update"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1449,7 +2729,23 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/get"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Contrato/get",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Contrato",
+								"get"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1476,7 +2772,24 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/getIdClient/82"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Contrato/getIdClient/82",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Contrato",
+								"getIdClient",
+								"82"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1503,7 +2816,25 @@
 								}
 							}
 						},
-						"url": "http://127.0.0.1/Coferba/Back/index.php/Contrato/getIdContrato/1/4"
+						"url": {
+							"raw": "http://127.0.0.1/Coferba/Back/index.php/Contrato/getIdContrato/1/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"Coferba",
+								"Back",
+								"index.php",
+								"Contrato",
+								"getIdContrato",
+								"1",
+								"4"
+							]
+						}
 					},
 					"response": []
 				}
