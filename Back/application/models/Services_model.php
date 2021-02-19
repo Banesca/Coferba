@@ -568,7 +568,7 @@ class Services_model extends CI_Model {
                 'dateUp'                 => $item['dateUp'],
                 'idCompanyFk'            => $item['idCompanyFk'],
                 'idDvr_nvrFk'            => $item['idDvr_nvrFk'],
-                'addessClient'           => $item['addessClient'],
+                'location'               => $item['location'],
                 'maxCamera'              => $item['maxCamera'],
                 'idTotenModelFk'         => $item['idTotenModelFk'],
                 'tipeMaintenance_SE'     => $item['idTypeMaintenanceFk'],
@@ -579,7 +579,7 @@ class Services_model extends CI_Model {
                 'numberPort1'            => $item['nroPort1'],
                 'namePort2'              => $item['namePort2'],
                 'numberPort2'            => $item['nroPort2'],
-                'addressClientInter'     => $item['addessClient'],
+                'addressClientInter'     => $item['addressClientInter'],
                 'portHttpInter'          => $item['portHttp'],
                 'namePortInter'          => $item['namePort'],
                 'numberPortInter'        => $item['port'],
@@ -632,7 +632,7 @@ class Services_model extends CI_Model {
                 'dateUp'                 => $item['dateUp'],
                 'idCompanyFk'            => $item['idCompanyFk'],
                 'idDvr_nvrFk'            => $item['idDvr_nvrFk'],
-                'addessClient'           => $item['addessClient'],
+                'location'               => $item['location'],
                 'maxCamera'              => $item['maxCamera'],
                 'idTotenModelFk'         => $item['idTotenModelFk'],
                 'tipeMaintenance_SE'     => $item['idTypeMaintenanceFk'],
@@ -643,7 +643,7 @@ class Services_model extends CI_Model {
                 'numberPort1'            => $item['nroPort1'],
                 'namePort2'              => $item['namePort2'],
                 'numberPort2'            => $item['nroPort2'],
-                'addressClientInter'     => $item['addessClient'],
+                'addressClientInter'     => $item['addressClientInter'],
                 'portHttpInter'          => $item['portHttp'],
                 'namePortInter'          => $item['namePort'],
                 'numberPortInter'        => $item['port'],
@@ -1882,3 +1882,4 @@ class Services_model extends CI_Model {
 }
 
 ?>
+
