@@ -1018,7 +1018,7 @@ class Services_model extends CI_Model {
             $servicios = $this->db->get();
 
             if ($servicios->num_rows() > 0) {
-                foreach ($servicios->result_array() as $key => $item) {
+                foreach (array_unique($servicios->result_array(),true)as $key => $item) {
                     foreach ($relaciones as $tabla1 => $data) {
                         foreach ($data as $id => $item3) {
                             // if ($tabla1=="tb_client_services_access_control") {
@@ -1082,11 +1082,15 @@ class Services_model extends CI_Model {
                                         }
 
                                     } elseif ($tabla == "tb_client_services_smart_panic" && $id == 'fk') {
+                                        //return 'a';
+                                        //return $servicios->result_array();
                                         foreach ($data[$id] as $idFk => $item3Fk) {
                                             $dataG = $this->db->select(" * ")
                                                 ->from($item3Fk[0])
                                                 ->where($item3Fk[1], $item['idClientServicesSmartPanicFk'])
                                                 ->get();
+                                            //return $this->db->last_query();
+                                            //return $dataG->result_array();
                                             $aux   = [];
                                             if ($dataG->num_rows() > 0) {
                                                 foreach ($dataG->result_array() as $ite2) {
