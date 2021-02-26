@@ -7,6 +7,19 @@ body{
 .modal {
   overflow-y:auto;
 }
+
+.text-success{
+    color: #5cb85c;
+    border-color: #4cae4c;
+}
+.text-warning{
+    color: #f0ad4e;
+    border-color: #eea236;
+}
+.text-danger{
+    color: #d9534f;
+    border-color: #d43f3a;
+}
 /*UI SELECT FOR NO ITEM FOUND RULE*/
 .ui-select-no-choice { 
   background-color: #f0ad4e;
@@ -105,6 +118,38 @@ th {
     color: rgba(255, 188, 87, 1);
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
+}
+
+/***********************************/
+/*       Input File Upload QR      */
+/***********************************/
+input.fileUpload{
+  display: none;
+}
+.dropzone {
+  position: relative;
+  height: 200px;
+  border: 2px dashed #b3b3b3;
+  border-radius: 4px;
+  background-color: #f3f3f3;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.dropzone .msg{
+  font-size: 20px;
+  font-weight: bold;
+  color: #c3c3c3;
+  padding: 0 10px;
+}
+
+.popover{
+    width:auto !important;
+    height:auto !important;    
+}
+.popover img{
+  width:200px !important;
+  height:200px !important;
 }
 /***********************************/
 /*   Radio button custom default   */
@@ -242,7 +287,7 @@ th {
 }
 /*main_container*/
 .main_container {
-    padding-top: 3em;
+    padding-top: 2em;
     margin-top: 8.6em;
     display: flex;
     flex-direction: column; 
@@ -586,7 +631,20 @@ th {
     color: #8a6d3b;
     border-color: #faebcc;
   }
-    /*  */
+  .well-success{
+    background-color: #dff0d8; 
+    color: #8a6d3b;
+    border-color: #d0f3d1;
+  }  
+/*********************/
+/*font-size-12px*/
+.f-s-12{
+  font-size: 12px !important;
+}
+
+.font-size-18px{
+  font-size: 18px !important;
+}
 
     .depto-warning {
       color: #ffc107!important;
@@ -1004,13 +1062,13 @@ th {
   padding-left: 5px;
 }
 .from-middle-to-label{
-  margin-left: 1.2em;
+  margin-left: 1.3em;
 }
 .from-middle-from-label{
-  margin-left: 1.0em;
+  margin-left: 1.3em;
 }
 .from-rigth-to-label{
-  margin-left: 0.7em;
+  margin-left: 1.3em;
 }
 /*ng-switch animation*/
 
@@ -1058,7 +1116,7 @@ th {
   text-align: center;
 }
 .btn-group-mg-top-s{
-      margin-top: 0.2%;
+      margin-top: 0.8%;
 }
 /*Form control Margin Left */
 .from-control-ml{
@@ -1904,6 +1962,10 @@ input:checked + .slider-3x:before {
 .card-depto:hover{
   transition: box-shadow .25s;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.card-depto h3:hover{
+  color: #777;
+  border-color: #fff;
 }
 .card-depto-content:hover{
   color: #777;

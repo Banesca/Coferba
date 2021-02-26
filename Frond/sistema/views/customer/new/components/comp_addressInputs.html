@@ -62,6 +62,7 @@
 	  				placeholder="Piso"
 	  				ng-disabled="customer.new.isNotCliente || customer.new.nameAddress==''" 
 	  				ng-required="(!customer.new.isNotCliente)" 
+	  				ng-pattern="pattOnlyNumbersX2"
 	  				ng-model="customer.new.floor" type="text" ng-keydown="fnLoadPhoneMask(); enabledNextBtn();" autofocus >
 	    </div>
 	</div>	

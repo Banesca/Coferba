@@ -32,7 +32,7 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   $scope.new = {pwd1: '', pwd2:''};
   $scope.redirectSuccessfull = false;
   $scope.counT  =5;
-  $scope.redirect ="#/login";
+  $scope.redirect ="/login";
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
@@ -100,7 +100,7 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
       data2update.user.isEditUser='true';
       $scope.sysRequestInit();
   }else{
-      location.href = "#/login";
+      location.href = "/login";
   }
   /**************************************************
   *                                                 *

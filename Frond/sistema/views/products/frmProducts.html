@@ -1,5 +1,5 @@
 <!-- MANAGE PRODUCTSs-->
-<div class="col-md-12">
+<div class="col-md-12" style="margin-top: -2em;">
   <div class="panel panel-default padding-panel">
     <div class="panel-heading">
       <h3 class="panel-title">GESTION DE PRODUCTOS </h3>
@@ -86,24 +86,16 @@
                         <div class="clear-fix"></div>
                         <!-- TABLE LIST WHERE IS DISPLAYED THE PRODUCTS -->
                         <div ng-include="'views/products/listProducts.html'"></div>
-                        <!-- PAGINATION -->
-                        <div>
-                          <ul class="pager">
-                              <li ng-class="{disabled: currentPage == 0}">
-                                <a href ng-click="prevPage()">« Anterior</a>
-                              </li>
-                              <!--<li ng-repeat="n in range(pagedItems.length)[currentPage]"
-                                  ng-class="{active: n == currentPage}"
-                                  ng-click="setPage()">
-                                <a href ng-bind="n + 1">1</a>
-                              </li>-->
-                              <span style="margin-top:-5px" class="badge badge-success">{{currentPage+1}} / {{pagedItems.length}}</span>
-                              <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
-                                <a href ng-click="nextPage()">Siguiente »</a>
-                              </li>
-                          </ul>
+                      <!-- PAGINATION -->
+                        <div ng-if="rsProductsData.length>=10" style="text-align: center;">
+                          <div ng-if="rsProductsData.length>10" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>  
+                              <!--<dir-pagination-controls
+                                max-size="10"
+                                direction-links="true"
+                                boundary-links="true" >
+                            </dir-pagination-controls>-->
                         </div>
-                        <!-- //PAGINATION -->
+                      <!-- //PAGINATION -->
                     </div>
             </div>
           </div>   

@@ -178,7 +178,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
 *                                                 *
 **************************************************/
   $scope.fnAssignDepto = function(userData){
-    $http.post(serverHost+serverBackend+"Department/update",userData)
+    $http.post(serverBackend+"Department/update",userData)
           .then(function(success, data) {
                   inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
                     ttl:3000, type: 'success'
@@ -200,7 +200,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.CallFilterFormU = function(){
      $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/User/filterForm"
+        url : "Coferba/Back/index.php/User/filterForm"
       }).then(function mySuccess(response) {
           $scope.listProfile      = response.data.profile;
           $scope.lisTypeTenant    = response.data.type;
@@ -218,7 +218,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.getAllAddress = function (){
     $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/Direccion"
+        url : "Coferba/Back/index.php/Direccion"
       }).then(function mySuccess(response){
           $scope.ListAddress = response.data;
       }, function myError (response){
@@ -330,7 +330,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
     $scope.listUser = "";
      $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/Ticket/filter"
+        url : "Coferba/Back/index.php/Ticket/filter"
       }).then(function mySuccess(response) {
           $scope.listTypeDelivery = response.data.typedelivery;
           $scope.listTypeLost     = response.data.reason_disabled_item;
@@ -357,7 +357,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.getTypeAttendant = function(){
      $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/Ticket/typeAttendant"
+        url : "Coferba/Back/index.php/Ticket/typeAttendant"
       }).then(function mySuccess(response) {
             $scope.listTypeAttendant = response.data;
              $scope.attendantTypeFound=true;
@@ -377,7 +377,7 @@ $scope.deptoHasOwner = function (idDeparment) {
     if(idDepto){
       $http({
         method : "GET",
-        url : serverHost+serverBackend+"Department/chekDepartamenteOwner/"+idDepto
+        url : serverBackend+"Department/chekDepartamenteOwner/"+idDepto
       }).then(function mySuccess(response) {
             if (response.data=="true"){
               $scope.ownerFound=true;
@@ -431,9 +431,9 @@ $scope.getDeptoListByAddress = function (idAddress){
      console.log("idAddressTmp: "+idAddressTmp);
      var urlT="";
       if($scope.register.idProfileKf==3){
-        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
+        urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
       }else{
-        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+        urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
       }
 
     $http({

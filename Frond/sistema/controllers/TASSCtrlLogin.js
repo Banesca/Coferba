@@ -17,7 +17,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
   $scope.swOption            = "";
   tokenSystem.destroyTokenStorage(4);
   $scope.counT  =5;
-  $scope.redirect ="#/mainapp";
+  $scope.redirect ="/mainapp";
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
   if ($scope.sysToken || $scope.sysLoggedUser ){
@@ -143,11 +143,11 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
       switch ($scope.loginResult){
         case 1:
           $scope.redirect2MainApp = true;
-          $scope.countDownRedirect("#/mainapp", 3);
+          $scope.countDownRedirect("/mainapp", 3);
         break;
         case 2:
           $scope.redirect2NewPwd = true;
-          $scope.countDownRedirect("#/newpwd", 3);
+          $scope.countDownRedirect("/newpwd", 3);
         break;
         case 3:
           //$scope.redirect2ResendEmail = true;
@@ -234,7 +234,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
           console.log("Email registrado / "+ $scope.signup.email);
         }else{
           $scope.redirect2Register = true;
-        $scope.countDownRedirect("#/register", 5);
+        $scope.countDownRedirect("/register", 5);
 
         }
     });
@@ -266,11 +266,11 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
       switch (value){
         case 'register':
           $scope.redirect2Register = true;
-          $scope.countDownRedirect("#/register", 3);
+          $scope.countDownRedirect("/register", 3);
         break;
         case 'forgotpwd':
           $scope.redirect2RestorePwd = true;
-          $scope.countDownRedirect("#/forgotpwd", 3);
+          $scope.countDownRedirect("/forgotpwd", 3);
         break;
 
         default:

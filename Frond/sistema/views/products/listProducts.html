@@ -6,12 +6,13 @@
           <th>Codigo</th>
           <th>Marca</th>
           <th>Modelo</th>
-          <th>#Fabrica</th>
-          <th>#Interno</th>
+          <!--<th><i class="fas fa-barcode"> </i>Fabrica</th>
+          <th><i class="fas fa-barcode"> </i>Interno</th>
           <th>Expiracion</th>
           <th>Horario</th>
-          <th>Precio</th>
-          <th>Estatus</th>
+          <th>Precio</th>-->
+          <th>Clasificaci&#243;n</th>
+          <th><i class="glyphicon icon-flag"> </i>Estatus</th>
           <!--
           <th data-toggle="tooltip" data-placement="right" title="Descripcion del producto">Descripcion</th>
           <th data-toggle="tooltip" data-placement="right" title="Codigo del fabricante">Codigo</th>
@@ -35,7 +36,7 @@
           <td ng-trim="true">{{item.codigoFabric}}</td>
           <td ng-trim="true">{{item.brand}}</td>
           <td ng-trim="true">{{item.model}}</td>
-          <td ng-trim="true" class="c-allign-td">
+          <!--<td ng-trim="true" class="c-allign-td">
               <label ng-if="item.isNumberSerieFabric==1" class="label label-success">SI</label>
               <label ng-if="item.isNumberSerieFabric==0" class="label label-warning">NO</label>
           </td>
@@ -47,13 +48,13 @@
               <label ng-if="item.isDateExpiration==1" class="label label-success">SI</label>
               <label ng-if="item.isDateExpiration==0" class="label label-warning">NO</label>
           </td>
-
           <td ng-trim="true" class="c-allign-td">
               <label ng-if="item.isControlSchedule==1" class="label label-success">SI</label>
               <label ng-if="item.isControlSchedule==0" class="label label-warning">NO</label>
               <label ng-if="item.isControlSchedule==null" class="label label-warning">N/A</label>
-          </td>
-          <td ng-trim="true">{{item.priceFabric}}</td>
+          </td>-->
+          <!--<td ng-trim="true">{{item.priceFabric}}</td>-->
+          <td ng-trim="true"><label ng-if="item.idStatusFk==1" class="label label-default">{{item.classification}}</label></td>
           <td ng-trim="true" class="c-allign-td"> <!-- STATUS -->
               <label ng-if="item.idStatusFk==1" class="label label-success">ACTIVO
               </label>

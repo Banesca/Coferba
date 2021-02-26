@@ -7,7 +7,7 @@ moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $root
   $scope.register = {idProfileKf:'', fname:'', lname:'', email:'', password1:'', password2:'', phonelocalNumberUser:'', phoneMovilNumberUser: ''};
   $scope.redirectSuccessfull = false;
   $scope.counT  =5;
-  $scope.redirect ="#/login";
+  $scope.redirect ="/login";
   $scope.email2Register = {};
   $scope.selectIdAddressKf = {};
   $scope.sysRegisteredUser = {};
@@ -77,81 +77,81 @@ $scope.sysCheckCode = function(){
   *               REGISTRO DE USUARIO               *
   *                                                 *
   **************************************************/
-  $scope.sysRegisterFn = function(){
-    $scope.tmp.idDepartmentKf=$scope.register.idDepartmentKf;$scope.register.idAddrAttKf /*?$scope.selectIdAddressKf.selected.idAdress*/
-    $scope.register.idAddrAttKf=$scope.reg.idAddrAttKf;
-    console.log($scope.register.idAddrAttKf);
-    console.log($scope.userData2Add());
-      userServices.addUser($scope.userData2Add()).then(function(data){
-        $scope.addUserResult = data;
-          if($scope.addUserResult){
-            console.log("REGISTERED SUCCESSFULLY");
-              if($scope.register.idProfileKf==3){
-                userServices.checkUserMail($scope.register.email, "").then(function(data) {
-                  $scope.mailCheckResult= data;
-                  if($scope.mailCheckResult){
-                      $scope.sysRegisteredUser = $scope.sysLoggedUser = tokenSystem.getTokenStorage(3);
-                            var dpto =
-                                      {
-                                           department: { 
-                                                        idDepartment      : $scope.tmp.idDepartmentKf,
-                                                        idUserKf          : $scope.sysRegisteredUser.idUser
-                                                       }
-                                      }; 
-                      $scope.fnAssignDepto(dpto);
-                  }
-                });
-              }else{
-                  $scope.redirectSuccessfull = true;
-                  $scope.countDownRedirect($scope.redirect, $scope.counT);
-              }
-          }
-      });
- 
-  }
-  $scope.userData2Add = function () {
-    if($scope.register.idProfileKf==3){
-      $scope.register.idTypeTenantKf ="1";
-      $scope.register.idDepartmentKf=null;
-    }else if ($scope.register.idProfileKf==5){
-      $scope.register.idTypeTenantKf ="2";
-      $scope.register.isDepartmentApproved = 0;
-    }else if($scope.register.idProfileKf==6 && $scope.register.idTypeAttKf==2){
-      $scope.register.idTypeTenantKf=1;
-      $scope.register.isRequireAuthentication=1;
-    }else{
-      $scope.register.idTypeTenantKf=null;
-      $scope.register.isRequireAuthentication=0;
-      $scope.register.idDepartmentKf=null;
-      $scope.register.isDepartmentApproved = null;
+    $scope.sysRegisterFn = function(){
+      $scope.tmp.idDepartmentKf=$scope.register.idDepartmentKf;$scope.register.idAddrAttKf /*?$scope.selectIdAddressKf.selected.idAdress*/
+      $scope.register.idAddrAttKf=$scope.reg.idAddrAttKf;
+      console.log($scope.register.idAddrAttKf);
+      console.log($scope.userData2Add());
+        userServices.addUser($scope.userData2Add()).then(function(data){
+          $scope.addUserResult = data;
+            if($scope.addUserResult){
+              console.log("REGISTERED SUCCESSFULLY");
+                if($scope.register.idProfileKf==3){
+                  userServices.checkUserMail($scope.register.email, "").then(function(data) {
+                    $scope.mailCheckResult= data;
+                    if($scope.mailCheckResult){
+                        $scope.sysRegisteredUser = $scope.sysLoggedUser = tokenSystem.getTokenStorage(3);
+                              var dpto =
+                                        {
+                                             department: { 
+                                                          idDepartment      : $scope.tmp.idDepartmentKf,
+                                                          idUserKf          : $scope.sysRegisteredUser.idUser
+                                                         }
+                                        }; 
+                        $scope.fnAssignDepto(dpto);
+                    }
+                  });
+                }else{
+                    $scope.redirectSuccessfull = true;
+                    $scope.countDownRedirect($scope.redirect, $scope.counT);
+                }
+            }
+        });
+   
     }
-    if($scope.register.idProfileKf!=2 && $scope.register.idProfileKf!=4 && $scope.register.idProfileKf!=4 && $scope.register.idAddrAttKf){
-      $scope.register.idCompanyKf = $scope.getCompanyFromAddress();
-    }
-    var user =
-          {
-            user:{
-                        fullNameUser            : $scope.register.fname+' '+$scope.register.lname,
-                        emailUser               : $scope.register.email,
-                        phoneNumberUser         : $scope.register.phoneMovilNumberUser,
-                        phoneLocalNumberUser    : $scope.register.phonelocalNumberUser,
-                        passwordUser            : $scope.register.password2,
-                        idProfileKf             : $scope.register.idProfileKf,
-                        idCompanyKf             : $scope.register.idCompanyKf,
-                        /*-----------------------------------------*/
-                        idAddresKf              : $scope.register.idAddrAttKf,
-                        idTyepeAttendantKf      : $scope.register.idTypeAttKf,
-                        idTypeTenantKf          : $scope.register.idTypeTenantKf,
-                        descOther               : $scope.register.typeOtherAtt,
-                        idDepartmentKf          : $scope.register.idDepartmentKf,
-                        isEdit                  : 1,
-                        isDepartmentApproved    : $scope.register.isDepartmentApproved,
-                        requireAuthentication   : $scope.register.isRequireAuthentication
-                  }
-          };
-    return user;
-  };
-
+    $scope.userData2Add = function () {
+      if($scope.register.idProfileKf==3){
+        $scope.register.idTypeTenantKf ="1";
+        $scope.register.idDepartmentKf=null;
+      }else if ($scope.register.idProfileKf==5){
+        $scope.register.idTypeTenantKf ="2";
+        $scope.register.isDepartmentApproved = 0;
+      }else if($scope.register.idProfileKf==6 && $scope.register.idTypeAttKf==2){
+        $scope.register.idTypeTenantKf=1;
+        $scope.register.isRequireAuthentication=1;
+      }else{
+        $scope.register.idTypeTenantKf=null;
+        $scope.register.isRequireAuthentication=0;
+        $scope.register.idDepartmentKf=null;
+        $scope.register.isDepartmentApproved = null;
+      }
+      if($scope.register.idProfileKf!=2 && $scope.register.idProfileKf!=4 && $scope.register.idProfileKf!=4 && $scope.register.idAddrAttKf){
+        $scope.register.idCompanyKf = $scope.getCompanyFromAddress();
+      }
+      var user =
+            {
+              user:{
+                          fullNameUser            : $scope.register.fname+' '+$scope.register.lname,
+                          emailUser               : $scope.register.email,
+                          phoneNumberUser         : $scope.register.phoneMovilNumberUser,
+                          phoneLocalNumberUser    : $scope.register.phonelocalNumberUser,
+                          passwordUser            : $scope.register.password2,
+                          idProfileKf             : $scope.register.idProfileKf,
+                          idCompanyKf             : $scope.register.idCompanyKf,
+                          /*-----------------------------------------*/
+                          idAddresKf              : $scope.register.idAddrAttKf,
+                          idTyepeAttendantKf      : $scope.register.idTypeAttKf,
+                          idTypeTenantKf          : $scope.register.idTypeTenantKf,
+                          descOther               : $scope.register.typeOtherAtt,
+                          idDepartmentKf          : $scope.register.idDepartmentKf,
+                          isEdit                  : 1,
+                          isDepartmentApproved    : $scope.register.isDepartmentApproved,
+                          requireAuthentication   : $scope.register.isRequireAuthentication
+                    }
+            };
+      return user;
+    };
+/**************************************************/
 $scope.sysCheckEmail = function(){
   $scope.sysEmailRegistered=false;
   if($scope.register.email){
@@ -178,7 +178,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
 *                                                 *
 **************************************************/
   $scope.fnAssignDepto = function(userData){
-    $http.post(serverHost+serverBackend+"Department/update",userData)
+    $http.post(serverBackend+"Department/update",userData)
           .then(function(success, data) {
                   inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
                     ttl:3000, type: 'success'
@@ -200,7 +200,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.CallFilterFormU = function(){
      $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/User/filterForm"
+        url : "Coferba/Back/index.php/User/filterForm"
       }).then(function mySuccess(response) {
           $scope.listProfile      = response.data.profile;
           $scope.lisTypeTenant    = response.data.type;
@@ -218,7 +218,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.getAllAddress = function (){
     $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/Direccion"
+        url : "Coferba/Back/index.php/Direccion"
       }).then(function mySuccess(response){
           $scope.ListAddress = response.data;
       }, function myError (response){
@@ -330,7 +330,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
     $scope.listUser = "";
      $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/Ticket/filter"
+        url : "Coferba/Back/index.php/Ticket/filter"
       }).then(function mySuccess(response) {
           $scope.listTypeDelivery = response.data.typedelivery;
           $scope.listTypeLost     = response.data.reason_disabled_item;
@@ -357,7 +357,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.getTypeAttendant = function(){
      $http({
         method : "GET",
-        url : serverHost+"Coferba/Back/index.php/Ticket/typeAttendant"
+        url : "Coferba/Back/index.php/Ticket/typeAttendant"
       }).then(function mySuccess(response) {
             $scope.listTypeAttendant = response.data;
              $scope.attendantTypeFound=true;
@@ -377,7 +377,7 @@ $scope.deptoHasOwner = function (idDeparment) {
     if(idDepto){
       $http({
         method : "GET",
-        url : serverHost+serverBackend+"Department/chekDepartamenteOwner/"+idDepto
+        url : serverBackend+"Department/chekDepartamenteOwner/"+idDepto
       }).then(function mySuccess(response) {
             if (response.data=="true"){
               $scope.ownerFound=true;
@@ -431,9 +431,9 @@ $scope.getDeptoListByAddress = function (idAddress){
      console.log("idAddressTmp: "+idAddressTmp);
      var urlT="";
       if($scope.register.idProfileKf==3){
-        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
+        urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
       }else{
-        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+        urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
       }
 
     $http({

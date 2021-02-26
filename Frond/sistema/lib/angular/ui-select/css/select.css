@@ -150,8 +150,8 @@ body > .select2-container.open {
 
 .ui-select-bootstrap .ui-select-toggle {
   position: relative;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
 }
 
 .ui-select-bootstrap .ui-select-toggle > .caret {
@@ -514,8 +514,8 @@ body > .select2-container.open {
 
 .ui-select-bootstrap .ui-select-toggle {
   position: relative;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
 }
 
 .ui-select-bootstrap .ui-select-toggle > .caret {
@@ -534,8 +534,9 @@ body > .select2-container.open {
 
 .input-group > .ui-select-bootstrap > input.ui-select-search.form-control {
   border-radius: 4px; /* FIXME hardcoded value :-/ */
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 100% !important;
 }
 .input-group > .ui-select-bootstrap > input.ui-select-search.form-control.direction-up {
   border-radius: 4px !important; /* FIXME hardcoded value :-/ */
@@ -725,4 +726,24 @@ body > .ui-select-bootstrap.open {
 
 .ui-select-refreshing.ng-animate {
   -webkit-animation: none 0s;
+}
+
+@media screen and (max-width: 767px) {
+  .input-group > .ui-select-bootstrap > input.ui-select-search.form-control {
+    border-radius: 4px; /* FIXME hardcoded value :-/ */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 105.3% !important;
+    float: left;
+    position: relative;
+    margin-left: -1.5em;
+  }
+  .ui-select-bootstrap > .ui-select-match > .btn{
+    /* Instead of center because of .btn */
+    text-align: left !important;
+    width: 105.3% !important;
+    float: left;
+    position: relative;
+    margin-left: -1.5em;
+  }
 }

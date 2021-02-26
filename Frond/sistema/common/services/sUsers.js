@@ -12,7 +12,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           checkUserMail: function(userMail, typeOfCheck) {
             mail2Search.mail.email=userMail;
             //console.log("Email a verificar: "+userMail);  
-              return $http.post(serverHost+serverBackend+"User/findUserByEmail",mail2Search)
+              return $http.post(serverHost+serverBackend+"User/findUserByEmail",mail2Search, serverHeaders)
                 .then(function mySucess(response, status, data) {
                       checkResult = 1;
                       //console.log("Email registrado: "+response.data.emailUser);
@@ -62,12 +62,12 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           recoverPwd: function(userPwd2Recover) {
             var rsTmpUser=tokenSystem.getTokenStorage(3);
               console.log("Cuenta a restablecer: "+rsTmpUser.emailUser);
-              return $http.post(serverHost+serverBackend+"User/updatePass",userPwd2Recover)
+              return $http.post(serverHost+serverBackend+"User/updatePass",userPwd2Recover, serverHeaders)
                 .then(function mySucess(response, status, data) {
                   checkResult = 1;
                   return checkResult;
               },function myError(response) { 
-                console.log("Error: "+response.status+" ["+response.statusText+"]");  
+                console.log("Error: "+response.data.error); 
                 checkResult = 0;
                 return checkResult;
               });
@@ -77,12 +77,12 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
             var data2update = userData2Change;
             //console.log(serverHeaders);
             console.log(data2update);
-              return $http.post(serverHost+serverBackend+"User/update",data2update)
-                .then(function mySucess(response, status, data) {
-                  checkResult = 1;
-                  return checkResult;
+              return $http.post(serverHost+serverBackend+"User/update",data2update, serverHeaders)
+                .then(function mySucess(response) {
+                  rsJSON = response;
+                  return rsJSON;
               },function myError(response, error) { 
-                console.log("Error: "+response.status+" ["+response.statusText+"]");   
+                console.log("Error: "+response.data.error);  
                 checkResult = 0;
                 return checkResult;
               });
@@ -91,12 +91,12 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           addUser: function(userData2Add) {
             //console.log(serverHeaders);
               console.log(userData2Add);
-              return $http.post(serverHost+serverBackend+"User/", userData2Add)
+              return $http.post(serverHost+serverBackend+"User/", userData2Add, serverHeaders)
                 .then(function mySucess(response, status, data) {
                   checkResult = 1;
                   return checkResult;
               },function myError(response, error) { 
-                console.log("Error: "+response.status+" ["+response.statusText+"]");  
+                console.log("Error: "+response.data.error); 
                 checkResult = 0;
                 return checkResult;
               });
@@ -105,7 +105,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           letLogin: function(jsonLogin) {
             var jsonUser=jsonLogin.user.fullNameUser;
               //console.log("Login con el email: "+jsonUser);
-              return $http.post(serverHost+serverBackend+"User/auth",jsonLogin)
+              return $http.post(serverHost+serverBackend+"User/auth",jsonLogin, serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJSON=response.data.response;
                   if(rsJSON){
@@ -175,13 +175,13 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                 },function myError(response) {
                   alert(status);
                     if(response.status == 404){
-                      console.log("Error: "+response.status+" ["+response.statusText+"]");  
+                      console.log("Error: "+response.data.error); 
                       /*inform.add(response.data.error,{
                         ttl:5000, type: 'warning'
                       }); */
                     }
                     else{
-                      console.log("Error: "+response.status+" ["+response.statusText+"]");  
+                      console.log("Error: "+response.data.error); 
                       /*inform.add(response.data.error,{
                         ttl:5000, type: 'warning'
                       }); */
@@ -224,7 +224,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
               console.log("[Service][approveTenantDepto]---> idDepto: "+idUser+' / idStatus: '+idStatus);
               return $http({
                     method : "GET",
-                    url : serverHost+serverBackend+"Department/deptoTenantStatus/"+idUser+"/"+idStatus
+                    url: serverHost+serverBackend+"Department/deptoTenantStatus/"+idUser+"/"+idStatus
                   }).then(function mySuccess(response) {
                       console.log("[Service][approveTenantDepto]---> idDepto: "+idUser+" (Successfully Approved)");
                       return response;
@@ -236,7 +236,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           },
           assignDepto: function(userData2Assign) {
               console.log("[Service][assignDepto]---> Department to Assign: "+userData2Assign.department.idDepartment);
-              return $http.post(serverHost+serverBackend+"Department/update",userData2Assign)
+              return $http.post(serverHost+serverBackend+"Department/update",userData2Assign, serverHeaders)
                 .then(function mySucess(response) {
                   console.log("[Service][assignDepto]---> Department N°: "+userData2Assign.department.idDepartment+" (Successfully Assigned)");
                   return response;
@@ -247,7 +247,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           },
           removeTenantDepto: function(userData2Remove) {
               console.log("[Service][removeTenantDepto]---> Department to remove: "+userData2Remove.department.idDepartment);
-              return $http.post(serverHost+serverBackend+"Department/removeTenant",userData2Remove)
+              return $http.post(serverHost+serverBackend+"Department/removeTenant",userData2Remove, serverHeaders)
                 .then(function mySucess(response) {
                   console.log("[Service][removeTenantDepto]---> Department N°: "+userData2Remove.department.idDepartment+" (Successfully removed)");
                   return response;
@@ -278,7 +278,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
           updateCompany: function(companyData2Update) {
               var rsData = {};
               console.log("[Service][updateCompany]---> idCompany: "+companyData2Update.company.idCompany);
-              return $http.post(serverHost+serverBackend+"user/updatecompany",companyData2Update)
+              return $http.post(serverHost+serverBackend+"user/updatecompany",companyData2Update, serverHeaders)
                 .then(function mySuccess(response) {
                     checkResult = 1;
                     return checkResult;

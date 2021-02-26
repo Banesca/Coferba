@@ -5,7 +5,7 @@ moduleForgotPwd.controller('ForgotPwdCtrl', function($scope, $rootScope, $locati
   $scope.forgot={email: ''};
   $scope.redirectSuccessfull = false;
   $scope.counT  =5;
-  $scope.redirect ="#/login";
+  $scope.redirect ="/login";
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken = tokenSystem.getTokenStorage(1);
   $scope.sysRsTmpUser = tokenSystem.getTokenStorage(3);

@@ -1,0 +1,144 @@
+<!-- CUSTOMER CONTRACT FORM -->
+<div id="serviceModuleConnectionDetails" class="modal fade bd-example-modal-md" style="top: 7.3%;" role="dialog">
+  	<div class="modal-dialog modal-md" >
+	    <div class="modal-content">
+          	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+            	<h3 ng-if="moduleConnectionType=='ip'" class="modal-title"><i class="product-success fas fa-network-wired"></i> MODULO IP</h3>
+            	<h3 ng-if="moduleConnectionType=='gprs'" class="modal-title"><i class="product-success fas fa-globe"></i> MODULO GPRS</h3>
+            	<h3 ng-if="moduleConnectionType=='linea'" class="modal-title"><i class="product-success fas fa-mobile-alt"></i> LINEA TELEFONICA</h3>
+        	</div>
+    		<div class="modal-body"  style="overflow-y: scroll;">
+    			<form class="form-horizontal" name="fServiceModuleDetails" novalidate>
+    				<fieldset ng-if="moduleConnectionType=='ip' || moduleConnectionType=='gprs'">
+						<!-- Modulo IP Alarma -->						  
+						<div class="form-group col-md-12" >
+						  	<label style="padding-left: 15px;">Modulo IP Alarma</label>
+						    <div class="col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
+									<select name="service_moduloIP_alarma" class="form-control" ng-model="service.module.ip_gprs.moduleIPAlarm" autofocus >
+									    <option class="text-uppercase" value="">Selecciona una opci&#243;n</option>
+								    </select>
+							  	</div>						    	
+					    	</div>
+						</div>
+						<!-- Internal Serial number -->						  
+						<div class="form-group col-md-6" >
+						  	<label style="padding-left: 15px;">N° de Serie Interno</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+					    			<input name="serviceProductInternalSerial" type="text" class="form-control" ng-model="service.module.ip_gprs.internalSerialNumber" />
+					    		</div>
+					    	</div>
+						</div>					
+						<!-- Fabric Serial number -->					  
+						<div class="form-group col-md-6" >
+						  	<label style="padding-left: 15px;">N° de Serie de Fabricante</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+					    			<input name="serviceProductFabricSerial" type="text" class="form-control" ng-model="service.module.ip_gprs.fabricSerialNumber" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- IP -->					  
+						<div ng-if="moduleConnectionType=='ip'" class="form-group col-md-6" >  
+						  	<label style="padding-left: 15px;">IP Address</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-network-wired"></i></span>
+					    			<input name="serviceIP" type="text" ng-keydown="fnLoadPhoneMask()" class="form-control input-ipaddr" ng-model="service.module.ip_gprs.IpAddr" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- Codigo programacion -->					  
+						<div class="form-group col-md-6" >  
+						  	<label style="padding-left: 15px;">Codigo de Programaci&#243;n</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-qrcode"></i></span>
+					    			<input name="serviceCodigoProgramacion" type="text" class="form-control" ng-model="service.module.ip_gprs.programCode" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- Puerto programacion -->					  
+						<div class="form-group col-md-6" >  
+						  	<label style="padding-left: 15px;">Puerto de Programaci&#243;n</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-qrcode"></i></span>
+					    			<input name="servicePuertoProgramacion" type="text" class="form-control" ng-model="service.module.ip_gprs.programPort" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- Clave de acceso para usuario al sistema -->  
+						<div class="form-group col-md-6" >  
+						  	<label style="padding-left: 15px;">Clave Acceso usuario al sistema</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-key"></i></span>
+					    			<input name="serviceSysUserPasswd" type="text" class="form-control" ng-model="service.module.ip_gprs.sysUserPasswd" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- Codigo particion 1 -->					  
+						<div class="form-group col-md-6" >  
+						  	<label style="padding-left: 15px;">Codigo Partici&#243;n 1</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-qrcode"></i></span>
+					    			<input name="serviceCodigoParticion1" type="text" class="form-control" ng-model="service.module.ip_gprs.partitionCode1" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- Codigo particion 2 -->					  
+						<div class="form-group col-md-6" >  
+						  	<label style="padding-left: 15px;">Codigo Partici&#243;n 2</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-qrcode"></i></span>
+					    			<input name="serviceCodigoParticion2" type="text" class="form-control" ng-model="service.module.ip_gprs.partitionCode2" />
+					    		</div>
+					    	</div>
+						</div>
+					</fieldset>
+					<fieldset ng-if="moduleConnectionType=='linea'">
+						<!-- Compañia -->					  
+						<div class="form-group col-md-12" >  
+						  	<label style="padding-left: 15px;">Compa&#241;ia</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-broadcast-tower"></i></span>
+					    			<input name="serviceCompaniaTelf" type="text" class="form-control" ng-model="service.module.phoneLine.phoneCompany" />
+					    		</div>
+					    	</div>
+						</div>
+						<!-- Codigo particion 2 -->					  
+						<div class="form-group col-md-12" >  
+						  	<label style="padding-left: 15px;">Linea Tomada</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
+					    			<input name="serviceNumeroLinea" type="text" class="form-control" ng-model="service.module.phoneLine.lineNumber" />
+					    		</div>
+					    	</div>
+						</div>						
+					</fieldset>
+				</form>
+			</div>
+			<!-- Actions Button -->
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                        <button type="submit" ng-click="" ng-disabled="fServiceModuleDetails.$invalid" class="btn btn-labeled btn-success">
+                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Asignar</button>
+                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>				

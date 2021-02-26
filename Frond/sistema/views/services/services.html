@@ -1,5 +1,5 @@
 <!-- MANAGE PRODUCTSs-->
-<div class="col-md-12">
+<div class="col-md-12" ng-init="getProductsFn();" style="margin-top: -2em;">
   <div class="panel panel-default padding-panel">
     <div class="panel-heading">
       <h3 class="panel-title">GESTION DE SERVICIOS </h3>
@@ -63,7 +63,7 @@
                   </div>
                   <div class="panel-body">
                     <!-- CUSTOMER COLUMN -->
-                    <div  class="col-md-8 well-checkbox customer-frame">
+                    <div  class="col-md-8 well-checkbox n-margin-r n-margin-l customer-frame">
                       <div class="col-md-6"><span>N° de Cliente: {{customerFound.idClient}}</span></div>
                       <div class="col-md-6"><span>Tipo de Cliente: {{customerFound.ClientType | uppercase}}</span></div>
                       <div class="col-md-6"><span>Nombre: {{customerFound.name | uppercase}}</span></div>
@@ -79,11 +79,13 @@
                         <span ng-if="customerFound.zona!=null">Zona: {{customerFound.zona.n_zona}} - {{customerFound.zona.descripcion | uppercase}}</span>
                         <span ng-if="customerFound.zona==null">Zona: <label  style="cursor: pointer;" data-toggle="tooltip" data-placement="right" title="Zona no asignada" class="label label-default">n/a</label></span>
                       </div>
+                      <div ng-if="customerFound.idClientType!='5'" class="col-md-6"><span>Dirección: {{customerFound.address | uppercase}}</span></div>
+                      <div ng-if="customerFound.idClientType=='5'" class="col-md-6"><span>Dirección: {{customerFound.billing_information.businessAddress | uppercase}}</span></div>
                       <div class="col-md-6"><span>IVA: {{customerFound.billing_information.typeTax | uppercase}}</span></div>
                     </div>
                     <!-- NEW CONTRACT -->
-                    <div class="col-md-3">
-                      <div class="col-xs-12 depto-widget well well-md" data-toggle="tooltip" data-placement="right" title="NUEVO CONTRATO" ng-click="switchCustomersFn('services', customerFound, 'new_contract');">
+                    <div class="col-md-2">
+                      <div class="col-xs-12 depto-widget well well-md" data-toggle="tooltip" data-placement="bottom" title="NUEVO CONTRATO" ng-click="switchCustomersFn('contract', customerFound, 'new_contract_windows');">
                         <div class="depto-icon">
                               <span><i class="default-sys-color fas fa-file-signature"></i></span>
                         </div>
@@ -93,7 +95,20 @@
                       </div>
                     </div>
                     <!-- //NEW CONTRACT -->
-                    <div class="col-md-12">
+                    <!-- NEW SERVICE -->
+                    <div class="col-md-2">
+                      <div class="col-xs-12 depto-widget well well-md" data-toggle="tooltip" data-placement="bottom" title="NUEVO SERVICIO" ng-click="switchCustomersFn('services', customerFound, 'select_contract_first', '');">
+                        <div class="depto-icon">
+                              <span><i class="default-sys-color fas fa-wrench"></i></span>
+                        </div>
+                        <div class="text-badge">
+                            <span class="registered-customer badge badge-light"> NUEVO SERVICIO </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- //NEW SERVICE -->
+                    <!-- CONTRACT LIST -->
+                    <div class="col-md-12 n-padding-l n-padding-r">
                       <label class="clf-size from-left-from-label" style="margin-left: 6em; padding-bottom: 15px;">CONTRATOS</label>
                       <div ng-include="'views/services/list/listContracts.html'"></div>                      
                     </div>                    
@@ -104,10 +119,10 @@
                   </div>
                   <div class="modal-footer">
                       <div class="row">
-                          <div class="col-xs-1 col-sm-1 col-md-1">
+                          <div class="col-xs-3 col-sm-1 col-md-1">
                                <button type="button" ng-click="closeServicePanel()" class="btn btn-labeled btn-success">
                                   <span class="btn-label"><i class="fas fa-search"></i></span>Nueva busqueda</button>
-                          </div>              
+                          </div>                                              
                       </div>
                   </div>                
               </div>
@@ -118,4 +133,18 @@
 </div>
 
 <div ng-include="'views/services/new/formRegisterContract.html'"></div>
-<div ng-include="'views/services/new/formRegisterService.html'"></div>
+<div ng-include="'views/services/new/formUpdateContract.html'"></div>
+<div ng-include="'views/services/new/approveContract.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceUnits.html'"></div>
+<div ng-include="'views/services/new/components/ControlAcess/formRegisterAccessControl.html'"></div>
+<div ng-include="'views/services/new/components/Alarm/formRegisterAlarm.html'"></div>
+<div ng-include="'views/services/new/components/AppMonitor/formRegisterAppMonitor.html'"></div>
+<div ng-include="'views/services/new/components/Cameras/formRegisterCameras.html'"></div>
+<div ng-include="'views/services/new/components/Totem/formRegisterTotem.html'"></div>
+<div ng-include="'views/services/new/components/Internet/formRegisterInternet.html'"></div>
+
+<div ng-include="'views/services/new/components/comp_serviceProductDetails.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceUserDetails.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceLicenceDetails.html'"></div>
+<div ng-include="'views/services/new/components/comp_contractSelect.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceSelect.html'"></div>

@@ -1,0 +1,118 @@
+<!-- CUSTOMER CONTRACT FORM -->
+<div id="serviceModuleZonesDetails" class="modal fade bd-example-modal-md" style="top:7.3%;" role="dialog">
+  	<div class="modal-dialog modal-md" >
+	    <div class="modal-content">
+          	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+            	<h3 class="modal-title"><i class="product-success fas fa-border-none"></i> Datos de Alarmas (Zonas)</h3>
+        	</div>
+    		<div class="modal-body"  style="overflow-y: scroll;">
+    			<form class="form-horizontal" name="fServiceModuleDetails" novalidate>
+					<!-- Numero de la zona del sensor -->						  
+					<div class="form-group col-md-6" >
+					  	<label style="padding-left: 15px;">N° de Zona de Sensor</label>
+					</div>
+					<div class="form-group col-md-6 n-padding-r n-padding-l" ng-class="
+								{	'has-success': 
+									service.new.zones.zoneNumber!='' && fServiceModuleDetails.serviceZoneNumbSensor.$valid,
+								 	'has-error':  
+									(service.new.zones.zoneNumber=='' || service.new.zones.zoneNumber==undefined) && fServiceModuleDetails.serviceZoneNumbSensor.$touched,
+								}">
+						<div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+								<select name="serviceZoneNumbSensor" id="serviceZoneNumbSensor" class="form-control" ng-options="item.zone as item.zone for item in list_sensors_zones" ng-required="service.new.idTipeServiceFk=='5' && productSelected.idProductClassification=='14'" ng-model="service.new.zones.zoneNumber" autofocus >
+								    <option value="">Selecciona una opci&#243;n</option>
+							    </select>				    			
+				    		</div>
+				    	</div>						
+					</div>
+					<!-- Area Cubierta -->
+					<div class="form-group col-md-12">
+					  <label class="col-xs-12" >Area Cubierta</label> 
+							<textarea style="resize: none;" name="serviceAreaCubierta" rows="3" class="form-control" ng-model="service.new.zones.areaCovered" ></textarea>							
+					</div>					
+					<!-- Numero de la zona del sensor -->						  
+					<div class="form-group col-md-6" >
+					  	<label style="padding-left: 15px;">N° de Zona de Tamper</label>
+					</div>
+					<div class="form-group col-md-6 n-padding-r n-padding-l">
+					    <div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+				    			<select name="serviceZonaNumbTamper" class="form-control" ng-model="service.new.zones.zoneTamper" autofocus >
+				    				<option value="">Selecciona una opci&#243;n</option>
+							    </select>					    				
+				    		</div>
+				    	</div>
+					</div>
+					<!-- Zona Ubicacion -->					  
+					<div class="form-group col-md-12 n-padding-r n-padding-l" >  
+					  	<label style="padding-left: 15px;">Ubicaci&#243;n</label>
+					    <div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-qrcode"></i></span>
+				    			<input name="serviceZonaUbicacion" type="text" class="form-control" ng-model="service.new.zones.zoneLocation" />
+				    		</div>
+				    	</div>
+					</div>
+					<!-- DVR -->
+					<div class="form-group col-md-6 n-padding-r n-padding-l" >
+					  	<label style="padding-left: 15px;">DVR</label>
+					    <div class="col-xs-12">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
+								<select name="serviceZonaDVR" class="form-control" ng-model="service.new.zones.zoneDvr" autofocus >
+								    <option value="">Selecciona una dvr</option>
+							    </select>
+						  	</div>						    	
+				    	</div>
+					</div>
+					<!-- Camaras -->
+					<div class="form-group col-md-6 n-padding-r n-padding-l" >
+					  	<label style="padding-left: 15px;">Camaras</label>
+					    <div class="col-xs-12">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
+								<select name="serviceZonaCamaras" class="form-control" ng-model="service.new.zones.zoneCameras" autofocus >
+								    <option value="">Selecciona una opci&#243;n</option>
+							    </select>
+						  	</div>						    	
+				    	</div>
+					</div>
+					<!-- Internal Serial number -->						  
+					<div class="form-group col-md-6 n-padding-r n-padding-l" >
+					  	<label style="padding-left: 15px;">N° de Serie Interno</label>
+					    <div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+				    			<input name="serviceProductInternalSerial" type="text" class="form-control" ng-model="service.new.zones.internalSerialNumber" />
+				    		</div>
+				    	</div>
+					</div>					
+					<!-- Fabric Serial number -->					  
+					<div class="form-group col-md-6 n-padding-r n-padding-l" >
+					  	<label style="padding-left: 15px;">N° de Serie de Fabricante</label>
+					    <div class="col-xs-12">
+						    <div class="input-group">
+						    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
+				    			<input name="serviceProductFabricSerial" type="text" class="form-control" ng-model="service.new.zones.fabricSerialNumber" />
+				    		</div>
+				    	</div>
+					</div>					
+				</form>
+			</div>
+			<!-- Actions Button -->
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                        <button type="submit" ng-click="addSubItemDetailsFn(productSelected, service.new.adicional)" ng-disabled="fServiceModuleDetails.$invalid" class="btn btn-labeled btn-success">
+                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Asignar</button>
+                        <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>				

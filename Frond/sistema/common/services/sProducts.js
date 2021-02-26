@@ -91,5 +91,18 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
                     return response;
             });   
           },
+          listProducts4Service: function() {
+            console.log("[Product Services] => List Product for service");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Product/getProducts4Service"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.status+" ["+response.statusText+"]");  
+                    return response;
+            });   
+          },          
       }
 }]);

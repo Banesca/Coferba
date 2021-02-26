@@ -35,7 +35,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
             });   
           },      
           addNewZone: function(zona) {
-            console.log("[Utilities Services] => Add New Zone ");
+            //console.log("[Utilities Services] => Add New Zone ");
               return $http.post(serverHost+serverBackend+"Zonas/add",zona,serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJson=response;
@@ -46,7 +46,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                 })  
           },
           updateZone: function(zona) {
-            console.log("[Utilities Services] => Update Zone ");
+            //console.log("[Utilities Services] => Update Zone ");
               return $http.post(serverHost+serverBackend+"Zonas/edit",zona,serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJson=response;
@@ -57,7 +57,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                 })  
           },
           deleteZone: function(id) {
-            console.log("[Utilities Services] => Delete Zone: "+id);
+            //console.log("[Utilities Services] => Delete Zone: "+id);
               return $http({
                     method : "DELETE",
                     url : serverHost+serverBackend+"Zonas/delete/"+id
@@ -96,7 +96,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
             });   
           },
           typeOfMails: function() {
-            console.log("[Utilities Services]: Get Type of Mails");
+            //console.log("[Utilities Services]: Get Type of Mails");
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Util/typeOfMails"
@@ -109,7 +109,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
             });   
           },
           typeOfProperty: function() {
-            console.log("[Utilities Services]: Get Type of Property");
+            //console.log("[Utilities Services]: Get Type of Property");
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Util/tipoInmueble"
@@ -120,6 +120,165 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     console.log("Error: "+response.data.error); 
                     return response;
             });   
-          },         
+          },
+          typeOfInternetServices: function() {
+            //console.log("[Utilities Services]: Get Type of Internet Services");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/tipoServiciosInternet"
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          typeOfMaintenance: function() {
+            //console.log("[Utilities Services]: Get Type of Maintenance Services");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/TypeMaintenance"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          typeOfContracts: function() {
+            //console.log("[Utilities Services]: Get Type of Contracts Services");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/typeContrato"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          internetCompanyList: function() {
+            //console.log("[Utilities Services]: Get Internet Company List");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/InternetCompany"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          monitorCompanyList: function() {
+            //console.log("[Utilities Services]: Get Monitor Company List");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/monitorCompany"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          totemModelList: function() {
+            //console.log("[Utilities Services]: Get Totem Model List");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/totemModel"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },          
+          internetPlanList: function() {
+            //console.log("[Utilities Services]: Get Internet Plan List");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/TypeInternet"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          detinationLicense: function() {
+            //console.log("[Utilities Services]: Get Detination License List");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/detinationLicense"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          typeOperatingSystem: function() {
+            //console.log("[Utilities Services]: Get type of operating system List");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/typeOperatingSystem"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          /* GET TYPE OF ALARM CLIENT */
+            typeAlarmClientList: function() {
+            //console.log("[Utilities Services]: Get Agents ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/getTypeAlarmClient"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          /* ALARM SERVICE ADITIONALS */
+            alarmServicesAditionalsList: function() {
+            //console.log("[Utilities Services]: Get Agents ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/getAlarmServicesAditionals"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },
+          /* ALARM SERVICE ADITIONALS */
+            transmissionFormatList: function() {
+            //console.log("[Utilities Services]: Get Agents ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/getFormatoTransmision"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },           
       }
 }]);
