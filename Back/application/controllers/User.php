@@ -5,10 +5,9 @@ class User extends REST_Controller {
 
 	public  function __construct()
  	{
- 		parent::__construct();
+ 		parent::__construct();     
  		$this->load->model('user_model');
  	}
-
  	/* SERVICIO QUE AUTENTIFICA  */
 	public function auth_post()
 	{

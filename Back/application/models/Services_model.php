@@ -1033,7 +1033,7 @@ class Services_model extends CI_Model {
                                             ->where($item3Fk[1], $item['idClientServicesCamera'])
                                             ->get();
                                         $aux   = [];
-                                        if ($dataG->num_rows() > 0) {
+                                        if ($dataG->num_rows() >= 0) {
                                             foreach ($dataG->result_array() as $ite2) {
                                                 array_push($aux, $ite2);
                                             }
@@ -1061,7 +1061,7 @@ class Services_model extends CI_Model {
                                                 ->where($item3Fk[1], $item['idClientServicesTotem'])
                                                 ->get();
                                             $aux   = [];
-                                            if ($dataG->num_rows() > 0) {
+                                            if ($dataG->num_rows() >= 0) {
                                                 foreach ($dataG->result_array() as $ite2) {
                                                     array_push($aux, $ite2);
                                                 }
@@ -1092,7 +1092,7 @@ class Services_model extends CI_Model {
                                             //return $this->db->last_query();
                                             //return $dataG->result_array();
                                             $aux   = [];
-                                            if ($dataG->num_rows() > 0) {
+                                            if ($dataG->num_rows() >= 0) {
                                                 foreach ($dataG->result_array() as $ite2) {
                                                     array_push($aux, $ite2);
                                                 }
@@ -1173,7 +1173,7 @@ class Services_model extends CI_Model {
                                                         ->where($item3Fk[1], $item['idClientServicesInternet'])
                                                         ->get();
                                                     $aux   = [];
-                                                    if ($dataG->num_rows() > 0) {
+                                                    if ($dataG->num_rows() >= 0) {
                                                         foreach ($dataG->result_array() as $ite2) {
                                                             array_push($aux, $ite2);
                                                         }
