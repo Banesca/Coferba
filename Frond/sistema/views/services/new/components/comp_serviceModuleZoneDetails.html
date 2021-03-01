@@ -28,7 +28,12 @@
 				    	</div>						
 					</div>
 					<!-- Area Cubierta -->
-					<div class="form-group col-md-12">
+					<div class="form-group col-md-12" ng-class="
+								{	'has-success': 
+									service.new.zones.areaCovered!='' && fServiceModuleDetails.serviceAreaCubierta.$valid,
+								 	'has-error':  
+									(service.new.zones.areaCovered=='' || service.new.zones.areaCovered==undefined) && fServiceModuleDetails.serviceAreaCubierta.$touched,
+								}">
 					  <label class="col-xs-12" >Area Cubierta</label> 
 							<textarea style="resize: none;" name="serviceAreaCubierta" rows="3" class="form-control" ng-model="service.new.zones.areaCovered" ></textarea>							
 					</div>					
@@ -36,18 +41,28 @@
 					<div class="form-group col-md-6" >
 					  	<label style="padding-left: 15px;">N° de Zona de Tamper</label>
 					</div>
-					<div class="form-group col-md-6 n-padding-r n-padding-l">
+					<div class="form-group col-md-6 n-padding-r n-padding-l" ng-class="
+								{	'has-success': 
+									service.new.zones.zoneTamper!='' && fServiceModuleDetails.serviceZonaNumbTamper.$valid,
+								 	'has-error':  
+									(service.new.zones.zoneTamper=='' || service.new.zones.zoneTamper==undefined) && fServiceModuleDetails.serviceZonaNumbTamper.$touched,
+								}">
 					    <div class="col-xs-12">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
-				    			<select name="serviceZonaNumbTamper" class="form-control" ng-model="service.new.zones.zoneTamper" autofocus >
+				    			<select name="serviceZonaNumbTamper" class="form-control" ng-options="item.tamper as item.tamper for item in list_tampers_zones" ng-required="service.new.idTipeServiceFk=='5' && productSelected.idProductClassification=='14'" ng-model="service.new.zones.zoneTamper" autofocus >
 				    				<option value="">Selecciona una opci&#243;n</option>
 							    </select>					    				
 				    		</div>
 				    	</div>
 					</div>
 					<!-- Zona Ubicacion -->					  
-					<div class="form-group col-md-12 n-padding-r n-padding-l" >  
+					<div class="form-group col-md-12 n-padding-r n-padding-l" ng-class="
+								{	'has-success': 
+									service.new.zones.zoneLocation!='' && fServiceModuleDetails.serviceZonaUbicacion.$valid,
+								 	'has-error':  
+									(service.new.zones.zoneLocation=='' || service.new.zones.zoneLocation==undefined) && fServiceModuleDetails.serviceZonaUbicacion.$touched,
+								}">  
 					  	<label style="padding-left: 15px;">Ubicaci&#243;n</label>
 					    <div class="col-xs-12">
 						    <div class="input-group">
@@ -57,7 +72,12 @@
 				    	</div>
 					</div>
 					<!-- DVR -->
-					<div class="form-group col-md-6 n-padding-r n-padding-l" >
+					<div class="form-group col-md-6 n-padding-r n-padding-l" ng-class="
+								{	'has-success': 
+									service.new.zones.zoneDvr!='' && fServiceModuleDetails.serviceZonaDVR.$valid,
+								 	'has-error':  
+									(service.new.zones.zoneDvr=='' || service.new.zones.zoneDvr==undefined) && fServiceModuleDetails.serviceZonaDVR.$touched,
+								}">
 					  	<label style="padding-left: 15px;">DVR</label>
 					    <div class="col-xs-12">
 							<div class="input-group">
@@ -69,7 +89,12 @@
 				    	</div>
 					</div>
 					<!-- Camaras -->
-					<div class="form-group col-md-6 n-padding-r n-padding-l" >
+					<div class="form-group col-md-6 n-padding-r n-padding-l" ng-class="
+								{	'has-success': 
+									service.new.zones.zoneCameras!='' && fServiceModuleDetails.serviceZonaCamaras.$valid,
+								 	'has-error':  
+									(service.new.zones.zoneCameras=='' || service.new.zones.zoneCameras==undefined) && fServiceModuleDetails.serviceZonaCamaras.$touched,
+								}">
 					  	<label style="padding-left: 15px;">Camaras</label>
 					    <div class="col-xs-12">
 							<div class="input-group">
@@ -106,7 +131,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="addSubItemDetailsFn(productSelected, service.new.adicional)" ng-disabled="fServiceModuleDetails.$invalid" class="btn btn-labeled btn-success">
+                        <button type="submit" ng-click="addSubItemDetailsFn(productSelected, service.new.zones)" ng-disabled="fServiceModuleDetails.$invalid" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Asignar</button>
                         <a data-dismiss="modal" type="button" class="btn btn-labeled btn-danger">
                             <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>

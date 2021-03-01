@@ -11,21 +11,73 @@
     		<div class="modal-body"  style="overflow-y: scroll;">
     			<form class="form-horizontal" name="fServiceModuleDetails" novalidate>
     				<fieldset ng-if="moduleConnectionType=='ip' || moduleConnectionType=='gprs'">
-						<!-- Modulo IP Alarma -->						  
-						<div class="form-group col-md-12" >
-						  	<label style="padding-left: 15px;">Modulo IP Alarma</label>
-						    <div class="col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
-									<select name="service_moduloIP_alarma" class="form-control" ng-model="service.module.ip_gprs.moduleIPAlarm" autofocus >
-									    <option class="text-uppercase" value="">Selecciona una opci&#243;n</option>
-								    </select>
-							  	</div>						    	
-					    	</div>
+						<!-- Modulo IP Alarma -->
+						<div ng-if="moduleConnectionType=='ip'" class="form-group col-md-12" ng-class="
+								  			{	'has-success': 
+								  				service.new.ipAlarmModule.selected!=undefined && fServiceModuleDetails.service_ipAlarmModule.$valid,
+								  			 	'has-error':  
+								  				(service.new.ipAlarmModule.selected==undefined) && fServiceModuleDetails.service_ipAlarmModule.$touched,
+								  			}">
+						<div class="col-md-8"><label style="padding-left: 15px;">Modulo IP Alarma</label></div>
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="bottom" title="Ver" ng-click="compServiceProductDetailsFn(service.new.ipAlarmModule.selected, productListType.MODULO_IP_ALARM)" ng-disabled="service.new.ipAlarmModule.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+						  	<button ng-if="service.new.ipAlarmModule.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.ipAlarmModule.selected, productListType.MODULO_IP_ALARM, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						    <div class="col-xs-12 selectContainer">							   
+							    <div class="input-group">
+					              <span class="input-group-addon"><i class="fas fa-plug"></i></span>
+					              <ui-select name="service_ipAlarmModule"  
+					              			 ng-change="compServiceProductDetailsFn(service.new.ipAlarmModule.selected, productListType.MODULO_IP_ALARM, null);" 
+					              			 ng-model="service.new.ipAlarmModule.selected"
+					              			 ng-required="true"
+					              			 ng-disabled="service.new.ipAlarmModule.selected!=undefined"
+					              			 theme="bootstrap" autofocus>
+					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
+					                    <ui-select-choices repeat="item in productListByType.MODULO_IP_ALARM | filter: $select.search">
+					                      <div ng-bind-html="item.descriptionProduct | highlight: $select.search"></div>
+					                      	<small ng-bind-html="item.model | highlight: $select.search"></small>
+					                      	<small ng-bind-html="item.brand | highlight: $select.search"></small>					                      	
+					                    </ui-select-choices>
+					                    <ui-select-no-choice>
+										    No hay resultados, contacte are de soporte.
+									  	</ui-select-no-choice>
+					                </ui-select>
+					            </div>
+						  	</div>
 						</div>
+						<!-- Modulo GPRS Alarma -->
+						<div ng-if="moduleConnectionType=='gprs'" class="form-group col-md-12" ng-class="
+								  			{	'has-success': 
+								  				service.new.gprsAlarmModule.selected!=undefined && fServiceModuleDetails.service_gprsAlarmModule.$valid,
+								  			 	'has-error':  
+								  				(service.new.gprsAlarmModule.selected==undefined) && fServiceModuleDetails.service_gprsAlarmModule.$touched,
+								  			}">
+						<div class="col-md-8"><label style="padding-left: 15px;">Modulo GPRS Alarma</label></div>
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="bottom" title="Ver" ng-click="compServiceProductDetailsFn(service.new.gprsAlarmModule.selected, productListType.MODULO_GPRS_ALARM)" ng-disabled="service.new.gprsAlarmModule.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+						  	<button ng-if="service.new.gprsAlarmModule.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.gprsAlarmModule.selected, productListType.MODULO_GPRS_ALARM, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						    <div class="col-xs-12 selectContainer">							   
+							    <div class="input-group">
+					              <span class="input-group-addon"><i class="fas fa-plug"></i></span>
+					              <ui-select name="service_gprsAlarmModule"  
+					              			 ng-change="compServiceProductDetailsFn(service.new.gprsAlarmModule.selected, productListType.MODULO_GPRS_ALARM, null);" 
+					              			 ng-model="service.new.gprsAlarmModule.selected"
+					              			 ng-required="true"
+					              			 ng-disabled="service.new.gprsAlarmModule.selected!=undefined"
+					              			 theme="bootstrap" autofocus>
+					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
+					                    <ui-select-choices repeat="item in productListByType.MODULO_GPRS_ALARM | filter: $select.search">
+					                      <div ng-bind-html="item.descriptionProduct | highlight: $select.search"></div>
+					                      	<small ng-bind-html="item.model | highlight: $select.search"></small>
+					                      	<small ng-bind-html="item.brand | highlight: $select.search"></small>					                      	
+					                    </ui-select-choices>
+					                    <ui-select-no-choice>
+										    No hay resultados, contacte are de soporte.
+									  	</ui-select-no-choice>
+					                </ui-select>
+					            </div>
+						  	</div>
+						</div>							
 						<!-- Internal Serial number -->						  
 						<div class="form-group col-md-6" >
-						  	<label style="padding-left: 15px;">N° de Serie Interno</label>
+						  	<label style="padding-left: 15px;">N° de Serie Interno (Sensor)</label>
 						    <div class="col-xs-12">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>
@@ -35,7 +87,7 @@
 						</div>					
 						<!-- Fabric Serial number -->					  
 						<div class="form-group col-md-6" >
-						  	<label style="padding-left: 15px;">N° de Serie de Fabricante</label>
+						  	<label style="padding-left: 15px;">N° de Serie de Fabricante (Sensor)</label>
 						    <div class="col-xs-12">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="fas fa-barcode"></i></span>

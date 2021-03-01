@@ -11281,7 +11281,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.rsCustomerContractListData=[];
         $scope.rsContractItemListData=[];
         $scope.list_batteries=[];
-        $scope.list_cameras=[];
+        $scope.list_cameras=[];       
         $scope.list_productsDetails=[];
         $scope.list_phones=[];
         $scope.previewData=[];
@@ -11290,7 +11290,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.list_sensors=[];
         $scope.list_tampers=[];
         $scope.list_people_notice=[];
-        $scope.list_people_verify=[];        
+        $scope.list_people_verify=[];
+        $scope.service.new.people={}
+        $scope.productDetailsAssigned=false;
         $scope.cleanServiceInputsFn();
         ContractServices.getSelectedServiceByIdContract(obj.idContratoFk, obj.idServiceType).then(function(data){
           $scope.rsJsonData = data;
@@ -11873,12 +11875,46 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.service.new.dvr.selected=undefined;
                   }
                 break;
+                case "12":
+                  if (opt=="set"){
+                    $scope.productListType.PANEL_ALARM=idProd;              
+                  }else{
+                    $scope.productListType.PANEL_ALARM=idProd;
+                    $scope.service.new.router.selected=undefined;
+                  }
+                break;
+                case "13":
+                  if (opt=="set"){
+                    $scope.productListType.TECLADO_ALARM=idProd;              
+                  }else{
+                    $scope.productListType.TECLADO_ALARM=idProd;
+                    $scope.service.new.alarmKeyboard.selected=undefined;
+                  }
+                break;
+                case "14":
+                break;
+                case "15":
+                  if (opt=="set"){
+                    $scope.productListType.MODULO_IP_ALARM=idProd;              
+                  }else{
+                    $scope.productListType.MODULO_IP_ALARM=idProd;
+                    $scope.service.new.ipAlarmModule.selected=undefined;
+                  }
+                break;
+                case "16":
+                  if (opt=="set"){
+                    $scope.productListType.MODULO_GPRS_ALARM=idProd;              
+                  }else{
+                    $scope.productListType.MODULO_GPRS_ALARM=idProd;
+                    $scope.service.new.gprsAlarmModule.selected=undefined;
+                  }
+                break;                
                 case "17":
                   if (opt=="set"){
                     $scope.productListType.ROUTER=idProd;              
                   }else{
                     $scope.productListType.ROUTER=idProd;
-                    $scope.service.new.router.selected=undefined;
+                    $scope.service.new.alarmPanel.selected=undefined;
                   }
                 break;              
                 case "18":
@@ -11986,6 +12022,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       $scope.battery_install=[];
       $scope.list_cameras=[];
       $scope.list_cameras_ports=[];
+      $scope.list_sensors=[];
+      $scope.list_sensors_zones=[];
+      $scope.list_tampers_zones=[];
       /***********************************
       *    LOAD MODAL WINDOWS DETAILS    *
       ************************************/      
@@ -12030,6 +12069,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
               });
               $scope.createPortList("filter");
             }
+          }if ($scope.service.new.idTipeServiceFk=='5' && obj.idProductClassificationFk!='14'){
+            $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
+            $('#serviceProductDetails').on('shown.bs.modal', function () {
+              $('#serviceProductInternalSerial').focus();
+            });
           }
           //console.log($scope.productSelected);
           //console.log($scope.service.new);
@@ -12068,15 +12112,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 }
               }
             }
-          }else{
+          }else if ($scope.service.new.idTipeServiceFk=='5'){
             if (opt=="all" || (opt=="filter" && $scope.list_sensors.length==0)){
-              console.log("creating the port list");
+              console.log("creating the Zone list");
               $scope.list_sensors_zones=[];
               $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
               for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
                  $scope.list_sensors_zones.push({'id':i-1, 'zone': i});
               }
-            }else{
+            }else if($scope.list_sensors.length>0){
               if ($scope.service.new.zonesQttyInstalledTmp!=$scope.service.new.zonesQttyInstalled){
                 $scope.list_sensors_zones=[];
                 $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
@@ -12086,9 +12130,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
               }
               for (var key in $scope.list_sensors){
                 console.log("Zone used: "+$scope.list_sensors_zones[key].zone); 
-                for (var port in $scope.list_sensors_zones){
-                  console.log("validating with Zone: "+$scope.list_sensors_zones[zone].port);     
-                  if ($scope.list_sensors_zones[zone].port==$scope.list_cameras[key].portCamera){
+                for (var zone in $scope.list_sensors_zones){
+                  console.log("validating with Zone: "+$scope.list_sensors_zones[zone].zone);     
+                  if ($scope.list_sensors_zones[zone].zone==$scope.list_cameras[key].zoneSensor){
                     console.log("Delete the Zone used from the list");
                     var objItem             = $scope.list_sensors_zones;
                     var arrItem             = objItem.map(function(o){return o.id;});        
@@ -12098,6 +12142,35 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 }
               }
             }
+            if (opt=="all" || (opt=="filter" && $scope.list_sensors.length==0)){
+              console.log("creating the Tamper list");
+              $scope.list_tampers_zones=[];
+              $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
+              for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
+                 $scope.list_tampers_zones.push({'id':i-1, 'tamper': i});
+              }
+            }else if($scope.list_sensors.length>0){
+              if ($scope.service.new.zonesQttyInstalledTmp!=$scope.service.new.zonesQttyInstalled){
+                $scope.list_tampers_zones=[];
+                $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
+                for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
+                 $scope.list_tampers_zones.push({'id':i-1, 'tamper': i});
+                }
+              }
+              for (var key in $scope.list_sensors){
+                console.log("Tamper used: "+$scope.list_tampers_zones[key].tamper); 
+                for (var tamper in $scope.list_tampers_zones){
+                  console.log("validating with tamper: "+$scope.list_tampers_zones[tamper].tamper);     
+                  if ($scope.list_tampers_zones[tamper].tamper==$scope.list_cameras[key].tamperSersor){
+                    console.log("Delete the Zone used from the list");
+                    var objItem             = $scope.list_tampers_zones;
+                    var arrItem             = objItem.map(function(o){return o.id;});        
+                    var indexItem           = arrItem.indexOf($scope.list_tampers_zones[tamper].id);
+                    $scope.list_tampers_zones.splice(indexItem, 1);
+                  }
+                }
+              }
+            }            
           }
         }
       /***********************************
@@ -12541,9 +12614,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
     *             ALARM SERVICE FUNCTIONS             *
     *                                                 *
     **************************************************/
-      $scope.compServiceAlarmDetailsFn=function(){
-        $("#serviceAlarmDetails").modal('show');
-      }
+      /***********************************
+      *  LOADING ADITIONAL WINDOWS FORM  *
+      ************************************/    
+        $scope.compServiceAlarmDetailsFn=function(){
+          $("#serviceAlarmDetails").modal('show');
+        }
       /***********************************
       *      GET TYPE ALARM CLIENT       *
       ************************************/
@@ -12567,7 +12643,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           });
         };
       /***********************************
-      *         Transmission Format      *
+      *       TRASMISSION FORMAT         *
       ************************************/
         $scope.rsTransmissionFormatListData = {};
         $scope.getTransmissionFormatListFn = function(){
@@ -12583,9 +12659,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.list_people_notice=[];
         $scope.list_people_verify=[];
         $scope.isSysUserExist=false;
-        
-        $scope.loadServicePeopleWindowFn=function(obj, opt){   
-        $scope.service.new.people={} 
+        $scope.service.new.people={}
+        $scope.loadServicePeopleWindowFn=function(obj, opt){
+          $scope.service.new.people={}    
           switch (opt){
             //PERSONAS PARA DAR AVISO
             case "getnotice":
@@ -12700,7 +12776,22 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             inform.add("Persona de contacto: "+obj.nombre_apellido+" ha sido removido correctamente.",{
               ttl:5000, type: 'success'
             });             
-        }        
+        }
+      /***********************************
+      *     LOAD USER PHONE NUMBER       *
+      ************************************/        
+        $scope.loadUserPhoneNumberFn = function(obj){
+          if (obj.phoneNumberUser){
+            $scope.service.new.aditional_alarm.telefono=obj.phoneNumberUser;
+          }else if(obj.phoneLocalNumberUser){
+            $scope.service.new.aditional_alarm.telefono=obj.phoneLocalNumberUser;
+          }else{
+              inform.add("El usuario: "+obj.fullNameUser+" no posee telefonos registrados.",{
+                ttl:5000, type: 'success'
+              });
+            $('#serviceAlarmPhone').focus();
+          }
+        }
     /********************************************************************************************************************************************
     *                                                                                                                                           *
     *                                                                                                                                           *
@@ -14070,7 +14161,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           //console.log($scope.sessionIdUser);   
           // N° de pedido EASY : 5420689
           //console.log($searchFilter);
-          $http.post(serverBackend+"Ticket/all", $searchFilter,setHeaderRequest())
+          $http.post(serverHost+serverBackend+"Ticket/all", $searchFilter,setHeaderRequest())
           .then(function (sucess, data) {
                  $scope.listTickt =  sucess.data.response;
                  $scope.totalTickets = $scope.listTickt.length;

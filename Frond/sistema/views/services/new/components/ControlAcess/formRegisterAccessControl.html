@@ -305,7 +305,7 @@
 					              			 ng-required="list_batteries.length==0"
 					              			 theme="bootstrap" autofocus>
 					                	<ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
-					                    <ui-select-choices repeat="item in productListByType.BATERIA | filter: $select.search">
+					                    <ui-select-choices repeat="item in productListByType.BACKUP_ENERGIA | filter: $select.search">
 					                    	<div ng-bind-html="item.descriptionProduct | highlight: $select.search"></div>
 					                      	<small ng-bind-html="item.model | highlight: $select.search"></small>
 					                      	<small ng-bind-html="item.brand | highlight: $select.search"></small>					                      	

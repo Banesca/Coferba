@@ -93,11 +93,14 @@ app.config(['$routeProvider', '$locationProvider',
         .otherwise({
             redirectTo: '/login/'
         });
+        // use the HTML5 History API
+        $locationProvider.html5Mode(true);        
 }]);
 //app.constant("serverHost","http://192.168.0.6/");
 //app.constant("serverHost","http://192.168.0.197/");
-app.constant("serverHost","http://localhost/");
-//app.constant("serverHost","http://10.39.9.110/");
+//app.constant("serverHost","http://localhost/");
+app.constant("serverHost","https://tass.sytes.net/");
+//app.constant("serverHost","http://181.170.204.244/");
 app.constant("serverBackend","Coferba/Back/index.php/");
 app.constant("serverHeaders", {'headers':{'Content-Type': 'application/json; charset=utf-8'}});
 

@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-if="rsContractsListByCustomerIdData.length>0" class="animate-repeat" style="align-content: center; cursor: pointer;" ng-repeat-start="contract in rsContractsListByCustomerIdData"> 
+      <tr ng-if="rsContractsListByCustomerIdData.length>0" class="animate-repeat" style="align-content: center; cursor: pointer;" ng-repeat="contract in rsContractsListByCustomerIdData"> 
         <td ng-click="" class="media-middle text-center">
           <button type="button" 
                   data-toggle="tooltip" 
@@ -83,7 +83,7 @@
       <!-- *      SHOW SERVICE LIST OF CONTRACT SELECTED      * -->
       <!-- *                                                  * -->
       <!-- **************************************************** -->
-      <tr collapse="dayDataCollapse[$index]" ng-repeat-end="">
+      <tr ng-if="rsContractsListByCustomerIdData.length>0" collapse="dayDataCollapse[$index]" ng-repeat-end="">
           <td colspan="11">
             <div class="panel panel-default">
               <div class="panel-heading">

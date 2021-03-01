@@ -28,7 +28,7 @@
 				    	</div>		                
 		            </div>
     				<!-- System user -->    				
-					<div class="form-group col-md-12" ng-class="
+					<div class="well-checkbox form-group col-md-12 n-padding-l n-padding-r" ng-class="
 								  			{	'has-success': 
 								  				(service.new.sysUser.selected!=undefined && fServiceAlarmDetails.service_sysUser.$valid) || 
 								  				(service.new.aditional_alarm.alarmAttendant!=undefined && fServiceAlarmDetails.serviceAlarmAttendant.$valid),
@@ -36,64 +36,66 @@
 								  				(service.new.sysUser.selected==undefined && fServiceAlarmDetails.service_sysUser.$touched) ||
 								  				(service.new.aditional_alarm.alarmAttendant==undefined && fServiceAlarmDetails.serviceAlarmAttendant.$touched),
 								  			}">
-					<div class="form-group col-md-5">
-						<label class="clf-p-left">Encargado Responsable</label>
-					</div>
-					<div class="form-group col-md-7 text-danger">
-				    	<label class="switch switch-1x">
-				    		<input type="checkbox" 
-				    		class="success" 
-				    		ng-change="service.new.sysUser.selected=undefined; service.new.aditional_alarm.alarmAttendant='';" 
-				    		ng-model="service.new.isSysUser" 
-				    		id="isSysUser" 
-				    		style="margin: 0px !important; display: inherit !important;">
-							<span class="slider slider-1x flat"></span>
-						</label>
-						<label for="serviceSysUser" style="cursor: pointer; font-weight: 600; padding-left: 15px;">Usuario del sistema web</label>
-					</div>  						
-						<div ng-if="service.new.isSysUser" class="col-xs-12 selectContainer">
-						    <div class="input-group">
-						      <span class="input-group-addon"><i class="fas fa-portrait"></i></span>
-						        <ui-select 
-						        	name="service_sysUser"
-						        	theme="bootstrap"
-						        	ng-change="service.new.aditional_alarm.alarmAttendant=''"
-						         	ng-model="service.new.sysUser.selected"
-						         	ng-required="list_user.length==0">
-						            <ui-select-match placeholder="Selecciona un usuario" >{{$select.selected.fullNameUser}}</ui-select-match>
-						            <ui-select-choices repeat="item in rsList.clientUser | filter: $select.search">
-						                <div ng-bind-html="item.fullNameUser | highlight: $select.search"></div>
-						                <small ng-bind-html="item.emailUser | highlight: $select.search"></small>
-						                <small class="label label-default" ng-bind-html="item.nameProfile | highlight: $select.search"></small>
-						                    
-						            </ui-select-choices>
-						            <ui-select-no-choice>
-									    No hay resultados, contacte area de soporte.
-								  	</ui-select-no-choice>
-						        </ui-select>					        						        
-						    </div>
-						</div>
-					    <div ng-if="!service.new.isSysUser" class="col-xs-12">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="fas fa-portrait"></i></span>
-				    			<input id="serviceAlarmAttendant" name="serviceAlarmAttendant" type="text" class="form-control" ng-required="service.new.sysUser.selected==undefined" ng-model="service.new.aditional_alarm.alarmAttendant" />
-				    		</div>
-				    	</div>
-					</div>
-					<!-- phone -->					  
-					<div class="form-group col-md-12" ng-class="
-								{	'has-success': 
-									service.new.aditional_alarm.telefono!='' && fServiceAlarmDetails.serviceAlarmPhone.$valid,
-								 	'has-error':  
-									(service.new.aditional_alarm.telefono=='' || service.new.aditional_alarm.telefono==undefined) && fServiceAlarmDetails.serviceAlarmPhone.$touched,
-								}">
-					  	<label style="padding-left: 15px;">Telefono</label>
-					    <div class="col-xs-12">
-						    <div class="input-group">
-						    	<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-				    			<input name="serviceAlarmPhone" type="text" class="form-control input--phone" ng-keydown="fnLoadPhoneMask()" ng-required="true" ng-model="service.new.aditional_alarm.telefono" />
-				    		</div>
-				    	</div>
+						<div class="form-group col-md-12">							  			
+							<div class="form-group col-md-5">
+								<label class="clf-p-left">Encargado Responsable</label>
+							</div>
+							<div class="form-group col-md-7 text-danger">
+						    	<label class="switch switch-1x">
+						    		<input type="checkbox" 
+						    		class="success" 
+						    		ng-change="service.new.sysUser.selected=undefined; service.new.aditional_alarm.alarmAttendant='';service.new.aditional_alarm.telefono=''" 
+						    		ng-model="service.new.isSysUser" 
+						    		id="isSysUser" 
+						    		style="margin: 0px !important; display: inherit !important;">
+									<span class="slider slider-1x flat"></span>
+								</label>
+								<label for="serviceSysUser" style="cursor: pointer; font-weight: 600; padding-left: 15px;">Usuario del sistema web</label>
+							</div>  						
+							<div ng-if="service.new.isSysUser" class="col-xs-12 selectContainer">
+							    <div class="input-group">
+							      <span class="input-group-addon"><i class="fas fa-portrait"></i></span>
+							        <ui-select 
+							        	name="service_sysUser"
+							        	theme="bootstrap"
+							        	ng-change="service.new.aditional_alarm.alarmAttendant=''; loadUserPhoneNumberFn(service.new.sysUser.selected)"
+							         	ng-model="service.new.sysUser.selected"
+							         	ng-required="list_user.length==0">
+							            <ui-select-match placeholder="Selecciona un usuario" >{{$select.selected.fullNameUser}}</ui-select-match>
+							            <ui-select-choices repeat="item in rsList.clientUser | filter: $select.search">
+							                <div ng-bind-html="item.fullNameUser | highlight: $select.search"></div>
+							                <small ng-bind-html="item.emailUser | highlight: $select.search"></small>
+							                <small class="label label-default" ng-bind-html="item.nameProfile | highlight: $select.search"></small>
+							                    
+							            </ui-select-choices>
+							            <ui-select-no-choice>
+										    No hay resultados, contacte area de soporte.
+									  	</ui-select-no-choice>
+							        </ui-select>					        						        
+							    </div>
+							</div>
+						    <div ng-if="!service.new.isSysUser" class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="fas fa-portrait"></i></span>
+					    			<input id="serviceAlarmAttendant" name="serviceAlarmAttendant" type="text" class="form-control" ng-required="service.new.sysUser.selected==undefined" ng-model="service.new.aditional_alarm.alarmAttendant" />
+					    		</div>
+					    	</div>
+					    </div>
+						<!-- phone -->					  
+						<div class="form-group col-md-12" ng-class="
+									{	'has-success': 
+										service.new.aditional_alarm.telefono!='' && fServiceAlarmDetails.serviceAlarmPhone.$valid,
+									 	'has-error':  
+										(service.new.aditional_alarm.telefono=='' || service.new.aditional_alarm.telefono==undefined) && fServiceAlarmDetails.serviceAlarmPhone.$touched,
+									}">
+						  	<label style="padding-left: 15px;">Telefono</label>
+						    <div class="col-xs-12">
+							    <div class="input-group">
+							    	<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+					    			<input name="serviceAlarmPhone" id="serviceAlarmPhone" type="text" class="form-control input--phone" ng-keydown="fnLoadPhoneMask()" ng-required="true" ng-model="service.new.aditional_alarm.telefono" />
+					    		</div>
+					    	</div>
+						</div>				    	
 					</div>
 					<!-- Related Street -->
 					<div class="form-group col-md-12" ng-class="
