@@ -635,16 +635,16 @@ class Services_model extends CI_Model {
                 'location'               => $item['location'],
                 'maxCamera'              => $item['maxCamera'],
                 'idTotenModelFk'         => $item['idTotenModelFk'],
-                'tipeMaintenance_SE'     => $item['idTypeMaintenanceFk'],
+                'idTypeMaintenanceFk'    => $item['idTypeMaintenanceFk'],
                 'dateDown'               => $item['dateDown'],
                 'numberPortRouter'       => $item['numberPortRouter'],
-                'addreesVpn'             => $item['addressVpn'],
+                'addreesVpn'             => $item['addreesVpn'],
                 'namePort1'              => $item['namePort1'],
                 'numberPort1'            => $item['nroPort1'],
                 'namePort2'              => $item['namePort2'],
                 'numberPort2'            => $item['nroPort2'],
                 'addressClientInter'     => $item['addressClientInter'],
-                'portHttpInter'          => $item['portHttp'],
+                'portHttpInter'          => $item['portHttpInter'],
                 'namePortInter'          => $item['namePort'],
                 'numberPortInter'        => $item['port'],
                 'observation'            => $item['observation'],
@@ -899,18 +899,21 @@ class Services_model extends CI_Model {
         ];
         $relaciones = [
             'tb_client_services_access_control' => [
-                'idDoorFk'            => [ 'tb_access_control_door', 'idAccessControlDoor' ],
-                'idAccessControlFk'   => [ 'tb_products', 'idProduct' ],
-                'idInputReaderFk'     => [ 'tb_products', 'idProduct' ],
-                'idTypeMaintenanceFk' => [ 'tb_products', 'idProduct' ],
-                'idEmergencyButtonFk' => [ 'tb_products', 'idProduct' ],
-                'idShutdownKeyFk'     => [ 'tb_products', 'idProduct' ],
+                'idDoorFk'               => [ 'tb_access_control_door', 'idAccessControlDoor' ],
+                'idAccessControlFk'      => [ 'tb_products', 'idProduct' ],
+                'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
+                'idInputReaderFk'        => [ 'tb_products', 'idProduct' ],
+                //'idTypeMaintenanceFk'    => [ 'tb_products', 'idProduct' ],
+                'idEmergencyButtonFk'    => [ 'tb_products', 'idProduct' ],
+                'idShutdownKeyFk'        => [ 'tb_products', 'idProduct' ],
+                'idFontFk'               => [ 'tb_products', 'idProduct' ],
                 //'idClientServicesFk'  => [ 'tb_clients', 'idClient' ],
-                'ouputReader'         => [ 'tb_products', 'idProduct' ],
-                'ouputButom'          => [ 'tb_products', 'idProduct' ],
-                'lock'                => [ 'tb_products', 'idProduct' ],
-                'idBatteryFk'         => [ 'tb_products', 'idProduct' ],
-                'fk'                  => [
+                'ouputReader'            => [ 'tb_products', 'idProduct' ],
+                'ouputButom'             => [ 'tb_products', 'idProduct' ],
+                'lock'                   => [ 'tb_products', 'idProduct' ],
+                'idBatteryFk'            => [ 'tb_products', 'idProduct' ],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance'],
+                'fk'                     => [
                     [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
 
@@ -923,7 +926,9 @@ class Services_model extends CI_Model {
                 'idRouterInternetFk'     => [ 'tb_products', 'idProduct' ],
                 'idModemInternetFk'      => [ 'tb_products', 'idProduct' ],
                 'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance'],
                 'idInternetCompanyFk'    => [ 'tb_internet_company', 'idInternetCompany' ],
+
                 'fk'                     => [
                     [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
@@ -933,6 +938,8 @@ class Services_model extends CI_Model {
                 'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
                 'idCompanyFk'            => [ 'tb_monitor_company', 'idMonitorCompany' ],
                 'idTotenModelFk'         => [ 'tb_totem_model', 'idTotenModel' ],
+                'idDvr_nvrFk'            => [ 'tb_products', 'idProduct' ],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance'],
                 'fk'                     => [
                     [ 'tb_cameras_totem', 'idClientServicesCameraTotemFk' ],
                     [ 'tb_client_totem', 'idClientServicesTotemFk' ],
@@ -1886,4 +1893,3 @@ class Services_model extends CI_Model {
 }
 
 ?>
-

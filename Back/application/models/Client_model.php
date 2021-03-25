@@ -59,6 +59,7 @@ class Client_model extends CI_Model {
                     'addressLon'              => $client['addressLon'],
                     'idAgentFk'               => $client['idAgentFk'],
                     'businessName'            => $client['businessName'],
+                    'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                     'CUIT'                    => $client['CUIT'],
                     'idLocationFk'            => $client['idLocationFk'],
                     'idProvinceFk'            => $client['idProvinceFk'],
@@ -202,6 +203,7 @@ class Client_model extends CI_Model {
                 'addressLon'              => $client['addressLon'],
                 'idAgentFk'               => $client['idAgentFk'],
                 'businessName'            => $client['businessName'],
+                'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                 'CUIT'                    => $client['CUIT'],
                 'idLocationFk'            => $client['idLocationFk'],
                 'idProvinceFk'            => $client['idProvinceFk'],
@@ -307,6 +309,7 @@ class Client_model extends CI_Model {
             $this->db->insert('tb_clients', [
                     'idClientTypeFk'          => $client['idClientTypeFk'],
                     'name'                    => $client['name'],
+                    'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                     'address'                 => $client['address'],
                     'addressLat'              => $client['addressLat'],
                     'addressLon'              => $client['addressLon'],
@@ -429,6 +432,7 @@ class Client_model extends CI_Model {
         $this->db->set(
             [
                 'name'                    => $client['name'],
+                'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                 'address'                 => $client['address'],
                 'addressLat'              => $client['addressLat'],
                 'addressLon'              => $client['addressLon'],
@@ -602,6 +606,7 @@ class Client_model extends CI_Model {
                     'addressLon'              => $client['addressLon'],
                     'idAgentFk'               => $client['idAgentFk'],
                     'businessName'            => $client['businessName'],
+                    'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                     'CUIT'                    => $client['CUIT'],
                     'idStatusFk'              => 1,
                     'idLocationFk'            => $client['idLocationFk'],
@@ -738,6 +743,7 @@ class Client_model extends CI_Model {
                 'addressLon'              => $client['addressLon'],
                 'idAgentFk'               => $client['idAgentFk'],
                 'businessName'            => $client['businessName'],
+                'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                 'CUIT'                    => $client['CUIT'],
                 'idLocationFk'            => $client['idLocationFk'],
                 'idProvinceFk'            => $client['idProvinceFk'],
@@ -874,6 +880,7 @@ class Client_model extends CI_Model {
                     'idClientTypeFk'          => $client['idClientTypeFk'],
                     'address'                 => $client['address'],
                     'name'                    => $client['name'],
+                    'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                     'addressLat'              => $client['addressLat'],
                     'addressLon'              => $client['addressLon'],
                     'idLocationFk'            => $client['idLocationFk'],
@@ -996,6 +1003,7 @@ class Client_model extends CI_Model {
         $this->db->set(
             [
                 'name'                    => $client['name'],
+                'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
                 'address'                 => $client['address'],
                 'addressLat'              => $client['addressLat'],
                 'addressLon'              => $client['addressLon'],
@@ -1096,19 +1104,20 @@ class Client_model extends CI_Model {
 
         if ($query->num_rows() < 1) {
             $this->db->insert('tb_clients', [
-                    'idClientTypeFk' => $client['idClientTypeFk'],
-                    'name'           => $client['name'],
-                    'address'        => $client['address'],
-                    'addressLat'     => $client['addressLat'],
-                    'addressLon'     => $client['addressLon'],
-                    'idAgentFk'      => $client['idAgentFk'],
-                    'idStatusFk'     => 1,
-                    'idLocationFk'   => $client['idLocationFk'],
-                    'idProvinceFk'   => $client['idProvinceFk'],
-                    'observation'    => $client['observation'],
-                    'phoneMobile'    => $client['mobile'],
-                    'phoneLocal'     => $client['local'],
-                    'mail'           => $client['mail'],
+                    'idClientTypeFk'          => $client['idClientTypeFk'],
+                    'name'                    => $client['name'],
+                    'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
+                    'address'                 => $client['address'],
+                    'addressLat'              => $client['addressLat'],
+                    'addressLon'              => $client['addressLon'],
+                    'idAgentFk'               => $client['idAgentFk'],
+                    'idStatusFk'              => 1,
+                    'idLocationFk'            => $client['idLocationFk'],
+                    'idProvinceFk'            => $client['idProvinceFk'],
+                    'observation'             => $client['observation'],
+                    'phoneMobile'             => $client['mobile'],
+                    'phoneLocal'              => $client['local'],
+                    'mail'                    => $client['mail'],
                 ]
             );
             if ($this->db->affected_rows() === 1) {
@@ -1209,17 +1218,18 @@ class Client_model extends CI_Model {
     public function updateParticular($client) {
         $this->db->set(
             [
-                'name'         => $client['name'],
-                'address'      => $client['address'],
-                'addressLat'   => $client['addressLat'],
-                'addressLon'   => $client['addressLon'],
-                'idAgentFk'    => $client['idAgentFk'],
-                'idLocationFk' => $client['idLocationFk'],
-                'idProvinceFk' => $client['idProvinceFk'],
-                'observation'  => $client['observation'],
-                'phoneMobile'  => $client['mobile'],
-                'phoneLocal'   => $client['local'],
-                'mail'         => $client['mail'],
+                'name'                    => $client['name'],
+                'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
+                'address'                 => $client['address'],
+                'addressLat'              => $client['addressLat'],
+                'addressLon'              => $client['addressLon'],
+                'idAgentFk'               => $client['idAgentFk'],
+                'idLocationFk'            => $client['idLocationFk'],
+                'idProvinceFk'            => $client['idProvinceFk'],
+                'observation'             => $client['observation'],
+                'phoneMobile'             => $client['mobile'],
+                'phoneLocal'              => $client['local'],
+                'mail'                    => $client['mail'],
 
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
