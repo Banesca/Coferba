@@ -32,7 +32,12 @@ body{
     font-size: 9px;
     margin-left: 5px;
 }
-
+.modal:nth-of-type(even) {
+    z-index: 1052 !important;
+}
+.modal-backdrop.show:nth-of-type(even) {
+    z-index: 1051 !important;
+}
 th {
     cursor:pointer;
 }
@@ -1279,6 +1284,9 @@ input:checked + .slider-3x:before {
 }
 .c-allign-td{
   text-align: center;
+}
+.padding-t-38{
+  padding-top: 3.8em;
 }
 
 .well-checkbox{

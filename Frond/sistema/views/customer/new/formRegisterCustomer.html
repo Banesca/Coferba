@@ -26,7 +26,20 @@
 								<!-- Customer Type -->
 								<div ng-include="'views/customer/new/components/comp_customerType.html'"></div>	
 								<!-- Customer Type of Inmueble -->
-								<div ng-include="'views/customer/new/components/comp_typeOfInmueble.html'"></div>					
+								<div ng-include="'views/customer/new/components/comp_typeOfInmueble.html'"></div>
+								<!-- Customer Name -->
+								<div ng-if="customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!=''" class="form-group col-md-12" ng-class="
+										{	'has-success': 
+											customer.new.idClientAssociated_SE!='' && fNewCustomer.ridClientAssociated_SE.$valid,
+										 	'has-error':  
+											(customer.new.idClientAssociated_SE=='' || customer.new.idClientAssociated_SE==undefined) && fNewCustomer.ridClientAssociated_SE.$touched,
+										}">
+								  <label style="padding-left: 15px;">Numero de cliente (Sistema de Gestion)</label>  
+										  <div class="input-group">
+											  <span class="input-group-addon"><i class="fas fa-file-invoice"></i></span>
+											  <input  name="ridClientAssociated_SE" autofocus="true" placeholder="numero de cliente" class="form-control" ng-model="customer.new.idClientAssociated_SE" ng-blur="enabledNextBtn();"  type="text" ng-required="true" autofocus/>
+										  </div>
+								</div>								
 									<!--<div style="margin-top: 2em;" class="form-group form-inline col-md-6" ng-if="(customer.new.idClientTypeFk==4 || customer.new.idClientTypeFk==5) && customer.new.idClientTypeFk!='' && customer.new.typeInmueble==1">
 										<table>
 											<tr>

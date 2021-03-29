@@ -9,7 +9,7 @@
         <tr ng-repeat="item in list_schedule">
         	<td style="padding-top: 11px; width: 1%;">
                 <label class="switch switch-3x">
-                    <input type="checkbox" class="success" ng-change="enabledNextBtn();" ng-click="item.id>=1?setScheduleTimeFn(item, 'new'):''" ng-required="!item.selected" ng-model="item.selected" id="modCheck-{{item.id}}">
+                    <input type="checkbox" class="success" ng-change="enabledNextBtn();" ng-click="item.id>=1?setScheduleTimeFn(item, 'new'):''" ng-required="item.selected" ng-model="item.selected" id="modCheck-{{item.id}}">
                     <span class="slider slider-3x flat"></span>
                 </label>
           	</td>
@@ -34,7 +34,7 @@
 		  					  item.fronAm!='' && item.fronAm!=undefined && item.selected
 	  					  }" 
 				  	ng-keydown="fnLoadPhoneMask();" 
-				  	ng-required="!item.selected" 
+				  	ng-required="item.selected" 
 				  	ng-model="item.fronAm" 
 				  	type="text" 
 				  	ng-keyup="enabledNextBtn();" 
@@ -51,7 +51,7 @@
 		  					  item.toAm!='' && item.toAm!=undefined && item.selected
 	  					  }"  
 				  	ng-keydown="fnLoadPhoneMask();" 
-				  	ng-required="!item.selected" 
+				  	ng-required="item.selected" 
 				  	ng-model="item.toAm"  
 				  	type="text" 
 				  	ng-keyup="item.toAm.length==5?setScheduleTimeFn(item, 'new'):'';enabledNextBtn();" 
@@ -68,7 +68,7 @@
 		  					  item.fronPm!='' && item.fronPm!=undefined  && item.selected
 	  					  }"   
 				  	ng-keydown="fnLoadPhoneMask();" 
-				  	ng-required="!item.selected" 
+				  	ng-required="item.selected" 
 				  	ng-model="item.fronPm"  
 				  	type="text" 
 				  	ng-keyup="enabledNextBtn();" 
@@ -85,7 +85,7 @@
 		  					  item.toPm!='' && item.toPm!=undefined && item.selected
 	  					  }"  
 				  	ng-keydown="fnLoadPhoneMask();" 
-				  	ng-required="!item.selected" 
+				  	ng-required="item.selected" 
 				  	ng-model="item.toPm"  
 				  	type="text" 
 				  	ng-keyup="item.toPm.length==5?setScheduleTimeFn(item, 'new'):'';enabledNextBtn();" 

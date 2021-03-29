@@ -252,6 +252,20 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                     return response;
             });   
           },
+          /* GET REMOTE CONNECTION TYPE */
+            typeConnectionList: function() {
+            //console.log("[Utilities Services]: Get Agents ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/getTipeConetionRemote"
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },          
           /* ALARM SERVICE ADITIONALS */
             alarmServicesAditionalsList: function() {
             //console.log("[Utilities Services]: Get Agents ");

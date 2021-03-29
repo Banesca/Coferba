@@ -64,7 +64,7 @@ moduleServiceServices.service("serviceServices", ['$http', 'tokenSystem', '$time
               break;              
               default:
             }
-              console.log("[Service Services]: new contract ");
+              console.log("[Service Services]: new customer service ");
               console.log(rsCustomerServices);
               return $http.post(serverHost+serverBackend+"Services/"+typeOfService,rsCustomerServices,serverHeaders)
                 .then(function mySucess(response, status) {
@@ -75,6 +75,42 @@ moduleServiceServices.service("serviceServices", ['$http', 'tokenSystem', '$time
                   return response;
                 });
           },
+          /*UPDATE NEW SERVICE */
+          updateService: function(data) {
+            rsCustomerServices.service = data;
+            var switchOption = rsCustomerServices.service.idClientTypeServices;
+            switch(switchOption){
+              case "1": //CONTROL ACCESS
+                typeOfService="editAccescontrol";
+              break;
+              case "2": //INTERNET
+                typeOfService="editInternet";
+              break;
+              case "3": //TOTEM
+                typeOfService="editTotem";
+              break;
+              case "4": //CAMERA
+                typeOfService="editCamera";
+              break;
+              case "5": //ALARM
+                typeOfService="editAlarm";
+              break;
+              case "6": //APP MONITOR
+                typeOfService="editSmartpanic";
+              break;              
+              default:
+            }
+              console.log("[Service Services]: update customer service ");
+              console.log(rsCustomerServices);
+              return $http.post(serverHost+serverBackend+"Services/"+typeOfService,rsCustomerServices,serverHeaders)
+                .then(function mySucess(response, status) {
+                  rsJson=response;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response); 
+                  return response;
+                });
+          },          
           getServiceListByIdContract: function(idContract) {
             rsJson={};
             console.log("[Service Services]: List of Services Items By Contract");

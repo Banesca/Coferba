@@ -3,7 +3,7 @@
   	<div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
           	<div class="modal-header">
-          		<button type="button" class="close" ng-click="modalConfirmation('closeServiceWindow', 0, null)"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+          		<button type="button" class="close" ng-click="modalConfirmation('closeServiceWindow', 0, service.new)"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
             	<h3 class="modal-title"><i class="product-success fas fa-wrench"></i> NUEVO SERVICIO CAMARAS</h3>
         	</div>
     		<div class="modal-body"  style="overflow-y: scroll;">
@@ -86,21 +86,21 @@
 							<!-- Camaras: DRV -->
 							<div class="form-group col-md-12"ng-class="
 								  			{	'has-success': 
-								  				service.new.dvr.selected!=undefined && fCustomerNewService.service_dvr.$valid,
+								  				service.dvr.selected!=undefined && fCustomerNewService.service_dvr.$valid,
 								  			 	'has-error':  
-								  				(service.new.dvr.selected==undefined) && fCustomerNewService.service_dvr.$touched,
+								  				(service.dvr.selected==undefined) && fCustomerNewService.service_dvr.$touched,
 								  			}">
 								<div class="col-md-8"><label style="padding-left: 15px;">DVR/NVR</label></div>
-								<div class="pull-right col-md-4"><button data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="service.new.dvr.selected==undefined" ng-click="compServiceProductDetailsFn(service.new.dvr.selected, productListType.RECORD_DEVICE)" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-							  	<button ng-if="service.new.dvr.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.dvr.selected, productListType.RECORD_DEVICE, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>  
+								<div class="pull-right col-md-4"><button data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="service.dvr.selected==undefined" ng-click="compServiceProductDetailsFn(service.dvr.selected, productListType.RECORD_DEVICE)" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+							  	<button ng-if="service.dvr.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.dvr.selected, productListType.RECORD_DEVICE, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>  
 							    <div class="col-xs-12 selectContainer">							   
 								    <div class="input-group">
 						              <span class="input-group-addon"><i class="fas fa-door-open"></i></span>
 						              <ui-select name="service_dvr"  
-						              			 ng-change="compServiceProductDetailsFn(service.new.dvr.selected, productListType.RECORD_DEVICE, null)" 
-						              			 ng-model="service.new.dvr.selected"
+						              			 ng-change="compServiceProductDetailsFn(service.dvr.selected, productListType.RECORD_DEVICE, null)" 
+						              			 ng-model="service.dvr.selected"
 						              			 ng-required="true"
-						              			 ng-disabled="service.new.dvr.selected!=undefined"
+						              			 ng-disabled="service.dvr.selected!=undefined"
 						              			 theme="bootstrap" autofocus>
 						                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 						                    <ui-select-choices repeat="item in productListByType.RECORD_DEVICE | filter: $select.search">
@@ -134,17 +134,17 @@
 							<!-- Camaras: cantidad -->
 							<div class="form-group col-md-12" ng-class="
 								  			{	'has-success': 
-								  				service.new.maxCamera.length>0 && 
-								  				service.new.maxCamera.length!=0 && fCustomerNewService.service_cantCamaras.$valid,
+								  				service.maxCamera.length>0 && 
+								  				service.maxCamera.length!=0 && fCustomerNewService.service_cantCamaras.$valid,
 								  			 	'has-error':  
-								  				(service.new.maxCamera.length==0 || 
-								  				service.new.maxCamera==0 || service.new.maxCamera==undefined) && fCustomerNewService.service_cantCamaras.$touched,
+								  				(service.maxCamera.length==0 || 
+								  				service.maxCamera==0 || service.maxCamera==undefined) && fCustomerNewService.service_cantCamaras.$touched,
 								  			}">
 							  <label style="padding-left: 15px;">Maximo de Camaras </label>  
 								  <div class="col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
-											<input name="service_cantCamaras" type="text" ng-keydown="fnLoadPhoneMask()" class="form-control input--number" ng-model="service.new.maxCamera" />
+											<input name="service_cantCamaras" type="text" ng-keydown="fnLoadPhoneMask()" class="form-control input--number" ng-model="service.maxCamera" />
 								  </div>
 								</div>
 							</div>					
@@ -155,12 +155,12 @@
 							<div class="col-md-12">
 								<div class="col-md-8">
 									<label class="clf-p-left">Backups de Energia</label></div>
-								<div class="pull-right col-md-4" style="padding-bottom: 5px;"><button ng-click="loadDetailModalWindow(service.new.batteries.selected)" ng-disabled="service.new.batteries.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button></div>
+								<div class="pull-right col-md-4" style="padding-bottom: 5px;"><button ng-click="loadDetailModalWindow(service.batteries.selected)" ng-disabled="service.batteries.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button></div>
 							    <div class="selectContainer">							   
 								    <div class="col-md-12 input-group">
 						              	<span class="input-group-addon"><i class="fas fa-car-battery"></i></span>
 						              	<ui-select name="service_energyBackups"
-						              			 ng-model="service.new.batteries.selected"
+						              			 ng-model="service.batteries.selected"
 						              			 ng-required="list_batteries.length==0"
 						              			 theme="bootstrap" autofocus>
 						                	<ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
@@ -196,12 +196,12 @@
 						<div class="well-checkbox form-group col-md-12">
 							<div class="col-md-12">
 								<div class="col-md-10"><label class="clf-p-left">Cargar Camaras </label></div>
-								<div class="pull-right col-md-2" style="padding-bottom: 5px;"><button ng-click="loadDetailModalWindow(service.new.cameras.selected)" ng-disabled="service.new.cameras.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button></div>
+								<div class="pull-right col-md-2" style="padding-bottom: 5px;"><button ng-click="loadDetailModalWindow(service.cameras.selected)" ng-disabled="service.cameras.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button></div>
 							    <div class="selectContainer">							   
 								    <div class="col-md-12 input-group">
 						              	<span class="input-group-addon"><i class="fas fa-video"></i></span>
 						              	<ui-select name="service_cameras"
-						              			 ng-model="service.new.cameras.selected"
+						              			 ng-model="service.cameras.selected"
 						              			 ng-required="list_cameras.length==0"
 						              			 theme="bootstrap" autofocus>
 						                	<ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
@@ -372,8 +372,8 @@
 						    	<label class="switch switch-1x">
 						    		<input type="checkbox" 
 						    		class="success" 
-						    		ng-change="service.new.sysUser.selected=undefined" 
-						    		ng-model="service.new.isSysUser" 
+						    		ng-change="service.sysUser.selected=undefined" 
+						    		ng-model="service.isSysUser" 
 						    		id="isSysUser" 
 						    		style="margin: 0px !important; display: inherit !important;">
 									<span class="slider slider-1x flat"></span>
@@ -381,15 +381,15 @@
 								<label for="serviceSysUser" style="cursor: pointer; font-weight: 600; padding-left: 15px;">Usuario del sistema web</label>
 							</div>
 							<div class="form-group col-md-2 pull-right">
-								<button ng-click="loadServiceUserWindowFn(service.new.sysUser.selected, 'new')" class="btn btn-sm btn-success" ng-disabled="(service.new.isSysUser && service.new.sysUser.selected==undefined)"><i class="fas fa-plus"></i> Agregar</button> 
+								<button ng-click="loadServiceUserWindowFn(service.sysUser.selected, 'new')" class="btn btn-sm btn-success" ng-disabled="(service.isSysUser && service.sysUser.selected==undefined)"><i class="fas fa-plus"></i> Agregar</button> 
 							</div>							
   							<div class="form-group col-md-12" >
-  								<div ng-if="service.new.isSysUser" class="selectContainer">
+  								<div ng-if="service.isSysUser" class="selectContainer">
 								    <div class="col-md-12 input-group">
 								      <span class="input-group-addon"><i class="fas fa-lock-open"></i></span>
 								        <ui-select 
 								        	theme="bootstrap"
-								         	ng-model="service.new.sysUser.selected"
+								         	ng-model="service.sysUser.selected"
 								         	ng-required="list_user.length==0">
 								            <ui-select-match placeholder="Selecciona un usuario" >{{$select.selected.fullNameUser}}</ui-select-match>
 								            <ui-select-choices repeat="item in rsList.clientUser | filter: $select.search">
@@ -440,9 +440,9 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="modalConfirmation('newService', 0, service.new)" ng-disabled="fCustomerNewService.$invalid || list_cameras.length!=service.new.maxCamera" class="btn btn-labeled btn-success">
+                        <button type="submit" ng-click="modalConfirmation('newService', 0, service.new)" ng-disabled="fCustomerNewService.$invalid || list_cameras.length!=service.maxCamera" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
-                        <a ng-click="modalConfirmation('closeServiceWindow', 0, null)" type="button" class="btn btn-labeled btn-danger">
+                        <a ng-click="modalConfirmation('closeServiceWindow', 0, service.new)" type="button" class="btn btn-labeled btn-danger">
                             <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
                     </div>
                 </div>

@@ -51,7 +51,7 @@
               <div class="input-group s-ui-width s-ui-m-left">
                 <input type="text" name="customerSearch" id="customerSearch" ng-model="customerSearch.name" ng-keyup="findCustomerFn(customerSearch.name)" class="form-control input-lg input-font-size text-uppercase" required="true" />
                 <ul class="list-group" style="height: 0px;">
-                  <li class="list-group-item" ng-repeat="item in listCustomerFound" ng-click="loadCustomerFieldsFn(item.customer)"> {{item.customer.idClient}} - {{item.customer.name}} <span class="label label-default">{{item.customer.ClientType | uppercase}}</span></li>
+                  <li class="list-group-item" ng-repeat="item in listCustomerFound" ng-class="{'padding-t-38': $index==0}" ng-click="loadCustomerFieldsFn(item.customer)"> {{item.customer.idClient}} - {{item.customer.name}} <span class="label label-default">{{item.customer.ClientType | uppercase}}</span></li>
                 </ul>
               </div>
           </div>
@@ -64,7 +64,12 @@
                   <div class="panel-body">
                     <!-- CUSTOMER COLUMN -->
                     <div  class="col-md-8 well-checkbox n-margin-r n-margin-l customer-frame">
-                      <div class="col-md-6"><span>N° de Cliente: {{customerFound.idClient}}</span></div>
+                      <div class="col-md-6">
+                        <span class="badge badge-default">sistema web</span><span> N° de Cliente : {{customerFound.idClient}}</span>
+                      </div>
+                      <div ng-if="customerFound.idClientAssociated_SE!=null" class="col-md-6">
+                        <span class="badge badge-default">sistema de gestion</span><span> N° de Cliente : {{customerFound.idClientAssociated_SE}}</span>
+                      </div>
                       <div class="col-md-6"><span>Tipo de Cliente: {{customerFound.ClientType | uppercase}}</span></div>
                       <div class="col-md-6"><span>Nombre: {{customerFound.name | uppercase}}</span></div>
                       <div ng-if="customerFound.idClientType=='1' || customerFound.idClientType=='3'" class="col-md-6"><span>Razón Social: {{customerFound.businessName | uppercase}}</span></div>
@@ -121,7 +126,7 @@
                       <div class="row">
                           <div class="col-xs-3 col-sm-1 col-md-1">
                                <button type="button" ng-click="closeServicePanel()" class="btn btn-labeled btn-success">
-                                  <span class="btn-label"><i class="fas fa-search"></i></span>Nueva busqueda</button>
+                                  <span class="btn-label"><i class="fas fa-search"></i></span>Buscar nuevo cliente</button>
                           </div>                                              
                       </div>
                   </div>                
@@ -132,16 +137,30 @@
   </div>
 </div>
 
+<div ng-include="'views/services/list/listServicesUserLicense.html'"></div>
+<div ng-include="'views/services/list/listCameras.html'"></div>
+
 <div ng-include="'views/services/new/formRegisterContract.html'"></div>
 <div ng-include="'views/services/new/formUpdateContract.html'"></div>
-<div ng-include="'views/services/new/approveContract.html'"></div>
+<div ng-include="'views/services/new/activationDateContract.html'"></div>
 <div ng-include="'views/services/new/components/comp_serviceUnits.html'"></div>
+
 <div ng-include="'views/services/new/components/ControlAcess/formRegisterAccessControl.html'"></div>
 <div ng-include="'views/services/new/components/Alarm/formRegisterAlarm.html'"></div>
 <div ng-include="'views/services/new/components/AppMonitor/formRegisterAppMonitor.html'"></div>
 <div ng-include="'views/services/new/components/Cameras/formRegisterCameras.html'"></div>
 <div ng-include="'views/services/new/components/Totem/formRegisterTotem.html'"></div>
 <div ng-include="'views/services/new/components/Internet/formRegisterInternet.html'"></div>
+
+
+
+<div ng-include="'views/services/update/components/ControlAcess/formUpdateAccessControl.html'"></div>
+<div ng-include="'views/services/update/components/Alarm/formUpdateAlarm.html'"></div>
+<div ng-include="'views/services/update/components/AppMonitor/formUpdateAppMonitor.html'"></div>
+<div ng-include="'views/services/update/components/Cameras/formUpdateCameras.html'"></div>
+<div ng-include="'views/services/update/components/Totem/formUpdateTotem.html'"></div>
+<div ng-include="'views/services/update/components/Internet/formUpdateInternet.html'"></div>
+
 
 <div ng-include="'views/services/new/components/comp_serviceProductDetails.html'"></div>
 <div ng-include="'views/services/new/components/comp_serviceUserDetails.html'"></div>

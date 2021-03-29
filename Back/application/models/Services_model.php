@@ -377,7 +377,6 @@ class Services_model extends CI_Model {
                 'idParticularAddressFk'   => $item['idParticularAddressFk'],
             ]
         )->where("idClientServicesSmartPanic", $item['idClientServicesSmartPanic'])->update("tb_client_services_smart_panic");
-
         $data = $this->db->select("idClientServicesFk")
             ->from('tb_client_services_smart_panic')
             ->where("idClientServicesSmartPanic", $item['idClientServicesSmartPanic'])
@@ -396,10 +395,9 @@ class Services_model extends CI_Model {
 
         //$id = $this->db->insert_id();
         //$this->updatedService($idClientServicesFk, $id);
-
         $this->insertLicence($item['licenses'], $item['idClientServicesSmartPanic'], true);
 
-        if (isset($item['adicional'])) {
+        if (isset($item['adicional']) && count($item['adicional']) > 0) {
             $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
@@ -413,7 +411,6 @@ class Services_model extends CI_Model {
                 );
             }
         }
-
         if ($this->db->affected_rows() === 1) {
             return 1;
         } else {
@@ -1456,8 +1453,7 @@ class Services_model extends CI_Model {
     }
     }*/
     /*GET LIST OF TYPE OF SERVICES*/
-    public
-    function getTypeOfServices() {
+    public function getTypeOfServices() {
 
         $query = null;
         $rs    = null;
@@ -1471,8 +1467,7 @@ class Services_model extends CI_Model {
     }
 
     /*GET LIST OF ACCESS CONTROL DOORS */
-    public
-    function accessCtrlDoors() {
+    public function accessCtrlDoors() {
 
         $query = null;
         $rs    = null;
@@ -1485,8 +1480,7 @@ class Services_model extends CI_Model {
         return $rs;
     }
 
-    public
-    function getPorIdContrato($idContrato) {
+    public function getPorIdContrato($idContrato) {
 
         $query         = null;
         $controlAcceso = null;
@@ -1557,8 +1551,7 @@ class Services_model extends CI_Model {
         return $todo;
     }
 
-    public
-    function getAditionalIdCliente($idServicesFk) {
+    public function getAditionalIdCliente($idServicesFk) {
         $query = null;
         $rs    = null;
 
@@ -1889,7 +1882,7 @@ class Services_model extends CI_Model {
         }
 
         return true;
-    }
+    }   
 }
 
 ?>

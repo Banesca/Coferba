@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2021 a las 16:05:24
+-- Tiempo de generación: 29-03-2021 a las 04:53:18
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `tb_access_control`
 --
 
+DROP TABLE IF EXISTS `tb_access_control`;
 CREATE TABLE `tb_access_control` (
   `idAccessControl` int(11) NOT NULL,
   `titulo` varchar(100) DEFAULT NULL
@@ -45,6 +46,7 @@ INSERT INTO `tb_access_control` (`idAccessControl`, `titulo`) VALUES
 -- Estructura de tabla para la tabla `tb_access_control_door`
 --
 
+DROP TABLE IF EXISTS `tb_access_control_door`;
 CREATE TABLE `tb_access_control_door` (
   `idAccessControlDoor` int(11) NOT NULL,
   `titulo` varchar(100) DEFAULT NULL
@@ -69,6 +71,7 @@ INSERT INTO `tb_access_control_door` (`idAccessControlDoor`, `titulo`) VALUES
 -- Estructura de tabla para la tabla `tb_addres`
 --
 
+DROP TABLE IF EXISTS `tb_addres`;
 CREATE TABLE `tb_addres` (
   `idAdress` int(11) NOT NULL,
   `nameAdress` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -101,6 +104,7 @@ INSERT INTO `tb_addres` (`idAdress`, `nameAdress`, `idCompanyKf`, `priceUni`, `p
 -- Estructura de tabla para la tabla `tb_agents`
 --
 
+DROP TABLE IF EXISTS `tb_agents`;
 CREATE TABLE `tb_agents` (
   `idAgent` int(11) UNSIGNED NOT NULL,
   `agent` varchar(200) DEFAULT NULL
@@ -119,6 +123,7 @@ INSERT INTO `tb_agents` (`idAgent`, `agent`) VALUES
 -- Estructura de tabla para la tabla `tb_alarm_batery`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_batery`;
 CREATE TABLE `tb_alarm_batery` (
   `idAlarmBatery` int(11) UNSIGNED NOT NULL,
   `nroInternal` varchar(200) DEFAULT NULL,
@@ -128,12 +133,65 @@ CREATE TABLE `tb_alarm_batery` (
   `fkidClientServicesAlarms` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_alarm_batery`
+--
+
+INSERT INTO `tb_alarm_batery` (`idAlarmBatery`, `nroInternal`, `nroFabric`, `dateExpired`, `isControlSchedule`, `fkidClientServicesAlarms`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, 6),
+(3, NULL, NULL, NULL, NULL, 14),
+(4, NULL, NULL, NULL, NULL, 15),
+(5, NULL, NULL, NULL, NULL, 16),
+(6, NULL, NULL, NULL, NULL, 17),
+(7, NULL, NULL, NULL, NULL, 18),
+(8, NULL, NULL, NULL, NULL, 19),
+(9, NULL, NULL, NULL, NULL, 20),
+(10, NULL, NULL, NULL, NULL, 21),
+(11, NULL, NULL, NULL, NULL, 22),
+(12, NULL, NULL, NULL, NULL, 23),
+(13, NULL, NULL, NULL, NULL, 24),
+(14, NULL, NULL, NULL, NULL, 25),
+(15, NULL, NULL, NULL, NULL, 26),
+(16, NULL, NULL, NULL, NULL, 27),
+(17, NULL, NULL, NULL, NULL, 28),
+(18, NULL, NULL, NULL, NULL, 29),
+(19, NULL, NULL, NULL, NULL, 30),
+(20, NULL, NULL, NULL, NULL, 31),
+(21, NULL, NULL, NULL, NULL, 32),
+(22, NULL, NULL, NULL, NULL, 33),
+(23, NULL, NULL, NULL, NULL, 34),
+(24, NULL, NULL, NULL, NULL, 0),
+(25, NULL, NULL, NULL, NULL, 167),
+(26, NULL, NULL, NULL, NULL, 167),
+(27, NULL, NULL, NULL, NULL, 167),
+(29, NULL, NULL, NULL, NULL, 209),
+(30, NULL, NULL, NULL, NULL, 209),
+(31, NULL, NULL, NULL, NULL, 209),
+(32, NULL, NULL, NULL, NULL, 0),
+(36, NULL, NULL, NULL, NULL, 35),
+(37, NULL, NULL, NULL, NULL, 36),
+(40, NULL, NULL, NULL, NULL, 38),
+(41, NULL, NULL, NULL, NULL, 39),
+(43, '6', '8', NULL, 1, 37),
+(44, NULL, NULL, NULL, NULL, 40),
+(45, NULL, NULL, NULL, NULL, 41),
+(51, '6', '8', NULL, 1, 42),
+(52, NULL, NULL, NULL, NULL, 43),
+(53, NULL, NULL, NULL, NULL, 44),
+(54, NULL, NULL, NULL, NULL, 46),
+(55, NULL, NULL, NULL, NULL, 47),
+(56, NULL, NULL, NULL, NULL, 48),
+(57, NULL, NULL, NULL, NULL, 49),
+(58, NULL, NULL, NULL, NULL, 50);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_alarm_line_phone`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_line_phone`;
 CREATE TABLE `tb_alarm_line_phone` (
   `idAlarmLinePhone` int(11) UNSIGNED NOT NULL,
   `company` varchar(100) DEFAULT NULL,
@@ -148,6 +206,7 @@ CREATE TABLE `tb_alarm_line_phone` (
 -- Estructura de tabla para la tabla `tb_alarm_module_gps`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_module_gps`;
 CREATE TABLE `tb_alarm_module_gps` (
   `idAlarmModuleGps` int(11) UNSIGNED NOT NULL,
   `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
@@ -168,6 +227,7 @@ CREATE TABLE `tb_alarm_module_gps` (
 -- Estructura de tabla para la tabla `tb_alarm_module_ip`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_module_ip`;
 CREATE TABLE `tb_alarm_module_ip` (
   `idAlarmModuleIp` int(11) UNSIGNED NOT NULL,
   `moduleIp` varchar(100) DEFAULT NULL,
@@ -189,6 +249,7 @@ CREATE TABLE `tb_alarm_module_ip` (
 -- Estructura de tabla para la tabla `tb_alarm_person_alert`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_person_alert`;
 CREATE TABLE `tb_alarm_person_alert` (
   `idPersonAlert` int(11) UNSIGNED NOT NULL,
   `fullName` varchar(200) DEFAULT NULL,
@@ -207,6 +268,7 @@ CREATE TABLE `tb_alarm_person_alert` (
 -- Estructura de tabla para la tabla `tb_alarm_person_verific`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_person_verific`;
 CREATE TABLE `tb_alarm_person_verific` (
   `idPersonVerific` int(11) UNSIGNED NOT NULL,
   `isUserSystem` tinyint(1) DEFAULT 0,
@@ -222,6 +284,7 @@ CREATE TABLE `tb_alarm_person_verific` (
 -- Estructura de tabla para la tabla `tb_alarm_services_aditionals`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_services_aditionals`;
 CREATE TABLE `tb_alarm_services_aditionals` (
   `idAlarmServicesAditionals` int(11) UNSIGNED NOT NULL,
   `alarmServicesAditionals` varchar(50) DEFAULT NULL
@@ -244,6 +307,7 @@ INSERT INTO `tb_alarm_services_aditionals` (`idAlarmServicesAditionals`, `alarmS
 -- Estructura de tabla para la tabla `tb_alarm_type_client`
 --
 
+DROP TABLE IF EXISTS `tb_alarm_type_client`;
 CREATE TABLE `tb_alarm_type_client` (
   `idTypeClientAlarm` int(11) UNSIGNED NOT NULL,
   `typeClientAlarm` varchar(200) DEFAULT NULL
@@ -265,6 +329,7 @@ INSERT INTO `tb_alarm_type_client` (`idTypeClientAlarm`, `typeClientAlarm`) VALU
 -- Estructura de tabla para la tabla `tb_backup_energy`
 --
 
+DROP TABLE IF EXISTS `tb_backup_energy`;
 CREATE TABLE `tb_backup_energy` (
   `idBackupEnergy` int(11) NOT NULL,
   `idClientServicesFk` int(11) DEFAULT NULL,
@@ -272,12 +337,21 @@ CREATE TABLE `tb_backup_energy` (
   `idBatteryFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_backup_energy`
+--
+
+INSERT INTO `tb_backup_energy` (`idBackupEnergy`, `idClientServicesFk`, `description`, `idBatteryFk`) VALUES
+(74, 50, 'Bateria Alarma 12v 7ah 7a Recargable', 9),
+(75, 50, 'Ups Estabilizador Lyonn 800va', 17);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_backup_energy_totem`
 --
 
+DROP TABLE IF EXISTS `tb_backup_energy_totem`;
 CREATE TABLE `tb_backup_energy_totem` (
   `idBackupEnergyTotem` int(11) NOT NULL,
   `idClientServicesTotemFk` int(11) DEFAULT NULL,
@@ -285,12 +359,22 @@ CREATE TABLE `tb_backup_energy_totem` (
   `idBatteryFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_backup_energy_totem`
+--
+
+INSERT INTO `tb_backup_energy_totem` (`idBackupEnergyTotem`, `idClientServicesTotemFk`, `description`, `idBatteryFk`) VALUES
+(145, 28, NULL, 9),
+(146, 28, NULL, 17),
+(147, 28, 'BATERIA', 14);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_bakups_order`
 --
 
+DROP TABLE IF EXISTS `tb_bakups_order`;
 CREATE TABLE `tb_bakups_order` (
   `idBakupsOrder` int(11) UNSIGNED NOT NULL,
   `bakupsOrder` int(11) DEFAULT NULL,
@@ -303,11 +387,21 @@ CREATE TABLE `tb_bakups_order` (
 -- Estructura de tabla para la tabla `tb_battery_install_access_control`
 --
 
+DROP TABLE IF EXISTS `tb_battery_install_access_control`;
 CREATE TABLE `tb_battery_install_access_control` (
   `idBatteryInstallAccessControl` int(11) UNSIGNED NOT NULL,
   `idClientServicesAccessControlFk` int(11) DEFAULT NULL,
   `idBatteryFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tb_battery_install_access_control`
+--
+
+INSERT INTO `tb_battery_install_access_control` (`idBatteryInstallAccessControl`, `idClientServicesAccessControlFk`, `idBatteryFk`) VALUES
+(115, 102, 9),
+(116, 102, 9),
+(117, 102, 14);
 
 -- --------------------------------------------------------
 
@@ -315,6 +409,7 @@ CREATE TABLE `tb_battery_install_access_control` (
 -- Estructura de tabla para la tabla `tb_battery_install_alarm`
 --
 
+DROP TABLE IF EXISTS `tb_battery_install_alarm`;
 CREATE TABLE `tb_battery_install_alarm` (
   `idBatteryInstallAlarm` int(11) NOT NULL,
   `battery` varchar(100) DEFAULT NULL,
@@ -330,6 +425,7 @@ CREATE TABLE `tb_battery_install_alarm` (
 -- Estructura de tabla para la tabla `tb_cameras`
 --
 
+DROP TABLE IF EXISTS `tb_cameras`;
 CREATE TABLE `tb_cameras` (
   `idCamera` int(11) UNSIGNED NOT NULL,
   `idClientServicesCameraFk` int(11) DEFAULT NULL,
@@ -347,9 +443,9 @@ CREATE TABLE `tb_cameras` (
 --
 
 INSERT INTO `tb_cameras` (`idCamera`, `idClientServicesCameraFk`, `portCamera`, `coveredArea`, `locationCamera`, `nroSerieCamera`, `nroFabricCamera`, `dateExpireCamera`, `idProductFk`) VALUES
-(83, 50, 1, 'Prueba', 'Prueba', '12845493589', '12845493589', NULL, 18),
-(84, 50, 2, 'Prueba 2', 'Prueba 2', '23457689876', '23457689876', NULL, 18),
-(85, 50, 3, 'Prueba 3', 'Prueba 3', '23456789675', '23456789675', NULL, 18);
+(86, 50, 1, 'Prueba', 'Prueba', '12845493589', '12845493589', NULL, 18),
+(87, 50, 2, 'Prueba 2', 'Prueba 2', '23457689876', '23457689876', NULL, 18),
+(88, 50, 3, 'Prueba 3', 'Prueba 3', '23456789675', '23456789675', NULL, 18);
 
 -- --------------------------------------------------------
 
@@ -357,6 +453,7 @@ INSERT INTO `tb_cameras` (`idCamera`, `idClientServicesCameraFk`, `portCamera`, 
 -- Estructura de tabla para la tabla `tb_cameras_totem`
 --
 
+DROP TABLE IF EXISTS `tb_cameras_totem`;
 CREATE TABLE `tb_cameras_totem` (
   `idCameraTotem` int(11) UNSIGNED NOT NULL,
   `idClientServicesCameraTotemFk` int(11) DEFAULT NULL,
@@ -369,12 +466,23 @@ CREATE TABLE `tb_cameras_totem` (
   `idProductFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_cameras_totem`
+--
+
+INSERT INTO `tb_cameras_totem` (`idCameraTotem`, `idClientServicesCameraTotemFk`, `portCamera`, `coveredArea`, `locationCamera`, `nroSerieCamera`, `nroFabricCamera`, `dateExpireCamera`, `idProductFk`) VALUES
+(220, 28, 1, 'Probando', 'Probando', '23423434532423432', '23423434532423432', NULL, 18),
+(221, 28, 3, 'Probando', 'Probando', '34543564364564365476', '34543564364564365476', NULL, 18),
+(222, 28, 4, 'Probando', 'Probando', '5678877565476734754687', '5678877565476734754687', NULL, 18),
+(223, 28, 2, 'Probando', 'Probando', '12345356579099098', '12345356579099098', NULL, 18);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_category_departament`
 --
 
+DROP TABLE IF EXISTS `tb_category_departament`;
 CREATE TABLE `tb_category_departament` (
   `idCategoryDepartament` int(11) UNSIGNED NOT NULL,
   `categoryDepartament` varchar(50) DEFAULT NULL
@@ -398,6 +506,7 @@ INSERT INTO `tb_category_departament` (`idCategoryDepartament`, `categoryDeparta
 -- Estructura de tabla para la tabla `tb_clients`
 --
 
+DROP TABLE IF EXISTS `tb_clients`;
 CREATE TABLE `tb_clients` (
   `idClient` int(11) UNSIGNED NOT NULL,
   `idClientTypeFk` int(11) DEFAULT NULL,
@@ -454,7 +563,7 @@ INSERT INTO `tb_clients` (`idClient`, `idClientTypeFk`, `name`, `address`, `addr
 (12, 2, 'LAVALLE 357', 'LAVALLE 357', '-34.601997409805', '-58.371944634111', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-24 16:16:00', '2020-09-07 23:03:42', 1, 'administracion@adctettamanti.com.ar', '', 0, 11, 'administracion@adctettamanti.com.ar', '', 'administracion@adctettamanti.com.ar', '', NULL, 1, NULL, NULL, 2, 3),
 (13, 2, 'MANUEL UGARTE 3580', 'MANUEL UGARTE 3580', '-34.562495783889', '-58.473842045079', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-24 16:21:15', '2020-09-05 02:22:09', 1, 'administracion@adctettamanti.com.ar', 'prueba', 0, 11, 'administracion@adctettamanti.com.ar', '', 'administracion@adctettamanti.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
 (14, 2, 'HIDALGO 462', 'HIDALGO 462', '-34.614010711042', '-58.439875711967', NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, '2020-07-24 22:32:36', NULL, 0, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, 1, 'ESTUDIO MARJBEIN-SUCHMON', 'HIDALGO 462', '-34.614010711042', '-58.439875711967', 1, 'DORA SILVIA MARJBEIN', NULL, '27-11018302-5', 1, 1, NULL, NULL, NULL, '', '', '2020-07-24 22:32:36', NULL, 1, 'proveedores@em-s.com.ar', '', 0, 0, 'proveedores@em-s.com.ar', '', 'proveedores@em-s.com.ar', '', 0, 1, 351, 1, NULL, NULL),
+(15, 1, 'ESTUDIO MARJBEIN-SUCHMON', 'HIDALGO 462', '-34.614010711042', '-58.439875711967', 1, 'DORA SILVIA MARJBEIN', 135643543, '27-11018302-5', 1, 1, NULL, NULL, NULL, '', '', '2020-07-24 22:32:36', '2021-03-28 01:39:05', 1, 'proveedores@em-s.com.ar', '', 0, 0, 'proveedores@em-s.com.ar', '', 'proveedores@em-s.com.ar', '', 0, 1, 351, 1, NULL, NULL),
 (16, 2, 'AV EVA PERON 1155', 'AV EVA PERON 1155', '-34.630617058881', '-58.441633624559', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-24 22:38:17', NULL, 1, 'proveedores@em-s.com.ar', '', 0, 15, 'proveedores@em-s.com.ar', '', 'proveedores@em-s.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
 (17, 2, 'JULIAN ALVAREZ 647', 'JULIAN ALVAREZ 647', '-34.599024958043', '-58.433565151432', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-24 22:45:01', '2020-09-07 23:23:14', 1, 'proveedores@em-s.com.ar', '', 0, 15, 'proveedores@em-s.com.ar', '', 'proveedores@em-s.com.ar', '', NULL, 1, NULL, NULL, 1, 1),
 (18, 2, 'HUMBERTO 1 2630', 'HUMBERTO 1 2630', '-34.622350637143', '-58.401702364025', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-27 15:54:50', NULL, 1, 'proveedores@em-s.com.ar', '', 0, 15, 'proveedores@em-s.com.ar', '', 'proveedores@em-s.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
@@ -474,7 +583,7 @@ INSERT INTO `tb_clients` (`idClient`, `idClientTypeFk`, `name`, `address`, `addr
 (32, 2, 'VENEZUELA 1867', 'VENEZUELA 1867', '-34.614994141794', '-58.392704942701', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-31 16:44:31', NULL, 1, 'consorcios@grupobeta.com.ar', '', 0, 31, 'consorcios@grupobeta.com.ar', '', 'consorcios@grupobeta.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
 (33, 2, 'CHARCAS 2956', 'CHARCAS 2956', '-34.593294765959', '-58.407892065368', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-31 16:57:08', NULL, 1, 'consorcios@grupobeta.com.ar', '', 0, 31, 'consorcios@grupobeta.com.ar', '', 'consorcios@grupobeta.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
 (34, 2, 'AV SANTA FE 2086', 'AV SANTA FE 2086', '-34.595587631448', '-58.397203472386', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-31 17:04:55', NULL, 1, 'consorcios@grupobeta.com.ar', '', 0, 31, 'consorcios@grupobeta.com.ar', '', 'consorcios@grupobeta.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
-(35, 2, 'CHILE 2154', 'CHILE 2154', '-34.617267693675', '-58.396904886312', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-31 17:40:30', NULL, 1, 'consorcios@grupobeta.com.ar', '', 0, 31, 'consorcios@grupobeta.com.ar', '', 'consorcios@grupobeta.com.ar', '', NULL, 1, NULL, NULL, NULL, NULL),
+(35, 2, 'CHILE 2154', 'CHILE 2154', '-34.617267693675', '-58.396904886312', 0, NULL, 2147483647, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-07-31 17:40:30', '2021-03-29 00:46:59', 1, 'consorcios@grupobeta.com.ar', '', 0, 31, 'consorcios@grupobeta.com.ar', '', 'consorcios@grupobeta.com.ar', '', NULL, 1, NULL, NULL, 2, 2),
 (36, 1, 'ALIPRANDI PALENA', 'YATAY 120', '-34.612744100574', '-58.428597216874', 1, 'MARIA FERNANDA ALIPRANDI', NULL, '27-20009140-5', 1, 1, NULL, NULL, NULL, '', '', '2020-08-13 21:07:19', NULL, 1, 'aliprandi_palena@hotmail.com', '', 0, 0, 'aliprandi_palena@hotmail.com', '', 'aliprandi_palena@hotmail.com', '', 0, 1, NULL, 3, NULL, NULL),
 (37, 2, 'BOGADO 4538', 'BOGADO 4538', '-34.604973522529', '-58.429553867589', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-08-13 21:16:53', NULL, 1, 'aliprandi_palena@hotmail.com', '', 0, 36, 'aliprandi_palena@hotmail.com', '', 'aliprandi_palena@hotmail.com', '', NULL, 1, NULL, NULL, NULL, NULL),
 (38, 2, 'SAN JOSE DE CALASANZ 481', 'SAN JOSE DE CALASANZ 481', '-34.624428090988', '-58.437713587696', 0, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, '', NULL, '2020-08-13 21:59:09', NULL, 1, 'aliprandi_palena@hotmail.com', '', 0, 36, 'aliprandi_palena@hotmail.com', '', 'aliprandi_palena@hotmail.com', '', NULL, 1, NULL, NULL, NULL, NULL),
@@ -489,6 +598,7 @@ INSERT INTO `tb_clients` (`idClient`, `idClientTypeFk`, `name`, `address`, `addr
 -- Estructura de tabla para la tabla `tb_clients_phones`
 --
 
+DROP TABLE IF EXISTS `tb_clients_phones`;
 CREATE TABLE `tb_clients_phones` (
   `idClientPhones` int(11) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -503,6 +613,7 @@ CREATE TABLE `tb_clients_phones` (
 -- Estructura de tabla para la tabla `tb_clients_tickets`
 --
 
+DROP TABLE IF EXISTS `tb_clients_tickets`;
 CREATE TABLE `tb_clients_tickets` (
   `idTicketsCliets` int(11) NOT NULL,
   `idTicketKf` int(11) DEFAULT NULL,
@@ -515,6 +626,7 @@ CREATE TABLE `tb_clients_tickets` (
 -- Estructura de tabla para la tabla `tb_client_address_particular`
 --
 
+DROP TABLE IF EXISTS `tb_client_address_particular`;
 CREATE TABLE `tb_client_address_particular` (
   `idAddressParticular` int(11) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -535,6 +647,7 @@ CREATE TABLE `tb_client_address_particular` (
 -- Estructura de tabla para la tabla `tb_client_authorizing`
 --
 
+DROP TABLE IF EXISTS `tb_client_authorizing`;
 CREATE TABLE `tb_client_authorizing` (
   `idClientAuthorizing` int(11) UNSIGNED NOT NULL,
   `idUserFk` int(11) DEFAULT NULL,
@@ -549,6 +662,7 @@ CREATE TABLE `tb_client_authorizing` (
 -- Estructura de tabla para la tabla `tb_client_billing_information`
 --
 
+DROP TABLE IF EXISTS `tb_client_billing_information`;
 CREATE TABLE `tb_client_billing_information` (
   `idBillingInfo` int(11) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -576,7 +690,7 @@ INSERT INTO `tb_client_billing_information` (`idBillingInfo`, `idClientFk`, `bus
 (9, 11, 'ARREGUI 3146', 'CONSTANZA TETTAMANTI', '27-25790019-9', 1, 1, 2),
 (10, 12, 'LAVALLE 357', 'CONSORCIO LAVALLE 357', '30-53414898-0', 1, 1, 1),
 (11, 13, 'MANUEL UGARTE 3580', 'CONSORCIO UGARTE 3580', '30-71112623-2', 1, 1, 1),
-(12, 15, NULL, 'DORA SILVIA MARJBEIN', '27-11018302-5', 1, 1, 3),
+(12, 15, 'HIDALGO 462', 'DORA SILVIA MARJBEIN', '27-11018302-5', 1, 1, 3),
 (13, 16, 'AV EVA PERON 1155', 'CONSORCIO EVA PERON 1155', '30-71550934-9', 1, 1, 1),
 (14, 17, 'JULIAN ALVAREZ 647', 'CONSORCIO JULIAN ALVAREZ 647', '30-61287840-0', 1, 1, 1),
 (15, 18, NULL, 'CONSORCIO HUMBERTO PRIMO 2630', '33-52229082-9', 1, 1, 1),
@@ -594,7 +708,7 @@ INSERT INTO `tb_client_billing_information` (`idBillingInfo`, `idClientFk`, `bus
 (27, 32, NULL, 'CONSORCIO VENEZUELA 1867/69', '30-55692953-6', 1, 1, 1),
 (28, 33, NULL, 'CONSORCIO CHARCAS 2956', '30-54533701-7', 1, 1, 1),
 (29, 34, NULL, 'CONSORCIO SANTA FE 2086', '30-59272355-3', 1, 1, 1),
-(30, 35, NULL, 'CONSORCIO CHILE 2154', '30-55993131-0', 1, 1, 1),
+(30, 35, 'CHILE 2154', 'CONSORCIO CHILE 2154', '30-55993131-0', 1, 1, 1),
 (31, 36, NULL, 'MARIA FERNANDA ALIPRANDI', '27-20009140-5', 1, 1, 3),
 (32, 37, NULL, 'CONSORCIO BOGADO 4538', '30-71117670-1', 1, 1, 1),
 (33, 38, NULL, 'CONSORCIO SAN JOSE DE CALASANZ 481', '30-71425179-8', 1, 1, 1),
@@ -609,6 +723,7 @@ INSERT INTO `tb_client_billing_information` (`idBillingInfo`, `idClientFk`, `bus
 -- Estructura de tabla para la tabla `tb_client_camera`
 --
 
+DROP TABLE IF EXISTS `tb_client_camera`;
 CREATE TABLE `tb_client_camera` (
   `idClientCamera` int(11) NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -620,12 +735,20 @@ CREATE TABLE `tb_client_camera` (
   `qrBase64` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_client_camera`
+--
+
+INSERT INTO `tb_client_camera` (`idClientCamera`, `idClientFk`, `idClientServicesCameraFk`, `name`, `user`, `pass`, `userProfile`, `qrBase64`) VALUES
+(71, 76, 50, 'Roberto Higuera', 'robertoh', 'admin', 'admin', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAsgAAALHCAIAAAAcnyP0AAALdElEQVR42uzYQa7lIAxFwbjF/rd8e5zZf1KwElO1gQgM0REryQUA8IR1XVdV2Qi+TiIfq+cP1nPA/I0Z8Cv+ZxcAgKcICwBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAICwAAIQFACAsAABhAQAICwAAYQEACAsAQFgAAAgLAEBYAADCAgAQFgAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBAHC32r6UxHafqaqsxWXhPRwwf+OtvFgAAMICABAWAICwAAAQFgCAsAAAhAUAICwAAIQFACAsAABhAQAgLAAAYQEACAsAQFgAAAgLAEBYAADCAgBAWAAAwgIAEBYAgLAAABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEAbLKGraeqDPUnSWzC27ar5xg3rMV9PJnpH/sr9mIBAAgLAEBYAADCAgBAWAAAwgIAEBYAgLAAABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEACAsAQFgAAMICAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAsMmyBfA2SWyC7YKP8mIBAAgLAEBYAADCAgBAWAAAwgIAEBYAgLAAABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEACAsAQFgAAMICAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAsMmyBfB3VTVmLUkGfKJtKD1rgQG8WAAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQBssoatJ4mh8vUDVlW2GpeFj/JiAQAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAICwAAO5W25eqynbzdT3HOMmMtfQsBH9jXsWLBQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAICwAAIQFACAsAABhAQAICwAAYQEACAsAQFgAAAgLAEBYAADCAgAQFgAAwgIAEBYAgLAAABAWAMAmlcQuwImXv8om/J1fJfyRFwsAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQAgLAAAYQEACAsAAGEBAAgLAEBYAAAICwBAWAAAwgIAEBYAAMICABAWAICwAAAQFgCAsAAAhAUAICwAAIQFACAsAABhAQAgLACATdZ1XVXV8KUkDV+xlheuZdJQJjF6vj79SaOfdFm8WAAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQBsUkmavlRlu3/SNhocY2f4JaPv2THH2FC2bpcXCwDgMcICABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEACAsAQFgAAMICAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAICwAAGEBAAgLAABhAQAICwBAWAAA3K3ruqqq4UtJbPdPxsylZyGTuCwOmAPmV/zdtXixAACEBQAgLAAAYQEAICwAAGEBAAgLAEBYAAAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAHeVpOlLVbb7hdoOwJAL4xiferomjd6tP/aA9YzeiwUAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQAgLAAAYQEACAsAAGEBAAgLAEBYAAAICwBAWAAAwgIAEBYAAMICABAWAICwAAAQFgDAJqvtS0kavlJVY9YyhqGcfFkcsBeuxZV0wLYuxIsFAPAYYQEACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAADu1rD1JDFUQ+Elc6mqMQds0lrGcMDeuRYvFgCAsAAAhAUAICwAAIQFACAsAABhAQAICwAAYQEACAsAQFgAAAgLAEBYAADCAgAQFgAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAACbrOu6qspG8HVJxnyl50r2rMUBe+HoDeVYDQcsiRcLAOAxwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQAgLAAAYQEACAsAAGEBAAgLAEBYAADcrbYvJbHdZ6oqm+CyOGCnjb5hLkb/Tl4sAABhAQAICwBAWAAACAsAQFgAAMICABAWAADCAgAQFgCAsAAAEBYAgLAAAIQFACAsAACEBQAgLAAAYQEAICwAAGEBAAgLAEBYAAAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAADZZw9ZTVYb6kyQ24W0HrGcoYy7LpDM86YC5KWcesCReLACAxwgLAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAICwAAGEBAAgLAABhAQAICwBAWAAACAsAQFgAAMICABAWAADCAgAQFgCAsAAAEBYAgLAAAIQFACAsAACEBQAgLACAIZYtgL9L0vCVqrJdcM5NaVtLz5X0YgEACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQCwybIF8HdV1fCVJLb6zKEY/QtNGkrDZUnixQIAeIywAACEBQAgLAAAYQEAICwAAGEBAAgLAEBYAAAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAHdr2HqSGCoOmKF8VFUZqKF8/bJ4sQAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgDYZLV9qapsN1/nGP8kyZih9KyFY4fSc4wbvpLEiwUA8BhhAQAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAMMT/AAAA///nWh+U978XmQAAAABJRU5ErkJggg==');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_departament`
 --
 
+DROP TABLE IF EXISTS `tb_client_departament`;
 CREATE TABLE `tb_client_departament` (
   `idClientDepartament` int(11) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -1633,6 +1756,7 @@ INSERT INTO `tb_client_departament` (`idClientDepartament`, `idClientFk`, `floor
 -- Estructura de tabla para la tabla `tb_client_files_list`
 --
 
+DROP TABLE IF EXISTS `tb_client_files_list`;
 CREATE TABLE `tb_client_files_list` (
   `idClientFiles` int(11) UNSIGNED NOT NULL,
   `idClientfK` int(11) DEFAULT NULL,
@@ -1646,6 +1770,7 @@ CREATE TABLE `tb_client_files_list` (
 -- Estructura de tabla para la tabla `tb_client_functional_units`
 --
 
+DROP TABLE IF EXISTS `tb_client_functional_units`;
 CREATE TABLE `tb_client_functional_units` (
   `idFunctionalUnits` int(11) UNSIGNED NOT NULL,
   `identifier` varchar(100) DEFAULT NULL,
@@ -1660,6 +1785,7 @@ CREATE TABLE `tb_client_functional_units` (
 -- Estructura de tabla para la tabla `tb_client_mails`
 --
 
+DROP TABLE IF EXISTS `tb_client_mails`;
 CREATE TABLE `tb_client_mails` (
   `idClientMail` int(10) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -1723,9 +1849,12 @@ INSERT INTO `tb_client_mails` (`idClientMail`, `idClientFk`, `mailTag`, `mailCon
 (322, 109, NULL, 'pagos@pruebaadmin.com.ar', 3, NULL),
 (323, 109, NULL, 'admin@pruebaadmin.com.ar', 4, 1),
 (324, 109, NULL, 'admin@pruebaadmin.com.ar', 5, 1),
-(325, 11, NULL, 'llavestettamanti@gmail.com', 1, 1),
-(326, 11, NULL, 'serviciostettamanti@gmail.com', 2, 1),
-(327, 11, NULL, 'admintettamanti@gmail.com', 4, 1);
+(328, 15, NULL, 'llaves@gmaill.com', 1, 1),
+(329, 15, NULL, 'services@gmaill.com', 2, 1),
+(330, 15, NULL, 'admin@gmaill.com', 4, 1),
+(331, 11, NULL, 'llavestettamanti@gmail.com', 1, 1),
+(332, 11, NULL, 'serviciostettamanti@gmail.com', 2, 1),
+(333, 11, NULL, 'admintettamanti@gmail.com', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -1733,6 +1862,7 @@ INSERT INTO `tb_client_mails` (`idClientMail`, `idClientFk`, `mailTag`, `mailCon
 -- Estructura de tabla para la tabla `tb_client_phone_contact`
 --
 
+DROP TABLE IF EXISTS `tb_client_phone_contact`;
 CREATE TABLE `tb_client_phone_contact` (
   `idClientPhoneFk` int(11) UNSIGNED NOT NULL,
   `phoneTag` varchar(80) DEFAULT NULL COMMENT 'Etiqueta del telefono de contacto Ejmp: Guardia/Urgencia',
@@ -1746,7 +1876,6 @@ CREATE TABLE `tb_client_phone_contact` (
 
 INSERT INTO `tb_client_phone_contact` (`idClientPhoneFk`, `phoneTag`, `phoneContact`, `idClientFk`) VALUES
 (1, 'comercial', '45019504', 2),
-(3, 'comercial', '4901-6193', 15),
 (4, 'comercial', '45556276', 26),
 (5, 'comercial', '45556276', 28),
 (6, 'comercial', '45556276', 29),
@@ -1759,7 +1888,8 @@ INSERT INTO `tb_client_phone_contact` (`idClientPhoneFk`, `phoneTag`, `phoneCont
 (13, 'comercial', '49581473', 36),
 (14, 'comercial', '1566619566', 36),
 (15, 'comercial', '1550152504', 37),
-(16, 'comercial', '4502-8872', 11);
+(17, 'comercial', '4901-6193', 15),
+(18, 'comercial', '4502-8872', 11);
 
 -- --------------------------------------------------------
 
@@ -1767,6 +1897,7 @@ INSERT INTO `tb_client_phone_contact` (`idClientPhoneFk`, `phoneTag`, `phoneCont
 -- Estructura de tabla para la tabla `tb_client_schedule_atention`
 --
 
+DROP TABLE IF EXISTS `tb_client_schedule_atention`;
 CREATE TABLE `tb_client_schedule_atention` (
   `idScheduleAtention` int(11) UNSIGNED NOT NULL,
   `idClienteFk` int(11) DEFAULT NULL,
@@ -1816,10 +1947,6 @@ INSERT INTO `tb_client_schedule_atention` (`idScheduleAtention`, `idClienteFk`, 
 (32, 9, 'Miercoles', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
 (33, 9, 'Jueves', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
 (34, 9, 'Viernes', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
-(47, 15, 'Martes', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
-(48, 15, 'Miercoles', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
-(49, 15, 'Jueves', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
-(50, 15, 'Viernes', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
 (59, 18, 'Martes', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
 (60, 18, 'Miercoles', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
 (61, 18, 'Jueves', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
@@ -1887,11 +2014,6 @@ INSERT INTO `tb_client_schedule_atention` (`idScheduleAtention`, `idClienteFk`, 
 (123, 34, 'Miercoles', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
 (124, 34, 'Jueves', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
 (125, 34, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
-(126, 35, 'Lunes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
-(127, 35, 'Martes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
-(128, 35, 'Miercoles', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
-(129, 35, 'Jueves', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
-(130, 35, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
 (131, 36, 'Lunes', '10:00:00', '00:00:00', '00:00:00', '16:00:00'),
 (132, 36, 'Martes', '10:00:00', '00:00:00', '00:00:00', '16:00:00'),
 (133, 36, 'Miercoles', '10:00:00', '00:00:00', '00:00:00', '16:00:00'),
@@ -1945,7 +2067,22 @@ INSERT INTO `tb_client_schedule_atention` (`idScheduleAtention`, `idClienteFk`, 
 (191, 17, 'Martes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
 (192, 17, 'Miercoles', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
 (193, 17, 'Jueves', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
-(194, 17, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00');
+(194, 17, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(195, 15, 'Lunes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(196, 15, 'Martes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(197, 15, 'Miercoles', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(198, 15, 'Jueves', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(199, 15, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(200, 11, 'Lunes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(201, 11, 'Martes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(202, 11, 'Miercoles', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(203, 11, 'Jueves', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(204, 11, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(205, 35, 'Lunes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(206, 35, 'Martes', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(207, 35, 'Miercoles', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(208, 35, 'Jueves', '08:00:00', '12:00:00', '17:00:00', '20:00:00'),
+(209, 35, 'Viernes', '08:00:00', '12:00:00', '17:00:00', '20:00:00');
 
 -- --------------------------------------------------------
 
@@ -1953,6 +2090,7 @@ INSERT INTO `tb_client_schedule_atention` (`idScheduleAtention`, `idClienteFk`, 
 -- Estructura de tabla para la tabla `tb_client_services`
 --
 
+DROP TABLE IF EXISTS `tb_client_services`;
 CREATE TABLE `tb_client_services` (
   `idClientServices` int(11) NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -1962,12 +2100,24 @@ CREATE TABLE `tb_client_services` (
   `nameId` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_client_services`
+--
+
+INSERT INTO `tb_client_services` (`idClientServices`, `idClientFk`, `idTipeServiceFk`, `nameDataBase`, `idServicesFk`, `nameId`) VALUES
+(277, 35, 1, 'tb_client_services_access_control', 102, 'idClientServicesAccessControl'),
+(278, 35, 2, 'tb_client_services_internet', 39, 'idClientServicesInternet'),
+(279, 35, 3, 'tb_client_services_totem', 28, 'idClientServicesTotem'),
+(280, 35, 4, 'tb_client_services_camera', 50, 'idClientServicesCamera'),
+(281, 35, 6, 'tb_client_services_smart_panic', 24, 'idClientServicesSmartPanic');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_services_access_control`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_access_control`;
 CREATE TABLE `tb_client_services_access_control` (
   `idClientServicesAccessControl` int(11) NOT NULL,
   `idDoorFk` int(11) DEFAULT NULL,
@@ -2002,12 +2152,20 @@ CREATE TABLE `tb_client_services_access_control` (
   `idClientServicesFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_client_services_access_control`
+--
+
+INSERT INTO `tb_client_services_access_control` (`idClientServicesAccessControl`, `idDoorFk`, `idContracAssociated_SE`, `dateUp`, `dateDown`, `idAccessControlFk`, `idInputReaderFk`, `locationGabinet`, `idFontFk`, `aclaration`, `idTypeMaintenanceFk`, `lock`, `ouputReader`, `ouputButom`, `isOuputReader`, `isOuputButom`, `isBlocklingScrew`, `idEmergencyButtonFk`, `idShutdownKeyFk`, `acaration2`, `portNumberRouter`, `addressClient`, `addressVpn`, `user`, `useVpn`, `passVpn`, `pass`, `portHttp`, `locationEmergencyButton`, `locationOffKey`, `idClientServicesFk`) VALUES
+(102, 1, 6, '14/03/2021', NULL, 7, 10, 'Sotano', 8, 'Prueba Aclaracion', 1, '6', '10', NULL, 1, NULL, 1, 12, 13, 'Probando Tornillo Bloqueador', '4', 'chile2154.seguridadtass.com.ar', 'chile2154.seguridadtass.com.ar', 'admin', 'admin', 'root', 'root', '8081', 'Prueba ubicación de pulsador de emergencia.', 'Prueba ubicación de Tecla de apagado', 277);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_services_alarms`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_alarms`;
 CREATE TABLE `tb_client_services_alarms` (
   `idClientServicesAlarms` int(11) UNSIGNED NOT NULL,
   `name` varchar(200) DEFAULT NULL,
@@ -2033,6 +2191,7 @@ CREATE TABLE `tb_client_services_alarms` (
 -- Estructura de tabla para la tabla `tb_client_services_alarms_aditional`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_alarms_aditional`;
 CREATE TABLE `tb_client_services_alarms_aditional` (
   `idClientServicesAlarmsAditionals` int(11) UNSIGNED NOT NULL,
   `idTypeClientAlarmFk` int(11) DEFAULT NULL,
@@ -2089,6 +2248,7 @@ CREATE TABLE `tb_client_services_alarms_aditional` (
 -- Estructura de tabla para la tabla `tb_client_services_camera`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_camera`;
 CREATE TABLE `tb_client_services_camera` (
   `idClientServicesCamera` int(11) NOT NULL,
   `name` varchar(200) DEFAULT NULL,
@@ -2117,12 +2277,20 @@ CREATE TABLE `tb_client_services_camera` (
   `idClientServicesFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_client_services_camera`
+--
+
+INSERT INTO `tb_client_services_camera` (`idClientServicesCamera`, `name`, `idContracAssociated_SE`, `idTypeMaintenanceFk`, `dateUp`, `dateDown`, `idDvr_nvrFk`, `location`, `locationLat`, `locationLon`, `maxCamera`, `numberPortRouter`, `addressVpn`, `nroPort1`, `nroPort2`, `namePort1`, `namePort2`, `observation`, `addessClient`, `addessClientLat`, `addessClientLot`, `portHttp`, `namePort`, `port`, `idClientServicesFk`) VALUES
+(50, 'Prueba de camaras', 6, 1, '24/03/2021', NULL, 16, 'Terraza', NULL, NULL, 3, 6, 'chile2154.seguridadtass.com.ar', 443, 8000, 'HTTPS', 'SERVIDOR', 'Probando nuevo servicio de camaras Modificacion', 'chile2154.seguridadtass.com.ar', NULL, NULL, 8080, 'RTSP', 554, 280);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_services_gps`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_gps`;
 CREATE TABLE `tb_client_services_gps` (
   `idClientServicesGps` int(11) UNSIGNED NOT NULL,
   `idClientServicesFk` int(11) DEFAULT NULL,
@@ -2146,6 +2314,7 @@ CREATE TABLE `tb_client_services_gps` (
 -- Estructura de tabla para la tabla `tb_client_services_internet`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_internet`;
 CREATE TABLE `tb_client_services_internet` (
   `idClientServicesInternet` int(11) UNSIGNED NOT NULL,
   `idClientServicesFk` int(11) DEFAULT NULL,
@@ -2170,12 +2339,20 @@ CREATE TABLE `tb_client_services_internet` (
   `numberChip` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_client_services_internet`
+--
+
+INSERT INTO `tb_client_services_internet` (`idClientServicesInternet`, `idClientServicesFk`, `idTypeInternetFk`, `idTypeMaintenanceFk`, `idServiceFk`, `idServiceAsociateFk`, `idRouterInternetFk`, `userAdmin`, `idContracAssociated_SE`, `idInternetCompanyFk`, `idModemInternetFk`, `dateDown`, `dateUp`, `isDown`, `port`, `passAdmin`, `userWifi`, `passWifi`, `macAddress`, `numberLine`, `numberChip`) VALUES
+(39, 278, 1, '1', 1, 277, 20, 'admin', 6, 1, '19', NULL, '19/03/2021', NULL, '5', 'admin', 'admin', 'admin', 'df-dg-45-64-56-54', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_services_smart_panic`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_smart_panic`;
 CREATE TABLE `tb_client_services_smart_panic` (
   `idClientServicesSmartPanic` int(11) NOT NULL,
   `idClientServicesFk` int(11) DEFAULT NULL,
@@ -2193,12 +2370,20 @@ CREATE TABLE `tb_client_services_smart_panic` (
   `observation` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_client_services_smart_panic`
+--
+
+INSERT INTO `tb_client_services_smart_panic` (`idClientServicesSmartPanic`, `idClientServicesFk`, `name`, `idContracAssociated_SE`, `dateUp`, `dateDown`, `idTypeMaintenanceFk`, `idCompanyMonitorFK`, `sucribeNumber`, `idDetinationOfLicenseFk`, `idDepartmentFk`, `idParticularAddressFk`, `countNewLicense`, `observation`) VALUES
+(24, 281, 'Prueba app monitor', 6, '24/03/2021', NULL, 1, 1, '438459357134853', 2, 828, NULL, 2, 'Prueba de nuevo servicio app monitor Modificacion');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_services_totem`
 --
 
+DROP TABLE IF EXISTS `tb_client_services_totem`;
 CREATE TABLE `tb_client_services_totem` (
   `idClientServicesTotem` int(11) UNSIGNED NOT NULL,
   `idClientServicesFk` int(11) DEFAULT NULL,
@@ -2227,12 +2412,20 @@ CREATE TABLE `tb_client_services_totem` (
   `numberAbonado` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tb_client_services_totem`
+--
+
+INSERT INTO `tb_client_services_totem` (`idClientServicesTotem`, `idClientServicesFk`, `name`, `idContracAssociated_SE`, `item_SE`, `dateUp`, `dateDown`, `idCompanyFk`, `idDvr_nvrFk`, `location`, `maxCamera`, `idTotenModelFk`, `idTypeMaintenanceFk`, `numberPortRouter`, `addreesVpn`, `namePort1`, `numberPort1`, `namePort2`, `numberPort2`, `addressClientInter`, `portHttpInter`, `namePortInter`, `numberPortInter`, `observation`, `numberAbonado`) VALUES
+(28, 279, 'PRUEBA DE TOTEM', 6, NULL, '22/03/2021', NULL, 1, '16', 'Sala de servicios', 4, 2, 1, '4', 'chile2154.seguridadtass.com.ar', 'HTTPS', '443', 'SERVIDOR', '8000', 'chile2154.seguridadtass.com.ar', '8080', 'RTSP', '554', 'Prueba de modificacion', '438459357134853');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_totem`
 --
 
+DROP TABLE IF EXISTS `tb_client_totem`;
 CREATE TABLE `tb_client_totem` (
   `idClientTotem` int(11) NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -2244,12 +2437,21 @@ CREATE TABLE `tb_client_totem` (
   `qrBase64` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_client_totem`
+--
+
+INSERT INTO `tb_client_totem` (`idClientTotem`, `idClientFk`, `idClientServicesTotemFk`, `name`, `user`, `pass`, `userProfile`, `qrBase64`) VALUES
+(116, 93, 28, 'David Eduardo Rincon Luengo', 'drincon', 'admin', 'admin', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAsgAAALHCAIAAAAcnyP0AAALdElEQVR42uzYQa7lIAxFwbjF/rd8e5zZf1KwElO1gQgM0REryQUA8IR1XVdV2Qi+TiIfq+cP1nPA/I0Z8Cv+ZxcAgKcICwBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAICwAAIQFACAsAABhAQAICwAAYQEACAsAQFgAAAgLAEBYAADCAgAQFgAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBAHC32r6UxHafqaqsxWXhPRwwf+OtvFgAAMICABAWAICwAAAQFgCAsAAAhAUAICwAAIQFACAsAABhAQAgLAAAYQEACAsAQFgAAAgLAEBYAADCAgBAWAAAwgIAEBYAgLAAABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEAbLKGraeqDPUnSWzC27ar5xg3rMV9PJnpH/sr9mIBAAgLAEBYAADCAgBAWAAAwgIAEBYAgLAAABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEACAsAQFgAAMICAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAsMmyBfA2SWyC7YKP8mIBAAgLAEBYAADCAgBAWAAAwgIAEBYAgLAAABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEACAsAQFgAAMICAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAsMmyBfB3VTVmLUkGfKJtKD1rgQG8WAAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQBssoatJ4mh8vUDVlW2GpeFj/JiAQAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAICwAAO5W25eqynbzdT3HOMmMtfQsBH9jXsWLBQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAICwAAIQFACAsAABhAQAICwAAYQEACAsAQFgAAAgLAEBYAADCAgAQFgAAwgIAEBYAgLAAABAWAMAmlcQuwImXv8om/J1fJfyRFwsAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQAgLAAAYQEACAsAAGEBAAgLAEBYAAAICwBAWAAAwgIAEBYAAMICABAWAICwAAAQFgCAsAAAhAUAICwAAIQFACAsAABhAQAgLACATdZ1XVXV8KUkDV+xlheuZdJQJjF6vj79SaOfdFm8WAAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQBsUkmavlRlu3/SNhocY2f4JaPv2THH2FC2bpcXCwDgMcICABAWAICwAACEBQCAsAAAhAUAICwAAGEBACAsAABhAQAICwAAYQEACAsAQFgAAMICAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAICwAAGEBAAgLAABhAQAICwBAWAAA3K3ruqqq4UtJbPdPxsylZyGTuCwOmAPmV/zdtXixAACEBQAgLAAAYQEAICwAAGEBAAgLAEBYAAAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAHeVpOlLVbb7hdoOwJAL4xiferomjd6tP/aA9YzeiwUAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQAgLAAAYQEACAsAAGEBAAgLAEBYAAAICwBAWAAAwgIAEBYAAMICABAWAICwAAAQFgDAJqvtS0kavlJVY9YyhqGcfFkcsBeuxZV0wLYuxIsFAPAYYQEACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAADu1rD1JDFUQ+Elc6mqMQds0lrGcMDeuRYvFgCAsAAAhAUAICwAAIQFACAsAABhAQAICwAAYQEACAsAQFgAAAgLAEBYAADCAgAQFgAAwgIAEBYAgLAAABAWAICwAACEBQAgLAAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAACbrOu6qspG8HVJxnyl50r2rMUBe+HoDeVYDQcsiRcLAOAxwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQAgLAAAYQEACAsAAGEBAAgLAEBYAADcrbYvJbHdZ6oqm+CyOGCnjb5hLkb/Tl4sAABhAQAICwBAWAAACAsAQFgAAMICABAWAADCAgAQFgCAsAAAEBYAgLAAAIQFACAsAACEBQAgLAAAYQEAICwAAGEBAAgLAEBYAAAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAADZZw9ZTVYb6kyQ24W0HrGcoYy7LpDM86YC5KWcesCReLACAxwgLAEBYAADCAgAQFgAAwgIAEBYAgLAAAIQFAICwAACEBQAgLAAAhAUAICwAAGEBAAgLAABhAQAICwBAWAAACAsAQFgAAMICABAWAADCAgAQFgCAsAAAEBYAgLAAAIQFACAsAACEBQAgLACAIZYtgL9L0vCVqrJdcM5NaVtLz5X0YgEACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgAQFgCAsAAAhAUAgLAAAIQFACAsAACEBQCwybIF8HdV1fCVJLb6zKEY/QtNGkrDZUnixQIAeIywAACEBQAgLAAAYQEAICwAAGEBAAgLAEBYAAAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAHdr2HqSGCoOmKF8VFUZqKF8/bJ4sQAAhAUAICwAAGEBACAsAABhAQAICwBAWAAACAsAQFgAAMICAEBYAADCAgAQFgCAsAAAEBYAgLAAAIQFAICwAACEBQAgLAAAYQEAICwAAGEBAAgLAABhAQAICwBAWAAAwgIAQFgAAMICABAWAADCAgDYZLV9qapsN1/nGP8kyZih9KyFY4fSc4wbvpLEiwUA8BhhAQAICwBAWAAAwgIAQFgAAMICABAWAICwAAAQFgCAsAAAhAUAgLAAAIQFACAsAABhAQAgLAAAYQEACAsAAGEBAAgLAEBYAADCAgBAWAAAwgIAEBYAAMICABAWAICwAACEBQCAsAAAhAUAMMT/AAAA///nWh+U978XmQAAAABJRU5ErkJggg=='),
+(117, NULL, 28, 'Carlos Villalobos', 'carlitos', 'admin', 'admin', 'data:image/png;base64,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');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_client_type`
 --
 
+DROP TABLE IF EXISTS `tb_client_type`;
 CREATE TABLE `tb_client_type` (
   `idClientType` int(11) UNSIGNED NOT NULL,
   `ClientType` varchar(50) DEFAULT NULL
@@ -2272,6 +2474,7 @@ INSERT INTO `tb_client_type` (`idClientType`, `ClientType`) VALUES
 -- Estructura de tabla para la tabla `tb_client_type_services`
 --
 
+DROP TABLE IF EXISTS `tb_client_type_services`;
 CREATE TABLE `tb_client_type_services` (
   `idClientTypeServices` int(11) UNSIGNED NOT NULL,
   `clientTypeServices` varchar(100) DEFAULT NULL
@@ -2295,6 +2498,7 @@ INSERT INTO `tb_client_type_services` (`idClientTypeServices`, `clientTypeServic
 -- Estructura de tabla para la tabla `tb_client_ufc`
 --
 
+DROP TABLE IF EXISTS `tb_client_ufc`;
 CREATE TABLE `tb_client_ufc` (
   `idUfd` int(11) UNSIGNED NOT NULL,
   `identificador` varchar(200) DEFAULT NULL,
@@ -2309,6 +2513,7 @@ CREATE TABLE `tb_client_ufc` (
 -- Estructura de tabla para la tabla `tb_client_users`
 --
 
+DROP TABLE IF EXISTS `tb_client_users`;
 CREATE TABLE `tb_client_users` (
   `idClientUsers` int(11) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -2351,7 +2556,8 @@ INSERT INTO `tb_client_users` (`idClientUsers`, `idClientFk`, `idUserFk`, `creat
 (34, 24, 2, NULL),
 (35, 26, 1, NULL),
 (36, 26, 2, NULL),
-(37, 11, 72, NULL);
+(38, 15, 72, NULL),
+(39, 11, 72, NULL);
 
 -- --------------------------------------------------------
 
@@ -2359,6 +2565,7 @@ INSERT INTO `tb_client_users` (`idClientUsers`, `idClientFk`, `idUserFk`, `creat
 -- Estructura de tabla para la tabla `tb_company`
 --
 
+DROP TABLE IF EXISTS `tb_company`;
 CREATE TABLE `tb_company` (
   `idCompany` int(11) NOT NULL,
   `nameCompany` varchar(300) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -2386,6 +2593,7 @@ INSERT INTO `tb_company` (`idCompany`, `nameCompany`, `SA_ID_COMPANY`, `tlfCompa
 -- Estructura de tabla para la tabla `tb_company_type_keychains`
 --
 
+DROP TABLE IF EXISTS `tb_company_type_keychains`;
 CREATE TABLE `tb_company_type_keychains` (
   `idKey` int(11) UNSIGNED NOT NULL,
   `idAddressKf` int(11) DEFAULT NULL,
@@ -2411,6 +2619,7 @@ INSERT INTO `tb_company_type_keychains` (`idKey`, `idAddressKf`, `item`, `value`
 -- Estructura de tabla para la tabla `tb_contratos`
 --
 
+DROP TABLE IF EXISTS `tb_contratos`;
 CREATE TABLE `tb_contratos` (
   `idContrato` int(10) UNSIGNED NOT NULL,
   `idClientFk` int(11) DEFAULT NULL,
@@ -2422,12 +2631,21 @@ CREATE TABLE `tb_contratos` (
   `idStatusFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_contratos`
+--
+
+INSERT INTO `tb_contratos` (`idContrato`, `idClientFk`, `fechaFirmaVigencia`, `fechaFirmaActivacion`, `numeroContrato`, `contratoType`, `maintenanceType`, `idStatusFk`) VALUES
+(6, 35, '1/3/2021', '28/3/2021', '35-3NC/APP-1321', 3, 1, 1),
+(7, 36, '24/3/2021', NULL, '36-3NC/APP-24321', 3, 1, 0);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_datos_adicionales_alarmas`
 --
 
+DROP TABLE IF EXISTS `tb_datos_adicionales_alarmas`;
 CREATE TABLE `tb_datos_adicionales_alarmas` (
   `idDatoAdicionalAlarma` int(11) NOT NULL,
   `fk_idTipoCliente` int(11) DEFAULT NULL,
@@ -2457,6 +2675,7 @@ CREATE TABLE `tb_datos_adicionales_alarmas` (
 -- Estructura de tabla para la tabla `tb_department`
 --
 
+DROP TABLE IF EXISTS `tb_department`;
 CREATE TABLE `tb_department` (
   `idDepartment` int(11) NOT NULL,
   `idAdressKf` int(255) DEFAULT NULL,
@@ -2543,6 +2762,7 @@ INSERT INTO `tb_department` (`idDepartment`, `idAdressKf`, `departmentFloor`, `d
 -- Estructura de tabla para la tabla `tb_detalles_control_acceso`
 --
 
+DROP TABLE IF EXISTS `tb_detalles_control_acceso`;
 CREATE TABLE `tb_detalles_control_acceso` (
   `idControlAcceso` int(11) NOT NULL,
   `numberSerieFabric` varchar(255) DEFAULT NULL,
@@ -2553,12 +2773,38 @@ CREATE TABLE `tb_detalles_control_acceso` (
   `optAux` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_detalles_control_acceso`
+--
+
+INSERT INTO `tb_detalles_control_acceso` (`idControlAcceso`, `numberSerieFabric`, `numberSerieInternal`, `dateExpiration`, `idProductoFk`, `idServicesFk`, `optAux`) VALUES
+(746, '324324324324234', '324324324324234', NULL, 19, 278, NULL),
+(747, '4657886545676543', '4657886545676543', NULL, 20, 278, NULL),
+(844, '234323243242432424', '234323243242432424', NULL, 16, 279, NULL),
+(845, '9919191911919', '9919191911919', '31/12/2022', 9, 279, NULL),
+(846, '598434583249234', '598434583249234', NULL, 17, 279, NULL),
+(847, '0594038345934534', '0594038345934534', '01/01/2022', 14, 279, NULL),
+(848, '1111111111111', '1111111111111', NULL, 7, 277, NULL),
+(849, '2222222222222', '2222222222222', NULL, 6, 277, NULL),
+(850, '33333333333333', '33333333333333', NULL, 10, 277, 'entrance'),
+(851, '44444444444444', '44444444444444', '31/12/2022', 8, 277, NULL),
+(852, '555555555555555', '555555555555555', NULL, 10, 277, 'exit'),
+(853, '777777777777777', '777777777777777', NULL, 12, 277, NULL),
+(854, '88888888888888', '88888888888888', NULL, 13, 277, NULL),
+(855, '6666666666666666', '6666666666666666', '31/12/2022', 9, 277, NULL),
+(856, '888888888888888', '888888888888888', '11/11/1111', 9, 277, NULL),
+(858, '46437565435634435643', '46437565435634435643', '10/10/2024', 14, 277, NULL),
+(859, '6666666666666666', '6666666666666666', NULL, 16, 280, NULL),
+(860, '01010101010100101', '01010101010100101', '01/01/2025', 9, 280, NULL),
+(861, '6666666666666666666666666666666', '6666666666666666666666666666666', NULL, 17, 280, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_detination_of_license`
 --
 
+DROP TABLE IF EXISTS `tb_detination_of_license`;
 CREATE TABLE `tb_detination_of_license` (
   `idDetinationOfLicense` int(11) NOT NULL,
   `detinationOfLicense` varchar(100) DEFAULT NULL
@@ -2579,6 +2825,7 @@ INSERT INTO `tb_detination_of_license` (`idDetinationOfLicense`, `detinationOfLi
 -- Estructura de tabla para la tabla `tb_divice_opening`
 --
 
+DROP TABLE IF EXISTS `tb_divice_opening`;
 CREATE TABLE `tb_divice_opening` (
   `idDiviceOpening` int(11) UNSIGNED NOT NULL,
   `diviceOpening` varchar(100) DEFAULT NULL
@@ -2603,6 +2850,7 @@ INSERT INTO `tb_divice_opening` (`idDiviceOpening`, `diviceOpening`) VALUES
 -- Estructura de tabla para la tabla `tb_emergency_button`
 --
 
+DROP TABLE IF EXISTS `tb_emergency_button`;
 CREATE TABLE `tb_emergency_button` (
   `idEmergencyButton` int(11) NOT NULL,
   `titulo` varchar(100) DEFAULT NULL
@@ -2622,6 +2870,7 @@ INSERT INTO `tb_emergency_button` (`idEmergencyButton`, `titulo`) VALUES
 -- Estructura de tabla para la tabla `tb_font`
 --
 
+DROP TABLE IF EXISTS `tb_font`;
 CREATE TABLE `tb_font` (
   `idFonf` int(11) NOT NULL,
   `titulo` varchar(100) DEFAULT NULL
@@ -2640,6 +2889,7 @@ INSERT INTO `tb_font` (`idFonf`, `titulo`) VALUES
 -- Estructura de tabla para la tabla `tb_formato_transmision`
 --
 
+DROP TABLE IF EXISTS `tb_formato_transmision`;
 CREATE TABLE `tb_formato_transmision` (
   `idFormatoTransmision` int(11) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
@@ -2661,6 +2911,7 @@ INSERT INTO `tb_formato_transmision` (`idFormatoTransmision`, `descripcion`) VAL
 -- Estructura de tabla para la tabla `tb_format_tramitio`
 --
 
+DROP TABLE IF EXISTS `tb_format_tramitio`;
 CREATE TABLE `tb_format_tramitio` (
   `idFormatTramitio` int(11) UNSIGNED NOT NULL,
   `formatTramitio` varchar(200) DEFAULT NULL
@@ -2682,6 +2933,7 @@ INSERT INTO `tb_format_tramitio` (`idFormatTramitio`, `formatTramitio`) VALUES
 -- Estructura de tabla para la tabla `tb_franja_horaria_alarmas`
 --
 
+DROP TABLE IF EXISTS `tb_franja_horaria_alarmas`;
 CREATE TABLE `tb_franja_horaria_alarmas` (
   `id_franja_horaria` int(11) NOT NULL,
   `dia` varchar(255) DEFAULT NULL,
@@ -2692,12 +2944,236 @@ CREATE TABLE `tb_franja_horaria_alarmas` (
   `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_franja_horaria_alarmas`
+--
+
+INSERT INTO `tb_franja_horaria_alarmas` (`id_franja_horaria`, `dia`, `desde1`, `hasta1`, `desde2`, `hasta2`, `fk_idDatoAdicionalAlarma`) VALUES
+(170, 'lunes', '07:00', '12:00', '17:00', '20:00', 27),
+(171, 'martes', '07:00', '12:00', '17:00', '20:00', 27),
+(172, 'miercoles', '07:00', '12:00', '17:00', '20:00', 27),
+(173, 'jueves', '07:00', '12:00', '17:00', '20:00', 27),
+(174, 'viernes', '07:00', '12:00', '17:00', '20:00', 27),
+(175, 'sabado', '07:00', '12:00', '17:00', '20:00', 27),
+(176, 'domingo', '07:00', '12:00', '17:00', '20:00', 27),
+(177, 'lunes', '07:00', '12:00', '17:00', '20:00', 28),
+(178, 'martes', '07:00', '12:00', '17:00', '20:00', 28),
+(179, 'miercoles', '07:00', '12:00', '17:00', '20:00', 28),
+(180, 'jueves', '07:00', '12:00', '17:00', '20:00', 28),
+(181, 'viernes', '07:00', '12:00', '17:00', '20:00', 28),
+(182, 'sabado', '07:00', '12:00', '17:00', '20:00', 28),
+(183, 'domingo', '07:00', '12:00', '17:00', '20:00', 28),
+(184, 'lunes', '07:00', '12:00', '17:00', '20:00', 29),
+(185, 'martes', '07:00', '12:00', '17:00', '20:00', 29),
+(186, 'miercoles', '07:00', '12:00', '17:00', '20:00', 29),
+(187, 'jueves', '07:00', '12:00', '17:00', '20:00', 29),
+(188, 'viernes', '07:00', '12:00', '17:00', '20:00', 29),
+(189, 'sabado', '07:00', '12:00', '17:00', '20:00', 29),
+(190, 'domingo', '07:00', '12:00', '17:00', '20:00', 29),
+(191, 'lunes', '07:00', '12:00', '17:00', '20:00', 30),
+(192, 'martes', '07:00', '12:00', '17:00', '20:00', 30),
+(193, 'miercoles', '07:00', '12:00', '17:00', '20:00', 30),
+(194, 'jueves', '07:00', '12:00', '17:00', '20:00', 30),
+(195, 'viernes', '07:00', '12:00', '17:00', '20:00', 30),
+(196, 'sabado', '07:00', '12:00', '17:00', '20:00', 30),
+(197, 'domingo', '07:00', '12:00', '17:00', '20:00', 30),
+(198, 'lunes', '07:00', '12:00', '17:00', '20:00', 31),
+(199, 'martes', '07:00', '12:00', '17:00', '20:00', 31),
+(200, 'miercoles', '07:00', '12:00', '17:00', '20:00', 31),
+(201, 'jueves', '07:00', '12:00', '17:00', '20:00', 31),
+(202, 'viernes', '07:00', '12:00', '17:00', '20:00', 31),
+(203, 'sabado', '07:00', '12:00', '17:00', '20:00', 31),
+(204, 'domingo', '07:00', '12:00', '17:00', '20:00', 31),
+(205, 'lunes', '07:00', '12:00', '17:00', '20:00', 32),
+(206, 'martes', '07:00', '12:00', '17:00', '20:00', 32),
+(207, 'miercoles', '07:00', '12:00', '17:00', '20:00', 32),
+(208, 'jueves', '07:00', '12:00', '17:00', '20:00', 32),
+(209, 'viernes', '07:00', '12:00', '17:00', '20:00', 32),
+(210, 'sabado', '07:00', '12:00', '17:00', '20:00', 32),
+(211, 'domingo', '07:00', '12:00', '17:00', '20:00', 32),
+(212, 'lunes', '07:00', '12:00', '17:00', '20:00', 33),
+(213, 'martes', '07:00', '12:00', '17:00', '20:00', 33),
+(214, 'miercoles', '07:00', '12:00', '17:00', '20:00', 33),
+(215, 'jueves', '07:00', '12:00', '17:00', '20:00', 33),
+(216, 'viernes', '07:00', '12:00', '17:00', '20:00', 33),
+(217, 'sabado', '07:00', '12:00', '17:00', '20:00', 33),
+(218, 'domingo', '07:00', '12:00', '17:00', '20:00', 33),
+(219, 'lunes', '07:00', '12:00', '17:00', '20:00', 34),
+(220, 'martes', '07:00', '12:00', '17:00', '20:00', 34),
+(221, 'miercoles', '07:00', '12:00', '17:00', '20:00', 34),
+(222, 'jueves', '07:00', '12:00', '17:00', '20:00', 34),
+(223, 'viernes', '07:00', '12:00', '17:00', '20:00', 34),
+(224, 'sabado', '07:00', '12:00', '17:00', '20:00', 34),
+(225, 'domingo', '07:00', '12:00', '17:00', '20:00', 34),
+(226, 'lunes', '07:00', '12:00', '17:00', '20:00', 35),
+(227, 'martes', '07:00', '12:00', '17:00', '20:00', 35),
+(228, 'miercoles', '07:00', '12:00', '17:00', '20:00', 35),
+(229, 'jueves', '07:00', '12:00', '17:00', '20:00', 35),
+(230, 'viernes', '07:00', '12:00', '17:00', '20:00', 35),
+(231, 'sabado', '07:00', '12:00', '17:00', '20:00', 35),
+(232, 'domingo', '07:00', '12:00', '17:00', '20:00', 35),
+(233, 'lunes', '07:00', '12:00', '17:00', '20:00', 36),
+(234, 'martes', '07:00', '12:00', '17:00', '20:00', 36),
+(235, 'miercoles', '07:00', '12:00', '17:00', '20:00', 36),
+(236, 'jueves', '07:00', '12:00', '17:00', '20:00', 36),
+(237, 'viernes', '07:00', '12:00', '17:00', '20:00', 36),
+(238, 'sabado', '07:00', '12:00', '17:00', '20:00', 36),
+(239, 'domingo', '07:00', '12:00', '17:00', '20:00', 36),
+(240, 'lunes', '07:00', '12:00', '17:00', '20:00', 37),
+(241, 'martes', '07:00', '12:00', '17:00', '20:00', 37),
+(242, 'miercoles', '07:00', '12:00', '17:00', '20:00', 37),
+(243, 'jueves', '07:00', '12:00', '17:00', '20:00', 37),
+(244, 'viernes', '07:00', '12:00', '17:00', '20:00', 37),
+(245, 'sabado', '07:00', '12:00', '17:00', '20:00', 37),
+(246, 'domingo', '07:00', '12:00', '17:00', '20:00', 37),
+(247, 'lunes', '07:00', '12:00', '17:00', '20:00', 38),
+(248, 'martes', '07:00', '12:00', '17:00', '20:00', 38),
+(249, 'miercoles', '07:00', '12:00', '17:00', '20:00', 38),
+(250, 'jueves', '07:00', '12:00', '17:00', '20:00', 38),
+(251, 'viernes', '07:00', '12:00', '17:00', '20:00', 38),
+(252, 'sabado', '07:00', '12:00', '17:00', '20:00', 38),
+(253, 'domingo', '07:00', '12:00', '17:00', '20:00', 38),
+(254, 'lunes', '07:00', '12:00', '17:00', '20:00', 39),
+(255, 'martes', '07:00', '12:00', '17:00', '20:00', 39),
+(256, 'miercoles', '07:00', '12:00', '17:00', '20:00', 39),
+(257, 'jueves', '07:00', '12:00', '17:00', '20:00', 39),
+(258, 'viernes', '07:00', '12:00', '17:00', '20:00', 39),
+(259, 'sabado', '07:00', '12:00', '17:00', '20:00', 39),
+(260, 'domingo', '07:00', '12:00', '17:00', '20:00', 39),
+(261, 'lunes', '07:00', '12:00', '17:00', '20:00', 40),
+(262, 'martes', '07:00', '12:00', '17:00', '20:00', 40),
+(263, 'miercoles', '07:00', '12:00', '17:00', '20:00', 40),
+(264, 'jueves', '07:00', '12:00', '17:00', '20:00', 40),
+(265, 'viernes', '07:00', '12:00', '17:00', '20:00', 40),
+(266, 'sabado', '07:00', '12:00', '17:00', '20:00', 40),
+(267, 'domingo', '07:00', '12:00', '17:00', '20:00', 40),
+(268, 'lunesp', '07:00', '12:00', '17:00', '20:00', 41),
+(269, 'martesp', '07:00', '12:00', '17:00', '20:00', 41),
+(270, 'miercoles', '07:00', '12:00', '17:00', '20:00', 41),
+(271, 'jueves', '07:00', '12:00', '17:00', '20:00', 41),
+(272, 'viernesp', '07:00', '12:00', '17:00', '20:00', 41),
+(273, 'sabado', '07:00', '12:00', '17:00', '20:00', 41),
+(274, 'domingo', '07:00', '12:00', '17:00', '20:00', 41),
+(282, 'lunes', '07:00', '12:00', '17:00', '20:00', 43),
+(283, 'martes', '07:00', '12:00', '17:00', '20:00', 43),
+(284, 'miercoles', '07:00', '12:00', '17:00', '20:00', 43),
+(285, 'jueves', '07:00', '12:00', '17:00', '20:00', 43),
+(286, 'viernes', '07:00', '12:00', '17:00', '20:00', 43),
+(287, 'sabado', '07:00', '12:00', '17:00', '20:00', 43),
+(288, 'domingo', '07:00', '12:00', '17:00', '20:00', 43),
+(289, 'lunes', '07:00', '12:00', '17:00', '20:00', 44),
+(290, 'martes', '07:00', '12:00', '17:00', '20:00', 44),
+(291, 'miercoles', '07:00', '12:00', '17:00', '20:00', 44),
+(292, 'jueves', '07:00', '12:00', '17:00', '20:00', 44),
+(293, 'viernes', '07:00', '12:00', '17:00', '20:00', 44),
+(294, 'sabado', '07:00', '12:00', '17:00', '20:00', 44),
+(295, 'domingo', '07:00', '12:00', '17:00', '20:00', 44),
+(296, 'lunesp', '07:00', '12:00', '17:00', '20:00', 45),
+(297, 'martesp', '07:00', '12:00', '17:00', '20:00', 45),
+(298, 'miercoles', '07:00', '12:00', '17:00', '20:00', 45),
+(299, 'jueves', '07:00', '12:00', '17:00', '20:00', 45),
+(300, 'viernesp', '07:00', '12:00', '17:00', '20:00', 45),
+(301, 'sabado', '07:00', '12:00', '17:00', '20:00', 45),
+(302, 'domingo', '07:00', '12:00', '17:00', '20:00', 45),
+(338, 'lunes', '07:00', '12:00', '17:00', '20:00', 51),
+(339, 'martes', '07:00', '12:00', '17:00', '20:00', 51),
+(340, 'miercoles', '07:00', '12:00', '17:00', '20:00', 51),
+(341, 'jueves', '07:00', '12:00', '17:00', '20:00', 51),
+(342, 'viernes', '07:00', '12:00', '17:00', '20:00', 51),
+(343, 'sabado', '07:00', '12:00', '17:00', '20:00', 51),
+(344, 'domingo', '07:00', '12:00', '17:00', '20:00', 51),
+(345, 'lunes', '07:00', '12:00', '17:00', '20:00', 52),
+(346, 'martes', '07:00', '12:00', '17:00', '20:00', 52),
+(347, 'miercoles', '07:00', '12:00', '17:00', '20:00', 52),
+(348, 'jueves', '07:00', '12:00', '17:00', '20:00', 52),
+(349, 'viernes', '07:00', '12:00', '17:00', '20:00', 52),
+(350, 'sabado', '07:00', '12:00', '17:00', '20:00', 52),
+(351, 'domingo', '07:00', '12:00', '17:00', '20:00', 52),
+(352, 'lunesp', '07:00', '12:00', '17:00', '20:00', 53),
+(353, 'martesp', '07:00', '12:00', '17:00', '20:00', 53),
+(354, 'miercolerrrs', '07:00', '12:00', '17:00', '20:00', 53),
+(355, 'jueves', '07:00', '12:00', '17:00', '20:00', 53),
+(356, 'viernesp', '07:00', '12:00', '17:00', '20:00', 53),
+(357, 'sabado', '07:00', '12:00', '17:00', '20:00', 53),
+(358, 'domingo', '07:00', '12:00', '17:00', '20:00', 53),
+(359, 'lunesp', '07:00', '12:00', '17:00', '20:00', 54),
+(360, 'martesp', '07:00', '12:00', '17:00', '20:00', 54),
+(361, 'miercolerrrs', '07:00', '12:00', '17:00', '20:00', 54),
+(362, 'jueves', '07:00', '12:00', '17:00', '20:00', 54),
+(363, 'viernesp', '07:00', '12:00', '17:00', '20:00', 54),
+(364, 'sabado', '07:00', '12:00', '17:00', '20:00', 54),
+(365, 'domingo', '07:00', '12:00', '17:00', '20:00', 54),
+(366, 'lunesp', '07:00', '12:00', '17:00', '20:00', 55),
+(367, 'martesp', '07:00', '12:00', '17:00', '20:00', 55),
+(368, 'miercolerrrs', '07:00', '12:00', '17:00', '20:00', 55),
+(369, 'jueves', '07:00', '12:00', '17:00', '20:00', 55),
+(370, 'viernesp', '07:00', '12:00', '17:00', '20:00', 55),
+(371, 'sabado', '07:00', '12:00', '17:00', '20:00', 55),
+(372, 'domingo', '07:00', '12:00', '17:00', '20:00', 55),
+(373, 'lunesp', '07:00', '12:00', '17:00', '20:00', 67),
+(374, 'martesp', '07:00', '12:00', '17:00', '20:00', 67),
+(375, 'miercolerrrs', '07:00', '12:00', '17:00', '20:00', 67),
+(376, 'jueves', '07:00', '12:00', '17:00', '20:00', 67),
+(377, 'viernesp', '07:00', '12:00', '17:00', '20:00', 67),
+(378, 'sabado', '07:00', '12:00', '17:00', '20:00', 67),
+(379, 'domingo', '07:00', '12:00', '17:00', '20:00', 67),
+(380, 'lunes', '07:00', '12:00', '17:00', '20:00', 71),
+(381, 'martes', '07:00', '12:00', '17:00', '20:00', 71),
+(382, 'miercoles', '07:00', '12:00', '17:00', '20:00', 71),
+(383, 'jueves', '07:00', '12:00', '17:00', '20:00', 71),
+(384, 'viernes', '07:00', '12:00', '17:00', '20:00', 71),
+(385, 'sabado', '07:00', '12:00', '17:00', '20:00', 71),
+(386, 'domingo', '07:00', '12:00', '17:00', '20:00', 71),
+(387, 'lunes', '07:00', '12:00', '17:00', '20:00', 72),
+(388, 'martes', '07:00', '12:00', '17:00', '20:00', 72),
+(389, 'miercoles', '07:00', '12:00', '17:00', '20:00', 72),
+(390, 'jueves', '07:00', '12:00', '17:00', '20:00', 72),
+(391, 'viernes', '07:00', '12:00', '17:00', '20:00', 72),
+(392, 'sabado', '07:00', '12:00', '17:00', '20:00', 72),
+(393, 'domingo', '07:00', '12:00', '17:00', '20:00', 72),
+(394, 'lunesp', '07:00', '12:00', '17:00', '20:00', 73),
+(395, 'martesp', '07:00', '12:00', '17:00', '20:00', 73),
+(396, 'miercolerrrs', '07:00', '12:00', '17:00', '20:00', 73),
+(397, 'jueves', '07:00', '12:00', '17:00', '20:00', 73),
+(398, 'viernesp', '07:00', '12:00', '17:00', '20:00', 73),
+(399, 'sabado', '07:00', '12:00', '17:00', '20:00', 73),
+(400, 'domingo', '07:00', '12:00', '17:00', '20:00', 73),
+(401, 'lunes', '07:00', '12:00', '17:00', '20:00', 74),
+(402, 'martes', '07:00', '12:00', '17:00', '20:00', 74),
+(403, 'miercoles', '07:00', '12:00', '17:00', '20:00', 74),
+(404, 'jueves', '07:00', '12:00', '17:00', '20:00', 74),
+(405, 'viernes', '07:00', '12:00', '17:00', '20:00', 74),
+(406, 'sabado', '07:00', '12:00', '17:00', '20:00', 74),
+(407, 'domingo', '07:00', '12:00', '17:00', '20:00', 74),
+(408, 'lunes', '07:00', '12:00', '17:00', '20:00', 75),
+(409, 'martes', '07:00', '12:00', '17:00', '20:00', 75),
+(410, 'miercoles', '07:00', '12:00', '17:00', '20:00', 75),
+(411, 'jueves', '07:00', '12:00', '17:00', '20:00', 75),
+(412, 'viernes', '07:00', '12:00', '17:00', '20:00', 75),
+(413, 'sabado', '07:00', '12:00', '17:00', '20:00', 75),
+(414, 'domingo', '07:00', '12:00', '17:00', '20:00', 75),
+(415, 'lunes', '07:00', '12:00', '17:00', '20:00', 76),
+(416, 'martes', '07:00', '12:00', '17:00', '20:00', 76),
+(417, 'miercoles', '07:00', '12:00', '17:00', '20:00', 76),
+(418, 'jueves', '07:00', '12:00', '17:00', '20:00', 76),
+(419, 'viernes', '07:00', '12:00', '17:00', '20:00', 76),
+(420, 'sabado', '07:00', '12:00', '17:00', '20:00', 76),
+(421, 'domingo', '07:00', '12:00', '17:00', '20:00', 76),
+(422, 'lunes', '07:00', '12:00', '17:00', '20:00', 77),
+(423, 'martes', '07:00', '12:00', '17:00', '20:00', 77),
+(424, 'miercoles', '07:00', '12:00', '17:00', '20:00', 77),
+(425, 'jueves', '07:00', '12:00', '17:00', '20:00', 77),
+(426, 'viernes', '07:00', '12:00', '17:00', '20:00', 77),
+(427, 'sabado', '07:00', '12:00', '17:00', '20:00', 77),
+(428, 'domingo', '07:00', '12:00', '17:00', '20:00', 77);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_input_reader`
 --
 
+DROP TABLE IF EXISTS `tb_input_reader`;
 CREATE TABLE `tb_input_reader` (
   `idInputReader` int(11) NOT NULL,
   `titulo` varchar(100) DEFAULT NULL
@@ -2717,6 +3193,7 @@ INSERT INTO `tb_input_reader` (`idInputReader`, `titulo`) VALUES
 -- Estructura de tabla para la tabla `tb_internet_company`
 --
 
+DROP TABLE IF EXISTS `tb_internet_company`;
 CREATE TABLE `tb_internet_company` (
   `idInternetCompany` int(11) UNSIGNED NOT NULL,
   `internetCompany` varchar(100) DEFAULT NULL
@@ -2737,6 +3214,7 @@ INSERT INTO `tb_internet_company` (`idInternetCompany`, `internetCompany`) VALUE
 -- Estructura de tabla para la tabla `tb_location`
 --
 
+DROP TABLE IF EXISTS `tb_location`;
 CREATE TABLE `tb_location` (
   `idLocation` int(11) UNSIGNED NOT NULL,
   `location` varchar(100) DEFAULT NULL,
@@ -3697,6 +4175,7 @@ INSERT INTO `tb_location` (`idLocation`, `location`, `idProvinceFK`) VALUES
 -- Estructura de tabla para la tabla `tb_modules`
 --
 
+DROP TABLE IF EXISTS `tb_modules`;
 CREATE TABLE `tb_modules` (
   `idModule` int(11) UNSIGNED NOT NULL,
   `name` varchar(100) DEFAULT NULL
@@ -3722,6 +4201,7 @@ INSERT INTO `tb_modules` (`idModule`, `name`) VALUES
 -- Estructura de tabla para la tabla `tb_monitor_company`
 --
 
+DROP TABLE IF EXISTS `tb_monitor_company`;
 CREATE TABLE `tb_monitor_company` (
   `idMonitorCompany` int(11) UNSIGNED NOT NULL,
   `monitorCompany` varchar(100) DEFAULT ''
@@ -3741,6 +4221,7 @@ INSERT INTO `tb_monitor_company` (`idMonitorCompany`, `monitorCompany`) VALUES
 -- Estructura de tabla para la tabla `tb_opcion_low`
 --
 
+DROP TABLE IF EXISTS `tb_opcion_low`;
 CREATE TABLE `tb_opcion_low` (
   `idOpcionLowTicket` int(11) UNSIGNED NOT NULL,
   `opcionLowTicket` varchar(200) COLLATE utf8_swedish_ci DEFAULT NULL
@@ -3760,6 +4241,7 @@ INSERT INTO `tb_opcion_low` (`idOpcionLowTicket`, `opcionLowTicket`) VALUES
 -- Estructura de tabla para la tabla `tb_personas_para_dar_aviso_alarmas`
 --
 
+DROP TABLE IF EXISTS `tb_personas_para_dar_aviso_alarmas`;
 CREATE TABLE `tb_personas_para_dar_aviso_alarmas` (
   `idPersona_aviso` int(11) NOT NULL,
   `fk_idUserSystema` int(11) DEFAULT NULL COMMENT 'puede ser null',
@@ -3777,6 +4259,7 @@ CREATE TABLE `tb_personas_para_dar_aviso_alarmas` (
 -- Estructura de tabla para la tabla `tb_personas_para_verificar_en_lugar`
 --
 
+DROP TABLE IF EXISTS `tb_personas_para_verificar_en_lugar`;
 CREATE TABLE `tb_personas_para_verificar_en_lugar` (
   `idPersona_aviso_lugar` int(11) NOT NULL,
   `fk_idUserSystema` int(11) DEFAULT NULL COMMENT 'puede ser null',
@@ -3793,6 +4276,7 @@ CREATE TABLE `tb_personas_para_verificar_en_lugar` (
 -- Estructura de tabla para la tabla `tb_pick_receive`
 --
 
+DROP TABLE IF EXISTS `tb_pick_receive`;
 CREATE TABLE `tb_pick_receive` (
   `idWhoPickUp` int(11) DEFAULT NULL,
   `nameWhoPickUp` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL
@@ -3813,6 +4297,7 @@ INSERT INTO `tb_pick_receive` (`idWhoPickUp`, `nameWhoPickUp`) VALUES
 -- Estructura de tabla para la tabla `tb_products`
 --
 
+DROP TABLE IF EXISTS `tb_products`;
 CREATE TABLE `tb_products` (
   `idProduct` int(11) NOT NULL,
   `descriptionProduct` varchar(200) DEFAULT NULL,
@@ -3862,6 +4347,7 @@ INSERT INTO `tb_products` (`idProduct`, `descriptionProduct`, `codigoFabric`, `b
 -- Estructura de tabla para la tabla `tb_products_classification`
 --
 
+DROP TABLE IF EXISTS `tb_products_classification`;
 CREATE TABLE `tb_products_classification` (
   `idProductClassification` int(11) NOT NULL,
   `classification` varchar(200) DEFAULT NULL
@@ -3899,6 +4385,7 @@ INSERT INTO `tb_products_classification` (`idProductClassification`, `classifica
 -- Estructura de tabla para la tabla `tb_products_divice_opening`
 --
 
+DROP TABLE IF EXISTS `tb_products_divice_opening`;
 CREATE TABLE `tb_products_divice_opening` (
   `idProductsDiviceOpening` int(11) UNSIGNED NOT NULL,
   `idDiviceOpeningFk` int(11) DEFAULT NULL,
@@ -3941,6 +4428,7 @@ INSERT INTO `tb_products_divice_opening` (`idProductsDiviceOpening`, `idDiviceOp
 -- Estructura de tabla para la tabla `tb_profile`
 --
 
+DROP TABLE IF EXISTS `tb_profile`;
 CREATE TABLE `tb_profile` (
   `idProfile` int(11) UNSIGNED NOT NULL,
   `nameProfile` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -3964,6 +4452,7 @@ INSERT INTO `tb_profile` (`idProfile`, `nameProfile`) VALUES
 -- Estructura de tabla para la tabla `tb_profiles`
 --
 
+DROP TABLE IF EXISTS `tb_profiles`;
 CREATE TABLE `tb_profiles` (
   `idProfiles` int(11) UNSIGNED NOT NULL,
   `name` varchar(200) DEFAULT NULL,
@@ -3985,6 +4474,7 @@ INSERT INTO `tb_profiles` (`idProfiles`, `name`, `idStatus`) VALUES
 -- Estructura de tabla para la tabla `tb_profiles_modules`
 --
 
+DROP TABLE IF EXISTS `tb_profiles_modules`;
 CREATE TABLE `tb_profiles_modules` (
   `idProfileModule` int(11) UNSIGNED NOT NULL,
   `idProfilesFk` int(11) DEFAULT NULL,
@@ -4021,6 +4511,7 @@ INSERT INTO `tb_profiles_modules` (`idProfileModule`, `idProfilesFk`, `idModuleF
 -- Estructura de tabla para la tabla `tb_province`
 --
 
+DROP TABLE IF EXISTS `tb_province`;
 CREATE TABLE `tb_province` (
   `idProvince` int(11) UNSIGNED NOT NULL,
   `province` varchar(200) DEFAULT NULL,
@@ -4063,6 +4554,7 @@ INSERT INTO `tb_province` (`idProvince`, `province`, `idLocationFk`) VALUES
 -- Estructura de tabla para la tabla `tb_reason_disabled_item`
 --
 
+DROP TABLE IF EXISTS `tb_reason_disabled_item`;
 CREATE TABLE `tb_reason_disabled_item` (
   `idReasonDisabledItem` int(11) NOT NULL,
   `reasonDisabledItem` varchar(100) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -4083,6 +4575,7 @@ INSERT INTO `tb_reason_disabled_item` (`idReasonDisabledItem`, `reasonDisabledIt
 -- Estructura de tabla para la tabla `tb_request`
 --
 
+DROP TABLE IF EXISTS `tb_request`;
 CREATE TABLE `tb_request` (
   `idRequest` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `RequestName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -4095,6 +4588,7 @@ CREATE TABLE `tb_request` (
 -- Estructura de tabla para la tabla `tb_router_internet`
 --
 
+DROP TABLE IF EXISTS `tb_router_internet`;
 CREATE TABLE `tb_router_internet` (
   `idRouterInternet` int(11) UNSIGNED NOT NULL,
   `numberSeriaInternal` text DEFAULT NULL,
@@ -4108,6 +4602,7 @@ CREATE TABLE `tb_router_internet` (
 -- Estructura de tabla para la tabla `tb_sensors_alarm`
 --
 
+DROP TABLE IF EXISTS `tb_sensors_alarm`;
 CREATE TABLE `tb_sensors_alarm` (
   `idSensorsAlarm` int(11) UNSIGNED NOT NULL,
   `numberZoneSensor` varchar(200) DEFAULT NULL,
@@ -4127,6 +4622,7 @@ CREATE TABLE `tb_sensors_alarm` (
 -- Estructura de tabla para la tabla `tb_services`
 --
 
+DROP TABLE IF EXISTS `tb_services`;
 CREATE TABLE `tb_services` (
   `idService` int(11) UNSIGNED NOT NULL,
   `service` varchar(100) DEFAULT NULL
@@ -4147,6 +4643,7 @@ INSERT INTO `tb_services` (`idService`, `service`) VALUES
 -- Estructura de tabla para la tabla `tb_services_camera_users`
 --
 
+DROP TABLE IF EXISTS `tb_services_camera_users`;
 CREATE TABLE `tb_services_camera_users` (
   `idServicesCameraUsers` int(11) UNSIGNED NOT NULL,
   `idUserFk` int(11) DEFAULT NULL,
@@ -4159,6 +4656,7 @@ CREATE TABLE `tb_services_camera_users` (
 -- Estructura de tabla para la tabla `tb_servicios_del_contrato_cabecera`
 --
 
+DROP TABLE IF EXISTS `tb_servicios_del_contrato_cabecera`;
 CREATE TABLE `tb_servicios_del_contrato_cabecera` (
   `idServiciosDelContrato` int(10) UNSIGNED NOT NULL,
   `idServiceType` int(11) DEFAULT NULL,
@@ -4166,12 +4664,31 @@ CREATE TABLE `tb_servicios_del_contrato_cabecera` (
   `idContratoFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_servicios_del_contrato_cabecera`
+--
+
+INSERT INTO `tb_servicios_del_contrato_cabecera` (`idServiciosDelContrato`, `idServiceType`, `serviceName`, `idContratoFk`) VALUES
+(55, 1, 'CONTROL DE ACCESO', 6),
+(56, 2, 'INTERNET', 6),
+(57, 3, 'TOTEM', 6),
+(58, 4, 'CAMARAS', 6),
+(59, 5, 'ALARMAS', 6),
+(60, 6, 'APP MONITOREO', 6),
+(61, 1, 'CONTROL DE ACCESO', 7),
+(62, 2, 'INTERNET', 7),
+(63, 3, 'TOTEM', 7),
+(64, 4, 'CAMARAS', 7),
+(65, 5, 'ALARMAS', 7),
+(66, 6, 'APP MONITOREO', 7);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_servicios_del_contrato_cuerpo`
 --
 
+DROP TABLE IF EXISTS `tb_servicios_del_contrato_cuerpo`;
 CREATE TABLE `tb_servicios_del_contrato_cuerpo` (
   `idServiciosDelContratoCuerpo` int(10) UNSIGNED NOT NULL,
   `idServiciosDelContratoFk` int(11) DEFAULT NULL,
@@ -4182,12 +4699,37 @@ CREATE TABLE `tb_servicios_del_contrato_cuerpo` (
   `idServiceTypeFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tb_servicios_del_contrato_cuerpo`
+--
+
+INSERT INTO `tb_servicios_del_contrato_cuerpo` (`idServiciosDelContratoCuerpo`, `idServiciosDelContratoFk`, `qtty`, `idAccCrtlDoor`, `itemName`, `itemAclaracion`, `idServiceTypeFk`) VALUES
+(81, 55, NULL, 1, 'Principal', NULL, 1),
+(82, 55, NULL, 2, 'Cochera', NULL, 1),
+(83, 56, NULL, 1, 'Cable Modem - TASS', NULL, 2),
+(84, 56, NULL, 4, '3G/LTE', NULL, 2),
+(85, 57, '4', NULL, 'CAMARAS', NULL, 3),
+(86, 58, '8', NULL, 'CAMARAS', NULL, 4),
+(87, 59, NULL, NULL, 'ALARMAS', NULL, 5),
+(88, 60, NULL, NULL, 'APP MONITOREO', NULL, 6),
+(89, 61, NULL, 1, 'Principal', NULL, 1),
+(90, 61, NULL, 2, 'Cochera', NULL, 1),
+(91, 61, NULL, 3, 'Servicio', NULL, 1),
+(92, 61, NULL, 4, 'Terraza', NULL, 1),
+(93, 62, NULL, 1, 'Cable Modem - TASS', NULL, 2),
+(94, 62, NULL, 4, '3G/LTE', NULL, 2),
+(95, 63, '2', NULL, 'CAMARAS', NULL, 3),
+(96, 64, '8', NULL, 'CAMARAS', NULL, 4),
+(97, 65, NULL, NULL, 'ALARMAS', NULL, 5),
+(98, 66, NULL, NULL, 'APP MONITOREO', NULL, 6);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_sesores_alarmas`
 --
 
+DROP TABLE IF EXISTS `tb_sesores_alarmas`;
 CREATE TABLE `tb_sesores_alarmas` (
   `idSensorAlarma` int(11) NOT NULL,
   `fk_idServicesAlarma` int(11) DEFAULT NULL,
@@ -4207,6 +4749,7 @@ CREATE TABLE `tb_sesores_alarmas` (
 -- Estructura de tabla para la tabla `tb_shutdown_key`
 --
 
+DROP TABLE IF EXISTS `tb_shutdown_key`;
 CREATE TABLE `tb_shutdown_key` (
   `idShutdownKey` int(11) NOT NULL,
   `titulo` varchar(100) DEFAULT NULL
@@ -4227,6 +4770,7 @@ INSERT INTO `tb_shutdown_key` (`idShutdownKey`, `titulo`) VALUES
 -- Estructura de tabla para la tabla `tb_sistemas_operativos`
 --
 
+DROP TABLE IF EXISTS `tb_sistemas_operativos`;
 CREATE TABLE `tb_sistemas_operativos` (
   `idSistemaOperativo` int(11) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
@@ -4246,6 +4790,7 @@ INSERT INTO `tb_sistemas_operativos` (`idSistemaOperativo`, `descripcion`) VALUE
 -- Estructura de tabla para la tabla `tb_smart_panic_license_pivote`
 --
 
+DROP TABLE IF EXISTS `tb_smart_panic_license_pivote`;
 CREATE TABLE `tb_smart_panic_license_pivote` (
   `idPivoteLicense` int(11) NOT NULL,
   `idClientServicesSmartPanicFk` int(11) NOT NULL,
@@ -4258,6 +4803,7 @@ CREATE TABLE `tb_smart_panic_license_pivote` (
 -- Estructura de tabla para la tabla `tb_status`
 --
 
+DROP TABLE IF EXISTS `tb_status`;
 CREATE TABLE `tb_status` (
   `idStatusTenant` int(255) NOT NULL,
   `statusTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -4278,6 +4824,7 @@ INSERT INTO `tb_status` (`idStatusTenant`, `statusTenantName`) VALUES
 -- Estructura de tabla para la tabla `tb_statusticket`
 --
 
+DROP TABLE IF EXISTS `tb_statusticket`;
 CREATE TABLE `tb_statusticket` (
   `idStatus` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `statusName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -4307,6 +4854,7 @@ INSERT INTO `tb_statusticket` (`idStatus`, `statusName`, `idTypeTicketKf`) VALUE
 -- Estructura de tabla para la tabla `tb_sys_code`
 --
 
+DROP TABLE IF EXISTS `tb_sys_code`;
 CREATE TABLE `tb_sys_code` (
   `idCode` int(11) DEFAULT NULL,
   `code` varchar(200) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -4326,6 +4874,7 @@ INSERT INTO `tb_sys_code` (`idCode`, `code`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_sys_param`
 --
 
+DROP TABLE IF EXISTS `tb_sys_param`;
 CREATE TABLE `tb_sys_param` (
   `idParam` int(11) UNSIGNED NOT NULL,
   `value` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL,
@@ -4352,6 +4901,7 @@ INSERT INTO `tb_sys_param` (`idParam`, `value`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_tax`
 --
 
+DROP TABLE IF EXISTS `tb_tax`;
 CREATE TABLE `tb_tax` (
   `idTypeTax` int(11) UNSIGNED NOT NULL,
   `typeTax` varchar(100) DEFAULT NULL
@@ -4373,6 +4923,7 @@ INSERT INTO `tb_tax` (`idTypeTax`, `typeTax`) VALUES
 -- Estructura de tabla para la tabla `tb_tickets`
 --
 
+DROP TABLE IF EXISTS `tb_tickets`;
 CREATE TABLE `tb_tickets` (
   `idTicket` int(11) NOT NULL,
   `dateCreated` timestamp NULL DEFAULT current_timestamp(),
@@ -4461,6 +5012,7 @@ INSERT INTO `tb_tickets` (`idTicket`, `dateCreated`, `dateRecibeCompany`, `idSta
 -- Estructura de tabla para la tabla `tb_tipos_servicios_internet`
 --
 
+DROP TABLE IF EXISTS `tb_tipos_servicios_internet`;
 CREATE TABLE `tb_tipos_servicios_internet` (
   `idTipoServicioInternet` int(11) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL
@@ -4482,6 +5034,7 @@ INSERT INTO `tb_tipos_servicios_internet` (`idTipoServicioInternet`, `nombre`) V
 -- Estructura de tabla para la tabla `tb_tipo_conexion_remoto`
 --
 
+DROP TABLE IF EXISTS `tb_tipo_conexion_remoto`;
 CREATE TABLE `tb_tipo_conexion_remoto` (
   `idTipoConexionRemoto` int(11) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
@@ -4503,6 +5056,7 @@ INSERT INTO `tb_tipo_conexion_remoto` (`idTipoConexionRemoto`, `descripcion`, `t
 -- Estructura de tabla para la tabla `tb_tipo_inmueble`
 --
 
+DROP TABLE IF EXISTS `tb_tipo_inmueble`;
 CREATE TABLE `tb_tipo_inmueble` (
   `idTipoInmueble` int(11) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
@@ -4523,6 +5077,7 @@ INSERT INTO `tb_tipo_inmueble` (`idTipoInmueble`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tb_tipo_mails`
 --
 
+DROP TABLE IF EXISTS `tb_tipo_mails`;
 CREATE TABLE `tb_tipo_mails` (
   `idTipoMail` int(10) UNSIGNED NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
@@ -4546,6 +5101,7 @@ INSERT INTO `tb_tipo_mails` (`idTipoMail`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tb_tmp_delivery_data`
 --
 
+DROP TABLE IF EXISTS `tb_tmp_delivery_data`;
 CREATE TABLE `tb_tmp_delivery_data` (
   `idTmpDeliveryData` int(11) NOT NULL COMMENT 'ID DE LA INFO TEMPORAL ASOCIADO A UN TICKET',
   `tmp_idTicketKf` int(11) NOT NULL COMMENT 'ID DEL TICKET ',
@@ -4570,6 +5126,7 @@ CREATE TABLE `tb_tmp_delivery_data` (
 -- Estructura de tabla para la tabla `tb_totem_model`
 --
 
+DROP TABLE IF EXISTS `tb_totem_model`;
 CREATE TABLE `tb_totem_model` (
   `idTotenModel` int(11) UNSIGNED NOT NULL,
   `totenModel` varchar(11) DEFAULT NULL
@@ -4589,6 +5146,7 @@ INSERT INTO `tb_totem_model` (`idTotenModel`, `totenModel`) VALUES
 -- Estructura de tabla para la tabla `tb_typetenant`
 --
 
+DROP TABLE IF EXISTS `tb_typetenant`;
 CREATE TABLE `tb_typetenant` (
   `idTypeTenant` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `typeTenantName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -4608,6 +5166,7 @@ INSERT INTO `tb_typetenant` (`idTypeTenant`, `typeTenantName`) VALUES
 -- Estructura de tabla para la tabla `tb_typeticket`
 --
 
+DROP TABLE IF EXISTS `tb_typeticket`;
 CREATE TABLE `tb_typeticket` (
   `idTypeTicket` int(11) NOT NULL,
   `TypeTicketName` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -4629,6 +5188,7 @@ INSERT INTO `tb_typeticket` (`idTypeTicket`, `TypeTicketName`) VALUES
 -- Estructura de tabla para la tabla `tb_type_attendant`
 --
 
+DROP TABLE IF EXISTS `tb_type_attendant`;
 CREATE TABLE `tb_type_attendant` (
   `idTyepeAttendant` int(11) UNSIGNED NOT NULL,
   `nameTypeAttendant` varchar(100) COLLATE utf8_swedish_ci DEFAULT NULL
@@ -4651,6 +5211,7 @@ INSERT INTO `tb_type_attendant` (`idTyepeAttendant`, `nameTypeAttendant`) VALUES
 -- Estructura de tabla para la tabla `tb_type_contrato`
 --
 
+DROP TABLE IF EXISTS `tb_type_contrato`;
 CREATE TABLE `tb_type_contrato` (
   `idTypeContrato` int(11) NOT NULL,
   `description` varchar(255) DEFAULT NULL
@@ -4674,6 +5235,7 @@ INSERT INTO `tb_type_contrato` (`idTypeContrato`, `description`) VALUES
 -- Estructura de tabla para la tabla `tb_type_delivery`
 --
 
+DROP TABLE IF EXISTS `tb_type_delivery`;
 CREATE TABLE `tb_type_delivery` (
   `idTypeDelivery` int(11) DEFAULT NULL,
   `typeDelivery` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -4694,6 +5256,7 @@ INSERT INTO `tb_type_delivery` (`idTypeDelivery`, `typeDelivery`, `amount`) VALU
 -- Estructura de tabla para la tabla `tb_type_gps`
 --
 
+DROP TABLE IF EXISTS `tb_type_gps`;
 CREATE TABLE `tb_type_gps` (
   `idTypeGps` int(11) NOT NULL,
   `typeGps` varchar(200) DEFAULT NULL
@@ -4714,6 +5277,7 @@ INSERT INTO `tb_type_gps` (`idTypeGps`, `typeGps`) VALUES
 -- Estructura de tabla para la tabla `tb_type_internet`
 --
 
+DROP TABLE IF EXISTS `tb_type_internet`;
 CREATE TABLE `tb_type_internet` (
   `idTypeInternet` int(50) UNSIGNED NOT NULL,
   `typeInternet` varchar(50) DEFAULT ''
@@ -4736,6 +5300,7 @@ INSERT INTO `tb_type_internet` (`idTypeInternet`, `typeInternet`) VALUES
 -- Estructura de tabla para la tabla `tb_type_maintenance`
 --
 
+DROP TABLE IF EXISTS `tb_type_maintenance`;
 CREATE TABLE `tb_type_maintenance` (
   `idTypeMaintenance` int(11) NOT NULL,
   `typeMaintenance` varchar(100) DEFAULT NULL
@@ -4756,6 +5321,7 @@ INSERT INTO `tb_type_maintenance` (`idTypeMaintenance`, `typeMaintenance`) VALUE
 -- Estructura de tabla para la tabla `tb_type_outher`
 --
 
+DROP TABLE IF EXISTS `tb_type_outher`;
 CREATE TABLE `tb_type_outher` (
   `idTypeOuther` int(11) NOT NULL,
   `TypeOuther` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL
@@ -4779,6 +5345,7 @@ INSERT INTO `tb_type_outher` (`idTypeOuther`, `TypeOuther`) VALUES
 -- Estructura de tabla para la tabla `tb_type_services`
 --
 
+DROP TABLE IF EXISTS `tb_type_services`;
 CREATE TABLE `tb_type_services` (
   `idTypeServices` int(11) NOT NULL,
   `typeServices` varchar(255) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -4803,6 +5370,7 @@ INSERT INTO `tb_type_services` (`idTypeServices`, `typeServices`, `SA_ID_TYPE`) 
 -- Estructura de tabla para la tabla `tb_user`
 --
 
+DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user` (
   `idUser` int(11) NOT NULL,
   `fullNameUser` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -4852,7 +5420,7 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 (85, 'Fernando Angulo', 'david.rincon.oracle@gmail.com', '', '123213213', '78d16ced1eedb4f436c83a861c91e052aaf3699f', 3, '2019-07-28 00:43:16', 5, 1, 12, NULL, NULL, NULL, NULL, 0, NULL, 1, 1, '7gVmCe4f3J', 1, NULL, NULL),
 (86, 'David Eduardo Rincon', 'davideduardo.luengo2@hotmail.com', '', '01122356388', 'fa399d74e61282062d50aaf7eb6a9afc1b21f314', 5, '2019-08-21 03:20:44', 1, 1, 1, NULL, NULL, 2, 1, 1, NULL, 2, 1, 'K67aipTQu2', 1, NULL, NULL),
 (87, 'Ernesto Araujo', 'earaujo@asdsad.com', '', '111232324324324', '5365642294a7a05378e5e13cd44fa91c5f9b546a', 6, '2019-08-29 23:12:26', 1, 1, 1, 2, NULL, NULL, NULL, 1, 0, 0, 1, 'FLTvvGz5wZ', 1, NULL, NULL),
-(88, 'Gabriel Gonzalez', 'ggonzalez@hotmail.com', '', '112322424233', 'e47ed8dab1b69a560435c3f4bff9d2679ab12233', 6, '2019-08-29 23:13:21', 1, 1, 2, 2, NULL, NULL, NULL, 1, 0, 0, 1, 'WM7HECe4EL', 1, NULL, NULL),
+(88, 'Gabriel Gonzalez', 'ggonzalez@hotmail.com', '11223544564356346', '112322424233', 'e47ed8dab1b69a560435c3f4bff9d2679ab12233', 6, '2019-08-29 23:13:21', 1, 1, 2, 2, NULL, NULL, NULL, 1, 0, 0, 1, 'WM7HECe4EL', 1, NULL, NULL),
 (89, 'Dionisio Machado', 'dmachado@asdasd.com', '121232132134', '112143435556', '80662a250c92f9c05b965cbff69785fdc404d0c4', 6, '2019-08-29 23:22:06', 5, 1, 11, 1, 'Plomero', NULL, NULL, 1, 0, NULL, 1, 'YJh6f8Gxb0', 1, NULL, NULL),
 (90, 'tester', 'tester@seguridadtass.com.ar', '', '1134343242423', 'c4bfc8777fbb8f54e03f4d5bcd1ff28fe347da3a', 1, '2019-11-09 19:25:55', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'fxvMqFzwGK', 1, NULL, 8),
 (91, 'prueba', 'sfsdfdsfdfds', 'prueba', NULL, '13a6d4daa92304298f07df965a8e71a42a6d2047', 1, '2019-11-09 19:26:53', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 'FAMIVpMRxv', 0, NULL, 8),
@@ -4865,6 +5433,7 @@ INSERT INTO `tb_user` (`idUser`, `fullNameUser`, `emailUser`, `phoneNumberUser`,
 -- Estructura de tabla para la tabla `tb_user_license`
 --
 
+DROP TABLE IF EXISTS `tb_user_license`;
 CREATE TABLE `tb_user_license` (
   `idUserLicense` int(11) NOT NULL,
   `fullName` varchar(100) DEFAULT NULL,
@@ -4872,9 +5441,16 @@ CREATE TABLE `tb_user_license` (
   `phone` varchar(100) DEFAULT NULL,
   `keyword` varchar(100) DEFAULT NULL,
   `idOS` tinyint(1) DEFAULT 1,
-  `profileUser` int(11) DEFAULT NULL,
+  `profileUser` varchar(100) DEFAULT '',
   `idClientServicesSmartPanicFk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tb_user_license`
+--
+
+INSERT INTO `tb_user_license` (`idUserLicense`, `fullName`, `email`, `phone`, `keyword`, `idOS`, `profileUser`, `idClientServicesSmartPanicFk`) VALUES
+(65, 'German Malaver', 'german.malaver@asdasd.com', '1123432432444', 'Patata', 1, 'admin', 24);
 
 -- --------------------------------------------------------
 
@@ -4882,6 +5458,7 @@ CREATE TABLE `tb_user_license` (
 -- Estructura de tabla para la tabla `tb_zonas`
 --
 
+DROP TABLE IF EXISTS `tb_zonas`;
 CREATE TABLE `tb_zonas` (
   `idZona` int(11) NOT NULL,
   `n_zona` int(11) DEFAULT NULL,
@@ -5673,7 +6250,7 @@ ALTER TABLE `tb_alarm_type_client`
 -- AUTO_INCREMENT de la tabla `tb_backup_energy`
 --
 ALTER TABLE `tb_backup_energy`
-  MODIFY `idBackupEnergy` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `idBackupEnergy` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_backup_energy_totem`
@@ -5703,7 +6280,7 @@ ALTER TABLE `tb_battery_install_alarm`
 -- AUTO_INCREMENT de la tabla `tb_cameras`
 --
 ALTER TABLE `tb_cameras`
-  MODIFY `idCamera` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `idCamera` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cameras_totem`
@@ -5757,7 +6334,7 @@ ALTER TABLE `tb_client_billing_information`
 -- AUTO_INCREMENT de la tabla `tb_client_camera`
 --
 ALTER TABLE `tb_client_camera`
-  MODIFY `idClientCamera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `idClientCamera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_client_departament`
@@ -5781,19 +6358,19 @@ ALTER TABLE `tb_client_functional_units`
 -- AUTO_INCREMENT de la tabla `tb_client_mails`
 --
 ALTER TABLE `tb_client_mails`
-  MODIFY `idClientMail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
+  MODIFY `idClientMail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_client_phone_contact`
 --
 ALTER TABLE `tb_client_phone_contact`
-  MODIFY `idClientPhoneFk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idClientPhoneFk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_client_schedule_atention`
 --
 ALTER TABLE `tb_client_schedule_atention`
-  MODIFY `idScheduleAtention` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `idScheduleAtention` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_client_services`
@@ -5877,7 +6454,7 @@ ALTER TABLE `tb_client_ufc`
 -- AUTO_INCREMENT de la tabla `tb_client_users`
 --
 ALTER TABLE `tb_client_users`
-  MODIFY `idClientUsers` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idClientUsers` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_company`
@@ -5913,7 +6490,7 @@ ALTER TABLE `tb_department`
 -- AUTO_INCREMENT de la tabla `tb_detalles_control_acceso`
 --
 ALTER TABLE `tb_detalles_control_acceso`
-  MODIFY `idControlAcceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=859;
+  MODIFY `idControlAcceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=862;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_detination_of_license`
@@ -6213,7 +6790,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT de la tabla `tb_user_license`
 --
 ALTER TABLE `tb_user_license`
-  MODIFY `idUserLicense` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idUserLicense` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_zonas`

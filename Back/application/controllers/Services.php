@@ -192,7 +192,6 @@ class Services extends REST_Controller {
         if (! $this->post('service')) {
             $this->response(null, 404);
         }
-
         $product = $this->services_model->editSmartpanic($this->post('service'));
 
         if ($product == 1) {

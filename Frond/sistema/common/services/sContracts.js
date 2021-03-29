@@ -65,5 +65,31 @@ moduleContractServices.service("ContractServices", ['$http', 'tokenSystem', '$ti
                   return response;
                 });
           },
+          activationDateContract: function(data) {
+            rsCustomer.contrato=data
+            //console.log("[Contract Services]: Date Sign contract ");
+              return $http.post(serverHost+serverBackend+"Contrato/fechaActivacionContrato",rsCustomer,serverHeaders)
+                .then(function mySucess(response, status) {
+                  rsJson=response;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                });
+          },
+          changeStatusContract: function(idContract, idStatus) {
+            rsJson={};
+            console.log("[Contract Services]: List of Services Items By Contract & Service Id");
+              return $http({
+                    method : "GET",
+                    url: serverHost+serverBackend+"Contrato/changeStatusContrato/"+idContract+"/"+idStatus
+                  }).then(function mySuccess(response) {
+                    rsJson=response;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });   
+          },                      
       }
 }]);

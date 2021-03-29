@@ -3,7 +3,7 @@
   	<div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
           	<div class="modal-header">
-          		<button type="button" class="close" ng-click="modalConfirmation('closeServiceWindow', 0, null)"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
+          		<button type="button" class="close" ng-click="modalConfirmation('closeServiceWindow', 0, service.new)"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
             	<h3 class="modal-title"><i class="product-success fas fa-wrench"></i> NUEVO SERVICIO CONTROL DE ACCESO</h3>
         	</div>
     		<div class="modal-body"  style="overflow-y: scroll;">
@@ -101,21 +101,21 @@
 						<!-- Control_de_Acceso: control of access -->
 						<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.crtlAccess.selected!=undefined && fCustomerNewService.service_crtl_access.$valid,
+								  				service.crtlAccess.selected!=undefined && fCustomerNewService.service_crtl_access.$valid,
 								  			 	'has-error':  
-								  				(service.new.crtlAccess.selected==undefined) && fCustomerNewService.service_crtl_access.$touched,
+								  				(service.crtlAccess.selected==undefined) && fCustomerNewService.service_crtl_access.$touched,
 								  			}">
 						<div class="col-md-8"><label style="padding-left: 15px;">Control de Acceso</label></div>
-						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="service.new.crtlAccess.selected==undefined" ng-click="compServiceProductDetailsFn(service.new.crtlAccess.selected, productListType.CONTROL_DE_ACCESOS)" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-						  	<button ng-if="service.new.crtlAccess.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.crtlAccess.selected, productListType.CONTROL_DE_ACCESOS, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>  
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="service.crtlAccess.selected==undefined" ng-click="compServiceProductDetailsFn(service.crtlAccess.selected, productListType.CONTROL_DE_ACCESOS)" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+						  	<button ng-if="service.crtlAccess.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.crtlAccess.selected, productListType.CONTROL_DE_ACCESOS, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>  
 						    <div class="col-xs-12 selectContainer">							   
 							    <div class="input-group">
 					              <span class="input-group-addon"><i class="fas fa-door-open"></i></span>
 					              <ui-select name="service_crtl_access"  
-					              			 ng-change="compServiceProductDetailsFn(service.new.crtlAccess.selected, productListType.CONTROL_DE_ACCESOS, null)" 
-					              			 ng-model="service.new.crtlAccess.selected"
+					              			 ng-change="compServiceProductDetailsFn(service.crtlAccess.selected, productListType.CONTROL_DE_ACCESOS, null)" 
+					              			 ng-model="service.crtlAccess.selected"
 					              			 ng-required="true"
-					              			 ng-disabled="service.new.crtlAccess.selected!=undefined"
+					              			 ng-disabled="service.crtlAccess.selected!=undefined"
 					              			 theme="bootstrap" autofocus>
 					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 					                    <ui-select-choices repeat="item in productListByType.CONTROL_DE_ACCESOS | filter: $select.search">
@@ -133,21 +133,21 @@
 						<!-- Control_de_Acceso: lock -->
 						<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.lockedIt.selected!=undefined && fCustomerNewService.service_locked.$valid,
+								  				service.lockedIt.selected!=undefined && fCustomerNewService.service_locked.$valid,
 								  			 	'has-error':  
-								  				(service.new.lockedIt.selected==undefined) && fCustomerNewService.service_locked.$touched,
+								  				(service.lockedIt.selected==undefined) && fCustomerNewService.service_locked.$touched,
 								  			}">
 						<div class="col-md-8"><label style="padding-left: 15px;">Cerradura </label></div>
-						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.new.lockedIt.selected, productListType.CERRADURA)" ng-disabled="service.new.lockedIt.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-						  <button ng-if="service.new.lockedIt.selected!=undefined" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeProductDetailsFn(service.new.lockedIt.selected, productListType.CERRADURA, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.lockedIt.selected, productListType.CERRADURA)" ng-disabled="service.lockedIt.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+						  <button ng-if="service.lockedIt.selected!=undefined" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeProductDetailsFn(service.lockedIt.selected, productListType.CERRADURA, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
 						    <div class="col-xs-12 selectContainer">							   
 							    <div class="input-group">
 					              <span class="input-group-addon"><i class="fas fa-lock"></i></span>
 					              <ui-select name="service_locked"  
-					              			 ng-change="compServiceProductDetailsFn(service.new.lockedIt.selected, productListType.CERRADURA, null);" 
-					              			 ng-model="service.new.lockedIt.selected"
+					              			 ng-change="compServiceProductDetailsFn(service.lockedIt.selected, productListType.CERRADURA, null);" 
+					              			 ng-model="service.lockedIt.selected"
 					              			 ng-required="true"
-					              			 ng-disabled="service.new.lockedIt.selected!=undefined"
+					              			 ng-disabled="service.lockedIt.selected!=undefined"
 					              			 theme="bootstrap" autofocus>
 					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 					                    <ui-select-choices repeat="item in productListByType.CERRADURA | filter: $select.search">
@@ -165,21 +165,21 @@
 						<!-- Control_de_Acceso: entranceReader -->
 						<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.entranceReader.selected!=undefined && fCustomerNewService.service_entranceReader.$valid,
+								  				service.entranceReader.selected!=undefined && fCustomerNewService.service_entranceReader.$valid,
 								  			 	'has-error':  
-								  				(service.new.entranceReader.selected==undefined) && fCustomerNewService.service_entranceReader.$touched,
+								  				(service.entranceReader.selected==undefined) && fCustomerNewService.service_entranceReader.$touched,
 								  			}">
 						<div class="col-md-8"><label style="padding-left: 15px;">Lector de entrada </label></div>
-						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.new.entranceReader.selected, productListType.LECTOR_ENT, 'entrance')" ng-disabled="service.new.entranceReader.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-						  <button ng-if="service.new.entranceReader.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.entranceReader.selected, productListType.LECTOR_ENT, 'entrance')" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(servnew.entranceReader.selected, productListType.LECTOR_ENT, 'entrance')" ng-disabled="service.entranceReader.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+						  <button ng-if="service.entranceReader.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(servnew.entranceReader.selected, productListType.LECTOR_ENT, 'entrance')" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
 						    <div class="col-xs-12 selectContainer">							   
 							    <div class="input-group">
 					              <span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
 					              <ui-select name="service_entranceReader"  
-					              			 ng-change="compServiceProductDetailsFn(service.new.entranceReader.selected, productListType.LECTOR_ENT, 'entrance');" 
-					              			 ng-model="service.new.entranceReader.selected"
+					              			 ng-change="compServiceProductDetailsFn(servnew.entranceReader.selected, productListType.LECTOR_ENT, 'entrance');" 
+					              			ng-model="service.entranceReader.selected"
 					              			 ng-required="true"
-					              			 ng-disabled="service.new.entranceReader.selected!=undefined"
+					              			 ng-disabled="service.entranceReader.selected!=undefined"
 					              			 theme="bootstrap" autofocus>
 					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 					                    <ui-select-choices repeat="item in productListByType.LECTOR | filter: $select.search">
@@ -197,21 +197,21 @@
 						<!-- Control_de_Acceso: powerSupply -->
 						<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.powerSupply.selected!=undefined && fCustomerNewService.service_powerSupply.$valid,
+								  				service.powerSupply.selected!=undefined && fCustomerNewService.service_powerSupply.$valid,
 								  			 	'has-error':  
-								  				(service.new.powerSupply.selected==undefined) && fCustomerNewService.service_powerSupply.$touched,
+								  				(service.powerSupply.selected==undefined) && fCustomerNewService.service_powerSupply.$touched,
 								  			}">
 						<div class="col-md-8"><label style="padding-left: 15px;">Fuente</label></div>
-						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.new.powerSupply.selected, productListType.FUENTE)" ng-disabled="service.new.powerSupply.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-						  	<button ng-if="service.new.powerSupply.selected!=undefined" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeProductDetailsFn(service.new.powerSupply.selected, productListType.FUENTE, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.powerSupply.selected, productListType.FUENTE)" ng-disabled="service.powerSupply.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+						  	<button ng-if="service.powerSupply.selected!=undefined" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeProductDetailsFn(service.powerSupply.selected, productListType.FUENTE, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
 						    <div class="col-xs-12 selectContainer">							   
 							    <div class="input-group">
 					              <span class="input-group-addon"><i class="fas fa-plug"></i></span>
 					              <ui-select name="service_powerSupply"  
-					              			 ng-change="compServiceProductDetailsFn(service.new.powerSupply.selected, productListType.FUENTE, null);" 
-					              			 ng-model="service.new.powerSupply.selected"
+					              			 ng-change="compServiceProductDetailsFn(service.powerSupply.selected, productListType.FUENTE, null);" 
+					              			 ng-model="service.powerSupply.selected"
 					              			 ng-required="true"
-					              			 ng-disabled="service.new.powerSupply.selected!=undefined"
+					              			 ng-disabled="service.powerSupply.selected!=undefined"
 					              			 theme="bootstrap" autofocus>
 					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 					                    <ui-select-choices repeat="item in productListByType.FUENTE | filter: $select.search">
@@ -229,9 +229,9 @@
 						<!-- Control_de_Acceso: exitReader -->
 						<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.exitReader.selected!=undefined && fCustomerNewService.service_exitReader.$valid,
+								  				service.exitReader.selected!=undefined && fCustomerNewService.service_exitReader.$valid,
 								  			 	'has-error':  
-								  				(service.new.exitReader.selected==undefined) && fCustomerNewService.service_exitReader.$touched,
+								  				(service.exitReader.selected==undefined) && fCustomerNewService.service_exitReader.$touched,
 								  			}">
 							<div class="col-md-5 n-padding-r">  			
 								<label ng-if="!service.new.isOuputButom">Lector de salida</label>
@@ -250,17 +250,17 @@
 								<label>Pulsador&nbsp;</label>
 							</div>									  			
 							<div class="pull-right col-md-4">  			
-								<button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.new.exitReader.selected, productListType.PRODUCT_EXIT, 'exit')" ng-disabled="service.new.exitReader.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-								  <button ng-if="service.new.exitReader.selected!=undefined" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeProductDetailsFn(service.new.exitReader.selected, productListType.PRODUCT_EXIT, 'exit')" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
+								<button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.exitReader.selected, productListType.PRODUCT_EXIT, 'exit')" ng-disabled="service.exitReader.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+								  <button ng-if="service.exitReader.selected!=undefined" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeProductDetailsFn(service.exitReader.selected, productListType.PRODUCT_EXIT, 'exit')" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
 							</div>					
 						    <div class="col-xs-12 selectContainer">							   
 							    <div class="input-group">
 					              <span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
 					              <ui-select name="service_exitReader"  
-					              			 ng-change="compServiceProductDetailsFn(service.new.exitReader.selected, productListType.PRODUCT_EXIT, 'exit');" 
-					              			 ng-model="service.new.exitReader.selected"
+					              			 ng-change="compServiceProductDetailsFn(service.exitReader.selected, productListType.PRODUCT_EXIT, 'exit');" 
+					              			 ng-model="service.exitReader.selected"
 					              			 ng-required="true"
-					              			 ng-disabled="service.new.exitReader.selected!=undefined"
+					              			 ng-disabled="service.exitReader.selected!=undefined"
 					              			 theme="bootstrap" autofocus>
 					                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 					                    <ui-select-choices repeat="item in productListByType.PRODUCT_EXIT | filter: $select.search">
@@ -296,12 +296,12 @@
 						<div class="col-md-12">
 							<div class="col-md-10">
 								<label class="clf-p-left">Baterias instaladas</label></div>
-							<div class="pull-right col-md-2" style="padding-bottom: 5px;"><button  ng-click="loadDetailModalWindow(service.new.batteries.selected)" ng-disabled="service.new.batteries.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button></div>
+							<div class="pull-right col-md-2" style="padding-bottom: 5px;"><button  ng-click="loadDetailModalWindow(service.batteries.selected)" ng-disabled="service.batteries.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button></div>
 					    	<div class="selectContainer">
 							    <div class="col-md-12 input-group">
 					              	<span class="input-group-addon"><i class="fas fa-car-battery"></i></span>
 					              	<ui-select name="service_battery"
-					              			 ng-model="service.new.batteries.selected"
+					              			 ng-model="service.batteries.selected"
 					              			 ng-required="list_batteries.length==0"
 					              			 theme="bootstrap" autofocus>
 					                	<ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
@@ -325,7 +325,7 @@
 							      		<td style="width: 15%"><span class="text-muted text-box" style="font-size: 85%">Marca:<label style="font-size: 85%" class="label label-default">{{battery.brand | uppercase}}</label></span></td>
 							          	<td style="padding-bottom: 5px; width: 15%">
 							            	<button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="subItemServiceProductDetailsFn(battery)" ng-disabled="!battery.idBatteryFk" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-						  					<button ng-if="battery.idBatteryFk" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeBatteryProductDetailsFn(battery)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
+						  					<button ng-if="battery.idBatteryFk" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeSubItemProductDetailsFn(battery)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
 
 							          	</td>
 							      	</tr>
@@ -369,19 +369,19 @@
 					<!-- Control_de_Acceso: EmergencyButton -->
 					<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.emergencyButton.selected!=undefined && fCustomerNewService.service_emergencyButton.$valid,
+								  				service.emergencyButton.selected!=undefined && fCustomerNewService.service_emergencyButton.$valid,
 								  			 	'has-error':  
-								  				(service.new.emergencyButton.selected==undefined) && fCustomerNewService.service_emergencyButton.$touched,
+								  				(service.emergencyButton.selected==undefined) && fCustomerNewService.service_emergencyButton.$touched,
 								  			}">
 						<div class="col-md-8"><label style="padding-left: 15px;">Pulsador de Emergencia</label></div>
-						<div class="pull-right col-md-4"><button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.new.emergencyButton.selected, productListType.PULSADOR_EMERG)" ng-disabled="service.new.emergencyButton.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-					  <button ng-if="service.new.emergencyButton.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.emergencyButton.selected, productListType.PULSADOR_EMERG, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						<div class="pull-right col-md-4"><button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.emergencyButton.selected, productListType.PULSADOR_EMERG)" ng-disabled="service.emergencyButton.selected==undefined" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+					  <button ng-if="service.emergencyButton.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.emergencyButton.selected, productListType.PULSADOR_EMERG, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
 					    <div class="col-xs-12 selectContainer">							   
 						    <div class="input-group">
 				              <span class="input-group-addon"><i class="fas fa-square"></i></span>
 				              <ui-select name="service_emergencyButton"  
-				              			 ng-change="compServiceProductDetailsFn(service.new.emergencyButton.selected, productListType.PULSADOR_EMERG);" 
-				              			 ng-model="service.new.emergencyButton.selected"
+				              			 ng-change="compServiceProductDetailsFn(service.emergencyButton.selected, productListType.PULSADOR_EMERG);" 
+				              			 ng-model="service.emergencyButton.selected"
 				              			 theme="bootstrap" autofocus>
 				                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 				                    <ui-select-choices repeat="item in productListByType.PULSADOR_EMERG | filter: $select.search">
@@ -409,19 +409,19 @@
 					<!-- Control_de_Acceso: TurnOffKeyboard -->
 					<div class="form-group col-md-6" ng-class="
 								  			{	'has-success': 
-								  				service.new.TurnOffKey.selected!=undefined && fCustomerNewService.service_TurnOffKey.$valid,
+								  				service.TurnOffKey.selected!=undefined && fCustomerNewService.service_TurnOffKey.$valid,
 								  			 	'has-error':  
-								  				(service.new.TurnOffKey.selected==undefined) && fCustomerNewService.service_TurnOffKey.$touched,
+								  				(service.TurnOffKey.selected==undefined) && fCustomerNewService.service_TurnOffKey.$touched,
 								  			}">
 					  	<div class="col-md-8"><label style="padding-left: 15px;">Tecla de apagado</label></div>
-						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.new.TurnOffKey.selected, productListType.TECLA_APAG)" ng-disabled="service.new.TurnOffKey.selected==undefined"  class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
-					  <button ng-if="service.new.TurnOffKey.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.new.TurnOffKey.selected, productListType.TECLA_APAG, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
+						<div class="pull-right col-md-4"><button  data-toggle="tooltip" data-placement="top" title="Ver" ng-click="compServiceProductDetailsFn(service.TurnOffKey.selected, productListType.TECLA_APAG)" ng-disabled="service.TurnOffKey.selected==undefined"  class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+					  <button ng-if="service.TurnOffKey.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.TurnOffKey.selected, productListType.TECLA_APAG, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>
 					    <div class="col-xs-12 selectContainer">							   
 						    <div class="input-group">
 				              <span class="input-group-addon"><i class="fas fa-keyboard"></i></span>
 				              <ui-select name="service_TurnOffKey"  
-				              			 ng-change="compServiceProductDetailsFn(service.new.TurnOffKey.selected, productListType.TECLA_APAG);" 
-				              			 ng-model="service.new.TurnOffKey.selected"
+				              			 ng-change="compServiceProductDetailsFn(service.TurnOffKey.selected, productListType.TECLA_APAG);" 
+				              			 ng-model="service.TurnOffKey.selected"
 				              			 theme="bootstrap" autofocus>
 				                  <ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 				                    <ui-select-choices repeat="item in productListByType.TECLA_APAG | filter: $select.search">
@@ -561,7 +561,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
                         <button type="submit" ng-click="modalConfirmation('newService', 0, service.new)" ng-disabled="fCustomerNewService.$invalid && list_batteries.length==0" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
-                        <a ng-click="modalConfirmation('closeServiceWindow', 0, null)" type="button" class="btn btn-labeled btn-danger">
+                        <a ng-click="modalConfirmation('closeServiceWindow', 0, service.new)" type="button" class="btn btn-labeled btn-danger">
                             <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
                     </div>
                 </div>

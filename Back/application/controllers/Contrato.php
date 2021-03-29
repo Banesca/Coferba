@@ -81,5 +81,32 @@ class Contrato extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+    public function fechaActivacionContrato_post() {
+        $res = $this->contrato_model->fechaActivacionContrato($this->post('contrato'));
+
+        if ($res == 1) {
+            $this->response([ 'response' => "Actualización exitosa" ], 200);
+        } elseif ($res == 0) {
+            $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+        } elseif ($res == 2) {
+            $this->response([ 'response' => "Contrato ya se encuentra aprobado" ], 203);
+        }
+    }       
+    public function changeStatusContrato_get($id, $idStatus) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $contrato = null;
+        $contrato = $this->contrato_model->changeStatusContrato($id, $idStatus);
+
+        if (!is_null($contrato) && $idStatus==1) {
+            $this->response([ 'response' => "Contrato Activado" ], 200);
+        } else if (!is_null($contrato) && $idStatus==0) {
+            $this->response([ 'response' => "Contrato Desactivado" ], 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }              
 
 }

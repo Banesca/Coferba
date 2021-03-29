@@ -341,8 +341,37 @@ class Contrato_model extends CI_Model {
         return $contratos1;
 
     }
+    public function fechaActivacionContrato($contrato) {
+        $this->db->set([
+                "idClientFk"           => $contrato['idClientFk'],
+                "fechaFirmaVigencia"   => $contrato['fechaFirmaVigencia'],
+                "fechaFirmaActivacion" => $contrato['fechaFirmaActivacion'],
+                "numeroContrato"       => $contrato['numeroContrato'],
+                "contratoType"         => $contrato['contratoType'],
+                "maintenanceType"      => $contrato['maintenanceType'],
+                "idStatusFk"           => $contrato['idStatusFk'],
+            ]
+        )->where("idContrato", $contrato['idContrato'])->update("tb_contratos");
 
+        if ($this->db->affected_rows() >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }     
+    /*HABILITAR / DESHABILITAR CONTRATO*/    
+    public function changeStatusContrato($id, $idStatus) {
+        $this->db->set([
+                "idStatusFk"           => $idStatus,
+            ]
+        )->where("idContrato", $id)->update("tb_contratos");
 
+        if ($this->db->affected_rows() >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }   
     public function delete($idClient) {
 
         $this->db->set([ 'idStatusFk' => -1 ])

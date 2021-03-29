@@ -272,11 +272,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.selectTableRow = function (value, idItem, opt) {
           $scope.vIndex = value;
           $scope.idDeptoKf = idItem;           
-          //console.log("[selectTableRow]->idItem: "+idItem);
+          console.log("[selectTableRow]->idItem: "+idItem);
             if ($scope.dayDataCollapse === 'undefined') {
                 $scope.dayDataCollapse = $scope.dayDataCollapseFn();
-                //console.log("dayDataCollapse:");
-                //console.log($scope.dayDataCollapse);
+                console.log("dayDataCollapse:");
+                console.log($scope.dayDataCollapse);
             } else {
                 //console.log("dayDataCollapse != undefined");
                 //console.log($scope.dayDataCollapse);              
@@ -3582,7 +3582,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 break;
                 default:
               }
-            $scope.opc=op;ahhh
+            $scope.opc=op;
              
           }
         /*------------------------------------------------*/
@@ -4814,12 +4814,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                   $('#UpdateModalCustomer').modal('hide');
                   $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
                 }
+            break;
             case "closeServiceWindow":
                 if (confirm==0){
                   if ($scope.isNewCustomerService==true){
+                    $scope.serviceNew=obj;
+                    console.log($scope.serviceNew);
                     $scope.mess2show="Se perderan todos los datos cargados para el registro del servicio, esta seguro que desea cancelar?";
+                    $scope.getListContractServicesFn($scope.serviceNew.idContratoFk, null);
                   }else{
+                    $scope.serviceUpdate=obj;
                     $scope.mess2show="Se perderan todos las modificaciones realizadas en el registro actual, esta seguro que desea cancelar la modificacion?";
+                    $scope.getListContractServicesFn($scope.serviceUpdate.idContratoFk, null);
                   }    
                   $('#confirmRequestModal').modal('show');
                 }else if (confirm==1){
@@ -4829,7 +4835,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                   $('#RegisterTotemService').modal('hide');
                   $('#RegisterCamerasService').modal('hide');
                   $('#RegisterAlarmService').modal('hide');
-                  $('#RegisterAppMonitorService').modal('hide'); 
+                  $('#RegisterAppMonitorService').modal('hide');
+                  $('#updateCtrlAccessService').modal('hide');
+                  $('#updateInternetService').modal('hide');
+                  $('#updateTotemService').modal('hide');
+                  $('#updateCamerasService').modal('hide');
+                  $('#updateAlarmService').modal('hide');
+                  $('#updateAppMonitorService').modal('hide');   
+                  
                   //$scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
                 }              
             break;
@@ -4958,6 +4971,21 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 $('#confirmRequestModal').modal('hide');
               }
             break;
+            case "updateService":
+              if (confirm==0){
+                  $scope.updateService=obj;
+                      $scope.mess2show="El servicio "+obj.clientTypeServices+" en el contrato "+obj.numeroContrato+" sera actualizado.     Confirmar?";
+                    
+                      console.log("servicio a actualizar  : "+obj.clientTypeServices);
+                      console.log("Numero de contrato: "+obj.numeroContrato);
+                      console.log("============================================================================");
+                      //console.log(obj);     
+                $('#confirmRequestModal').modal('toggle');
+              }else if (confirm==1){
+                    $scope.switchCustomersFn('services', $scope.updateService, 'update');
+                $('#confirmRequestModal').modal('hide');
+              }
+            break;            
             case "updateSysUser":
               if (confirm==0){
                   if ($scope.sessionidProfile==1 && obj.idUser!=0){
@@ -4973,7 +5001,35 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.sysUpdateUserFn($scope.argObj);
                 $('#confirmRequestModal').modal('hide');
               }
-            break;                     
+            break;
+            case "contract_enable":
+              if (confirm==0){
+                $scope.mess2show="El contrato "+obj.numeroContrato+" sera activado.     Confirmar?";
+                $scope.argObj={};
+                $scope.argObj = obj;
+                console.log('Contrato a habilitar ID: '+obj.idContrato+' Contrato: '+obj.numeroContrato);
+                console.log("============================================================================")
+                console.log($scope.argObj);   
+                $('#confirmRequestModal').modal('toggle');
+              }else if (confirm==1){
+                  $scope.switchCustomersFn('contract', $scope.argObj, 'enable');
+                  $('#confirmRequestModal').modal('hide');
+              }            
+            break;            
+            case "contract_disable":
+              if (confirm==0){
+                $scope.mess2show="El contrato "+obj.numeroContrato+" sera desactivado.     Confirmar?";
+                $scope.argObj={};
+                $scope.argObj = obj;
+                console.log('Contrato a desahibilitar ID: '+obj.idContrato+' Contrato: '+obj.numeroContrato);
+                console.log("============================================================================")
+                console.log($scope.argObj);   
+                $('#confirmRequestModal').modal('toggle');
+              }else if (confirm==1){
+                  $scope.switchCustomersFn('contract', $scope.argObj, 'disable');
+                  $('#confirmRequestModal').modal('hide');
+              }            
+            break;
             default:
           }
         }
@@ -6603,6 +6659,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
     ********************************************************************************************************************************************/
     $scope.isNewCustomer=false;
     $scope.isUpdateCustomer=false;
+    $scope.isListCustomerService=false;
     $scope.isInfoCustomer=false;
     $scope.filterTypeOfClient='';
     $scope.defArrForCustomersFn = function(){
@@ -6629,8 +6686,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       $scope.rsAddress_API_Data_PCA = [];
       $scope.geoLocation = {'address':'','addressLat':'', 'addressLon':'', 'option':''};
       $scope.tmpAddres = {'province':{},'location':{}};
-      $scope.service = {'customer':{},'new':{'adicional':{}, 'users':{}, 'aditional_alarm':{}}, 'update':{}};
-      $scope.service.new = {'dvr':{'selected':undefined}, 'batteries':{'selected':undefined}, 'sysUser':{'selected':undefined}};
+      $scope.service = {'customer':{},'new':{'isHasLockingScrew':'0','numbOfLicenceRemains':'', 'numbOfLicenceSet':'', 'people':{}}, 'users':{'fullName':'','emailUser':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}}, 'update':{}, 'tipo_conexion_remoto':[{}], 'dvr':{'selected':undefined}, 'batteries':{'selected':undefined}, 'cameras':{'selected':undefined}, 'modem':{'selected':undefined}, 'router':{'selected':undefined}, 'crtlAccess':{'selected':undefined}, 'lockedIt':{'selected':undefined}, 'entranceReader':{'selected':undefined}, 'powerSupply':{'selected':undefined}, 'exitReader':{'selected':undefined}, 'emergencyButton':{'selected':undefined}, 'TurnOffKey':{'selected':undefined}, 'alarmPanel':{'selected':undefined}, 'alarmKeyboard':{'selected':undefined}, 'sysUser':{'selected':undefined}, 'sensor':{'selected':undefined}, 'adicional':{}, 'aditional_alarm':{}};
       $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'companyData':{}, 'particular':{}, 'select':{'main':{},'payment':{}, 'company':{}}};
       $scope.contract = {'new':{}, 'update':{}, 'info':{}, 'select':{'main':{},'date':{}, 'codes':{}}};
       $scope.customer.select.main = {'address':{}, 'department':'', 'province':{'selected':undefined}, 'location':{'selected':undefined}, }
@@ -6643,6 +6699,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                             'name':'', 
                             'idAgentFk':'',
                             'businessName':'',
+                            'idClientAssociated_SE':'',
                             'CUIT':'', 
                             'observationOrderKey': '', 
                             'idDepartmentFk':'', 
@@ -6698,7 +6755,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                                 'idTipoDeMailFk':''
                             }                            
       };
-      $scope.service = {'new':{'isHasLockingScrew':'0'}};
+      console.log($scope.service)
     }
     $scope.cleanCustomerFieldFn = function(){
       $scope.btnBack=false;
@@ -6730,7 +6787,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       $scope.list_client_user = [];
       $scope.idProvinceFk=null;
     }
-    $scope.defArrForCustomersFn();   
     $scope.switchCustomersFn = function(opt1, obj1, opt2){
       var cObj = !obj1 || obj1==undefined ? null : obj1;
       switch (opt1){
@@ -6772,7 +6828,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             });
         break;
         case "add":
-          $scope.fnNewCustomerFn(cObj);
+
+            $scope.fnNewCustomerFn(cObj);
         break; 
         case "edit":
           $scope.isNewCustomer=false;
@@ -6785,10 +6842,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           $timeout(function() {
             $scope.customerDataFn(cObj, 'edit');
           }, 1500); 
-          
         break;
         case "update":
-          $scope.customerDataFn(cObj, 'update');
+
+            $scope.customerDataFn(cObj, 'update');
         break;        
         case "enabled":
           //Enabled client function
@@ -6823,10 +6880,30 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             break;
             case "assign_contract_service":
               $('#ServiceUnit').modal({backdrop: 'static', keyboard: false});
-              $scope.service = {'new':{'adicional':{}, 'users':{}}, 'update':{}};
+              $scope.service.new.serviceItems={};
+              $scope.service.new.serviceType="";
             break;
             case "add":
-              $scope.customerContractFn('create');
+              $scope.customerContractFn(null, 'create');
+            break;
+            case "approveContractWindow":
+              $scope.contract.activateDate={}
+              $scope.contract.activateDate=cObj;
+              if ($scope.contract.activateDate.fechaFirmaActivacion!=null && $scope.contract.activateDate.fechaFirmaActivacion!=undefined){
+                $scope.modalConfirmation('contract_enable', 0, cObj)
+              }else{
+                $('#activationDateContractWindows').modal('show');
+                $scope.contract.activateDate.fechaFirmaActivacion=fullSysDate;
+              }
+            break;
+            case "activateDate":
+              $scope.customerContractFn(cObj, 'activateDate');
+            break;            
+            case "enable":
+              $scope.customerContractFn(cObj, 'enable');
+            break;
+            case "disable":
+              $scope.customerContractFn(cObj, 'disable');
             break;             
           }        
         break;
@@ -6834,23 +6911,45 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           switch (opt2){
             case "start_new_service":
               $scope.isNewCustomerService=true;
+              $scope.isUpdateCustomerService=false;
+              $scope.isListCustomerService=false;
               $('#SelectServiceWindows').modal('hide');
               $scope.defArrForCustomersFn();
               blockUI.start('Nuevo Servicio '+cObj.serviceName);
                 $scope.getProductsList4ServiceFn();
               //console.log(cObj)
               $timeout(function() {
-                blockUI.message('Cargando productos...');                
-                $scope.getSelectedServiceByIdContractFn(cObj);
+                blockUI.message('Cargando productos...');
+                $scope.serviceDataFn(cObj, 'start');
               }, 1500);
               //$scope.contract.new.idClient=cObj.idClient;
             break;
             case "add_new_service":
               blockUI.start('Creando Nuevo '+cObj.serviceName);
               $timeout(function() {
-                $scope.fnNewServiceFn(cObj);
+                $scope.serviceDataFn(cObj, 'add');
               }, 1500);
             break;
+            case "edit":
+              $scope.isNewCustomerService=false;
+              $scope.isUpdateCustomerService=true;
+              $scope.isListCustomerService=false;
+              $scope.defArrForCustomersFn();
+              $scope.getCustomerListFn("", 2);
+              $scope.getProductsList4ServiceFn();
+              $scope.cleanServiceInputsFn();
+              blockUI.start('Cargando datos del servicio '+cObj.clientTypeServices);
+              $timeout(function() {
+                $scope.serviceDataFn(cObj, 'edit');
+              }, 1500);             
+            break;
+            case "update":
+              blockUI.start('Actualizando datos del servicio '+cObj.clientTypeServices);
+              $timeout(function() {
+                $scope.serviceDataFn(cObj, 'update');
+              }, 1500);                          
+            break;
+           
             case "select_contract_first":
               if ($scope.rsContractsListByCustomerIdData.length>0){
                 $('#SelectContractFirst').modal('show');
@@ -6876,7 +6975,23 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
               inform.add('Selecciona un servicio para continuar. ',{
                 ttl:5000, type: 'success'
               });
-            break;            
+            break;
+            case "userLicense":
+              $scope.isListCustomerService=true;
+              $scope.cleanServiceInputsFn();
+              blockUI.start('Cargando Licencias de usuario del servicio '+cObj.clientTypeServices);
+              $timeout(function() {
+                $scope.serviceDataFn(cObj, 'userLicense');
+              }, 1500);            
+            break;              
+            case "listCameras":
+              $scope.isListCustomerService=true;
+              $scope.cleanServiceInputsFn();
+              blockUI.start('Cargando Listado de cameras del servicio '+cObj.clientTypeServices);
+              $timeout(function() {
+                $scope.serviceDataFn(cObj, 'listCameras');
+              }, 1500);
+            break;
           }
         break;                                      
         case "allowedUsers":
@@ -10680,8 +10795,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             var customerName=customer.name;
             var customerId=customer.idClient;
             var customerType=customer.idClientType;
+            var customerNumber=customer.idClientAssociated_SE;
+            var customerBusinessName=customer.companyBusinessName
+            //console.log("customerNumber: "+customerNumber);
             if($scope.customerSearch.typeClient!="all"){
-                if(customerType==$scope.customerSearch.typeClient && (customerId.toLowerCase().indexOf(string.toLowerCase())>=0 || customerName.toLowerCase().indexOf(string.toLowerCase())>=0)){
+              //(customerNumber!=null && customerNumber.toLowerCase().indexOf(string.toLowerCase()>=0))
+                if(customerType==$scope.customerSearch.typeClient && (customerId.toLowerCase().indexOf(string.toLowerCase())>=0 || customerName.toLowerCase().indexOf(string.toLowerCase())>=0 )){
                   output.push({customer});
                 }
             }else{
@@ -10722,7 +10841,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           if ($scope.rsContractsListByCustomerIdData.length>0){
             $scope.getListCustomersServicesFn($scope.customerFound.idClient, null);
           }
-        }, 2000);
+        }, 1000);
         $scope.customerFound.zona=zonaInfo.n_zona==undefined?null:zonaInfo;
         $scope.listCustomerFound=null;
         $scope.searchCustomerFound=true;
@@ -10863,11 +10982,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.getCustomerListFn("","");
         $scope.customerSearch.typeClient="all"
       }
-      $scope.moduleConnectionType=null;
-      $scope.compServiceModuleConnectionDetailsFn=function(opt){
-        $("#serviceModuleConnectionDetails").modal('show');
-        $scope.moduleConnectionType=opt;
-      }      
+     
       $scope.removeServiceItemFn = function(obj, item){
         console.log(obj);
         var objArr     = $scope.list_services_tmp;
@@ -10904,13 +11019,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       }
     /**************************************************
     *                                                 *
-    *              NEW CUSTOMERS CONTRACT             *
+    *                CUSTOMERS CONTRACT               *
     *                                                 *
     **************************************************/
         /***********************************
         *       GETTING CONTRACT DATA      *
         ************************************/    
-          $scope.customerContractFn = function(opt){
+          $scope.customerContractFn = function(contract, opt){
             switch(opt){
               case "create": //NEW CUSTOMER CONRACT
                 $scope.contract.new.services=$scope.list_services_tmp;
@@ -10921,6 +11036,21 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 console.log($scope.contract.new);
                 $scope.addCustomerContractFn($scope.contract.new);
               break;
+              case "activateDate": //ENABLE CUSTOMER CONRACT
+                contract.idStatusFk=1
+                //console.log(contract);
+                $scope.setSignDateContractFn(contract);
+              break;
+              case "enable": //ENABLE CUSTOMER CONRACT
+                contract.idStatusFk=1
+                //console.log(contract);
+                $scope.changeStatusCustomerContractFn(contract);
+              break;              
+              case "disable": //DISABLE CUSTOMER CONRACT
+                contract.idStatusFk=0
+                //console.log(contract);
+                $scope.changeStatusCustomerContractFn(contract);
+              break;              
             }
           }
         /***********************************
@@ -10956,12 +11086,56 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             });
           };        
         /***********************************
-        *   APPROVE NEW CUSTOMER CONTRACT  *
+        *   SET ACTIVATION DATE CONTRACT   *
         ************************************/
-           $scope.approvalContractWindowFn = function(obj){
-            console.log(obj);
-              $('#approveContractWindows').modal('show');
-           }
+          $scope.setSignDateContractFn = function(contrato){
+            ContractServices.activationDateContract(contrato).then(function(data){
+                $scope.rsJsonData = data;
+                //console.log($scope.rsJsonData);
+                if($scope.rsJsonData.status==200){
+                  console.log("Customer Contract Successfully Created");
+                  inform.add('Asignada fecha de firma del contrato y habilitado satisfactoriamente. ',{
+                        ttl:2000, type: 'success'
+                  });
+                  $('#activationDateContractWindows').modal('hide');
+                }else if($scope.rsJsonData.status==500){
+                  console.log("Customer contract not Created, contact administrator");
+                  inform.add('Error: [500] Contacta al area de soporte. ',{
+                        ttl:2000, type: 'danger'
+                  });
+                  $('#activationDateContractWindows').modal('hide');
+                }
+                $scope.getContractsByCustomerIdFn(contrato.idClientFk);
+            });
+          };         
+        /***********************************
+        *  CHANGE STATUS CUSTOMER CONTRACT *
+        ************************************/
+           $scope.changeStatusCustomerContractFn = function(contrato){
+            ContractServices.changeStatusContract(contrato.idContrato, contrato.idStatusFk).then(function(data){
+                $scope.rsJsonData = data;
+                //console.log($scope.rsJsonData);
+                if($scope.rsJsonData.status==200){
+                  if (contrato.idStatusFk==1){
+                    console.log("Customer Contract Successfully Enabled");
+                    inform.add('El contrato del cliente ha sido activado con exito. ',{
+                          ttl:3000, type: 'success'
+                    });
+                  }else{
+                    console.log("Customer Contract Successfully Disabled");
+                    inform.add('El contrato del cliente ha sido desactivado con exito. ',{
+                          ttl:3000, type: 'info'
+                    });
+                  }
+                }else if($scope.rsJsonData.status==500){
+                  console.log("Customer contract not Created, contact administrator");
+                  inform.add('Error: [500] Contacta al area de soporte. ',{
+                        ttl:3000, type: 'danger'
+                  });
+                }
+                  $scope.getContractsByCustomerIdFn(contrato.idClientFk);
+            });
+          };
     /**************************************************
     *                                                 *
     *              UPDATE CUSTOMERS CONTRACT          *
@@ -10983,186 +11157,870 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       }
     /**************************************************
     *                                                 *
-    *                ADD SERVICE DATA                 *
+    *            ABM SERVICES ADD/UPDATE/ETC          *
     *                                                 *
     **************************************************/
-        /***********************************
-        *       GETTING SERVICE DATA       *
-        ************************************/ 
-          $scope.fnNewServiceFn = function(service){
-            $scope.addNewService=service;
-            switch(service.idServiceType){
-              case "1": //NEW CONTROL ACCESS
-               $timeout(function() {
-                $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
-                $scope.addNewService.idAccessControlFk        = service.crtlAccess.selected.idProduct;
-                $scope.addNewService.lock                     = service.lockedIt.selected.idProduct;
-                $scope.addNewService.idInputReaderFk          = service.entranceReader.selected.idProduct;
-                $scope.addNewService.ouputReader              = service.isOuputButom==undefined || !service.isOuputButom?service.exitReader.selected.idProduct:null;
-                $scope.addNewService.ouputButom               = service.isOuputButom?service.exitReader.selected.idProduct:null;
-                $scope.addNewService.idFontFk                 = service.powerSupply.selected.idProduct;
-                $scope.addNewService.idEmergencyButtonFk      = service.emergencyButton.selected.idProduct;
-                $scope.addNewService.idShutdownKeyFk          = service.TurnOffKey.selected.idProduct;
-                $scope.addNewService.battery_install          = $scope.list_batteries;
-                $scope.addNewService.isOuputReader            = service.isOuputButom?null:'1';
-                $scope.addNewService.isOuputButom             = service.isOuputButom?'1':null; 
-                $scope.addNewService.dateDown                 = null;
-                $scope.locationGabinet                        = $scope.locationGabinet!='' && $scope.locationGabine!=undefined?$scope.locationGabine:null;
-                $scope.addNewService.acaration2               = service.isBlocklingScrew==0||service.isBlocklingScrew==undefined?null:service.lockingScrewComment;
-                if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
-                  $scope.addNewService.portNumberRouter=null;
-                  $scope.addNewService.portHttp=null;
-                  $scope.addNewService.addressClient=null;
-                  $scope.addNewService.user=null;
-                  $scope.addNewService.pass=null;
-                  $scope.addNewService.addressVpn=null;
-                  $scope.addNewService.useVpn=null;
-                  $scope.addNewService.passVpn=null;
-                }
-                var productIdNumber=0;
-                for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
-                for (var key in $scope.list_batteries){
-                  $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
-                  productIdNumber++;                  
-                }
-                $scope.addNewService.adicional=$scope.list_productsDetails;
-                blockUI.message('Guardando Servicio '+service.serviceName);
-                }, 1500);
-                $timeout(function() {
-                  console.log($scope.addNewService);
-                  $scope.addCustomerServiceFn($scope.addNewService);
-                }, 1500);
-                  $('#RegisterCtrlAccessService').modal('hide');
-                blockUI.stop(); 
-              break;
-              case "2": //NEW INTERNET
-                $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
-                $scope.addNewService.idRouterInternetFk       = service.idTypeInternetFk<="2"?service.router.selected.idProduct:null;
-                $scope.addNewService.idModemInternetFk        = service.modem.selected.idProduct;
-                $scope.addNewService.macAddress               = service.idTypeInternetFk<="2"?service.macAddr:null;
-                $scope.addNewService.port                     = service.idTypeInternetFk<="2"?service.port:null;
-                $scope.addNewService.userWifi                 = service.idTypeInternetFk<="2"?service.userTass:null;
-                $scope.addNewService.passWifi                 = service.idTypeInternetFk<="2"?service.passTass:null;
-                $scope.addNewService.userAdmin                = service.idTypeInternetFk<="2"?service.userTass:null;
-                $scope.addNewService.passAdmin                = service.idTypeInternetFk<="2"?service.passTass:null;
-                $scope.addNewService.numberLine               = service.idTypeInternetFk<="2"?null:service.numLine;
-                $scope.addNewService.numberChip               = service.idTypeInternetFk<="2"?null:service.numChip;
-                $scope.addNewService.dateDown                 = null;
-                $scope.addNewService.isDown                   = null;
-               $timeout(function() {
-                $scope.addNewService.adicional=$scope.list_productsDetails;
-                blockUI.message('Guardando Servicio '+service.serviceName);
-                }, 1500);
-                $timeout(function() {
-                  console.log($scope.addNewService);
-                  $scope.addCustomerServiceFn($scope.addNewService);
-                }, 1500);
-                  $('#RegisterInternetService').modal('hide');
-                blockUI.stop();               
-              break;
-              case "3"://ADD TOTEM
-                $timeout(function() {
-                  $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
-                  $scope.addNewService.idDvr_nvrFk              = service.dvr.selected.idProduct;
-                  $scope.addNewService.backup_energy            = $scope.list_batteries;
-                  $scope.addNewService.cameras                  = $scope.list_cameras;
-                  $scope.addNewService.dateDown                 = null;
-                  $scope.addNewService.item_SE                  = null;
-                  $scope.addNewService.clients                  = $scope.list_user;
-                  if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
-                    $scope.addNewService.portNumberRouter=null;
-                    $scope.addNewService.portHttp=null;
-                    $scope.addNewService.addressClient=null;
-                    $scope.addNewService.user=null;
-                    $scope.addNewService.pass=null;
-                    $scope.addNewService.addressVpn=null;
-                    $scope.addNewService.useVpn=null;
-                    $scope.addNewService.passVpn=null;
-                    $scope.addNewService.namePort=null;
-                    $scope.addNewService.port=null;
-                    $scope.addNewService.namePort1=null;
-                    $scope.addNewService.nroPort1=null;
-                    $scope.addNewService.namePort2=null;
-                    $scope.addNewService.nroPort2=null;                    
+            $scope.rsContractServiceData=[];
+            $scope.rsCustomerContractListData=[];
+            $scope.rsContractItemListData=[];
+            $scope.isProductDetailExist=false;
+          $scope.serviceDataFn=function(service, switchOption){
+            //console.log(service);
+            /***********************************
+            *         ABM SWITCH SERVICE       *
+            ************************************/
+            switch(switchOption){
+              /***********************************
+              *   START PROCESS FOR NEW SERVICE  *
+              ************************************/
+                case "start":
+                    obj=service;
+                    $scope.cleanServiceInputsFn();
+                    ContractServices.getSelectedServiceByIdContract(obj.idContratoFk, obj.idServiceType).then(function(data){
+                      $scope.rsJsonData = data;
+                      console.log($scope.rsJsonData);
+                      $timeout(function() {
+                        if($scope.rsJsonData.status==200){
+                            $scope.rsContractServiceData=$scope.rsJsonData.data[0];
+                            //console.log($scope.rsContractServiceData);
+
+                            switch (obj.idServiceType){
+                              case "1"://RegisterCtrlAccessService
+                                if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
+                                  if ($scope.rsContractServiceData.services[0].disponible>=1){
+                                    $('#RegisterCtrlAccessService').modal({backdrop: 'static', keyboard: false});
+                                    $('#RegisterCtrlAccessService').on('shown.bs.modal', function () {
+                                        $('#service_door').focus();
+                                    });                        
+                                    for (var key in $scope.rsTypeOfMaintenanceData){                      
+                                      if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
+                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                      }
+                                    }
+                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
+                                    $scope.service.new.serviceAvailability=$scope.rsContractServiceData.services[0].disponible;
+                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
+                                     //$scope.service.idContracAssociated_SE=
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Control de Acceso]. ',{
+                                      ttl:5000, type: 'info'
+                                    });                    
+                                    //console.log($scope.service);
+                                  }else{
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Control de Acceso] disponibles en el contrato. ',{
+                                      ttl:5000, type: 'warning'
+                                    }); 
+                                  }
+                                }else{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Control de Acceso] no contratado. ',{
+                                    ttl:5000, type: 'danger'
+                                  });  
+                                }
+                              break;
+                              case "2"://RegisterInternetService
+                                if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
+                                  if ($scope.rsContractServiceData.services[0].disponible>=1){
+                                    $('#RegisterInternetService').modal({backdrop: 'static', keyboard: false});
+                                    $('#RegisterInternetService').on('shown.bs.modal', function () {
+                                        $('#service_internetType').focus();
+                                    });                        
+                                    for (var key in $scope.rsTypeOfMaintenanceData){                      
+                                      if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
+                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                      }
+                                    }
+                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
+                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
+                                     //$scope.service.idContracAssociated_SE=
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Control de Acceso]. ',{
+                                      ttl:5000, type: 'info'
+                                    });                    
+                                    //console.log($scope.service);
+                                  }else{
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Control de Acceso] disponibles en el contrato. ',{
+                                      ttl:5000, type: 'warning'
+                                    }); 
+                                  }
+                                }else{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Control de Acceso] no contratado. ',{
+                                    ttl:5000, type: 'danger'
+                                  });  
+                                }                    
+                              break;
+                              case "3"://RegisterTotemService
+                                if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
+                                  if ($scope.rsContractServiceData.services[0].disponible>=1){
+                                    $('#RegisterTotemService').modal({backdrop: 'static', keyboard: false});
+                                    $('#RegisterTotemService').on('shown.bs.modal', function () {
+                                        $('#service_name').focus();
+                                         $scope.getUserLists();
+                                    });                        
+                                    for (var key in $scope.rsTypeOfMaintenanceData){                      
+                                      if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
+                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                      }
+                                    }
+                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
+                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
+                                     //$scope.service.idContracAssociated_SE=
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Camaras]. ',{
+                                      ttl:5000, type: 'info'
+                                    });                    
+                                    //console.log($scope.service);
+                                  }else{
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Camaras] disponibles en el contrato. ',{
+                                      ttl:5000, type: 'warning'
+                                    }); 
+                                  }
+                                }else{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Camaras] no contratado. ',{
+                                    ttl:5000, type: 'danger'
+                                  });  
+                                }
+                              break;
+                              case "4"://RegisterCamerasService
+                                if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
+                                  if ($scope.rsContractServiceData.services[0].disponible>=1){
+                                    $('#RegisterCamerasService').modal({backdrop: 'static', keyboard: false});
+                                    $('#RegisterCamerasService').on('shown.bs.modal', function () {
+                                        $('#service_name').focus();
+                                         $scope.getUserLists();
+                                    });                        
+                                    for (var key in $scope.rsTypeOfMaintenanceData){                      
+                                      if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
+                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                      }
+                                    }
+                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
+                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
+                                     //$scope.service.idContracAssociated_SE=
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Camaras]. ',{
+                                      ttl:5000, type: 'info'
+                                    });                    
+                                    //console.log($scope.service);
+                                  }else{
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Camaras] disponibles en el contrato. ',{
+                                      ttl:5000, type: 'warning'
+                                    }); 
+                                  }
+                                }else{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Camaras] no contratado. ',{
+                                    ttl:5000, type: 'danger'
+                                  });  
+                                }                    
+                              break;                
+                              case "5"://RegisterAlarmService
+                                if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
+                                  if ($scope.rsContractServiceData.services[0].disponible>=1){
+                                    $('#RegisterAlarmService').modal({backdrop: 'static', keyboard: false});
+                                    $('#RegisterAlarmService').on('shown.bs.modal', function () {
+                                        $('#service_name').focus();
+                                         $scope.getUserLists();
+                                    });                        
+                                    for (var key in $scope.rsTypeOfMaintenanceData){                      
+                                      if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
+                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                      }
+                                    }
+
+                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
+                                    $scope.service.new.idClientTypeFk=$scope.customerFound.idClientTypeFk;
+                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
+                                    $scope.service.new.numbOfLicence=0;
+                                    $scope.getTypeAlarmClientListFn();
+                                    $scope.getAlarmServiceAditionalsListFn();
+                                    $scope.getTypeConnectionListFn();
+                                    $scope.getTransmissionFormatListFn();
+                                    if ($scope.service.new.idClientTypeFk=="2"){
+                                      $scope.getBuildingsDeptosFn($scope.service.new.idClientFk);  
+                                    }else if ($scope.service.new.idClientTypeFk=="5"){
+                                      $scope.service.new.list_address_particular=$scope.customerFound.list_address_particular;
+                                     //$scope.service.idContracAssociated_SE=
+                                    }
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Alarma]. ',{
+                                      ttl:5000, type: 'info'
+                                    });                    
+                                    //console.log($scope.service);
+                                  }else{
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Alarma] no disponible en el contrato. ',{
+                                      ttl:5000, type: 'warning'
+                                    }); 
+                                  }
+                                }else{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Alarma] no contratado. ',{
+                                    ttl:5000, type: 'danger'
+                                  });  
+                                }                   
+                              break;
+                              case "6"://RegisterAppMonitorService
+                                if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
+                                  if ($scope.rsContractServiceData.services[0].disponible>=1){
+                                    $('#RegisterAppMonitorService').modal({backdrop: 'static', keyboard: false});
+                                    $('#RegisterAppMonitorService').on('shown.bs.modal', function () {
+                                        $('#service_name').focus();
+                                         $scope.getUserLists();
+                                    });                        
+                                    for (var key in $scope.rsTypeOfMaintenanceData){                      
+                                      if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
+                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                      }
+                                    }
+
+                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
+                                    $scope.service.new.idClientTypeFk=$scope.customerFound.idClientTypeFk;
+                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
+                                    $scope.service.new.numbOfLicence=0;
+                                    if ($scope.service.new.idClientTypeFk=="2"){
+                                      $scope.getBuildingsDeptosFn($scope.service.new.idClientFk);  
+                                    }else if ($scope.service.new.idClientTypeFk=="5"){
+                                      $scope.service.new.list_address_particular=$scope.customerFound.list_address_particular;
+                                     //$scope.service.idContracAssociated_SE=
+                                    }
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [App Monitor]. ',{
+                                      ttl:5000, type: 'info'
+                                    });                    
+                                    //console.log($scope.service);
+                                  }else{
+                                    inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' servicio [App Monitor] no disponible en el contrato. ',{
+                                      ttl:5000, type: 'warning'
+                                    }); 
+                                  }
+                                }else{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [App Monitor] no contratado. ',{
+                                    ttl:5000, type: 'danger'
+                                  });  
+                                }                     
+                              break;
+                              default:
+                                $('#SelectServiceWindows').modal('hide');
+                            }            
+                        }else{
+                          $scope.rsContractServiceData=[];
+                        }
+                      }, 500);
+                    });
+                    blockUI.stop();
+                break;
+              /***********************************
+              *     GET DATA FOR NEW SERVICE     *
+              ************************************/              
+                case "add":
+                  $scope.addNewService=service;
+                  switch(service.idServiceType){
+                    case "1": //NEW CONTROL ACCESS
+                     $timeout(function() {
+                      $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
+                      $scope.addNewService.idAccessControlFk        = $scope.service.crtlAccess.selected.idProduct;
+                      $scope.addNewService.lock                     = $scope.service.lockedIt.selected.idProduct;
+                      $scope.addNewService.idInputReaderFk          = $scope.service.entranceReader.selected.idProduct;
+                      $scope.addNewService.ouputReader              = service.isOuputButom==undefined || !service.isOuputButom?$scope.service.exitReader.selected.idProduct:null;
+                      $scope.addNewService.ouputButom               = service.isOuputButom?$scope.service.exitReader.selected.idProduct:null;
+                      $scope.addNewService.idFontFk                 = $scope.service.powerSupply.selected.idProduct;
+                      $scope.addNewService.idEmergencyButtonFk      = $scope.service.emergencyButton.selected.idProduct;
+                      $scope.addNewService.idShutdownKeyFk          = $scope.service.TurnOffKey.selected.idProduct;
+                      $scope.addNewService.battery_install          = $scope.list_batteries;
+                      $scope.addNewService.isOuputReader            = service.isOuputButom?null:'1';
+                      $scope.addNewService.isOuputButom             = service.isOuputButom?'1':null; 
+                      $scope.addNewService.dateDown                 = null;
+                      $scope.locationGabinet                        = $scope.locationGabinet!='' && $scope.locationGabine!=undefined?$scope.locationGabine:null;
+                      $scope.addNewService.acaration2               = service.isBlocklingScrew==0||service.isBlocklingScrew==undefined?null:service.lockingScrewComment;
+                      if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
+                        $scope.addNewService.portNumberRouter=null;
+                        $scope.addNewService.portHttp=null;
+                        $scope.addNewService.addressClient=null;
+                        $scope.addNewService.user=null;
+                        $scope.addNewService.pass=null;
+                        $scope.addNewService.addressVpn=null;
+                        $scope.addNewService.useVpn=null;
+                        $scope.addNewService.passVpn=null;
+                      }
+                      var productIdNumber=0;
+                      for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
+                      for (var key in $scope.list_batteries){
+                        $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
+                        productIdNumber++;                  
+                      }
+                      $scope.addNewService.adicional=$scope.list_productsDetails;
+                      blockUI.message('Guardando Servicio '+service.serviceName);
+                      }, 1500);
+                      $timeout(function() {
+                        console.log($scope.addNewService);
+                        $scope.addCustomerServiceFn($scope.addNewService);
+                      }, 1500);
+                        $('#RegisterCtrlAccessService').modal('hide');
+                      blockUI.stop(); 
+                    break;
+                    case "2": //NEW INTERNET
+                      $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
+                      $scope.addNewService.idRouterInternetFk       = service.idTypeInternetFk<="2"?$scope.service.router.selected.idProduct:null;
+                      $scope.addNewService.idModemInternetFk        = $scope.service.modem.selected.idProduct;
+                      $scope.addNewService.macAddress               = service.idTypeInternetFk<="2"?service.macAddr:null;
+                      $scope.addNewService.port                     = service.idTypeInternetFk<="2"?service.port:null;
+                      $scope.addNewService.userWifi                 = service.idTypeInternetFk<="2"?service.userTass:null;
+                      $scope.addNewService.passWifi                 = service.idTypeInternetFk<="2"?service.passTass:null;
+                      $scope.addNewService.userAdmin                = service.idTypeInternetFk<="2"?service.userTass:null;
+                      $scope.addNewService.passAdmin                = service.idTypeInternetFk<="2"?service.passTass:null;
+                      $scope.addNewService.numberLine               = service.idTypeInternetFk<="2"?null:service.numLine;
+                      $scope.addNewService.numberChip               = service.idTypeInternetFk<="2"?null:service.numChip;
+                      $scope.addNewService.dateDown                 = null;
+                      $scope.addNewService.isDown                   = null;
+                     $timeout(function() {
+                      $scope.addNewService.adicional=$scope.list_productsDetails;
+                      blockUI.message('Guardando Servicio '+service.serviceName);
+                      }, 1500);
+                      $timeout(function() {
+                        console.log($scope.addNewService);
+                        $scope.addCustomerServiceFn($scope.addNewService);
+                      }, 1500);
+                        $('#RegisterInternetService').modal('hide');
+                      blockUI.stop();               
+                    break;
+                    case "3"://ADD TOTEM
+                      $timeout(function() {
+                        $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
+                        $scope.addNewService.idDvr_nvrFk              = $scope.service.dvr.selected.idProduct;
+                        $scope.addNewService.backup_energy            = $scope.list_batteries;
+                        $scope.addNewService.cameras                  = $scope.list_cameras;
+                        $scope.addNewService.maxCamera                = $scope.service.maxCamera;
+                        $scope.addNewService.dateDown                 = null;
+                        $scope.addNewService.item_SE                  = null;
+                        $scope.addNewService.clients                  = $scope.list_user;
+                        if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
+                          $scope.addNewService.portNumberRouter=null;
+                          $scope.addNewService.portHttp=null;
+                          $scope.addNewService.addressClient=null;
+                          $scope.addNewService.addressVpn=null;
+                          $scope.addNewService.namePort=null;
+                          $scope.addNewService.port=null;
+                          $scope.addNewService.namePort1=null;
+                          $scope.addNewService.nroPort1=null;
+                          $scope.addNewService.namePort2=null;
+                          $scope.addNewService.nroPort2=null;                    
+                        }
+                        var productIdNumber=0;
+                        for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
+                        for (var key in $scope.list_batteries){
+                          $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
+                          productIdNumber++;                  
+                        }
+                        $scope.addNewService.adicional=$scope.list_productsDetails;
+                        blockUI.message('Guardando Servicio '+service.serviceName);
+                        }, 1500);
+                        $timeout(function() {
+                          console.log($scope.addNewService);
+                          $scope.addCustomerServiceFn($scope.addNewService);
+                      }, 1500);
+                      $('#RegisterTotemService').modal('hide');
+                      blockUI.stop();              
+                    break;
+                    case "4"://ADD CAMERAS
+                      $timeout(function() {
+                        $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
+                        $scope.addNewService.idDvr_nvrFk              = $scope.service.dvr.selected.idProduct;
+                        $scope.addNewService.observation              = service.generalComments;
+                        $scope.addNewService.backup_energy            = $scope.list_batteries;
+                        $scope.addNewService.cameras                  = $scope.list_cameras;
+                        $scope.addNewService.maxCamera                = $scope.service.maxCamera;
+                        $scope.addNewService.dateDown                 = null;
+                        $scope.addNewService.clients                  = $scope.list_user;
+                        if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
+                          $scope.addNewService.portNumberRouter=null;
+                          $scope.addNewService.portHttp=null;
+                          $scope.addNewService.addressClient=null;
+                          $scope.addNewService.user=null;
+                          $scope.addNewService.pass=null;
+                          $scope.addNewService.addressVpn=null;
+                          $scope.addNewService.useVpn=null;
+                          $scope.addNewService.passVpn=null;
+                          $scope.addNewService.namePort=null;
+                          $scope.addNewService.port=null;                    
+                          $scope.addNewService.namePort1=null;
+                          $scope.addNewService.nroPort1=null;
+                          $scope.addNewService.namePort2=null;
+                          $scope.addNewService.nroPort2=null;                    
+                        }
+                        var productIdNumber=0;
+                        for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
+                        for (var key in $scope.list_batteries){
+                          $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
+                          productIdNumber++;                  
+                        }
+                        $scope.addNewService.adicional=$scope.list_productsDetails;
+                        blockUI.message('Guardando Servicio '+service.serviceName);
+                        }, 1500);
+                        $timeout(function() {
+                          console.log($scope.addNewService);
+                          $scope.addCustomerServiceFn($scope.addNewService);
+                        }, 1500);
+                          $('#RegisterCamerasService').modal('hide');
+                        blockUI.stop();               
+                    break;
+                    case "6"://ADD APP MONITOR
+                      $timeout(function() {
+                        $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
+                        $scope.addNewService.observation              = service.generalComments;
+                        $scope.addNewService.dateDown                 = null;
+                        $scope.addNewService.idDepartmentFk           = service.idClientTypeFk=="2"?service.idDepartmentFk:null;
+                        $scope.addNewService.idParticularAddressFk    = service.idClientTypeFk=="5"?service.idParticularAddressFk:null;
+                        $scope.addNewService.licenses                 = $scope.list_user_licence;
+                        $scope.addNewService.countNewLicense          = $scope.service.numbOfLicenceSet
+                        $scope.addNewService.idDetinationOfLicenseFk  = service.idClientTypeFk=="2"?service.idDetinationOfLicenseFk:null;
+                        $scope.addNewService.adicional={};
+                        blockUI.message('Guardando Servicio '+service.serviceName);
+                        }, 1500);
+                        $timeout(function() {
+                          console.log($scope.addNewService);
+                          $scope.addCustomerServiceFn($scope.addNewService);
+                        }, 1500);
+                          $('#RegisterAppMonitorService').modal('hide');
+                        blockUI.stop();               
+                    break;  
                   }
-                  var productIdNumber=0;
-                  for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
-                  for (var key in $scope.list_batteries){
-                    $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
-                    productIdNumber++;                  
-                  }
-                  $scope.addNewService.adicional=$scope.list_productsDetails;
-                  blockUI.message('Guardando Servicio '+service.serviceName);
-                  }, 1500);
+                break;
+              /***********************************
+              *    LOAD DATA FOR UPDATE SERVICE  *
+              ************************************/              
+                case "edit":
+                  $scope.service.update=service;         
+                  switch(service.idTipeServiceFk){
+                    case "1": //LOAD CONTROL ACCESS   
+                      $timeout(function() {
+                        $scope.service.update.idContratoFk         = service.idContracAssociated_SE;
+                        $scope.service.update.numeroContrato       = service.idContracAssociated_SE_array[0].numeroContrato;
+                        $scope.service.crtlAccess.selected         = service.idAccessControlFk_array[0];
+                        $scope.service.lockedIt.selected           = service.lock_array[0];
+                        $scope.service.entranceReader.selected     = service.idInputReaderFk_array[0];
+                        $scope.service.exitReader.selected         = service.ouputReader_array[0];
+                        $scope.service.powerSupply.selected        = service.idFontFk_array[0];
+                        $scope.service.emergencyButton.selected    = service.idEmergencyButtonFk_array[0];     
+                        $scope.service.TurnOffKey.selected         = service.idShutdownKeyFk_array[0];
+                        $scope.service.update.idTypeMaintenanceFk  = service.idTypeMaintenanceFk_array[0].idTypeMaintenance;
+                        $scope.service.update.MntType              = service.idTypeMaintenanceFk_array[0].typeMaintenance;
+                        $scope.service.update.isBlocklingScrew     = parseInt(service.isBlocklingScrew);
+                        var productIdNumber = 1;
+
+                        for (var key in service.adicional){
+                          for (var prduct in $scope.rsProductsData){
+                            if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':service.adicional[key].idProductoFk, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'optAux':service.adicional[key].optAux});
+                              $scope.typeOfProductsFn("set", $scope.rsProductsData[prduct].idProductClassificationFk, productIdNumber, service.adicional[key].optAux);
+                              productIdNumber++;
+                              break;
+                            }
+                          }
+                        }
+                        //console.log($scope.list_productsDetails);
+                        //console.log($scope.productListType);
+                        //LIST BATTERIES INSTALLED
+                        //console.log($scope.list_batteries);
+                        for (var batery in service.idBatteryFk_array){
+                          for (var key in service.adicional){
+                            if (service.idBatteryFk_array[batery].idProduct==service.adicional[key].idProductoFk){
+                              $scope.list_batteries.push({'idBatteryFk':service.idBatteryFk_array[batery].idProduct,'descriptionProduct':service.idBatteryFk_array[batery].descriptionProduct, 'model':service.idBatteryFk_array[batery].model, 'brand': service.idBatteryFk_array[batery].brand,'isNumberSerieInternal':service.idBatteryFk_array[batery].isNumberSerieInternal,'isNumberSerieFabric':service.idBatteryFk_array[batery].isNumberSerieFabric,'isDateExpiration':service.idBatteryFk_array[batery].isDateExpiration, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'idProductClassification':service.idBatteryFk_array[batery].idProductClassificationFk, 'classification': null, 'description':null, 'isNew':0});
+                            }
+                          }
+                        }                        
+                        $scope.rsCustomerContractListData            = $scope.rsContractsListByCustomerIdData;
+                        $scope.rsContractItemListData                = $scope.getSelectedServiceByIdContractFn($scope.service.update.idContratoFk, $scope.service.update.idClientTypeServices);
+                        $scope.service.update.isHasInternetConnect   = $scope.service.update.portNumberRouter!=undefined && $scope.service.update.portHttp!=undefined?true: false;
+                        console.log($scope.rsContractItemListData);
+                        console.log($scope.service.update);
+                      }, 500);
+                     
+                      blockUI.stop();
+                      $('#updateCtrlAccessService').modal({backdrop: 'static', keyboard: false});
+                    break;
+                    case "2": //LOAD INTERNET
+                      $timeout(function() {
+                        $scope.service.update.idContratoFk        = service.idContracAssociated_SE;
+                        $scope.service.update.numeroContrato      = service.idContracAssociated_SE_array[0].numeroContrato;
+                        $scope.service.modem.selected             = service.idModemInternetFk_array[0];
+                        $scope.service.router.selected            = service.idRouterInternetFk_array[0];
+                        $scope.service.update.idInternetCompanyFk = service.idInternetCompanyFk_array[0].idInternetCompany;
+                        $scope.service.update.idServiceFk         = service.idServiceFk_array[0].idTypeInternet;
+                        $scope.service.update.idServiceAsociateFk = service.idServiceAsociateFk_array[0].idClientServices;
+                        $scope.service.update.idTypeMaintenanceFk = service.idTypeMaintenanceFk_array[0].idTypeMaintenance;
+                        $scope.service.update.MntType             = service.idTypeMaintenanceFk_array[0].typeMaintenance;
+                        var productIdNumber = 1;
+                        for (var key in service.adicional){
+                          for (var prduct in $scope.rsProductsData){
+                            if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':service.adicional[key].idProductoFk, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'optAux':service.adicional[key].optAux});
+                              $scope.typeOfProductsFn("set", $scope.rsProductsData[prduct].idProductClassificationFk, productIdNumber, service.adicional[key].optAux);
+                              productIdNumber++;
+                              break;
+                            }
+                          }
+                        }
+                        console.log($scope.list_productsDetails);
+                        //console.log($scope.productListType);
+                        $scope.rsCustomerContractListData                    = $scope.rsContractsListByCustomerIdData;
+                        $scope.rsContractItemListData                        = $scope.getSelectedServiceByIdContractFn($scope.service.update.idContratoFk, $scope.service.update.idClientTypeServices);
+                        
+                        console.log($scope.service.update);                         
+                      }, 500);
+                      blockUI.stop();
+                      $('#updateInternetService').modal({backdrop: 'static', keyboard: false});                   
+                    break;
+                    case "3": //LOAD TOTEM
+                      $timeout(function() {
+                        $scope.service.update.idContratoFk         = service.idContracAssociated_SE;
+                        $scope.service.update.numeroContrato       = service.idContracAssociated_SE_array[0].numeroContrato;
+                        $scope.service.dvr.selected                = service.idDvr_nvrFk_array[0];
+                        $scope.service.maxCamera                   = service.maxCamera;
+                        $scope.service.update.idTypeMaintenanceFk  = service.idTypeMaintenanceFk_array[0].idTypeMaintenance;
+                        $scope.service.update.MntType              = service.idTypeMaintenanceFk_array[0].typeMaintenance;
+                        var productIdNumber = 1;
+                        for (var key in service.adicional){
+                          for (var prduct in $scope.rsProductsData){
+                            if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':service.adicional[key].idProductoFk, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'optAux':service.adicional[key].optAux});
+                              $scope.typeOfProductsFn("set", $scope.rsProductsData[prduct].idProductClassificationFk, productIdNumber, service.adicional[key].optAux);
+                              productIdNumber++;
+                            }
+                            for (var batery in service.tb_backup_energy_totem_array){
+                              if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct && service.tb_backup_energy_totem_array[batery].idBatteryFk==service.adicional[key].idProductoFk){
+                                $scope.list_batteries.push({'idBatteryFk':service.tb_backup_energy_totem_array[batery].idBatteryFk,'descriptionProduct':$scope.rsProductsData[prduct].descriptionProduct, 'model':$scope.rsProductsData[prduct].model, 'brand': $scope.rsProductsData[prduct].brand,'isNumberSerieInternal':$scope.rsProductsData[prduct].isNumberSerieInternal,'isNumberSerieFabric':$scope.rsProductsData[prduct].isNumberSerieFabric,'isDateExpiration':$scope.rsProductsData[prduct].isDateExpiration, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'idProductClassification':service.tb_backup_energy_totem_array[batery].idProductClassificationFk, 'classification': $scope.rsProductsData[prduct].classification, 'description':$scope.rsProductsData[prduct].descriptionProduct, 'isNew':0});
+                              }
+                            }
+                          }
+                        }
+                        //LOAD DVR USERS
+                        for (var dvrUser in service.tb_client_totem_array){
+                          $scope.list_user.push({'idClientFk':service.tb_client_totem_array[dvrUser].idClientFk,'name':service.tb_client_totem_array[dvrUser].name, 'user':service.tb_client_totem_array[dvrUser].user, 'pass':service.tb_client_totem_array[dvrUser].pass, 'profile':service.tb_client_totem_array[dvrUser].userProfile, 'userProfile':service.tb_client_totem_array[dvrUser].userProfile, 'qrCode':service.tb_client_totem_array[dvrUser].qrBase64, 'qrBase64':service.tb_client_totem_array[dvrUser].qrBase64});
+                        }
+                        //LOAD CAMERAS
+                        for (var camera in service.tb_cameras_totem_array){
+                          for (var prduct in $scope.rsProductsData){
+                            if ($scope.rsProductsData[prduct].idProduct==service.tb_cameras_totem_array[camera].idProductFk){
+                              $scope.list_cameras.push({'idProductFk':service.tb_cameras_totem_array[camera].idProductFk, 'idCameraFk':service.tb_cameras_totem_array[camera].idProductFk,'portCamera':parseInt(service.tb_cameras_totem_array[camera].portCamera), 'coveredArea':service.tb_cameras_totem_array[camera].coveredArea, 'locationCamera': service.tb_cameras_totem_array[camera].locationCamera, 'descriptionProduct':$scope.rsProductsData[prduct].descriptionProduct, 'model':$scope.rsProductsData[prduct].model, 'brand': $scope.rsProductsData[prduct].brand,'isNumberSerieInternal':$scope.rsProductsData[prduct].isNumberSerieInternal,'isNumberSerieFabric':$scope.rsProductsData[prduct].isNumberSerieFabric,'isDateExpiration':$scope.rsProductsData[prduct].isDateExpiration, 'numberSerieFabric':service.tb_cameras_totem_array[camera].nroFabricCamera, 'numberSerieInternal':service.tb_cameras_totem_array[camera].nroSerieCamera,'dateExpiration':service.tb_cameras_totem_array[camera].dateExpireCamera, 'idProductClassification':$scope.rsProductsData[prduct].idProductClassification, 'classification': $scope.rsProductsData[prduct].classification, 'nroSerieCamera':service.tb_cameras_totem_array[camera].nroSerieCamera,'nroFabricCamera':service.tb_cameras_totem_array[camera].nroFabricCamera,'dateExpireCamera':service.tb_cameras_totem_array[camera].dateExpireCamera, 'isNew':0});
+                              break;                              
+                            }
+                          }
+                        }
+                        console.log($scope.list_cameras);
+                        //console.log($scope.list_productsDetails);
+                        //console.log($scope.productListType);
+                        //LIST BATTERIES INSTALLED
+                        //console.log($scope.list_batteries);                     
+                        $scope.rsCustomerContractListData            = $scope.rsContractsListByCustomerIdData;                        
+                        $scope.service.update.isHasInternetConnect   = $scope.service.update.numberPortRouter!=undefined && $scope.service.update.portHttpInter!=undefined?true: false;
+                        if ($scope.service.update.isHasInternetConnect){
+                          $scope.service.update.namePort = service.namePortInter;
+                          $scope.service.update.port     = service.numberPortInter;
+                          $scope.service.update.nroPort1 = service.numberPort1;
+                          $scope.service.update.nroPort2 = service.numberPort2;   
+                        }
+                      }, 500);
+                      console.log($scope.service.update);
+                      blockUI.stop();
+                      $('#updateTotemService').modal({backdrop: 'static', keyboard: false});                    
+                    break;
+                    case "4": //LOAD CAMERAS
+                      $timeout(function() {
+                        $scope.service.update.idContratoFk         = service.idContracAssociated_SE;
+                        $scope.service.update.numeroContrato       = service.idContracAssociated_SE_array[0].numeroContrato;
+                        $scope.service.dvr.selected                = service.idDvr_nvrFk_array[0];
+                        $scope.service.maxCamera                   = service.maxCamera;
+                        $scope.service.update.idTypeMaintenanceFk  = service.idTypeMaintenanceFk_array[0].idTypeMaintenance;
+                        $scope.service.update.MntType              = service.idTypeMaintenanceFk_array[0].typeMaintenance;
+                        var productIdNumber = 1;
+                        //LOAD ADICITIONAL
+                        for (var key in service.adicional){
+                          for (var prduct in $scope.rsProductsData){
+                            if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':service.adicional[key].idProductoFk, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'optAux':service.adicional[key].optAux});
+                              $scope.typeOfProductsFn("set", $scope.rsProductsData[prduct].idProductClassificationFk, productIdNumber, service.adicional[key].optAux);
+                              productIdNumber++;
+                            }
+                            for (var batery in service.tb_backup_energy_array){
+                              if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct && service.tb_backup_energy_array[batery].idBatteryFk==service.adicional[key].idProductoFk){
+                                $scope.list_batteries.push({'idBatteryFk':service.tb_backup_energy_array[batery].idBatteryFk,'descriptionProduct':$scope.rsProductsData[prduct].descriptionProduct, 'model':$scope.rsProductsData[prduct].model, 'brand': $scope.rsProductsData[prduct].brand,'isNumberSerieInternal':$scope.rsProductsData[prduct].isNumberSerieInternal,'isNumberSerieFabric':$scope.rsProductsData[prduct].isNumberSerieFabric,'isDateExpiration':$scope.rsProductsData[prduct].isDateExpiration, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'idProductClassification':service.tb_backup_energy_array[batery].idProductClassificationFk, 'classification': $scope.rsProductsData[prduct].classification, 'description':$scope.rsProductsData[prduct].descriptionProduct, 'isNew':0});
+                              }
+                            }
+                          }
+                        }
+                        //LOAD DVR USERS
+                        for (var dvrUser in service.tb_client_camera_array){
+                          $scope.list_user.push({'idClientFk':service.tb_client_camera_array[dvrUser].idClientFk,'name':service.tb_client_camera_array[dvrUser].name, 'user':service.tb_client_camera_array[dvrUser].user, 'pass':service.tb_client_camera_array[dvrUser].pass, 'profile':service.tb_client_camera_array[dvrUser].userProfile, 'userProfile':service.tb_client_camera_array[dvrUser].userProfile, 'qrCode':service.tb_client_camera_array[dvrUser].qrBase64, 'qrBase64':service.tb_client_camera_array[dvrUser].qrBase64});
+                        }
+                        //LOAD CAMERAS
+                        for (var camera in service.tb_cameras_array){
+                          for (var prduct in $scope.rsProductsData){
+                            if ($scope.rsProductsData[prduct].idProduct==service.tb_cameras_array[camera].idProductFk){
+                              $scope.list_cameras.push({'idProductFk':service.tb_cameras_array[camera].idProductFk, 'idCameraFk':service.tb_cameras_array[camera].idProductFk,'portCamera':parseInt(service.tb_cameras_array[camera].portCamera), 'coveredArea':service.tb_cameras_array[camera].coveredArea, 'locationCamera': service.tb_cameras_array[camera].locationCamera, 'descriptionProduct':$scope.rsProductsData[prduct].descriptionProduct, 'model':$scope.rsProductsData[prduct].model, 'brand': $scope.rsProductsData[prduct].brand,'isNumberSerieInternal':$scope.rsProductsData[prduct].isNumberSerieInternal,'isNumberSerieFabric':$scope.rsProductsData[prduct].isNumberSerieFabric,'isDateExpiration':$scope.rsProductsData[prduct].isDateExpiration, 'numberSerieFabric':service.tb_cameras_array[camera].nroFabricCamera, 'numberSerieInternal':service.tb_cameras_array[camera].nroSerieCamera,'dateExpiration':service.tb_cameras_array[camera].dateExpireCamera, 'idProductClassification':$scope.rsProductsData[prduct].idProductClassification, 'classification': $scope.rsProductsData[prduct].classification, 'nroSerieCamera':service.tb_cameras_array[camera].nroSerieCamera,'nroFabricCamera':service.tb_cameras_array[camera].nroFabricCamera,'dateExpireCamera':service.tb_cameras_array[camera].dateExpireCamera, 'isNew':0});
+                              break;
+                            }
+                          }
+                        }
+                        console.log($scope.list_cameras);
+                        //console.log($scope.list_productsDetails);
+                        //console.log($scope.productListType);
+                        //LIST BATTERIES INSTALLED
+                        //console.log($scope.list_batteries);                     
+                        $scope.rsCustomerContractListData            = $scope.rsContractsListByCustomerIdData;                        
+                        $scope.service.update.isHasInternetConnect   = $scope.service.update.numberPortRouter!=undefined && $scope.service.update.portHttp!=undefined?true: false;
+                      }, 500);
+                      console.log($scope.service.update);
+                      blockUI.stop();
+                      $('#updateCamerasService').modal({backdrop: 'static', keyboard: false});                     
+                    break;
+                    case "5": //LOAD ALARM
+                    break;
+                    case "6": //LOAD APP MONITOR
+                      $timeout(function() {
+                        $scope.service.update.idContratoFk        = service.idContracAssociated_SE;
+                        $scope.service.update.numeroContrato      = service.idContracAssociated_SE_array[0].numeroContrato;                                                                                                                        
+                        $scope.service.update.idTypeMaintenanceFk = service.idTypeMaintenanceFk_array[0].idTypeMaintenance;
+                        $scope.service.update.MntType             = service.idTypeMaintenanceFk_array[0].typeMaintenance;
+                        $scope.rsCustomerContractListData         = $scope.rsContractsListByCustomerIdData;
+                        $scope.rsContractItemListData             = $scope.getSelectedServiceByIdContractFn($scope.service.update.idContratoFk, $scope.service.update.idClientTypeServices);
+                        $scope.service.update.idClientTypeFk      = $scope.customerFound.idClientTypeFk;
+
+                        $scope.getBuildingsDeptosFn($scope.service.update.idClientFk);
+                        for (var key in service.tb_user_license_array){
+                          $scope.list_user_licence.push({'idUserFk':service.tb_user_license_array[key].idUserLicense,'fullName':service.tb_user_license_array[key].fullName, 'email':service.tb_user_license_array[key].email, 'phone':service.tb_user_license_array[key].phone, 'keyword':service.tb_user_license_array[key].keyword, 'idOS':service.tb_user_license_array[key].idOS, 'profileUser':service.tb_user_license_array[key].profileUser});
+                        }
+                        $scope.service.numbOfNewLicence           = parseInt(service.countNewLicense);
+                        $scope.changeLicencesFn("set");
+                      }, 500);
+                      console.log($scope.service.update); 
+                      blockUI.stop();
+                      $('#updateAppMonitorService').modal({backdrop: 'static', keyboard: false});                      
+                    break;
+                    }
+                break;
+                case "update":
+                  switch(service.idTipeServiceFk){
+                    case "1": //UPDATE CONTROL ACCESS
+                      $timeout(function() {
+                        var productIdNumber=0;
+                        for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
+                          for (var key in $scope.list_batteries){
+                            if ($scope.list_batteries[key].isNew==1){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
+                              productIdNumber++;                            
+                            }
+                          }
+                          service.battery_install=[];
+                          service.battery_install= $scope.list_batteries;
+                          service.adicional=[];
+                          service.adicional=$scope.list_productsDetails;
+                          blockUI.message('Guardando Servicio '+service.clientTypeServices);
+                          }, 1500);
+                          $timeout(function() {
+                            console.log(service);
+                            $scope.updateCustomerServiceFn(service);
+                          }, 1500);
+                      $('#updateCtrlAccessService').modal('hide');
+                      blockUI.stop();
+                    break;
+                    case "2": //UPDATE INTERNET
+                      $timeout(function() {
+                        var productIdNumber=0;
+                          service.adicional=[];
+                          service.adicional=$scope.list_productsDetails;
+                          blockUI.message('Guardando Servicio '+service.clientTypeServices);
+                          }, 1500);
+                          $timeout(function() {
+                            console.log(service);
+                            $scope.updateCustomerServiceFn(service);
+                          }, 1500);
+                      $('#updateInternetService').modal('hide');
+                      blockUI.stop();                    
+                    break;
+                    case "3": //UPDATE TOTEM
+                      $timeout(function() {
+                        service.idDvr_nvrFk           = $scope.service.dvr.selected.idProduct;
+                        service.backup_energy         = [];
+                        service.backup_energy         = $scope.list_batteries;
+                        service.cameras               = [];
+                        service.cameras               = $scope.list_cameras;
+                        service.maxCamera             = $scope.service.maxCamera;
+                        service.clients               = [];
+                        service.clients               = $scope.list_user;
+                        if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
+                          service.numberPortRouter    = null;
+                          service.portHttpInter       = null;
+                          service.numberPortInter     = null;
+                          service.addressClientInter  = null;
+                          service.addreesVpn          = null;
+                          service.namePortInter       = null;
+                          service.port                = null;
+                          service.namePort1           = null;
+                          service.numberPort1         = null;
+                          service.namePort2           = null;
+                          service.numberPort2         = null;                    
+                        }else{
+                          service.namePortInter       = service.namePort;
+                          service.numberPortInter     = service.port;
+                          service.numberPort1         = service.nroPort1;
+                          service.numberPort2         = service.nroPort2;  
+                        }                        
+                        var productIdNumber=0;
+                        
+                        for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
+                          for (var key in $scope.list_batteries){
+                            if ($scope.list_batteries[key].isNew==1){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
+                              productIdNumber++;                            
+                            }
+                          }
+                          service.adicional=[];
+                          service.adicional=$scope.list_productsDetails;
+                          blockUI.message('Guardando Servicio '+service.clientTypeServices);
+                          }, 1500);
+                          $timeout(function() {
+                            console.log(service);
+                            $scope.updateCustomerServiceFn(service);
+                          }, 1500);
+                      $('#updateTotemService').modal('hide');
+                      blockUI.stop();
+                    break;
+                    case "4": //UPDATE CAMERAS
+                      $timeout(function() {
+                        service.idDvr_nvrFk           = $scope.service.dvr.selected.idProduct;
+                        service.backup_energy         = [];
+                        service.backup_energy         = $scope.list_batteries;
+                        service.cameras               = [];
+                        service.cameras               = $scope.list_cameras;
+                        service.maxCamera             = $scope.service.maxCamera;
+                        service.clients               = [];
+                        service.clients               = $scope.list_user;
+                        if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
+                          service.numberPortRouter    = null;
+                          service.portHttpInter       = null;
+                          service.numberPortInter     = null;
+                          service.addressClientInter  = null;
+                          service.addreesVpn          = null;
+                          service.namePortInter       = null;
+                          service.port                = null;
+                          service.namePort1           = null;
+                          service.numberPort1         = null;
+                          service.namePort2           = null;
+                          service.numberPort2         = null;                    
+                        }else{
+                          service.namePortInter       = service.namePort;
+                          service.numberPortInter     = service.port;
+                          service.numberPort1         = service.nroPort1;
+                          service.numberPort2         = service.nroPort2;  
+                        }                        
+                        var productIdNumber=0;
+                        
+                        for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
+                          for (var key in $scope.list_batteries){
+                            if ($scope.list_batteries[key].isNew==1){
+                              $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
+                              productIdNumber++;                            
+                            }
+                          }
+                          service.adicional=[];
+                          service.adicional=$scope.list_productsDetails;
+                          blockUI.message('Guardando Servicio '+service.clientTypeServices);
+                          }, 1500);
+                          $timeout(function() {
+                            console.log(service);
+                            $scope.updateCustomerServiceFn(service);
+                          }, 1500);
+                      $('#updateCamerasService').modal('hide');
+                      blockUI.stop();                    
+                    break;
+                    case "5": //UPDATE ALARM
+                    break;
+                    case "6": //UPDATE APP MONITOR
+                      $timeout(function() {
+                        service.idDepartmentFk           = service.idClientTypeFk=="2"?service.idDepartmentFk:null;
+                        service.idParticularAddressFk    = service.idClientTypeFk=="5"?service.idParticularAddressFk:null;
+                        service.licenses                 = $scope.list_user_licence;
+                        service.countNewLicense          = $scope.service.numbOfLicenceSet;
+                        service.adicional={};
+                        blockUI.message('Guardando Servicio '+service.clientTypeServices);
+                        }, 1500);
+                        $timeout(function() {
+                          console.log(service);
+                          $scope.updateCustomerServiceFn(service);
+                        }, 1500);
+                          $('#updateAppMonitorService').modal('hide');
+                        blockUI.stop();                       
+                    break;
+                  }              
+                break;
+                case "userLicense":
+                  $scope.service.update=service;
                   $timeout(function() {
-                    console.log($scope.addNewService);
-                    $scope.addCustomerServiceFn($scope.addNewService);
-                }, 1500);
-                $('#RegisterTotemService').modal('hide');
-                blockUI.stop();              
-              break;
-              case "4"://ADD CAMERAS
-                $timeout(function() {
-                  $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
-                  $scope.addNewService.idDvr_nvrFk              = service.dvr.selected.idProduct;
-                  $scope.addNewService.observation              = service.generalComments;
-                  $scope.addNewService.backup_energy            = $scope.list_batteries;
-                  $scope.addNewService.cameras                  = $scope.list_cameras;
-                  $scope.addNewService.dateDown                 = null;
-                  $scope.addNewService.clients                  = $scope.list_user;
-                  if (service.isHasInternetConnect==undefined || !service.isHasInternetConnect){
-                    $scope.addNewService.portNumberRouter=null;
-                    $scope.addNewService.portHttp=null;
-                    $scope.addNewService.addressClient=null;
-                    $scope.addNewService.user=null;
-                    $scope.addNewService.pass=null;
-                    $scope.addNewService.addressVpn=null;
-                    $scope.addNewService.useVpn=null;
-                    $scope.addNewService.passVpn=null;
-                    $scope.addNewService.namePort=null;
-                    $scope.addNewService.port=null;                    
-                    $scope.addNewService.namePort1=null;
-                    $scope.addNewService.nroPort1=null;
-                    $scope.addNewService.namePort2=null;
-                    $scope.addNewService.nroPort2=null;                    
-                  }
-                  var productIdNumber=0;
-                  for (var item in $scope.list_productsDetails){productIdNumber=($scope.list_productsDetails[item].idProductDetail+1);}  
-                  for (var key in $scope.list_batteries){
-                    $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':$scope.list_batteries[key].idBatteryFk, 'numberSerieFabric':$scope.list_batteries[key].numberSerieFabric, 'numberSerieInternal':$scope.list_batteries[key].numberSerieInternal,'dateExpiration':$scope.list_batteries[key].dateExpiration, 'optAux':null});                  
-                    productIdNumber++;                  
-                  }
-                  $scope.addNewService.adicional=$scope.list_productsDetails;
-                  blockUI.message('Guardando Servicio '+service.serviceName);
-                  }, 1500);
-                  $timeout(function() {
-                    console.log($scope.addNewService);
-                    $scope.addCustomerServiceFn($scope.addNewService);
-                  }, 1500);
-                    $('#RegisterCamerasService').modal('hide');
-                  blockUI.stop();               
-              break;
-              case "6"://ADD APP MONITOR
-                $timeout(function() {
-                  $scope.addNewService.idContracAssociated_SE   = service.idContratoFk;
-                  $scope.addNewService.observation              = service.generalComments;
-                  $scope.addNewService.dateDown                 = null;
-                  $scope.addNewService.idDepartmentFk           = service.idClientTypeFk=="2"?service.idDepartmentFk:null;
-                  $scope.addNewService.idParticularAddressFk    = service.idClientTypeFk=="5"?service.idParticularAddressFk:null;
-                  $scope.addNewService.licenses                 = $scope.list_user_licence;
-                  $scope.addNewService.countNewLicense          = service.numbOfLicenceSet;
-                  $scope.addNewService.idDetinationOfLicenseFk = service.idClientTypeFk=="2"?service.idDetinationOfLicenseFk:null;
-                  $scope.addNewService.adicional={};
-                  blockUI.message('Guardando Servicio '+service.serviceName);
-                  }, 1500);
-                  $timeout(function() {
-                    console.log($scope.addNewService);
-                    $scope.addCustomerServiceFn($scope.addNewService);
-                  }, 1500);
-                    $('#RegisterAppMonitorService').modal('hide');
-                  blockUI.stop();               
-              break;  
-            }            
+                    $scope.service.update.idClientTypeFk      = $scope.customerFound.idClientTypeFk;
+                    $scope.getBuildingsDeptosFn($scope.service.update.idClientFk);
+                      for (var key in service.tb_user_license_array){
+                        $scope.list_user_licence.push({'idUserFk':service.tb_user_license_array[key].idUserLicense,'fullName':service.tb_user_license_array[key].fullName, 'email':service.tb_user_license_array[key].email, 'phone':service.tb_user_license_array[key].phone, 'keyword':service.tb_user_license_array[key].keyword, 'idOS':service.tb_user_license_array[key].idOS, 'profileUser':service.tb_user_license_array[key].profileUser});
+                      }
+                    $scope.service.numbOfNewLicence           = parseInt(service.countNewLicense);
+                    $scope.changeLicencesFn("set");
+                  }, 500);
+                  console.log($scope.service.update); 
+                  blockUI.stop();
+                  $('#serviceUserLicenseList').modal({backdrop: 'static', keyboard: false});
+                break;
+                case "listCameras":
+                  $scope.service.update=service;
+                  $timeout(function() {                
+                    $scope.service.maxCamera                   = service.maxCamera;
+                    $scope.service.cameraList = service.tb_cameras_totem_array==undefined?service.tb_cameras_array:service.tb_cameras_totem_array;
+                    //LOAD CAMERAS
+                    for (var camera in $scope.service.cameraList){
+                      for (var prduct in $scope.rsProductsData){
+                        if ($scope.rsProductsData[prduct].idProduct==$scope.service.cameraList[camera].idProductFk){
+                          $scope.list_cameras.push({'idProductFk':$scope.service.cameraList[camera].idProductFk, 'idCameraFk':$scope.service.cameraList[camera].idProductFk,'portCamera':parseInt($scope.service.cameraList[camera].portCamera), 'coveredArea':$scope.service.cameraList[camera].coveredArea, 'locationCamera': $scope.service.cameraList[camera].locationCamera, 'descriptionProduct':$scope.rsProductsData[prduct].descriptionProduct, 'model':$scope.rsProductsData[prduct].model, 'brand': $scope.rsProductsData[prduct].brand,'isNumberSerieInternal':$scope.rsProductsData[prduct].isNumberSerieInternal,'isNumberSerieFabric':$scope.rsProductsData[prduct].isNumberSerieFabric,'isDateExpiration':$scope.rsProductsData[prduct].isDateExpiration, 'numberSerieFabric':$scope.service.cameraList[camera].nroFabricCamera, 'numberSerieInternal':$scope.service.cameraList[camera].nroSerieCamera,'dateExpiration':$scope.service.cameraList[camera].dateExpireCamera, 'idProductClassification':$scope.rsProductsData[prduct].idProductClassification, 'classification': $scope.rsProductsData[prduct].classification, 'nroSerieCamera':$scope.service.cameraList[camera].nroSerieCamera,'nroFabricCamera':$scope.service.cameraList[camera].nroFabricCamera,'dateExpireCamera':$scope.service.cameraList[camera].dateExpireCamera, 'isNew':0});
+                          break;
+                        }
+                      }
+                    }
+                  }, 500);
+                  console.log($scope.service.update); 
+                  blockUI.stop();
+                  $('#serviceCamerasList').modal({backdrop: 'static', keyboard: false});
+                break;
+            }
           }
         /***********************************
         *   ADDING NEW CUSTOMER SERVICE    *
@@ -11190,7 +12048,35 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                   //$scope.isUpdateCustomer=false;
                 //console.log($scope.rsLocations_API_Data);
             });
-          };             
+          };
+        /***********************************
+        *   UPDATING A CUSTOMER SERVICE    *
+        ************************************/
+          $scope.updateCustomerServiceFn = function(service){
+            serviceServices.updateService(service).then(function(data){
+                $scope.rsJsonData = data;
+                //console.log($scope.rsJsonData);
+                if($scope.rsJsonData.status==200){
+                  console.log("Customer Service Update Successfully");
+                  inform.add('Servicio '+service.clientTypeServices+' del ha sido actualizado con exito. ',{
+                        ttl:2000, type: 'success'
+                  });
+                  $scope.getListCustomersServicesFn(service.idClientFk, null);
+                  $scope.getListContractServicesFn(service.idContratoFk, null);
+                  $scope.getContractsByCustomerIdFn(service.idClientFk,'assign');
+                }else if($scope.rsJsonData.status==500){
+                  console.log("Customer Service not updated, contact administrator");
+                  inform.add('Error: [500] Contacta al area de soporte. ',{
+                        ttl:2000, type: 'danger'
+                  });
+                }
+                  //$scope.getContractsByCustomerIdFn(contrato.idClientFk);
+                  //$scope.isNewCustomer=false;
+                  //$scope.isUpdateCustomer=false;
+                //console.log($scope.rsLocations_API_Data);
+            });
+            $scope.cleanServiceInputsFn();
+          };          
     /**************************************************
     *                                                 *
     *              GET CUSTOMERS CONTRACT             *
@@ -11235,11 +12121,31 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           }else{
             $scope.rsServicesListByContractsIdData=[];
           }
-          //console.log($scope.rsServicesListByContractsIdData);
+          console.log($scope.rsServicesListByContractsIdData);
 
         });
 
       }
+    /**************************************************
+    *                                                 *
+    *       GET SELECTED SERVICE BY ID CONTRACT       *
+    *                                                 *
+    **************************************************/
+      $scope.getSelectedServiceByIdContractFn=function(idContract, idTypeServices){
+        var arrSelectedService = [];
+        ContractServices.getSelectedServiceByIdContract(idContract, idTypeServices).then(function(response){
+          $scope.rsJsonData = response;
+          //console.log($scope.rsJsonData.data);          
+          if($scope.rsJsonData.status==200){
+            for (var item in $scope.rsJsonData.data[0].services[0].serviceItems){
+              arrSelectedService.push($scope.rsJsonData.data[0].services[0].serviceItems[item]);
+            }            
+          }else{
+            arrSelectedService=[];
+          }
+        });
+        return arrSelectedService;
+      }      
     /**************************************************
     *                                                 *
     *           GET CUSTOMER SERVICES LIST            *
@@ -11269,298 +12175,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       }          
     /**************************************************
     *                                                 *
-    *    GET SERVICE ITEM BY CONTRACT & SERVICE ID    *
+    *        CHANGE BETWEEN CUSTOMER CONTRACT         *
     *                                                 *
     **************************************************/
-      $scope.rsContractServiceData=[];
-      $scope.rsCustomerContractListData=[];
-      $scope.rsContractItemListData=[];
-      $scope.getSelectedServiceByIdContractFn=function(obj){
-        console.log(obj)
-        $scope.rsContractServiceData=[];
-        $scope.rsCustomerContractListData=[];
-        $scope.rsContractItemListData=[];
-        $scope.list_batteries=[];
-        $scope.list_cameras=[];       
-        $scope.list_productsDetails=[];
-        $scope.list_phones=[];
-        $scope.previewData=[];
-        $scope.list_user_licence=[];
-        $scope.list_user=[];
-        $scope.list_sensors=[];
-        $scope.list_tampers=[];
-        $scope.list_people_notice=[];
-        $scope.list_people_verify=[];
-        $scope.service.new.people={}
-        $scope.productDetailsAssigned=false;
-        $scope.cleanServiceInputsFn();
-        ContractServices.getSelectedServiceByIdContract(obj.idContratoFk, obj.idServiceType).then(function(data){
-          $scope.rsJsonData = data;
-          //console.log($scope.rsJsonData);
-          $timeout(function() {
-            if($scope.rsJsonData.status==200){
-                $scope.rsContractServiceData=$scope.rsJsonData.data[0];
-                //console.log($scope.rsContractServiceData);
-
-                switch (obj.idServiceType){
-                  case "1"://RegisterCtrlAccessService
-                    if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
-                      if ($scope.rsContractServiceData.services[0].disponible>=1){
-                        $('#RegisterCtrlAccessService').modal({backdrop: 'static', keyboard: false});
-                        $('#RegisterCtrlAccessService').on('shown.bs.modal', function () {
-                            $('#service_door').focus();
-                        });                        
-                        for (var key in $scope.rsTypeOfMaintenanceData){                      
-                          if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                            $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                            $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
-                          }
-                        }
-                        $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                        $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                        $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                        $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                        $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                        $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                        $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                        $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                         //$scope.service.idContracAssociated_SE=
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Control de Acceso]. ',{
-                          ttl:5000, type: 'info'
-                        });                    
-                        //console.log($scope.service);
-                      }else{
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Control de Acceso] disponibles en el contrato. ',{
-                          ttl:5000, type: 'warning'
-                        }); 
-                      }
-                    }else{
-                      inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Control de Acceso] no contratado. ',{
-                        ttl:5000, type: 'danger'
-                      });  
-                    }
-                  break;
-                  case "2"://RegisterInternetService
-                    if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
-                      if ($scope.rsContractServiceData.services[0].disponible>=1){
-                        $('#RegisterInternetService').modal({backdrop: 'static', keyboard: false});
-                        $('#RegisterInternetService').on('shown.bs.modal', function () {
-                            $('#service_internetType').focus();
-                        });                        
-                        for (var key in $scope.rsTypeOfMaintenanceData){                      
-                          if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                            $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                            $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
-                          }
-                        }
-                        $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                        $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                        $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                        $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                        $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                        $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                        $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                        $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                         //$scope.service.idContracAssociated_SE=
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Control de Acceso]. ',{
-                          ttl:5000, type: 'info'
-                        });                    
-                        //console.log($scope.service);
-                      }else{
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Control de Acceso] disponibles en el contrato. ',{
-                          ttl:5000, type: 'warning'
-                        }); 
-                      }
-                    }else{
-                      inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Control de Acceso] no contratado. ',{
-                        ttl:5000, type: 'danger'
-                      });  
-                    }                    
-                  break;
-                  case "3"://RegisterTotemService
-                    if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
-                      if ($scope.rsContractServiceData.services[0].disponible>=1){
-                        $('#RegisterTotemService').modal({backdrop: 'static', keyboard: false});
-                        $('#RegisterTotemService').on('shown.bs.modal', function () {
-                            $('#service_name').focus();
-                             $scope.getUserLists();
-                        });                        
-                        for (var key in $scope.rsTypeOfMaintenanceData){                      
-                          if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                            $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                            $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
-                          }
-                        }
-                        $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                        $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                        $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                        $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                        $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                        $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                        $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                        $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                         //$scope.service.idContracAssociated_SE=
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Camaras]. ',{
-                          ttl:5000, type: 'info'
-                        });                    
-                        //console.log($scope.service);
-                      }else{
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Camaras] disponibles en el contrato. ',{
-                          ttl:5000, type: 'warning'
-                        }); 
-                      }
-                    }else{
-                      inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Camaras] no contratado. ',{
-                        ttl:5000, type: 'danger'
-                      });  
-                    }
-                  break;
-                  case "4"://RegisterCamerasService
-                    if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
-                      if ($scope.rsContractServiceData.services[0].disponible>=1){
-                        $('#RegisterCamerasService').modal({backdrop: 'static', keyboard: false});
-                        $('#RegisterCamerasService').on('shown.bs.modal', function () {
-                            $('#service_name').focus();
-                             $scope.getUserLists();
-                        });                        
-                        for (var key in $scope.rsTypeOfMaintenanceData){                      
-                          if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                            $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                            $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
-                          }
-                        }
-                        $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                        $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                        $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                        $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                        $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                        $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                        $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                        $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                         //$scope.service.idContracAssociated_SE=
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Camaras]. ',{
-                          ttl:5000, type: 'info'
-                        });                    
-                        //console.log($scope.service);
-                      }else{
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' No items [Camaras] disponibles en el contrato. ',{
-                          ttl:5000, type: 'warning'
-                        }); 
-                      }
-                    }else{
-                      inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Camaras] no contratado. ',{
-                        ttl:5000, type: 'danger'
-                      });  
-                    }                    
-                  break;                
-                  case "5"://RegisterAlarmService
-                    if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
-                      if ($scope.rsContractServiceData.services[0].disponible>=1){
-                        $('#RegisterAlarmService').modal({backdrop: 'static', keyboard: false});
-                        $('#RegisterAlarmService').on('shown.bs.modal', function () {
-                            $('#service_name').focus();
-                             $scope.getUserLists();
-                        });                        
-                        for (var key in $scope.rsTypeOfMaintenanceData){                      
-                          if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                            $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                            $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
-                          }
-                        }
-
-                        $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                        $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                        $scope.service.new.idClientTypeFk=$scope.customerFound.idClientTypeFk;
-                        $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                        $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                        $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                        $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                        $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                        $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                        $scope.service.new.numbOfLicence=0;
-                        $scope.getTypeAlarmClientListFn();
-                        $scope.getAlarmServiceAditionalsListFn();
-                        $scope.getTransmissionFormatListFn();
-                        if ($scope.service.new.idClientTypeFk=="2"){
-                          $scope.getBuildingsDeptosFn($scope.service.new.idClientFk);  
-                        }else if ($scope.service.new.idClientTypeFk=="5"){
-                          $scope.service.new.list_address_particular=$scope.customerFound.list_address_particular;
-                         //$scope.service.idContracAssociated_SE=
-                        }
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Alarma]. ',{
-                          ttl:5000, type: 'info'
-                        });                    
-                        //console.log($scope.service);
-                      }else{
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Alarma] no disponible en el contrato. ',{
-                          ttl:5000, type: 'warning'
-                        }); 
-                      }
-                    }else{
-                      inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Alarma] no contratado. ',{
-                        ttl:5000, type: 'danger'
-                      });  
-                    }                   
-                  break;
-                  case "6"://RegisterAppMonitorService
-                    if ($scope.rsContractServiceData.services[0].serviceItems!=undefined){
-                      if ($scope.rsContractServiceData.services[0].disponible>=1){
-                        $('#RegisterAppMonitorService').modal({backdrop: 'static', keyboard: false});
-                        $('#RegisterAppMonitorService').on('shown.bs.modal', function () {
-                            $('#service_name').focus();
-                             $scope.getUserLists();
-                        });                        
-                        for (var key in $scope.rsTypeOfMaintenanceData){                      
-                          if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                            $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                            $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
-                          }
-                        }
-
-                        $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                        $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                        $scope.service.new.idClientTypeFk=$scope.customerFound.idClientTypeFk;
-                        $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                        $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                        $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                        $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                        $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                        $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                        $scope.service.new.numbOfLicence=0;
-                        if ($scope.service.new.idClientTypeFk=="2"){
-                          $scope.getBuildingsDeptosFn($scope.service.new.idClientFk);  
-                        }else if ($scope.service.new.idClientTypeFk=="5"){
-                          $scope.service.new.list_address_particular=$scope.customerFound.list_address_particular;
-                         //$scope.service.idContracAssociated_SE=
-                        }
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [App Monitor]. ',{
-                          ttl:5000, type: 'info'
-                        });                    
-                        //console.log($scope.service);
-                      }else{
-                        inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' servicio [App Monitor] no disponible en el contrato. ',{
-                          ttl:5000, type: 'warning'
-                        }); 
-                      }
-                    }else{
-                      inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [App Monitor] no contratado. ',{
-                        ttl:5000, type: 'danger'
-                      });  
-                    }                     
-                  break;
-                  default:
-                    $('#SelectServiceWindows').modal('hide');
-                }            
-            }else{
-              $scope.rsContractServiceData=[];
-            }
-          }, 500);
-        });
-        blockUI.stop();
-      }
-      /***********************************
-      *    LOADING USER WINDOWS FORM     *
-      ************************************/
         $scope.contrato=[];
         $scope.switchContractService = function(obj){
           if (obj.idContratoFk!=undefined){            
@@ -11721,16 +12338,28 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
               });
             }
               $scope.typeOfProductsFn("set", $scope.productSelected.idProductClassificationFk, productIdNumber, tmpAux);
-              $scope.service.new.adicional={};
+              //set serial numbers for conexion module in the Alarm Service
+              if ($scope.productSelected.idProductClassificationFk=="15" || $scope.productSelected.idProductClassificationFk=="16"){
+                for (var item in $scope.list_productsDetails){
+                  if ((($scope.service.module.ipAlarmModule.selected!=undefined && $scope.service.module.ipAlarmModule.selected.idProduct==$scope.list_productsDetails[item].idProductoFk) || ($scope.service.module.gprsAlarmModule.selected!=undefined && $scope.service.module.gprsAlarmModule.selected.idProduct==$scope.list_productsDetails[item].idProductoFk)) && $scope.list_productsDetails[item].idProductDetail!=null){
+                    $scope.service.module.internalSerialNumber  = $scope.list_productsDetails[item].numberSerieFabric;
+                    $scope.service.module.fabricSerialNumber    = $scope.list_productsDetails[item].numberSerieInternal;
+                    break;                        
+                  }                 
+                }
+              }
+              $scope.service.adicional={};
               $scope.productSelected={};
-              console.log($scope.list_productsDetails);
+              //console.log($scope.list_productsDetails);                            
           }
         /***********************************
         *   REMOVE PRODUCT DETAIL SINGLE   *
         ************************************/           
           $scope.removeProductDetailsFn = function(obj, idProductDetail, optAux){
+            console.log("removeProductDetailsFn");
+            console.log(obj);
             $scope.productSelected  = obj;
-            var tmpAux=$scope.productSelected.idProductClassificationFk=="3" || $scope.productSelected.idProductClassificationFk=="20"?optAux:null;
+            var tmpAux=($scope.productSelected.idProductClassificationFk=="3" || $scope.productSelected.idProductClassification=="3") || ($scope.productSelected.idProductClassificationFk=="20" || $scope.productSelected.idProductClassification=="20")?optAux:null;
             var objItem             = $scope.list_productsDetails;        
             var arrItem             = objItem.map(function(i){return i.idProductDetail;});        
             var indexItem           = arrItem.indexOf(idProductDetail); 
@@ -11739,9 +12368,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
 
             $scope.typeOfProductsFn("remove", $scope.productSelected.idProductClassificationFk, null, tmpAux);
             $scope.productDetailsAssigned=false;
-            inform.add("Datos adicionales del producto han sido removidos correctamente.",{
-              ttl:5000, type: 'warning'
-            });
+            if ($scope.productSelected.idProductClassification!="5"){
+              inform.add("Datos adicionales del producto han sido removidos correctamente.",{
+                ttl:5000, type: 'warning'
+              });
+            }
+            if ($scope.productSelected.idProductClassificationFk=="15" || $scope.productSelected.idProductClassificationFk=="16"){
+              $scope.service.module.internalSerialNumber  = "";
+              $scope.service.module.fabricSerialNumber    = "";
+            }              
             console.log($scope.list_productsDetails);
           }
         /***********************************
@@ -11750,36 +12385,39 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           $scope.productSelected={};
           $scope.productDetailsAssigned=false;
           $scope.compServiceProductDetailsFn=function(obj, idProductDetail, optAux){
-            console.log("---------------------");
-            console.log($scope.productListType)
-            console.log("---------------------");
-            console.log("idProductDetail: "+idProductDetail);
-            console.log("optAux: "+optAux);
+            //console.log(obj);
+            //console.log($scope.list_productsDetails);
+            //console.log("---------------------");
+            //console.log($scope.productListType)
+            //console.log("---------------------");
+            //console.log("idProductDetail: "+idProductDetail);
+            //console.log("optAux: "+optAux);
             if ($scope.list_productsDetails.length>0){
               for (var item in $scope.list_productsDetails){
                 if (obj.idProduct==$scope.list_productsDetails[item].idProductoFk && idProductDetail!=null && optAux==$scope.list_productsDetails[item].optAux){
                   $scope.productSelected=obj;
-                  $scope.service.new.adicional.idProductoFk         = $scope.list_productsDetails[item].idProductoFk;
-                  $scope.service.new.adicional.numberSerieFabric    = $scope.list_productsDetails[item].numberSerieFabric;
-                  $scope.service.new.adicional.numberSerieInternal  = $scope.list_productsDetails[item].numberSerieInternal;
-                  $scope.service.new.adicional.dateExpiration       = $scope.list_productsDetails[item].dateExpiration;
+                    console.log($scope.list_productsDetails[item]);
+                    $scope.service.adicional.idProductoFk         = $scope.list_productsDetails[item].idProductoFk;
+                    $scope.service.adicional.numberSerieFabric    = $scope.list_productsDetails[item].numberSerieFabric;
+                    $scope.service.adicional.numberSerieInternal  = $scope.list_productsDetails[item].numberSerieInternal;
+                    $scope.service.adicional.dateExpiration       = $scope.list_productsDetails[item].dateExpiration;
                   $scope.productDetailsAssigned=true;
-                  console.log($scope.list_productsDetails);
+                  ////console.log($scope.list_productsDetails);
                   break;
                 }else{
                   $scope.productDetailsAssigned=false;
-                  $scope.service.new.adicional={};
+                  $scope.service.adicional={};
                   $scope.productSelected=obj;
-                  $scope.service.new.adicional={'idProductoFk':''};
-                  $scope.service.new.adicional.idProductoFk=$scope.productSelected.idProduct;
-                  $scope.service.new.adicional.optAux=optAux;
+                  $scope.service.adicional={'idProductoFk':''};
+                  $scope.service.adicional.idProductoFk=$scope.productSelected.idProduct;
+                  $scope.service.adicional.optAux=optAux;
                 }
               }
             }else{
               $scope.productSelected=obj;
-              $scope.service.new.adicional={'idProductoFk':''};
-              $scope.service.new.adicional.idProductoFk=$scope.productSelected.idProduct;
-              $scope.service.new.adicional.optAux=optAux;
+              $scope.service.adicional={'idProductoFk':''};
+              $scope.service.adicional.idProductoFk=$scope.productSelected.idProduct;
+              $scope.service.adicional.optAux=optAux;
             }
             $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
             $('#serviceProductDetails').on('shown.bs.modal', function () {
@@ -11791,15 +12429,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         *     TYPE OF PRODUCT FUNCTION     *
         ************************************/        
           $scope.typeOfProductsFn = function(opt, idType, idProd, optAux){
-            console.log("opt: '"+opt+"' idType: "+idType+" idProd: "+idProd+" optAux: "+optAux);
+            //console.log("opt: '"+opt+"' idType: "+idType+" idProd: "+idProd+" optAux: "+optAux);
               switch(idType){
                 case "1":
                   if (opt=="set"){
                     $scope.productListType.CONTROL_DE_ACCESOS=idProd;
-                    console.log("set: "+idProd+" to $scope.productListType.CONTROL_DE_ACCESOS: "+idProd);
+                    //console.log("set: "+idProd+" to $scope.productListType.CONTROL_DE_ACCESOS: "+idProd);
                   }else{
                     $scope.productListType.CONTROL_DE_ACCESOS=idProd;
-                    $scope.service.new.crtlAccess.selected=undefined;
+                    $scope.service.crtlAccess.selected=undefined;
                   }
                   
                 break;
@@ -11808,27 +12446,27 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.CERRADURA=idProd;
                   }else{
                     $scope.productListType.CERRADURA=idProd;
-                    $scope.service.new.lockedIt.selected=undefined;
+                    $scope.service.lockedIt.selected=undefined;
                   }
                 break;
                 case "3":
                   if (opt=="set"){
                     if (optAux=="entrance"){
-                       console.log("set: "+idProd+" to $scope.productListType.LECTOR_ENT: "+idProd);
+                       //onsole.log("set: "+idProd+" to $scope.productListType.LECTOR_ENT: "+idProd);
                        $scope.productListType.LECTOR_ENT=idProd;
                     }else{
-                      console.log("set: "+idProd+" to $scope.productListType.PRODUCT_EXIT: "+idProd);
+                      //console.log("set: "+idProd+" to $scope.productListType.PRODUCT_EXIT: "+idProd);
                       $scope.productListType.PRODUCT_EXIT=idProd;
                     }
                   }else{
                     if (optAux=="entrance"){
-                      console.log("remove: "+idProd+" to $scope.productListType.LECTOR_ENT: "+idProd);
+                      //console.log("remove: "+idProd+" to $scope.productListType.LECTOR_ENT: "+idProd);
                       $scope.productListType.LECTOR_ENT=idProd;
-                      $scope.service.new.entranceReader.selected=undefined;
+                      $scope.service.entranceReader.selected=undefined;
                     }else{
-                      console.log("set: "+idProd+" to $scope.productListType.PRODUCT_EXIT: "+idProd);
+                      //console.log("set: "+idProd+" to $scope.productListType.PRODUCT_EXIT: "+idProd);
                       $scope.productListType.PRODUCT_EXIT=idProd;
-                      $scope.service.new.exitReader.selected=undefined;
+                      $scope.service.exitReader.selected=undefined;
                     }
                   }
                 break;
@@ -11837,7 +12475,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.FUENTE=idProd;              
                   }else{
                     $scope.productListType.FUENTE=idProd;
-                    $scope.service.new.powerSupply.selected=undefined;
+                    $scope.service.powerSupply.selected=undefined;
                   }
                 break;
                 case "5":
@@ -11848,7 +12486,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.PULSADOR_EMERG=idProd;              
                   }else{
                     $scope.productListType.PULSADOR_EMERG=idProd;
-                    $scope.service.new.emergencyButton.selected=undefined;
+                    $scope.service.emergencyButton.selected=undefined;
                   }          
                 break;
                 case "7":
@@ -11856,7 +12494,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                      $scope.productListType.TECLA_APAG=idProd;              
                   }else{
                      $scope.productListType.TECLA_APAG=idProd;
-                    $scope.service.new.TurnOffKey.selected=undefined;
+                    $scope.service.TurnOffKey.selected=undefined;
                   }
                 break;
                 case "8":
@@ -11864,7 +12502,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.RECORD_DEVICE=idProd;
                   }else{
                     $scope.productListType.RECORD_DEVICE=idProd;
-                    $scope.service.new.dvr.selected=undefined;
+                    $scope.service.dvr.selected=undefined;
                   }
                 break;
                 case "9":
@@ -11872,7 +12510,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.RECORD_DEVICE=idProd;
                   }else{
                     $scope.productListType.RECORD_DEVICE=idProd;
-                    $scope.service.new.dvr.selected=undefined;
+                    $scope.service.dvr.selected=undefined;
                   }
                 break;
                 case "12":
@@ -11880,7 +12518,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.PANEL_ALARM=idProd;              
                   }else{
                     $scope.productListType.PANEL_ALARM=idProd;
-                    $scope.service.new.router.selected=undefined;
+                    $scope.service.router.selected=undefined;
                   }
                 break;
                 case "13":
@@ -11888,7 +12526,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.TECLADO_ALARM=idProd;              
                   }else{
                     $scope.productListType.TECLADO_ALARM=idProd;
-                    $scope.service.new.alarmKeyboard.selected=undefined;
+                    $scope.service.alarmKeyboard.selected=undefined;
                   }
                 break;
                 case "14":
@@ -11898,7 +12536,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.MODULO_IP_ALARM=idProd;              
                   }else{
                     $scope.productListType.MODULO_IP_ALARM=idProd;
-                    $scope.service.new.ipAlarmModule.selected=undefined;
+                    $scope.service.module.ipAlarmModule.selected=undefined;
                   }
                 break;
                 case "16":
@@ -11906,7 +12544,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.MODULO_GPRS_ALARM=idProd;              
                   }else{
                     $scope.productListType.MODULO_GPRS_ALARM=idProd;
-                    $scope.service.new.gprsAlarmModule.selected=undefined;
+                    $scope.service.module.gprsAlarmModule.selected=undefined;
                   }
                 break;                
                 case "17":
@@ -11914,7 +12552,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.ROUTER=idProd;              
                   }else{
                     $scope.productListType.ROUTER=idProd;
-                    $scope.service.new.alarmPanel.selected=undefined;
+                    $scope.service.alarmPanel.selected=undefined;
                   }
                 break;              
                 case "18":
@@ -11922,7 +12560,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.MODEM=idProd;              
                   }else{
                     $scope.productListType.MODEM=idProd;
-                    $scope.service.new.modem.selected=undefined;
+                    $scope.service.modem.selected=undefined;
                   }
                 break;
                 case "20":
@@ -11930,7 +12568,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     $scope.productListType.PRODUCT_EXIT=idProd;              
                   }else{
                     $scope.productListType.PRODUCT_EXIT=idProd;
-                    $scope.service.new.exitReader.selected=undefined;
+                    $scope.service.exitReader.selected=undefined;
                   }
                 break;            
               }
@@ -12029,47 +12667,50 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       *    LOAD MODAL WINDOWS DETAILS    *
       ************************************/      
         $scope.loadDetailModalWindow = function(obj){
-          $scope.service.new.adicional={};
+          $scope.service.adicional={};
           $scope.productSelected=obj;
-          $scope.service.new.adicional.idProductoFk=$scope.productSelected.idProduct;  
+          console.log(obj);
+          $scope.service.adicional.idProductoFk=$scope.productSelected.idProduct;  
           $scope.productDetailsAssigned=false;     
-          if ($scope.service.new.idTipeServiceFk!='3' && $scope.service.new.idTipeServiceFk!='4' && $scope.service.new.idTipeServiceFk!='5'){
+          if (($scope.service.new!=undefined && $scope.service.new.idTipeServiceFk!='3' && $scope.service.new.idTipeServiceFk!='4' && $scope.service.new.idTipeServiceFk!='5') || ($scope.service.update!=undefined && $scope.service.update.idTipeServiceFk!='3' && $scope.service.update.idTipeServiceFk!='4' && $scope.service.update.idTipeServiceFk!='5')){
             $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
             $('#serviceProductDetails').on('shown.bs.modal', function () {
               $('#serviceProductInternalSerial').focus();
             });
-          }else if(($scope.service.new.idTipeServiceFk=='3' || $scope.service.new.idTipeServiceFk=='4') && obj.idProductClassificationFk!='11'){
+          }else if ((($scope.service.new!=undefined && ($scope.service.new.idTipeServiceFk=='3' || $scope.service.new.idTipeServiceFk=='4')) || ($scope.service.update!=undefined && ($scope.service.update.idTipeServiceFk=='3' || $scope.service.update.idTipeServiceFk=='4'))) && obj.idProductClassificationFk!='11'){
             $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
             $('#serviceProductDetails').on('shown.bs.modal', function () {
               $('#serviceProductInternalSerial').focus();
             });
-          }else if (($scope.service.new.idTipeServiceFk=='3' || $scope.service.new.idTipeServiceFk=='4') && obj.idProductClassificationFk=='11'){
-            if ($scope.service.new.dvr==undefined || ($scope.service.new.maxCamera==undefined || $scope.service.new.maxCamera<=0)){
+          }else if ((($scope.service.new!=undefined && ($scope.service.new.idTipeServiceFk=='3' || $scope.service.new.idTipeServiceFk=='4')) || ($scope.service.update!=undefined && ($scope.service.update.idTipeServiceFk=='3' || $scope.service.update.idTipeServiceFk=='4'))) && obj.idProductClassificationFk=='11'){
+            if ($scope.service.dvr.selected==undefined || ($scope.service.maxCamera==undefined || $scope.service.maxCamera<=0)){
               inform.add("Debe seleccionar un DVR/NVR y/o completar el campo 'Maximo de Camaras' antes de cargar una camara.",{
                 ttl:5000, type: 'warning'
               });
-              $scope.service.new.cameras.selected=undefined;
-            }else if ($scope.service.new.dvr.selected!=undefined && ($scope.service.new.maxCamera!=undefined && $scope.service.new.maxCamera>=1)){
+              $scope.service.cameras.selected=undefined;
+              console.log("aca no tiene que entrar!!")
+            }else if ($scope.service.dvr.selected!=undefined && ($scope.service.maxCamera!=undefined && $scope.service.maxCamera>=1)){
                 $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
                 $('#serviceProductDetails').on('shown.bs.modal', function () {
                   $('#serviceCameraPort').focus();
                 });
                 $scope.createPortList("filter");
             }
-          }else if ($scope.service.new.idTipeServiceFk=='5' && obj.idProductClassificationFk=='14'){
-            if ($scope.service.new.zonesQttyInstalled==undefined || $scope.service.new.zonesQttyInstalled<=0){
+          }else if ((($scope.service.new!=undefined && $scope.service.new.idTipeServiceFk=='5') || ($scope.service.update!=undefined && $scope.service.update.idTipeServiceFk=='5'))  && obj.idProductClassificationFk=='14'){
+            if ($scope.service.zonesQttyInstalled==undefined || $scope.service.zonesQttyInstalled<=0){
               inform.add("Debe completar el campo 'Cantidad De Zonas Instaladas' para crear una zona.",{
                 ttl:5000, type: 'warning'
               });
-              $scope.service.new.sensor.selected=undefined;
-            }else if($scope.service.new.sensor.selected!=undefined && ($scope.service.new.zonesQttyInstalled!=undefined && $scope.service.new.zonesQttyInstalled>=1)){
+              $('#serviceZonasCantInstaladas').focus();
+              $scope.service.sensor.selected=undefined;
+            }else if($scope.service.sensor.selected!=undefined && ($scope.service.zonesQttyInstalled!=undefined && $scope.service.zonesQttyInstalled>=1)){
               $("#serviceModuleZonesDetails").modal({backdrop: 'static', keyboard: false});
               $('#serviceModuleZonesDetails').on('shown.bs.modal', function () {
                 $('#serviceZoneNumbSensor').focus();
               });
               $scope.createPortList("filter");
             }
-          }if ($scope.service.new.idTipeServiceFk=='5' && obj.idProductClassificationFk!='14'){
+          }if ((($scope.service.new!=undefined && $scope.service.new.idTipeServiceFk=='5') || ($scope.service.update!=undefined && $scope.service.update.idTipeServiceFk=='5')) && obj.idProductClassificationFk!='14'){
             $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
             $('#serviceProductDetails').on('shown.bs.modal', function () {
               $('#serviceProductInternalSerial').focus();
@@ -12082,49 +12723,59 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       *    CREATE PORT LIST FUNCTION     *
       ************************************/      
         $scope.createPortList=function(opt){
-          if ($scope.service.new.idTipeServiceFk=='3' || $scope.service.new.idTipeServiceFk=='4'){
+          if (($scope.service.new!=undefined && ($scope.service.new.idTipeServiceFk=='3' || $scope.service.new.idTipeServiceFk=='4')) || ($scope.service.update!=undefined && ($scope.service.update.idTipeServiceFk=='3' || $scope.service.update.idTipeServiceFk=='4'))){
             if (opt=="all" || (opt=="filter" && $scope.list_cameras.length==0)){
-              //console.log("creating the port list");
+              console.log("creating the port list all");
               $scope.list_cameras_ports=[];
-              $scope.service.new.maxCameraTmp=$scope.service.new.maxCamera;
-              for (var i=1; i<=$scope.service.new.maxCamera; i++){
+              $scope.service.maxCameraTmp=$scope.service.maxCamera;
+              for (var i=1; i<=$scope.service.maxCamera; i++){
                  $scope.list_cameras_ports.push({'id':i-1, 'port': i});
               }
+              console.log($scope.list_cameras_ports);
             }else{
-              if ($scope.service.new.maxCameraTmp!=$scope.service.new.maxCamera){
+              console.log("creating the port list with the availables slots");
+              console.log("$scope.service.maxCameraTmp: "+$scope.service.maxCameraTmp);
+              console.log("$scope.service.maxCamera: "+$scope.service.maxCamera);
+
                 $scope.list_cameras_ports=[];
-                $scope.service.new.maxCameraTmp=$scope.service.new.maxCamera;
-                for (var i=1; i<=$scope.service.new.maxCamera; i++){
+                $scope.service.maxCameraTmp=$scope.service.maxCamera;
+                for (var i=1; i<=$scope.service.maxCamera; i++){
                  $scope.list_cameras_ports.push({'id':i-1, 'port': i});
                 }
-              }
+              console.log("$scope.list_cameras_ports:");
+              console.log($scope.list_cameras_ports);
               for (var key in $scope.list_cameras){
                 console.log("Port used: "+$scope.list_cameras[key].portCamera); 
                 for (var port in $scope.list_cameras_ports){
                   console.log("validating with port: "+$scope.list_cameras_ports[port].port);     
                   if ($scope.list_cameras_ports[port].port==$scope.list_cameras[key].portCamera){
-                    console.log("Delete the port used from the list");
+                    console.log("Delete the port ["+$scope.list_cameras_ports[port].port+"] used from the list");
                     var objItem             = $scope.list_cameras_ports;
                     var arrItem             = objItem.map(function(o){return o.id;});        
                     var indexItem           = arrItem.indexOf($scope.list_cameras_ports[port].id);
+                    console.log("Port: "+$scope.list_cameras_ports[port].port+" Deleted");
                     $scope.list_cameras_ports.splice(indexItem, 1);
+                  }else{
+                    console.log("Port: "+$scope.list_cameras_ports[port].port+" Not Deleted");
                   }
                 }
               }
+              console.log("$scope.list_cameras_ports:");
+              console.log($scope.list_cameras_ports);
             }
-          }else if ($scope.service.new.idTipeServiceFk=='5'){
+          }else if (($scope.service.new!=undefined && $scope.service.new.idTipeServiceFk=='5') || ($scope.service.update!=undefined && $scope.service.update.idTipeServiceFk=='5')){
             if (opt=="all" || (opt=="filter" && $scope.list_sensors.length==0)){
               console.log("creating the Zone list");
               $scope.list_sensors_zones=[];
-              $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
-              for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
+              $scope.service.zonesQttyInstalledTmp=$scope.service.zonesQttyInstalled;
+              for (var i=1; i<=$scope.service.zonesQttyInstalled; i++){
                  $scope.list_sensors_zones.push({'id':i-1, 'zone': i});
               }
             }else if($scope.list_sensors.length>0){
-              if ($scope.service.new.zonesQttyInstalledTmp!=$scope.service.new.zonesQttyInstalled){
+              if ($scope.service.zonesQttyInstalledTmp!=$scope.service.zonesQttyInstalled){
                 $scope.list_sensors_zones=[];
-                $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
-                for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
+                $scope.service.zonesQttyInstalledTmp=$scope.service.zonesQttyInstalled;
+                for (var i=1; i<=$scope.service.zonesQttyInstalled; i++){
                  $scope.list_sensors_zones.push({'id':i-1, 'zone': i});
                 }
               }
@@ -12145,15 +12796,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             if (opt=="all" || (opt=="filter" && $scope.list_sensors.length==0)){
               console.log("creating the Tamper list");
               $scope.list_tampers_zones=[];
-              $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
-              for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
+              $scope.service.zonesQttyInstalledTmp=$scope.service.zonesQttyInstalled;
+              for (var i=1; i<=$scope.service.zonesQttyInstalled; i++){
                  $scope.list_tampers_zones.push({'id':i-1, 'tamper': i});
               }
             }else if($scope.list_sensors.length>0){
-              if ($scope.service.new.zonesQttyInstalledTmp!=$scope.service.new.zonesQttyInstalled){
+              if ($scope.service.zonesQttyInstalledTmp!=$scope.service.zonesQttyInstalled){
                 $scope.list_tampers_zones=[];
-                $scope.service.new.zonesQttyInstalledTmp=$scope.service.new.zonesQttyInstalled;
-                for (var i=1; i<=$scope.service.new.zonesQttyInstalled; i++){
+                $scope.service.zonesQttyInstalledTmp=$scope.service.zonesQttyInstalled;
+                for (var i=1; i<=$scope.service.zonesQttyInstalled; i++){
                  $scope.list_tampers_zones.push({'id':i-1, 'tamper': i});
                 }
               }
@@ -12181,15 +12832,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           //console.log(objDetail)
           if (objSelect.idProductClassificationFk!='11'){
             var dateExpiration = objDetail.dateExpiration==undefined || objDetail.dateExpiration==null?null:objDetail.dateExpiration;
-            $scope.list_batteries.push({'idBatteryFk':objSelect.idProduct,'descriptionProduct':objSelect.descriptionProduct, 'model':objSelect.model, 'brand': objSelect.brand,'isNumberSerieInternal':objSelect.isNumberSerieInternal,'isNumberSerieFabric':objSelect.isNumberSerieFabric,'isDateExpiration':objSelect.isDateExpiration, 'numberSerieFabric':objDetail.numberSerieFabric, 'numberSerieInternal':objDetail.numberSerieInternal,'dateExpiration':dateExpiration, 'idProductClassification':objSelect.idProductClassification, 'classification': objSelect.classification, 'description':objSelect.classification});
+            $scope.list_batteries.push({'idBatteryFk':objSelect.idProduct,'descriptionProduct':objSelect.descriptionProduct, 'model':objSelect.model, 'brand': objSelect.brand,'isNumberSerieInternal':objSelect.isNumberSerieInternal,'isNumberSerieFabric':objSelect.isNumberSerieFabric,'isDateExpiration':objSelect.isDateExpiration, 'numberSerieFabric':objDetail.numberSerieFabric, 'numberSerieInternal':objDetail.numberSerieInternal,'dateExpiration':dateExpiration, 'idProductClassification':objSelect.idProductClassification, 'classification': objSelect.classification, 'description':objSelect.classification, 'isNew':1});
             $scope.productSelected={};
-            $scope.service.new.batteries.selected=undefined;
+            $scope.service.batteries.selected=undefined;
             console.log($scope.list_batteries);
           }else{
             var dateExpiration = objDetail.dateExpiration==undefined?null:objDetail.dateExpiration;
-            $scope.list_cameras.push({'idProductFk':objSelect.idProduct, 'idCameraFk':objSelect.idProduct,'portCamera':objDetail.portCamera, 'coveredArea':objDetail.coveredArea, 'locationCamera': objDetail.locationCamera, 'descriptionProduct':objSelect.descriptionProduct, 'model':objSelect.model, 'brand': objSelect.brand,'isNumberSerieInternal':objSelect.isNumberSerieInternal,'isNumberSerieFabric':objSelect.isNumberSerieFabric,'isDateExpiration':objSelect.isDateExpiration, 'numberSerieFabric':objDetail.numberSerieFabric, 'numberSerieInternal':objDetail.numberSerieInternal,'dateExpiration':dateExpiration, 'idProductClassification':objSelect.idProductClassification, 'classification': objSelect.classification, 'nroSerieCamera':objDetail.numberSerieInternal,'nroFabricCamera':objDetail.numberSerieInternal,'dateExpireCamera':dateExpiration});
+            $scope.list_cameras.push({'idProductFk':objSelect.idProduct, 'idCameraFk':objSelect.idProduct,'portCamera':objDetail.portCamera, 'coveredArea':objDetail.coveredArea, 'locationCamera': objDetail.locationCamera, 'descriptionProduct':objSelect.descriptionProduct, 'model':objSelect.model, 'brand': objSelect.brand,'isNumberSerieInternal':objSelect.isNumberSerieInternal,'isNumberSerieFabric':objSelect.isNumberSerieFabric,'isDateExpiration':objSelect.isDateExpiration, 'numberSerieFabric':objDetail.numberSerieFabric, 'numberSerieInternal':objDetail.numberSerieInternal,'dateExpiration':dateExpiration, 'idProductClassification':objSelect.idProductClassification, 'classification': objSelect.classification, 'nroSerieCamera':objDetail.numberSerieInternal,'nroFabricCamera':objDetail.numberSerieInternal,'dateExpireCamera':dateExpiration, 'isNew':1});
             $scope.productSelected={};
-            $scope.service.new.cameras.selected=undefined;
+            $scope.service.cameras.selected=undefined;
             console.log($scope.list_cameras);          
           }
           
@@ -12200,15 +12851,17 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       *  LOAD/GET SUB ITEMLIST FUNCTION  *
       ************************************/         
         $scope.subItemServiceProductDetailsFn = function(obj){
-          $scope.service.new.adicional={};
+          $scope.service.adicional={};
           $scope.productSelected={};
           $scope.productSelected=obj;
-          $scope.service.new.adicional=obj;
+          $scope.service.adicional=obj;
+          console.log(obj);
           $scope.productDetailsAssigned=true;
           if ($scope.productSelected.idProductClassificationFk!='11'){
+
             $scope.createPortList("all");
           }
-          //console.log($scope.service.new.adicional);
+          //console.log($scope.service.adicional);
           //console.log($scope.productSelected);
           $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
         }
@@ -12216,25 +12869,39 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       *   REMOVE SUB ITEMLIST FUNCTION   *
       ************************************/        
         $scope.removeSubItemProductDetailsFn = function (obj){
-          console.log(obj)
+          console.log("removeSubItemProductDetailsFn");
+          console.log(obj);
           if (obj.idProductClassification!='11'){
             var objItem             = $scope.list_batteries; 
             var arrItem             = objItem.map(function(i){return i.idBatteryFk;});        
             var indexItem           = arrItem.indexOf(obj.idBatteryFk);
             $scope.list_batteries.splice(indexItem, 1);
             $scope.productDetailsAssigned=false;
-            $scope.service.new.adicional={};
+            $scope.service.adicional={};
             $scope.productSelected={};        
-            console.log($scope.list_batteries);          
+            console.log($scope.list_batteries);
+            if ($scope.isUpdateCustomerService){
+              for (var item in $scope.list_productsDetails){
+                if ($scope.list_productsDetails[item].idProductoFk==obj.idBatteryFk){
+                  console.log("productDetail Deleted:");
+                  console.log($scope.list_productsDetails[item]);
+                  $scope.removeProductDetailsFn(obj, $scope.list_productsDetails[item].idProductDetail, $scope.list_productsDetails[item].optAux);
+                  console.log("----------------------");
+                  break;
+                }  
+              }
+            }
           }else{
             var objItem             = $scope.list_cameras;
-            var arrItem             = objItem.map(function(i){return i.idCameraFk;});        
-            var indexItem           = arrItem.indexOf(obj.idCameraFk);
+            var arrItem             = objItem.map(function(i){return i.portCamera;});        
+            var indexItem           = arrItem.indexOf(obj.portCamera);
+            console.log(indexItem);
             $scope.list_cameras.splice(indexItem, 1);
             $scope.productDetailsAssigned=false;
-            $scope.service.new.adicional={};
-            $scope.productSelected={};        
-            console.log($scope.list_cameras);          
+            $scope.service.adicional={};
+            $scope.productSelected={};
+            console.log($scope.list_cameras);
+            console.log($scope.list_cameras_ports);
           }
           inform.add("Producto: ("+obj.descriptionProduct+") ha sido removido correctamente.",{
             ttl:5000, type: 'warning'
@@ -12250,10 +12917,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         //console.log("===============================");
         //console.log("| SERVICE INPUT CLEAR COMPLETE |");
         //console.log("===============================");
-        $scope.service.new = {'aditional_alarm':{}};
-        $scope.service.new = {
+        $scope.service = {
                             'dvr':{'selected':undefined},
-                            'batteries':{'selected':undefined},
                             'cameras':{'selected':undefined},
                             'modem':{'selected':undefined},
                             'router':{'selected':undefined},
@@ -12268,46 +12933,109 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                             'TurnOffKey':{'selected':undefined},
                             'sensor':{'selected':undefined},
                             'alarmPanel':{'selected':undefined},
-                            'alarmKeyboard':{'selected':undefined}
-
+                            'alarmKeyboard':{'selected':undefined},
+                            'aditional':{},
+                            'numbOfLicenceRemains':0,
+                            'numbOfLicenceSet':0,
+                            'aditional_alarm':{}
         };
-        $scope.service.new={
-                            'idContratoFk':'', 
-                            'name':'', 
-                            'MntType':'',
-                            'dateUp':'',
-                            'dateDown':'', 
-                            'location': '', 
-                            'maxCamera':'', 
-                            'zonesQttyInstalled':'',
-                            'isHasInternetConnect':0, 
-                            'numberPortRouter':'', 
-                            'addessClient':'', 
-                            'portHttp':'', 
-                            'addressVpn':'', 
-                            'namePort1':'', 
-                            'nroPort1':'', 
-                            'namePort2':'', 
-                            'nroPort2':'', 
-                            'generalComments':'', 
-                            'idDoorFk':'',
-                            'aclaration':'',
-                            'locationGabinet':'',
-                            'isBlocklingScrew':'',
-                            'lockingScrewComment':'',
-                            'locationEmergencyButton':'',
-                            'locationOffKey':'',
-                            'portNumberRouter':'',
-                            'user':'',
-                            'pass':'',
-                            'useVpn':'',
-                            'passVpn':'',
-                            'isSysUser':0,
-                 'numbOfLicenceRemains':0,
-                     'numbOfLicenceSet':0,
-                       'isSysUser': false
+        if ($scope.isNewCustomerService){
+          $scope.service.new={
+                              'idContratoFk':'', 
+                              'name':'', 
+                              'MntType':'',
+                              'dateUp':'',
+                              'dateDown':'', 
+                              'location': '', 
+                              'maxCamera':'', 
+                              'zonesQttyInstalled':'',
+                              'isHasInternetConnect':0, 
+                              'numberPortRouter':'', 
+                              'addessClient':'', 
+                              'portHttp':'', 
+                              'addressVpn':'', 
+                              'namePort1':'', 
+                              'nroPort1':'', 
+                              'namePort2':'', 
+                              'nroPort2':'', 
+                              'generalComments':'', 
+                              'idDoorFk':'',
+                              'aclaration':'',
+                              'locationGabinet':'',
+                              'isBlocklingScrew':'',
+                              'lockingScrewComment':'',
+                              'locationEmergencyButton':'',
+                              'locationOffKey':'',
+                              'portNumberRouter':'',
+                              'idTipoConexionRemoto':'',
+                              'user':'',
+                              'pass':'',
+                              'useVpn':'',
+                              'passVpn':'',
+                              'isSysUser':0,
+                              'people':{},
+                              'isSysUser': false
+          };
         }
-        //console.log($scope.service.new);
+        if ($scope.isUpdateCustomerService){
+          $scope.service.update = {
+                              'idContratoFk':'', 
+                              'name':'', 
+                              'MntType':'',
+                              'dateUp':'',
+                              'dateDown':'', 
+                              'location': '', 
+                              'maxCamera':'', 
+                              'zonesQttyInstalled':'',
+                              'isHasInternetConnect':0, 
+                              'numberPortRouter':'', 
+                              'addessClient':'', 
+                              'portHttp':'', 
+                              'addressVpn':'', 
+                              'namePort1':'', 
+                              'nroPort1':'', 
+                              'namePort2':'', 
+                              'nroPort2':'', 
+                              'generalComments':'', 
+                              'idDoorFk':'',
+                              'aclaration':'',
+                              'locationGabinet':'',
+                              'isBlocklingScrew':'',
+                              'lockingScrewComment':'',
+                              'locationEmergencyButton':'',
+                              'locationOffKey':'',
+                              'portNumberRouter':'',
+                              'idTipoConexionRemoto':'',
+                              'user':'',
+                              'pass':'',
+                              'useVpn':'',
+                              'passVpn':'',
+                              'isSysUser':0,
+                              'isSysUser': false
+          };
+        }
+        $scope.service.adicional={};
+        $scope.list_batteries=[];
+        $scope.battery_install=[];
+        $scope.list_cameras=[];
+        $scope.list_cameras_ports=[];
+        $scope.list_sensors=[];
+        $scope.list_sensors_zones=[];
+        $scope.list_tampers_zones=[];
+        $scope.rsContractServiceData=[];
+        $scope.rsCustomerContractListData=[];
+        $scope.rsContractItemListData=[];       
+        $scope.list_productsDetails=[];
+        $scope.list_phones=[];
+        $scope.previewData=[];
+        $scope.list_user_licence=[];
+        $scope.list_user=[];
+        $scope.list_tampers=[];
+        $scope.list_people_notice=[];
+        $scope.list_people_verify=[];
+        $scope.service.module={};
+        $scope.service.tipo_conexion_remoto=[];
+        $scope.productDetailsAssigned=false;        
       }
     /**************************************************
     *                                                 *
@@ -12321,8 +13049,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           $scope.isSysUserExist=false;
           $scope.loadServiceUserWindowFn=function(obj){
             //console.log(obj);
-            $scope.service.new.users={}           
-                if ($scope.service.new.isSysUser){
+            $scope.service.users={}           
+                if ($scope.service.isSysUser){
                   if ($scope.list_user.length>0){
                     for (var key in  $scope.list_user){
                       if ($scope.list_user[key].idClientFk==obj.idUser){
@@ -12339,15 +13067,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                   if (!$scope.isSysUserExist){
                     console.log("$scope.isSysUserExist: "+$scope.isSysUserExist);
                       $('#serviceUserDetails').modal({backdrop: 'static', keyboard: false});
-                      $scope.service.new.users.idUser=obj.idUser;
-                      $scope.service.new.users.name=obj.fullNameUser;
+                      $scope.service.users.idUser=obj.idUser;
+                      $scope.service.users.name=obj.fullNameUser;
                       $('#serviceUser').focus();
                   }                
                 }else{
                   $('#serviceUserDetails').modal({backdrop: 'static', keyboard: false});
                   $('#serviceUserName').focus();
-                   $scope.service.new.users.idUser=null;
-                  $scope.service.new.users.name='';
+                   $scope.service.users.idUser=null;
+                  $scope.service.users.name='';
                 }
           }
         /***********************************
@@ -12355,15 +13083,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         ************************************/
           $scope.qrCodeImageDetails={};
           $scope.addServiceUserDetailsFn=function(obj){
-            $scope.list_user.push({'idClientFk':obj.idUser,'name':obj.name, 'user':obj.user, 'pass':obj.pass, 'profile':obj.profile, 'userProfile':obj.profile, 'qrCode':obj.qrCode, 'qrBase64':obj.qrCode});
+            var idUser=obj.idUser==null || obj.idUser==undefined?obj.idClientFk:obj.idUser;
+            var idProfile=obj.profile==null || obj.profile==undefined?obj.userProfile:obj.profile;
+            var qrCode = obj.qrCode==null || obj.qrCode==undefined?obj.qrBase64:obj.qrCode;
+            $scope.list_user.push({'idClientFk':idUser,'name':obj.name, 'user':obj.user, 'pass':obj.pass, 'profile':idProfile, 'userProfile':idProfile, 'qrCode':qrCode, 'qrBase64':qrCode});
             $scope.qrCodeImageDetails=$scope.previewData;
             $scope.previewData=[];
              $('#serviceUserDetails').modal('hide');
-             if (obj.idUser!=null){$scope.service.new.sysUser.selected=undefined;};
+             if (obj.idUser!=null){$scope.service.sysUser.selected=undefined;};
               inform.add("Usuario DVR: "+obj.user+" ha sido cargado correctamente.",{
                 ttl:5000, type: 'success'
               });
-            console.log($scope.list_user);
+            //console.log($scope.list_user);
           }
         /***********************************
         *     REMOVE USER DATA DETAILS     *
@@ -12400,7 +13131,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                           $scope.$apply(function($scope) {
                             $scope.files = element.files;
                             $scope.previewData.push({'name':file.name,'size':size,'type':file.type,'src':src,'data':obj});
-                            $scope.service.new.users.qrCode=src;
+                            $scope.service.users.qrCode=src;
                           });
                           console.log($scope.previewData);
                       }
@@ -12425,57 +13156,78 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 }
                 //console.log(element.files);
                 $scope.processAttachedFilesFn(element.files);
-          }
-      /***********************************
-      *      VERIFY INTERNET CHECKBOX    *
-      ************************************/          
-          $scope.verifyCheckBoxFn = function(obj){
-            if(obj){
-              $scope.service.new.namePort="RTSP";
-              $scope.service.new.port="554";
-
-              $scope.service.new.namePort1="HTTPS"
-              $scope.service.new.nroPort1="443";
-
-              $scope.service.new.namePort2="SERVIDOR";
-              $scope.service.new.nroPort2="8000";
-            }else{
-              $scope.service.new.namePort=null;
-              $scope.service.new.port=null;
-
-              $scope.service.new.namePort1=null;
-              $scope.service.new.nroPort1=null;
-
-              $scope.service.new.namePort2=null;
-              $scope.service.new.nroPort2=null;
             }
+        /***********************************
+        *      VERIFY INTERNET CHECKBOX    *
+        ************************************/
+            $scope.verifyCheckBoxFn = function(obj){
+              if ($scope.isNewCustomerService){
+                if(obj){
+                  $scope.service.new.namePort="RTSP";
+                  $scope.service.new.port="554";
+
+                  $scope.service.new.namePort1="HTTPS"
+                  $scope.service.new.nroPort1="443";
+
+                  $scope.service.new.namePort2="SERVIDOR";
+                  $scope.service.new.nroPort2="8000";
+                }else{
+                  $scope.service.new.namePort=null;
+                  $scope.service.new.port=null;
+
+                  $scope.service.new.namePort1=null;
+                  $scope.service.new.nroPort1=null;
+
+                  $scope.service.new.namePort2=null;
+                  $scope.service.new.nroPort2=null;
+                }
+              }else if ($scope.isUpdateCustomerService){
+                if(obj){
+                  $scope.service.update.namePort="RTSP";
+                  $scope.service.update.port="554";
+
+                  $scope.service.update.namePort1="HTTPS"
+                  $scope.service.update.nroPort1="443";
+
+                  $scope.service.update.namePort2="SERVIDOR";
+                  $scope.service.update.nroPort2="8000";
+                }else{
+                  $scope.service.update.namePort=null;
+                  $scope.service.update.port=null;
+
+                  $scope.service.update.namePort1=null;
+                  $scope.service.update.nroPort1=null;
+
+                  $scope.service.update.namePort2=null;
+                  $scope.service.update.nroPort2=null;
+                }
+              }
+            }
+        /***********************************
+        *  VERIFY LIST OF CAMERAS CHECKBOX *
+        ************************************/
+          $scope.verifyCameraLengthFn = function(ArrObjList, amount){
+            console.log(ArrObjList.length+' = '+amount)
+              if(ArrObjList.length!=0 && amount>=1 && ArrObjList.length<amount){
+                inform.add('La cantidad de camaras/totem es menor al maximo establecido, completar para continuar.',{
+                            ttl:6000, type: 'warning'
+                });
+              }
           }
-      /***********************************
-      *  VERIFY LIST OF CAMERAS CHECKBOX *
-      ************************************/
-      $scope.verifyCameraLengthFn = function(ArrObjList, amount){
-        console.log(ArrObjList.length+' = '+amount)
-          if(ArrObjList.length!=0 && amount>=1 && ArrObjList.length<amount){
-            inform.add('La cantidad de camaras/totem es menor al maximo establecido, completar para continuar.',{
-                        ttl:6000, type: 'warning'
-            });
-          }
-      }
     /**************************************************
     *                                                 *
     *           APP MONITOR SERVICE FUNCTIONS         *
     *                                                 *
     **************************************************/
-      $scope.service.new.users = {'fullName':'','emailUser':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}};
       $scope.loadServiceLicenceWindowFn = function(){
-        if ($scope.list_user_licence.length<=0 && $scope.service.new.numbOfLicenceRemains<=0){
+        if ($scope.list_user_licence.length<=0 && $scope.service.numbOfLicenceRemains<=0){
             inform.add("Debe asignar la cantidad de nuevas licencias.",{
               ttl:5000, type: 'warning'
             }); 
-        }else if ($scope.service.new.numbOfLicenceRemains>=1){
+        }else if ($scope.service.numbOfLicenceRemains>=1){
           $('#serviceLicenceDetails').modal({backdrop: 'static', keyboard: false});
-          $scope.service.new.users = {'fullName':'','emailUser':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}};
-          $scope.service.new.isSysUser=false;
+          $scope.service.users = {'fullName':'','email':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}};
+          $scope.service.isSysUser=false;
           $('#serviceUserLicenceName').focus();
           $scope.rsJsonUser={};
         }else{
@@ -12486,6 +13238,22 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         }
       }
       /***********************************
+      *    LOAD USER LICENSE SELECTED    *
+      ************************************/       
+      $scope.loadSelectedUserLicenceFn = function(obj){
+        console.log(obj);
+        $scope.service.users = {'fullName':'','email':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}};
+        $scope.service.users.fullName                 = obj.fullName;
+        $scope.service.users.email                    = obj.email;
+        $scope.service.users.phone                    = obj.phone;
+        $scope.service.users.keyword                  = obj.keyword;
+        $scope.service.users.idOS                     = obj.idOS;
+        $scope.service.users.profileUser              = obj.profileUser;
+        $scope.service.sysUser.selected         = {idUser: obj.idUserFk, fullNameUser: obj.fullName};
+        $scope.service.isSysUser=obj.idUserFk?true:false;
+        $('#serviceLicenceDetails').modal({backdrop: 'static', keyboard: false});
+      }      
+      /***********************************
       *      SET QTTY OF NEW LICENCE     *
       ************************************/ 
         $scope.setNewLicencesFn = function (item){
@@ -12494,26 +13262,31 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             });
             $scope.changeLicencesFn("set");
         }
-        $scope.service.new.numbOfLicenceRemains=0;
-        $scope.service.new.numbOfLicenceSet=0; 
         $scope.changeLicencesFn = function (opt){
           switch (opt){
             case "set":
-              if ($scope.service.new.numbOfLicenceSet==0){
-                $scope.service.new.numbOfLicenceSet=$scope.service.new.numbOfNewLicence;
-                $scope.service.new.numbOfLicenceRemains=$scope.service.new.numbOfLicenceSet;
+              if ($scope.service.numbOfLicenceSet==0){
+                $scope.service.numbOfLicenceSet=$scope.service.numbOfNewLicence;
+                if ($scope.isUpdateCustomerService || $scope.isListCustomerService){
+                  $scope.service.numbOfLicenceRemains=$scope.service.numbOfLicenceSet-$scope.list_user_licence.length;
+                  console.log("$scope.list_user_licence.length: "+$scope.list_user_licence.length);
+                  console.log("$scope.service.numbOfLicenceSet: "+$scope.service.numbOfLicenceSet);
+                  console.log("$scope.service.numbOfLicenceRemains: "+$scope.service.numbOfLicenceRemains);
+                }else{
+                  $scope.service.numbOfLicenceRemains=$scope.service.numbOfLicenceSet;
+                }                
               }else{
-                $scope.service.new.numbOfLicenceSet=$scope.service.new.numbOfLicenceSet+$scope.service.new.numbOfNewLicence;
-                $scope.service.new.numbOfLicenceRemains=$scope.service.new.numbOfLicenceSet-$scope.list_user_licence.length;
-                console.log("$scope.service.new.numbOfLicenceSet:"+$scope.service.new.numbOfLicenceSet);
+                $scope.service.numbOfLicenceSet=$scope.service.numbOfLicenceSet+$scope.service.numbOfNewLicence;
+                $scope.service.numbOfLicenceRemains=$scope.service.numbOfLicenceSet-$scope.list_user_licence.length;
+                console.log("$scope.service.numbOfLicenceSet:"+$scope.service.numbOfLicenceSet);
               }
             break;
             case "change":
-                $scope.service.new.numbOfLicenceRemains=$scope.service.new.numbOfLicenceSet-$scope.list_user_licence.length;
-                console.log("$scope.service.new.numbOfLicenceSet:"+$scope.service.new.numbOfLicenceSet);
+                $scope.service.numbOfLicenceRemains=$scope.service.numbOfLicenceSet-$scope.list_user_licence.length;
+                console.log("$scope.service.numbOfLicenceSet:"+$scope.service.numbOfLicenceSet);
             break;
             case "remove":
-               $scope.service.new.numbOfLicenceRemains=$scope.service.new.numbOfLicenceRemains+1;
+               $scope.service.numbOfLicenceRemains=$scope.service.numbOfLicenceRemains+1;
             break;
           }
 
@@ -12547,7 +13320,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.rsJsonUser={};
         $scope.loadSeletedSysUserFields = function(obj){
           $scope.rsJsonUser={};
-          $scope.service.new.users = {'fullName':'','emailUser':'', 'phone':''}
+          $scope.service.users = {'fullName':'','email':'', 'phone':''}
           if ($scope.list_user_licence.length>0){
             for (var key in  $scope.list_user_licence){
               if ($scope.list_user_licence[key].idUserFk==obj.idUser){
@@ -12565,15 +13338,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
               console.log("$scope.list_user_licence.length: "+$scope.list_user_licence.length);
               console.log("$scope.isSysUserExist: "+$scope.isSysUserExist);
               $scope.rsJsonUser=obj;
-              $scope.service.new.users.idUser   = obj.idUser;
-              $scope.service.new.users.fullName = obj.fullNameUser;
-              $scope.service.new.users.email    = obj.emailUser;
-              $scope.service.new.users.phone    = obj.phoneNumberUser;
+              $scope.service.users.idUser   = obj.idUser;
+              $scope.service.users.fullName = obj.fullNameUser;
+              $scope.service.users.email    = obj.emailUser;
+              $scope.service.users.phone    = obj.phoneNumberUser;
               $('#serviceLicenceSecretWord').focus();
           }else{
-              $scope.service.new.isSysUser=false;
-              $scope.service.new.sysUser.selected=undefined;
-              $scope.service.new.users = {'fullName':'','emailUser':'', 'phone':''}
+              $scope.service.isSysUser=false;
+              $scope.service.sysUser.selected=undefined;
+              $scope.service.users = {'fullName':'','email':'', 'phone':''}
               $scope.rsJsonUser={};
           }
 
@@ -12583,13 +13356,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       ************************************/ 
         $scope.addUserLicenceFn = function(obj){
           if ((obj.idUser!=undefined || obj.idUser!=null) && $scope.rsJsonUser.phoneNumberUser!=obj.phone){
-            $scope.rsJsonUser.phoneNumberUser=$scope.service.new.users.phone;
+            $scope.rsJsonUser.phoneNumberUser=$scope.service.users.phone;
             $scope.modalConfirmation('updateSysUser', 0, $scope.rsJsonUser);
           }
-            var idUserFk = $scope.service.new.isSysUser ? obj.idUser : null;
+            var idUserFk = $scope.service.isSysUser ? obj.idUser : null;
             $scope.list_user_licence.push({'idUserFk':idUserFk,'fullName':obj.fullName, 'email':obj.email, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
              $('#serviceLicenceDetails').modal('hide');
-             if (obj.idUser!=null){$scope.service.new.sysUser.selected=undefined;};
+             if (obj.idUser!=null){$scope.service.sysUser.selected=undefined;};
               inform.add("Licencia ha sido cargada y asignada a "+obj.fullName+" satisfactoriamente.",{
                 ttl:5000, type: 'success'
               });
@@ -12618,7 +13391,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       *  LOADING ADITIONAL WINDOWS FORM  *
       ************************************/    
         $scope.compServiceAlarmDetailsFn=function(){
-          $("#serviceAlarmDetails").modal('show');
+          $('#serviceAlarmDetails').modal({backdrop: 'static', keyboard: false});
+          $scope.service.new.sysUser={'selected':undefined};
         }
       /***********************************
       *      GET TYPE ALARM CLIENT       *
@@ -12631,6 +13405,17 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             }
           });
         };
+      /***********************************
+      *        GET CONNECTION TYPE       *
+      ************************************/
+        $scope.rsTypeConnectionListData = {};
+        $scope.getTypeConnectionListFn = function(){
+          UtilitiesServices.typeConnectionList().then(function(response){
+            if(response.status==200){
+              $scope.rsTypeConnectionListData = response.data;
+            }
+          });
+        };        
       /***********************************
       *      ALARM SERVICE ADITIONALS    *
       ************************************/
@@ -12659,13 +13444,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.list_people_notice=[];
         $scope.list_people_verify=[];
         $scope.isSysUserExist=false;
-        $scope.service.new.people={}
         $scope.loadServicePeopleWindowFn=function(obj, opt){
           $scope.service.new.people={}    
           switch (opt){
             //PERSONAS PARA DAR AVISO
             case "getnotice":
-              if ($scope.service.new.aditional_alarm.isSysPeopleNoticeUser){
+              if ($scope.service.aditional_alarm.isSysPeopleNoticeUser){
                 if ($scope.list_people_notice.length>0){
                   for (var key in  $scope.list_people_notice){
                     if ($scope.list_people_notice[key].fk_idUserSystema==obj.idUser){
@@ -12696,7 +13480,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             break;
             //PERSONAS PARA VERIFICAR EN EL LUGAR
             case "verifyplace":
-              if ($scope.service.new.aditional_alarm.isSysPeopleVerifyUser){
+              if ($scope.service.aditional_alarm.isSysPeopleVerifyUser){
                 if ($scope.list_people_verify.length>0){
                   for (var key in  $scope.list_people_verify){
                     if ($scope.list_people_verify[key].fk_idUserSystema==obj.idUser){
@@ -12734,14 +13518,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           console.log(obj);
           switch (opt){
             case "getnotice":
-              var idUser = $scope.service.new.aditional_alarm.isSysPeopleNoticeUser?obj.idUser:null;
-              if (idUser!=null){$scope.service.new.aditional_alarm.sysPeopleNoticeUser.selected=undefined;};
+              var idUser = $scope.service.aditional_alarm.isSysPeopleNoticeUser?obj.idUser:null;
+              if (idUser!=null){$scope.service.aditional_alarm.sysPeopleNoticeUser.selected=undefined;};
               $scope.list_people_notice.push({'fk_idUserSystema':idUser,'nombre_apellido':obj.nombre_apellido, 'vinculo':obj.vinculo, 'palabra_clave':obj.palabra_clave, 'telefono':obj.telefono, 'numero_del_usuario':obj.numero_del_usuario, 'opt':'getnotice'});
               console.log($scope.list_people_notice);              
             break;
             case "verifyplace":
-              var idUser = $scope.service.new.aditional_alarm.isSysPeopleVerifyUser?obj.idUser:null;
-              if (idUser!=null){$scope.service.new.aditional_alarm.sysPeopleVerifyUser.selected=undefined;};
+              var idUser = $scope.service.aditional_alarm.isSysPeopleVerifyUser?obj.idUser:null;
+              if (idUser!=null){$scope.service.aditional_alarm.sysPeopleVerifyUser.selected=undefined;};
               $scope.list_people_verify.push({'fk_idUserSystema':idUser,'nombre_apellido':obj.nombre_apellido, 'vinculo':obj.vinculo, 'telefono':obj.telefono, 'numero_del_usuario':obj.numero_del_usuario, 'opt':'verifyplace'});
               console.log($scope.list_people_verify);
             break;
@@ -12781,17 +13565,111 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       *     LOAD USER PHONE NUMBER       *
       ************************************/        
         $scope.loadUserPhoneNumberFn = function(obj){
+          $scope.service.aditional_alarm.telefono='';
           if (obj.phoneNumberUser){
-            $scope.service.new.aditional_alarm.telefono=obj.phoneNumberUser;
+            $scope.service.aditional_alarm.telefono=obj.phoneNumberUser;
           }else if(obj.phoneLocalNumberUser){
-            $scope.service.new.aditional_alarm.telefono=obj.phoneLocalNumberUser;
+            $scope.service.aditional_alarm.telefono=obj.phoneLocalNumberUser;
           }else{
               inform.add("El usuario: "+obj.fullNameUser+" no posee telefonos registrados.",{
                 ttl:5000, type: 'success'
               });
             $('#serviceAlarmPhone').focus();
           }
+        }        
+      /***********************************
+      *    GET ADITIONAL DATA DETAILS    *
+      ************************************/
+        $scope.aditional_alarm={};
+        $scope.addAditionalAlarmFn = function(obj){
+          $scope.orderScheduleTimeFn($scope.list_schedule_atention);
+          $scope.aditional_alarm=obj;          
+          $scope.aditional_alarm.fk_idEncargado=$scope.service.new.sysUser.selected!=undefined?$scope.service.new.sysUser.selected.idUser:null;
+          $scope.aditional_alarm.franjas_horarias=$scope.list_schedule_time_orderBy;
+          $scope.aditional_alarm.personas_para_dar_aviso=$scope.list_people_notice;
+          $scope.aditional_alarm.personas_para_verificar_en_el_lugar=$scope.list_people_verify;
+          console.log($scope.aditional_alarm);
         }
+      /***********************************
+      *    LOAD ALARM MODULE CONEXION    *
+      ************************************/
+        $scope.moduleConnectionType=null;
+        $scope.compServiceModuleConnectionDetailsFn=function(opt){
+          $scope.service.module={
+                            'ipAlarmModule':{'selected':undefined},
+                            'gprsAlarmModule':{'selected':undefined},
+          };
+          $("#serviceModuleConnectionDetails").modal('show');
+          $scope.moduleConnectionType=opt;
+          $('#serviceModuleConnectionDetails').on('shown.bs.modal', function () {
+            if ($scope.moduleConnectionType=="1"){
+              $('#serviceCompaniaTelf').focus(); 
+            }else if ($scope.moduleConnectionType=="2"){
+              $('#serviceIpAlarmModule').focus();
+            }else{
+              $('#serviceGprsAlarmModule').focus();             
+            }
+
+          });
+        }         
+      /***********************************
+      *    GET ALARM MODULE CONEXION    *
+      ************************************/
+        $scope.addServiceModuleConnectionDetailsFn=function(obj, opt){
+          $scope.service.tipo_conexion_remoto=[]
+          $scope.service.tipo_conexion_remoto.push({'data':{}}); 
+          switch (opt){
+                  case "1"://Línea Telefónica
+                    $scope.service.tipo_conexion_remoto[0].data.company=obj.phoneCompany;
+                    $scope.service.tipo_conexion_remoto[0].data.line=obj.lineNumber;
+                    $scope.service.tipo_conexion_remoto[0].idTipoConexionRemoto=opt;
+                    console.log( $scope.service);
+                  break;
+                  case "2"://Módulo IP
+                    //Remove the GPRS Details from list_productsDetails array
+                    if (obj.gprsAlarmModule.selected!=undefined){
+                      for (var item in $scope.list_productsDetails){
+                        if (obj.gprsAlarmModule.selected.idProduct==$scope.list_productsDetails[item].idProductoFk && $scope.list_productsDetails[item].idProductDetail!=null){
+                          $scope.removeProductDetailsFn(obj.gprsAlarmModule.selected, $scope.list_productsDetails[item].idProductDetail, '');
+                          break;
+                        }
+                      }
+                    }                  
+                   $scope.service.tipo_conexion_remoto[0].data.moduleIp=obj.ipAlarmModule.selected.idProduct;
+                   $scope.service.tipo_conexion_remoto[0].data.nroSerieFrabric=obj.fabricSerialNumber;
+                   $scope.service.tipo_conexion_remoto[0].data.nroSerieInternal=obj.internalSerialNumber;
+                   $scope.service.tipo_conexion_remoto[0].data.ip=obj.IpAddr;
+                   $scope.service.tipo_conexion_remoto[0].data.codeProgrm=obj.programCode;
+                   $scope.service.tipo_conexion_remoto[0].data.portProgrm=obj.programPort;
+                   $scope.service.tipo_conexion_remoto[0].data.passwordAcces=obj.systemAccessPassword;
+                   $scope.service.tipo_conexion_remoto[0].data.codePart1=obj.partitionCode1;
+                   $scope.service.tipo_conexion_remoto[0].data.codePart2=obj.partitionCode2;
+                   $scope.service.tipo_conexion_remoto[0].idTipoConexionRemoto=opt;
+                    console.log( $scope.service);
+                  break;
+                  case "3"://Módulo GPRS
+                  if (obj.ipAlarmModule.selected!=undefined){
+                    for (var item in $scope.list_productsDetails){
+                      if (obj.ipAlarmModule.selected.idProduct==$scope.list_productsDetails[item].idProductoFk && $scope.list_productsDetails[item].idProductDetail!=null){
+                        $scope.removeProductDetailsFn(obj.ipAlarmModule.selected, $scope.list_productsDetails[item].idProductDetail, '');
+                        break;
+                      }
+                    }
+                  }                  
+                   $scope.service.tipo_conexion_remoto[0].data.moduleGprs=obj.gprsAlarmModule.selected.idProduct;
+                   $scope.service.tipo_conexion_remoto[0].data.nroSerieFrabric=obj.fabricSerialNumber;
+                   $scope.service.tipo_conexion_remoto[0].data.nroSerieInternal=obj.internalSerialNumber;
+                   $scope.service.tipo_conexion_remoto[0].data.codeProgrm=obj.programCode;
+                   $scope.service.tipo_conexion_remoto[0].data.portProgrm=obj.programPort;
+                   $scope.service.tipo_conexion_remoto[0].data.passwordAcces=obj.systemAccessPassword;
+                   $scope.service.tipo_conexion_remoto[0].data.codePart1=obj.partitionCode1;
+                   $scope.service.tipo_conexion_remoto[0].data.codePart2=obj.partitionCode2;
+                   $scope.service.tipo_conexion_remoto[0].idTipoConexionRemoto=opt;
+                    console.log( $scope.service);
+                  break;
+          }
+        }
+
     /********************************************************************************************************************************************
     *                                                                                                                                           *
     *                                                                                                                                           *
@@ -13700,6 +14578,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           $scope.showInputs                 = false;
           $scope.typeOption                 = 0;
           $scope.emailFound                 = false;
+          $scope.listCustomerFound          = null;
           $scope.idOpcionLowTicketKf        = 0;
           $scope.sendNotify                 = "";
           $scope.companykeychains           = {};
@@ -14210,6 +15089,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         $scope.getDiviceOpening();
         $scope.getProductsFn("",0);
         $scope.getSysModulesFn();
+        $scope.defArrForCustomersFn();
             /*PENDIENTE PASAR TODOS ESTOS DATOS A VARIABLES LOCALES PARA MEJORAR LA PERFORMANCE */
                 $scope.getAllLocationsFn();             
                 $scope.getBuildingsFn();
@@ -14233,48 +15113,48 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       }
      /*MOSTRAR EL MONITOR ACTIVO SIEMPRE AL ENTRAR AL SISTEMA*/
 
-    $scope.fnLoadPhoneMask = function(){
-        /**********************************************
-        *               INPUT PHONE MASK              *
-        **********************************************/
-        $('.input--movil').mask('9999999999999999999999999');
-        $('.input--local').mask('9999999999999999999999999');
-        $('.input--phone').mask('9999999999999999999999999');
-        $('.input--time').mask('00:00');
-        $('.input--dni').mask('99999999');
-        $('.input--number').mask('99');
-        $('.input--date-number').mask('999999');
-        $('.input--date').mask('00/00/0000', {placeholder: "__/__/____"});
-        $('.input-ipaddr').mask('099.099.099.099', {placeholder: "___.___.___.___"});
-        $('.input-macaddr').mask('ZZ-ZZ-ZZ-ZZ-ZZ-ZZ', 
-            {
-              translation:{
-                'Z':{
-                  pattern: /[a-zA-Z0-9]/
+      $scope.fnLoadPhoneMask = function(){
+          /**********************************************
+          *               INPUT PHONE MASK              *
+          **********************************************/
+          $('.input--movil').mask('9999999999999999999999999');
+          $('.input--local').mask('9999999999999999999999999');
+          $('.input--phone').mask('9999999999999999999999999');
+          $('.input--time').mask('00:00');
+          $('.input--dni').mask('99999999');
+          $('.input--number').mask('99');
+          $('.input--date-number').mask('999999');
+          $('.input--date').mask('00/00/0000', {placeholder: "__/__/____"});
+          $('.input-ipaddr').mask('099.099.099.099', {placeholder: "___.___.___.___"});
+          $('.input-macaddr').mask('ZZ-ZZ-ZZ-ZZ-ZZ-ZZ', 
+              {
+                translation:{
+                  'Z':{
+                    pattern: /[a-zA-Z0-9]/
+                  }
+                },
+                placeholder: "__-__-__-__-__-__"}
+          );
+          $('.input--decimal').mask('999999,99');
+          $('.input--tel.input--dni').on('focus', function () {
+            //console.log($(this).val());
+             if ($(this).val().length === 0) {
+               $(this).val();
+             }
+          });
+          
+          $('.input--tel.input--dni').keydown(function (e) {
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                     (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                     (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                     (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                     (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        return;
                 }
-              },
-              placeholder: "__-__-__-__-__-__"}
-        );
-        $('.input--decimal').mask('999999,99');
-        $('.input--tel.input--dni').on('focus', function () {
-          //console.log($(this).val());
-           if ($(this).val().length === 0) {
-             $(this).val();
-           }
-        });
-        
-        $('.input--tel.input--dni').keydown(function (e) {
-              if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                   (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                   (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-                   (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-                   (e.keyCode >= 35 && e.keyCode <= 39)) {
-                      return;
-              }
 
-              if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                  e.preventDefault();
-              }
-          });      
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });      
       }
 }); /*Cierre del JS ANGULAR*/
