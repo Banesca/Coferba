@@ -1514,6 +1514,13 @@ class Client_model extends CI_Model {
                 $rs5                    = $quuery->result_array();
                 $rs['list_departament'] = $rs5;
 
+                // ARCHIVOS SUBIDOS
+                $this->db->select("*")->from("tb_client_files_list");
+                $quuery = $this->db->where("tb_client_files_list.idClientfK =", $id)->get();
+
+                $rs6                       = $quuery->result_array();
+                $rs['files_uploaded']      = $rs6;
+
                 return $rs;
             }
 
@@ -1603,6 +1610,13 @@ class Client_model extends CI_Model {
                     $rs7                        = $quuery->result_array();
                     $rs[$i]['list_address_particular'] = $rs7;
 
+                    // ARCHIVOS SUBIDOS
+                    $this->db->select("*")->from("tb_client_files_list");
+                    $quuery = $this->db->where("tb_client_files_list.idClientfK =", $row->idClient)->get();
+
+                    $rs8                       = $quuery->result_array();
+                    $rs[$i]['files_uploaded']      = $rs8;
+
                     $i++;
                 }
 
@@ -1613,11 +1627,42 @@ class Client_model extends CI_Model {
 
             return null;
         }
+    }
+    public function postUploadFiles($customerId, $fileName, $file) {
+        $image_path = realpath(APPPATH . '../../Frond/sistema/images');
+        $file_name_ext = explode(".", $file["file"]["name"])[1];
+        $file_name_tmp = explode(".", $file["file"]["name"])[0];
+        if ($fileName != ''){
+            $file_name  = $customerId . '_'. $fileName . '_' . date("Ymd") . '.' . $file_name_ext;    
+        }else{
+           $file_name  = $customerId . '_'. $file_name_tmp . '_' . date("Ymd") . '.' . $file_name_ext;     
+        }
+        
+        //$file_size  = $file['file']['size'];
+        $file_type  = $file['file']['type'];
+        //$error      = $file['file']['error'];
+        $tempPath   = $file['file']['tmp_name' ];
+        $uploadPath = $image_path. DIRECTORY_SEPARATOR .$file_name;
+        move_uploaded_file($tempPath, $uploadPath);
+        $answer = array('dir' => '/images/', 'filename' => $file_name, 'type' => $file_type);
 
+        return $answer;
+    }
+    public function addCustomerUploadedFile($client) {
+        $this->db->insert('tb_client_files_list', [
+                'idClientfK'       => $client['idClient'],
+                'title'            => $client['name'],
+                'urlFile'          => $client['urlFile'],
+                'typeFile'         => $client['type'],
+                ]
+        );
+        if ($this->db->affected_rows() === 1) {
+            return true;
+        }else{
+            return null;
+        }
 
     }
-
-
 }
 
 ?>

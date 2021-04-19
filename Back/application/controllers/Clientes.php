@@ -234,5 +234,32 @@ class Clientes extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+    public function upload_post() {
+        if ( !empty( $_FILES ) ) {
+            $customerId  = $this->post('customerId');
+            $fileName  = $this->post('fileName');
+            $file      = $_FILES;
+        }else{
+            $upload=null;
+        }
+        $upload = $this->client_model->postUploadFiles($customerId, $fileName, $file);
+        if (! is_null($upload)) {
+            $this->response($upload, 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }                
+
+    }
+
+    public function addCustomerUploadedFile_post() {
+
+        $rs = $this->client_model->addCustomerUploadedFile($this->post('client'));
+        if (! is_null($rs)) {
+            $this->response([ 'response' => "Registro Exitoso" ], 200);
+        } else {
+            $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+        }
+    }
+
 
 }
