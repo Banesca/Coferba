@@ -234,7 +234,7 @@ class Clientes extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
-    public function upload_post() {
+    public function uploadFile_post() {
         if ( !empty( $_FILES ) ) {
             $customerId  = $this->post('customerId');
             $fileName  = $this->post('fileName');
@@ -260,6 +260,31 @@ class Clientes extends REST_Controller {
             $this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
         }
     }
+
+    public function deleteFile_post() {
+        $urlFile  = $this->post('fileName');
+
+        if (! $urlFile) {
+            $this->response(array('warning' => 'url of file is missing'), 404);
+        }
+
+        $rs = $this->client_model->postDeleteFiles($urlFile);
+        if (!is_null($rs)) {
+            $this->response("Eliminado", 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    } 
+
+    public function deleteCustomerUploadedFile_delete($idClientFile) {
+
+        $rs = $this->client_model->deleteCustomerUploadedFile($idClientFile);
+        if (!is_null($rs)) {
+            $this->response("Eliminado", 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }    
 
 
 }

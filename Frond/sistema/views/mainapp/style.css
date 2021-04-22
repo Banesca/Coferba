@@ -20,6 +20,18 @@ body{
     color: #d9534f;
     border-color: #d43f3a;
 }
+.thumbnail-success{
+  border: 1px solid #5cb85c;
+  background-color: #5cb85c;
+}
+.thumbnail-warning{
+  border: 1px solid #eea236;
+  background-color: #f0ad4e;
+}
+.thumbnail-danger{
+  border: 1px solid #d43f3a;
+  background-color: #d9534f;
+}
 /*UI SELECT FOR NO ITEM FOUND RULE*/
 .ui-select-no-choice { 
   background-color: #f0ad4e;
@@ -426,7 +438,6 @@ input.fileUpload{
     background-color: rgba(255, 188, 87, 0.66);
     padding: 0;
 }
-
 .navbar-custom {
     background-color: #2e353d;
     color:#ffffff;
@@ -2158,6 +2169,22 @@ input:checked + .slider-3x:before {
   border: 1px solid #ddd !important;
 }
 /********************************************/
+/*FileList*/
+.file-list {
+  padding: 0;
+}
+
+.file-list li {
+  display: inline-block;
+  margin: 0 1em 1em 0;
+  list-style-type: none;
+  text-align: center;
+}
+
+.file-list-5 img {
+  width: 120px;
+  height: 120px;
+} 
 /********************************************/
  ::-webkit-scrollbar {
         width: 12px;
@@ -2611,6 +2638,20 @@ input:checked + .slider-3x:before {
   .update_button{
     display: none;
   }
+  .file-list li {
+      margin: 0;
+    }
+  }
+
+  .file-list-1 img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .file-list-2 img {
+    width: 6em;
+  }
+
 }
 
 @media screen and (max-width: 766px) {

@@ -12,5 +12,4 @@ $(document).ready(function() {
             placement: 'top',
             content: function(){return '<img src="'+$(this).data('img') + '" />';}
           });	
-
 });

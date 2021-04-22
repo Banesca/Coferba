@@ -1,7 +1,7 @@
 var moduleCustomerServices = angular.module("services.Customers", ["tokenSystem"]);
 
-moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$timeout', 'serverHost', 'serverBackend', 'serverHeaders', 
-  function($http, tokenSystem, $timeout, serverHost, serverBackend, serverHeaders){
+moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem', '$timeout', 'serverHost', 'serverBackend', 'serverHeaders', 
+  function($http, $q, tokenSystem, $timeout, serverHost, serverBackend, serverHeaders){
       var rsJson = {};
       var sndJson= {};
       var rsCustomer={'client':{}};
@@ -104,7 +104,7 @@ moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$ti
                     method : "GET",
                     url : serverHost+serverBackend+"Clientes/findadmin/"+id
                   }).then(function mySuccess(response) {
-                  rsJson=response.data;
+                  rsJson=response;
                   return rsJson;
                 },function myError(response) { 
                   console.log("Error: "+response.data.error); 
@@ -117,12 +117,64 @@ moduleCustomerServices.service("CustomerServices", ['$http', 'tokenSystem', '$ti
                     method : "GET",
                     url : serverHost+serverBackend+"Clientes/listCustomersById/"+id
                   }).then(function mySuccess(response) {
-                  rsJson=response.data;
+                  rsJson=response;
                   return rsJson;
                 },function myError(response) { 
                   console.log("Error: "+response.data.error); 
                   return response;
                 })  
-          },        
+          },
+          uploadCustomerFiles: function(file, customerId, fileName){
+              var fd = new FormData();
+              fd.append('file', file);
+              fd.append('customerId', customerId);
+              fd.append('fileName', fileName);
+              console.log("[Customer Services] => upload file: ");
+              return $http.post(serverHost+serverBackend+"Clientes/uploadFile", fd, {
+                  transformRequest: angular.identity,
+                  headers: {'Content-Type': undefined}
+              }).then(function mySuccess(response) {
+                rsJson=response;
+                return rsJson;                
+              },function myError(response) { 
+                console.log("Error: "+response); 
+                return response;
+              })
+          },
+          addUploadedCustomerFile: function(data) {
+            rsCustomer.client = data;            
+            console.log("[Customer Services] => add Customer Uploaded File");
+            return $http.post(serverHost+serverBackend+"Clientes/addCustomerUploadedFile",rsCustomer,serverHeaders)
+              .then(function mySucess(response, status) {
+                rsJson=response;
+                return rsJson;
+              },function myError(response) { 
+                console.log("Error: "+response); 
+                return response;
+              });
+          },
+          deleteCustomerFiles: function(fileName){
+            rsCustomer.fileName = fileName; 
+            console.log("[Customer Services] => Delete Customer Uploaded File from hard drive ");
+            return $http.post(serverHost+serverBackend+"Clientes/deleteFile",rsCustomer,serverHeaders)
+            .then(function mySuccess(response) {
+              rsJson=response;
+              return rsJson;                
+            },function myError(response) { 
+              console.log("Error: "+response); 
+              return response;
+            })
+          },          
+          deleteUploadedCustomerFile: function(idClientFiles) {     
+            console.log("[Customer Services] => Delete Customer Uploaded File from db");
+            return $http.delete(serverHost+serverBackend+"Clientes/deleteCustomerUploadedFile/"+idClientFiles)
+              .then(function mySucess(response, status) {
+                rsJson=response;
+                return rsJson;
+              },function myError(response) { 
+                console.log("Error: "+response); 
+                return response;
+              });
+          },             
       }
 }]);

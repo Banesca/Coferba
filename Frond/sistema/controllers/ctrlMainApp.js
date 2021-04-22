@@ -10,14 +10,14 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
                                                 "services.Customers",
                                                "systemServices.Mail",
                                                   "services.service", 
-                                                         "ui.select",
-                                                 "angularFileUpload", 
+                                                         "ui.select", 
                                                 "services.Utilities",
                                                 "services.Contracts",
                                                        "ngclipboard",
                                                      "Service.Pager",
-                             "angularUtils.directives.dirPagination",                                                     
-                                                         "ngCookies"]);
+                             "angularUtils.directives.dirPagination",                             
+                                                         "ngCookies",
+                                                "bootstrapLightbox"]);
 /*FILTERS & DIRECTIVES */
   /**************************************************
   *                                                 *
@@ -188,7 +188,7 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
   });  
 /*************************************************/
 //Controller.$inject = ['$scope'];
-moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, FileUploader, UtilitiesServices, PagerService, $cookies){
+moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, UtilitiesServices, PagerService, $cookies){
     /**************************************************************/
       $scope.redirectSuccessfull = false;
       $scope.counT  =5;
@@ -233,9 +233,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       const fullSysDate = sysDate.toLocaleString('es-AR', { day: 'numeric', month: 'numeric', year:'numeric' });
 
       //currentMoney.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-      const sysYear = sysDate.toLocaleString('es-AR', { year: 'numeric'}).toString().substr(2,2);
+      const sysYear  = sysDate.toLocaleString('es-AR', { year: 'numeric'}).toString().substr(2,2);
       const sysMonth = sysDate.toLocaleString('es-AR', { month: 'numeric'});
-      const sysDay = sysDate.toLocaleString('es-AR', { day: 'numeric'});
+      const sysDay   = sysDate.toLocaleString('es-AR', { day: 'numeric'});
       //console.log($scope.sysModules);
       //console.log($scope.sysLoggedUserModules);
       //$cookies.__SESSION = $scope.sysLoggedUser;
@@ -5030,6 +5030,19 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                   $('#confirmRequestModal').modal('hide');
               }            
             break;
+            case "deleteSingleFile":
+              if (confirm==0){
+                $scope.delFile=obj;
+                $scope.mess2show="El archivo "+obj.title+" sera eliminado.     Confirmar?";
+
+                console.log('Archivo a eliminar ID: '+obj.idClientFiles+' File: '+obj.title);
+                console.log("============================================================================")   
+                $('#confirmRequestModal').modal('toggle');
+              }else if (confirm==1){
+                  $scope.switchCustomersFn('deleteSingleFile', $scope.delFile);
+                  $('#confirmRequestModal').modal('hide');
+              }              
+            break;
             default:
           }
         }
@@ -6687,7 +6700,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       $scope.geoLocation = {'address':'','addressLat':'', 'addressLon':'', 'option':''};
       $scope.tmpAddres = {'province':{},'location':{}};
       $scope.service = {'customer':{},'new':{'isHasLockingScrew':'0','numbOfLicenceRemains':'', 'numbOfLicenceSet':'', 'people':{}}, 'users':{'fullName':'','emailUser':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}}, 'update':{}, 'tipo_conexion_remoto':[{}], 'dvr':{'selected':undefined}, 'batteries':{'selected':undefined}, 'cameras':{'selected':undefined}, 'modem':{'selected':undefined}, 'router':{'selected':undefined}, 'crtlAccess':{'selected':undefined}, 'lockedIt':{'selected':undefined}, 'entranceReader':{'selected':undefined}, 'powerSupply':{'selected':undefined}, 'exitReader':{'selected':undefined}, 'emergencyButton':{'selected':undefined}, 'TurnOffKey':{'selected':undefined}, 'alarmPanel':{'selected':undefined}, 'alarmKeyboard':{'selected':undefined}, 'sysUser':{'selected':undefined}, 'sensor':{'selected':undefined}, 'adicional':{}, 'aditional_alarm':{}};
-      $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'companyData':{}, 'particular':{}, 'select':{'main':{},'payment':{}, 'company':{}}};
+      $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'upload':{}, 'companyData':{}, 'particular':{}, 'select':{'main':{},'payment':{}, 'company':{}}};
       $scope.contract = {'new':{}, 'update':{}, 'info':{}, 'select':{'main':{},'date':{}, 'codes':{}}};
       $scope.customer.select.main = {'address':{}, 'department':'', 'province':{'selected':undefined}, 'location':{'selected':undefined}, }
       $scope.customer.select.payment = {'address':{}, 'department':'', 'province':{'selected':undefined}, 'location':{'selected':undefined}}
@@ -6868,6 +6881,36 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         case "particularAddress":
           $scope.customerDataFn(cObj,'particularAddress');
         break;
+        case "loadCustomerFields":
+          $scope.loadCustomerFieldsFn(cObj)
+        break;
+        case "uploadFiles":
+          $scope.customer.upload={};
+          blockUI.start('Subir archivos al cliente '+cObj.ClientType);
+          $timeout(function() {
+            $scope.customerDataFn(cObj, 'uploadFiles');
+            blockUI.stop();
+          }, 1500); 
+        break;
+        case "listFiles":
+          blockUI.start('ver archivos del cliente '+cObj.ClientType);
+          $timeout(function() {
+            $scope.customerDataFn(cObj, 'listFiles');
+            blockUI.stop();
+          }, 1500); 
+        break;
+        case "deleteSingleFile":
+          blockUI.start('Eliminando archivo del cliente '+$scope.customer.files.ClientType);
+          $timeout(function() {
+            $scope.deleteSingleFile(cObj);
+            blockUI.stop();
+          }, 1500);         
+        break;
+        case "switchToServices":
+          $scope.fnShowHide('services', 'open');
+          $scope.searchCustomerFound=true;
+          $scope.loadCustomerFieldsFn(cObj)
+        break;        
         case "contract":
           switch (opt2){
             case "new_contract_windows":
@@ -6949,7 +6992,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 $scope.serviceDataFn(cObj, 'update');
               }, 1500);                          
             break;
-           
             case "select_contract_first":
               if ($scope.rsContractsListByCustomerIdData.length>0){
                 $('#SelectContractFirst').modal('show');
@@ -6999,11 +7041,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           $scope.isUpdateCustomer=true;
           $scope.customerDataFn(cObj,'allowedUsers'); 
         break;
-        case "allowedUsers_update":       
+        case "allowedUsers_update":
           $scope.customerDataFn(cObj,'allowedUsers_update'); 
-        break;allowedUsers_apply
-        case "uploadFiles":
-          $('#attachCustomerFiles').modal('toggle');
         break;
         case "info":
           $scope.isInfoCustomer=true;
@@ -7225,11 +7264,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           };
     /**************************************************
     *                                                 *
-    *                UPDATE CUSTOMER                  *
+    *             CUSTOMER DATA FUNCTION              *
     *                                                 *
     **************************************************/
         /******************************
-        *     SELECT CUSTOMER DATA    *
+        *  SWITCH CUSTOMER FUNCTION   *
         ******************************/
           $scope.chekBox={row: {}};
           $scope.tmpVars ={};
@@ -7245,7 +7284,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                         $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
                         $scope.customer.update.billing_information=obj.billing_information[0];
                         var chekbDays = $scope.chekBox.row;
-                        /*PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
+                        /* PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
                         for (var key in chekbDays){
                             if (chekbDays[key]==true){
                               $scope.chekBox.row[key]=false;
@@ -8121,6 +8160,27 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                     });
                     console.info($scope.customer.info);                              
                     $scope.enabledNextBtn();                   
+                break;
+                case "uploadFiles":
+                  $timeout(function() {
+                    $scope.customer.upload=obj;
+                      $('#attachCustomerFiles').modal({backdrop: 'static', keyboard: false});
+                      $('#attachCustomerFiles').on('shown.bs.modal', function () {
+                      });
+                    blockUI.stop();
+                    $scope.customer.upload.editFileTitle=false;
+                    //console.info($scope.customer.upload);                              
+                  }, 500);                  
+                break;
+                case "listFiles":
+                  $timeout(function() {
+                    $scope.customer.files=obj;
+                      $('#listCustomerFiles').modal({backdrop: 'static', keyboard: false});
+                      $('#listCustomerFiles').on('shown.bs.modal', function () {
+                      });
+                    blockUI.stop();                    
+                    console.info($scope.customer.files);                              
+                  }, 500);                  
                 break;                
                 default:
                   console.info("-------------------------");
@@ -8187,9 +8247,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
             return arrLocationSelect;
           }
           $scope.getCustomerBusinessNameByIdFn = function(clientId){
-            //console.log("getCustomerBusinessNameByIdFn: "+clientId);
+            console.log("getCustomerBusinessNameByIdFn: "+clientId);
             var arrCompanySelect = [];
-            //console.log($scope.rsCustomerListData);
+            console.log($scope.rsCustomerListData);
             for (var key in  $scope.rsCustomerListData){
                 if ($scope.rsCustomerListData[key].idClient==clientId){
                     arrCompanySelect.push({'idClient':$scope.rsCustomerListData[key].idClient, 'businessName':$scope.rsCustomerListData[key].businessName});
@@ -8315,20 +8375,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
       };
     /**************************************************
     *                                                 *
-    *       GET LIST OF CUSTOMER BY CUSTOMER ID       *
+    *                GET CUSTOMER BY ID               *
     *                                                 *
     **************************************************/
-      $scope.rsListCustomersOfCustomerData = {};
-      $scope.getLisOfCustomersByIdFn = function(id){
-        $scope.rsCustomerListData={};
-        CustomerServices.getCustomersListByCustomerId(id).then(function(data){
-          if(data.status!=404){
-            $scope.rsCustomerListData = data;
-          }else{
-            $scope.rsCustomerListData = '';
+      $scope.getCustomerByIdFn = function(id){
+        CustomerServices.getCustomersById(id).then(function(response){
+          if(response.status==200){
+            $scope.customer.files = response.data;
+            if ($scope.customer.files.files_uploaded.length==0){
+              $('#listCustomerFiles').modal('hide');
+              $scope.customer.files={};
+            }            
           }
-           $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
-        //console.log($scope.rsCustomerListData);
         });
       };    
       $scope.list_id_user=[];
@@ -8355,50 +8413,264 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
     *                UPLOAD CUSTOMER FILES            *
     *                                                 *
     **************************************************/
-      var uploader = $scope.uploader = new FileUploader({
-          url: 'upload.php'
-      });
-      uploader.filters.push({
-          name: 'customFilter',
-          fn: function(item /*{File|FileLikeObject}*/, options) {
-              return this.queue.length < 10;
+          $scope.filesUploadList=[];
+          $scope.fileList=[];
+          $scope.fileListTmp=[];
+          $scope.fileName=null;
+          $scope.invalidTypeOf=false;
+          $scope.fileTypeOf=null;
+          $scope.isFileExist = null;
+        /**************************************
+        *             IMAGE VIEWER            *
+        **************************************/
+          $scope.openLightboxModal = function (arrObj, index) {
+            Lightbox.openModal(arrObj, index);
           }
-      });
-      // CALLBACKS
-      uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-          //console.info('onWhenAddingFileFailed', item, filter, options);
-      };
-      uploader.onAfterAddingFile = function(fileItem) {
-          //console.info('onAfterAddingFile', fileItem);
-      };
-      uploader.onAfterAddingAll = function(addedFileItems) {
-          //console.info('onAfterAddingAll', addedFileItems);
-      };
-      uploader.onBeforeUploadItem = function(item) {
-          //console.info('onBeforeUploadItem', item);
-      };
-      uploader.onProgressItem = function(fileItem, progress) {
-          //console.info('onProgressItem', fileItem, progress);
-      };
-      uploader.onProgressAll = function(progress) {
-          //console.info('onProgressAll', progress);
-      };
-      uploader.onSuccessItem = function(fileItem, response, status, headers) {
-          //console.info('onSuccessItem', fileItem, response, status, headers);
-      };
-      uploader.onErrorItem = function(fileItem, response, status, headers) {
-          //console.info('onErrorItem', fileItem, response, status, headers);
-      };
-      uploader.onCancelItem = function(fileItem, response, status, headers) {
-          //console.info('onCancelItem', fileItem, response, status, headers);
-      };
-      uploader.onCompleteItem = function(fileItem, response, status, headers) {
-          //console.info('onCompleteItem', fileItem, response, status, headers);
-      };
-      uploader.onCompleteAll = function() {
-          //console.info('onCompleteAll');
-      };
-      //console.info('uploader', uploader);
+        /**************************************
+        *               PDF VIEWER            *
+        **************************************/
+          $scope.openPDFModalViewer = function (obj) {
+            $('#pdfViewerModal').modal('show');
+            $('#pdfViewerModal').on('shown.bs.modal', function () {
+              PDFObject.embed(serverHost+obj.urlFile, "#pdfobject");
+            });            
+            
+          }
+        /**************************************
+        *             DOWNLOAD FILE           *
+        **************************************/
+          $scope.downloadFile = function (obj) {
+            console.log(serverHost+obj.urlFile);
+            var a = document.createElement('a');
+            a.href = serverHost+obj.urlFile;
+            a.download = obj.title;
+            a.click();
+            a.remove();            
+          };
+        /**************************************
+        *         LOAD FILES TO UPLOAD        *
+        **************************************/
+          $scope.loadFilesFn = function(e) {
+            $scope.fileListTmp=[];
+            var list = e;            
+            $scope.$apply(function($scope) {
+            for(var i=0;i<list.files.length;i++){
+              file = list.files[i];
+              var fileName=file.name.replace(/ /g,"_");
+              var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+              if('|jpg|png|jpeg|bmp|gif|pdf|docx|xlsx|msword|vnd.openxmlformats-officedocument.wordprocessingml.document|vnd.openxmlformats-officedocument.spreadsheetml.sheet|vnd.ms-excel|'.indexOf(type) !== -1){
+                var cleanFile = new File([file], fileName, {type: file.type, lastModified: file.lastModified, size: file.size});
+                console.log(cleanFile);
+                $scope.fileListTmp.push(cleanFile);
+              }else{
+                  $scope.fileName=file.name;
+                  $scope.fileTypeOf=file.type.slice(file.type.lastIndexOf('/') + 1)
+                  $scope.invalidTypeOf=true;
+                  inform.add('El archivo: '+file.name+' es de tipo invalido. ',{
+                    ttl:4000, type: 'warning'
+                  });
+                  console.log(file.name + " with type "+file.type+" is not supported");
+                $("#uploadCustomerfiles").val(null);
+              }
+            }
+            //console.log($scope.fileListTmp);
+            $scope.processFileListFn();
+            });               
+          }
+        /**************************************
+        *          UPLOAD SINGLE FILE         *
+        **************************************/
+          $scope.uploadSingleFile = function(item){
+            for (var key in $scope.filesUploadList){
+              if ($scope.filesUploadList[key].name==item.name && $scope.filesUploadList[key].type==item.type){                
+                var file      =  $scope.filesUploadList[key];
+                var fileTitle  =  item.fileTitle==''?'':item.fileTitle.replace(/ /g,"_");;
+                break;
+              }
+            }
+            //SEND DATA TO THE UPLOAD SERVICE
+            $scope.uploadFilesFn(file, $scope.customer.upload.idClient, fileTitle, item)
+          }
+        /**************************************
+        *          UPLOAD ALL FILES           *
+        **************************************/
+          $scope.uploadAllFiles = function(fileList){            
+            for (var item in fileList){
+              //console.log(fileList[item]);
+              if (fileList[item].uploadStatus==false){
+                for (var key in $scope.filesUploadList){
+                  if ($scope.filesUploadList[key].name==fileList[item].name && $scope.filesUploadList[key].type==fileList[item].type){                
+                    var file      =  $scope.filesUploadList[key];
+                    var fileTitle  =  fileList[item].fileTitle==''?'':fileList[item].fileTitle.replace(/ /g,"_");;
+                  //SEND DATA TO THE UPLOAD SERVICE
+                  $scope.uploadFilesFn(file, $scope.customer.upload.idClient, fileTitle, fileList[item])
+                  }
+                }
+              }
+            }                       
+          }          
+        /**************************************
+        *          REMOVE SINGLE FILE         *
+        **************************************/
+          $scope.removeSingleFile = function(index, obj){
+            console.log(index);
+            $scope.filesUploadList.splice(index, 1);
+            $scope.fileList.splice(index, 1);
+              inform.add("Archivo: "+obj.name+" ha sido removido correctamente.",{
+                ttl:5000, type: 'success'
+              });            
+          }
+        /**************************************
+        *            REMOVE FILE LIST         *
+        **************************************/
+          $scope.clearFilesQueue = function(opt){
+            $scope.filesUploadList=[];
+            $scope.fileList=[];
+            if(opt==null || opt==undefined){
+              inform.add("Todos los archivos han sido removidos de la lista correctamente.",{
+                ttl:5000, type: 'success'
+              });
+            }
+          }
+        /**************************************
+        *            UPLOAD FILES             *
+        **************************************/
+          $scope.uploadFilesFn = function(file, idClient, fileTitle, item){
+            $scope.uploadCustomerData={};
+            CustomerServices.uploadCustomerFiles(file, idClient, fileTitle).then(function(rsupload){
+              //console.log(rsupload);
+              if(rsupload.status==200){
+                $scope.uploadCustomerData.idClient = idClient;
+                $scope.uploadCustomerData.urlFile  = rsupload.data.dir+rsupload.data.filename;                
+                $scope.uploadCustomerData.name     = rsupload.data.filename;
+                $scope.uploadCustomerData.type     = rsupload.data.type;
+                //console.log($scope.uploadCustomerData);
+                CustomerServices.addUploadedCustomerFile($scope.uploadCustomerData).then(function(response){
+                  if(response.status==200){
+                    var fileName=item.fileTitle==''?item.name:item.fileTitle;
+                    inform.add('Archivo '+fileName+' subido satisfactoriamente. ',{
+                          ttl:2000, type: 'success'
+                    });                    
+                    item.uploadStatus=true;
+                    $scope.getCustomerListFn("",1);                    
+                  }else if(response.status==404){
+                  console.log("not found, contact administrator");
+                  inform.add('Error: [404] Contacta al area de soporte. ',{
+                        ttl:2000, type: 'danger'
+                  });
+                  //$('#RegisterModalCustomer').modal('hide');
+                  }else if(response.status==500){
+                    console.log("file uploaded not added into the db, contact administrator");
+                    inform.add('Error: [500] Contacta al area de soporte. ',{
+                          ttl:2000, type: 'danger'
+                    });
+                    item.uploadStatus=null;
+                    //$('#RegisterModalCustomer').modal('hide');
+                  }
+                });
+              }
+            });
+          }
+        /**************************************
+        *          DELETE SINGLE FILE         *
+        **************************************/
+          $scope.deleteSingleFile = function(file){
+            //SEND DATA TO THE DELETE FILE SERVICE
+            $scope.deleteFilesFn(file)
+          }          
+        /**************************************
+        *           DELETED FILES             *
+        **************************************/
+          $scope.deleteFilesFn = function(file){
+            CustomerServices.deleteCustomerFiles(file.title).then(function(rsdeletedFile){
+              //console.log(rsdeletedFile);
+              if(rsdeletedFile.status==200){
+                CustomerServices.deleteUploadedCustomerFile(file.idClientFiles).then(function(response){
+                  console.log(response);
+                  if(response.status==200){
+                    var fileName=file.title;
+                    inform.add('Archivo '+fileName+' eliminado satisfactoriamente. ',{
+                          ttl:2000, type: 'success'
+                    });
+                    $scope.getCustomerListFn("",1);
+                    $scope.getCustomerByIdFn($scope.customer.files.idClient);
+                  }else if(response.status==404){
+                  console.log("not found, contact administrator");
+                  inform.add('Error: [404] Contacta al area de soporte. ',{
+                        ttl:2000, type: 'danger'
+                  });
+                  //$('#RegisterModalCustomer').modal('hide');
+                  }else if(response.status==500){
+                    console.log("file uploaded not added into the db, contact administrator");
+                    inform.add('Error: [500] Contacta al area de soporte. ',{
+                          ttl:2000, type: 'danger'
+                    });
+                    //$('#RegisterModalCustomer').modal('hide');
+                  }
+                });
+              }
+            });
+          }                  
+        /**************************************
+        *             SET FILENAME            *
+        **************************************/
+          $scope.editItem = function(item) {          
+            $('#editItemTitleModal').modal({backdrop: 'static', keyboard: false});
+            angular.element(document.getElementById("editItemTitleModal")).scope().item = {};
+            $('#editItemTitleModal').on('shown.bs.modal', function () {
+              angular.element(document.getElementById("editItemTitleModal")).scope().item = item;
+              $("#fileTitle").focus();
+            });              
+          };
+          $scope.saveItem = function(item) {
+            $('#editItemTitleModal').modal('hide');
+          }
+        /**************************************
+        *   PROCESS FILE LIST TO SET PREVIEW  *
+        **************************************/
+          $scope.processFileListFn = function(){
+            for(var i=0;i<$scope.fileListTmp.length;i++){
+              var file = $scope.fileListTmp[i];
+              if ($scope.fileList.length>0){
+                  for (var key in $scope.fileList){
+                    if ($scope.fileList[key].name==file.name && $scope.fileList[key].type==file.type){       
+                        inform.add('El archivo: '+file.name+' ya se encuentra en la lista. ',{
+                          ttl:4000, type: 'warning'
+                        }); 
+                        $scope.isFileExist=true;
+                      break;
+                    }else{
+                        console.log("File isn't loaded already!!")
+                        $scope.isFileExist=false; 
+                    }
+                  }
+              }else{
+                $scope.isFileExist=false;
+              }
+              if (!$scope.isFileExist){
+                $scope.setPreviewBeforeUploadFile(file);
+                $scope.invalidTypeOf=false;
+              }
+            }            
+          }            
+        /**************************************
+        *     PREVIEW IMAGE BEFORE UPLOAD     *
+        **************************************/
+          $scope.setPreviewBeforeUploadFile = function (file){
+            //console.info(file);
+            $scope.invalidTypeOf=false;
+            var reader = new FileReader();
+                reader.onload = function(event) {
+                    var src = event.target.result;
+                    $scope.$apply(function($scope) {
+                      $scope.filesUploadList.push(file);
+                      $scope.fileList.push({'name':file.name,'size':file.size,'type':file.type,'src':src,'lastModified':file.lastModified, 'uploadStatus':false, 'fileTitle':''});
+                    });
+                    console.log($scope.fileList);
+                }
+                reader.readAsDataURL(file);
+                $("#uploadCustomerfiles").val(null);
+          }            
     /**************************************************/
     /********************************************************************************************************************************************
     *                                                                                                                                           *
@@ -10830,6 +11102,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
         var arrCompany=[]
         if($scope.customerFound.idClientType=="2" || $scope.customerFound.idClientType=="4"){
           var companyBusinessName = $scope.customerFound.idClientAdminFk==null?$scope.customerFound.idClientCompaniFk:$scope.customerFound.idClientAdminFk;
+          console.log(companyBusinessName);                    
           arrCompany=$scope.getCustomerBusinessNameByIdFn(companyBusinessName); 
           $scope.customerFound.companyBusinessName=arrCompany[0].businessName;
         }
@@ -13048,6 +13321,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           $scope.list_user=[];
           $scope.isSysUserExist=false;
           $scope.loadServiceUserWindowFn=function(obj){
+            $scope.previewData=[];
+            $scope.invalidTypeOf=false;
+            $scope.fileTypeOf=null;            
             //console.log(obj);
             $scope.service.users={}           
                 if ($scope.service.isSysUser){
@@ -13142,13 +13418,16 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                   //console.info(e);   
                   for(var i=0;i<e.length;i++){
                     file = e[i];
-                    if(file.type.indexOf("image") !== -1){
+                    var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+                    if('|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1){
                       $scope.previewFile(file);
                       $scope.fileTypeOf=file.type;
                       $scope.invalidTypeOf=false;
                     }else{
-                      salert(file.name + " is not supported");
-                      $scope.fileTypeOf=file.type;
+                      console.log(file.name + " is not supported");
+                      $scope.service.users.qrCode='';
+                      $scope.previewData = [];
+                      $scope.fileTypeOf=type;
                       $scope.invalidTypeOf=true;
                     }
                   }
@@ -14940,7 +15219,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
                 $scope.manageDepto = 0;
                 $scope.customerSearch.typeClient="all";
                 $scope.getZonesFn();
-                $scope.getCustomerListFn("","");
+                //$scope.getCustomerListFn("","");
                 $scope.getProductsList4ServiceFn();
                 $scope.getTypeOfMaintenanceFn();
                 $scope.getTypeOfContractsFn();
@@ -15044,7 +15323,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, $sce, $locatio
           .then(function (sucess, data) {
                  $scope.listTickt =  sucess.data.response;
                  $scope.totalTickets = $scope.listTickt.length;
-
             },function (error, data,status) {
                 if(error.status == 203 || error.status == 404){
                   console.log("Error Codigo["+error.status+"] - "+error.data.error);

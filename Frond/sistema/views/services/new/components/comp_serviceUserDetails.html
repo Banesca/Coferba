@@ -83,7 +83,7 @@
 							    	<label for="serviceUserQR" style="cursor: pointer;">	
 										<input id="serviceUserQR" name="serviceUserQR" accept="image/*" onchange="angular.element(this).scope().loadAttachedFilesFn(this)" type="file" class="form-control" ng-model="service.users.qrCode" style="display: none;" />
 										<div class="thumbnail">
-									        <img ng-if="previewData.length==0"src="images/nopictureselected.png" style="width:auto">
+									        <img ng-if="previewData.length==0" src="images/nopictureselected.png" style="width:auto">
 											<img ng-if="previewData.length>0" ng-src="{{data.src}}" ng-repeat="data in previewData track by $index" class="thumbnail box-center" style="width:auto">       
 									        <div class="caption">
 									          	<p ng-if="previewData.length>=0">Seleciona una imagen de tipo  jpg|png|jpeg</p>

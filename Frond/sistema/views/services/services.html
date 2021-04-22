@@ -51,7 +51,7 @@
               <div class="input-group s-ui-width s-ui-m-left">
                 <input type="text" name="customerSearch" id="customerSearch" ng-model="customerSearch.name" ng-keyup="findCustomerFn(customerSearch.name)" class="form-control input-lg input-font-size text-uppercase" required="true" />
                 <ul class="list-group" style="height: 0px;">
-                  <li class="list-group-item" ng-repeat="item in listCustomerFound" ng-class="{'padding-t-38': $index==0}" ng-click="loadCustomerFieldsFn(item.customer)"> {{item.customer.idClient}} - {{item.customer.name}} <span class="label label-default">{{item.customer.ClientType | uppercase}}</span></li>
+                  <li class="list-group-item" ng-repeat="item in listCustomerFound" ng-class="{'padding-t-38': $index==0}" ng-click="switchCustomersFn('loadCustomerFields', item.customer);"> {{item.customer.idClient}} - {{item.customer.name}} <span class="label label-default">{{item.customer.ClientType | uppercase}}</span></li>
                 </ul>
               </div>
           </div>

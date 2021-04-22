@@ -1629,7 +1629,7 @@ class Client_model extends CI_Model {
         }
     }
     public function postUploadFiles($customerId, $fileName, $file) {
-        $image_path = realpath(APPPATH . '../../Frond/sistema/images');
+        $image_path = realpath(APPPATH . '../../Frond/sistema/files');
         $file_name_ext = explode(".", $file["file"]["name"])[1];
         $file_name_tmp = explode(".", $file["file"]["name"])[0];
         if ($fileName != ''){
@@ -1644,7 +1644,7 @@ class Client_model extends CI_Model {
         $tempPath   = $file['file']['tmp_name' ];
         $uploadPath = $image_path. DIRECTORY_SEPARATOR .$file_name;
         move_uploaded_file($tempPath, $uploadPath);
-        $answer = array('dir' => '/images/', 'filename' => $file_name, 'type' => $file_type);
+        $answer = array('dir' => '/files/', 'filename' => $file_name, 'type' => $file_type);
 
         return $answer;
     }
@@ -1663,6 +1663,18 @@ class Client_model extends CI_Model {
         }
 
     }
+    public function postDeleteFiles($fileName) {
+        $image_path = realpath(APPPATH . '../../Frond/sistema/files');
+        $filePath = $image_path. DIRECTORY_SEPARATOR .$fileName;
+        unlink($filePath);  
+        return true;
+    }      
+    public function deleteCustomerUploadedFile($idClientFile) {
+
+        $this->db->delete('tb_client_files_list', array('idClientFiles' => $idClientFile));  
+        return true;
+
+    }    
 }
 
 ?>
