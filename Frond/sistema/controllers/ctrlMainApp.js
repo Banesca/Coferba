@@ -191,6 +191,9 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
 moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, UtilitiesServices, PagerService, $cookies){
     /**************************************************************/
       $scope.redirectSuccessfull = false;
+      $scope.locationHref=window.location.href;
+      console.log($scope.locationHref);
+      console.log(serverHost+serverBackend);
       $scope.counT  =5;
       $scope.redirect ="/login";
       tokenSystem.destroyTokenStorage(4);
@@ -986,7 +989,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.getParameter = function(){
          $http({
             method : "GET",
-            url : serverBackend+"User/mailsmtp"
+            url : serverHost+serverBackend+"User/mailsmtp"
           }).then(function mySuccess(response) {
               $scope.listParameter   = response.data;
           }, function myError(response) {
@@ -1029,7 +1032,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               var idCompanytmp=idCompanyKf;
              $http({
                 method : "GET",
-                url : serverBackend+"Direccion/addressListByCompanyid/"+idCompanytmp
+                url : serverHost+serverBackend+"Direccion/addressListByCompanyid/"+idCompanytmp
               }).then(function mySuccess(response) {
                   $scope.listOffice   = response.data
 
@@ -1067,7 +1070,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
 
          $http({
             method : "GET",
-            url : serverBackend+"Direccion/companyByid/"+idCompanytmp
+            url : serverHost+serverBackend+"Direccion/companyByid/"+idCompanytmp
           }).then(function mySuccess(response) {
               $scope.listOffice   = response.data;
               $scope.companyFound=true;
@@ -1084,7 +1087,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.CallFilterFormU = function(varray){
          $http({
             method : "GET",
-            url : serverBackend+"User/filterForm"
+            url : serverHost+serverBackend+"User/filterForm"
           }).then(function mySuccess(response) {
               $scope.listProfile      = response.data.profile;
               $scope.lisTypeTenant    = response.data.type;
@@ -1154,7 +1157,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var arrList = [];
          $http({
             method : "GET",
-            url : serverBackend+"Ticket/filter"
+            url : serverHost+serverBackend+"Ticket/filter"
           }).then(function mySuccess(response) {
               $scope.listTypeDelivery = response.data.typedelivery;
               $scope.listTypeServices = response.data.typeservices;
@@ -1192,7 +1195,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.getAllAddress = function (){
         $http({
             method : "GET",
-            url : serverBackend+"Direccion"
+            url : serverHost+serverBackend+"Direccion"
           }).then(function mySuccess(response){
               $scope.ListAddress = response.data;
           }, function myError (response){
@@ -1250,7 +1253,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var urlF=$scope.sessionidProfile==5 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2) ? url1 : url2;
         $http({
             method : "GET",
-            url : serverBackend+urlF,
+            url : serverHost+serverBackend+urlF,
           }).then(function mySuccess(response){
               $scope.ListTenantAddress  = response.data;
               //console.log($scope.ListTenantAddress);
@@ -1276,7 +1279,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         console.log("[getTypeAttendant]: getting the attendant type list");
          $http({
             method : "GET",
-            url : serverBackend+"Ticket/typeAttendant"
+            url : serverHost+serverBackend+"Ticket/typeAttendant"
           }).then(function mySuccess(response) {
                 $scope.listTypeAttendant = response.data;
                  $scope.attendantTypeFound=true;
@@ -1306,7 +1309,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var informMessage="";
          $http({
             method : "GET",
-            url : serverBackend+"User/attendantByIdDirecction/"+idAddressAttKf
+            url : serverHost+serverBackend+"User/attendantByIdDirecction/"+idAddressAttKf
           }).then(function mySuccess(response) {
                 $scope.listAttendant ="";
                 $scope.listAttendant = response.data;
@@ -1455,9 +1458,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         idTenantTmp = $scope.sessionidProfile==3 || ($scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1)? $scope.sessionidOwner : $scope.idTenantKf;
          if ($scope.sessionidProfile==3 || $scope.sessionidProfile==6){
               $scope.isCollapsed = false;$scope.collap=1;
-              urlT=serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'-1';
+              urlT=serverHost+serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+idTenantTmp+"/"+'-1';
             }else{
-              urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+              urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
             }
 
         $http({
@@ -1495,7 +1498,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.fnAssignDepto = function(item1, item2){
         var fnAction= $scope.sessionidProfile==3 ? 0 : item2;
         console.log($scope._getData2AssignDepto(item1, item2));
-        $http.post(serverBackend+"Department/update",$scope._getData2AssignDepto(item1, item2),setHeaderRequest())
+        $http.post(serverHost+serverBackend+"Department/update",$scope._getData2AssignDepto(item1, item2),setHeaderRequest())
               .then(function(success, data) {
                   if ($scope.sessionidTypeTenant>0 && fnAction==0){
                       inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
@@ -1546,7 +1549,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.fnUnAssignDepto = function (item1, item2) {
         var fnAction= $scope.sessionidProfile==3 ? 0 : item2;
         console.log($scope.data2CancelDepto(item1));
-        $http.post(serverBackend+"Department/update",$scope.data2CancelDepto(item1),setHeaderRequest())
+        $http.post(serverHost+serverBackend+"Department/update",$scope.data2CancelDepto(item1),setHeaderRequest())
               .then(function(success, data) {
                   if ($scope.sessionidProfile!=3 && fnAction==2){
                       inform.add('Cancelada solicitud satisfactoriamente.',{
@@ -1585,7 +1588,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var idDeptoKf = !item1 ? $scope.select.idDepartmentKf : item1;
         $http({
             method : "GET",
-            url : serverBackend+"Department/aprobated/"+idDeptoKf
+            url : serverHost+serverBackend+"Department/aprobated/"+idDeptoKf
           }).then(function mySuccess(response) {
             
               if($scope.manageDepto==1 && $scope.collap==1){
@@ -1655,7 +1658,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var idDeptoKf = !item1 ? $scope.select.idDepartmentKf : item1;
         $http({
             method : "GET",
-            url : serverBackend+"Department/desaprobated/"+idDeptoKf
+            url : serverHost+serverBackend+"Department/desaprobated/"+idDeptoKf
           }).then(function mySuccess(response) {
                   if($scope.manageDepto==1){
                     $scope.listUserDepto(1, $scope.selectIdAddressKf.selected.idAdress); 
@@ -1675,7 +1678,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var rsRequest = item2;
         $http({
             method : "GET",
-            url : serverBackend+"Department/requesLowByProp/"+idDeptoKf+'/'+rsRequest
+            url : serverHost+serverBackend+"Department/requesLowByProp/"+idDeptoKf+'/'+rsRequest
           }).then(function mySuccess(response) {
               if($scope.manageDepto==1){
                 $scope.listUserDepto(1, $scope.selectIdAddressKf.selected.idAdress);
@@ -1707,14 +1710,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.manageDeptoTmp = $scope.manageDepto;
           $scope.manageDepto = value; //Variable usada en la gestion de departamento
             if ($scope.sessionidProfile!=1 && $scope.manageDepto==1){
-               urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
+               urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
             }
             if($scope.sessionidProfile!=3 && $scope.sessionidProfile!=5 && $scope.sessionidProfile!=6 && $scope.manageDepto>=0 || $scope.IsSystem){
-              urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+              urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
             }if (($scope.sessionidProfile==5 || $scope.sessionidProfile==6 && $scope.sessionidTypeTenant==2) && $scope.manageDepto==0){
-              urlT=serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser+"/"+'1';
+              urlT=serverHost+serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidTenantUser+"/"+'1';
             }else if (($scope.sessionidProfile==3 || $scope.sessionidProfile==6 && $scope.sessionidTypeTenant==1) && $scope.manageDepto==0){
-              urlT=serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidOwner+"/"+'1';
+              urlT=serverHost+serverBackend+"Department/byIdTenantYDireccion/"+idAddressTmp+"/"+$scope.sessionidOwner+"/"+'1';
             }
             //console.log(urlT);
         $http({
@@ -1761,7 +1764,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.getAllDeparment = function (idValue){
         //console.log("idAdressKf: "+idValue);
          var idAddressTmp=idValue;
-         urlT=serverBackend+"Department/allDepartment/";
+         urlT=serverHost+serverBackend+"Department/allDepartment/";
            
         $http({
             method : "GET",
@@ -1786,8 +1789,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         //alert("2: "+$scope.manageDepto);
         var idDepto   = v1;
         var typeTenant= v2;
-        var url1=serverBackend+"tenant/allByIdDepartament/"+idDepto;
-        var url2=serverBackend+"Tenant/tenanatByIdDepartament/"+idDepto+"/"+typeTenant;
+        var url1=serverHost+serverBackend+"tenant/allByIdDepartament/"+idDepto;
+        var url2=serverHost+serverBackend+"Tenant/tenanatByIdDepartament/"+idDepto+"/"+typeTenant;
         var urlT=$scope.sessionidProfile==3 ? url2 : url1;
         console.log(urlT);
            $http({
@@ -1835,7 +1838,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.searchDptoById = function(){
            $http({
               method : "GET",
-              url : serverBackend+"Department/find/"+$scope.idDeptoKf
+              url : serverHost+serverBackend+"Department/find/"+$scope.idDeptoKf
             }).then(function mySuccess(response) {
               if (!response.data){
                    inform.add('El Departamento no presenta inquilinos registrados.',{
@@ -2000,7 +2003,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         var msg1, msg2;
            $http({
               method : "GET",
-              url : serverBackend+"Ticket/verificateTicketByIdUser/"+idTenant
+              url : serverHost+serverBackend+"Ticket/verificateTicketByIdUser/"+idTenant
             }).then(function mySuccess(response) {
                 $scope.isHasTicket = true;
                 console.log("POSEE TICKETS")
@@ -2504,7 +2507,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         $scope.modificarUsuario = function ($http, $scope, itemOp, rsJSON){
           $scope.isPwdCh=itemOp;
           //console.log($scope._getData2Update($scope.isPwdCh));
-          $http.post(serverBackend+"User/update", rsJSON)
+          $http.post(serverHost+serverBackend+"User/update", rsJSON)
               .then(function (sucess, data) {
                  if ($scope.isPwdCh==0){
                   inform.add($scope.sessionNames +' Sus datos han sido actualizado.',{
@@ -2635,7 +2638,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.disabledUser = function (item) {
             $http({
                 method : "GET",
-                url : serverBackend+"User/inactive/"+item.idUser
+                url : serverHost+serverBackend+"User/inactive/"+item.idUser
               }).then(function mySuccess(response) {
                   if($scope.IsSystem){
                     $scope.getUserLists(1, item.idProfileKf);
@@ -2655,7 +2658,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.enabledUser = function (item) {
             $http({
                 method : "GET",
-                url : serverBackend+"User/active/"+item.idUser
+                url : serverHost+serverBackend+"User/active/"+item.idUser
               }).then(function mySuccess(response) {
                   if($scope.IsSystem){
                     $scope.getUserLists(1, item.idProfileKf);
@@ -2942,7 +2945,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           console.log(item);
           $http({
               method : "delete",
-              url : serverBackend+"User/delete/"+item.idUser
+              url : serverHost+serverBackend+"User/delete/"+item.idUser
             }).then(function mySuccess(response) {
                 //$scope.refresRowsInList();
                 $scope.getUserLists(1, item.idProfileKf);
@@ -2979,7 +2982,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         }
         $scope.chgPwdUser = function ($http, $scope){
           console.log($scope.requestNewPwd());
-          $http.post(serverBackend+"User/updatePass", $scope.requestNewPwd(),setHeaderRequest())
+          $http.post(serverHost+serverBackend+"User/updatePass", $scope.requestNewPwd(),setHeaderRequest())
               .then(function (sucess, data) {
                   inform.add('Se ha restablecido su clave por favor verifique su correo.',{
                             ttl:3000, type: 'success'
@@ -3301,7 +3304,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             mail2Search = mailString ? mailString : mail2Search;
             $http({
                   method : "GET",
-                  url : serverBackend+"Tenant/findByEmail/"+mail2Search
+                  url : serverHost+serverBackend+"Tenant/findByEmail/"+mail2Search
                 }).then(function mySuccess(response) {
                       $scope.rsTenantData = response.data;
                       console.log("<<<INQUILINO ENCONTRADO>>>");
@@ -3388,7 +3391,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         *                                                 *
         **************************************************/
           $scope.addTenant = function ($http, $scope){
-            $http.post(serverBackend+"User/", getTenantData2Add(),setHeaderRequest())
+            $http.post(serverHost+serverBackend+"User/", getTenantData2Add(),setHeaderRequest())
                 .then(function (sucess, data) {
                   console.log("DATA RECIBIDA Y REGISTRADA");
                   console.log(getTenantData2Add());
@@ -3484,7 +3487,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         **************************************************/
           $scope.editTenant = function ($http, $scope){
             console.log(getData2UpdateTenant());
-            $http.post(serverBackend+"User/update", getData2UpdateTenant())
+            $http.post(serverHost+serverBackend+"User/update", getData2UpdateTenant())
                 .then(function (sucess, data) {
                   console.log("Los Datos han sido actualizados");
                   if($scope.manageDepto==1 && $scope.IsTenant==true){
@@ -3658,7 +3661,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         **************************************************/
           $scope.fnRemoveTenant = function(){
             console.log($scope._getData2RemoveTenant());
-            $http.post(serverBackend+"Department/removeTenant",$scope._getData2RemoveTenant(),setHeaderRequest())
+            $http.post(serverHost+serverBackend+"Department/removeTenant",$scope._getData2RemoveTenant(),setHeaderRequest())
                   .then(function(success, data) {
                       if ($scope.manageDepto==1 && $scope.IsFnRemove==true){
 
@@ -3708,7 +3711,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.disabledTenant = function (itemId) {
             $http({
                 method : "GET",
-                url : serverBackend+"Tenant/inactive/"+itemId
+                url : serverHost+serverBackend+"Tenant/inactive/"+itemId
               }).then(function mySuccess(response) {
 
                   $scope.searchTenant('listTenant', $scope.idDeptoKf);
@@ -3724,7 +3727,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.enabledTenant = function (itemId) {
             $http({
                 method : "GET",
-                url : serverBackend+"Tenant/active/"+itemId
+                url : serverHost+serverBackend+"Tenant/active/"+itemId
               }).then(function mySuccess(response) {
                   $scope.searchTenant('listTenant', $scope.idDeptoKf);
                 }, function myError(response) {
@@ -3859,7 +3862,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 }else{$scope.tmpVar=0;}
                 $http({
                   method : "GET",
-                  url : serverBackend+"Department/chekDepartamenteOwner/"+$scope.tmp.idDepartment
+                  url : serverHost+serverBackend+"Department/chekDepartamenteOwner/"+$scope.tmp.idDepartment
                 }).then(function mySuccess(response) {
                       if (response.data==true){
                         $scope.ownerFound=true;
@@ -4142,7 +4145,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         *                                                 *
         **************************************************/
           $scope.addAttendant = function ($http, $scope){
-            $http.post(serverBackend+"User/", getAttData2Add(),setHeaderRequest())
+            $http.post(serverHost+serverBackend+"User/", getAttData2Add(),setHeaderRequest())
                 .then(function (sucess, data) {
                   inform.add('Encargado registrado satisfactoriamente',{
                           ttl:2000, type: 'success'
@@ -4206,7 +4209,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         *                                                 *
         **************************************************/
             $scope.updateAttendant = function ($http, $scope){
-              $http.post(serverBackend+"User/update", getAttData2Update(),setHeaderRequest())
+              $http.post(serverHost+serverBackend+"User/update", getAttData2Update(),setHeaderRequest())
                   .then(function (sucess, data) {
                     console.log(getAttData2Update());
                     inform.add('Datos del Encargado actualizados satisfactoriamente',{
@@ -4255,7 +4258,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.searchAttendantByMail = function (mailAtt2Search){
             $http({
                   method : "GET",
-                  url : serverBackend+"user/findAttByEmail/"+mailAtt2Search
+                  url : serverHost+serverBackend+"user/findAttByEmail/"+mailAtt2Search
                 }).then(function mySuccess(response) {
                       $scope.rsAttData = response.data;
                       console.log("<<<ENCARGADO ENCONTRADO>>>");
@@ -5383,7 +5386,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.keyChains = {};
       $scope.getKeyChains = function(idAddressTmp){
         console.log("[getKeyChains] => From the idAddressTmp: "+idAddressTmp);
-        var urlT=serverBackend+"Department/keyChainsByIdAddress/"+idAddressTmp;
+        var urlT=serverHost+serverBackend+"Department/keyChainsByIdAddress/"+idAddressTmp;
 
         $http({
             method : "GET",
@@ -5619,7 +5622,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                                                 *
     **************************************************/
       $scope.requestUpKey = function ($http, $scope){
-        $http.post(serverBackend+"Ticket", $scope._getData2AddKey())
+        $http.post(serverHost+serverBackend+"Ticket", $scope._getData2AddKey())
             .then(function (sucess, data) {
               ticketServices.ticketByToken($scope._getData2AddKey().ticket.urlToken).then(function(data){
                 if(data==1){
@@ -5694,7 +5697,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     **************************************************/
       $scope.requestDownKey = function (){
         //console.log($scope._getData2DelKey())
-        $http.post(serverBackend+"Ticket", $scope._getData2DelKey())
+        $http.post(serverHost+serverBackend+"Ticket", $scope._getData2DelKey())
             .then(function (sucess, data) {
                   closeAllDiv();
                   cleanForms();
@@ -5751,7 +5754,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     **************************************************/
       $scope.requestService = function (){
         console.log($scope._getServiceData());
-        $http.post(serverBackend+"Ticket", $scope._getServiceData())
+        $http.post(serverHost+serverBackend+"Ticket", $scope._getServiceData())
             .then(function (sucess, data) {
                 closeAllDiv ();
                 cleanForms();
@@ -5797,7 +5800,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                                                 *
     **************************************************/
       $scope.otherRequest = function ($http, $scope){
-        $http.post(serverBackend+"Ticket", $scope._getData2RequestOther())
+        $http.post(serverHost+serverBackend+"Ticket", $scope._getData2RequestOther())
             .then(function (sucess, data) {
                 closeAllDiv ();
                 cleanForms();
@@ -6768,7 +6771,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                 'idTipoDeMailFk':''
                             }                            
       };
-      console.log($scope.service)
+      //console.log($scope.service)
     }
     $scope.cleanCustomerFieldFn = function(){
       $scope.btnBack=false;
@@ -6907,9 +6910,17 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           }, 1500);         
         break;
         case "switchToServices":
-          $scope.fnShowHide('services', 'open');
-          $scope.searchCustomerFound=true;
-          $scope.loadCustomerFieldsFn(cObj)
+          blockUI.start('Cambiando al modulo de servicios');
+          $timeout(function() {
+            $scope.fnShowHide('services', 'open');
+          }, 1500);
+          
+          $timeout(function() {
+            blockUI.message('Cargando datos asociados cliente '+cObj.ClientType);
+            $scope.searchCustomerFound=true;
+            $scope.loadCustomerFieldsFn(cObj);
+            blockUI.stop();
+          }, 1500);          
         break;        
         case "contract":
           switch (opt2){
@@ -7048,6 +7059,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.isInfoCustomer=true;
           $scope.customer.info={};
           $scope.customer.info.isNotCliente=false;
+          console.log(cObj)
           $scope.customerDataFn(cObj,'info'); 
         break;        
         default:
@@ -8005,7 +8017,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         i++;
                       }
                     }
-                  }console.log($scope.list_depto_floors);
+                  }//console.log($scope.list_depto_floors);
                   var d=0;
                   //DEPTOS
                   for (arrList in $scope.list_depto_floors){
@@ -8018,7 +8030,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         }
                         d++;
                     }
-                  }console.log($scope.list_depto_floors);
+                  }//console.log($scope.list_depto_floors);
                   //console.log($scope.list_depto_floors);
                   $('#DepartmentsCustomer').modal('toggle');                      
                 break;
@@ -8040,13 +8052,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   }
                   $('#AddressParticularCustomer').modal('toggle');                       
                 break;
-                case "allowedUsers":                                    
+                case "allowedUsers":
                   //USERS                  
                   $scope.customer.info    = obj;
                   $scope.customer.info.billing_information=obj.billing_information[0];
-                  console.info($scope.customer.info);
+                  //console.info($scope.customer.info);
                   $scope.customer.info.billing_information.nameAddress=$scope.customer.info.billing_information.businessAddress;
-                  console.info($scope.customer.info);  
+                  //console.info($scope.customer.info);
                   $scope.list_users       = [];
                   $scope.list_client_user = [];
                   if (obj.list_client_user.length>0){
@@ -8062,7 +8074,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   $scope.customer.info.list_client_user = [];
                   $scope.customer.info.list_client_user = $scope.list_client_user;
                   //Printing the current array before add the customer
-                  console.log($scope.customer.info);
+                  //console.log($scope.customer.info);
                   //Send the customer data to the addcustomer service
                   $scope.updateCustomerFn($scope.customer.info);
                   $('#allowedUsers').modal('hide');                   
@@ -8179,7 +8191,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $('#listCustomerFiles').on('shown.bs.modal', function () {
                       });
                     blockUI.stop();                    
-                    console.info($scope.customer.files);                              
+                    //console.info($scope.customer.files);                              
                   }, 500);                  
                 break;                
                 default:
@@ -8249,7 +8261,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.getCustomerBusinessNameByIdFn = function(clientId){
             console.log("getCustomerBusinessNameByIdFn: "+clientId);
             var arrCompanySelect = [];
-            console.log($scope.rsCustomerListData);
+            //console.log($scope.rsCustomerListData);
             for (var key in  $scope.rsCustomerListData){
                 if ($scope.rsCustomerListData[key].idClient==clientId){
                     arrCompanySelect.push({'idClient':$scope.rsCustomerListData[key].idClient, 'businessName':$scope.rsCustomerListData[key].businessName});
@@ -8341,7 +8353,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.getCustomersListByTypeFn = function(type){
          console.log("getCustomerListByTypeFn => type:"+type);
             $scope.rsCustomerListByTypeData=[];
-            console.log($scope.rsCustomerSelectData);
+            //console.log($scope.rsCustomerSelectData);
             if (type!=undefined && type!='' && type!=null){
               for (var item in $scope.rsCustomerSelectData){
                 if ($scope.rsCustomerSelectData[item].idClientTypeFk==type){
@@ -8388,7 +8400,26 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             }            
           }
         });
-      };    
+      };
+    /**************************************************
+    *                                                 *
+    *       GET LIST OF CUSTOMER BY CUSTOMER ID       *
+    *                                                 *
+    **************************************************/
+      $scope.rsListCustomersOfCustomerData = {};
+      $scope.getLisOfCustomersByIdFn = function(id){
+        $scope.rsCustomerListData={};
+        CustomerServices.getCustomersListByCustomerId(id).then(function(response){
+          //console.log(response);
+          if(response.status==200){
+            $scope.rsCustomerListData = response.data;
+          }else{
+            $scope.rsCustomerListData = '';
+          }
+          $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
+          //console.log($scope.rsCustomerListData);
+        });
+      };      
       $scope.list_id_user=[];
       $scope.list_client_user=[];
       $scope.list_users=[];
@@ -8413,13 +8444,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                UPLOAD CUSTOMER FILES            *
     *                                                 *
     **************************************************/
-          $scope.filesUploadList=[];
-          $scope.fileList=[];
-          $scope.fileListTmp=[];
-          $scope.fileName=null;
-          $scope.invalidTypeOf=false;
-          $scope.fileTypeOf=null;
-          $scope.isFileExist = null;
+        $scope.filesUploadList=[];
+        $scope.fileList=[];
+        $scope.fileListTmp=[];
+        $scope.fileName=null;
+        $scope.invalidTypeOf=false;
+        $scope.fileTypeOf=null;
+        $scope.isFileExist = null;
         /**************************************
         *             IMAGE VIEWER            *
         **************************************/
@@ -8440,9 +8471,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         *             DOWNLOAD FILE           *
         **************************************/
           $scope.downloadFile = function (obj) {
-            console.log(serverHost+obj.urlFile);
             var a = document.createElement('a');
-            a.href = serverHost+obj.urlFile;
+            a.href = obj.urlFile;
             a.download = obj.title;
             a.click();
             a.remove();            
@@ -8460,7 +8490,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
               if('|jpg|png|jpeg|bmp|gif|pdf|docx|xlsx|msword|vnd.openxmlformats-officedocument.wordprocessingml.document|vnd.openxmlformats-officedocument.spreadsheetml.sheet|vnd.ms-excel|'.indexOf(type) !== -1){
                 var cleanFile = new File([file], fileName, {type: file.type, lastModified: file.lastModified, size: file.size});
-                console.log(cleanFile);
+                //console.log(cleanFile);
                 $scope.fileListTmp.push(cleanFile);
               }else{
                   $scope.fileName=file.name;
@@ -8513,7 +8543,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         *          REMOVE SINGLE FILE         *
         **************************************/
           $scope.removeSingleFile = function(index, obj){
-            console.log(index);
+            //console.log(index);
             $scope.filesUploadList.splice(index, 1);
             $scope.fileList.splice(index, 1);
               inform.add("Archivo: "+obj.name+" ha sido removido correctamente.",{
@@ -8666,7 +8696,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.filesUploadList.push(file);
                       $scope.fileList.push({'name':file.name,'size':file.size,'type':file.type,'src':src,'lastModified':file.lastModified, 'uploadStatus':false, 'fileTitle':''});
                     });
-                    console.log($scope.fileList);
+                    //console.log($scope.fileList);
                 }
                 reader.readAsDataURL(file);
                 $("#uploadCustomerfiles").val(null);
@@ -8769,7 +8799,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                                                 *
     **************************************************/
       $scope.getCompanyDataFn = function(obj){
-        console.log(obj);
+        //console.log(obj);
           if (obj){
             var typeName = '';
             $scope.customer.companyData = obj;
@@ -8840,13 +8870,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     **************************************************/
       $scope.rsCustomerData={};
       $scope.getCustomersByIdFn = function(opt, obj){
-        console.log(obj);
-         CustomerServices.getCustomersById(obj.idClient).then(function(data){
-            $scope.rsCustomerData = data;
-            if($scope.rsCustomerData){
-              $scope.switchCustomersFn(opt, $scope.rsCustomerData);
-            }
-            //console.log($scope.rsProfileData);
+        //console.log(obj);
+         CustomerServices.getCustomersById(obj.idClient).then(function(response){
+          if(response.status==200){
+            $scope.rsCustomerData = response.data;
+            $scope.switchCustomersFn(opt, $scope.rsCustomerData);
+          }
         });
       }
     /**************************************************
@@ -11023,7 +11052,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.customerTypeCustomer = function(){
         $scope.customer.new.typeInmueble='';
         $scope.enabledNextBtn();
-        console.info($scope.customer.new.idClientTypeFk);
+        //console.info($scope.customer.new.idClientTypeFk);
         if ($scope.customer.new.idClientTypeFk==undefined){
           inform.add("Selecciona un tipo de cliente para continuar.",{
               ttl:5000, type: 'warning'
@@ -14223,7 +14252,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.smtp={mail: '', password: ''};
       $scope.updateMailSmtp = function ($http, $scope){
         console.log($scope.getSmtpMail2Update());
-        $http.post(serverBackend+"User/updateMailSmtp", $scope.getSmtpMail2Update())
+        $http.post(serverHost+serverBackend+"User/updateMailSmtp", $scope.getSmtpMail2Update())
             .then(function (sucess, data) {
                   $scope.smtpPwd="";
                   $scope.smtpMail="";
@@ -14264,7 +14293,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     **************************************************/
       $scope.updateSysParam = function ($http, $scope){
         console.log($scope.getSysParam2Update());
-        $http.post(serverBackend+"User/updateParam", $scope.getSysParam2Update())
+        $http.post(serverHost+serverBackend+"User/updateParam", $scope.getSysParam2Update())
             .then(function (sucess, data) {
                   $scope.sysConfig('sys','dash');
                 inform.add('Configuracion Satisfactoria del correo del departamento de '+$scope.sysParam.msg,{
@@ -15377,6 +15406,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 $scope.getCategoryDepartamentFn();
                 $scope.getCustomerListFn("","");
                 $scope.getCustomerTypesFn();
+                $scope.getZonesFn();
             /*PENDIENTE PASAR TODOS ESTOS DATOS A VARIABLES LOCALES PARA MEJORAR LA PERFORMANCE */        
 
         cleanForms();

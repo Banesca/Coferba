@@ -153,9 +153,9 @@
                           <td class="show-column-table media-middle text-center">{{service.dateUp}}</td>
                           <!--<td>{{item.dateCreated}}</td>-->
                           <td ng-trim="true" ng-click="">
+                            <button ng-click="switchCustomersFn('services', service, 'edit');" data-toggle="tooltip" data-placement="bottom" title="Modificar" type="button" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>                            
                             <button ng-if="service.idTipeServiceFk=='3' || service.idTipeServiceFk=='4'"ng-click="switchCustomersFn('services', service, 'listCameras');" data-toggle="tooltip" data-placement="bottom" title="Ver camaras" type="button" class="btn btn-success btn-xs"><i class="fas fa-video"></i></button>
                             <button ng-if="service.idTipeServiceFk=='6' && service.tb_user_license_array.length>0"ng-click="switchCustomersFn('services', service, 'userLicense');" data-toggle="tooltip" data-placement="bottom" title="Ver licencias" type="button" class="btn btn-success btn-xs"><i class="far fa-address-book"></i></button>
-                            <button ng-click="switchCustomersFn('services', service, 'edit');" data-toggle="tooltip" data-placement="bottom" title="Modificar" type="button" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>
 
                           </td>                           
                       </tr>                                        

@@ -3,7 +3,7 @@ var moduleRegisterUser = angular.module("module.RegisterUser", ["tokenSystem", "
 
 
 moduleRegisterUser.controller('RegisterUserCtrl', function($scope, inform, $rootScope, $location, $http, blockUI, inputService, userServices, $timeout, tokenSystem, serverHost, serverBackend, $window){
-
+  console.log(serverHost+serverBackend);
   $scope.register = {idProfileKf:'', fname:'', lname:'', email:'', password1:'', password2:'', phonelocalNumberUser:'', phoneMovilNumberUser: ''};
   $scope.redirectSuccessfull = false;
   $scope.counT  =5;
@@ -178,7 +178,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
 *                                                 *
 **************************************************/
   $scope.fnAssignDepto = function(userData){
-    $http.post(serverBackend+"Department/update",userData)
+    $http.post(serverHost+serverBackend+"Department/update",userData)
           .then(function(success, data) {
                   inform.add('Departamento Asignado y pendiente por aprobacion por la administracion.',{
                     ttl:3000, type: 'success'
@@ -200,7 +200,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.CallFilterFormU = function(){
      $http({
         method : "GET",
-        url : "Coferba/Back/index.php/User/filterForm"
+        url : serverHost+serverBackend+"/User/filterForm"
       }).then(function mySuccess(response) {
           $scope.listProfile      = response.data.profile;
           $scope.lisTypeTenant    = response.data.type;
@@ -218,7 +218,7 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.getAllAddress = function (){
     $http({
         method : "GET",
-        url : "Coferba/Back/index.php/Direccion"
+        url : serverHost+serverBackend+"/Direccion"
       }).then(function mySuccess(response){
           $scope.ListAddress = response.data;
       }, function myError (response){
@@ -330,8 +330,9 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
     $scope.listUser = "";
      $http({
         method : "GET",
-        url : "Coferba/Back/index.php/Ticket/filter"
+        url : serverHost+serverBackend+"/Ticket/filter"
       }).then(function mySuccess(response) {
+          console.log(response.data);
           $scope.listTypeDelivery = response.data.typedelivery;
           $scope.listTypeLost     = response.data.reason_disabled_item;
           $scope.listTypeQuery    = response.data.typeouther;
@@ -357,9 +358,10 @@ $('#confirmCodeModal').on('hide.bs.modal', function (e) {
   $scope.getTypeAttendant = function(){
      $http({
         method : "GET",
-        url : "Coferba/Back/index.php/Ticket/typeAttendant"
+        url : serverHost+serverBackend+"/Ticket/typeAttendant"
       }).then(function mySuccess(response) {
             $scope.listTypeAttendant = response.data;
+            console.log(response.data);
              $scope.attendantTypeFound=true;
         }, function myError(response) {
           $scope.listTypeAttendant ="";
@@ -377,7 +379,7 @@ $scope.deptoHasOwner = function (idDeparment) {
     if(idDepto){
       $http({
         method : "GET",
-        url : serverBackend+"Department/chekDepartamenteOwner/"+idDepto
+        url : serverHost+serverBackend+"Department/chekDepartamenteOwner/"+idDepto
       }).then(function mySuccess(response) {
             if (response.data=="true"){
               $scope.ownerFound=true;
@@ -431,9 +433,9 @@ $scope.getDeptoListByAddress = function (idAddress){
      console.log("idAddressTmp: "+idAddressTmp);
      var urlT="";
       if($scope.register.idProfileKf==3){
-        urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
+        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'0';
       }else{
-        urlT=serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
+        urlT=serverHost+serverBackend+"Department/byIdDireccion/"+idAddressTmp+"/"+'-1';
       }
 
     $http({

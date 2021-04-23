@@ -1461,6 +1461,7 @@ class Client_model extends CI_Model {
 
             $this->db->select("*")->from("tb_clients");
             $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
+            $this->db->join('tb_zonas', 'tb_zonas.idZona = tb_clients.idZonaFk', 'left');
             $quuery = $this->db->where("tb_clients.idClient =", $id)->get();
 
 
@@ -1529,6 +1530,7 @@ class Client_model extends CI_Model {
 
             $this->db->select("*")->from("tb_clients");
             $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
+            $this->db->join('tb_zonas', 'tb_zonas.idZona = tb_clients.idZonaFk', 'left');
             $this->db->where("tb_clients.idStatusFk !=", -1);
 
 
@@ -1629,7 +1631,7 @@ class Client_model extends CI_Model {
         }
     }
     public function postUploadFiles($customerId, $fileName, $file) {
-        $image_path = realpath(APPPATH . '../../Frond/sistema/files');
+        $image_path = realpath(APPPATH . '../../files');
         $file_name_ext = explode(".", $file["file"]["name"])[1];
         $file_name_tmp = explode(".", $file["file"]["name"])[0];
         if ($fileName != ''){
@@ -1664,7 +1666,7 @@ class Client_model extends CI_Model {
 
     }
     public function postDeleteFiles($fileName) {
-        $image_path = realpath(APPPATH . '../../Frond/sistema/files');
+        $image_path = realpath(APPPATH . '../../files');
         $filePath = $image_path. DIRECTORY_SEPARATOR .$fileName;
         unlink($filePath);  
         return true;
