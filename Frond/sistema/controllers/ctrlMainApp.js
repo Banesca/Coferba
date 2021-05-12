@@ -6771,7 +6771,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                 'idTipoDeMailFk':''
                             }                            
       };
-      //console.log($scope.service)
+      console.log($scope.service)
     }
     $scope.cleanCustomerFieldFn = function(){
       $scope.btnBack=false;
@@ -6910,17 +6910,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           }, 1500);         
         break;
         case "switchToServices":
-          blockUI.start('Cambiando al modulo de servicios');
-          $timeout(function() {
-            $scope.fnShowHide('services', 'open');
-          }, 1500);
-          
-          $timeout(function() {
-            blockUI.message('Cargando datos asociados cliente '+cObj.ClientType);
-            $scope.searchCustomerFound=true;
-            $scope.loadCustomerFieldsFn(cObj);
-            blockUI.stop();
-          }, 1500);          
+          $scope.fnShowHide('services', 'open');
+          $scope.searchCustomerFound=true;
+          $scope.loadCustomerFieldsFn(cObj)
         break;        
         case "contract":
           switch (opt2){
@@ -7059,7 +7051,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.isInfoCustomer=true;
           $scope.customer.info={};
           $scope.customer.info.isNotCliente=false;
-          console.log(cObj)
           $scope.customerDataFn(cObj,'info'); 
         break;        
         default:
@@ -8017,7 +8008,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         i++;
                       }
                     }
-                  }//console.log($scope.list_depto_floors);
+                  }console.log($scope.list_depto_floors);
                   var d=0;
                   //DEPTOS
                   for (arrList in $scope.list_depto_floors){
@@ -8030,7 +8021,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         }
                         d++;
                     }
-                  }//console.log($scope.list_depto_floors);
+                  }console.log($scope.list_depto_floors);
                   //console.log($scope.list_depto_floors);
                   $('#DepartmentsCustomer').modal('toggle');                      
                 break;
@@ -8052,13 +8043,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   }
                   $('#AddressParticularCustomer').modal('toggle');                       
                 break;
-                case "allowedUsers":
+                case "allowedUsers":                                    
                   //USERS                  
                   $scope.customer.info    = obj;
                   $scope.customer.info.billing_information=obj.billing_information[0];
-                  //console.info($scope.customer.info);
+                  console.info($scope.customer.info);
                   $scope.customer.info.billing_information.nameAddress=$scope.customer.info.billing_information.businessAddress;
-                  //console.info($scope.customer.info);
+                  console.info($scope.customer.info);  
                   $scope.list_users       = [];
                   $scope.list_client_user = [];
                   if (obj.list_client_user.length>0){
@@ -8074,7 +8065,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   $scope.customer.info.list_client_user = [];
                   $scope.customer.info.list_client_user = $scope.list_client_user;
                   //Printing the current array before add the customer
-                  //console.log($scope.customer.info);
+                  console.log($scope.customer.info);
                   //Send the customer data to the addcustomer service
                   $scope.updateCustomerFn($scope.customer.info);
                   $('#allowedUsers').modal('hide');                   
@@ -8191,7 +8182,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $('#listCustomerFiles').on('shown.bs.modal', function () {
                       });
                     blockUI.stop();                    
-                    //console.info($scope.customer.files);                              
+                    console.info($scope.customer.files);                              
                   }, 500);                  
                 break;                
                 default:
@@ -8261,7 +8252,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.getCustomerBusinessNameByIdFn = function(clientId){
             console.log("getCustomerBusinessNameByIdFn: "+clientId);
             var arrCompanySelect = [];
-            //console.log($scope.rsCustomerListData);
+            console.log($scope.rsCustomerListData);
             for (var key in  $scope.rsCustomerListData){
                 if ($scope.rsCustomerListData[key].idClient==clientId){
                     arrCompanySelect.push({'idClient':$scope.rsCustomerListData[key].idClient, 'businessName':$scope.rsCustomerListData[key].businessName});
@@ -8353,7 +8344,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.getCustomersListByTypeFn = function(type){
          console.log("getCustomerListByTypeFn => type:"+type);
             $scope.rsCustomerListByTypeData=[];
-            //console.log($scope.rsCustomerSelectData);
+            console.log($scope.rsCustomerSelectData);
             if (type!=undefined && type!='' && type!=null){
               for (var item in $scope.rsCustomerSelectData){
                 if ($scope.rsCustomerSelectData[item].idClientTypeFk==type){
@@ -8400,26 +8391,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             }            
           }
         });
-      };
-    /**************************************************
-    *                                                 *
-    *       GET LIST OF CUSTOMER BY CUSTOMER ID       *
-    *                                                 *
-    **************************************************/
-      $scope.rsListCustomersOfCustomerData = {};
-      $scope.getLisOfCustomersByIdFn = function(id){
-        $scope.rsCustomerListData={};
-        CustomerServices.getCustomersListByCustomerId(id).then(function(response){
-          //console.log(response);
-          if(response.status==200){
-            $scope.rsCustomerListData = response.data;
-          }else{
-            $scope.rsCustomerListData = '';
-          }
-          $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
-          //console.log($scope.rsCustomerListData);
-        });
-      };      
+      };    
       $scope.list_id_user=[];
       $scope.list_client_user=[];
       $scope.list_users=[];
@@ -8444,13 +8416,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                UPLOAD CUSTOMER FILES            *
     *                                                 *
     **************************************************/
-        $scope.filesUploadList=[];
-        $scope.fileList=[];
-        $scope.fileListTmp=[];
-        $scope.fileName=null;
-        $scope.invalidTypeOf=false;
-        $scope.fileTypeOf=null;
-        $scope.isFileExist = null;
+          $scope.filesUploadList=[];
+          $scope.fileList=[];
+          $scope.fileListTmp=[];
+          $scope.fileName=null;
+          $scope.invalidTypeOf=false;
+          $scope.fileTypeOf=null;
+          $scope.isFileExist = null;
         /**************************************
         *             IMAGE VIEWER            *
         **************************************/
@@ -8490,7 +8462,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
               if('|jpg|png|jpeg|bmp|gif|pdf|docx|xlsx|msword|vnd.openxmlformats-officedocument.wordprocessingml.document|vnd.openxmlformats-officedocument.spreadsheetml.sheet|vnd.ms-excel|'.indexOf(type) !== -1){
                 var cleanFile = new File([file], fileName, {type: file.type, lastModified: file.lastModified, size: file.size});
-                //console.log(cleanFile);
+                console.log(cleanFile);
                 $scope.fileListTmp.push(cleanFile);
               }else{
                   $scope.fileName=file.name;
@@ -8543,7 +8515,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         *          REMOVE SINGLE FILE         *
         **************************************/
           $scope.removeSingleFile = function(index, obj){
-            //console.log(index);
+            console.log(index);
             $scope.filesUploadList.splice(index, 1);
             $scope.fileList.splice(index, 1);
               inform.add("Archivo: "+obj.name+" ha sido removido correctamente.",{
@@ -8696,7 +8668,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.filesUploadList.push(file);
                       $scope.fileList.push({'name':file.name,'size':file.size,'type':file.type,'src':src,'lastModified':file.lastModified, 'uploadStatus':false, 'fileTitle':''});
                     });
-                    //console.log($scope.fileList);
+                    console.log($scope.fileList);
                 }
                 reader.readAsDataURL(file);
                 $("#uploadCustomerfiles").val(null);
@@ -8799,7 +8771,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                                                 *
     **************************************************/
       $scope.getCompanyDataFn = function(obj){
-        //console.log(obj);
+        console.log(obj);
           if (obj){
             var typeName = '';
             $scope.customer.companyData = obj;
@@ -8870,12 +8842,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     **************************************************/
       $scope.rsCustomerData={};
       $scope.getCustomersByIdFn = function(opt, obj){
-        //console.log(obj);
-         CustomerServices.getCustomersById(obj.idClient).then(function(response){
-          if(response.status==200){
-            $scope.rsCustomerData = response.data;
-            $scope.switchCustomersFn(opt, $scope.rsCustomerData);
-          }
+        console.log(obj);
+         CustomerServices.getCustomersById(obj.idClient).then(function(data){
+            $scope.rsCustomerData = data;
+            if($scope.rsCustomerData){
+              $scope.switchCustomersFn(opt, $scope.rsCustomerData);
+            }
+            //console.log($scope.rsProfileData);
         });
       }
     /**************************************************
@@ -11052,7 +11025,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.customerTypeCustomer = function(){
         $scope.customer.new.typeInmueble='';
         $scope.enabledNextBtn();
-        //console.info($scope.customer.new.idClientTypeFk);
+        console.info($scope.customer.new.idClientTypeFk);
         if ($scope.customer.new.idClientTypeFk==undefined){
           inform.add("Selecciona un tipo de cliente para continuar.",{
               ttl:5000, type: 'warning'
@@ -15406,7 +15379,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 $scope.getCategoryDepartamentFn();
                 $scope.getCustomerListFn("","");
                 $scope.getCustomerTypesFn();
-                $scope.getZonesFn();
             /*PENDIENTE PASAR TODOS ESTOS DATOS A VARIABLES LOCALES PARA MEJORAR LA PERFORMANCE */        
 
         cleanForms();
