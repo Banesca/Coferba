@@ -39,14 +39,18 @@ CREATE TABLE `tb_access_control_door` (
   `idAccessControlDoor` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idAccessControlDoor`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_access_control_door` */
 
 insert  into `tb_access_control_door`(`idAccessControlDoor`,`titulo`) values 
-(1,'AC DE PRUEBA 1'),
-(2,'AC DE PRUEBA 2'),
-(3,'AC DE PRUEBA 3');
+(1,'Principal'),
+(2,'Cochera'),
+(3,'Servicio'),
+(4,'Terraza'),
+(5,'Escalera'),
+(6,'Sum'),
+(7,'Otros');
 
 /*Table structure for table `tb_addres` */
 
@@ -102,11 +106,65 @@ CREATE TABLE `tb_alarm_batery` (
   `nroFabric` varchar(200) DEFAULT NULL,
   `dateExpired` date DEFAULT NULL,
   `isControlSchedule` int(11) DEFAULT NULL,
-  `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
+  `fkidClientServicesAlarms` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmBatery`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_batery` */
+
+insert  into `tb_alarm_batery`(`idAlarmBatery`,`nroInternal`,`nroFabric`,`dateExpired`,`isControlSchedule`,`fkidClientServicesAlarms`) values 
+(1,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,NULL,NULL,NULL,6),
+(3,NULL,NULL,NULL,NULL,14),
+(4,NULL,NULL,NULL,NULL,15),
+(5,NULL,NULL,NULL,NULL,16),
+(6,NULL,NULL,NULL,NULL,17),
+(7,NULL,NULL,NULL,NULL,18),
+(8,NULL,NULL,NULL,NULL,19),
+(9,NULL,NULL,NULL,NULL,20),
+(10,NULL,NULL,NULL,NULL,21),
+(11,NULL,NULL,NULL,NULL,22),
+(12,NULL,NULL,NULL,NULL,23),
+(13,NULL,NULL,NULL,NULL,24),
+(14,NULL,NULL,NULL,NULL,25),
+(15,NULL,NULL,NULL,NULL,26),
+(16,NULL,NULL,NULL,NULL,27),
+(17,NULL,NULL,NULL,NULL,28),
+(18,NULL,NULL,NULL,NULL,29),
+(19,NULL,NULL,NULL,NULL,30),
+(20,NULL,NULL,NULL,NULL,31),
+(21,NULL,NULL,NULL,NULL,32),
+(22,NULL,NULL,NULL,NULL,33),
+(23,NULL,NULL,NULL,NULL,34),
+(24,NULL,NULL,NULL,NULL,0),
+(25,NULL,NULL,NULL,NULL,167),
+(26,NULL,NULL,NULL,NULL,167),
+(27,NULL,NULL,NULL,NULL,167),
+(29,NULL,NULL,NULL,NULL,209),
+(30,NULL,NULL,NULL,NULL,209),
+(31,NULL,NULL,NULL,NULL,209),
+(32,NULL,NULL,NULL,NULL,0),
+(36,NULL,NULL,NULL,NULL,35),
+(37,NULL,NULL,NULL,NULL,36),
+(40,NULL,NULL,NULL,NULL,38),
+(41,NULL,NULL,NULL,NULL,39),
+(43,'6','8',NULL,1,37),
+(44,NULL,NULL,NULL,NULL,40),
+(45,NULL,NULL,NULL,NULL,41),
+(51,'6','8',NULL,1,42),
+(52,NULL,NULL,NULL,NULL,43),
+(53,NULL,NULL,NULL,NULL,44),
+(54,NULL,NULL,NULL,NULL,46),
+(55,NULL,NULL,NULL,NULL,47),
+(56,NULL,NULL,NULL,NULL,48),
+(57,NULL,NULL,NULL,NULL,49),
+(58,NULL,NULL,NULL,NULL,50),
+(59,NULL,NULL,NULL,NULL,51),
+(60,NULL,NULL,NULL,NULL,52),
+(61,NULL,NULL,NULL,NULL,53),
+(62,NULL,NULL,NULL,NULL,54),
+(63,NULL,NULL,NULL,NULL,55),
+(64,NULL,NULL,NULL,NULL,56);
 
 /*Table structure for table `tb_alarm_line_phone` */
 
@@ -117,10 +175,19 @@ CREATE TABLE `tb_alarm_line_phone` (
   `company` varchar(100) DEFAULT NULL,
   `line` varchar(100) DEFAULT NULL,
   `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
+  `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmLinePhone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_line_phone` */
+
+insert  into `tb_alarm_line_phone`(`idAlarmLinePhone`,`company`,`line`,`idClientServicesAlarmsFk`,`fk_idDatoAdicionalAlarma`) values 
+(45,'3454','ertert',NULL,51),
+(46,'3454','ertert',NULL,52),
+(47,'3454','ertert',NULL,53),
+(48,'3454','ertert',NULL,54),
+(49,'3454','ertert',NULL,55),
+(50,'3454','ertert',NULL,56);
 
 /*Table structure for table `tb_alarm_module_gps` */
 
@@ -129,7 +196,7 @@ DROP TABLE IF EXISTS `tb_alarm_module_gps`;
 CREATE TABLE `tb_alarm_module_gps` (
   `idAlarmModuleGps` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
-  `moduleGpsr` varchar(200) DEFAULT NULL,
+  `moduleGprs` varchar(200) DEFAULT NULL,
   `nroSerieFrabric` varchar(200) DEFAULT NULL,
   `nroSerieInternal` varchar(200) DEFAULT NULL,
   `codeProgram` varchar(200) DEFAULT NULL,
@@ -137,10 +204,19 @@ CREATE TABLE `tb_alarm_module_gps` (
   `passwordAcces` varchar(200) DEFAULT NULL,
   `codePart1` varchar(200) DEFAULT NULL,
   `codePart2` varchar(200) DEFAULT NULL,
+  `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmModuleGps`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_module_gps` */
+
+insert  into `tb_alarm_module_gps`(`idAlarmModuleGps`,`idClientServicesAlarmsFk`,`moduleGprs`,`nroSerieFrabric`,`nroSerieInternal`,`codeProgram`,`portProgram`,`passwordAcces`,`codePart1`,`codePart2`,`fk_idDatoAdicionalAlarma`) values 
+(45,NULL,'1','klñk90','null','1233','2244','121','122','11222',51),
+(46,NULL,'1','klñk90','null','1233','2244','121','122','11222',52),
+(47,NULL,'1','klñk90','null','1233','2244','121','122','11222',53),
+(48,NULL,'1','klñk90','null','1233','2244','121','122','11222',54),
+(49,NULL,'1','klñk90','null','1233','2244','121','122','11222',55),
+(50,NULL,'1','klñk90','null','1233','2244','121','122','11222',56);
 
 /*Table structure for table `tb_alarm_module_ip` */
 
@@ -151,17 +227,26 @@ CREATE TABLE `tb_alarm_module_ip` (
   `moduleIp` varchar(100) DEFAULT NULL,
   `nroSerieFrabric` varchar(100) DEFAULT NULL,
   `nroSerieInternal` varchar(100) DEFAULT NULL,
-  `ip` int(11) DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
   `codeProgrm` varchar(100) DEFAULT NULL,
   `portProgrm` varchar(100) DEFAULT NULL,
   `passwordAcces` varchar(100) DEFAULT NULL,
   `codePart1` varchar(100) DEFAULT NULL,
   `codePart2` varchar(100) DEFAULT NULL,
   `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
+  `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAlarmModuleIp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_alarm_module_ip` */
+
+insert  into `tb_alarm_module_ip`(`idAlarmModuleIp`,`moduleIp`,`nroSerieFrabric`,`nroSerieInternal`,`ip`,`codeProgrm`,`portProgrm`,`passwordAcces`,`codePart1`,`codePart2`,`idClientServicesAlarmsFk`,`fk_idDatoAdicionalAlarma`) values 
+(45,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,51),
+(46,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,52),
+(47,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,53),
+(48,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,54),
+(49,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,55),
+(50,'rrttt','7klkl-klk','nutyt-tytyll','192.168.0.1','123','43','1232244','123','321',NULL,56);
 
 /*Table structure for table `tb_alarm_person_alert` */
 
@@ -241,23 +326,41 @@ DROP TABLE IF EXISTS `tb_backup_energy`;
 
 CREATE TABLE `tb_backup_energy` (
   `idBackupEnergy` int(11) NOT NULL AUTO_INCREMENT,
-  `idClientServicesCameraFk` int(11) DEFAULT NULL,
+  `idClientServicesFk` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `idBatteryFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idBackupEnergy`),
-  KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`),
-  KEY `idBatteryFk` (`idBatteryFk`),
-  CONSTRAINT `tb_backup_energy_ibfk_1` FOREIGN KEY (`idClientServicesCameraFk`) REFERENCES `tb_client_services_camera` (`idClientServicesCamera`),
-  CONSTRAINT `tb_backup_energy_ibfk_3` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+  KEY `idClientServicesCameraFk` (`idClientServicesFk`),
+  KEY `idBatteryFk` (`idBatteryFk`)
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_backup_energy` */
 
-insert  into `tb_backup_energy`(`idBackupEnergy`,`idClientServicesCameraFk`,`description`,`idBatteryFk`) values 
-(21,31,'nota adicional',1),
-(22,31,'nota adicional',2),
-(23,32,'nota adicional',1),
-(24,32,'nota adicional',2);
+insert  into `tb_backup_energy`(`idBackupEnergy`,`idClientServicesFk`,`description`,`idBatteryFk`) values 
+(74,50,'Bateria Alarma 12v 7ah 7a Recargable',9),
+(75,50,'Ups Estabilizador Lyonn 800va',17);
+
+/*Table structure for table `tb_backup_energy_totem` */
+
+DROP TABLE IF EXISTS `tb_backup_energy_totem`;
+
+CREATE TABLE `tb_backup_energy_totem` (
+  `idBackupEnergyTotem` int(11) NOT NULL AUTO_INCREMENT,
+  `idClientServicesTotemFk` int(11) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `idBatteryFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idBackupEnergyTotem`),
+  KEY `idClientServicesCameraFk` (`idClientServicesTotemFk`),
+  KEY `idBatteryFk` (`idBatteryFk`),
+  CONSTRAINT `tb_backup_energy_totem_ibfk_3` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_products` (`idProduct`)
+) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_backup_energy_totem` */
+
+insert  into `tb_backup_energy_totem`(`idBackupEnergyTotem`,`idClientServicesTotemFk`,`description`,`idBatteryFk`) values 
+(145,28,NULL,9),
+(146,28,NULL,17),
+(147,28,'BATERIA',14);
 
 /*Table structure for table `tb_bakups_order` */
 
@@ -285,13 +388,14 @@ CREATE TABLE `tb_battery_install_access_control` (
   KEY `idBatteryFk` (`idBatteryFk`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_1` FOREIGN KEY (`idClientServicesAccessControlFk`) REFERENCES `tb_client_services_access_control` (`idClientServicesAccessControl`),
   CONSTRAINT `tb_battery_install_access_control_ibfk_2` FOREIGN KEY (`idBatteryFk`) REFERENCES `tb_products` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_battery_install_access_control` */
 
 insert  into `tb_battery_install_access_control`(`idBatteryInstallAccessControl`,`idClientServicesAccessControlFk`,`idBatteryFk`) values 
-(14,29,1),
-(15,29,2);
+(115,102,9),
+(116,102,9),
+(117,102,14);
 
 /*Table structure for table `tb_battery_install_alarm` */
 
@@ -317,35 +421,48 @@ CREATE TABLE `tb_cameras` (
   `idCamera` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientServicesCameraFk` int(11) DEFAULT NULL,
   `portCamera` int(11) DEFAULT NULL,
-  `coveredArea` int(11) DEFAULT NULL,
-  `locationCamera` int(11) DEFAULT NULL,
-  `nroSerieCamera` int(11) DEFAULT NULL,
-  `nroFabricCamera` int(11) DEFAULT NULL,
-  `dateExpireCamera` int(11) DEFAULT NULL,
+  `coveredArea` varchar(255) DEFAULT '',
+  `locationCamera` varchar(255) DEFAULT '',
+  `nroSerieCamera` varchar(255) DEFAULT '',
+  `nroFabricCamera` varchar(255) DEFAULT '',
+  `dateExpireCamera` varchar(255) DEFAULT '',
+  `idProductFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idCamera`),
-  KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`),
-  CONSTRAINT `tb_cameras_ibfk_1` FOREIGN KEY (`idClientServicesCameraFk`) REFERENCES `tb_client_services_camera` (`idClientServicesCamera`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+  KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`)
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_cameras` */
 
-insert  into `tb_cameras`(`idCamera`,`idClientServicesCameraFk`,`portCamera`,`coveredArea`,`locationCamera`,`nroSerieCamera`,`nroFabricCamera`,`dateExpireCamera`) values 
-(11,16,21,2,0,5,48,2020),
-(12,16,20,1,0,NULL,47,2020),
-(13,17,21,2,0,5,48,2020),
-(14,17,20,1,0,4,47,2020),
-(15,18,21,2,0,5,48,2020),
-(16,18,20,1,0,4,47,2020),
-(17,19,21,2,0,5,48,2020),
-(18,19,20,1,0,4,47,2020),
-(27,29,21,2,0,5,48,2020),
-(28,29,20,1,0,4,47,2020),
-(29,30,21,2,0,5,48,2020),
-(30,30,20,1,0,4,47,2020),
-(31,31,21,2,0,5,48,2020),
-(32,31,20,1,0,4,47,2020),
-(33,32,21,2,0,5,48,2020),
-(34,32,20,1,0,4,47,2020);
+insert  into `tb_cameras`(`idCamera`,`idClientServicesCameraFk`,`portCamera`,`coveredArea`,`locationCamera`,`nroSerieCamera`,`nroFabricCamera`,`dateExpireCamera`,`idProductFk`) values 
+(86,50,1,'Prueba','Prueba','12845493589','12845493589',NULL,18),
+(87,50,2,'Prueba 2','Prueba 2','23457689876','23457689876',NULL,18),
+(88,50,3,'Prueba 3','Prueba 3','23456789675','23456789675',NULL,18);
+
+/*Table structure for table `tb_cameras_totem` */
+
+DROP TABLE IF EXISTS `tb_cameras_totem`;
+
+CREATE TABLE `tb_cameras_totem` (
+  `idCameraTotem` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientServicesCameraTotemFk` int(11) DEFAULT NULL,
+  `portCamera` int(11) DEFAULT NULL,
+  `coveredArea` varchar(255) DEFAULT '',
+  `locationCamera` varchar(255) DEFAULT '',
+  `nroSerieCamera` varchar(255) DEFAULT '',
+  `nroFabricCamera` varchar(255) DEFAULT '',
+  `dateExpireCamera` varchar(255) DEFAULT '',
+  `idProductFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idCameraTotem`),
+  KEY `idClientServicesCameraFk` (`idClientServicesCameraTotemFk`)
+) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_cameras_totem` */
+
+insert  into `tb_cameras_totem`(`idCameraTotem`,`idClientServicesCameraTotemFk`,`portCamera`,`coveredArea`,`locationCamera`,`nroSerieCamera`,`nroFabricCamera`,`dateExpireCamera`,`idProductFk`) values 
+(220,28,1,'Probando','Probando','23423434532423432','23423434532423432',NULL,18),
+(221,28,3,'Probando','Probando','34543564364564365476','34543564364564365476',NULL,18),
+(222,28,4,'Probando','Probando','5678877565476734754687','5678877565476734754687',NULL,18),
+(223,28,2,'Probando','Probando','12345356579099098','12345356579099098',NULL,18);
 
 /*Table structure for table `tb_category_departament` */
 
@@ -384,23 +501,9 @@ CREATE TABLE `tb_client_address_particular` (
   `idZonaFk` varchar(255) DEFAULT NULL,
   `idTipoInmuebleFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAddressParticular`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_address_particular` */
-
-insert  into `tb_client_address_particular`(`idAddressParticular`,`idClientFk`,`address`,`depto`,`isBuilding`,`idProvinceFk`,`idLocationFk`,`clarification`,`idParticularDepartamentKf`,`idZonaFk`,`idTipoInmuebleFk`) values 
-(1,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(2,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(3,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(4,12,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(5,21,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(6,21,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(7,28,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(8,28,'TEST','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(9,29,'TEST2','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(10,29,'TEST3','depto',1,1,1,'TEST',NULL,NULL,NULL),
-(11,106,'TEST','ddfg',1,1,1,'5',1,'1',1),
-(13,1,'TEST','ddfg',1,1,1,'5',1,'1',1);
 
 /*Table structure for table `tb_client_authorizing` */
 
@@ -424,102 +527,55 @@ DROP TABLE IF EXISTS `tb_client_billing_information`;
 CREATE TABLE `tb_client_billing_information` (
   `idBillingInfo` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientFk` int(11) DEFAULT NULL,
+  `businessAddress` varchar(200) DEFAULT NULL,
   `businessNameBilling` varchar(200) DEFAULT NULL,
   `cuitBilling` varchar(50) DEFAULT NULL,
   `idLocationBillingFk` int(11) DEFAULT NULL,
   `idProvinceBillingFk` int(11) DEFAULT NULL,
   `idTypeTaxFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idBillingInfo`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_billing_information` */
 
-insert  into `tb_client_billing_information`(`idBillingInfo`,`idClientFk`,`businessNameBilling`,`cuitBilling`,`idLocationBillingFk`,`idProvinceBillingFk`,`idTypeTaxFk`) values 
-(1,1,'text','text',1,1,1),
-(2,3,'text','text',1,1,1),
-(3,4,'text','text',1,1,1),
-(4,5,'text','text',1,1,1),
-(5,6,'text','text',1,1,1),
-(6,7,'text','text',1,1,1),
-(7,8,'text','text',1,1,1),
-(8,9,'text','text',1,1,1),
-(9,10,'text','text',1,1,1),
-(10,11,'text','text',1,1,1),
-(11,12,'text','text',1,1,1),
-(12,13,'text','text',1,1,1),
-(13,14,'text','text',1,1,1),
-(14,15,'Administracion Uno s.a','23432432434-4',42,1,2),
-(15,16,'administracion dos s.a','3243243244-4',37,1,2),
-(16,17,'administracion dos s.a','3243243244-4',37,1,2),
-(17,18,'administracion tres s.a','213213213-4',921,2,2),
-(18,19,'text','text',1,1,1),
-(19,15,'text','text',1,1,1),
-(20,16,'text','text',1,1,1),
-(21,17,'text','text',1,1,1),
-(22,18,'text','text',1,1,1),
-(23,19,'text','text',1,1,1),
-(24,20,'text','text',1,1,1),
-(25,21,'text','text',1,1,1),
-(26,23,'text','text',1,1,1),
-(27,24,'text','text',1,1,1),
-(28,26,'text','text',1,1,1),
-(29,28,'text','text',1,1,1),
-(30,29,'text','text',1,1,1),
-(31,39,'Inversiones Inmobiliarias H&A','30-324324-34',37,1,2),
-(32,40,'Inversiones Inmobiliarias H&A','30-324324-34',37,1,2),
-(33,41,'Inversiones Inmobiliarias H&A','30-324324-34',37,1,2),
-(34,43,'Augusto Propiedades S&A','30-2343242332-3',35,1,2),
-(35,45,'Juana Propíedades & Asociados','20-234234324-2',42,1,2),
-(36,47,'Juana Propíedades & Asociados','20-234234324-2',42,1,2),
-(37,49,'Juana Propíedades & Asociados','20-234234324-2',42,1,2),
-(38,51,'Juana Propíedades & Asociados','20-234234324-2',42,1,2),
-(39,53,'Juana Propíedades & Asociados','20-234234324-2',42,1,2),
-(40,54,'Juana Propíedades & Asociados','20-234234324-2',42,1,2),
-(41,55,'BLANCO ENCALADA 3275 S.A','20-234324324-33',40,1,2),
-(42,56,'BLANCO ENCALADA 3275 S.A','20-234324324-33',40,1,2),
-(43,58,'CocaCola Inc','30-2324243232-22',921,2,2),
-(44,60,'CocaCola Inc','30-2324243232-22',921,2,2),
-(45,61,'CocaCola Inc','30-2324243232-22',921,2,2),
-(46,63,'Victor Machado','20-95690981-4',37,1,1),
-(47,65,'Victor Machado','20-95690981-4',37,1,1),
-(48,67,'MANUELA PEDRAZA 3553 S.A','20-3243242343-3',42,1,3),
-(49,68,'Pepsi AR','asdasdasasfas',35,1,2),
-(50,69,'CocaCola Inc','30-2324243232-22',921,2,2),
-(51,70,'Besares y Asociados S.A','20-3423232-2',1,1,2),
-(52,71,'Consorcio Balbin 3050','30-3432433434-3',37,1,2),
-(53,73,'text','text',1,1,1),
-(54,74,'text','text',1,1,1),
-(55,75,'text','text',1,1,1),
-(56,77,'text','text',1,1,1),
-(57,79,'text','text',1,1,1),
-(58,80,'text','text',1,1,1),
-(59,81,'text','text',1,1,1),
-(60,82,'text','text',1,1,1),
-(61,83,'text','text',1,1,1),
-(62,84,'text','text',1,1,1),
-(63,85,'text','text',1,1,1),
-(64,86,'text','text',1,1,1),
-(65,87,'text','text',1,1,1),
-(66,88,'text','text',1,1,1),
-(67,89,'text','text',1,1,1),
-(68,90,'text','text',1,1,1),
-(69,91,'text','text',1,1,1),
-(70,92,'text','text',1,1,1),
-(71,93,'text','text',1,1,1),
-(72,94,'text','text',1,1,1),
-(73,95,'text','text',1,1,1),
-(74,96,'text','text',1,1,1),
-(75,97,'text','text',1,1,1),
-(76,98,'text','text',1,1,1),
-(77,99,'text','text',1,1,1),
-(78,100,'text','text',1,1,1),
-(79,101,'text','text',1,1,1),
-(80,102,'text','text',1,1,1),
-(81,103,'text','text',1,1,1),
-(82,104,'text','text',1,1,1),
-(83,105,'text','text',1,1,1),
-(84,106,'text','text',1,1,1),
-(85,107,'text','text',1,1,1);
+insert  into `tb_client_billing_information`(`idBillingInfo`,`idClientFk`,`businessAddress`,`businessNameBilling`,`cuitBilling`,`idLocationBillingFk`,`idProvinceBillingFk`,`idTypeTaxFk`) values 
+(1,2,NULL,'CARLOS MARSAN','20-10550239-8',1,1,2),
+(2,3,NULL,'CONSORCIO SAN PEDRITO 636','30-66123727-5',1,1,2),
+(3,4,NULL,'CONSORCIO MONROE 3846/48','30-70999275-5',1,1,1),
+(4,5,NULL,'CONSORCIO BELAUSTEGUI 1115','30-71158873-2',1,1,1),
+(5,6,NULL,'CONSORCIO SAN JUAN 3688','30-66303996-9',1,1,1),
+(6,7,NULL,'CONSORCIOS REPUBLICA ARABE SIRIA 2763','33-53891758-9',1,1,1),
+(7,8,NULL,'CONSORCIO AV. SAN JUAN 3655','30-59623849-8',1,1,1),
+(8,9,NULL,'CONSORCIO URUGUAY 1038/42','30-53595230-9',1,1,1),
+(9,11,'ARREGUI 3146','CONSTANZA TETTAMANTI','27-25790019-9',1,1,2),
+(10,12,'LAVALLE 357','CONSORCIO LAVALLE 357','30-53414898-0',1,1,1),
+(11,13,'MANUEL UGARTE 3580','CONSORCIO UGARTE 3580','30-71112623-2',1,1,1),
+(12,15,'HIDALGO 462','DORA SILVIA MARJBEIN','27-11018302-5',1,1,3),
+(13,16,'AV EVA PERON 1155','CONSORCIO EVA PERON 1155','30-71550934-9',1,1,1),
+(14,17,'JULIAN ALVAREZ 647','CONSORCIO JULIAN ALVAREZ 647','30-61287840-0',1,1,1),
+(15,18,NULL,'CONSORCIO HUMBERTO PRIMO 2630','33-52229082-9',1,1,1),
+(16,19,NULL,'CONSORCIO GURRUCHAGA 2230','30-66155337-1',1,1,1),
+(17,20,NULL,'CONSORCIO NEUQUEN 554','30-58020580-8',1,1,1),
+(18,21,NULL,'CONSORCIO PLANES 636','30-53772707-8',1,1,1),
+(19,22,NULL,'CONSORCIO SOLER 4196/98','30-62687526-9',1,1,1),
+(20,23,NULL,'CONSORCIO HIDALGO 619/23','30-68254780-0',1,1,1),
+(21,24,NULL,'ARGERICH 1723 S.A.','30-71515362-5',1,1,2),
+(22,26,NULL,'SEBASTIAN REYES','20-22472909-0',1,1,3),
+(23,27,NULL,'CONSORCIO AV. FEDERICO LACROZE 3541/45','30-71469960-8',1,1,1),
+(24,28,NULL,'CONSORCIO GUEVARA 456/60','30-71469967-5',1,1,1),
+(25,29,NULL,'CONSORCIO AV. MENDOZA 5123/5125','30-71605813-8',1,1,1),
+(26,31,NULL,'FRANCISCA ELENA ANTONELLI','27-13071755-7',1,1,2),
+(27,32,NULL,'CONSORCIO VENEZUELA 1867/69','30-55692953-6',1,1,1),
+(28,33,NULL,'CONSORCIO CHARCAS 2956','30-54533701-7',1,1,1),
+(29,34,NULL,'CONSORCIO SANTA FE 2086','30-59272355-3',1,1,1),
+(30,35,'CHILE 2154','CONSORCIO CHILE 2154','30-55993131-0',1,1,1),
+(31,36,NULL,'MARIA FERNANDA ALIPRANDI','27-20009140-5',1,1,3),
+(32,37,NULL,'CONSORCIO BOGADO 4538','30-71117670-1',1,1,1),
+(33,38,NULL,'CONSORCIO SAN JOSE DE CALASANZ 481','30-71425179-8',1,1,1),
+(34,39,NULL,'CONSORCIO VALLE 1215','30-71219834-2',1,1,1),
+(35,40,NULL,'CONSORCIO RIVADAVIA 4965','30-53581480-1',1,1,1),
+(36,41,NULL,'CONSORCIO MALVINAS ARGENTINAS 251/253/255','30-67895315-2',1,1,1),
+(37,42,NULL,'CONSORCIO HORTIGUERA 473/475','CONSORCIO HORTIGUERA 473/475',1,1,1);
 
 /*Table structure for table `tb_client_camera` */
 
@@ -532,30 +588,17 @@ CREATE TABLE `tb_client_camera` (
   `name` varchar(255) DEFAULT NULL,
   `user` varchar(255) DEFAULT NULL,
   `pass` varchar(255) DEFAULT NULL,
+  `userProfile` varchar(255) DEFAULT NULL,
+  `qrBase64` text,
   PRIMARY KEY (`idClientCamera`),
   KEY `idClientServicesCameraFk` (`idClientServicesCameraFk`),
   CONSTRAINT `tb_client_camera_ibfk_1` FOREIGN KEY (`idClientServicesCameraFk`) REFERENCES `tb_client_services_camera` (`idClientServicesCamera`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_client_camera` */
 
-insert  into `tb_client_camera`(`idClientCamera`,`idClientFk`,`idClientServicesCameraFk`,`name`,`user`,`pass`) values 
-(1,1,25,'ale','aleUser','1234'),
-(2,1,25,'ale','aleUser','1234'),
-(3,1,26,'ale','aleUser','1234'),
-(4,1,26,'ale','aleUser','1234'),
-(5,1,27,'ale','aleUser','1234'),
-(6,1,27,'ale','aleUser','1234'),
-(7,1,28,'ale','aleUser','1234'),
-(8,1,28,'ale','aleUser','1234'),
-(9,1,29,'ale','aleUser','1234'),
-(10,1,29,'ale','aleUser','1234'),
-(11,1,30,'ale','aleUser','1234'),
-(12,1,30,'ale','aleUser','1234'),
-(13,1,31,'ale','aleUser','1234'),
-(14,1,31,'ale','aleUser','1234'),
-(15,1,32,'ale','aleUser','1234'),
-(16,1,32,'ale','aleUser','1234');
+insert  into `tb_client_camera`(`idClientCamera`,`idClientFk`,`idClientServicesCameraFk`,`name`,`user`,`pass`,`userProfile`,`qrBase64`) values 
+(71,76,50,'Roberto Higuera','robertoh','admin','admin','data:image/png;base64,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');
 
 /*Table structure for table `tb_client_departament` */
 
@@ -571,161 +614,994 @@ CREATE TABLE `tb_client_departament` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `numberUNF` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientDepartament`)
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=984 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_departament` */
 
 insert  into `tb_client_departament`(`idClientDepartament`,`idClientFk`,`floor`,`departament`,`idCategoryDepartamentFk`,`idStatusFk`,`created_at`,`numberUNF`) values 
-(1,NULL,NULL,NULL,NULL,NULL,'2019-10-22 18:10:26',NULL),
-(4,18,'1','A',1,1,'2020-03-06 15:00:01',NULL),
-(5,18,'1','B',1,1,'2020-03-06 15:00:01',NULL),
-(6,18,'2','C',1,1,'2020-03-06 15:00:03',NULL),
-(7,18,'2','D',1,1,'2020-03-06 15:00:03',NULL),
-(8,18,'3','E',1,1,'2020-03-06 15:01:13',NULL),
-(9,18,'3','F',1,1,'2020-03-06 15:01:13',NULL),
-(13,52,'8','b',1,1,'2020-07-20 00:46:41',NULL),
-(14,56,'co','1',2,1,'2020-07-20 01:33:25',0),
-(15,56,'ba','1',3,1,'2020-07-20 01:33:25',0),
-(16,56,'lo','1',4,1,'2020-07-20 01:33:25',0),
-(17,56,'pb','1',1,1,'2020-07-20 01:33:25',0),
-(18,56,'pb','2',5,1,'2020-07-20 01:33:25',0),
-(19,56,'1','A',1,1,'2020-07-20 01:33:25',0),
-(20,56,'1','B',1,1,'2020-07-20 01:33:25',0),
-(21,56,'1','C',1,1,'2020-07-20 01:33:25',0),
-(22,56,'1','D',1,1,'2020-07-20 01:33:25',0),
-(23,56,'1','E',1,1,'2020-07-20 01:33:25',0),
-(24,56,'2','A',1,1,'2020-07-20 01:33:25',0),
-(25,56,'2','B',1,1,'2020-07-20 01:33:25',0),
-(26,56,'2','C',1,1,'2020-07-20 01:33:25',0),
-(27,56,'2','D',1,1,'2020-07-20 01:33:25',0),
-(28,56,'2','E',1,1,'2020-07-20 01:33:25',0),
-(29,56,'3','A',1,1,'2020-07-20 01:33:25',0),
-(30,56,'3','B',1,1,'2020-07-20 01:33:25',0),
-(31,56,'3','C',1,1,'2020-07-20 01:33:25',0),
-(32,56,'3','D',1,1,'2020-07-20 01:33:25',0),
-(33,56,'3','E',1,1,'2020-07-20 01:33:25',0),
-(34,56,'4','A',1,1,'2020-07-20 01:33:25',0),
-(35,56,'4','B',1,1,'2020-07-20 01:33:25',0),
-(36,56,'4','C',1,1,'2020-07-20 01:33:25',0),
-(37,56,'4','D',1,1,'2020-07-20 01:33:25',0),
-(38,56,'4','E',1,1,'2020-07-20 01:33:25',0),
-(39,56,'5','A',1,1,'2020-07-20 01:33:25',0),
-(40,56,'5','B',1,1,'2020-07-20 01:33:25',0),
-(41,56,'5','C',1,1,'2020-07-20 01:33:25',0),
-(42,56,'5','D',1,1,'2020-07-20 01:33:25',0),
-(43,56,'5','E',1,1,'2020-07-20 01:33:25',0),
-(44,57,'4','d',1,1,'2020-07-20 20:10:58',NULL),
-(45,59,'5','a',1,1,'2020-07-20 23:03:55',NULL),
-(46,62,'1','a',1,1,'2020-07-21 02:32:23',NULL),
-(47,64,'1','a',1,1,'2020-07-21 02:52:21',NULL),
-(48,66,NULL,NULL,NULL,1,'2020-07-21 02:52:21',NULL),
-(49,67,'pb','1',1,1,'2020-07-21 03:10:26',0),
-(50,67,'pb','2',5,1,'2020-07-21 03:10:26',0),
-(51,67,'1','1',1,1,'2020-07-21 03:10:26',0),
-(52,67,'1','2',1,1,'2020-07-21 03:10:26',0),
-(53,67,'1','3',1,1,'2020-07-21 03:10:26',0),
-(54,67,'1','4',1,1,'2020-07-21 03:10:26',0),
-(55,67,'1','5',1,1,'2020-07-21 03:10:26',0),
-(56,67,'2','6',1,1,'2020-07-21 03:10:26',0),
-(57,67,'2','7',1,1,'2020-07-21 03:10:26',0),
-(58,67,'2','8',1,1,'2020-07-21 03:10:26',0),
-(59,67,'2','9',1,1,'2020-07-21 03:10:26',0),
-(60,67,'2','10',1,1,'2020-07-21 03:10:26',0),
-(61,67,'3','11',1,1,'2020-07-21 03:10:26',0),
-(62,67,'3','12',1,1,'2020-07-21 03:10:26',0),
-(63,67,'3','13',1,1,'2020-07-21 03:10:26',0),
-(64,67,'3','14',1,1,'2020-07-21 03:10:26',0),
-(65,67,'3','15',1,1,'2020-07-21 03:10:26',0),
-(66,67,'4','16',1,1,'2020-07-21 03:10:26',0),
-(67,67,'4','17',1,1,'2020-07-21 03:10:26',0),
-(68,67,'4','18',1,1,'2020-07-21 03:10:26',0),
-(69,67,'4','19',1,1,'2020-07-21 03:10:26',0),
-(70,67,'4','20',1,1,'2020-07-21 03:10:26',0),
-(71,67,'5','21',1,1,'2020-07-21 03:10:26',0),
-(72,67,'5','22',1,1,'2020-07-21 03:10:26',0),
-(73,67,'5','23',1,1,'2020-07-21 03:10:26',0),
-(74,67,'5','24',1,1,'2020-07-21 03:10:26',0),
-(75,67,'5','25',1,1,'2020-07-21 03:10:26',0),
-(76,70,'pb','1',1,1,'2020-07-24 18:29:15',0),
-(77,70,'pb','2',5,1,'2020-07-24 18:29:15',0),
-(78,70,'1','A',1,1,'2020-07-24 18:29:15',0),
-(79,70,'1','B',1,1,'2020-07-24 18:29:15',0),
-(80,70,'1','C',1,1,'2020-07-24 18:29:15',0),
-(81,70,'1','D',1,1,'2020-07-24 18:29:15',0),
-(82,70,'1','E',1,1,'2020-07-24 18:29:15',0),
-(83,70,'2','A',1,1,'2020-07-24 18:29:15',0),
-(84,70,'2','B',1,1,'2020-07-24 18:29:15',0),
-(85,70,'2','C',1,1,'2020-07-24 18:29:15',0),
-(86,70,'2','D',1,1,'2020-07-24 18:29:15',0),
-(87,70,'2','E',1,1,'2020-07-24 18:29:15',0),
-(88,70,'3','A',1,1,'2020-07-24 18:29:15',0),
-(89,70,'3','B',1,1,'2020-07-24 18:29:15',0),
-(90,70,'3','C',1,1,'2020-07-24 18:29:15',0),
-(91,70,'3','D',1,1,'2020-07-24 18:29:15',0),
-(92,70,'3','E',1,1,'2020-07-24 18:29:15',0),
-(93,70,'4','A',1,1,'2020-07-24 18:29:15',0),
-(94,70,'4','B',1,1,'2020-07-24 18:29:15',0),
-(95,70,'4','C',1,1,'2020-07-24 18:29:15',0),
-(96,70,'4','D',1,1,'2020-07-24 18:29:15',0),
-(97,70,'4','E',1,1,'2020-07-24 18:29:15',0),
-(98,70,'5','A',1,1,'2020-07-24 18:29:15',0),
-(99,70,'5','B',1,1,'2020-07-24 18:29:15',0),
-(100,70,'5','C',1,1,'2020-07-24 18:29:15',0),
-(101,70,'5','D',1,1,'2020-07-24 18:29:15',0),
-(102,70,'5','E',1,1,'2020-07-24 18:29:15',0),
-(103,71,'pb','1',5,1,'2020-07-24 18:33:34',0),
-(104,71,'1','A',1,1,'2020-07-24 18:33:34',0),
-(105,71,'1','B',1,1,'2020-07-24 18:33:34',0),
-(106,71,'1','C',1,1,'2020-07-24 18:33:34',0),
-(107,71,'1','D',1,1,'2020-07-24 18:33:34',0),
-(108,71,'1','E',1,1,'2020-07-24 18:33:34',0),
-(109,71,'2','A',1,1,'2020-07-24 18:33:34',0),
-(110,71,'2','B',1,1,'2020-07-24 18:33:34',0),
-(111,71,'2','C',1,1,'2020-07-24 18:33:34',0),
-(112,71,'2','D',1,1,'2020-07-24 18:33:34',0),
-(113,71,'2','E',1,1,'2020-07-24 18:33:34',0),
-(114,71,'3','A',1,1,'2020-07-24 18:33:34',0),
-(115,71,'3','B',1,1,'2020-07-24 18:33:34',0),
-(116,71,'3','C',1,1,'2020-07-24 18:33:34',0),
-(117,71,'3','D',1,1,'2020-07-24 18:33:34',0),
-(118,71,'3','E',1,1,'2020-07-24 18:33:34',0),
-(119,71,'4','A',1,1,'2020-07-24 18:33:34',0),
-(120,71,'4','B',1,1,'2020-07-24 18:33:34',0),
-(121,71,'4','C',1,1,'2020-07-24 18:33:34',0),
-(122,71,'4','D',1,1,'2020-07-24 18:33:34',0),
-(123,71,'4','E',1,1,'2020-07-24 18:33:34',0),
-(124,71,'5','A',1,1,'2020-07-24 18:33:34',0),
-(125,71,'5','B',1,1,'2020-07-24 18:33:34',0),
-(126,71,'5','C',1,1,'2020-07-24 18:33:34',0),
-(127,71,'5','D',1,1,'2020-07-24 18:33:34',0),
-(128,71,'5','E',1,1,'2020-07-24 18:33:34',0),
-(129,72,NULL,NULL,NULL,1,'2020-08-12 10:13:54',NULL),
-(130,76,'erwer',NULL,0,1,'2020-08-12 10:48:45',NULL),
-(131,78,'1','A',1,1,'2020-08-12 11:07:56',NULL),
-(132,3,'1','departament',0,1,'2020-08-12 15:09:27',NULL),
-(133,3,'1','departament',0,1,'2020-08-12 15:09:28',NULL),
-(134,83,'1','departament',0,1,'2020-08-12 15:09:56',NULL),
-(135,83,'1','departament',0,1,'2020-08-12 15:09:57',NULL),
-(136,84,'1','departament',0,1,'2020-08-12 15:11:46',NULL),
-(137,84,'1','departament',0,1,'2020-08-12 15:11:46',NULL),
-(138,85,'1','departament',0,1,'2020-08-12 15:12:09',NULL),
-(139,85,'1','departament',0,1,'2020-08-12 15:12:09',NULL),
-(140,86,'1','departament',0,1,'2020-08-12 15:12:33',NULL),
-(141,86,'1','departament',0,1,'2020-08-12 15:12:33',NULL),
-(142,87,'1','departament',0,1,'2020-08-12 15:13:03',NULL),
-(143,87,'1','departament',0,1,'2020-08-12 15:13:03',NULL),
-(144,88,'1','departament',0,1,'2020-08-12 15:13:50',1),
-(145,88,'1','departament',0,1,'2020-08-12 15:13:50',1),
-(146,89,'1','departament',0,1,'2020-08-12 15:15:03',1),
-(147,89,'1','departament',0,1,'2020-08-12 15:15:03',1),
-(148,90,'1','departament',0,1,'2020-08-12 15:15:43',1),
-(149,90,'1','departament',0,1,'2020-08-12 15:15:43',1),
-(150,91,'1','departament',0,1,'2020-08-12 15:16:09',1),
-(151,91,'1','departament',0,1,'2020-08-12 15:16:09',1),
-(152,100,'1','departament',0,1,'2020-08-14 00:11:36',1),
-(153,100,'1','departament',0,1,'2020-08-14 00:11:36',1),
-(164,1,'1','departament',0,1,'2020-08-14 00:18:33',1),
-(165,1,'1','departament',0,1,'2020-08-14 00:18:33',1);
+(1,1,'2','A',1,1,'2020-07-23 21:37:02',NULL),
+(2,3,'pb','1',5,1,'2020-07-23 21:48:46',0),
+(3,3,'1','A',1,1,'2020-07-23 21:48:46',0),
+(4,3,'1','B',1,1,'2020-07-23 21:48:46',0),
+(5,3,'1','C',1,1,'2020-07-23 21:48:46',0),
+(6,3,'1','D',1,1,'2020-07-23 21:48:46',0),
+(7,3,'1','E',1,1,'2020-07-23 21:48:46',0),
+(8,3,'1','F',1,1,'2020-07-23 21:48:46',0),
+(9,3,'1','G',1,1,'2020-07-23 21:48:46',0),
+(10,3,'2','A',1,1,'2020-07-23 21:48:46',0),
+(11,3,'2','B',1,1,'2020-07-23 21:48:46',0),
+(12,3,'2','C',1,1,'2020-07-23 21:48:46',0),
+(13,3,'2','D',1,1,'2020-07-23 21:48:46',0),
+(14,3,'2','E',1,1,'2020-07-23 21:48:46',0),
+(15,3,'2','F',1,1,'2020-07-23 21:48:46',0),
+(16,3,'2','G',1,1,'2020-07-23 21:48:46',0),
+(17,3,'3','A',1,1,'2020-07-23 21:48:46',0),
+(18,3,'3','B',1,1,'2020-07-23 21:48:46',0),
+(19,3,'3','C',1,1,'2020-07-23 21:48:46',0),
+(20,3,'3','D',1,1,'2020-07-23 21:48:46',0),
+(21,3,'3','E',1,1,'2020-07-23 21:48:46',0),
+(22,3,'3','F',1,1,'2020-07-23 21:48:46',0),
+(23,3,'3','G',1,1,'2020-07-23 21:48:46',0),
+(24,3,'4','A',1,1,'2020-07-23 21:48:46',0),
+(25,3,'4','B',1,1,'2020-07-23 21:48:46',0),
+(26,3,'4','C',1,1,'2020-07-23 21:48:46',0),
+(27,3,'4','D',1,1,'2020-07-23 21:48:46',0),
+(28,3,'4','E',1,1,'2020-07-23 21:48:46',0),
+(29,3,'4','F',1,1,'2020-07-23 21:48:46',0),
+(30,3,'4','G',1,1,'2020-07-23 21:48:46',0),
+(31,3,'5','A',1,1,'2020-07-23 21:48:46',0),
+(32,3,'5','B',1,1,'2020-07-23 21:48:46',0),
+(33,3,'5','C',1,1,'2020-07-23 21:48:46',0),
+(34,3,'5','D',1,1,'2020-07-23 21:48:46',0),
+(35,3,'5','E',1,1,'2020-07-23 21:48:46',0),
+(36,3,'5','F',1,1,'2020-07-23 21:48:46',0),
+(37,3,'5','G',1,1,'2020-07-23 21:48:46',0),
+(38,3,'6','A',1,1,'2020-07-23 21:48:46',0),
+(39,3,'6','B',1,1,'2020-07-23 21:48:46',0),
+(40,3,'6','C',1,1,'2020-07-23 21:48:46',0),
+(41,3,'6','D',1,1,'2020-07-23 21:48:46',0),
+(42,3,'6','E',1,1,'2020-07-23 21:48:46',0),
+(43,3,'6','F',1,1,'2020-07-23 21:48:46',0),
+(44,3,'6','G',1,1,'2020-07-23 21:48:46',0),
+(45,3,'7','A',1,1,'2020-07-23 21:48:46',0),
+(46,3,'7','B',1,1,'2020-07-23 21:48:46',0),
+(47,3,'7','C',1,1,'2020-07-23 21:48:46',0),
+(48,3,'7','D',1,1,'2020-07-23 21:48:46',0),
+(49,3,'7','E',1,1,'2020-07-23 21:48:47',0),
+(50,3,'7','F',1,1,'2020-07-23 21:48:47',0),
+(51,3,'7','G',1,1,'2020-07-23 21:48:47',0),
+(52,3,'8','A',1,1,'2020-07-23 21:48:47',0),
+(53,3,'8','B',1,1,'2020-07-23 21:48:47',0),
+(54,3,'8','C',1,1,'2020-07-23 21:48:47',0),
+(55,3,'8','D',1,1,'2020-07-23 21:48:47',0),
+(56,3,'8','E',1,1,'2020-07-23 21:48:47',0),
+(57,3,'8','F',1,1,'2020-07-23 21:48:47',0),
+(58,3,'8','G',1,1,'2020-07-23 21:48:47',0),
+(59,4,'pb','1',1,1,'2020-07-24 12:21:36',0),
+(60,4,'1','A',1,1,'2020-07-24 12:21:36',0),
+(61,4,'1','B',1,1,'2020-07-24 12:21:36',0),
+(62,4,'2','A',1,1,'2020-07-24 12:21:36',0),
+(63,4,'2','B',1,1,'2020-07-24 12:21:36',0),
+(64,4,'3','A',1,1,'2020-07-24 12:21:36',0),
+(65,4,'3','B',1,1,'2020-07-24 12:21:36',0),
+(66,4,'4','A',1,1,'2020-07-24 12:21:36',0),
+(67,4,'4','B',1,1,'2020-07-24 12:21:36',0),
+(68,4,'5','A',1,1,'2020-07-24 12:21:36',0),
+(69,4,'5','B',1,1,'2020-07-24 12:21:36',0),
+(70,4,'6','A',1,1,'2020-07-24 12:21:36',0),
+(71,4,'6','B',1,1,'2020-07-24 12:21:36',0),
+(72,4,'7','A',1,1,'2020-07-24 12:21:36',0),
+(73,4,'7','B',1,1,'2020-07-24 12:21:36',0),
+(74,4,'8','A',1,1,'2020-07-24 12:21:36',0),
+(75,4,'8','B',1,1,'2020-07-24 12:21:36',0),
+(76,4,'9','A',1,1,'2020-07-24 12:21:36',0),
+(77,4,'9','B',1,1,'2020-07-24 12:21:36',0),
+(78,5,'pb','1',5,1,'2020-07-24 12:26:03',0),
+(79,5,'1','A',1,1,'2020-07-24 12:26:03',0),
+(80,5,'1','B',1,1,'2020-07-24 12:26:03',0),
+(81,5,'1','C',1,1,'2020-07-24 12:26:03',0),
+(82,5,'2','A',1,1,'2020-07-24 12:26:03',0),
+(83,5,'2','B',1,1,'2020-07-24 12:26:03',0),
+(84,5,'2','C',1,1,'2020-07-24 12:26:03',0),
+(85,5,'3','A',1,1,'2020-07-24 12:26:04',0),
+(86,5,'3','B',1,1,'2020-07-24 12:26:04',0),
+(87,5,'3','C',1,1,'2020-07-24 12:26:04',0),
+(88,5,'4','A',1,1,'2020-07-24 12:26:04',0),
+(89,5,'4','B',1,1,'2020-07-24 12:26:04',0),
+(90,5,'4','C',1,1,'2020-07-24 12:26:04',0),
+(91,5,'5','A',1,1,'2020-07-24 12:26:04',0),
+(92,5,'5','B',1,1,'2020-07-24 12:26:04',0),
+(93,5,'5','C',1,1,'2020-07-24 12:26:04',0),
+(94,5,'6','A',1,1,'2020-07-24 12:26:04',0),
+(95,5,'6','B',1,1,'2020-07-24 12:26:04',0),
+(96,5,'6','C',1,1,'2020-07-24 12:26:04',0),
+(97,5,'7','A',1,1,'2020-07-24 12:26:04',0),
+(98,5,'7','B',1,1,'2020-07-24 12:26:04',0),
+(99,5,'7','C',1,1,'2020-07-24 12:26:04',0),
+(100,5,'8','A',1,1,'2020-07-24 12:26:04',0),
+(101,5,'8','B',1,1,'2020-07-24 12:26:04',0),
+(102,5,'8','C',1,1,'2020-07-24 12:26:05',0),
+(103,6,'lo','1',4,1,'2020-07-24 12:36:39',0),
+(104,6,'pb','1',5,1,'2020-07-24 12:36:39',0),
+(105,6,'1','A',1,1,'2020-07-24 12:36:39',0),
+(106,6,'1','B',1,1,'2020-07-24 12:36:39',0),
+(107,6,'1','C',1,1,'2020-07-24 12:36:39',0),
+(108,6,'2','A',1,1,'2020-07-24 12:36:39',0),
+(109,6,'2','B',1,1,'2020-07-24 12:36:39',0),
+(110,6,'2','C',1,1,'2020-07-24 12:36:39',0),
+(111,6,'3','A',1,1,'2020-07-24 12:36:39',0),
+(112,6,'3','B',1,1,'2020-07-24 12:36:39',0),
+(113,6,'3','C',1,1,'2020-07-24 12:36:39',0),
+(114,6,'4','A',1,1,'2020-07-24 12:36:39',0),
+(115,6,'4','B',1,1,'2020-07-24 12:36:39',0),
+(116,6,'4','C',1,1,'2020-07-24 12:36:39',0),
+(117,6,'5','A',1,1,'2020-07-24 12:36:39',0),
+(118,6,'5','B',1,1,'2020-07-24 12:36:39',0),
+(119,6,'5','C',1,1,'2020-07-24 12:36:39',0),
+(120,6,'6','A',1,1,'2020-07-24 12:36:39',0),
+(121,6,'6','B',1,1,'2020-07-24 12:36:39',0),
+(122,6,'6','C',1,1,'2020-07-24 12:36:39',0),
+(123,6,'7','A',1,1,'2020-07-24 12:36:39',0),
+(124,6,'7','B',1,1,'2020-07-24 12:36:39',0),
+(125,6,'7','C',1,1,'2020-07-24 12:36:39',0),
+(126,6,'8','A',1,1,'2020-07-24 12:36:39',0),
+(127,6,'8','B',1,1,'2020-07-24 12:36:39',0),
+(128,6,'8','C',1,1,'2020-07-24 12:36:39',0),
+(129,6,'9','A',1,1,'2020-07-24 12:36:39',0),
+(130,6,'9','B',1,1,'2020-07-24 12:36:39',0),
+(131,6,'10','A',1,1,'2020-07-24 12:36:39',0),
+(132,6,'10','B',1,1,'2020-07-24 12:36:39',0),
+(133,7,'pb','1',1,1,'2020-07-24 12:47:16',0),
+(134,7,'pb','2',1,1,'2020-07-24 12:47:16',0),
+(135,7,'1','A',1,1,'2020-07-24 12:47:16',0),
+(136,7,'1','B',1,1,'2020-07-24 12:47:16',0),
+(137,7,'2','A',1,1,'2020-07-24 12:47:16',0),
+(138,7,'2','B',1,1,'2020-07-24 12:47:16',0),
+(139,7,'3','A',1,1,'2020-07-24 12:47:16',0),
+(140,7,'3','B',1,1,'2020-07-24 12:47:17',0),
+(141,7,'4','A',1,1,'2020-07-24 12:47:17',0),
+(142,7,'4','B',1,1,'2020-07-24 12:47:17',0),
+(143,7,'5','A',1,1,'2020-07-24 12:47:17',0),
+(144,7,'5','B',1,1,'2020-07-24 12:47:17',0),
+(145,7,'6','A',1,1,'2020-07-24 12:47:17',0),
+(146,7,'6','B',1,1,'2020-07-24 12:47:17',0),
+(147,7,'7','A',1,1,'2020-07-24 12:47:17',0),
+(148,7,'7','B',1,1,'2020-07-24 12:47:17',0),
+(149,7,'8','A',1,1,'2020-07-24 12:47:17',0),
+(150,7,'8','B',1,1,'2020-07-24 12:47:17',0),
+(151,7,'9','A',1,1,'2020-07-24 12:47:17',0),
+(152,7,'9','B',1,1,'2020-07-24 12:47:17',0),
+(153,7,'10','A',1,1,'2020-07-24 12:47:17',0),
+(154,7,'10','B',1,1,'2020-07-24 12:47:17',0),
+(155,7,'11','A',1,1,'2020-07-24 12:47:17',0),
+(156,7,'11','B',1,1,'2020-07-24 12:47:17',0),
+(157,7,'12','A',1,1,'2020-07-24 12:47:17',0),
+(158,7,'12','B',1,1,'2020-07-24 12:47:17',0),
+(159,8,'pb','1',5,1,'2020-07-24 12:56:29',0),
+(160,8,'1','A',1,1,'2020-07-24 12:56:29',0),
+(161,8,'1','B',1,1,'2020-07-24 12:56:29',0),
+(162,8,'1','C',1,1,'2020-07-24 12:56:29',0),
+(163,8,'1','D',1,1,'2020-07-24 12:56:29',0),
+(164,8,'1','E',1,1,'2020-07-24 12:56:29',0),
+(165,8,'1','F',1,1,'2020-07-24 12:56:29',0),
+(166,8,'1','G',1,1,'2020-07-24 12:56:29',0),
+(167,8,'2','A',1,1,'2020-07-24 12:56:29',0),
+(168,8,'2','B',1,1,'2020-07-24 12:56:29',0),
+(169,8,'2','C',1,1,'2020-07-24 12:56:29',0),
+(170,8,'2','D',1,1,'2020-07-24 12:56:29',0),
+(171,8,'2','E',1,1,'2020-07-24 12:56:29',0),
+(172,8,'2','F',1,1,'2020-07-24 12:56:29',0),
+(173,8,'2','G',1,1,'2020-07-24 12:56:29',0),
+(174,8,'3','A',1,1,'2020-07-24 12:56:29',0),
+(175,8,'3','B',1,1,'2020-07-24 12:56:29',0),
+(176,8,'3','C',1,1,'2020-07-24 12:56:29',0),
+(177,8,'3','D',1,1,'2020-07-24 12:56:29',0),
+(178,8,'3','E',1,1,'2020-07-24 12:56:29',0),
+(179,8,'4','A',1,1,'2020-07-24 12:56:29',0),
+(180,8,'4','B',1,1,'2020-07-24 12:56:29',0),
+(181,8,'4','C',1,1,'2020-07-24 12:56:29',0),
+(182,8,'4','D',1,1,'2020-07-24 12:56:29',0),
+(183,8,'4','E',1,1,'2020-07-24 12:56:29',0),
+(184,8,'5','A',1,1,'2020-07-24 12:56:29',0),
+(185,8,'5','B',1,1,'2020-07-24 12:56:29',0),
+(186,8,'5','C',1,1,'2020-07-24 12:56:29',0),
+(187,8,'5','D',1,1,'2020-07-24 12:56:29',0),
+(188,8,'5','E',1,1,'2020-07-24 12:56:29',0),
+(189,8,'6','A',1,1,'2020-07-24 12:56:29',0),
+(190,8,'6','B',1,1,'2020-07-24 12:56:29',0),
+(191,8,'6','C',1,1,'2020-07-24 12:56:29',0),
+(192,8,'6','D',1,1,'2020-07-24 12:56:29',0),
+(193,8,'6','E',1,1,'2020-07-24 12:56:29',0),
+(194,8,'7','A',1,1,'2020-07-24 12:56:29',0),
+(195,8,'7','B',1,1,'2020-07-24 12:56:29',0),
+(196,8,'7','C',1,1,'2020-07-24 12:56:29',0),
+(197,8,'7','D',1,1,'2020-07-24 12:56:29',0),
+(198,8,'7','E',1,1,'2020-07-24 12:56:29',0),
+(199,8,'8','A',1,1,'2020-07-24 12:56:29',0),
+(200,8,'8','B',1,1,'2020-07-24 12:56:29',0),
+(201,8,'8','C',1,1,'2020-07-24 12:56:29',0),
+(202,8,'8','D',1,1,'2020-07-24 12:56:29',0),
+(203,8,'8','E',1,1,'2020-07-24 12:56:29',0),
+(204,8,'9','A',1,1,'2020-07-24 12:56:29',0),
+(205,8,'9','B',1,1,'2020-07-24 12:56:30',0),
+(206,8,'9','C',1,1,'2020-07-24 12:56:30',0),
+(207,8,'9','D',1,1,'2020-07-24 12:56:30',0),
+(208,8,'10','A',1,1,'2020-07-24 12:56:30',0),
+(209,8,'10','B',1,1,'2020-07-24 12:56:30',0),
+(210,8,'10','C',1,1,'2020-07-24 12:56:30',0),
+(211,8,'10','D',1,1,'2020-07-24 12:56:30',0),
+(212,9,'pb','1',1,1,'2020-07-24 13:03:23',0),
+(213,9,'1','A',1,1,'2020-07-24 13:03:23',0),
+(214,9,'1','B',1,1,'2020-07-24 13:03:23',0),
+(215,9,'2','A',1,1,'2020-07-24 13:03:23',0),
+(216,9,'2','B',1,1,'2020-07-24 13:03:23',0),
+(217,9,'3','A',1,1,'2020-07-24 13:03:23',0),
+(218,9,'3','B',1,1,'2020-07-24 13:03:23',0),
+(219,9,'4','A',1,1,'2020-07-24 13:03:23',0),
+(220,9,'4','B',1,1,'2020-07-24 13:03:24',0),
+(221,9,'5','A',1,1,'2020-07-24 13:03:24',0),
+(222,9,'5','B',1,1,'2020-07-24 13:03:24',0),
+(223,9,'6','A',1,1,'2020-07-24 13:03:24',0),
+(224,9,'6','B',1,1,'2020-07-24 13:03:24',0),
+(225,9,'7','A',1,1,'2020-07-24 13:03:24',0),
+(226,9,'7','B',1,1,'2020-07-24 13:03:24',0),
+(227,9,'8','A',1,1,'2020-07-24 13:03:24',0),
+(228,9,'8','B',1,1,'2020-07-24 13:03:24',0),
+(229,9,'9','A',1,1,'2020-07-24 13:03:24',0),
+(230,9,'9','B',1,1,'2020-07-24 13:03:24',0),
+(231,9,'10','A',1,1,'2020-07-24 13:03:24',0),
+(232,10,'8','1',1,1,'2020-07-24 13:10:47',0),
+(233,12,'pb','1',5,1,'2020-07-24 13:16:00',0),
+(234,12,'1','1',1,1,'2020-07-24 13:16:00',0),
+(235,12,'1','2',1,1,'2020-07-24 13:16:00',0),
+(236,12,'1','3',1,1,'2020-07-24 13:16:00',0),
+(237,12,'1','4',1,1,'2020-07-24 13:16:00',0),
+(238,12,'1','5',1,1,'2020-07-24 13:16:00',0),
+(239,12,'1','6',1,1,'2020-07-24 13:16:00',0),
+(240,12,'1','7',1,1,'2020-07-24 13:16:00',0),
+(241,12,'1','8',1,1,'2020-07-24 13:16:00',0),
+(242,12,'2','1',1,1,'2020-07-24 13:16:00',0),
+(243,12,'2','2',1,1,'2020-07-24 13:16:00',0),
+(244,12,'2','3',1,1,'2020-07-24 13:16:00',0),
+(245,12,'2','4',1,1,'2020-07-24 13:16:00',0),
+(246,12,'2','5',1,1,'2020-07-24 13:16:00',0),
+(247,12,'2','6',1,1,'2020-07-24 13:16:00',0),
+(248,12,'2','7',1,1,'2020-07-24 13:16:00',0),
+(249,12,'2','8',1,1,'2020-07-24 13:16:00',0),
+(250,12,'3','1',1,1,'2020-07-24 13:16:00',0),
+(251,12,'3','2',1,1,'2020-07-24 13:16:00',0),
+(252,12,'3','3',1,1,'2020-07-24 13:16:00',0),
+(253,12,'3','4',1,1,'2020-07-24 13:16:00',0),
+(254,12,'3','5',1,1,'2020-07-24 13:16:00',0),
+(255,12,'3','6',1,1,'2020-07-24 13:16:00',0),
+(256,12,'3','7',1,1,'2020-07-24 13:16:00',0),
+(257,12,'3','8',1,1,'2020-07-24 13:16:00',0),
+(258,12,'4','1',1,1,'2020-07-24 13:16:00',0),
+(259,12,'4','2',1,1,'2020-07-24 13:16:00',0),
+(260,12,'4','3',1,1,'2020-07-24 13:16:00',0),
+(261,12,'4','4',1,1,'2020-07-24 13:16:00',0),
+(262,12,'4','5',1,1,'2020-07-24 13:16:00',0),
+(263,12,'4','6',1,1,'2020-07-24 13:16:00',0),
+(264,12,'4','7',1,1,'2020-07-24 13:16:00',0),
+(265,12,'4','8',1,1,'2020-07-24 13:16:00',0),
+(266,12,'5','1',1,1,'2020-07-24 13:16:00',0),
+(267,12,'5','2',1,1,'2020-07-24 13:16:00',0),
+(268,12,'5','3',1,1,'2020-07-24 13:16:00',0),
+(269,12,'5','4',1,1,'2020-07-24 13:16:00',0),
+(270,12,'5','5',1,1,'2020-07-24 13:16:00',0),
+(271,12,'5','6',1,1,'2020-07-24 13:16:00',0),
+(272,12,'5','7',1,1,'2020-07-24 13:16:00',0),
+(273,12,'5','8',1,1,'2020-07-24 13:16:00',0),
+(274,12,'6','1',1,1,'2020-07-24 13:16:00',0),
+(275,12,'6','2',1,1,'2020-07-24 13:16:00',0),
+(276,12,'6','3',1,1,'2020-07-24 13:16:00',0),
+(277,12,'6','4',1,1,'2020-07-24 13:16:00',0),
+(278,12,'6','5',1,1,'2020-07-24 13:16:00',0),
+(279,12,'6','6',1,1,'2020-07-24 13:16:00',0),
+(280,12,'6','7',1,1,'2020-07-24 13:16:00',0),
+(281,12,'6','8',1,1,'2020-07-24 13:16:00',0),
+(282,12,'7','1',1,1,'2020-07-24 13:16:00',0),
+(283,12,'7','2',1,1,'2020-07-24 13:16:00',0),
+(284,12,'7','3',1,1,'2020-07-24 13:16:00',0),
+(285,12,'7','4',1,1,'2020-07-24 13:16:00',0),
+(286,12,'7','5',1,1,'2020-07-24 13:16:00',0),
+(287,12,'7','6',1,1,'2020-07-24 13:16:00',0),
+(288,12,'7','7',1,1,'2020-07-24 13:16:00',0),
+(289,12,'7','8',1,1,'2020-07-24 13:16:00',0),
+(290,12,'8','1',1,1,'2020-07-24 13:16:00',0),
+(291,12,'8','2',1,1,'2020-07-24 13:16:00',0),
+(292,12,'8','3',1,1,'2020-07-24 13:16:00',0),
+(293,12,'8','4',1,1,'2020-07-24 13:16:00',0),
+(294,12,'8','5',1,1,'2020-07-24 13:16:00',0),
+(295,12,'8','6',1,1,'2020-07-24 13:16:00',0),
+(296,12,'8','7',1,1,'2020-07-24 13:16:00',0),
+(297,12,'8','8',1,1,'2020-07-24 13:16:01',0),
+(298,12,'9','1',1,1,'2020-07-24 13:16:01',0),
+(299,12,'9','2',1,1,'2020-07-24 13:16:01',0),
+(300,12,'9','3',1,1,'2020-07-24 13:16:01',0),
+(301,12,'9','4',1,1,'2020-07-24 13:16:01',0),
+(302,12,'9','5',1,1,'2020-07-24 13:16:01',0),
+(303,12,'9','6',1,1,'2020-07-24 13:16:01',0),
+(304,12,'9','7',1,1,'2020-07-24 13:16:01',0),
+(305,12,'9','8',1,1,'2020-07-24 13:16:01',0),
+(306,12,'10','1',1,1,'2020-07-24 13:16:01',0),
+(307,12,'10','2',1,1,'2020-07-24 13:16:01',0),
+(308,12,'10','3',1,1,'2020-07-24 13:16:01',0),
+(309,12,'10','4',1,1,'2020-07-24 13:16:01',0),
+(310,12,'10','5',1,1,'2020-07-24 13:16:01',0),
+(311,12,'10','6',1,1,'2020-07-24 13:16:01',0),
+(312,12,'10','7',1,1,'2020-07-24 13:16:01',0),
+(313,12,'10','8',1,1,'2020-07-24 13:16:01',0),
+(314,12,'11','1',1,1,'2020-07-24 13:16:01',0),
+(315,12,'11','2',1,1,'2020-07-24 13:16:01',0),
+(316,12,'11','3',1,1,'2020-07-24 13:16:01',0),
+(317,12,'11','4',1,1,'2020-07-24 13:16:01',0),
+(318,12,'11','5',1,1,'2020-07-24 13:16:01',0),
+(319,12,'11','6',1,1,'2020-07-24 13:16:01',0),
+(320,12,'11','7',1,1,'2020-07-24 13:16:01',0),
+(321,12,'11','8',1,1,'2020-07-24 13:16:01',0),
+(322,12,'12','1',1,1,'2020-07-24 13:16:01',0),
+(323,12,'12','2',1,1,'2020-07-24 13:16:01',0),
+(324,12,'12','3',1,1,'2020-07-24 13:16:01',0),
+(325,12,'12','4',1,1,'2020-07-24 13:16:01',0),
+(326,12,'12','5',1,1,'2020-07-24 13:16:01',0),
+(327,12,'12','6',1,1,'2020-07-24 13:16:01',0),
+(328,12,'12','7',1,1,'2020-07-24 13:16:01',0),
+(329,12,'12','8',1,1,'2020-07-24 13:16:01',0),
+(330,13,'pb','1',5,-1,'2020-07-24 13:21:15',0),
+(331,13,'1','A',1,1,'2020-07-24 13:21:15',0),
+(332,13,'1','B',1,1,'2020-07-24 13:21:15',0),
+(333,13,'1','C',1,1,'2020-07-24 13:21:15',0),
+(334,13,'1','D',1,1,'2020-07-24 13:21:15',0),
+(335,13,'2','A',1,1,'2020-07-24 13:21:15',0),
+(336,13,'2','B',1,1,'2020-07-24 13:21:15',0),
+(337,13,'2','C',1,1,'2020-07-24 13:21:15',0),
+(338,13,'2','D',1,1,'2020-07-24 13:21:15',0),
+(339,13,'3','A',1,1,'2020-07-24 13:21:15',0),
+(340,13,'3','B',1,1,'2020-07-24 13:21:15',0),
+(341,13,'3','C',1,1,'2020-07-24 13:21:15',0),
+(342,13,'3','D',1,1,'2020-07-24 13:21:15',0),
+(343,13,'4','A',1,1,'2020-07-24 13:21:15',0),
+(344,13,'4','B',1,1,'2020-07-24 13:21:15',0),
+(345,13,'4','C',1,1,'2020-07-24 13:21:15',0),
+(346,13,'4','D',1,1,'2020-07-24 13:21:15',0),
+(347,13,'5','A',1,1,'2020-07-24 13:21:15',0),
+(348,13,'5','B',1,1,'2020-07-24 13:21:15',0),
+(349,13,'5','C',1,1,'2020-07-24 13:21:15',0),
+(350,13,'5','D',1,1,'2020-07-24 13:21:15',0),
+(351,14,'1','A',1,1,'2020-07-24 19:32:36',0),
+(352,16,'pb','1',5,1,'2020-07-24 19:38:17',0),
+(353,16,'1','A',1,1,'2020-07-24 19:38:17',0),
+(354,16,'1','B',1,1,'2020-07-24 19:38:17',0),
+(355,16,'1','C',1,1,'2020-07-24 19:38:17',0),
+(356,16,'2','A',1,1,'2020-07-24 19:38:17',0),
+(357,16,'2','B',1,1,'2020-07-24 19:38:17',0),
+(358,16,'2','C',1,1,'2020-07-24 19:38:17',0),
+(359,16,'3','A',1,1,'2020-07-24 19:38:17',0),
+(360,16,'3','B',1,1,'2020-07-24 19:38:17',0),
+(361,16,'3','C',1,1,'2020-07-24 19:38:17',0),
+(362,16,'4','A',1,1,'2020-07-24 19:38:17',0),
+(363,16,'4','B',1,1,'2020-07-24 19:38:17',0),
+(364,16,'4','C',1,1,'2020-07-24 19:38:17',0),
+(365,16,'5','A',1,1,'2020-07-24 19:38:17',0),
+(366,16,'5','B',1,1,'2020-07-24 19:38:17',0),
+(367,16,'5','C',1,1,'2020-07-24 19:38:17',0),
+(368,16,'6','A',1,1,'2020-07-24 19:38:17',0),
+(369,16,'6','B',1,1,'2020-07-24 19:38:17',0),
+(370,16,'6','C',1,1,'2020-07-24 19:38:17',0),
+(371,16,'7','A',1,1,'2020-07-24 19:38:17',0),
+(372,16,'7','B',1,1,'2020-07-24 19:38:17',0),
+(373,16,'7','C',1,1,'2020-07-24 19:38:17',0),
+(374,16,'8','A',1,1,'2020-07-24 19:38:17',0),
+(375,16,'8','B',1,1,'2020-07-24 19:38:17',0),
+(376,16,'8','C',1,1,'2020-07-24 19:38:17',0),
+(377,16,'9','A',1,1,'2020-07-24 19:38:17',0),
+(378,16,'9','B',1,1,'2020-07-24 19:38:17',0),
+(379,16,'9','C',1,1,'2020-07-24 19:38:17',0),
+(380,16,'10','A',1,1,'2020-07-24 19:38:17',0),
+(381,16,'10','B',1,1,'2020-07-24 19:38:17',0),
+(382,16,'10','C',1,1,'2020-07-24 19:38:17',0),
+(383,16,'11','A',1,1,'2020-07-24 19:38:17',0),
+(384,16,'11','B',1,1,'2020-07-24 19:38:17',0),
+(385,16,'12','A',1,1,'2020-07-24 19:38:17',0),
+(386,16,'13','A',1,1,'2020-07-24 19:38:17',0),
+(387,16,'13','B',1,1,'2020-07-24 19:38:17',0),
+(388,16,'14','A',1,1,'2020-07-24 19:38:17',0),
+(389,17,'pb','1',1,-1,'2020-07-24 19:45:01',0),
+(390,17,'pb','2',1,-1,'2020-07-24 19:45:01',0),
+(391,17,'pb','3',1,-1,'2020-07-24 19:45:01',0),
+(392,17,'pb','4',1,-1,'2020-07-24 19:45:01',0),
+(393,17,'pb','5',1,-1,'2020-07-24 19:45:01',0),
+(394,17,'pb','6',1,-1,'2020-07-24 19:45:01',0),
+(395,17,'pb','7',1,-1,'2020-07-24 19:45:01',0),
+(396,17,'pb','8',1,-1,'2020-07-24 19:45:01',0),
+(397,17,'pb','9',1,-1,'2020-07-24 19:45:01',0),
+(398,17,'1','A',1,1,'2020-07-24 19:45:01',0),
+(399,17,'1','B',1,1,'2020-07-24 19:45:01',0),
+(400,17,'1','C',1,1,'2020-07-24 19:45:01',0),
+(401,17,'1','D',1,1,'2020-07-24 19:45:01',0),
+(402,17,'2','A',1,1,'2020-07-24 19:45:01',0),
+(403,17,'2','B',1,1,'2020-07-24 19:45:01',0),
+(404,17,'2','C',1,1,'2020-07-24 19:45:01',0),
+(405,17,'2','D',1,1,'2020-07-24 19:45:01',0),
+(406,17,'3','A',1,1,'2020-07-24 19:45:01',0),
+(407,17,'3','B',1,1,'2020-07-24 19:45:01',0),
+(408,17,'3','C',1,1,'2020-07-24 19:45:01',0),
+(409,17,'3','D',1,1,'2020-07-24 19:45:01',0),
+(410,17,'4','A',1,1,'2020-07-24 19:45:01',0),
+(411,17,'4','B',1,1,'2020-07-24 19:45:01',0),
+(412,17,'4','C',1,1,'2020-07-24 19:45:01',0),
+(413,17,'4','D',1,1,'2020-07-24 19:45:02',0),
+(414,17,'5','A',1,1,'2020-07-24 19:45:02',0),
+(415,17,'5','B',1,1,'2020-07-24 19:45:02',0),
+(416,17,'5','C',1,1,'2020-07-24 19:45:02',0),
+(417,17,'5','D',1,1,'2020-07-24 19:45:02',0),
+(418,17,'6','A',1,1,'2020-07-24 19:45:02',0),
+(419,17,'6','B',1,1,'2020-07-24 19:45:02',0),
+(420,17,'6','C',1,1,'2020-07-24 19:45:02',0),
+(421,17,'6','D',1,1,'2020-07-24 19:45:02',0),
+(422,17,'7','A',1,1,'2020-07-24 19:45:02',0),
+(423,17,'7','B',1,1,'2020-07-24 19:45:02',0),
+(424,17,'7','C',1,1,'2020-07-24 19:45:02',0),
+(425,17,'7','D',1,1,'2020-07-24 19:45:02',0),
+(426,17,'8','A',1,1,'2020-07-24 19:45:02',0),
+(427,17,'8','B',1,1,'2020-07-24 19:45:02',0),
+(428,17,'8','C',1,1,'2020-07-24 19:45:02',0),
+(429,17,'8','D',1,1,'2020-07-24 19:45:02',0),
+(430,18,'pb','1',1,1,'2020-07-27 12:54:50',0),
+(431,18,'1','1',1,1,'2020-07-27 12:54:50',0),
+(432,18,'1','2',1,1,'2020-07-27 12:54:50',0),
+(433,18,'1','3',1,1,'2020-07-27 12:54:50',0),
+(434,18,'1','4',1,1,'2020-07-27 12:54:50',0),
+(435,18,'2','5',1,1,'2020-07-27 12:54:50',0),
+(436,18,'2','6',1,1,'2020-07-27 12:54:50',0),
+(437,18,'2','7',1,1,'2020-07-27 12:54:50',0),
+(438,18,'3','8',1,1,'2020-07-27 12:54:50',0),
+(439,18,'3','9',1,1,'2020-07-27 12:54:50',0),
+(440,18,'3','10',1,1,'2020-07-27 12:54:50',0),
+(441,18,'4','11',1,1,'2020-07-27 12:54:50',0),
+(442,18,'4','12',1,1,'2020-07-27 12:54:50',0),
+(443,18,'4','13',1,1,'2020-07-27 12:54:50',0),
+(444,18,'5','14',1,1,'2020-07-27 12:54:50',0),
+(445,18,'5','15',1,1,'2020-07-27 12:54:50',0),
+(446,18,'5','16',1,1,'2020-07-27 12:54:50',0),
+(447,18,'6','17',1,1,'2020-07-27 12:54:50',0),
+(448,18,'6','18',1,1,'2020-07-27 12:54:50',0),
+(449,18,'6','19',1,1,'2020-07-27 12:54:50',0),
+(450,18,'7','20',1,1,'2020-07-27 12:54:50',0),
+(451,18,'7','21',1,1,'2020-07-27 12:54:50',0),
+(452,18,'7','22',1,1,'2020-07-27 12:54:50',0),
+(453,18,'8','23',1,1,'2020-07-27 12:54:50',0),
+(454,18,'8','24',1,1,'2020-07-27 12:54:50',0),
+(455,18,'8','25',1,1,'2020-07-27 12:54:50',0),
+(456,18,'9','26',1,1,'2020-07-27 12:54:50',0),
+(457,18,'9','27',1,1,'2020-07-27 12:54:50',0),
+(458,18,'9','28',1,1,'2020-07-27 12:54:50',0),
+(459,18,'10','29',1,1,'2020-07-27 12:54:50',0),
+(460,19,'pb','1',1,1,'2020-07-27 13:04:08',0),
+(461,19,'pb','2',1,1,'2020-07-27 13:04:08',0),
+(462,19,'1','1',1,1,'2020-07-27 13:04:08',0),
+(463,19,'1','2',1,1,'2020-07-27 13:04:08',0),
+(464,19,'1','3',1,1,'2020-07-27 13:04:08',0),
+(465,19,'1','4',1,1,'2020-07-27 13:04:08',0),
+(466,19,'2','5',1,1,'2020-07-27 13:04:08',0),
+(467,19,'2','6',1,1,'2020-07-27 13:04:08',0),
+(468,19,'3','7',1,1,'2020-07-27 13:04:08',0),
+(469,19,'3','8',1,1,'2020-07-27 13:04:08',0),
+(470,19,'4','9',1,1,'2020-07-27 13:04:08',0),
+(471,19,'4','10',1,1,'2020-07-27 13:04:08',0),
+(472,20,'pb','1',1,1,'2020-07-27 13:09:23',0),
+(473,20,'pb','2',1,1,'2020-07-27 13:09:23',0),
+(474,20,'1','A',1,1,'2020-07-27 13:09:23',0),
+(475,20,'1','B',1,1,'2020-07-27 13:09:23',0),
+(476,20,'2','A',1,1,'2020-07-27 13:09:23',0),
+(477,20,'2','B',1,1,'2020-07-27 13:09:23',0),
+(478,20,'3','A',1,1,'2020-07-27 13:09:23',0),
+(479,20,'3','B',1,1,'2020-07-27 13:09:23',0),
+(480,20,'4','A',1,1,'2020-07-27 13:09:23',0),
+(481,20,'4','B',1,1,'2020-07-27 13:09:23',0),
+(482,20,'5','A',1,1,'2020-07-27 13:09:23',0),
+(483,20,'5','B',1,1,'2020-07-27 13:09:23',0),
+(484,20,'6','A',1,1,'2020-07-27 13:09:23',0),
+(485,20,'6','B',1,1,'2020-07-27 13:09:24',0),
+(486,20,'7','A',1,1,'2020-07-27 13:09:24',0),
+(487,20,'7','B',1,1,'2020-07-27 13:09:24',0),
+(488,20,'8','A',1,1,'2020-07-27 13:09:24',0),
+(489,20,'8','B',1,1,'2020-07-27 13:09:24',0),
+(490,21,'pb','1',1,1,'2020-07-27 13:19:25',0),
+(491,21,'pb','2',1,1,'2020-07-27 13:19:25',0),
+(492,21,'pb','3',1,1,'2020-07-27 13:19:25',0),
+(493,21,'pb','4',1,1,'2020-07-27 13:19:25',0),
+(494,21,'1','A',1,1,'2020-07-27 13:19:25',0),
+(495,21,'1','B',1,1,'2020-07-27 13:19:25',0),
+(496,21,'1','C',1,1,'2020-07-27 13:19:25',0),
+(497,21,'2','A',1,1,'2020-07-27 13:19:25',0),
+(498,21,'2','B',1,1,'2020-07-27 13:19:25',0),
+(499,21,'2','C',1,1,'2020-07-27 13:19:25',0),
+(500,21,'3','A',1,1,'2020-07-27 13:19:25',0),
+(501,21,'3','B',1,1,'2020-07-27 13:19:25',0),
+(502,21,'3','C',1,1,'2020-07-27 13:19:25',0),
+(503,21,'4','A',1,1,'2020-07-27 13:19:25',0),
+(504,21,'4','B',1,1,'2020-07-27 13:19:25',0),
+(505,21,'4','C',1,1,'2020-07-27 13:19:25',0),
+(506,21,'5','A',1,1,'2020-07-27 13:19:25',0),
+(507,21,'5','B',1,1,'2020-07-27 13:19:25',0),
+(508,21,'5','C',1,1,'2020-07-27 13:19:25',0),
+(509,21,'6','A',1,1,'2020-07-27 13:19:25',0),
+(510,21,'6','B',1,1,'2020-07-27 13:19:25',0),
+(511,21,'6','C',1,1,'2020-07-27 13:19:25',0),
+(512,22,'pb','1',5,1,'2020-07-27 13:37:21',0),
+(513,22,'1','A',1,1,'2020-07-27 13:37:21',0),
+(514,22,'1','B',1,1,'2020-07-27 13:37:21',0),
+(515,22,'2','A',1,1,'2020-07-27 13:37:21',0),
+(516,22,'2','B',1,1,'2020-07-27 13:37:21',0),
+(517,22,'3','A',1,1,'2020-07-27 13:37:21',0),
+(518,22,'3','B',1,1,'2020-07-27 13:37:21',0),
+(519,22,'4','A',1,1,'2020-07-27 13:37:21',0),
+(520,22,'4','B',1,1,'2020-07-27 13:37:21',0),
+(521,22,'5','A',1,1,'2020-07-27 13:37:21',0),
+(522,22,'5','B',1,1,'2020-07-27 13:37:21',0),
+(523,22,'6','A',1,1,'2020-07-27 13:37:21',0),
+(524,22,'6','B',1,1,'2020-07-27 13:37:21',0),
+(525,22,'7','A',1,1,'2020-07-27 13:37:21',0),
+(526,22,'7','B',1,1,'2020-07-27 13:37:21',0),
+(527,22,'8','A',1,1,'2020-07-27 13:37:21',0),
+(528,23,'pb','1',1,1,'2020-07-27 14:01:29',0),
+(529,23,'pb','2',1,1,'2020-07-27 14:01:29',0),
+(530,23,'pb','3',1,1,'2020-07-27 14:01:29',0),
+(531,23,'pb','4',1,1,'2020-07-27 14:01:29',0),
+(532,23,'pb','5',1,1,'2020-07-27 14:01:29',0),
+(533,23,'pb','6',1,1,'2020-07-27 14:01:29',0),
+(534,23,'pb','7',1,1,'2020-07-27 14:01:29',0),
+(535,23,'pb','8',1,1,'2020-07-27 14:01:29',0),
+(536,23,'pb','9',1,1,'2020-07-27 14:01:29',0),
+(537,23,'1','A',1,1,'2020-07-27 14:01:29',0),
+(538,23,'1','B',1,1,'2020-07-27 14:01:29',0),
+(539,23,'1','C',1,1,'2020-07-27 14:01:29',0),
+(540,23,'1','D',1,1,'2020-07-27 14:01:29',0),
+(541,23,'1','E',1,1,'2020-07-27 14:01:29',0),
+(542,23,'1','F',1,1,'2020-07-27 14:01:29',0),
+(543,23,'1','G',1,1,'2020-07-27 14:01:29',0),
+(544,23,'1','I',1,1,'2020-07-27 14:01:29',0),
+(545,23,'2','A',1,1,'2020-07-27 14:01:29',0),
+(546,23,'2','B',1,1,'2020-07-27 14:01:29',0),
+(547,23,'2','C',1,1,'2020-07-27 14:01:29',0),
+(548,23,'2','D',1,1,'2020-07-27 14:01:29',0),
+(549,23,'2','E',1,1,'2020-07-27 14:01:29',0),
+(550,23,'2','F',1,1,'2020-07-27 14:01:29',0),
+(551,23,'2','G',1,1,'2020-07-27 14:01:29',0),
+(552,23,'2','I',1,1,'2020-07-27 14:01:29',0),
+(553,23,'3','A',1,1,'2020-07-27 14:01:29',0),
+(554,23,'3','B',1,1,'2020-07-27 14:01:29',0),
+(555,23,'3','C',1,1,'2020-07-27 14:01:29',0),
+(556,23,'3','D',1,1,'2020-07-27 14:01:29',0),
+(557,23,'3','E',1,1,'2020-07-27 14:01:29',0),
+(558,23,'3','F',1,1,'2020-07-27 14:01:29',0),
+(559,23,'3','G',1,1,'2020-07-27 14:01:29',0),
+(560,23,'3','I',1,1,'2020-07-27 14:01:29',0),
+(561,23,'4','A',1,1,'2020-07-27 14:01:29',0),
+(562,23,'4','B',1,1,'2020-07-27 14:01:29',0),
+(563,23,'4','C',1,1,'2020-07-27 14:01:29',0),
+(564,23,'4','D',1,1,'2020-07-27 14:01:29',0),
+(565,23,'4','E',1,1,'2020-07-27 14:01:29',0),
+(566,23,'4','F',1,1,'2020-07-27 14:01:29',0),
+(567,23,'4','G',1,1,'2020-07-27 14:01:29',0),
+(568,23,'4','I',1,1,'2020-07-27 14:01:29',0),
+(569,23,'5','A',1,1,'2020-07-27 14:01:29',0),
+(570,23,'5','B',1,1,'2020-07-27 14:01:29',0),
+(571,23,'5','C',1,1,'2020-07-27 14:01:29',0),
+(572,23,'5','D',1,1,'2020-07-27 14:01:29',0),
+(573,23,'5','E',1,1,'2020-07-27 14:01:29',0),
+(574,23,'5','F',1,1,'2020-07-27 14:01:29',0),
+(575,23,'5','G',1,1,'2020-07-27 14:01:29',0),
+(576,23,'5','I',1,1,'2020-07-27 14:01:29',0),
+(577,23,'6','A',1,1,'2020-07-27 14:01:29',0),
+(578,23,'6','B',1,1,'2020-07-27 14:01:29',0),
+(579,23,'6','C',1,1,'2020-07-27 14:01:29',0),
+(580,23,'6','D',1,1,'2020-07-27 14:01:29',0),
+(581,23,'6','E',1,1,'2020-07-27 14:01:29',0),
+(582,23,'6','F',1,1,'2020-07-27 14:01:29',0),
+(583,23,'6','G',1,1,'2020-07-27 14:01:29',0),
+(584,23,'6','I',1,1,'2020-07-27 14:01:29',0),
+(585,23,'7','A',1,1,'2020-07-27 14:01:29',0),
+(586,23,'7','B',1,1,'2020-07-27 14:01:29',0),
+(587,23,'7','C',1,1,'2020-07-27 14:01:29',0),
+(588,23,'7','D',1,1,'2020-07-27 14:01:29',0),
+(589,23,'7','E',1,1,'2020-07-27 14:01:29',0),
+(590,23,'7','F',1,1,'2020-07-27 14:01:29',0),
+(591,23,'7','G',1,1,'2020-07-27 14:01:29',0),
+(592,23,'7','I',1,1,'2020-07-27 14:01:29',0),
+(593,23,'8','A',1,1,'2020-07-27 14:01:29',0),
+(594,23,'8','B',1,1,'2020-07-27 14:01:29',0),
+(595,23,'8','C',1,1,'2020-07-27 14:01:29',0),
+(596,23,'8','D',1,1,'2020-07-27 14:01:29',0),
+(597,23,'8','E',1,1,'2020-07-27 14:01:29',0),
+(598,23,'8','F',1,1,'2020-07-27 14:01:29',0),
+(599,23,'8','G',1,1,'2020-07-27 14:01:29',0),
+(600,23,'8','I',1,1,'2020-07-27 14:01:30',0),
+(601,24,'pb','1',1,1,'2020-07-27 14:06:33',0),
+(602,24,'1','A',1,1,'2020-07-27 14:06:34',0),
+(603,24,'1','B',1,1,'2020-07-27 14:06:35',0),
+(604,24,'1','C',1,1,'2020-07-27 14:06:36',0),
+(605,24,'2','A',1,1,'2020-07-27 14:06:37',0),
+(606,24,'2','B',1,1,'2020-07-27 14:06:37',0),
+(607,24,'3','A',1,1,'2020-07-27 14:06:37',0),
+(608,24,'3','B',1,1,'2020-07-27 14:06:37',0),
+(609,24,'4','A',1,1,'2020-07-27 14:06:37',0),
+(610,24,'4','B',1,1,'2020-07-27 14:06:37',0),
+(611,24,'4','C',1,1,'2020-07-27 14:06:37',0),
+(612,24,'5','A',1,1,'2020-07-27 14:06:37',0),
+(613,24,'5','B',1,1,'2020-07-27 14:06:37',0),
+(614,24,'6','A',1,1,'2020-07-27 14:06:37',0),
+(615,24,'6','B',1,1,'2020-07-27 14:06:37',0),
+(616,24,'7','A',1,1,'2020-07-27 14:06:37',0),
+(617,25,'3','C',1,1,'2020-07-27 14:20:17',NULL),
+(618,27,'pb','1',1,1,'2020-07-28 18:00:20',0),
+(619,27,'pb','2',5,1,'2020-07-28 18:00:20',0),
+(620,27,'1','A',1,1,'2020-07-28 18:00:20',0),
+(621,27,'1','B',1,1,'2020-07-28 18:00:20',0),
+(622,27,'1','C',1,1,'2020-07-28 18:00:20',0),
+(623,27,'2','A',1,1,'2020-07-28 18:00:20',0),
+(624,27,'2','B',1,1,'2020-07-28 18:00:21',0),
+(625,27,'2','C',1,1,'2020-07-28 18:00:21',0),
+(626,27,'3','A',1,1,'2020-07-28 18:00:21',0),
+(627,27,'3','B',1,1,'2020-07-28 18:00:21',0),
+(628,27,'3','C',1,1,'2020-07-28 18:00:21',0),
+(629,27,'4','A',1,1,'2020-07-28 18:00:21',0),
+(630,27,'4','B',1,1,'2020-07-28 18:00:21',0),
+(631,27,'4','C',1,1,'2020-07-28 18:00:22',0),
+(632,27,'5','A',1,1,'2020-07-28 18:00:22',0),
+(633,27,'5','B',1,1,'2020-07-28 18:00:22',0),
+(634,27,'5','C',1,1,'2020-07-28 18:00:22',0),
+(635,27,'6','A',1,1,'2020-07-28 18:00:22',0),
+(636,27,'6','B',1,1,'2020-07-28 18:00:22',0),
+(637,27,'6','C',1,1,'2020-07-28 18:00:22',0),
+(638,27,'7','A',1,1,'2020-07-28 18:00:22',0),
+(639,27,'7','B',1,1,'2020-07-28 18:00:22',0),
+(640,27,'7','C',1,1,'2020-07-28 18:00:22',0),
+(641,27,'8','A',1,1,'2020-07-28 18:00:22',0),
+(642,27,'8','B',1,1,'2020-07-28 18:00:22',0),
+(643,27,'8','C',1,1,'2020-07-28 18:00:22',0),
+(644,27,'9','A',1,1,'2020-07-28 18:00:22',0),
+(645,27,'9','B',1,1,'2020-07-28 18:00:22',0),
+(646,27,'9','C',1,1,'2020-07-28 18:00:22',0),
+(647,28,'pb','1',5,1,'2020-07-28 18:05:25',0),
+(648,28,'1','A',1,1,'2020-07-28 18:05:25',0),
+(649,28,'1','B',1,1,'2020-07-28 18:05:25',0),
+(650,28,'1','C',1,1,'2020-07-28 18:05:25',0),
+(651,28,'1','D',1,1,'2020-07-28 18:05:25',0),
+(652,28,'2','A',1,1,'2020-07-28 18:05:25',0),
+(653,28,'2','B',1,1,'2020-07-28 18:05:25',0),
+(654,28,'2','C',1,1,'2020-07-28 18:05:25',0),
+(655,28,'2','D',1,1,'2020-07-28 18:05:25',0),
+(656,28,'3','A',1,1,'2020-07-28 18:05:25',0),
+(657,28,'3','B',1,1,'2020-07-28 18:05:25',0),
+(658,28,'3','C',1,1,'2020-07-28 18:05:25',0),
+(659,28,'3','D',1,1,'2020-07-28 18:05:25',0),
+(660,28,'4','A',1,1,'2020-07-28 18:05:25',0),
+(661,28,'4','B',1,1,'2020-07-28 18:05:25',0),
+(662,28,'4','C',1,1,'2020-07-28 18:05:25',0),
+(663,28,'4','D',1,1,'2020-07-28 18:05:25',0),
+(664,28,'5','A',1,1,'2020-07-28 18:05:25',0),
+(665,28,'5','B',1,1,'2020-07-28 18:05:25',0),
+(666,28,'5','C',1,1,'2020-07-28 18:05:25',0),
+(667,28,'5','D',1,1,'2020-07-28 18:05:25',0),
+(668,28,'6','A',1,1,'2020-07-28 18:05:25',0),
+(669,28,'6','B',1,1,'2020-07-28 18:05:25',0),
+(670,28,'6','C',1,1,'2020-07-28 18:05:25',0),
+(671,28,'6','D',1,1,'2020-07-28 18:05:25',0),
+(672,28,'7','A',1,1,'2020-07-28 18:05:25',0),
+(673,28,'7','B',1,1,'2020-07-28 18:05:25',0),
+(674,28,'7','C',1,1,'2020-07-28 18:05:25',0),
+(675,28,'7','D',1,1,'2020-07-28 18:05:25',0),
+(676,28,'8','A',1,1,'2020-07-28 18:05:25',0),
+(677,28,'8','B',1,1,'2020-07-28 18:05:25',0),
+(678,28,'8','C',1,1,'2020-07-28 18:05:26',0),
+(679,28,'8','D',1,1,'2020-07-28 18:05:26',0),
+(680,28,'9','A',1,1,'2020-07-28 18:05:26',0),
+(681,28,'9','B',1,1,'2020-07-28 18:05:26',0),
+(682,28,'9','C',1,1,'2020-07-28 18:05:26',0),
+(683,28,'9','D',1,1,'2020-07-28 18:05:26',0),
+(684,28,'10','A',1,1,'2020-07-28 18:05:26',0),
+(685,28,'10','B',1,1,'2020-07-28 18:05:26',0),
+(686,28,'10','C',1,1,'2020-07-28 18:05:26',0),
+(687,28,'10','D',1,1,'2020-07-28 18:05:26',0),
+(688,29,'pb','1',1,1,'2020-07-28 18:23:17',0),
+(689,29,'1','A',1,1,'2020-07-28 18:23:17',0),
+(690,29,'1','B',1,1,'2020-07-28 18:23:17',0),
+(691,29,'2','A',1,1,'2020-07-28 18:23:17',0),
+(692,29,'2','B',1,1,'2020-07-28 18:23:17',0),
+(693,29,'3','A',1,1,'2020-07-28 18:23:17',0),
+(694,29,'3','B',1,1,'2020-07-28 18:23:17',0),
+(695,29,'4','A',1,1,'2020-07-28 18:23:17',0),
+(696,29,'4','B',1,1,'2020-07-28 18:23:17',0),
+(697,29,'5','A',1,1,'2020-07-28 18:23:17',0),
+(698,29,'5','B',1,1,'2020-07-28 18:23:17',0),
+(699,29,'6','A',1,1,'2020-07-28 18:23:17',0),
+(700,29,'6','B',1,1,'2020-07-28 18:23:17',0),
+(701,29,'7','A',1,1,'2020-07-28 18:23:17',0),
+(702,29,'7','B',1,1,'2020-07-28 18:23:17',0),
+(703,29,'8','A',1,1,'2020-07-28 18:23:17',0),
+(704,29,'8','B',1,1,'2020-07-28 18:23:17',0),
+(705,29,'9','A',1,1,'2020-07-28 18:23:17',0),
+(706,29,'9','B',1,1,'2020-07-28 18:23:17',0),
+(707,29,'10','A',1,1,'2020-07-28 18:23:17',0),
+(708,29,'10','B',1,1,'2020-07-28 18:23:17',0),
+(709,29,'11','A',1,1,'2020-07-28 18:23:17',0),
+(710,29,'11','B',1,1,'2020-07-28 18:23:17',0),
+(711,29,'12','A',1,1,'2020-07-28 18:23:17',0),
+(712,30,'3','3',1,1,'2020-07-30 20:49:44',NULL),
+(713,32,'pb','00',1,1,'2020-07-31 13:44:31',0),
+(714,32,'1','A',1,1,'2020-07-31 13:44:31',0),
+(715,32,'1','B',1,1,'2020-07-31 13:44:31',0),
+(716,32,'1','C',1,1,'2020-07-31 13:44:31',0),
+(717,32,'1','D',1,1,'2020-07-31 13:44:31',0),
+(718,32,'1','E',1,1,'2020-07-31 13:44:31',0),
+(719,32,'1','F',1,1,'2020-07-31 13:44:31',0),
+(720,32,'1','G',1,1,'2020-07-31 13:44:31',0),
+(721,32,'2','A',1,1,'2020-07-31 13:44:31',0),
+(722,32,'2','B',1,1,'2020-07-31 13:44:31',0),
+(723,32,'2','C',1,1,'2020-07-31 13:44:31',0),
+(724,32,'2','D',1,1,'2020-07-31 13:44:31',0),
+(725,32,'2','E',1,1,'2020-07-31 13:44:31',0),
+(726,32,'2','F',1,1,'2020-07-31 13:44:31',0),
+(727,32,'2','G',1,1,'2020-07-31 13:44:31',0),
+(728,32,'3','A',1,1,'2020-07-31 13:44:31',0),
+(729,32,'3','B',1,1,'2020-07-31 13:44:31',0),
+(730,32,'3','C',1,1,'2020-07-31 13:44:31',0),
+(731,32,'4','A',1,1,'2020-07-31 13:44:31',0),
+(732,32,'4','B',1,1,'2020-07-31 13:44:31',0),
+(733,32,'4','C',1,1,'2020-07-31 13:44:31',0),
+(734,32,'4','D',1,1,'2020-07-31 13:44:31',0),
+(735,32,'4','E',1,1,'2020-07-31 13:44:31',0),
+(736,32,'5','A',1,1,'2020-07-31 13:44:31',0),
+(737,32,'5','B',1,1,'2020-07-31 13:44:31',0),
+(738,32,'5','C',1,1,'2020-07-31 13:44:31',0),
+(739,32,'5','D',1,1,'2020-07-31 13:44:31',0),
+(740,32,'5','E',1,1,'2020-07-31 13:44:31',0),
+(741,32,'6','A',1,1,'2020-07-31 13:44:31',0),
+(742,32,'6','B',1,1,'2020-07-31 13:44:31',0),
+(743,32,'6','C',1,1,'2020-07-31 13:44:31',0),
+(744,32,'6','D',1,1,'2020-07-31 13:44:31',0),
+(745,32,'7','A',1,1,'2020-07-31 13:44:31',0),
+(746,32,'7','B',1,1,'2020-07-31 13:44:31',0),
+(747,32,'7','C',1,1,'2020-07-31 13:44:31',0),
+(748,32,'7','D',1,1,'2020-07-31 13:44:31',0),
+(749,32,'7','E',1,1,'2020-07-31 13:44:31',0),
+(750,32,'8','A',1,1,'2020-07-31 13:44:31',0),
+(751,32,'8','B',1,1,'2020-07-31 13:44:31',0),
+(752,32,'8','C',1,1,'2020-07-31 13:44:31',0),
+(753,32,'8','D',1,1,'2020-07-31 13:44:31',0),
+(754,32,'8','E',1,1,'2020-07-31 13:44:31',0),
+(755,32,'9','A',1,1,'2020-07-31 13:44:31',0),
+(756,32,'9','B',1,1,'2020-07-31 13:44:31',0),
+(757,32,'9','C',1,1,'2020-07-31 13:44:31',0),
+(758,32,'10','A',1,1,'2020-07-31 13:44:31',0),
+(759,32,'10','B',1,1,'2020-07-31 13:44:31',0),
+(760,32,'10','C',1,1,'2020-07-31 13:44:31',0),
+(761,32,'10','D',1,1,'2020-07-31 13:44:31',0),
+(762,33,'pb','a',1,1,'2020-07-31 13:57:08',0),
+(763,33,'pb','B',1,1,'2020-07-31 13:57:08',0),
+(764,33,'pb','C',1,1,'2020-07-31 13:57:08',0),
+(765,33,'pb','D',1,1,'2020-07-31 13:57:08',0),
+(766,33,'pb','E',1,1,'2020-07-31 13:57:08',0),
+(767,33,'pb','F',1,1,'2020-07-31 13:57:08',0),
+(768,33,'1','A',1,1,'2020-07-31 13:57:08',0),
+(769,33,'1','B',1,1,'2020-07-31 13:57:08',0),
+(770,33,'1','C',1,1,'2020-07-31 13:57:08',0),
+(771,33,'1','D',1,1,'2020-07-31 13:57:08',0),
+(772,33,'1','E',1,1,'2020-07-31 13:57:08',0),
+(773,33,'1','F',1,1,'2020-07-31 13:57:08',0),
+(774,33,'2','A',1,1,'2020-07-31 13:57:08',0),
+(775,33,'2','B',1,1,'2020-07-31 13:57:08',0),
+(776,33,'2','C',1,1,'2020-07-31 13:57:08',0),
+(777,33,'2','D',1,1,'2020-07-31 13:57:08',0),
+(778,33,'2','E',1,1,'2020-07-31 13:57:08',0),
+(779,33,'2','F',1,1,'2020-07-31 13:57:08',0),
+(780,34,'pb','A',1,1,'2020-07-31 14:04:55',0),
+(781,34,'1','A',1,1,'2020-07-31 14:04:55',0),
+(782,34,'1','B',1,1,'2020-07-31 14:04:55',0),
+(783,34,'1','C',1,1,'2020-07-31 14:04:55',0),
+(784,34,'1','D',1,1,'2020-07-31 14:04:55',0),
+(785,34,'2','A',1,1,'2020-07-31 14:04:55',0),
+(786,34,'2','B',1,1,'2020-07-31 14:04:55',0),
+(787,34,'2','C',1,1,'2020-07-31 14:04:55',0),
+(788,34,'2','D',1,1,'2020-07-31 14:04:55',0),
+(789,34,'3','A',1,1,'2020-07-31 14:04:55',0),
+(790,34,'3','B',1,1,'2020-07-31 14:04:55',0),
+(791,34,'3','C',1,1,'2020-07-31 14:04:55',0),
+(792,34,'3','D',1,1,'2020-07-31 14:04:55',0),
+(793,34,'4','A',1,1,'2020-07-31 14:04:55',0),
+(794,34,'4','B',1,1,'2020-07-31 14:04:55',0),
+(795,34,'4','C',1,1,'2020-07-31 14:04:55',0),
+(796,34,'4','D',1,1,'2020-07-31 14:04:55',0),
+(797,34,'5','A',1,1,'2020-07-31 14:04:55',0),
+(798,34,'5','B',1,1,'2020-07-31 14:04:55',0),
+(799,34,'5','C',1,1,'2020-07-31 14:04:55',0),
+(800,34,'5','D',1,1,'2020-07-31 14:04:55',0),
+(801,34,'6','A',1,1,'2020-07-31 14:04:55',0),
+(802,34,'6','B',1,1,'2020-07-31 14:04:55',0),
+(803,34,'6','C',1,1,'2020-07-31 14:04:55',0),
+(804,34,'6','D',1,1,'2020-07-31 14:04:55',0),
+(805,34,'7','A',1,1,'2020-07-31 14:04:55',0),
+(806,34,'7','B',1,1,'2020-07-31 14:04:55',0),
+(807,34,'7','C',1,1,'2020-07-31 14:04:55',0),
+(808,34,'7','D',1,1,'2020-07-31 14:04:55',0),
+(809,34,'8','A',1,1,'2020-07-31 14:04:55',0),
+(810,34,'8','B',1,1,'2020-07-31 14:04:55',0),
+(811,34,'8','C',1,1,'2020-07-31 14:04:56',0),
+(812,34,'8','D',1,1,'2020-07-31 14:04:56',0),
+(813,34,'9','A',1,1,'2020-07-31 14:04:56',0),
+(814,34,'9','B',1,1,'2020-07-31 14:04:56',0),
+(815,34,'9','C',1,1,'2020-07-31 14:04:56',0),
+(816,34,'9','D',1,1,'2020-07-31 14:04:56',0),
+(817,34,'10','A',1,1,'2020-07-31 14:04:56',0),
+(818,34,'10','B',1,1,'2020-07-31 14:04:56',0),
+(819,34,'10','C',1,1,'2020-07-31 14:04:56',0),
+(820,34,'11','A',1,1,'2020-07-31 14:04:56',0),
+(821,34,'11','B',1,1,'2020-07-31 14:04:56',0),
+(822,34,'11','C',1,1,'2020-07-31 14:04:56',0),
+(823,34,'12','A',1,1,'2020-07-31 14:04:56',0),
+(824,34,'12','B',1,1,'2020-07-31 14:04:56',0),
+(825,34,'12','C',1,1,'2020-07-31 14:04:56',0),
+(826,34,'13','A',1,1,'2020-07-31 14:04:56',0),
+(827,34,'14','A',1,1,'2020-07-31 14:04:56',0),
+(828,35,'1','A',1,1,'2020-07-31 14:40:30',0),
+(829,35,'1','B',1,1,'2020-07-31 14:40:30',0),
+(830,35,'1','C',1,1,'2020-07-31 14:40:30',0),
+(831,35,'1','D',1,1,'2020-07-31 14:40:30',0),
+(832,35,'2','A',1,1,'2020-07-31 14:40:30',0),
+(833,35,'2','B',1,1,'2020-07-31 14:40:30',0),
+(834,35,'2','C',1,1,'2020-07-31 14:40:30',0),
+(835,35,'2','D',1,1,'2020-07-31 14:40:30',0),
+(836,35,'3','A',1,1,'2020-07-31 14:40:30',0),
+(837,35,'3','B',1,1,'2020-07-31 14:40:30',0),
+(838,35,'3','C',1,1,'2020-07-31 14:40:30',0),
+(839,35,'3','D',1,1,'2020-07-31 14:40:30',0),
+(840,35,'4','A',1,1,'2020-07-31 14:40:30',0),
+(841,35,'4','B',1,1,'2020-07-31 14:40:30',0),
+(842,35,'4','C',1,1,'2020-07-31 14:40:30',0),
+(843,35,'4','D',1,1,'2020-07-31 14:40:30',0),
+(844,35,'4','E',1,1,'2020-07-31 14:40:30',0),
+(845,35,'5','A',1,1,'2020-07-31 14:40:30',0),
+(846,35,'5','B',1,1,'2020-07-31 14:40:30',0),
+(847,35,'5','C',1,1,'2020-07-31 14:40:30',0),
+(848,35,'5','D',1,1,'2020-07-31 14:40:30',0),
+(849,35,'5','E',1,1,'2020-07-31 14:40:30',0),
+(850,35,'6','A',1,1,'2020-07-31 14:40:30',0),
+(851,35,'6','B',1,1,'2020-07-31 14:40:30',0),
+(852,35,'6','C',1,1,'2020-07-31 14:40:30',0),
+(853,35,'6','D',1,1,'2020-07-31 14:40:30',0),
+(854,35,'6','E',1,1,'2020-07-31 14:40:30',0),
+(855,35,'7','A',1,1,'2020-07-31 14:40:30',0),
+(856,35,'7','B',1,1,'2020-07-31 14:40:30',0),
+(857,35,'7','C',1,1,'2020-07-31 14:40:30',0),
+(858,35,'7','D',1,1,'2020-07-31 14:40:30',0),
+(859,35,'7','E',1,1,'2020-07-31 14:40:30',0),
+(860,35,'8','A',1,1,'2020-07-31 14:40:30',0),
+(861,35,'8','B',1,1,'2020-07-31 14:40:30',0),
+(862,35,'8','C',1,1,'2020-07-31 14:40:30',0),
+(863,35,'8','D',1,1,'2020-07-31 14:40:30',0),
+(864,35,'8','E',1,1,'2020-07-31 14:40:30',0),
+(865,35,'9','A',1,1,'2020-07-31 14:40:30',0),
+(866,35,'9','B',1,1,'2020-07-31 14:40:30',0),
+(867,35,'9','C',1,1,'2020-07-31 14:40:30',0),
+(868,35,'9','D',1,1,'2020-07-31 14:40:30',0),
+(869,35,'10','A',1,1,'2020-07-31 14:40:30',0),
+(870,35,'10','B',1,1,'2020-07-31 14:40:30',0),
+(871,35,'10','D',1,1,'2020-07-31 14:40:30',0),
+(872,37,'pb','00',1,1,'2020-08-13 18:16:53',0),
+(873,37,'1','A',1,1,'2020-08-13 18:16:53',0),
+(874,37,'1','B',1,1,'2020-08-13 18:16:53',0),
+(875,37,'2','A',1,1,'2020-08-13 18:16:53',0),
+(876,37,'2','B',1,1,'2020-08-13 18:16:53',0),
+(877,37,'3','A',1,1,'2020-08-13 18:16:53',0),
+(878,37,'3','B',1,1,'2020-08-13 18:16:53',0),
+(879,37,'4','A',1,1,'2020-08-13 18:16:53',0),
+(880,37,'4','B',1,1,'2020-08-13 18:16:53',0),
+(881,37,'5','A',1,1,'2020-08-13 18:16:53',0),
+(882,37,'5','B',1,1,'2020-08-13 18:16:53',0),
+(883,37,'6','A',1,1,'2020-08-13 18:16:53',0),
+(884,37,'6','B',1,1,'2020-08-13 18:16:53',0),
+(885,37,'7','A',1,1,'2020-08-13 18:16:53',0),
+(886,37,'7','B',1,1,'2020-08-13 18:16:53',0),
+(887,37,'8','A',1,1,'2020-08-13 18:16:53',0),
+(888,37,'8','B',1,1,'2020-08-13 18:16:53',0),
+(889,38,'1','A',1,1,'2020-08-13 18:59:09',0),
+(890,38,'2','A',1,1,'2020-08-13 18:59:09',0),
+(891,38,'3','A',1,1,'2020-08-13 18:59:09',0),
+(892,38,'4','A',1,1,'2020-08-13 18:59:09',0),
+(893,38,'5','A',1,1,'2020-08-13 18:59:09',0),
+(894,38,'6','A',1,1,'2020-08-13 18:59:09',0),
+(895,38,'7','A',1,1,'2020-08-13 18:59:09',0),
+(896,39,'1','A',1,1,'2020-08-13 19:05:21',0),
+(897,39,'2','A',1,1,'2020-08-13 19:05:21',0),
+(898,39,'3','A',1,1,'2020-08-13 19:05:21',0),
+(899,39,'4','A',1,1,'2020-08-13 19:05:21',0),
+(900,39,'5','A',1,1,'2020-08-13 19:05:21',0),
+(901,39,'6','A',1,1,'2020-08-13 19:05:21',0),
+(902,39,'7','A',1,1,'2020-08-13 19:05:21',0),
+(903,39,'8','A',1,1,'2020-08-13 19:05:21',0),
+(904,39,'9','A',1,1,'2020-08-13 19:05:21',0),
+(905,40,'1','A',1,1,'2020-08-13 19:18:58',0),
+(906,40,'1','B',1,1,'2020-08-13 19:18:58',0),
+(907,40,'1','C',1,1,'2020-08-13 19:18:58',0),
+(908,40,'1','D',1,1,'2020-08-13 19:18:58',0),
+(909,40,'2','A',1,1,'2020-08-13 19:18:58',0),
+(910,40,'2','B',1,1,'2020-08-13 19:18:58',0),
+(911,40,'2','C',1,1,'2020-08-13 19:18:58',0),
+(912,40,'2','D',1,1,'2020-08-13 19:18:58',0),
+(913,40,'3','A',1,1,'2020-08-13 19:18:58',0),
+(914,40,'3','B',1,1,'2020-08-13 19:18:58',0),
+(915,40,'3','C',1,1,'2020-08-13 19:18:58',0),
+(916,40,'3','D',1,1,'2020-08-13 19:18:58',0),
+(917,40,'4','A',1,1,'2020-08-13 19:18:58',0),
+(918,40,'4','B',1,1,'2020-08-13 19:18:58',0),
+(919,40,'4','C',1,1,'2020-08-13 19:18:58',0),
+(920,40,'4','D',1,1,'2020-08-13 19:18:58',0),
+(921,40,'5','A',1,1,'2020-08-13 19:18:58',0),
+(922,40,'5','B',1,1,'2020-08-13 19:18:58',0),
+(923,40,'5','C',1,1,'2020-08-13 19:18:58',0),
+(924,40,'5','D',1,1,'2020-08-13 19:18:58',0),
+(925,40,'6','A',1,1,'2020-08-13 19:18:58',0),
+(926,40,'6','B',1,1,'2020-08-13 19:18:58',0),
+(927,40,'6','C',1,1,'2020-08-13 19:18:58',0),
+(928,40,'6','D',1,1,'2020-08-13 19:18:58',0),
+(929,40,'7','A',1,1,'2020-08-13 19:18:58',0),
+(930,40,'7','B',1,1,'2020-08-13 19:18:58',0),
+(931,40,'7','C',1,1,'2020-08-13 19:18:58',0),
+(932,40,'7','D',1,1,'2020-08-13 19:18:58',0),
+(933,40,'8','A',1,1,'2020-08-13 19:18:58',0),
+(934,40,'8','B',1,1,'2020-08-13 19:18:58',0),
+(935,40,'8','C',1,1,'2020-08-13 19:18:58',0),
+(936,40,'8','D',1,1,'2020-08-13 19:18:58',0),
+(937,40,'9','A',1,1,'2020-08-13 19:18:58',0),
+(938,40,'9','B',1,1,'2020-08-13 19:18:58',0),
+(939,40,'9','C',1,1,'2020-08-13 19:18:58',0),
+(940,40,'9','D',1,1,'2020-08-13 19:18:58',0),
+(941,40,'10','A',1,1,'2020-08-13 19:18:58',0),
+(942,40,'10','B',1,1,'2020-08-13 19:18:58',0),
+(943,40,'10','C',1,1,'2020-08-13 19:18:58',0),
+(944,40,'10','D',1,1,'2020-08-13 19:18:58',0),
+(945,40,'11','A',1,1,'2020-08-13 19:18:58',0),
+(946,41,'pb','00',1,1,'2020-08-13 19:23:58',0),
+(947,41,'1','1',1,1,'2020-08-13 19:23:58',0),
+(948,41,'2','2',1,1,'2020-08-13 19:23:58',0),
+(949,41,'3','3',1,1,'2020-08-13 19:23:58',0),
+(950,41,'4','4',1,1,'2020-08-13 19:23:58',0),
+(951,41,'5','5',1,1,'2020-08-13 19:23:58',0),
+(952,41,'6','6',1,1,'2020-08-13 19:23:58',0),
+(953,41,'7','7',1,1,'2020-08-13 19:23:58',0),
+(954,41,'8','8',1,1,'2020-08-13 19:23:58',0),
+(955,42,'pb','00',1,1,'2020-08-13 19:28:31',0),
+(956,42,'1','A',1,1,'2020-08-13 19:28:31',0),
+(957,42,'1','B',1,1,'2020-08-13 19:28:31',0),
+(958,42,'2','A',1,1,'2020-08-13 19:28:32',0),
+(959,42,'2','B',1,1,'2020-08-13 19:28:32',0),
+(960,42,'3','A',1,1,'2020-08-13 19:28:32',0),
+(961,42,'3','B',1,1,'2020-08-13 19:28:32',0),
+(962,42,'4','A',1,1,'2020-08-13 19:28:32',0),
+(963,42,'4','B',1,1,'2020-08-13 19:28:32',0),
+(964,42,'5','A',1,1,'2020-08-13 19:28:32',0),
+(965,42,'5','B',1,1,'2020-08-13 19:28:32',0),
+(966,42,'6','A',1,1,'2020-08-13 19:28:32',0),
+(967,42,'6','B',1,1,'2020-08-13 19:28:32',0),
+(968,42,'7','A',1,1,'2020-08-13 19:28:32',0),
+(969,42,'7','B',1,1,'2020-08-13 19:28:32',0),
+(970,17,'pb','A',1,1,'2020-09-07 20:23:14',0),
+(971,17,'pb','a',6,-1,'2020-09-07 20:23:14',0),
+(972,17,'pb','B',1,1,'2020-09-07 20:23:14',0),
+(973,17,'pb','b',6,-1,'2020-09-07 20:23:14',0),
+(974,17,'pb','c',6,1,'2020-09-07 20:23:14',0),
+(975,17,'pb','d',6,1,'2020-09-07 20:23:14',0),
+(976,17,'pb','C',1,-1,'2020-09-07 20:23:14',0),
+(977,17,'pb','e',6,1,'2020-09-07 20:23:14',0),
+(978,17,'pb','D',1,-1,'2020-09-07 20:23:14',0),
+(979,17,'pb','f',6,1,'2020-09-07 20:23:14',0),
+(980,17,'pb','E',1,-1,'2020-09-07 20:23:14',0),
+(981,17,'pb','g',6,1,'2020-09-07 20:23:14',0),
+(982,17,'pb','h',6,1,'2020-09-07 20:23:14',0),
+(983,17,'pb','i',6,1,'2020-09-07 20:23:14',0);
 
 /*Table structure for table `tb_client_files_list` */
 
@@ -736,10 +1612,18 @@ CREATE TABLE `tb_client_files_list` (
   `idClientfK` int(11) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `urlFile` varchar(200) DEFAULT NULL,
+  `typeFile` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientFiles`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_files_list` */
+
+insert  into `tb_client_files_list`(`idClientFiles`,`idClientfK`,`title`,`urlFile`,`typeFile`) values 
+(12,11,'11_ROG_wallpaper_keystone_3440x1440_20210422.jpg','/files/11_ROG_wallpaper_keystone_3440x1440_20210422.jpg','image/jpeg'),
+(14,11,'11_change_ejecutar_cerrar_-_v_1_20210422.pdf','/files/11_change_ejecutar_cerrar_-_v_1_20210422.pdf','application/pdf'),
+(15,11,'11_change_ejecutar_cerrar_-_v_1_0_20210422.pdf','/files/11_change_ejecutar_cerrar_-_v_1_0_20210422.pdf','application/pdf'),
+(16,11,'11_813526_20210422.jpg','/files/11_813526_20210422.jpg','image/jpeg'),
+(19,11,'11_prueba_titulo_20210424.pdf','/files/11_prueba_titulo_20210424.pdf','application/pdf');
 
 /*Table structure for table `tb_client_functional_units` */
 
@@ -768,7 +1652,7 @@ CREATE TABLE `tb_client_mails` (
   `idTipoDeMailFk` int(11) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idClientMail`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_client_mails` */
 
@@ -796,7 +1680,42 @@ insert  into `tb_client_mails`(`idClientMail`,`idClientFk`,`mailTag`,`mailContac
 (24,NULL,'prueba','prueba@gail.conm',1,0),
 (26,91,'prueba','prueba@gail.conm',1,0),
 (30,107,'prueba','prueba@gail.conm',1,0),
-(34,1,'prueba','prueba@gail.conm',1,0);
+(34,1,'prueba','prueba@gail.conm',1,0),
+(35,108,NULL,'llaveros@pruebaadmin.com.ar',1,1),
+(36,108,NULL,'servicios@pruebaadmin.com.ar',2,1),
+(37,108,NULL,'pagos@pruebaadmin.com.ar',3,1),
+(44,111,NULL,'llaves@pruebaadmin2.com.ar',1,1),
+(45,111,NULL,'servicio@pruebaadmin2.com.ar',2,1),
+(46,111,NULL,'pagos@pruebaadmin2.com.ar',3,1),
+(50,114,NULL,'asdsadsad@fdfsdf',1,1),
+(51,114,NULL,'asdsadasd@fdgfgfdg',2,1),
+(52,114,NULL,'asdsadasd@dfsdfdsf',3,1),
+(72,22,NULL,'servicios@inversionesjc.com.ar',2,1),
+(73,22,NULL,'pagos@inversionesjc.com.ar',3,1),
+(74,22,NULL,'admin@inversionesjc.com.ar',4,1),
+(184,110,NULL,'llaves@pruebaadmin2.com.ar',1,1),
+(185,110,NULL,'servicio@pruebaadmin2.com.ar',2,1),
+(186,110,NULL,'pagos@pruebaadmin2.com.ar',3,1),
+(246,112,NULL,'llaves@pruebaadmin2.com.ar',1,1),
+(247,112,NULL,'servicio@pruebaadmin2.com.ar',2,1),
+(248,112,NULL,'pagos@pruebaadmin2.com.ar',3,1),
+(313,60,NULL,'services@ccocacola.com.ar',2,1),
+(314,60,NULL,'pagos@ccocacola.com.ar',3,1),
+(320,109,NULL,'llaveros@pruebaadmin.com.ar',1,1),
+(321,109,NULL,'servicios@pruebaadmin.com.ar',2,1),
+(322,109,NULL,'pagos@pruebaadmin.com.ar',3,1),
+(323,109,NULL,'admin@pruebaadmin.com.ar',4,1),
+(324,109,NULL,'admin@pruebaadmin.com.ar',5,1),
+(328,15,NULL,'llaves@gmaill.com',1,1),
+(329,15,NULL,'services@gmaill.com',2,1),
+(330,15,NULL,'admin@gmaill.com',4,1),
+(355,11,NULL,'llavestettamanti@gmail.com',1,1),
+(356,11,NULL,'serviciostettamanti@gmail.com',2,1),
+(357,11,NULL,'admintettamanti@gmail.com',4,1),
+(366,12,NULL,'lavalle357@gmai.com',1,NULL),
+(367,12,NULL,'lavalle357@gmai.com',2,NULL),
+(368,12,NULL,'lavalle357@gmai.com',3,NULL),
+(369,12,NULL,'llavestettamanti@gmail.com',1,NULL);
 
 /*Table structure for table `tb_client_phone_contact` */
 
@@ -808,66 +1727,30 @@ CREATE TABLE `tb_client_phone_contact` (
   `phoneContact` varchar(80) DEFAULT NULL,
   `idClientFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientPhoneFk`)
-) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_phone_contact` */
 
 insert  into `tb_client_phone_contact`(`idClientPhoneFk`,`phoneTag`,`phoneContact`,`idClientFk`) values 
-(1,'comercial','11232423343',17),
-(2,'comercial','112324324325',20),
-(4,'comercial','1123222222222',22),
-(5,'comercial','1150311207',23),
-(6,'guardia','1150311208',23),
-(121,'comercial','11234324323',39),
-(122,'urgente','11234234323',39),
-(123,'comercial','11234324323',40),
-(124,'urgente','11234234323',40),
-(125,'comercial','11324234324',41),
-(126,'comercial','1134324343566',43),
-(127,'urgente','1123423435334',43),
-(128,'comercial','112343243244',45),
-(129,'comercial','112343243244',47),
-(130,'comercial','112343243244',49),
-(131,'comercial','112343243244',51),
-(132,'comercial','112343243244',53),
-(133,'comercial','112343243244',54),
-(134,'comercial','1124234324324',58),
-(135,'comercial','1132423432254',60),
-(136,'mobile','112342343222',65),
-(137,'local','112342343244',65),
-(138,'comercial','11223423423432',68),
-(139,'123123','text',73),
-(140,'123123','text2',73),
-(141,'123123','text',74),
-(142,'123123','text2',74),
-(143,'123123','text',75),
-(144,'123123','text2',75),
-(145,'123123','text',77),
-(146,'123123','text2',77),
-(147,NULL,'text',81),
-(148,NULL,'text2',81),
-(149,'123123','text',82),
-(150,'123123','text',82),
-(151,'123123','text',NULL),
-(152,'123123','text2',NULL),
-(161,'123123','text',99),
-(162,'123123','text',99),
-(163,'123123','text',NULL),
-(164,'123123','text',NULL),
-(165,'123123','text',NULL),
-(166,'123123','text',NULL),
-(171,'123123','text',91),
-(172,'123123','text2',91),
-(173,'123123','text',NULL),
-(174,'123123','text',NULL),
-(175,'123123','text',107),
-(176,'123123','text',107),
-(177,'123123','text',NULL),
-(178,'123123','text',NULL),
-(179,'123123','text',NULL),
-(180,'123123','text',NULL),
-(183,'123123','text',1),
-(184,'123123','text',1);
+(1,'comercial','45019504',2),
+(4,'comercial','45556276',26),
+(5,'comercial','45556276',28),
+(6,'comercial','45556276',29),
+(7,'comercial','4951-8506',31),
+(8,'comercial','4952-0757',31),
+(9,'comercial','4951-8506',32),
+(10,'comercial','4951-8506',33),
+(11,'comercial','4951-8506',34),
+(12,'comercial','49581624',36),
+(13,'comercial','49581473',36),
+(14,'comercial','1566619566',36),
+(15,'comercial','1550152504',37),
+(17,'comercial','4901-6193',15),
+(33,'comercial','45028872',11),
+(42,'comercial','1123232324',12),
+(43,'guardia','1123232324',12),
+(44,'urgente','1123232324',12),
+(45,'comercial','45028872',12);
 
 /*Table structure for table `tb_client_schedule_atention` */
 
@@ -882,209 +1765,181 @@ CREATE TABLE `tb_client_schedule_atention` (
   `fronPm` time DEFAULT NULL,
   `toPm` time DEFAULT NULL,
   PRIMARY KEY (`idScheduleAtention`)
-) ENGINE=InnoDB AUTO_INCREMENT=527 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=274 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_schedule_atention` */
 
 insert  into `tb_client_schedule_atention`(`idScheduleAtention`,`idClienteFk`,`day`,`fronAm`,`toAm`,`fronPm`,`toPm`) values 
-(293,17,'Lunes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(294,17,'Martes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(295,17,'Miercoles','00:00:09','00:00:13','00:00:14','00:00:18'),
-(296,17,'Jueves','00:00:09','00:00:13','00:00:14','00:00:18'),
-(297,17,'Viernes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(298,17,'Sabado','00:00:09','00:00:13','00:00:14','00:00:18'),
-(299,18,'Lunes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(300,18,'Martes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(301,18,'Miercoles','00:00:09','00:00:13','00:00:14','00:00:18'),
-(302,18,'Jueves','00:00:09','00:00:13','00:00:14','00:00:18'),
-(303,18,'Viernes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(304,18,'Sabado','00:00:09','00:00:13','00:00:14','00:00:18'),
-(305,18,'Domingo','00:00:09','00:00:13','00:00:14','00:00:18'),
-(306,19,'Lunes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(307,19,'Martes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(308,19,'Miercoles','00:00:09','00:00:13','00:00:14','00:00:18'),
-(309,19,'Jueves','00:00:09','00:00:13','00:00:14','00:00:18'),
-(310,19,'Viernes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(311,19,'Sabado','00:00:09','00:00:13','00:00:14','00:00:18'),
-(312,19,'Domingo','00:00:09','00:00:13','00:00:14','00:00:18'),
-(313,20,'Lunes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(314,20,'Martes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(315,20,'Miercoles','00:00:09','00:00:13','00:00:14','00:00:18'),
-(316,20,'Jueves','00:00:09','00:00:13','00:00:14','00:00:18'),
-(317,20,'Viernes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(318,20,'Sabado','00:00:09','00:00:13','00:00:14','00:00:18'),
-(319,20,'Domingo','00:00:09','00:00:13','00:00:14','00:00:18'),
-(320,22,'Lunes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(321,22,'Martes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(322,22,'Miercoles','00:00:09','00:00:13','00:00:14','00:00:18'),
-(323,22,'Jueves','00:00:09','00:00:13','00:00:14','00:00:18'),
-(324,22,'Viernes','00:00:09','00:00:13','00:00:14','00:00:18'),
-(325,23,'Lunes',NULL,'00:00:00','00:00:17','00:00:20'),
-(326,23,'Martes',NULL,'00:00:00','00:00:17','00:00:20'),
-(327,23,'Miercoles',NULL,'00:00:00','00:00:17','00:00:20'),
-(328,23,'Jueves',NULL,'00:00:00','00:00:17','00:00:20'),
-(329,23,'Viernes',NULL,'00:00:00','00:00:17','00:00:20'),
-(330,24,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
-(331,24,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
-(332,24,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
-(333,24,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
-(334,24,'Sabado','00:00:00','00:00:00','00:00:00','00:00:00'),
-(335,25,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
-(336,25,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
-(337,25,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
-(338,25,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
-(339,26,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
-(340,26,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
-(341,39,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(342,39,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(343,39,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(344,39,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(345,39,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(346,40,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(347,40,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(348,40,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(349,40,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(350,40,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(351,41,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(352,41,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(353,41,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(354,41,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(355,41,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(356,43,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(357,43,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(358,43,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(359,43,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(360,43,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(361,45,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(362,45,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(363,45,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(364,45,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(365,45,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(366,47,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(367,47,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(368,47,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(369,47,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(370,47,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(371,49,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(372,49,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(373,49,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(374,49,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(375,49,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(376,51,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(377,51,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(378,51,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(379,51,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(380,51,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(381,53,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(382,53,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(383,53,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(384,53,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(385,53,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(386,54,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(387,54,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(388,54,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(389,54,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(390,54,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(391,56,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(392,56,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(393,56,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(394,56,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(395,56,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(396,58,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(397,58,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(398,58,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(399,58,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(400,58,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(401,60,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(402,60,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(403,60,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(404,60,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(405,60,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(406,61,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(407,61,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(408,61,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(409,61,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(410,61,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(411,61,'Sabado','09:00:00','12:00:00','13:00:00','18:00:00'),
-(412,67,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(413,67,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(414,67,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(415,67,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(416,67,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(417,68,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(418,68,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(419,68,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(420,68,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(421,68,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(422,68,'Sabado','09:00:00','12:00:00','13:00:00','18:00:00'),
-(423,68,'Domingo','09:00:00','12:00:00','13:00:00','18:00:00'),
-(424,69,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(425,69,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(426,69,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(427,69,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(428,69,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(429,70,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(430,70,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(431,70,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(432,70,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(433,70,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(434,71,'Lunes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(435,71,'Martes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(436,71,'Miercoles','09:00:00','12:00:00','13:00:00','18:00:00'),
-(437,71,'Jueves','09:00:00','12:00:00','13:00:00','18:00:00'),
-(438,71,'Viernes','09:00:00','12:00:00','13:00:00','18:00:00'),
-(439,73,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(440,73,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(441,74,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(442,74,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(443,75,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(444,75,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(445,77,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(446,77,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(447,79,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(448,79,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(449,80,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(450,80,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(451,81,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(452,81,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(453,82,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(454,82,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(455,3,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(456,3,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(457,83,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(458,83,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(459,84,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(460,84,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(461,85,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(462,85,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(463,86,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(464,86,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(465,87,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(466,87,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(467,88,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(468,88,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(469,89,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(470,89,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(471,90,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(472,90,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(475,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(476,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(487,98,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(488,98,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(489,99,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(490,99,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(491,100,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(492,100,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(505,91,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(506,91,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(515,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(516,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(517,107,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(518,107,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(519,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(520,NULL,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(525,1,'text','00:00:00','00:00:00','00:00:00','00:00:00'),
-(526,1,'text','00:00:00','00:00:00','00:00:00','00:00:00');
+(1,2,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(2,2,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(3,2,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(4,2,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(5,2,'Sabado','00:00:00','00:00:00','00:00:00','00:00:00'),
+(6,3,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(7,3,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(8,3,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(9,3,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(10,4,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(11,4,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(12,4,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(13,4,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(14,5,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(15,5,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(16,5,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(17,5,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(18,6,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(19,6,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(20,6,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(21,6,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(22,6,'Sabado','00:00:00','00:00:00','00:00:00','00:00:00'),
+(23,7,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(24,7,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(25,7,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(26,7,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(27,8,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(28,8,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(29,8,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(30,8,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(31,9,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(32,9,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(33,9,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(34,9,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(59,18,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(60,18,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(61,18,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(62,18,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(63,19,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(64,19,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(65,19,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(66,19,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(71,21,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(72,21,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(73,21,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(74,21,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(75,22,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(76,22,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(77,22,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(78,22,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(79,23,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(80,23,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(81,23,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(82,23,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(83,24,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(84,24,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(85,24,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(86,24,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(87,26,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(88,26,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(89,26,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(90,26,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(91,27,'Martes','00:00:00','00:00:00','17:00:00','20:00:00'),
+(92,27,'Miercoles','00:00:00','00:00:00','17:00:00','20:00:00'),
+(93,27,'Jueves','00:00:00','00:00:00','17:00:00','20:00:00'),
+(94,27,'Viernes','00:00:00','00:00:00','17:00:00','20:00:00'),
+(95,27,'Lunes','00:00:00','00:00:00','17:00:00','20:00:00'),
+(96,28,'Martes','00:00:00','00:00:00','17:00:00','20:00:00'),
+(97,28,'Miercoles','00:00:00','00:00:00','17:00:00','20:00:00'),
+(98,28,'Jueves','00:00:00','00:00:00','17:00:00','20:00:00'),
+(99,28,'Viernes','00:00:00','00:00:00','17:00:00','20:00:00'),
+(100,28,'Lunes','00:00:00','00:00:00','17:00:00','20:00:00'),
+(101,29,'Martes','08:00:00','00:00:00','17:00:00','20:00:00'),
+(102,29,'Miercoles','08:00:00','12:00:00','18:00:00','20:00:00'),
+(103,29,'Jueves','08:00:00','00:00:00','17:00:00','20:00:00'),
+(104,29,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(105,29,'Lunes','08:00:00','00:00:00','17:00:00','20:00:00'),
+(106,31,'Lunes','10:00:00','13:00:00','14:00:00','17:00:00'),
+(107,31,'Martes','10:00:00','13:00:00','14:00:00','17:00:00'),
+(108,31,'Miercoles','10:00:00','13:00:00','14:00:00','17:00:00'),
+(109,31,'Jueves','10:00:00','13:00:00','14:00:00','17:00:00'),
+(110,31,'Viernes','10:00:00','13:00:00','14:00:00','17:00:00'),
+(111,32,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(112,32,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(113,32,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(114,32,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(115,32,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(116,33,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(117,33,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(118,33,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(119,33,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(120,33,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(121,34,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(122,34,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(123,34,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(124,34,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(125,34,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(131,36,'Lunes','10:00:00','00:00:00','00:00:00','16:00:00'),
+(132,36,'Martes','10:00:00','00:00:00','00:00:00','16:00:00'),
+(133,36,'Miercoles','10:00:00','00:00:00','00:00:00','16:00:00'),
+(134,36,'Jueves','10:00:00','00:00:00','00:00:00','16:00:00'),
+(135,37,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(136,37,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(137,37,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(138,37,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(139,37,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(140,38,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(141,38,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(142,38,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(143,38,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(144,38,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(145,39,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(146,39,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(147,39,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(148,39,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(149,39,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(150,40,'Lunes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(151,40,'Martes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(152,40,'Miercoles','07:00:00','12:00:00','17:00:00','20:00:00'),
+(153,40,'Jueves','07:00:00','12:00:00','17:00:00','20:00:00'),
+(154,40,'Viernes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(155,41,'Lunes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(156,41,'Martes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(157,41,'Miercoles','07:00:00','12:00:00','17:00:00','20:00:00'),
+(158,41,'Jueves','07:00:00','12:00:00','17:00:00','20:00:00'),
+(159,41,'Viernes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(160,42,'Lunes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(161,42,'Martes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(162,42,'Miercoles','07:00:00','12:00:00','17:00:00','20:00:00'),
+(163,42,'Jueves','07:00:00','12:00:00','17:00:00','20:00:00'),
+(164,42,'Viernes','07:00:00','12:00:00','17:00:00','20:00:00'),
+(170,13,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(171,13,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(172,13,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(173,13,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(174,13,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(175,16,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(176,16,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(177,16,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(178,16,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(179,16,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(190,17,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(191,17,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(192,17,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(193,17,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(194,17,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(195,15,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(196,15,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(197,15,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(198,15,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(199,15,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(225,35,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(226,35,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(227,35,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(228,35,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(229,35,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(230,20,'Martes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(231,20,'Miercoles','00:00:00','00:00:00','00:00:00','00:00:00'),
+(232,20,'Jueves','00:00:00','00:00:00','00:00:00','00:00:00'),
+(233,20,'Viernes','00:00:00','00:00:00','00:00:00','00:00:00'),
+(254,11,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(255,11,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(256,11,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(257,11,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(258,11,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(269,12,'Lunes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(270,12,'Martes','08:00:00','12:00:00','17:00:00','20:00:00'),
+(271,12,'Miercoles','08:00:00','12:00:00','17:00:00','20:00:00'),
+(272,12,'Jueves','08:00:00','12:00:00','17:00:00','20:00:00'),
+(273,12,'Viernes','08:00:00','12:00:00','17:00:00','20:00:00');
 
 /*Table structure for table `tb_client_services` */
 
@@ -1094,29 +1949,28 @@ CREATE TABLE `tb_client_services` (
   `idClientServices` int(11) NOT NULL AUTO_INCREMENT,
   `idClientFk` int(11) DEFAULT NULL,
   `idTipeServiceFk` int(11) DEFAULT NULL,
+  `nameDataBase` varchar(255) DEFAULT NULL,
+  `idServicesFk` int(11) DEFAULT NULL,
+  `nameId` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientServices`),
   KEY `idTipeServiceFk` (`idTipeServiceFk`),
   CONSTRAINT `tb_client_services_ibfk_1` FOREIGN KEY (`idTipeServiceFk`) REFERENCES `tb_type_services` (`idTypeServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=288 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services` */
 
-insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeServiceFk`) values 
-(43,1,1),
-(44,1,1),
-(45,1,1),
-(46,1,1),
-(47,1,1),
-(48,1,1),
-(49,1,1),
-(50,1,1),
-(51,1,1),
-(52,1,1),
-(53,1,1),
-(54,1,1),
-(55,1,1),
-(56,1,1),
-(57,1,1);
+insert  into `tb_client_services`(`idClientServices`,`idClientFk`,`idTipeServiceFk`,`nameDataBase`,`idServicesFk`,`nameId`) values 
+(277,35,1,'tb_client_services_access_control',102,'idClientServicesAccessControl'),
+(278,35,2,'tb_client_services_internet',39,'idClientServicesInternet'),
+(279,35,3,'tb_client_services_totem',28,'idClientServicesTotem'),
+(280,35,4,'tb_client_services_camera',50,'idClientServicesCamera'),
+(281,35,6,'tb_client_services_smart_panic',24,'idClientServicesSmartPanic'),
+(282,1,5,'tb_client_services_alarms',51,'idClientServicesAlarms'),
+(283,1,5,'tb_client_services_alarms',52,'idClientServicesAlarms'),
+(284,1,5,'tb_client_services_alarms',53,'idClientServicesAlarms'),
+(285,1,5,'tb_client_services_alarms',54,'idClientServicesAlarms'),
+(286,1,5,'tb_client_services_alarms',55,'idClientServicesAlarms'),
+(287,1,5,'tb_client_services_alarms',56,'idClientServicesAlarms');
 
 /*Table structure for table `tb_client_services_access_control` */
 
@@ -1126,8 +1980,8 @@ CREATE TABLE `tb_client_services_access_control` (
   `idClientServicesAccessControl` int(11) NOT NULL AUTO_INCREMENT,
   `idDoorFk` int(11) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
-  `dateUp` date DEFAULT NULL,
-  `dateDown` date DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT NULL,
+  `dateDown` varchar(255) DEFAULT NULL,
   `idAccessControlFk` int(11) DEFAULT NULL,
   `idInputReaderFk` int(11) DEFAULT NULL,
   `locationGabinet` text,
@@ -1143,19 +1997,17 @@ CREATE TABLE `tb_client_services_access_control` (
   `idEmergencyButtonFk` int(11) DEFAULT NULL,
   `idShutdownKeyFk` int(11) DEFAULT NULL,
   `acaration2` text,
-  `address` varchar(100) DEFAULT NULL,
-  `addressLat` varchar(100) DEFAULT NULL,
-  `addressLon` varchar(100) DEFAULT NULL,
   `portNumberRouter` varchar(200) DEFAULT NULL,
   `addressClient` varchar(100) DEFAULT NULL,
   `addressVpn` varchar(100) DEFAULT NULL,
-  `addressClientLat` varchar(100) DEFAULT NULL,
-  `addressClientLon` varchar(100) DEFAULT NULL,
   `user` varchar(100) DEFAULT NULL,
   `useVpn` varchar(100) DEFAULT NULL,
   `passVpn` varchar(100) DEFAULT NULL,
   `pass` varchar(100) DEFAULT NULL,
   `portHttp` decimal(10,0) DEFAULT NULL,
+  `locationEmergencyButton` varchar(255) DEFAULT NULL,
+  `locationOffKey` varchar(255) DEFAULT NULL,
+  `idClientServicesFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesAccessControl`),
   KEY `idDoorFk` (`idDoorFk`),
   KEY `idAccessControlFk` (`idAccessControlFk`),
@@ -1165,18 +2017,17 @@ CREATE TABLE `tb_client_services_access_control` (
   KEY `idEmergencyButtonFk` (`idEmergencyButtonFk`),
   KEY `tb_client_services_access_control_ibfk_7` (`idShutdownKeyFk`),
   CONSTRAINT `tb_client_services_access_control_ibfk_1` FOREIGN KEY (`idDoorFk`) REFERENCES `tb_access_control_door` (`idAccessControlDoor`),
-  CONSTRAINT `tb_client_services_access_control_ibfk_2` FOREIGN KEY (`idAccessControlFk`) REFERENCES `tb_access_control` (`idAccessControl`),
-  CONSTRAINT `tb_client_services_access_control_ibfk_3` FOREIGN KEY (`idInputReaderFk`) REFERENCES `tb_input_reader` (`idInputReader`),
-  CONSTRAINT `tb_client_services_access_control_ibfk_4` FOREIGN KEY (`idFontFk`) REFERENCES `tb_font` (`idFonf`),
-  CONSTRAINT `tb_client_services_access_control_ibfk_5` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_type_maintenance` (`idTypeMaintenance`),
-  CONSTRAINT `tb_client_services_access_control_ibfk_6` FOREIGN KEY (`idEmergencyButtonFk`) REFERENCES `tb_emergency_button` (`idEmergencyButton`),
-  CONSTRAINT `tb_client_services_access_control_ibfk_7` FOREIGN KEY (`idShutdownKeyFk`) REFERENCES `tb_shutdown_key` (`idShutdownKey`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+  CONSTRAINT `tb_client_services_access_control_ibfk_2` FOREIGN KEY (`idAccessControlFk`) REFERENCES `tb_products` (`idProduct`),
+  CONSTRAINT `tb_client_services_access_control_ibfk_3` FOREIGN KEY (`idInputReaderFk`) REFERENCES `tb_products` (`idProduct`),
+  CONSTRAINT `tb_client_services_access_control_ibfk_4` FOREIGN KEY (`idFontFk`) REFERENCES `tb_products` (`idProduct`),
+  CONSTRAINT `tb_client_services_access_control_ibfk_6` FOREIGN KEY (`idEmergencyButtonFk`) REFERENCES `tb_products` (`idProduct`),
+  CONSTRAINT `tb_client_services_access_control_ibfk_7` FOREIGN KEY (`idShutdownKeyFk`) REFERENCES `tb_products` (`idProduct`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_access_control` */
 
-insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`,`idDoorFk`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idAccessControlFk`,`idInputReaderFk`,`locationGabinet`,`idFontFk`,`aclaration`,`idTypeMaintenanceFk`,`lock`,`ouputReader`,`ouputButom`,`isOuputReader`,`isOuputButom`,`isBlocklingScrew`,`idEmergencyButtonFk`,`idShutdownKeyFk`,`acaration2`,`address`,`addressLat`,`addressLon`,`portNumberRouter`,`addressClient`,`addressVpn`,`addressClientLat`,`addressClientLon`,`user`,`useVpn`,`passVpn`,`pass`,`portHttp`) values 
-(29,1,1,'0000-00-00','0000-00-00',1,1,'1',1,'1',1,'1','1','1',1,1,1,1,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',1);
+insert  into `tb_client_services_access_control`(`idClientServicesAccessControl`,`idDoorFk`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idAccessControlFk`,`idInputReaderFk`,`locationGabinet`,`idFontFk`,`aclaration`,`idTypeMaintenanceFk`,`lock`,`ouputReader`,`ouputButom`,`isOuputReader`,`isOuputButom`,`isBlocklingScrew`,`idEmergencyButtonFk`,`idShutdownKeyFk`,`acaration2`,`portNumberRouter`,`addressClient`,`addressVpn`,`user`,`useVpn`,`passVpn`,`pass`,`portHttp`,`locationEmergencyButton`,`locationOffKey`,`idClientServicesFk`) values 
+(102,1,6,'14/03/2021',NULL,7,10,'Sotano',8,'Prueba Aclaracion',1,'6','10',NULL,1,NULL,1,12,13,'Probando Tornillo Bloqueador','4','chile2154.seguridadtass.com.ar','chile2154.seguridadtass.com.ar','admin','admin','root','root',8081,'Prueba ubicación de pulsador de emergencia.','Prueba ubicación de Tecla de apagado',277);
 
 /*Table structure for table `tb_client_services_alarms` */
 
@@ -1185,26 +2036,32 @@ DROP TABLE IF EXISTS `tb_client_services_alarms`;
 CREATE TABLE `tb_client_services_alarms` (
   `idClientServicesAlarms` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
-  `idContracAssociated_SE` int(11) DEFAULT NULL,
+  `idContracAssociated_SE` varchar(255) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
-  `dateUp` date DEFAULT NULL,
-  `dateDown` date DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT NULL,
+  `dateDown` varchar(255) DEFAULT NULL,
   `companyMonitor` varchar(200) DEFAULT NULL,
   `numberPay` varchar(50) DEFAULT NULL,
   `alarmPanel` varchar(50) DEFAULT NULL,
   `alarmKeyboard` varchar(11) DEFAULT NULL,
-  `countZone` int(11) DEFAULT NULL,
   `panelAlarm` varchar(200) DEFAULT NULL,
   `keyboardAlarm` varchar(200) DEFAULT NULL,
   `countZoneIntaled` int(11) DEFAULT NULL,
-  `isLinePhone` tinyint(1) DEFAULT '0',
-  `isModuleIp` tinyint(1) DEFAULT '0',
-  `isModuleGps` tinyint(1) DEFAULT '0',
   `observation` text,
+  `idClientServicesFk` int(11) DEFAULT NULL,
+  `idTypeConectionRemote` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesAlarms`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_alarms` */
+
+insert  into `tb_client_services_alarms`(`idClientServicesAlarms`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`companyMonitor`,`numberPay`,`alarmPanel`,`alarmKeyboard`,`panelAlarm`,`keyboardAlarm`,`countZoneIntaled`,`observation`,`idClientServicesFk`,`idTypeConectionRemote`) values 
+(51,'prueba','877445',1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',282,1),
+(52,'prueba','877445',1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',283,1),
+(53,'prueba','877445',1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',284,1),
+(54,'prueba','877445',1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',285,1),
+(55,'prueba','87745',1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',286,1),
+(56,'prueba','877445',1,'2020-04-25','2020-04-25','1','44ghh-4','1','1','1','1',1,'3434',287,1);
 
 /*Table structure for table `tb_client_services_alarms_aditional` */
 
@@ -1272,9 +2129,9 @@ CREATE TABLE `tb_client_services_camera` (
   `name` varchar(200) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
-  `dateUp` date DEFAULT NULL,
-  `dateDown` date DEFAULT NULL,
-  `idDvrNvr_tb_prod_classFk` int(11) DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT NULL,
+  `dateDown` varchar(255) DEFAULT NULL,
+  `idDvr_nvrFk` int(11) DEFAULT NULL,
   `location` varchar(200) DEFAULT NULL,
   `locationLat` varchar(200) DEFAULT NULL,
   `locationLon` varchar(200) DEFAULT NULL,
@@ -1296,23 +2153,16 @@ CREATE TABLE `tb_client_services_camera` (
   PRIMARY KEY (`idClientServicesCamera`),
   KEY `idClientServicesFk` (`idClientServicesFk`),
   KEY `idTypeMaintenanceFk` (`idTypeMaintenanceFk`),
-  KEY `idDvrNvr_tb_prod_classFk` (`idDvrNvr_tb_prod_classFk`),
+  KEY `idDvrNvr_tb_prod_classFk` (`idDvr_nvrFk`),
   CONSTRAINT `tb_client_services_camera_ibfk_1` FOREIGN KEY (`idClientServicesFk`) REFERENCES `tb_client_services` (`idClientServices`),
   CONSTRAINT `tb_client_services_camera_ibfk_2` FOREIGN KEY (`idTypeMaintenanceFk`) REFERENCES `tb_type_maintenance` (`idTypeMaintenance`),
-  CONSTRAINT `tb_client_services_camera_ibfk_3` FOREIGN KEY (`idDvrNvr_tb_prod_classFk`) REFERENCES `tb_products_classification` (`idProductClassification`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+  CONSTRAINT `tb_client_services_camera_ibfk_3` FOREIGN KEY (`idDvr_nvrFk`) REFERENCES `tb_products_classification` (`idProductClassification`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_camera` */
 
-insert  into `tb_client_services_camera`(`idClientServicesCamera`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`idDvrNvr_tb_prod_classFk`,`location`,`locationLat`,`locationLon`,`maxCamera`,`numberPortRouter`,`addressVpn`,`nroPort1`,`nroPort2`,`namePort1`,`namePort2`,`observation`,`addessClient`,`addessClientLat`,`addessClientLot`,`portHttp`,`namePort`,`port`,`idClientServicesFk`) values 
-(16,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(17,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(18,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(19,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,NULL),
-(29,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,43),
-(30,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,45),
-(31,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,52),
-(32,'1',1,1,'2020-03-21','2020-03-21',1,'1','1','1',1,1,'1',1,1,'1','1','1','1','1','1',1,'1',1,53);
+insert  into `tb_client_services_camera`(`idClientServicesCamera`,`name`,`idContracAssociated_SE`,`idTypeMaintenanceFk`,`dateUp`,`dateDown`,`idDvr_nvrFk`,`location`,`locationLat`,`locationLon`,`maxCamera`,`numberPortRouter`,`addressVpn`,`nroPort1`,`nroPort2`,`namePort1`,`namePort2`,`observation`,`addessClient`,`addessClientLat`,`addessClientLot`,`portHttp`,`namePort`,`port`,`idClientServicesFk`) values 
+(50,'Prueba de camaras',6,1,'24/03/2021',NULL,16,'Terraza',NULL,NULL,3,6,'chile2154.seguridadtass.com.ar',443,8000,'HTTPS','SERVIDOR','Probando nuevo servicio de camaras Modificacion','chile2154.seguridadtass.com.ar',NULL,NULL,8080,'RTSP',554,280);
 
 /*Table structure for table `tb_client_services_gps` */
 
@@ -1323,8 +2173,8 @@ CREATE TABLE `tb_client_services_gps` (
   `idClientServicesFk` int(11) DEFAULT NULL,
   `idTypeGpsFk` int(11) DEFAULT NULL,
   `typeMaintenance` text,
-  `dateUp` date DEFAULT NULL,
-  `dateDown` date DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT NULL,
+  `dateDown` varchar(255) DEFAULT NULL,
   `modem` varchar(200) DEFAULT NULL,
   `idInternetCompanyFk` int(11) DEFAULT NULL COMMENT 'Empresa',
   `nroLine` varchar(200) DEFAULT NULL,
@@ -1334,13 +2184,9 @@ CREATE TABLE `tb_client_services_gps` (
   `nroSerieManufacturer` varchar(200) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesGps`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_gps` */
-
-insert  into `tb_client_services_gps`(`idClientServicesGps`,`idClientServicesFk`,`idTypeGpsFk`,`typeMaintenance`,`dateUp`,`dateDown`,`modem`,`idInternetCompanyFk`,`nroLine`,`nroChip`,`idServiceAsociateFk`,`nroSerieInternal`,`nroSerieManufacturer`,`idContracAssociated_SE`) values 
-(12,50,1,'pser','2020-03-31','2020-03-31','1',1,'1','1',1,'1','1',1),
-(13,55,1,'pser','2020-03-31','2020-03-31','1',1,'1','1',1,'1','1',1);
 
 /*Table structure for table `tb_client_services_internet` */
 
@@ -1350,30 +2196,31 @@ CREATE TABLE `tb_client_services_internet` (
   `idClientServicesInternet` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idClientServicesFk` int(11) DEFAULT NULL,
   `idTypeInternetFk` int(11) DEFAULT NULL,
-  `typeMaintenance` text,
+  `idTypeMaintenanceFk` text,
   `idServiceFk` int(11) DEFAULT NULL,
   `idServiceAsociateFk` int(11) DEFAULT NULL,
   `idRouterInternetFk` int(11) DEFAULT NULL,
-  `numberSeria` varchar(100) DEFAULT NULL,
   `userAdmin` varchar(100) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   `idInternetCompanyFk` int(11) DEFAULT NULL,
-  `modenMark` varchar(100) DEFAULT '',
-  `dateDown` date DEFAULT NULL,
-  `dateUp` date DEFAULT NULL,
+  `idModemInternetFk` varchar(100) DEFAULT '',
+  `dateDown` varchar(255) DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT NULL,
   `isDown` tinyint(1) DEFAULT '0',
   `port` decimal(11,0) DEFAULT NULL,
   `passAdmin` varchar(200) DEFAULT NULL,
-  `nroSerieInternal` varchar(200) DEFAULT NULL,
-  `nroSerieManufacturer` varchar(200) DEFAULT NULL,
+  `userWifi` varchar(255) DEFAULT NULL,
+  `passWifi` varchar(255) DEFAULT NULL,
+  `macAddress` varchar(255) DEFAULT NULL,
+  `numberLine` varchar(255) DEFAULT NULL,
+  `numberChip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesInternet`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_internet` */
 
-insert  into `tb_client_services_internet`(`idClientServicesInternet`,`idClientServicesFk`,`idTypeInternetFk`,`typeMaintenance`,`idServiceFk`,`idServiceAsociateFk`,`idRouterInternetFk`,`numberSeria`,`userAdmin`,`idContracAssociated_SE`,`idInternetCompanyFk`,`modenMark`,`dateDown`,`dateUp`,`isDown`,`port`,`passAdmin`,`nroSerieInternal`,`nroSerieManufacturer`) values 
-(10,51,1,'psa',1,1,1,'1','1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1'),
-(11,54,1,'psa',1,1,1,'1','1',1,1,'1','2020-03-19','2020-03-19',1,1,'1','1','1');
+insert  into `tb_client_services_internet`(`idClientServicesInternet`,`idClientServicesFk`,`idTypeInternetFk`,`idTypeMaintenanceFk`,`idServiceFk`,`idServiceAsociateFk`,`idRouterInternetFk`,`userAdmin`,`idContracAssociated_SE`,`idInternetCompanyFk`,`idModemInternetFk`,`dateDown`,`dateUp`,`isDown`,`port`,`passAdmin`,`userWifi`,`passWifi`,`macAddress`,`numberLine`,`numberChip`) values 
+(39,278,1,'1',1,277,20,'admin',6,1,'19',NULL,'19/03/2021',NULL,5,'admin','admin','admin','df-dg-45-64-56-54',NULL,NULL);
 
 /*Table structure for table `tb_client_services_smart_panic` */
 
@@ -1384,29 +2231,29 @@ CREATE TABLE `tb_client_services_smart_panic` (
   `idClientServicesFk` int(11) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
-  `dateUp` date DEFAULT NULL,
-  `dateDown` date DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT NULL,
+  `dateDown` varchar(255) DEFAULT NULL,
   `idTypeMaintenanceFk` int(11) DEFAULT NULL,
   `idCompanyMonitorFK` int(11) DEFAULT NULL,
   `sucribeNumber` varchar(200) NOT NULL,
   `idDetinationOfLicenseFk` int(11) DEFAULT NULL,
-  `idDepartmentFk` int(11) DEFAULT NULL,
+  `idDepartmentFk` int(11) unsigned DEFAULT NULL,
+  `idParticularAddressFk` int(11) unsigned DEFAULT NULL,
   `countNewLicense` int(11) DEFAULT NULL,
   `observation` text,
   PRIMARY KEY (`idClientServicesSmartPanic`),
   KEY `idDetinationOfLicenseFk` (`idDetinationOfLicenseFk`),
   KEY `idDepartmentFk` (`idDepartmentFk`),
+  KEY `idParticularAddressFk` (`idParticularAddressFk`),
   CONSTRAINT `tb_client_services_smart_panic_ibfk_1` FOREIGN KEY (`idDetinationOfLicenseFk`) REFERENCES `tb_detination_of_license` (`idDetinationOfLicense`),
-  CONSTRAINT `tb_client_services_smart_panic_ibfk_2` FOREIGN KEY (`idDepartmentFk`) REFERENCES `tb_department` (`idDepartment`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  CONSTRAINT `tb_client_services_smart_panic_ibfk_2` FOREIGN KEY (`idDepartmentFk`) REFERENCES `tb_client_departament` (`idClientDepartament`),
+  CONSTRAINT `tb_client_services_smart_panic_ibfk_3` FOREIGN KEY (`idParticularAddressFk`) REFERENCES `tb_client_address_particular` (`idAddressParticular`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_smart_panic` */
 
-insert  into `tb_client_services_smart_panic`(`idClientServicesSmartPanic`,`idClientServicesFk`,`name`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idTypeMaintenanceFk`,`idCompanyMonitorFK`,`sucribeNumber`,`idDetinationOfLicenseFk`,`idDepartmentFk`,`countNewLicense`,`observation`) values 
-(6,48,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
-(7,49,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
-(8,56,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba'),
-(9,57,'Nombre de Prueba',1,'2020-04-01','2020-04-01',1,1,'1',1,1,1,'Observación de prueba');
+insert  into `tb_client_services_smart_panic`(`idClientServicesSmartPanic`,`idClientServicesFk`,`name`,`idContracAssociated_SE`,`dateUp`,`dateDown`,`idTypeMaintenanceFk`,`idCompanyMonitorFK`,`sucribeNumber`,`idDetinationOfLicenseFk`,`idDepartmentFk`,`idParticularAddressFk`,`countNewLicense`,`observation`) values 
+(24,281,'Prueba app monitor',6,'24/03/2021',NULL,1,1,'438459357134853',2,828,NULL,2,'Prueba de nuevo servicio app monitor Modificacion');
 
 /*Table structure for table `tb_client_services_totem` */
 
@@ -1418,18 +2265,15 @@ CREATE TABLE `tb_client_services_totem` (
   `name` varchar(100) DEFAULT NULL,
   `idContracAssociated_SE` int(11) DEFAULT NULL,
   `item_SE` varchar(100) DEFAULT NULL,
-  `date` date DEFAULT NULL,
+  `dateUp` varchar(255) DEFAULT '',
+  `dateDown` varchar(255) DEFAULT NULL,
   `idCompanyFk` int(11) DEFAULT NULL,
-  `dvr_nvr` varchar(100) DEFAULT NULL,
-  `addresss` varchar(100) DEFAULT NULL,
-  `latAddress` varchar(100) DEFAULT NULL,
-  `lonAddress` varchar(100) DEFAULT NULL,
+  `idDvr_nvrFk` varchar(100) DEFAULT NULL,
+  `location` varchar(100) DEFAULT '',
   `maxCamera` int(11) DEFAULT NULL,
   `idTotenModelFk` int(11) DEFAULT NULL,
-  `tipeMaintenance_SE` int(11) DEFAULT NULL,
-  `dateDown` date DEFAULT NULL,
-  `numerFertilizer` varchar(100) DEFAULT NULL,
-  `numberPort` varchar(100) DEFAULT NULL,
+  `idTypeMaintenanceFk` int(11) DEFAULT NULL,
+  `numberPortRouter` varchar(100) DEFAULT '',
   `addreesVpn` varchar(100) DEFAULT NULL,
   `namePort1` varchar(100) DEFAULT NULL,
   `numberPort1` varchar(100) DEFAULT NULL,
@@ -1439,11 +2283,37 @@ CREATE TABLE `tb_client_services_totem` (
   `portHttpInter` varchar(100) DEFAULT NULL,
   `namePortInter` varchar(100) DEFAULT NULL,
   `numberPortInter` varchar(100) DEFAULT NULL,
-  `observatioGeneral` text,
+  `observation` text,
+  `numberAbonado` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClientServicesTotem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_services_totem` */
+
+insert  into `tb_client_services_totem`(`idClientServicesTotem`,`idClientServicesFk`,`name`,`idContracAssociated_SE`,`item_SE`,`dateUp`,`dateDown`,`idCompanyFk`,`idDvr_nvrFk`,`location`,`maxCamera`,`idTotenModelFk`,`idTypeMaintenanceFk`,`numberPortRouter`,`addreesVpn`,`namePort1`,`numberPort1`,`namePort2`,`numberPort2`,`addressClientInter`,`portHttpInter`,`namePortInter`,`numberPortInter`,`observation`,`numberAbonado`) values 
+(28,279,'PRUEBA DE TOTEM',6,NULL,'22/03/2021',NULL,1,'16','Sala de servicios',4,2,1,'4','chile2154.seguridadtass.com.ar','HTTPS','443','SERVIDOR','8000','chile2154.seguridadtass.com.ar','8080','RTSP','554','Prueba de modificacion','438459357134853');
+
+/*Table structure for table `tb_client_totem` */
+
+DROP TABLE IF EXISTS `tb_client_totem`;
+
+CREATE TABLE `tb_client_totem` (
+  `idClientTotem` int(11) NOT NULL AUTO_INCREMENT,
+  `idClientFk` int(11) DEFAULT NULL,
+  `idClientServicesTotemFk` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `pass` varchar(255) DEFAULT NULL,
+  `userProfile` varchar(255) DEFAULT NULL,
+  `qrBase64` text,
+  PRIMARY KEY (`idClientTotem`)
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_client_totem` */
+
+insert  into `tb_client_totem`(`idClientTotem`,`idClientFk`,`idClientServicesTotemFk`,`name`,`user`,`pass`,`userProfile`,`qrBase64`) values 
+(116,93,28,'David Eduardo Rincon Luengo','drincon','admin','admin','data:image/png;base64,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'),
+(117,NULL,28,'Carlos Villalobos','carlitos','admin','admin','data:image/png;base64,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');
 
 /*Table structure for table `tb_client_type` */
 
@@ -1472,18 +2342,17 @@ CREATE TABLE `tb_client_type_services` (
   `idClientTypeServices` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `clientTypeServices` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idClientTypeServices`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_type_services` */
 
 insert  into `tb_client_type_services`(`idClientTypeServices`,`clientTypeServices`) values 
 (1,'CONTROL DE ACCESO'),
 (2,'INTERNET'),
-(3,'GPS'),
-(4,'TOTEM'),
+(3,'TOTEM'),
+(4,'CAMARAS'),
 (5,'ALARMAS'),
-(6,'CAMARAS'),
-(7,'SMART PANIC');
+(6,'APP MONITOREO');
 
 /*Table structure for table `tb_client_ufc` */
 
@@ -1500,14 +2369,6 @@ CREATE TABLE `tb_client_ufc` (
 
 /*Data for the table `tb_client_ufc` */
 
-insert  into `tb_client_ufc`(`idUfd`,`identificador`,`idProvinceFk`,`idClientFk`,`idTypeTaxFk`) values 
-(1,'test1',1,14,1),
-(2,'test2',1,14,1),
-(7,'EDITADO 111',1,4,1),
-(8,'test2',1,4,1),
-(17,'test1',1,1,1),
-(18,'test2',1,1,1);
-
 /*Table structure for table `tb_client_users` */
 
 DROP TABLE IF EXISTS `tb_client_users`;
@@ -1518,53 +2379,46 @@ CREATE TABLE `tb_client_users` (
   `idUserFk` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idClientUsers`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_client_users` */
 
 insert  into `tb_client_users`(`idClientUsers`,`idClientFk`,`idUserFk`,`created_at`) values 
 (1,2,1,NULL),
 (2,2,2,NULL),
+(7,1,1,NULL),
+(8,1,2,NULL),
 (11,5,1,NULL),
 (12,5,2,NULL),
+(13,1,1,NULL),
+(14,1,2,NULL),
+(15,1,1,NULL),
+(16,1,2,NULL),
+(17,1,1,NULL),
+(18,1,2,NULL),
 (19,14,1,NULL),
 (20,14,2,NULL),
+(21,1,1,NULL),
+(22,1,2,NULL),
+(23,1,1,NULL),
+(24,1,2,NULL),
+(25,1,1,NULL),
+(26,1,2,NULL),
 (27,19,1,NULL),
 (28,19,2,NULL),
-(29,20,1,NULL),
-(30,20,2,NULL),
 (31,23,1,NULL),
 (32,23,2,NULL),
 (33,24,1,NULL),
 (34,24,2,NULL),
 (35,26,1,NULL),
 (36,26,2,NULL),
-(37,73,1,NULL),
-(38,73,2,NULL),
-(39,74,1,NULL),
-(40,74,2,NULL),
-(41,75,1,NULL),
-(42,75,2,NULL),
-(43,77,1,NULL),
-(44,77,2,NULL),
-(45,81,1,NULL),
-(46,81,2,NULL),
-(47,82,1,NULL),
-(48,82,2,NULL),
-(49,NULL,1,NULL),
-(50,NULL,2,NULL),
-(59,99,1,NULL),
-(60,99,2,NULL),
-(61,91,1,NULL),
-(62,91,2,NULL),
-(63,NULL,1,NULL),
-(64,NULL,2,NULL),
-(65,107,1,NULL),
-(66,107,2,NULL),
-(67,NULL,1,NULL),
-(68,NULL,2,NULL),
-(73,1,1,NULL),
-(74,1,2,NULL);
+(38,15,72,NULL),
+(41,35,92,NULL),
+(48,11,93,NULL),
+(49,11,92,NULL),
+(50,11,89,NULL),
+(54,12,92,NULL),
+(55,12,72,NULL);
 
 /*Table structure for table `tb_clients` */
 
@@ -1579,21 +2433,25 @@ CREATE TABLE `tb_clients` (
   `addressLon` varchar(100) DEFAULT NULL,
   `idAgentFk` int(200) DEFAULT NULL,
   `businessName` varchar(200) DEFAULT NULL,
+  `idClientAssociated_SE` int(11) DEFAULT NULL,
   `CUIT` varchar(30) DEFAULT NULL,
   `idLocationFk` int(11) DEFAULT NULL,
   `idProvinceFk` int(11) DEFAULT NULL,
-  `phoneMobile` varchar(200) DEFAULT '' COMMENT 'Telefono movil de un particular',
+  `phoneMobile` varchar(200) DEFAULT NULL COMMENT 'Telefono movil de un particular',
   `phoneLocal` varchar(200) DEFAULT NULL COMMENT 'Telefono local de un particular',
   `mail` varchar(200) DEFAULT NULL,
   `observation` varchar(500) DEFAULT NULL,
   `pageWeb` varchar(200) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` timestamp NULL DEFAULT NULL,
+  `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `idStatusFk` int(11) DEFAULT NULL,
+  `mailFronKey` varchar(100) DEFAULT NULL,
   `observationOrderKey` varchar(500) DEFAULT NULL,
   `isNotCliente` tinyint(1) DEFAULT '0',
   `idClientAdminFk` int(11) DEFAULT NULL,
+  `mailServiceTecnic` varchar(100) DEFAULT NULL,
   `observationSericeTecnic` varchar(100) DEFAULT NULL,
+  `mailCollection` varchar(100) DEFAULT NULL,
   `observationCollection` varchar(500) DEFAULT NULL,
   `idClientCompaniFk` int(11) DEFAULT NULL,
   `idZonaFk` int(11) DEFAULT NULL,
@@ -1602,67 +2460,53 @@ CREATE TABLE `tb_clients` (
   `departmentUnit` int(11) DEFAULT NULL COMMENT 'Designacion de Edificio Tipos {Letras o Numeros}',
   `departmentCorrelation` int(11) DEFAULT NULL COMMENT 'Designacion de correlacion {por piso o todo el edificio}',
   PRIMARY KEY (`idClient`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_clients` */
 
-insert  into `tb_clients`(`idClient`,`idClientTypeFk`,`name`,`address`,`addressLat`,`addressLon`,`idAgentFk`,`businessName`,`CUIT`,`idLocationFk`,`idProvinceFk`,`phoneMobile`,`phoneLocal`,`mail`,`observation`,`pageWeb`,`created_at`,`update_at`,`idStatusFk`,`observationOrderKey`,`isNotCliente`,`idClientAdminFk`,`observationSericeTecnic`,`observationCollection`,`idClientCompaniFk`,`idZonaFk`,`idClientDepartamentFk`,`idTipoInmuebleFk`,`departmentUnit`,`departmentCorrelation`) values 
-(17,1,'Administracion 2000','AV DR RICARDO BALBIN 4033','-34.55490995935','-58.487112924078',1,'Administracion 2000 S.A','324245325234-43',37,1,NULL,NULL,NULL,'','administracion2000.com.ar','2020-04-25 22:49:21',NULL,1,'',0,1,'','',1,0,0,0,NULL,NULL),
-(18,2,'GARCIA DEL RIO 4044','GARCIA DEL RIO 4044','-34.554323584571','-58.484865178333',1,NULL,NULL,35,1,NULL,NULL,NULL,'',NULL,'2020-04-26 17:57:56',NULL,1,'Probando',0,17,'Probando','Probando',NULL,NULL,NULL,NULL,NULL,NULL),
-(22,3,'Inversiones J&C','JUANA AZURDUY 2170','-34.5493526756','-58.464684760605',1,'Inversiones JC S.A','2132132133-33',42,1,NULL,NULL,NULL,'','inversionesjc.com.ar','2020-04-27 00:02:35',NULL,1,NULL,0,NULL,'','',NULL,NULL,NULL,NULL,NULL,NULL),
-(23,1,'ROM','AV SAN JUAN 3582','-34.625401211531','-58.415853330413',1,'FIGUEROA RUBINOS LEANDRO GASTON','20309473788',16,1,NULL,NULL,NULL,'','','2020-04-27 18:13:36',NULL,1,'',0,0,'','',0,NULL,NULL,NULL,NULL,NULL),
-(24,1,'PRUEBA3','AV CORRIENTES 3030','-34.604215776516','-58.408138089139',1,'PEDRO PEREZ SA','20354875458',1,1,NULL,NULL,NULL,'','WWW.infobae.com.ar','2020-05-25 22:14:30',NULL,1,'.',0,0,'.','.',0,NULL,NULL,NULL,NULL,NULL),
-(41,1,'Inversiones Inmobiliarias H&A','GARCIA DEL RIO 4044','-34.554323584571','-58.484865178333',1,'Inversiones Inmobiliarias H&A','30-324324-34',37,1,NULL,NULL,NULL,'','invmobiliariaha.com.ar','2020-07-19 02:19:58',NULL,1,'',0,0,'','',0,NULL,18,1,NULL,NULL),
-(52,2,'JUANA AZURDUY 2170','JUANA AZURDUY 2170','-34.5493526756','-58.464684760605',NULL,NULL,NULL,42,1,NULL,NULL,NULL,NULL,NULL,'2020-07-20 00:46:41',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(54,1,'Juana Propíedades & Asociados','JUANA AZURDUY 2170','-34.5493526756','-58.464684760605',1,'Juana Propíedades & Asociados','20-234234324-2',42,1,NULL,NULL,NULL,'','jpropasociados.com.ar','2020-07-20 01:04:54',NULL,1,'',0,0,'','',0,1,13,1,NULL,NULL),
-(56,2,'BLANCO ENCALADA 3275','BLANCO ENCALADA 3275','-34.564306266114','-58.467654013277',0,NULL,NULL,40,1,NULL,NULL,NULL,'',NULL,'2020-07-20 01:33:25',NULL,1,'',0,17,'','',NULL,1,NULL,NULL,NULL,NULL),
-(59,2,'AYACUCHO 559','AYACUCHO 559','-34.672338830277','-58.703013781913',NULL,NULL,NULL,921,2,NULL,NULL,NULL,NULL,NULL,'2020-07-20 23:03:55',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(60,3,'CocaCola Inc','AYACUCHO 559','-34.672338830277','-58.703013781913',1,'CocaCola Inc','30-2324243232-22',921,2,NULL,NULL,NULL,'','cocacola.com.ar','2020-07-20 23:03:55',NULL,1,NULL,0,NULL,'','',NULL,1,45,NULL,NULL,NULL),
-(61,4,'AV CORDOBA 4562','AV CORDOBA 4562','-34.594512272762','-58.429723462258',NULL,NULL,NULL,9,1,NULL,NULL,NULL,'',NULL,'2020-07-21 01:06:13',NULL,1,NULL,0,NULL,'','',60,1,NULL,NULL,NULL,NULL),
-(64,2,'ESTOMBA 3445','ESTOMBA 3445','-34.558352598331','-58.48126375303',NULL,NULL,NULL,37,1,NULL,NULL,NULL,NULL,NULL,'2020-07-21 02:52:21',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(65,5,'Victor Machado','ESTOMBA 3445','-34.558352598331','-58.48126375303',1,NULL,NULL,37,1,NULL,NULL,NULL,'',NULL,'2020-07-21 02:52:21',NULL,1,NULL,0,NULL,NULL,NULL,NULL,1,47,NULL,NULL,NULL),
-(66,2,'ESTOMBA 2333','ESTOMBA 2333',NULL,NULL,NULL,NULL,NULL,37,1,NULL,NULL,NULL,NULL,NULL,'2020-07-21 02:52:21',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(67,2,'MANUELA PEDRAZA 3553','MANUELA PEDRAZA 3553','-34.557124872056','-58.47640255313',0,NULL,NULL,42,1,NULL,NULL,NULL,'',NULL,'2020-07-21 03:10:26',NULL,1,'',0,17,'','',NULL,1,NULL,NULL,NULL,NULL),
-(68,3,'Pepsi','GARCIA DEL RIO 4044','-34.554323584571','-58.484865178333',1,'Pepsi AR','asdasdasasfas',35,1,NULL,NULL,NULL,'','pepsi.com.ar','2020-07-21 03:12:44',NULL,1,NULL,0,NULL,'','',NULL,1,0,NULL,NULL,NULL),
-(69,4,'AV CABILDO 2556','AV CABILDO 2556','-34.55781945647','-58.46035069506',NULL,NULL,NULL,40,1,NULL,NULL,NULL,'',NULL,'2020-07-21 03:15:53',NULL,1,NULL,0,NULL,'','',60,1,NULL,NULL,NULL,NULL),
-(70,2,'BESARES 3043','BESARES 3043','-34.547324859982','-58.476917358848',0,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 18:29:15',NULL,1,'',0,17,'','',NULL,1,NULL,NULL,NULL,NULL),
-(71,2,'AV DR RICARDO BALBIN 3050','AV DR RICARDO BALBIN 3050','-34.559197916175','-58.473636367845',0,NULL,NULL,37,1,NULL,NULL,NULL,'',NULL,'2020-07-24 18:33:34',NULL,1,'',0,54,'','',NULL,1,NULL,NULL,NULL,NULL),
-(72,2,'text2','text2','text','text',NULL,NULL,NULL,1,1,'',NULL,NULL,NULL,NULL,'2020-08-12 10:13:54',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(73,1,'te1ddxgfhghjh4hlfgj5545t','text2','text','text',1,'text2','text',1,1,'',NULL,NULL,'text','text','2020-08-12 10:28:01',NULL,1,'text',0,1,'text','text',1,1,1,1,NULL,NULL),
-(74,1,'te1ddxgfhghjh4hlfgj5545tasd','text2','text','text',1,'text2','text',1,1,'',NULL,NULL,'text','text','2020-08-12 10:32:36',NULL,1,'text',0,1,'text','text',1,1,1,1,NULL,NULL),
-(75,1,'te1ddxgfhghjh4hlfgj554545tasd','text2','text','text',1,'text2','text',1,1,'',NULL,NULL,'text','text','2020-08-12 10:33:25',NULL,1,'text',0,1,'text','text',1,1,1,1,NULL,NULL),
-(76,2,'text22','text22','text','text',NULL,NULL,NULL,1,1,'',NULL,NULL,NULL,NULL,'2020-08-12 10:48:45',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(77,1,'te1ddxgfhghjh4hltfgj554545tasd','text22','text','text',1,'text2','text',1,1,'',NULL,NULL,'text','text','2020-08-12 11:06:48',NULL,1,'text',0,1,'text','text',1,1,0,1,NULL,NULL),
-(78,2,'TEST','TEST','TEST','TEST',NULL,NULL,NULL,1,1,'',NULL,NULL,NULL,NULL,'2020-08-12 11:07:56',NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(79,4,'TESTs','TEST','TEST','TEST',NULL,NULL,NULL,1,1,'',NULL,NULL,'TEST',NULL,'2020-08-12 11:07:56',NULL,1,NULL,1,NULL,'TEST','TEST',1,1,131,NULL,NULL,NULL),
-(80,4,'TESTs3','TEST','TEST','TEST',NULL,NULL,NULL,1,1,'',NULL,NULL,'TEST',NULL,'2020-08-12 15:06:57',NULL,1,NULL,1,NULL,'TEST','TEST',1,1,131,NULL,NULL,NULL),
-(81,3,'jorge','TEST','TEST','TEST',1,'TEST','TEST',1,1,'',NULL,NULL,'TEST','TEST','2020-08-12 15:07:17',NULL,1,NULL,0,NULL,'TEST','TEST',NULL,1,131,NULL,NULL,NULL),
-(82,3,'jorg0e','TEST','TEST','TEST',1,'TEST','TEST',1,1,'',NULL,NULL,'TEST','TEST','2020-08-12 15:08:52',NULL,1,NULL,0,NULL,'TEST','TEST',NULL,1,131,NULL,NULL,NULL),
-(83,2,'empresa','caba','text','text',1,NULL,NULL,NULL,NULL,'',NULL,NULL,'text',NULL,'2020-08-12 15:09:56',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,NULL,NULL),
-(84,2,'empresa5','caba','text','text',1,NULL,NULL,1,NULL,'',NULL,NULL,'text',NULL,'2020-08-12 15:11:46',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,NULL,NULL),
-(85,2,'empresa56','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:12:09',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,NULL,NULL),
-(86,2,'empresa546','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:12:32',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,NULL),
-(87,2,'empresa5466','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:13:03',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
-(88,2,'empresa54666','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:13:50',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
-(89,2,'empresa546636','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:15:03',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
-(90,2,'empresa5466326','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-12 15:15:43',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
-(91,1,'35gh3j5gh','text2','text','text',1,'text2','text',1,1,'',NULL,NULL,'text','text','2020-08-12 15:16:09',NULL,1,'text',0,1,'text','text',1,1,72,NULL,1,1),
-(92,5,'TEST PARdTICaULRa2','TEST',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-08-13 09:44:07',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(93,5,'TEST PARdTIC4aULRa2','TEST','54','-4',1,NULL,NULL,1,1,NULL,NULL,NULL,'asdas',NULL,'2020-08-13 09:46:49',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(94,5,'TEST PARdTIC4aULRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:47:33',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(95,5,'TEST PARdTIC4aUweLRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:48:12',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(96,5,'TEST PARdTIC4a2UweLRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:49:55',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(97,5,'TEST PARdTIC4a2UweLfRqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-13 09:51:55',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(98,4,'TESTs53','TEST','TEST','TEST',NULL,NULL,NULL,1,1,'',NULL,NULL,'TEST',NULL,'2020-08-14 00:10:46',NULL,1,NULL,1,NULL,'TEST','TEST',1,1,131,NULL,NULL,NULL),
-(99,3,'jorg04e','TEST','TEST','TEST',1,'TEST','TEST',1,1,'',NULL,NULL,'TEST','TEST','2020-08-14 00:11:03',NULL,1,NULL,0,NULL,'TEST','TEST',NULL,1,131,NULL,NULL,NULL),
-(100,2,'empresa54663e26','caba','text','text',1,NULL,NULL,1,1,'',NULL,NULL,'text',NULL,'2020-08-14 00:11:36',NULL,1,'text',1,1,'text','text',NULL,1,NULL,NULL,1,1),
-(101,5,'TEST PARdTIC4a2UweLf6Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 12:08:30',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(102,5,'TEST PARdTIC4a2UweLf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 12:11:50',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(103,5,'TEST PARdTIC4a24UweLf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:19:05',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(104,5,'TEST PARdTIC4a24Uwe4Lf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:21:15',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(105,5,'TEST PARdTIC4a24Uw4e4Lf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:21:39',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(106,5,'TEST PARdTIC4a24Uw33eLf16Rqa2','TEST','54','-4',1,NULL,NULL,1,1,'32424234','23424324324',NULL,'asdas',NULL,'2020-08-14 13:23:42',NULL,1,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(107,3,'jorge04e','TEST','TEST','TEST',1,'TEST','TEST',1,1,'',NULL,NULL,'TEST','TEST','2020-08-14 13:26:21',NULL,1,NULL,0,NULL,'TEST','TEST',NULL,1,131,NULL,NULL,NULL);
+insert  into `tb_clients`(`idClient`,`idClientTypeFk`,`name`,`address`,`addressLat`,`addressLon`,`idAgentFk`,`businessName`,`idClientAssociated_SE`,`CUIT`,`idLocationFk`,`idProvinceFk`,`phoneMobile`,`phoneLocal`,`mail`,`observation`,`pageWeb`,`created_at`,`update_at`,`idStatusFk`,`mailFronKey`,`observationOrderKey`,`isNotCliente`,`idClientAdminFk`,`mailServiceTecnic`,`observationSericeTecnic`,`mailCollection`,`observationCollection`,`idClientCompaniFk`,`idZonaFk`,`idClientDepartamentFk`,`idTipoInmuebleFk`,`departmentUnit`,`departmentCorrelation`) values 
+(1,2,'GABRIELA MISTRAL 4099','GABRIELA MISTRAL 4099','-34.596312317965','-58.516365731706',NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL,NULL,NULL,'2020-07-23 21:37:02',NULL,0,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,1,'DUGGANCO MARSAN','GABRIELA MISTRAL 4099','-34.596312317965','-58.516365731706',1,'CARLOS MARSAN',NULL,'20-10550239-8',1,1,NULL,NULL,NULL,'','www.marsan.com.ar','2020-07-23 21:37:02',NULL,1,'dugganco@gmail.com','',0,0,'dugganco@gmail.com','','duggancopagos@gmail.com','',0,1,1,1,NULL,NULL),
+(3,2,'SAN PEDRITO 636','SAN PEDRITO 636','-34.638248176437','-58.466290724568',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-23 21:48:46',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(4,2,'AV MONROE 3846','AV MONROE 3846','-34.566909593671','-58.473782463583',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 12:21:35',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(5,2,'DR LUIS BELAUSTEGUI 1115','DR LUIS BELAUSTEGUI 1115','-34.60552842687767','-58.45638311971346',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 12:26:02',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(6,2,'AV SAN JUAN 3688','AV SAN JUAN 3688','-34.625635395556','-58.417501922526',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 12:36:39',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(7,2,'REPUBLICA ARABE SIRIA 2763','REPUBLICA ARABE SIRIA 2763','-34.58273652608','-58.415093425803',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 12:47:16',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(8,2,'AV SAN JUAN 3655','AV SAN JUAN 3655','-34.62555820985','-58.416969238364',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 12:56:29',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(9,2,'URUGUAY 1038','URUGUAY 1038','-34.596555598811','-58.387099762717',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 13:03:23',NULL,1,'dugganco@gmail.com','',0,2,'dugganco@gmail.com','','duggancopagos@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(10,2,'ARREGUI 3146','ARREGUI 3146','-34.607451066225','-58.489197639921',NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL,NULL,NULL,'2020-07-24 13:10:47',NULL,0,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,1,'CONSTANZA TETTAMANTI','ARREGUI 3146','-34.607451066225','-58.489197639921',1,'CONSTANZA TETTAMANTI',134534583,'27-25790019-9',1,1,NULL,NULL,NULL,'prueba','','2020-07-24 13:10:47','2021-03-25 11:01:27',1,'administracion@adctettamanti.com.ar','prueba',0,0,'administracion@adctettamanti.com.ar','prueba','administracion@adctettamanti.com.ar','prueba',0,1,232,1,NULL,NULL),
+(12,2,'LAVALLE 357','LAVALLE 357','-34.601997409805','-58.371944634111',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 13:16:00','2020-09-07 20:03:42',1,'administracion@adctettamanti.com.ar','',0,11,'administracion@adctettamanti.com.ar','','administracion@adctettamanti.com.ar','',NULL,1,NULL,NULL,2,3),
+(13,2,'MANUEL UGARTE 3580','MANUEL UGARTE 3580','-34.562495783889','-58.473842045079',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 13:21:15','2020-09-04 23:22:09',1,'administracion@adctettamanti.com.ar','prueba',0,11,'administracion@adctettamanti.com.ar','','administracion@adctettamanti.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(14,2,'HIDALGO 462','HIDALGO 462','-34.614010711042','-58.439875711967',NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL,NULL,NULL,'2020-07-24 19:32:36',NULL,0,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(15,1,'ESTUDIO MARJBEIN-SUCHMON','HIDALGO 462','-34.614010711042','-58.439875711967',1,'DORA SILVIA MARJBEIN',135643543,'27-11018302-5',1,1,NULL,NULL,NULL,'','','2020-07-24 19:32:36','2021-03-27 22:39:05',1,'proveedores@em-s.com.ar','',0,0,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',0,1,351,1,NULL,NULL),
+(16,2,'AV EVA PERON 1155','AV EVA PERON 1155','-34.630617058881','-58.441633624559',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 19:38:17',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(17,2,'JULIAN ALVAREZ 647','JULIAN ALVAREZ 647','-34.599024958043','-58.433565151432',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-24 19:45:01','2020-09-07 20:23:14',1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,1,1),
+(18,2,'HUMBERTO 1 2630','HUMBERTO 1 2630','-34.622350637143','-58.401702364025',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 12:54:50',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(19,2,'GURRUCHAGA 2230','GURRUCHAGA 2230','-34.585151263659','-58.42288892944',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 13:04:08',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(20,2,'NEUQUEN 554','NEUQUEN 554','-36.663492212454','-56.684565495017',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 13:09:23',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(21,2,'PLANES 636','PLANES 636','-34.609259386073','-58.441812083249',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 13:19:25',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(22,2,'SOLER 4196','SOLER 4196','-34.590089325845','-58.420209648228',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 13:37:21',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(23,2,'HIDALGO 619','HIDALGO 619','-34.612366139591','-58.440569517803',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 14:01:29',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(24,2,'ARGERICH 1723','ARGERICH 1723','-34.61488205388','-58.480494908741',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-27 14:06:33',NULL,1,'proveedores@em-s.com.ar','',0,15,'proveedores@em-s.com.ar','','proveedores@em-s.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(25,2,'VIRREY DEL PINO 4130','VIRREY DEL PINO 4130','-34.576279462042','-58.47115818738',NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL,NULL,NULL,'2020-07-27 14:20:17',NULL,0,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(26,1,'REYES CHOLAKIAN','VIRREY DEL PINO 4130','-34.576279462042','-58.47115818738',1,'SEBASTIAN REYES',NULL,'20-22472909-0',1,1,NULL,NULL,NULL,'','','2020-07-27 14:20:17',NULL,1,'admreyescholakian@gmail.com','',0,0,'admreyescholakian@gmail.com','','admreyescholakian@gmail.com','',0,1,617,1,NULL,NULL),
+(27,2,'AV FEDERICO LACROZE 3541','AV FEDERICO LACROZE 3541','-34.580871507962','-58.451187995348',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-28 18:00:18',NULL,1,'admreyescholakian@gmail.com','',0,26,'admreyescholakian@gmail.com','','admreyescholakian@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(28,2,'GUEVARA 456','GUEVARA 456','-34.586609107101','-58.451108912433',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-28 18:05:25',NULL,1,'admreyescholakian@gmail.com','',0,26,'admreyescholakian@gmail.com','','admreyescholakian@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(29,2,'MENDOZA 5123','MENDOZA 5123','-34.577352270774','-58.484039386476',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-28 18:23:17',NULL,1,'admreyescholakian@gmail.com','',0,26,'admreyescholakian@gmail.com','','admreyescholakian@gmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(30,2,'AV RIVADAVIA 2358','AV RIVADAVIA 2358','-34.609760181381','-58.399901004654',NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL,NULL,NULL,'2020-07-30 20:49:44',NULL,0,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(31,1,'GRUPO BETA','AV RIVADAVIA 2358','-34.609760181381','-58.399901004654',1,'FRANCISCA ELENA ANTONELLI',NULL,'27-13071755-7',1,1,NULL,NULL,NULL,'','','2020-07-30 20:49:44',NULL,1,'consorcios@grupobeta.com.ar','',0,0,'consorcios@grupobeta.com.ar','','consorcios@grupobeta.com.ar','',0,1,712,1,NULL,NULL),
+(32,2,'VENEZUELA 1867','VENEZUELA 1867','-34.614994141794','-58.392704942701',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-31 13:44:31',NULL,1,'consorcios@grupobeta.com.ar','',0,31,'consorcios@grupobeta.com.ar','','consorcios@grupobeta.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(33,2,'CHARCAS 2956','CHARCAS 2956','-34.593294765959','-58.407892065368',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-31 13:57:08',NULL,1,'consorcios@grupobeta.com.ar','',0,31,'consorcios@grupobeta.com.ar','','consorcios@grupobeta.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(34,2,'AV SANTA FE 2086','AV SANTA FE 2086','-34.595587631448','-58.397203472386',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-31 14:04:55',NULL,1,'consorcios@grupobeta.com.ar','',0,31,'consorcios@grupobeta.com.ar','','consorcios@grupobeta.com.ar','',NULL,1,NULL,NULL,NULL,NULL),
+(35,2,'CHILE 2154','CHILE 2154','-34.617267693675','-58.396904886312',0,NULL,2147483647,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-07-31 14:40:30','2021-03-28 21:46:59',1,'consorcios@grupobeta.com.ar','',0,31,'consorcios@grupobeta.com.ar','','consorcios@grupobeta.com.ar','',NULL,1,NULL,NULL,2,2),
+(36,1,'ALIPRANDI PALENA','YATAY 120','-34.612744100574','-58.428597216874',1,'MARIA FERNANDA ALIPRANDI',NULL,'27-20009140-5',1,1,NULL,NULL,NULL,'','','2020-08-13 18:07:19',NULL,1,'aliprandi_palena@hotmail.com','',0,0,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',0,1,NULL,3,NULL,NULL),
+(37,2,'BOGADO 4538','BOGADO 4538','-34.604973522529','-58.429553867589',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-08-13 18:16:53',NULL,1,'aliprandi_palena@hotmail.com','',0,36,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(38,2,'SAN JOSE DE CALASANZ 481','SAN JOSE DE CALASANZ 481','-34.624428090988','-58.437713587696',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-08-13 18:59:09',NULL,1,'aliprandi_palena@hotmail.com','',0,36,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(39,2,'VALLE 1215','VALLE 1215','-34.625393441154','-58.444797164656',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-08-13 19:05:21',NULL,1,'aliprandi_palena@hotmail.com','',0,36,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(40,2,'AV RIVADAVIA 4965','AV RIVADAVIA 4965','-34.617896441747','-58.435550242969',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-08-13 19:18:58',NULL,1,'aliprandi_palena@hotmail.com','',0,36,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(41,2,'MALVINAS ARGENTINAS 251','MALVINAS ARGENTINAS 251','-34.62755403111','-58.450679583446',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-08-13 19:23:57',NULL,1,'aliprandi_palena@hotmail.com','',0,36,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',NULL,1,NULL,NULL,NULL,NULL),
+(42,2,'HORTIGUERA 473','HORTIGUERA 473','-34.628049430079','-58.44512915586',0,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'',NULL,'2020-08-13 19:28:31',NULL,1,'aliprandi_palena@hotmail.com','',0,36,'aliprandi_palena@hotmail.com','','aliprandi_palena@hotmail.com','',NULL,1,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tb_clients_phones` */
 
@@ -1691,23 +2535,6 @@ CREATE TABLE `tb_clients_tickets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `tb_clients_tickets` */
-
-insert  into `tb_clients_tickets`(`idTicketsCliets`,`idTicketKf`,`idClientKf`) values 
-(1,19,2),
-(2,19,3),
-(3,19,1),
-(4,20,2),
-(5,20,3),
-(6,20,1),
-(7,21,2),
-(8,21,3),
-(9,21,1),
-(10,22,2),
-(11,22,3),
-(12,22,1),
-(13,23,2),
-(14,23,3),
-(15,23,1);
 
 /*Table structure for table `tb_company` */
 
@@ -1753,8 +2580,67 @@ insert  into `tb_company_type_keychains`(`idKey`,`idAddressKf`,`item`,`value`) v
 (3,11,'Credencial Movil',10.99),
 (4,12,'Llaveros',10.99),
 (5,12,'Sticket Vehicular',10.99),
-(6,5,'Credencial Movil',10.99),
-(7,NULL,NULL,NULL);
+(6,5,'Credencial Movil',10.99);
+
+/*Table structure for table `tb_contratos` */
+
+DROP TABLE IF EXISTS `tb_contratos`;
+
+CREATE TABLE `tb_contratos` (
+  `idContrato` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idClientFk` int(11) DEFAULT NULL,
+  `fechaFirmaVigencia` varchar(255) DEFAULT NULL,
+  `fechaFirmaActivacion` varchar(255) DEFAULT NULL,
+  `numeroContrato` varchar(255) DEFAULT NULL,
+  `contratoType` int(11) DEFAULT NULL,
+  `maintenanceType` int(11) DEFAULT NULL,
+  `idStatusFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idContrato`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_contratos` */
+
+insert  into `tb_contratos`(`idContrato`,`idClientFk`,`fechaFirmaVigencia`,`fechaFirmaActivacion`,`numeroContrato`,`contratoType`,`maintenanceType`,`idStatusFk`) values 
+(6,35,'1/3/2021','28/3/2021','35-3NC/APP-1321',3,1,1),
+(7,36,'24/3/2021',NULL,'36-3NC/APP-24321',3,1,0);
+
+/*Table structure for table `tb_datos_adicionales_alarmas` */
+
+DROP TABLE IF EXISTS `tb_datos_adicionales_alarmas`;
+
+CREATE TABLE `tb_datos_adicionales_alarmas` (
+  `idDatoAdicionalAlarma` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_idTipoCliente` int(11) DEFAULT NULL,
+  `fk_idEncargado` int(11) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `calles_laterales` text,
+  `calle_trasera` text,
+  `fk_idServiciosAdicionales` int(11) DEFAULT NULL,
+  `mail_reporte` varchar(255) DEFAULT NULL,
+  `fk_idFormatoTransmision` int(11) DEFAULT NULL,
+  `fk_idAutomarcado` int(11) DEFAULT NULL,
+  `n_usuario_asalto` varchar(255) DEFAULT NULL,
+  `contrasena_asalto` varchar(255) DEFAULT NULL,
+  `comisaria` varchar(255) DEFAULT NULL,
+  `tlf_comisaria` varchar(255) DEFAULT NULL,
+  `servicio_emergencia_medica` varchar(255) DEFAULT NULL,
+  `n_de_socio` varchar(255) DEFAULT NULL,
+  `plan` varchar(255) DEFAULT NULL,
+  `observacion_general` varchar(255) DEFAULT NULL,
+  `horario_automarcado` varchar(255) DEFAULT NULL,
+  `fkidClientServicesAlarms` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idDatoAdicionalAlarma`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_datos_adicionales_alarmas` */
+
+insert  into `tb_datos_adicionales_alarmas`(`idDatoAdicionalAlarma`,`fk_idTipoCliente`,`fk_idEncargado`,`telefono`,`calles_laterales`,`calle_trasera`,`fk_idServiciosAdicionales`,`mail_reporte`,`fk_idFormatoTransmision`,`fk_idAutomarcado`,`n_usuario_asalto`,`contrasena_asalto`,`comisaria`,`tlf_comisaria`,`servicio_emergencia_medica`,`n_de_socio`,`plan`,`observacion_general`,`horario_automarcado`,`fkidClientServicesAlarms`) values 
+(78,1,1,'0416-454000','no','no',0,'asa@as.com',1,1,'1','454545','null','445-454545','null','null','null','nota adicional','De 08:00 a 16:00',51),
+(79,1,1,'0416-454000','no','no',0,'asa@as.com',1,1,'1','454545','null','445-454545','null','null','null','nota adicional','De 08:00 a 16:00',52),
+(80,1,1,'0416-454000','no','no',0,'asa@as.com',1,1,'1','454545','null','445-454545','null','null','null','nota adicional','De 08:00 a 16:00',53),
+(81,1,1,'0416-454000','no','no',0,'asa@as.com',1,1,'1','454545','null','445-454545','null','null','null','nota adicional','De 08:00 a 16:00',54),
+(85,1,1,'0416-454000','no','no',0,'asa@as.com',1,1,'1','454545','null','445-454545','null','null','null','nota adicional 2','De 08:00 a 16:00',55),
+(86,1,1,'0416-454000','no','no',0,'asa@as.com',1,1,'1','454545','null','445-454545','null','null','null','nota adicional','De 08:00 a 16:00',56);
 
 /*Table structure for table `tb_department` */
 
@@ -1814,9 +2700,9 @@ insert  into `tb_department`(`idDepartment`,`idAdressKf`,`departmentFloor`,`depa
 (113,11,'05-B',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14156),
 (114,11,'05-C',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14157),
 (115,11,'PB-A',NULL,NULL,NULL,NULL,NULL,NULL,1,0,14158),
-(116,12,'PB-01',NULL,NULL,NULL,NULL,NULL,73,1,0,14159),
+(116,12,'PB-01',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14159),
 (117,12,'PB-02',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14160),
-(118,12,'01-01',NULL,NULL,NULL,NULL,NULL,85,0,0,14161),
+(118,12,'01-01',NULL,NULL,NULL,NULL,NULL,85,1,0,14161),
 (119,12,'01-02',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14162),
 (120,12,'02-01',NULL,NULL,NULL,NULL,NULL,71,1,0,14163),
 (121,12,'02-02',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14164),
@@ -1838,6 +2724,48 @@ insert  into `tb_department`(`idDepartment`,`idAdressKf`,`departmentFloor`,`depa
 (137,12,'10-02',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14180),
 (138,12,'11-ENCARGADO',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14181),
 (139,12,'ADM-ADM',NULL,NULL,NULL,NULL,NULL,NULL,0,0,14182);
+
+/*Table structure for table `tb_detalles_control_acceso` */
+
+DROP TABLE IF EXISTS `tb_detalles_control_acceso`;
+
+CREATE TABLE `tb_detalles_control_acceso` (
+  `idControlAcceso` int(11) NOT NULL AUTO_INCREMENT,
+  `numberSerieFabric` varchar(255) DEFAULT NULL,
+  `numberSerieInternal` varchar(255) DEFAULT NULL,
+  `dateExpiration` varchar(255) DEFAULT NULL,
+  `idProductoFk` int(11) DEFAULT NULL,
+  `idServicesFk` int(11) DEFAULT NULL,
+  `optAux` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idControlAcceso`)
+) ENGINE=InnoDB AUTO_INCREMENT=866 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_detalles_control_acceso` */
+
+insert  into `tb_detalles_control_acceso`(`idControlAcceso`,`numberSerieFabric`,`numberSerieInternal`,`dateExpiration`,`idProductoFk`,`idServicesFk`,`optAux`) values 
+(746,'324324324324234','324324324324234',NULL,19,278,NULL),
+(747,'4657886545676543','4657886545676543',NULL,20,278,NULL),
+(844,'234323243242432424','234323243242432424',NULL,16,279,NULL),
+(845,'9919191911919','9919191911919','31/12/2022',9,279,NULL),
+(846,'598434583249234','598434583249234',NULL,17,279,NULL),
+(847,'0594038345934534','0594038345934534','01/01/2022',14,279,NULL),
+(848,'1111111111111','1111111111111',NULL,7,277,NULL),
+(849,'2222222222222','2222222222222',NULL,6,277,NULL),
+(850,'33333333333333','33333333333333',NULL,10,277,'entrance'),
+(851,'44444444444444','44444444444444','31/12/2022',8,277,NULL),
+(852,'555555555555555','555555555555555',NULL,10,277,'exit'),
+(853,'777777777777777','777777777777777',NULL,12,277,NULL),
+(854,'88888888888888','88888888888888',NULL,13,277,NULL),
+(855,'6666666666666666','6666666666666666','31/12/2022',9,277,NULL),
+(856,'888888888888888','888888888888888','11/11/1111',9,277,NULL),
+(858,'46437565435634435643','46437565435634435643','10/10/2024',14,277,NULL),
+(859,'6666666666666666','6666666666666666',NULL,16,280,NULL),
+(860,'01010101010100101','01010101010100101','01/01/2025',9,280,NULL),
+(861,'6666666666666666666666666666666','6666666666666666666666666666666',NULL,17,280,NULL),
+(862,'645fghg2fh','3445633hgfh5','',8,286,NULL),
+(863,'45f33ghgfh','83445446hgfh5','',5,286,NULL),
+(864,'645fghg2fh','3445633hgfh5','',8,287,NULL),
+(865,'45f33ghgfh','83445446hgfh5','',5,287,NULL);
 
 /*Table structure for table `tb_detination_of_license` */
 
@@ -1925,6 +2853,239 @@ insert  into `tb_format_tramitio`(`idFormatTramitio`,`formatTramitio`) values
 (2,'4+2'),
 (3,'SIA'),
 (4,'CID');
+
+/*Table structure for table `tb_formato_transmision` */
+
+DROP TABLE IF EXISTS `tb_formato_transmision`;
+
+CREATE TABLE `tb_formato_transmision` (
+  `idFormatoTransmision` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idFormatoTransmision`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_formato_transmision` */
+
+insert  into `tb_formato_transmision`(`idFormatoTransmision`,`descripcion`) values 
+(1,'CONTACT-ID'),
+(2,'4+2'),
+(3,'GID'),
+(4,'SIA');
+
+/*Table structure for table `tb_franja_horaria_alarmas` */
+
+DROP TABLE IF EXISTS `tb_franja_horaria_alarmas`;
+
+CREATE TABLE `tb_franja_horaria_alarmas` (
+  `id_franja_horaria` int(11) NOT NULL AUTO_INCREMENT,
+  `day` varchar(255) DEFAULT NULL,
+  `fronAm` varchar(255) DEFAULT NULL,
+  `toAm` varchar(255) DEFAULT NULL,
+  `fronPm` varchar(255) DEFAULT NULL,
+  `toPm` varchar(255) DEFAULT NULL,
+  `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_franja_horaria`)
+) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_franja_horaria_alarmas` */
+
+insert  into `tb_franja_horaria_alarmas`(`id_franja_horaria`,`day`,`fronAm`,`toAm`,`fronPm`,`toPm`,`fk_idDatoAdicionalAlarma`) values 
+(170,'lunes','07:00','12:00','17:00','20:00',27),
+(171,'martes','07:00','12:00','17:00','20:00',27),
+(172,'miercoles','07:00','12:00','17:00','20:00',27),
+(173,'jueves','07:00','12:00','17:00','20:00',27),
+(174,'viernes','07:00','12:00','17:00','20:00',27),
+(175,'sabado','07:00','12:00','17:00','20:00',27),
+(176,'domingo','07:00','12:00','17:00','20:00',27),
+(177,'lunes','07:00','12:00','17:00','20:00',28),
+(178,'martes','07:00','12:00','17:00','20:00',28),
+(179,'miercoles','07:00','12:00','17:00','20:00',28),
+(180,'jueves','07:00','12:00','17:00','20:00',28),
+(181,'viernes','07:00','12:00','17:00','20:00',28),
+(182,'sabado','07:00','12:00','17:00','20:00',28),
+(183,'domingo','07:00','12:00','17:00','20:00',28),
+(184,'lunes','07:00','12:00','17:00','20:00',29),
+(185,'martes','07:00','12:00','17:00','20:00',29),
+(186,'miercoles','07:00','12:00','17:00','20:00',29),
+(187,'jueves','07:00','12:00','17:00','20:00',29),
+(188,'viernes','07:00','12:00','17:00','20:00',29),
+(189,'sabado','07:00','12:00','17:00','20:00',29),
+(190,'domingo','07:00','12:00','17:00','20:00',29),
+(191,'lunes','07:00','12:00','17:00','20:00',30),
+(192,'martes','07:00','12:00','17:00','20:00',30),
+(193,'miercoles','07:00','12:00','17:00','20:00',30),
+(194,'jueves','07:00','12:00','17:00','20:00',30),
+(195,'viernes','07:00','12:00','17:00','20:00',30),
+(196,'sabado','07:00','12:00','17:00','20:00',30),
+(197,'domingo','07:00','12:00','17:00','20:00',30),
+(198,'lunes','07:00','12:00','17:00','20:00',31),
+(199,'martes','07:00','12:00','17:00','20:00',31),
+(200,'miercoles','07:00','12:00','17:00','20:00',31),
+(201,'jueves','07:00','12:00','17:00','20:00',31),
+(202,'viernes','07:00','12:00','17:00','20:00',31),
+(203,'sabado','07:00','12:00','17:00','20:00',31),
+(204,'domingo','07:00','12:00','17:00','20:00',31),
+(205,'lunes','07:00','12:00','17:00','20:00',32),
+(206,'martes','07:00','12:00','17:00','20:00',32),
+(207,'miercoles','07:00','12:00','17:00','20:00',32),
+(208,'jueves','07:00','12:00','17:00','20:00',32),
+(209,'viernes','07:00','12:00','17:00','20:00',32),
+(210,'sabado','07:00','12:00','17:00','20:00',32),
+(211,'domingo','07:00','12:00','17:00','20:00',32),
+(212,'lunes','07:00','12:00','17:00','20:00',33),
+(213,'martes','07:00','12:00','17:00','20:00',33),
+(214,'miercoles','07:00','12:00','17:00','20:00',33),
+(215,'jueves','07:00','12:00','17:00','20:00',33),
+(216,'viernes','07:00','12:00','17:00','20:00',33),
+(217,'sabado','07:00','12:00','17:00','20:00',33),
+(218,'domingo','07:00','12:00','17:00','20:00',33),
+(219,'lunes','07:00','12:00','17:00','20:00',34),
+(220,'martes','07:00','12:00','17:00','20:00',34),
+(221,'miercoles','07:00','12:00','17:00','20:00',34),
+(222,'jueves','07:00','12:00','17:00','20:00',34),
+(223,'viernes','07:00','12:00','17:00','20:00',34),
+(224,'sabado','07:00','12:00','17:00','20:00',34),
+(225,'domingo','07:00','12:00','17:00','20:00',34),
+(226,'lunes','07:00','12:00','17:00','20:00',35),
+(227,'martes','07:00','12:00','17:00','20:00',35),
+(228,'miercoles','07:00','12:00','17:00','20:00',35),
+(229,'jueves','07:00','12:00','17:00','20:00',35),
+(230,'viernes','07:00','12:00','17:00','20:00',35),
+(231,'sabado','07:00','12:00','17:00','20:00',35),
+(232,'domingo','07:00','12:00','17:00','20:00',35),
+(233,'lunes','07:00','12:00','17:00','20:00',36),
+(234,'martes','07:00','12:00','17:00','20:00',36),
+(235,'miercoles','07:00','12:00','17:00','20:00',36),
+(236,'jueves','07:00','12:00','17:00','20:00',36),
+(237,'viernes','07:00','12:00','17:00','20:00',36),
+(238,'sabado','07:00','12:00','17:00','20:00',36),
+(239,'domingo','07:00','12:00','17:00','20:00',36),
+(240,'lunes','07:00','12:00','17:00','20:00',37),
+(241,'martes','07:00','12:00','17:00','20:00',37),
+(242,'miercoles','07:00','12:00','17:00','20:00',37),
+(243,'jueves','07:00','12:00','17:00','20:00',37),
+(244,'viernes','07:00','12:00','17:00','20:00',37),
+(245,'sabado','07:00','12:00','17:00','20:00',37),
+(246,'domingo','07:00','12:00','17:00','20:00',37),
+(247,'lunes','07:00','12:00','17:00','20:00',38),
+(248,'martes','07:00','12:00','17:00','20:00',38),
+(249,'miercoles','07:00','12:00','17:00','20:00',38),
+(250,'jueves','07:00','12:00','17:00','20:00',38),
+(251,'viernes','07:00','12:00','17:00','20:00',38),
+(252,'sabado','07:00','12:00','17:00','20:00',38),
+(253,'domingo','07:00','12:00','17:00','20:00',38),
+(254,'lunes','07:00','12:00','17:00','20:00',39),
+(255,'martes','07:00','12:00','17:00','20:00',39),
+(256,'miercoles','07:00','12:00','17:00','20:00',39),
+(257,'jueves','07:00','12:00','17:00','20:00',39),
+(258,'viernes','07:00','12:00','17:00','20:00',39),
+(259,'sabado','07:00','12:00','17:00','20:00',39),
+(260,'domingo','07:00','12:00','17:00','20:00',39),
+(261,'lunes','07:00','12:00','17:00','20:00',40),
+(262,'martes','07:00','12:00','17:00','20:00',40),
+(263,'miercoles','07:00','12:00','17:00','20:00',40),
+(264,'jueves','07:00','12:00','17:00','20:00',40),
+(265,'viernes','07:00','12:00','17:00','20:00',40),
+(266,'sabado','07:00','12:00','17:00','20:00',40),
+(267,'domingo','07:00','12:00','17:00','20:00',40),
+(268,'lunesp','07:00','12:00','17:00','20:00',41),
+(269,'martesp','07:00','12:00','17:00','20:00',41),
+(270,'miercoles','07:00','12:00','17:00','20:00',41),
+(271,'jueves','07:00','12:00','17:00','20:00',41),
+(272,'viernesp','07:00','12:00','17:00','20:00',41),
+(273,'sabado','07:00','12:00','17:00','20:00',41),
+(274,'domingo','07:00','12:00','17:00','20:00',41),
+(282,'lunes','07:00','12:00','17:00','20:00',43),
+(283,'martes','07:00','12:00','17:00','20:00',43),
+(284,'miercoles','07:00','12:00','17:00','20:00',43),
+(285,'jueves','07:00','12:00','17:00','20:00',43),
+(286,'viernes','07:00','12:00','17:00','20:00',43),
+(287,'sabado','07:00','12:00','17:00','20:00',43),
+(288,'domingo','07:00','12:00','17:00','20:00',43),
+(289,'lunes','07:00','12:00','17:00','20:00',44),
+(290,'martes','07:00','12:00','17:00','20:00',44),
+(291,'miercoles','07:00','12:00','17:00','20:00',44),
+(292,'jueves','07:00','12:00','17:00','20:00',44),
+(293,'viernes','07:00','12:00','17:00','20:00',44),
+(294,'sabado','07:00','12:00','17:00','20:00',44),
+(295,'domingo','07:00','12:00','17:00','20:00',44),
+(296,'lunesp','07:00','12:00','17:00','20:00',45),
+(297,'martesp','07:00','12:00','17:00','20:00',45),
+(298,'miercoles','07:00','12:00','17:00','20:00',45),
+(299,'jueves','07:00','12:00','17:00','20:00',45),
+(300,'viernesp','07:00','12:00','17:00','20:00',45),
+(301,'sabado','07:00','12:00','17:00','20:00',45),
+(302,'domingo','07:00','12:00','17:00','20:00',45),
+(373,'lunesp','07:00','12:00','17:00','20:00',67),
+(374,'martesp','07:00','12:00','17:00','20:00',67),
+(375,'miercolerrrs','07:00','12:00','17:00','20:00',67),
+(376,'jueves','07:00','12:00','17:00','20:00',67),
+(377,'viernesp','07:00','12:00','17:00','20:00',67),
+(378,'sabado','07:00','12:00','17:00','20:00',67),
+(379,'domingo','07:00','12:00','17:00','20:00',67),
+(380,'lunes','07:00','12:00','17:00','20:00',71),
+(381,'martes','07:00','12:00','17:00','20:00',71),
+(382,'miercoles','07:00','12:00','17:00','20:00',71),
+(383,'jueves','07:00','12:00','17:00','20:00',71),
+(384,'viernes','07:00','12:00','17:00','20:00',71),
+(385,'sabado','07:00','12:00','17:00','20:00',71),
+(386,'domingo','07:00','12:00','17:00','20:00',71),
+(387,'lunes','07:00','12:00','17:00','20:00',72),
+(388,'martes','07:00','12:00','17:00','20:00',72),
+(389,'miercoles','07:00','12:00','17:00','20:00',72),
+(390,'jueves','07:00','12:00','17:00','20:00',72),
+(391,'viernes','07:00','12:00','17:00','20:00',72),
+(392,'sabado','07:00','12:00','17:00','20:00',72),
+(393,'domingo','07:00','12:00','17:00','20:00',72),
+(394,'lunesp','07:00','12:00','17:00','20:00',73),
+(395,'martesp','07:00','12:00','17:00','20:00',73),
+(396,'miercolerrrs','07:00','12:00','17:00','20:00',73),
+(397,'jueves','07:00','12:00','17:00','20:00',73),
+(398,'viernesp','07:00','12:00','17:00','20:00',73),
+(399,'sabado','07:00','12:00','17:00','20:00',73),
+(400,'domingo','07:00','12:00','17:00','20:00',73),
+(401,'lunes','07:00','12:00','17:00','20:00',74),
+(402,'martes','07:00','12:00','17:00','20:00',74),
+(403,'miercoles','07:00','12:00','17:00','20:00',74),
+(404,'jueves','07:00','12:00','17:00','20:00',74),
+(405,'viernes','07:00','12:00','17:00','20:00',74),
+(406,'sabado','07:00','12:00','17:00','20:00',74),
+(407,'domingo','07:00','12:00','17:00','20:00',74),
+(408,'lunes','07:00','12:00','17:00','20:00',75),
+(409,'martes','07:00','12:00','17:00','20:00',75),
+(410,'miercoles','07:00','12:00','17:00','20:00',75),
+(411,'jueves','07:00','12:00','17:00','20:00',75),
+(412,'viernes','07:00','12:00','17:00','20:00',75),
+(413,'sabado','07:00','12:00','17:00','20:00',75),
+(414,'domingo','07:00','12:00','17:00','20:00',75),
+(415,'lunes','07:00','12:00','17:00','20:00',76),
+(416,'martes','07:00','12:00','17:00','20:00',76),
+(417,'miercoles','07:00','12:00','17:00','20:00',76),
+(418,'jueves','07:00','12:00','17:00','20:00',76),
+(419,'viernes','07:00','12:00','17:00','20:00',76),
+(420,'sabado','07:00','12:00','17:00','20:00',76),
+(421,'domingo','07:00','12:00','17:00','20:00',76),
+(422,'lunes','07:00','12:00','17:00','20:00',77),
+(423,'martes','07:00','12:00','17:00','20:00',77),
+(424,'miercoles','07:00','12:00','17:00','20:00',77),
+(425,'jueves','07:00','12:00','17:00','20:00',77),
+(426,'viernes','07:00','12:00','17:00','20:00',77),
+(427,'sabado','07:00','12:00','17:00','20:00',77),
+(428,'domingo','07:00','12:00','17:00','20:00',77),
+(429,'lunes','07:00','12:00','17:00','20:00',78),
+(430,'martes','07:00','12:00','17:00','20:00',78),
+(431,'lunes','07:00','12:00','17:00','20:00',79),
+(432,'martes','07:00','12:00','17:00','20:00',79),
+(433,'lunes','07:00','12:00','17:00','20:00',80),
+(434,'martes','07:00','12:00','17:00','20:00',80),
+(435,'lunes','07:00','12:00','17:00','20:00',81),
+(436,'martes','07:00','12:00','17:00','20:00',81),
+(437,'lunes','07:00','12:00','17:00','20:00',82),
+(438,'martes','07:00','12:00','17:00','20:00',82),
+(439,'lunes','07:00','12:00','17:00','20:00',85),
+(440,'martes','07:00','12:00','17:00','20:00',85),
+(441,'lunes','07:00','12:00','17:00','20:00',86),
+(442,'martes','07:00','12:00','17:00','20:00',86);
 
 /*Table structure for table `tb_input_reader` */
 
@@ -2938,6 +4099,22 @@ insert  into `tb_modules`(`idModule`,`name`) values
 (7,'servicio'),
 (8,'producto');
 
+/*Table structure for table `tb_monitor_company` */
+
+DROP TABLE IF EXISTS `tb_monitor_company`;
+
+CREATE TABLE `tb_monitor_company` (
+  `idMonitorCompany` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `monitorCompany` varchar(100) DEFAULT '',
+  PRIMARY KEY (`idMonitorCompany`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_monitor_company` */
+
+insert  into `tb_monitor_company`(`idMonitorCompany`,`monitorCompany`) values 
+(1,'RAM'),
+(2,'SPS');
+
 /*Table structure for table `tb_opcion_low` */
 
 DROP TABLE IF EXISTS `tb_opcion_low`;
@@ -2953,6 +4130,59 @@ CREATE TABLE `tb_opcion_low` (
 insert  into `tb_opcion_low`(`idOpcionLowTicket`,`opcionLowTicket`) values 
 (1,'LLaveros a dar de baja'),
 (2,'LLaveros en mi poder');
+
+/*Table structure for table `tb_personas_para_dar_aviso_alarmas` */
+
+DROP TABLE IF EXISTS `tb_personas_para_dar_aviso_alarmas`;
+
+CREATE TABLE `tb_personas_para_dar_aviso_alarmas` (
+  `idPersona_aviso` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_idUserSystema` int(11) DEFAULT NULL COMMENT 'puede ser null',
+  `vinculo` varchar(255) DEFAULT NULL,
+  `palabra_clave` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `numero_del_usuario` varchar(255) DEFAULT NULL,
+  `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
+  `nombre_apellido` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idPersona_aviso`)
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_personas_para_dar_aviso_alarmas` */
+
+insert  into `tb_personas_para_dar_aviso_alarmas`(`idPersona_aviso`,`fk_idUserSystema`,`vinculo`,`palabra_clave`,`telefono`,`numero_del_usuario`,`fk_idDatoAdicionalAlarma`,`nombre_apellido`) values 
+(99,0,'null','null','null','null',78,'a'),
+(100,0,'null','null','null','null',79,'a'),
+(101,0,'null','null','null','null',80,'a'),
+(102,0,'null','null','null','null',81,'a'),
+(103,0,'null','null','null','null',82,'a'),
+(104,0,'null','null','null','null',85,'a'),
+(105,0,'null','null','null','null',86,'a');
+
+/*Table structure for table `tb_personas_para_verificar_en_lugar` */
+
+DROP TABLE IF EXISTS `tb_personas_para_verificar_en_lugar`;
+
+CREATE TABLE `tb_personas_para_verificar_en_lugar` (
+  `idPersona_aviso_lugar` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_idUserSystema` int(11) DEFAULT NULL COMMENT 'puede ser null',
+  `vinculo` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `numero_del_usuario` varchar(255) DEFAULT NULL,
+  `fk_idDatoAdicionalAlarma` int(11) DEFAULT NULL,
+  `nombre_apellido` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idPersona_aviso_lugar`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_personas_para_verificar_en_lugar` */
+
+insert  into `tb_personas_para_verificar_en_lugar`(`idPersona_aviso_lugar`,`fk_idUserSystema`,`vinculo`,`telefono`,`numero_del_usuario`,`fk_idDatoAdicionalAlarma`,`nombre_apellido`) values 
+(56,0,'null','null','null',78,'as'),
+(57,0,'null','null','null',79,'as'),
+(58,0,'null','null','null',80,'as'),
+(59,0,'null','null','null',81,'as'),
+(60,0,'null','null','null',82,'as'),
+(61,0,'null','null','null',85,'as'),
+(62,0,'null','null','null',86,'as');
 
 /*Table structure for table `tb_pick_receive` */
 
@@ -2988,16 +4218,33 @@ CREATE TABLE `tb_products` (
   `priceFabric` decimal(18,2) DEFAULT '0.00',
   `idStatusFk` int(11) DEFAULT '1',
   PRIMARY KEY (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_products` */
 
 insert  into `tb_products`(`idProduct`,`descriptionProduct`,`codigoFabric`,`brand`,`model`,`idProductClassificationFk`,`isNumberSerieFabric`,`isNumberSerieInternal`,`isDateExpiration`,`isControlSchedule`,`priceFabric`,`idStatusFk`) values 
-(1,'2Ejemplo3111','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,1,120.38,1),
-(2,'Ejemplo2','Ejemplo','Ejemplo','Ejemplo','5',1,0,0,0,120.38,1),
-(3,'Ejemplo3','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,0,120.38,-1),
-(4,'2Ejemplo3','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,1,120.38,1),
-(5,'2Ejemdplo3','Ejemplo','Ejemplo','Ejemplo','5',1,0,1,1,120.38,1);
+(6,'Cerradura Multilock','234324322352','Multilock','Multilock-500','2',1,1,0,0,4500.00,1),
+(7,'Control de Acceso con huella y horario','32324324324','Libertech','FCM052','1',1,1,0,1,3200.00,1),
+(8,'Fuente Alimentación Auxiliar','23123214124','X-28','FU 1A MPXH','4',1,1,1,NULL,7150.00,1),
+(9,'Bateria Alarma 12v 7ah 7a Recargable','234324324324','Kaise','12V7AH','5',1,1,1,NULL,1250.00,1),
+(10,'Lector entrada/salida v1000','0234230L23432','SecOps','LecV1000','3',1,1,0,0,20000.00,1),
+(11,'Pulsador Emergencia Golpe De Puño Por Giro C/ Retencion','286036/286032/1','BAW','B5bs542','6',1,1,0,NULL,400.00,-1),
+(12,'Boton Pulsador Tecla De Salida Metalico','213213214214','Zuden','ZD-BT-801A-METAL','6',1,1,0,NULL,500.00,1),
+(13,'Teclado de Apagado','234324325325','TEBAS','M-M','7',1,1,0,NULL,4000.00,1),
+(14,'Bateria Alarma Ups Leds Gel 12v 7ah','asdsad234324324','Ultracell','UL7-12','5',1,1,1,NULL,1200.00,1),
+(15,'Control Accesos Autonomo','12323224233','LTC Electronics','A210KIT','1',1,1,0,1,1300.00,1),
+(16,'Dvr Seguridad 8ch Hikvision P2p Hdmi','12312321432432','Hikvision','DS7208HGHI','8',1,1,0,NULL,6700.00,1),
+(17,'Ups Estabilizador Lyonn 800va','111232423g','Lyonn','CTB-800V','10',1,1,0,NULL,7400.00,1),
+(18,'Camara Seguridad Hikvision 2mp Full Hd 1080p','12345454FGHYT','Hikvision','DS-2CE16D0T-IPF','11',1,1,0,NULL,1800.00,1),
+(19,'TP-Link Archer AX50','AX-501232324','TP-Link','AX50','18',1,1,0,NULL,10400.00,1),
+(20,'Router TP-Link Archer C60','Archer-3242344234','TP-Link','Archer C60','17',1,1,0,NULL,3600.00,1),
+(21,'Boton De Salida Pulsador Control Acceso','21312323ADR','Disbyte','EXMET','20',1,1,0,NULL,400.00,1),
+(22,'Boton Pulsador De Salida Cerraduras Electricas','123123RRR','Cygnus','EX-905','20',1,1,0,NULL,1400.00,1),
+(23,'Panel Alarma Casa Domiciliaria Inalambrica Wifi','1237sdb23h4234','Security Factory','Marshall IP','12',1,1,0,NULL,17895.00,1),
+(24,'Teclado Panel Remoto Pantalla cristal Liquido','12312434tgv345','X-28','TLCD-MPXH','13',1,1,0,NULL,8955.00,1),
+(25,'Sensor Detector De Movimiento Exterior','1232134tgert345','Geneve','79.06.92','14',1,1,0,NULL,750.00,1),
+(26,'Modulo Ip Wifi Universal','123134535654','Dx Control','Dx Full Wifi','15',1,1,0,NULL,9500.00,1),
+(27,'Modulo Lan Y Gprs Para Alarmas Doble Tarjeta Sim Ant Externa','1111111111111','Intelbras','XEG4000','16',1,1,0,NULL,8.43,1);
 
 /*Table structure for table `tb_products_classification` */
 
@@ -3007,7 +4254,7 @@ CREATE TABLE `tb_products_classification` (
   `idProductClassification` int(11) NOT NULL AUTO_INCREMENT,
   `classification` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`idProductClassification`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_products_classification` */
 
@@ -3029,7 +4276,9 @@ insert  into `tb_products_classification`(`idProductClassification`,`classificat
 (15,'MODULO IP DE ALARMA'),
 (16,'MODULO GPRS DE ALARMA'),
 (17,'ROUTER'),
-(18,'MODEM');
+(18,'MODEM'),
+(19,'DISPOSITIVO DE APERTURA'),
+(20,'PULSADOR DE SALIDA');
 
 /*Table structure for table `tb_products_divice_opening` */
 
@@ -3040,7 +4289,7 @@ CREATE TABLE `tb_products_divice_opening` (
   `idDiviceOpeningFk` int(11) DEFAULT NULL,
   `idProductFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idProductsDiviceOpening`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_products_divice_opening` */
 
@@ -3064,7 +4313,11 @@ insert  into `tb_products_divice_opening`(`idProductsDiviceOpening`,`idDiviceOpe
 (25,2,5),
 (26,3,5),
 (27,4,5),
-(28,5,5);
+(28,5,5),
+(29,2,6),
+(30,3,6),
+(31,4,6),
+(32,5,6);
 
 /*Table structure for table `tb_profile` */
 
@@ -3113,23 +4366,29 @@ CREATE TABLE `tb_profiles_modules` (
   `idProfilesFk` int(11) DEFAULT NULL,
   `idModuleFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idProfileModule`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_profiles_modules` */
 
 insert  into `tb_profiles_modules`(`idProfileModule`,`idProfilesFk`,`idModuleFk`) values 
-(33,9,1),
-(34,9,2),
 (35,10,1),
 (36,10,2),
-(37,8,1),
-(38,8,2),
-(39,8,3),
-(40,8,4),
-(41,8,5),
-(42,8,6),
-(43,8,7),
-(44,8,8);
+(77,8,1),
+(78,8,2),
+(79,8,3),
+(80,8,4),
+(81,8,5),
+(82,8,6),
+(83,8,7),
+(84,8,8),
+(85,9,1),
+(86,9,2),
+(87,9,3),
+(88,9,4),
+(89,9,5),
+(90,9,6),
+(91,9,7),
+(92,9,8);
 
 /*Table structure for table `tb_province` */
 
@@ -3214,10 +4473,6 @@ CREATE TABLE `tb_router_internet` (
 
 /*Data for the table `tb_router_internet` */
 
-insert  into `tb_router_internet`(`idRouterInternet`,`numberSeriaInternal`,`numberSeriaFrabic`,`titulo`) values 
-(1,'441jjh14458g4h','fgh5hfg4hgf54h','cisco router'),
-(2,'5454jkkkk','1op7788888','TP LINK');
-
 /*Table structure for table `tb_sensors_alarm` */
 
 DROP TABLE IF EXISTS `tb_sensors_alarm`;
@@ -3227,18 +4482,24 @@ CREATE TABLE `tb_sensors_alarm` (
   `numberZoneSensor` varchar(200) DEFAULT NULL,
   `area` text,
   `nroZoneTamper` varchar(200) DEFAULT NULL,
-  `location` varchar(200) DEFAULT NULL,
-  `locationLat` varchar(200) DEFAULT NULL,
   `locationLon` varchar(200) DEFAULT NULL,
-  `dvr` varchar(200) DEFAULT NULL,
+  `idDvr` int(11) DEFAULT NULL,
   `idCameraFk` int(11) DEFAULT NULL,
   `nroInterno` varchar(200) DEFAULT NULL,
   `nroFrabric` varchar(200) DEFAULT NULL,
-  `idClientServicesAlarmsFk` int(11) DEFAULT NULL,
+  `fkidClientServicesAlarms` int(11) DEFAULT NULL,
   PRIMARY KEY (`idSensorsAlarm`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_sensors_alarm` */
+
+insert  into `tb_sensors_alarm`(`idSensorsAlarm`,`numberZoneSensor`,`area`,`nroZoneTamper`,`locationLon`,`idDvr`,`idCameraFk`,`nroInterno`,`nroFrabric`,`fkidClientServicesAlarms`) values 
+(59,'null','null','null','null',0,0,'null','null',51),
+(60,'null','null','null','null',0,0,'null','null',52),
+(61,'null','null','null','null',0,0,'null','null',53),
+(62,'null','null','null','null',0,0,'null','null',54),
+(63,'null','null','null','null',0,0,'null','null',55),
+(64,'null','null','null','null',0,0,'null','null',56);
 
 /*Table structure for table `tb_services` */
 
@@ -3270,6 +4531,91 @@ CREATE TABLE `tb_services_camera_users` (
 
 /*Data for the table `tb_services_camera_users` */
 
+/*Table structure for table `tb_servicios_del_contrato_cabecera` */
+
+DROP TABLE IF EXISTS `tb_servicios_del_contrato_cabecera`;
+
+CREATE TABLE `tb_servicios_del_contrato_cabecera` (
+  `idServiciosDelContrato` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idServiceType` int(11) DEFAULT NULL,
+  `serviceName` varchar(255) DEFAULT NULL,
+  `idContratoFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idServiciosDelContrato`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_servicios_del_contrato_cabecera` */
+
+insert  into `tb_servicios_del_contrato_cabecera`(`idServiciosDelContrato`,`idServiceType`,`serviceName`,`idContratoFk`) values 
+(55,1,'CONTROL DE ACCESO',6),
+(56,2,'INTERNET',6),
+(57,3,'TOTEM',6),
+(58,4,'CAMARAS',6),
+(59,5,'ALARMAS',6),
+(60,6,'APP MONITOREO',6),
+(61,1,'CONTROL DE ACCESO',7),
+(62,2,'INTERNET',7),
+(63,3,'TOTEM',7),
+(64,4,'CAMARAS',7),
+(65,5,'ALARMAS',7),
+(66,6,'APP MONITOREO',7);
+
+/*Table structure for table `tb_servicios_del_contrato_cuerpo` */
+
+DROP TABLE IF EXISTS `tb_servicios_del_contrato_cuerpo`;
+
+CREATE TABLE `tb_servicios_del_contrato_cuerpo` (
+  `idServiciosDelContratoCuerpo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idServiciosDelContratoFk` int(11) DEFAULT NULL,
+  `qtty` varchar(255) DEFAULT NULL,
+  `idAccCrtlDoor` int(11) DEFAULT NULL,
+  `itemName` varchar(255) DEFAULT NULL,
+  `itemAclaracion` varchar(255) DEFAULT NULL,
+  `idServiceTypeFk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idServiciosDelContratoCuerpo`)
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_servicios_del_contrato_cuerpo` */
+
+insert  into `tb_servicios_del_contrato_cuerpo`(`idServiciosDelContratoCuerpo`,`idServiciosDelContratoFk`,`qtty`,`idAccCrtlDoor`,`itemName`,`itemAclaracion`,`idServiceTypeFk`) values 
+(81,55,NULL,1,'Principal',NULL,1),
+(82,55,NULL,2,'Cochera',NULL,1),
+(83,56,NULL,1,'Cable Modem - TASS',NULL,2),
+(84,56,NULL,4,'3G/LTE',NULL,2),
+(85,57,'4',NULL,'CAMARAS',NULL,3),
+(86,58,'8',NULL,'CAMARAS',NULL,4),
+(87,59,NULL,NULL,'ALARMAS',NULL,5),
+(88,60,NULL,NULL,'APP MONITOREO',NULL,6),
+(89,61,NULL,1,'Principal',NULL,1),
+(90,61,NULL,2,'Cochera',NULL,1),
+(91,61,NULL,3,'Servicio',NULL,1),
+(92,61,NULL,4,'Terraza',NULL,1),
+(93,62,NULL,1,'Cable Modem - TASS',NULL,2),
+(94,62,NULL,4,'3G/LTE',NULL,2),
+(95,63,'2',NULL,'CAMARAS',NULL,3),
+(96,64,'8',NULL,'CAMARAS',NULL,4),
+(97,65,NULL,NULL,'ALARMAS',NULL,5),
+(98,66,NULL,NULL,'APP MONITOREO',NULL,6);
+
+/*Table structure for table `tb_sesores_alarmas` */
+
+DROP TABLE IF EXISTS `tb_sesores_alarmas`;
+
+CREATE TABLE `tb_sesores_alarmas` (
+  `idSensorAlarma` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_idServicesAlarma` int(11) DEFAULT NULL,
+  `n_zona_sensor` int(11) DEFAULT NULL,
+  `area_cubierta` text,
+  `n_zona_tamper` int(11) DEFAULT NULL,
+  `ubicacion` text,
+  `idDvr` int(11) DEFAULT NULL,
+  `idCamara` int(11) DEFAULT NULL,
+  `n_serie_interno` text,
+  `n_serie_fabricante` text,
+  PRIMARY KEY (`idSensorAlarma`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_sesores_alarmas` */
+
 /*Table structure for table `tb_shutdown_key` */
 
 DROP TABLE IF EXISTS `tb_shutdown_key`;
@@ -3286,6 +4632,22 @@ insert  into `tb_shutdown_key`(`idShutdownKey`,`titulo`) values
 (1,'TECLA DE APAGADO 1'),
 (2,'TECLA DE APAGADO 2'),
 (3,'TECLA DE APAGADO 3');
+
+/*Table structure for table `tb_sistemas_operativos` */
+
+DROP TABLE IF EXISTS `tb_sistemas_operativos`;
+
+CREATE TABLE `tb_sistemas_operativos` (
+  `idSistemaOperativo` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idSistemaOperativo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_sistemas_operativos` */
+
+insert  into `tb_sistemas_operativos`(`idSistemaOperativo`,`descripcion`) values 
+(1,'IOS'),
+(2,'ANDROID');
 
 /*Table structure for table `tb_smart_panic_license_pivote` */
 
@@ -3482,11 +4844,29 @@ insert  into `tb_tickets`(`idTicket`,`dateCreated`,`dateRecibeCompany`,`idStatus
 (141,'2019-09-10 22:29:14',NULL,3,'TK-00000274',1,0,0,71,31,NULL,0,0,2,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"2\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,451.98,NULL,1,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,31,'2019-09-11 03:29:58',0,NULL,NULL,2,2,78,NULL,NULL,NULL,1,NULL,NULL,1,260.00,21.98,170.00,'cDQsHZraOMIjwFfyObvo'),
 (142,'2019-09-10 22:31:06',NULL,3,'TK-00000275',1,0,0,71,31,NULL,0,0,2,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"2\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,451.98,NULL,1,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,1,'2020-07-30 04:41:38',0,NULL,NULL,2,2,84,NULL,NULL,NULL,1,NULL,NULL,1,260.00,21.98,170.00,'ZQhaJab_lapt3T:4r9gf'),
 (143,'2019-09-10 23:34:58',NULL,3,'TK-00000276',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,270.99,NULL,1,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,1,'2020-07-30 04:41:32',0,NULL,NULL,1,1,NULL,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,0.00,'sxN1zFdxa47GUjVtvZj3'),
-(144,'2019-09-10 23:41:02',NULL,3,'TK-00000277',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,440.99,NULL,1,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,1,'2020-07-30 04:41:27',0,NULL,NULL,2,2,75,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,170.00,'--RfxK.mYUf7DrK21_kn'),
-(145,'2019-09-10 23:42:50',NULL,3,'TK-00000278',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,100.99,NULL,1,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,1,'2020-03-19 03:36:58',0,NULL,1,1,1,NULL,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,0.00,'fQKigD_OB1WbFX4ohqe.'),
-(146,'2019-09-10 23:54:26',NULL,6,'TK-00000279',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,100.99,NULL,1,NULL,NULL,5,11,100,1,NULL,'ghfghf','2020-03-19 03:37:53',NULL,NULL,0,NULL,1,1,1,NULL,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,0.00,'h5RgaRWBPbxSsdGq:73g'),
+(144,'2019-09-10 23:41:02',NULL,3,'TK-00000277',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,440.99,NULL,1,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,1,'2020-07-30 04:41:27',0,NULL,1,2,2,89,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,170.00,'--RfxK.mYUf7DrK21_kn'),
+(145,'2019-09-10 23:42:50',NULL,6,'TK-00000278',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,100.99,NULL,1,NULL,NULL,5,11,100,71,NULL,'prueba','2021-02-27 12:55:57',1,'2020-03-19 03:36:58',0,NULL,1,1,1,NULL,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,0.00,'fQKigD_OB1WbFX4ohqe.'),
+(146,'2019-09-10 23:54:26',NULL,6,'TK-00000279',1,0,0,71,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,'asdsadas',NULL,1,NULL,100.99,NULL,1,NULL,NULL,5,11,100,1,NULL,'ghfghf','2020-03-19 03:37:53',NULL,NULL,0,NULL,1,1,1,NULL,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,0.00,'h5RgaRWBPbxSsdGq:73g'),
 (129,'2019-09-06 23:56:49',NULL,3,'TK-00000262',1,0,0,71,0,NULL,0,0,2,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1},{\"idKeyKf\":\"2\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,281.98,NULL,3,NULL,NULL,5,11,100,NULL,NULL,NULL,NULL,31,'2019-09-07 05:19:56',0,NULL,NULL,1,1,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,260.00,21.98,0.00,'tRHY0xO-xpP7ozeu1FJg'),
 (130,'2019-09-07 00:35:58',NULL,2,'TK-00000263',1,0,0,0,31,NULL,0,0,1,'{\"keys\":[{\"idKeyKf\":\"1\",\"keyQty\":1}]}','null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,440.99,NULL,1,NULL,2,5,11,0,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,2,2,89,NULL,NULL,NULL,1,NULL,NULL,1,260.00,10.99,170.00,'l7:LyXlS9ksUfLmp7y6E');
+
+/*Table structure for table `tb_tipo_conexion_remoto` */
+
+DROP TABLE IF EXISTS `tb_tipo_conexion_remoto`;
+
+CREATE TABLE `tb_tipo_conexion_remoto` (
+  `idTipoConexionRemoto` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `tabla` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTipoConexionRemoto`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_tipo_conexion_remoto` */
+
+insert  into `tb_tipo_conexion_remoto`(`idTipoConexionRemoto`,`descripcion`,`tabla`) values 
+(1,'Línea Telefónica','tb_alarm_line_phone'),
+(2,'Módulo IP','tb_alarm_module_ip'),
+(3,'Módulo GPRS','tb_alarm_module_gps');
 
 /*Table structure for table `tb_tipo_inmueble` */
 
@@ -3525,6 +4905,24 @@ insert  into `tb_tipo_mails`(`idTipoMail`,`descripcion`) values
 (5,'GUARDIA'),
 (6,'EMERGENCIA');
 
+/*Table structure for table `tb_tipos_servicios_internet` */
+
+DROP TABLE IF EXISTS `tb_tipos_servicios_internet`;
+
+CREATE TABLE `tb_tipos_servicios_internet` (
+  `idTipoServicioInternet` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTipoServicioInternet`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_tipos_servicios_internet` */
+
+insert  into `tb_tipos_servicios_internet`(`idTipoServicioInternet`,`nombre`) values 
+(1,'Cable Modem - TASS'),
+(2,'Cable Modem - CLIENTE'),
+(3,'GPRS'),
+(4,'3G/LTE');
+
 /*Table structure for table `tb_tmp_delivery_data` */
 
 DROP TABLE IF EXISTS `tb_tmp_delivery_data`;
@@ -3558,9 +4956,13 @@ CREATE TABLE `tb_totem_model` (
   `idTotenModel` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `totenModel` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`idTotenModel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_totem_model` */
+
+insert  into `tb_totem_model`(`idTotenModel`,`totenModel`) values 
+(1,'DE PIE'),
+(2,'DE PARED');
 
 /*Table structure for table `tb_type_attendant` */
 
@@ -3580,6 +4982,26 @@ insert  into `tb_type_attendant`(`idTyepeAttendant`,`nameTypeAttendant`) values
 (3,'Suplente'),
 (4,'Ayudante'),
 (5,'Intendente');
+
+/*Table structure for table `tb_type_contrato` */
+
+DROP TABLE IF EXISTS `tb_type_contrato`;
+
+CREATE TABLE `tb_type_contrato` (
+  `idTypeContrato` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTypeContrato`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_type_contrato` */
+
+insert  into `tb_type_contrato`(`idTypeContrato`,`description`) values 
+(1,'VENTA'),
+(2,'COMODATO'),
+(3,'INTEGRA 3.0 – COMODATO'),
+(4,'INTEGRA 2.0 – VENTA'),
+(5,'INTEGRA 2.0 – COMODATO'),
+(6,'MANTENIMIENTO EQUIPO INSTALADO');
 
 /*Table structure for table `tb_type_delivery` */
 
@@ -3619,17 +5041,19 @@ insert  into `tb_type_gps`(`idTypeGps`,`typeGps`) values
 DROP TABLE IF EXISTS `tb_type_internet`;
 
 CREATE TABLE `tb_type_internet` (
-  `idTypeInternet` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `typeInternet` varchar(11) DEFAULT NULL,
+  `idTypeInternet` int(50) unsigned NOT NULL AUTO_INCREMENT,
+  `typeInternet` varchar(50) DEFAULT '',
   PRIMARY KEY (`idTypeInternet`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_type_internet` */
 
 insert  into `tb_type_internet`(`idTypeInternet`,`typeInternet`) values 
-(1,'CABLEMODEM'),
-(2,'SATELITAL'),
-(3,'FIBRA');
+(1,'M2M - 10Mbps'),
+(2,'M2M - 25Mbps'),
+(3,'500Mbps'),
+(4,'10/1 Mbps'),
+(5,'50/1 Mbps');
 
 /*Table structure for table `tb_type_maintenance` */
 
@@ -3639,12 +5063,14 @@ CREATE TABLE `tb_type_maintenance` (
   `idTypeMaintenance` int(11) NOT NULL AUTO_INCREMENT,
   `typeMaintenance` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idTypeMaintenance`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_type_maintenance` */
 
 insert  into `tb_type_maintenance`(`idTypeMaintenance`,`typeMaintenance`) values 
-(1,'PRUEBA DE TIPO DE MANTENIMIENTO');
+(1,'MANO DE OBRA Y MATERIALES'),
+(2,'SOLO MANO DE OBRA'),
+(3,'MIXTO');
 
 /*Table structure for table `tb_type_outher` */
 
@@ -3756,22 +5182,22 @@ CREATE TABLE `tb_user` (
   CONSTRAINT `tb_user_ibfk_1` FOREIGN KEY (`idProfileKf`) REFERENCES `tb_profile` (`idProfile`) ON UPDATE NO ACTION,
   CONSTRAINT `tb_user_ibfk_2` FOREIGN KEY (`idAddresKf`) REFERENCES `tb_addres` (`idAdress`),
   CONSTRAINT `tb_user_ibfk_3` FOREIGN KEY (`idCompanyKf`) REFERENCES `tb_company` (`idCompany`)
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `tb_user` */
 
 insert  into `tb_user`(`idUser`,`fullNameUser`,`emailUser`,`phoneNumberUser`,`phoneLocalNumberUser`,`passwordUser`,`idProfileKf`,`dateCreated`,`idCompanyKf`,`resetPasword`,`idAddresKf`,`idTyepeAttendantKf`,`descOther`,`idDepartmentKf`,`isDepartmentApproved`,`isEdit`,`requireAuthentication`,`idTypeTenantKf`,`idStatusKf`,`tokenMail`,`isConfirmatedMail`,`SA_ID`,`idSysProfileFk`) values 
-(1,'admin sistema','soporte@coferba.com.ar','(054) 9 11 2323-2323','91124759596','fe703d258c7ef5f50b71e06565a65aa07194907f',1,'2018-02-16 09:01:22',NULL,0,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,NULL,1,NULL,8),
-(71,'David Eduardo Rincon','davideduardo.luengo@hotmail.com','','1122333444555666','870e8768d555d80e0aeb44870c081f5563d90bd3',3,'2018-10-21 23:33:22',5,0,11,NULL,NULL,NULL,NULL,0,NULL,1,1,'3Jh0NuqLHa',1,NULL,NULL),
+(1,'admin sistema','soporte@coferba.com.ar','(054) 9 11 2323-2323','91124759596','fe703d258c7ef5f50b71e06565a65aa07194907f',1,'2018-02-16 09:01:22',NULL,0,NULL,NULL,'',NULL,NULL,1,NULL,NULL,1,'',1,NULL,8),
+(71,'David Eduardo Rincon','davideduardo.luengo@hotmail.com','1122333444555666','1122333444555666','870e8768d555d80e0aeb44870c081f5563d90bd3',1,'2018-10-21 23:33:22',5,0,11,NULL,NULL,NULL,NULL,1,NULL,1,1,'3Jh0NuqLHa',1,3833,8),
 (72,'leandro figueroa','lean.figueroa@gmail.com','123213213213213','123213213213213','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',5,'2018-10-29 13:27:43',5,0,12,NULL,NULL,117,1,0,NULL,2,1,'JbuVXny0Jr',1,NULL,NULL),
 (73,'leandro2 figueroa2','leandro.figueroa@coferba.com.ar','1122356388','123213213213213','1f82ea75c5cc526729e2d581aeb3aeccfef4407e',3,'2018-10-29 13:48:52',5,0,12,NULL,NULL,NULL,NULL,1,NULL,1,1,'OLtCaObFgO',1,NULL,NULL),
-(74,'inquilino prueba','rexx84@gmail.com','123213213213213','123213213213213','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',5,'2018-10-29 13:58:23',5,0,12,NULL,NULL,120,1,0,NULL,2,1,'XTrpLMkZiG',1,NULL,NULL),
+(74,'inquilino prueba Modificado','rexx84@gmail.com','123213213213213','123213213213213','03dedf914b5841220b31eee857d94a03974553fb',5,'2018-10-29 13:58:23',5,1,12,NULL,NULL,120,1,1,NULL,2,1,'XTrpLMkZiG',1,NULL,NULL),
 (75,'Encargado Prueba','encargadoprueba@asdasda','123213213213213','1123232434333423','c4f9fcd7be6b041073f1b23a2bf80bd1d831292e',6,'2018-12-19 14:30:57',5,1,11,4,NULL,103,1,1,1,2,1,'gQuGxR2Zoo',1,NULL,NULL),
-(76,'Roberto Higuera','rhiguera@fffff.com','123213213213213','123213213213213','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',6,'2019-01-18 01:10:24',5,0,12,2,NULL,NULL,NULL,0,1,1,1,'ZWsfbNEEXB',1,NULL,NULL),
+(76,'Roberto Higuera','rhiguera@fffff.com','123213213213214','123213213213213','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',6,'2019-01-18 01:10:24',5,0,12,2,NULL,NULL,NULL,1,NULL,1,1,'ZWsfbNEEXB',1,NULL,NULL),
 (77,'Esteban Moreli','emoreli@akjsdsadas.com','123213213213213','11233243253243','44b07ccf74fd8a488be0b4aa0593beff5ac6f3ef',6,'2019-01-18 01:31:36',5,1,12,3,NULL,NULL,NULL,1,0,0,1,'uQzz412uH5',1,NULL,NULL),
 (78,'Victor Gonzalez','vgonzalez@asdadsadwq.com','77788787878','','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',6,'2019-01-18 01:33:07',5,0,11,2,NULL,NULL,NULL,1,1,1,1,'69bMxpjXQ8',1,NULL,NULL),
 (79,'Sofia Rincon','sofia.rincon@asdasdsad.com','123213213213213','123213213213213','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',4,'2019-01-22 01:06:32',5,0,NULL,NULL,NULL,NULL,NULL,0,0,NULL,1,'NaUwCkVwH4',1,NULL,NULL),
-(80,'Daniela Becerra','daniela.becerra@hoasdsad.com','123213213213213','123213213213213','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',5,'2019-02-10 22:23:37',5,0,NULL,NULL,NULL,NULL,1,1,NULL,2,1,'hXLcQRwWGn',1,NULL,NULL),
+(80,'Daniela Becerra','daniela.becerra@hoasdsad.com','123213213213213','123213213213213','03d000df4fa813c9d0c93e59a0ba3b6dc5c88399',5,'2019-02-10 22:23:37',5,0,12,NULL,NULL,128,1,1,NULL,2,1,'hXLcQRwWGn',1,NULL,NULL),
 (81,'probando','probando@probando.com','123213123213','','f11131b2bcdf821dc9ff69b38e2712541439b9f8',5,'2019-07-27 14:29:15',5,1,11,NULL,NULL,108,1,1,NULL,2,1,'lxUXCkdgnZ',1,NULL,NULL),
 (82,'asdsadas','asdsad@asdsad.com','','12321311312','b9f4327bafdb162ed16fe0d6d4a50bde306ee08e',5,'2019-07-27 14:51:24',5,1,11,NULL,NULL,100,1,1,NULL,2,1,'HCU6UgT88X',1,NULL,NULL),
 (83,'erewrrewrew','wqewqew@asdsad.com','','121321321','7be5fac0585900a65effd04d887cc62022b16a20',5,'2019-07-27 15:38:43',NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,2,1,'yZAGdjTOLv',1,NULL,NULL),
@@ -3779,11 +5205,12 @@ insert  into `tb_user`(`idUser`,`fullNameUser`,`emailUser`,`phoneNumberUser`,`ph
 (85,'Fernando Angulo','david.rincon.oracle@gmail.com','','123213213','78d16ced1eedb4f436c83a861c91e052aaf3699f',3,'2019-07-27 21:43:16',5,1,12,NULL,NULL,NULL,NULL,0,NULL,1,1,'7gVmCe4f3J',1,NULL,NULL),
 (86,'David Eduardo Rincon','davideduardo.luengo2@hotmail.com','','01122356388','fa399d74e61282062d50aaf7eb6a9afc1b21f314',5,'2019-08-21 00:20:44',1,1,1,NULL,NULL,2,1,1,NULL,2,1,'K67aipTQu2',1,NULL,NULL),
 (87,'Ernesto Araujo','earaujo@asdsad.com','','111232324324324','5365642294a7a05378e5e13cd44fa91c5f9b546a',6,'2019-08-29 20:12:26',1,1,1,2,NULL,NULL,NULL,1,0,0,1,'FLTvvGz5wZ',1,NULL,NULL),
-(88,'Gabriel Gonzalez','ggonzalez@hotmail.com','','112322424233','e47ed8dab1b69a560435c3f4bff9d2679ab12233',6,'2019-08-29 20:13:21',1,1,2,2,NULL,NULL,NULL,1,0,0,1,'WM7HECe4EL',1,NULL,NULL),
+(88,'Gabriel Gonzalez','ggonzalez@hotmail.com','11223544564356346','112322424233','e47ed8dab1b69a560435c3f4bff9d2679ab12233',6,'2019-08-29 20:13:21',1,1,2,2,NULL,NULL,NULL,1,0,0,1,'WM7HECe4EL',1,NULL,NULL),
 (89,'Dionisio Machado','dmachado@asdasd.com','121232132134','112143435556','80662a250c92f9c05b965cbff69785fdc404d0c4',6,'2019-08-29 20:22:06',5,1,11,1,'Plomero',NULL,NULL,1,0,NULL,1,'YJh6f8Gxb0',1,NULL,NULL),
-(90,'prueba','prueba','prueba',NULL,'508bbdcf90061f63832be9aeaeb508ed1da6bd6b',1,'2019-11-09 16:25:55',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'fxvMqFzwGK',0,NULL,8),
+(90,'tester','tester@seguridadtass.com.ar','','1134343242423','c4bfc8777fbb8f54e03f4d5bcd1ff28fe347da3a',1,'2019-11-09 16:25:55',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'fxvMqFzwGK',1,NULL,8),
 (91,'prueba','sfsdfdsfdfds','prueba',NULL,'13a6d4daa92304298f07df965a8e71a42a6d2047',1,'2019-11-09 16:26:53',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,'FAMIVpMRxv',0,NULL,8),
-(92,'German Malaver','german.malaver@asdasd.com','1123432432444','1123423432432','6956aa2ea365aa0cf67ba52265436016d751bd3e',6,'2020-07-10 20:32:47',1,1,2,2,NULL,NULL,NULL,1,NULL,1,1,'8S3z3UtLlR',1,NULL,NULL);
+(92,'German Malaver','german.malaver@asdasd.com','1123432432444','1123423432432','6956aa2ea365aa0cf67ba52265436016d751bd3e',6,'2020-07-10 20:32:47',1,1,2,2,NULL,NULL,NULL,1,NULL,1,1,'8S3z3UtLlR',1,NULL,NULL),
+(93,'David Eduardo Rincon Luengo','rexx85@gmail.com','1122333334','1122356388','29474f7249c08b13cf44a0dce3c819183fc031d4',3,'2020-08-21 05:57:06',5,1,12,NULL,NULL,NULL,NULL,0,NULL,1,1,'RNqMUvoiqi',1,NULL,NULL);
 
 /*Table structure for table `tb_user_license` */
 
@@ -3794,22 +5221,18 @@ CREATE TABLE `tb_user_license` (
   `fullName` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
-  `key` varchar(100) DEFAULT NULL,
-  `isAndroidOperantSystem` tinyint(1) DEFAULT '1',
-  `profileUser` int(11) DEFAULT NULL,
+  `keyword` varchar(100) DEFAULT NULL,
+  `idOS` tinyint(1) DEFAULT '1',
+  `profileUser` varchar(100) DEFAULT '',
   `idClientServicesSmartPanicFk` int(11) DEFAULT NULL,
   PRIMARY KEY (`idUserLicense`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_user_license` */
 
-insert  into `tb_user_license`(`idUserLicense`,`fullName`,`email`,`phone`,`key`,`isAndroidOperantSystem`,`profileUser`,`idClientServicesSmartPanicFk`) values 
-(1,'1','1','1','1',1,1,NULL),
-(2,'1','1','1','1',1,1,NULL),
-(3,'1','1','1','1',1,1,NULL),
-(4,'1','1','1','1',1,1,NULL),
-(5,'1','1','1','1',1,1,NULL),
-(6,'1','1','1','1',1,1,NULL);
+insert  into `tb_user_license`(`idUserLicense`,`fullName`,`email`,`phone`,`keyword`,`idOS`,`profileUser`,`idClientServicesSmartPanicFk`) values 
+(67,'German Malaver','german.malaver@asdasd.com','1123432432444','Patata',1,'admin',24),
+(68,'Gabriel Gonzalez','ggonzalez@hotmail.com','11223544564356346','pelota',1,'admin',24);
 
 /*Table structure for table `tb_zonas` */
 
@@ -3823,14 +5246,15 @@ CREATE TABLE `tb_zonas` (
   `valor_envio` float DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`idZona`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_zonas` */
 
 insert  into `tb_zonas`(`idZona`,`n_zona`,`descripcion`,`costo_envio`,`valor_envio`,`status`) values 
-(1,1,'zona',450,100,1),
-(2,2,'zona',300,140,1),
-(3,3,'zona',200,130,1);
+(1,1,'zona este',450,1003,1),
+(2,2,'zona norte',300,14003,1),
+(3,3,'zona oeste',200,13093,1),
+(11,4,'zona sur',9993,9983,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

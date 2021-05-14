@@ -71,15 +71,29 @@ class Contrato_model extends CI_Model {
             )->where("idServiciosDelContrato", $service['idServiciosDelContrato'])->update("tb_servicios_del_contrato_cabecera");
 
             if (count($service['serviceItems']) > 0) {
+                $data = $this->db->select("idServiciosDelContrato")
+                    ->from('tb_servicios_del_contrato_cabecera')
+                    ->where("idContratoFk", $client['idContrato'])
+                    ->get();
+
+                $id = 0;
+                if ($data->num_rows() > 0) {
+                    $id = $data->result_array()[0]['idServiciosDelContrato'];
+                }
+
+                $this->db->delete('tb_servicios_del_contrato_cuerpo', [ 'idServiciosDelContratoFk' => $id ]);
+
                 foreach ($service['serviceItems'] as $serviceItem) {
-                    $this->db->set([
-                            "qtty"            => $serviceItem['qtty'],
-                            "idAccCrtlDoor"   => $serviceItem['idAccCrtlDoor'],
-                            "itemName"        => $serviceItem['itemName'],
-                            "itemAclaracion"  => $serviceItem['itemAclaracion'],
-                            "idServiceTypeFk" => $serviceItem['idServiceTypeFk'],
+                    $this->db->insert('tb_servicios_del_contrato_cuerpo', [
+                            "qtty"                     => $serviceItem['qtty'],
+                            "idAccCrtlDoor"            => $serviceItem['idAccCrtlDoor'],
+                            "itemName"                 => $serviceItem['itemName'],
+                            "itemAclaracion"           => $serviceItem['itemAclaracion'],
+                            "idServiceTypeFk"          => $serviceItem['idServiceTypeFk'],
+                            "idServiciosDelContratoFk" => $id,
                         ]
-                    )->where("idServiciosDelContratoCuerpo", $serviceItem['idServiciosDelContratoCuerpo'])->update("tb_servicios_del_contrato_cuerpo");
+                    );
+
                 }
             }
 
@@ -165,13 +179,13 @@ class Contrato_model extends CI_Model {
                                 ->get();
                             // return $servicios->result_array();
                             // exit();
-                            $cantidad = 0;
+                            $cantidad            = 0;
                             $cantidad_contratado = 0;
                             if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera') {
                                 //return $cuerpo->result_array();
                                 //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
-                                $er = $servicios->result_array();
-                                $cantidad_servicio=0;
+                                $er                = $servicios->result_array();
+                                $cantidad_servicio = 0;
                                 //exit();
                                 if (count($er) > 0) {
                                     foreach ($er as $item1) {
@@ -184,7 +198,7 @@ class Contrato_model extends CI_Model {
                                     foreach ($rea as $item1) {
                                         // return $item1['qtty'];
                                         // exit();
-                                        $cantidad_contrato += $item1['qtty'];
+                                        $cantidad_contrato   += $item1['qtty'];
                                         $cantidad_contratado += $item1['qtty'];
                                     }
                                     // return $cantidad;
@@ -195,8 +209,8 @@ class Contrato_model extends CI_Model {
                                 if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_totem') {
                                     //return $cuerpo->result_array();
                                     //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
-                                    $er = $servicios->result_array();
-                                    $cantidad_servicio=0;
+                                    $er                = $servicios->result_array();
+                                    $cantidad_servicio = 0;
                                     //exit();
                                     if (count($er) > 0) {
                                         foreach ($er as $item1) {
@@ -207,7 +221,7 @@ class Contrato_model extends CI_Model {
                                     if (count($rea) > 0) {
                                         $cantidad_contrato = 0;
                                         foreach ($rea as $item1) {
-                                            $cantidad_contrato += $item1['qtty'];
+                                            $cantidad_contrato   += $item1['qtty'];
                                             $cantidad_contratado += $item1['qtty'];
                                         }
                                         $cantidad = $cantidad_contrato - $cantidad_servicio;
@@ -232,6 +246,7 @@ class Contrato_model extends CI_Model {
         return $contratos1;
 
     }
+
 
     public function getDisponibilidadPorContrato($idContrato, $idServicesType) {
         $contratos  = $this->db->select("*")
@@ -271,18 +286,19 @@ class Contrato_model extends CI_Model {
 
 
                         if ($cuerpo->num_rows() > 0) {
+
                             $servicios = $this->db->select("*")
                                 ->from($r[$rr[$key2]['idServiceType'] - 1])
                                 ->where('idContracAssociated_SE', $contrato['idContrato'])
                                 ->get();
-                            // return $servicios->result_array();
+                            //return $servicios->result_array();
                             // exit();
                             $cantidad = 0;
                             if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_camera') {
                                 //return $cuerpo->result_array();
                                 //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
-                                $er = $servicios->result_array();
-                                $cantidad_servicio=0;
+                                $er                = $servicios->result_array();
+                                $cantidad_servicio = 0;
                                 //exit();
                                 if (count($er) > 0) {
                                     foreach ($er as $item1) {
@@ -305,8 +321,8 @@ class Contrato_model extends CI_Model {
                                 if ($r[$rr[$key2]['idServiceType'] - 1] == 'tb_client_services_totem') {
                                     //return $cuerpo->result_array();
                                     //var_dump($r[$rr[$key2]['idServiceType'] - 1]);
-                                    $er = $servicios->result_array();
-                                    $cantidad_servicio=0;
+                                    $er                = $servicios->result_array();
+                                    $cantidad_servicio = 0;
                                     //exit();
                                     if (count($er) > 0) {
                                         foreach ($er as $item1) {
@@ -331,7 +347,7 @@ class Contrato_model extends CI_Model {
                             // }
                             $contratos1[$key]['services'][$key2]['disponible'] = $cantidad;
 
-                            $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array();
+                            $contratos1[$key]['services'][$key2]['serviceItems'] = $cuerpo->result_array(); //aqui hay que quitar los elelmentos que no tenga n disponivilidad 
                         }
                     }
                 }

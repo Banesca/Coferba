@@ -317,7 +317,7 @@ class Services_model extends CI_Model {
         $this->db->insert('tb_client_services_smart_panic', [
                 'idClientServicesFk'      => $idClientServicesFk,
                 'name'                    => $item['name'],
-                'idContracAssociated_SE'  => $item['idContracAssociated_SE'],
+                'idContracAssociated_SE'  => $item['idContracAssociatedFk'],
                 'dateUp'                  => $item['dateUp'],
                 'dateDown'                => $item['dateDown'],
                 'idTypeMaintenanceFk'     => $item['idTypeMaintenanceFk'],
@@ -909,7 +909,7 @@ class Services_model extends CI_Model {
                 'ouputButom'             => [ 'tb_products', 'idProduct' ],
                 'lock'                   => [ 'tb_products', 'idProduct' ],
                 'idBatteryFk'            => [ 'tb_products', 'idProduct' ],
-                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance'],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
                 'fk'                     => [
                     [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
@@ -923,10 +923,10 @@ class Services_model extends CI_Model {
                 'idRouterInternetFk'     => [ 'tb_products', 'idProduct' ],
                 'idModemInternetFk'      => [ 'tb_products', 'idProduct' ],
                 'idContracAssociated_SE' => [ 'tb_contratos', 'idContrato' ],
-                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance'],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
                 'idInternetCompanyFk'    => [ 'tb_internet_company', 'idInternetCompany' ],
 
-                'fk'                     => [
+                'fk' => [
                     [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
             ],
@@ -936,7 +936,7 @@ class Services_model extends CI_Model {
                 'idCompanyFk'            => [ 'tb_monitor_company', 'idMonitorCompany' ],
                 'idTotenModelFk'         => [ 'tb_totem_model', 'idTotenModel' ],
                 'idDvr_nvrFk'            => [ 'tb_products', 'idProduct' ],
-                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance'],
+                'idTypeMaintenanceFk'    => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
                 'fk'                     => [
                     [ 'tb_cameras_totem', 'idClientServicesCameraTotemFk' ],
                     [ 'tb_client_totem', 'idClientServicesTotemFk' ],
@@ -1022,7 +1022,7 @@ class Services_model extends CI_Model {
             $servicios = $this->db->get();
 
             if ($servicios->num_rows() > 0) {
-                foreach (array_unique($servicios->result_array(),true)as $key => $item) {
+                foreach (array_unique($servicios->result_array(), true) as $key => $item) {
                     foreach ($relaciones as $tabla1 => $data) {
                         foreach ($data as $id => $item3) {
                             // if ($tabla1=="tb_client_services_access_control") {
@@ -1095,7 +1095,7 @@ class Services_model extends CI_Model {
                                                 ->get();
                                             //return $this->db->last_query();
                                             //return $dataG->result_array();
-                                            $aux   = [];
+                                            $aux = [];
                                             if ($dataG->num_rows() >= 0) {
                                                 foreach ($dataG->result_array() as $ite2) {
                                                     array_push($aux, $ite2);
@@ -1593,8 +1593,22 @@ class Services_model extends CI_Model {
         $id = $this->db->insert_id();
         $this->updatedService($idClientServicesFk, $id);
 
+        if (count($item['adicional_alarmar']) > 0) {
+            $this->insertDatosAdicionalesAlarmas($item['adicional_alarmar'], $id);
+        }
+
         if (count($item['adicional']) > 0) {
-            $this->insertDatosAdicionalesAlarmas($item['adicional'], $id);
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $idClientServicesFk,
+                        "optAux"              => @$item1['optAux'],
+                    ]
+                );
+            }
         }
         if (count($item['sensores_de_alarmas']) > 0) {
             $this->insertSensoresDeAlarmas($item['sensores_de_alarmas'], $id);
@@ -1654,8 +1668,22 @@ class Services_model extends CI_Model {
         // $id = $this->db->insert_id();
         // $this->updatedService($idClientServicesFk, $id);
 
+        if (count($item['adicional_alarmar']) > 0) {
+            return $this->insertDatosAdicionalesAlarmas($item['adicional_alarmar'], $item['idClientServicesAlarms'], true);
+        }
+
         if (count($item['adicional']) > 0) {
-            return $this->insertDatosAdicionalesAlarmas($item['adicional'], $item['idClientServicesAlarms'], true);
+            foreach ($item['adicional'] as $item1) {
+                $this->db->insert('tb_detalles_control_acceso', [
+                        "numberSerieFabric"   => $item1['numberSerieFabric'],
+                        "numberSerieInternal" => $item1['numberSerieInternal'],
+                        "dateExpiration"      => $item1['dateExpiration'],
+                        "idProductoFk"        => $item1['idProductoFk'],
+                        "idServicesFk"        => $idClientServicesFk,
+                        "optAux"              => @$item1['optAux'],
+                    ]
+                );
+            }
         }
         if (count($item['sensores_de_alarmas']) > 0) {
             $this->insertSensoresDeAlarmas($item['sensores_de_alarmas'], $item['idClientServicesAlarms'], true);
@@ -1688,7 +1716,7 @@ class Services_model extends CI_Model {
                     "fk_idFormatoTransmision"    => $item['fk_idFormatoTransmision'],
                     "fk_idAutomarcado"           => $item['fk_idAutomarcado'],
                     "n_usuario_asalto"           => $item['n_usuario_asalto'],
-                    "contraseña_asalto"          => $item['contraseña_asalto'],
+                    "contrasena_asalto"          => $item['contrasena_asalto'],
                     "comisaria"                  => $item['comisaria'],
                     "tlf_comisaria"              => $item['tlf_comisaria'],
                     "servicio_emergencia_medica" => $item['servicio_emergencia_medica'],
@@ -1701,7 +1729,7 @@ class Services_model extends CI_Model {
 
             );
             $id1 = $this->db->insert_id();
-// return [$id1,$id];
+            // return [$id1,$id];
             if (count($item['franjas_horarias']) > 0) {
                 $this->insertFranjasHorariasAlarmas($item['franjas_horarias'], $id1, $id, true);
             }
@@ -1725,11 +1753,18 @@ class Services_model extends CI_Model {
         foreach ($data as $item) {
             $this->db->insert('tb_franja_horaria_alarmas', [
                     // 'idClientFk'               => isset($item['idClientFk']) ? $item['idClientFk'] : null,
-                    "dia"                      => $item['dia'],
-                    "desde1"                   => $item['desde1'],
-                    "hasta1"                   => $item['hasta1'],
-                    "desde2"                   => $item['desde2'],
-                    "hasta2"                   => $item['hasta2'],
+                    // "dia"                      => $item['dia'],
+                    // "desde1"                   => $item['desde1'],
+                    // "hasta1"                   => $item['hasta1'],
+                    // "desde2"                   => $item['desde2'],
+                    // "hasta2"                   => $item['hasta2'],
+                    // "fk_idDatoAdicionalAlarma" => $id,
+
+                    'day'                      => $item['day'],
+                    'fronAm'                   => $item['fronAm'],
+                    'toAm'                     => $item['toAm'],
+                    'fronPm'                   => $item['fronPm'],
+                    'toPm'                     => $item['toPm'],
                     "fk_idDatoAdicionalAlarma" => $id,
                 ]
             );
@@ -1882,7 +1917,7 @@ class Services_model extends CI_Model {
         }
 
         return true;
-    }   
+    }
 }
 
 ?>
