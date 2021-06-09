@@ -272,6 +272,9 @@ input.fileUpload{
 .customer-frame span{
   font-size: 18px;
 }
+.customer-frame-margin-b{
+  margin-bottom: 40px !important;
+}
 /**********************************************************/
 
 .badge-notify{
@@ -288,7 +291,7 @@ input.fileUpload{
 /*  contract services panel size   */
 /***********************************/
 .srvs-panel-head{
-    font-size: 16px;
+    font-size: 16px !important;
     font-weight: 700;
 }
 /***********************************/
@@ -640,18 +643,26 @@ input.fileUpload{
     .depto-widget .text{text-align: center;}
     
 /***********************/
-/*    well warning     */
+/*    well Custom      */
 /***********************/
   .well-warning{
     background-color: #fcf8e3; 
     color: #8a6d3b;
     border-color: #faebcc;
   }
+  .well-danger{
+    background-color: #f9f2f4; 
+    color: #c9302c;
+    border-color: #f9f2f4;
+  }
   .well-success{
     background-color: #dff0d8; 
     color: #8a6d3b;
     border-color: #d0f3d1;
   }  
+ .well .srvs-icon-danger i{ display: block; font-size: 36px; line-height: 76px; color: #d9534f;}
+ .well .srvs-icon-warning i{ display: block; font-size: 36px; line-height: 76px; color: #8a6d3b;}
+ .well .srvs-icon-success i{ display: block; font-size: 36px; line-height: 76px; color: #5cb85c;} 
 /*********************/
 /*font-size-12px*/
 .f-s-12{
@@ -2179,11 +2190,15 @@ input:checked + .slider-3x:before {
   margin: 0 1em 1em 0;
   list-style-type: none;
   text-align: center;
+  cursor: pointer;
 }
-
+.file-list a {
+  margin-bottom: 0px !important;
+}
 .file-list-5 img {
   width: 120px;
   height: 120px;
+  cursor: pointer;
 } 
 /********************************************/
  ::-webkit-scrollbar {

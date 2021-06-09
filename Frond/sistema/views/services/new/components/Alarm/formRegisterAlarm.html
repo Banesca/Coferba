@@ -50,7 +50,7 @@
 						  	<label style="padding-left: 15px;">Tipo de mantenimiento</label>
 						    <div class="col-xs-12 ">
 							    <div class="input-group">
-							    	<span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
+							    	<span class="input-group-addon"><i class="fas fa-screwdriver"></i></span>
 					    			<input name="service_mnt_type" type="text" class="form-control" ng-disabled="true" ng-model="service.new.MntType" />
 					    		</div>
 					    	</div>
@@ -118,9 +118,9 @@
 						</div>			
 						<div class="form-group col-md-12 text-badge"> <h3>Sistema a Instalar</h3></div>		
 						<!-- Left Colunm -->						
-						<div class="well-checkbox form-group col-md-6 n-padding-l n-padding-r">
+						<div class="well-checkbox form-group col-md-12">
 							<!-- Alarmas: panel de alarma -->
-							<div class="form-group col-md-12" ng-class="
+							<div class="form-group col-md-6 n-padding-l" ng-class="
 									  			{	'has-success': 
 									  				service.alarmPanel.selected!=undefined && fCustomerNewService.service_alarm_panel.$valid,
 									  			 	'has-error':  
@@ -131,7 +131,7 @@
 							  	<button ng-if="service.alarmPanel.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.alarmPanel.selected, productListType.PANEL_ALARM, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>  
 							    <div class="col-xs-12 selectContainer">							   
 								    <div class="input-group">
-						              <span class="input-group-addon"><i class="fas fa-door-open"></i></span>
+						              <span class="input-group-addon"><i class="fas fa-desktop"></i></span>
 						              <ui-select name="service_alarm_panel"  
 						              			 ng-change="compServiceProductDetailsFn(service.alarmPanel.selected, productListType.PANEL_ALARM, null)" 
 						              			 ng-model="service.alarmPanel.selected"
@@ -152,7 +152,7 @@
 							  	</div>
 							</div>							
 							<!-- ALARM: entranceReader -->
-							<div class="form-group col-md-12" ng-class="
+							<div class="form-group col-md-6 n-padding-l" ng-class="
 									  			{	'has-success': 
 									  				service.alarmKeyboard.selected!=undefined && fCustomerNewService.service_teclado_alarma.$valid,
 									  			 	'has-error':  
@@ -163,7 +163,7 @@
 							  	<button ng-if="service.alarmKeyboard.selected!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeProductDetailsFn(service.alarmKeyboard.selected, productListType.TECLADO_ALARM, null)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button></div>  
 							    <div class="col-xs-12 selectContainer">							   
 								    <div class="input-group">
-						              <span class="input-group-addon"><i class="fas fa-door-open"></i></span>
+						              <span class="input-group-addon"><i class="fas fa-keyboard"></i></span>
 						              <ui-select name="service_teclado_alarma"  
 						              			 ng-change="compServiceProductDetailsFn(service.alarmKeyboard.selected, productListType.TECLADO_ALARM, null)" 
 						              			 ng-model="service.alarmKeyboard.selected"
@@ -182,9 +182,12 @@
 						                </ui-select>
 						            </div>
 							  	</div>
-							</div>							
+							</div>
+						</div>
+						<!-- Right Colunm -->
+						<div class="well-checkbox form-group col-md-12">
 							<!-- ALARM: exitReader -->
-							<div class="form-group col-md-12" ng-class="
+							<div class="form-group col-md-12 n-padding-l n-padding-r" ng-class="
 								  			{	'has-success': 
 								  				service.zonesQttyInstalled.length>0 && 
 								  				service.zonesQttyInstalled.length!=0 && fCustomerNewService.service_zonas_cant_instaladas.$valid,
@@ -192,27 +195,25 @@
 								  				(service.zonesQttyInstalled.length==0 || 
 								  				service.zonesQttyInstalled==0 || service.zonesQttyInstalled==undefined) && fCustomerNewService.service_zonas_cant_instaladas.$touched,
 								  			}">
-							  <label style="padding-left: 15px;">Cantidad de Zonas Instaladas</label>  
+							  <label style="padding-left: 15px;">Cantidad de Zonas a Instalar</label>  
 								  <div class="col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fas fa-sim-card"></i></span>
 											<input name="service_zonas_cant_instaladas" id="serviceZonasCantInstaladas" type="text" ng-keydown="fnLoadPhoneMask()" class="form-control input--number" ng-model="service.zonesQttyInstalled" />
 								  </div>
 								</div>
-							</div>					
-						</div>
-						<!-- Right Colunm -->
-						<div class="well-checkbox form-group col-md-6" style="height: 262px;">
+							</div>							
 							<!-- Alarmas: Sensores de alarma -->
 							<div class="col-md-12">
-								<div class="col-md-8"><label class="clf-p-left">Sensores de alarma</label></div>
-								<div class="pull-right col-md-4" style="padding-bottom: 5px;"><button ng-click="loadDetailModalWindow(service.sensor.selected)" ng-disabled="service.sensor.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Zona</button></div>
+								<div class="col-md-10"><label class="clf-p-left">Sensores de alarma</label></div>
+								<div class="pull-right col-md-2" style="padding-bottom: 5px;"><button ng-click="loadDetailModalWindow(service.sensor.selected)" ng-disabled="service.sensor.selected==undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Zona</button></div>
 							    <div class="selectContainer">							   
 								    <div class="col-md-12 input-group">
 						              	<span class="input-group-addon"><i class="far fa-dot-circle"></i></span>
 						              	<ui-select name="serviceAlarmSensor"
 						              			 ng-model="service.sensor.selected"
 						              			 ng-required="list_sensors.length==0"
+						              			 ng-disabled="service.zonesQttyInstalled=='' || service.zonesQttyInstalled==undefined"
 						              			 theme="bootstrap" autofocus>
 						                	<ui-select-match placeholder="Selecciona una opci&#243;n">({{$select.selected.brand}}) - {{$select.selected.model}}</ui-select-match>
 						                    <ui-select-choices repeat="item in productListByType.SENSOR_ALARM | filter: $select.search">
@@ -228,14 +229,22 @@
 							  	</div>
 								<div class="well-checkbox n-padding-t n-padding-b" ng-class="{'n-padding-l n-padding-r':list_sensors.length>0}" style="margin-left: 0px;margin-right: 0px;">
 								  	<table ng-if="list_sensors.length>0">
-								    	<tr ng-repeat="sensor in list_sensors">
-								    		<td style="width: 5%; padding: 0 0px 0 10px;"><label style="font-size: 80%" class="label label-default">{{$index+1}}</label></td>
-								      		 <td style="width: auto"><span style="font-size: 85%" class="text-muted text-uppercase text-box">{{sensor.classification | uppercase}} </span></td>
-								      		<!--<td style="width: 15%"><span class="text-muted text-box" style="font-size: 85%">Modelo:<label style="font-size: 85%" class="label label-default">{{sensor.model | uppercase}}</label></span></td>-->
-								      		<td style="width: auto"><label data-toggle="tooltip" data-placement="right" title="Marca" style="font-size: 85%" class="label label-default"><i class="text-warning fas fa-tag"> </i> {{sensor.brand | uppercase}}</label></td>
-								          	<td style="padding-bottom: 5px;">
-								            	<button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="subItemServiceProductDetailsFn(sensor)" ng-disabled="!sensor.idBatteryFk" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i></button>
-							  					<button ng-if="sensor.idBatteryFk" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeSubItemProductDetailsFn(sensor)" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
+								    	<tr ng-repeat="sensor in list_sensors" style="line-height: 2em;">
+								    		<td style="width: 5%; padding: 0 0px 0 10px;"><label style="font-size: 100%" class="label label-default">{{$index+1}}</label></td>
+								    		<!-- SENSOR Y MARCA -->
+							      		 	<td style="width: auto"><span style="font-size: 100%" class="text-muted text-uppercase text-box">{{sensor.sensorDetails.classification | uppercase}} ({{sensor.sensorDetails.brand | uppercase}})</span></td>
+							      		 	<!-- NUMERO DE ZONA -->
+								      		<td style="width: auto"><label data-toggle="tooltip" data-placement="top" title="N° de Zona" style="font-size: 100%" class="label label-default"><i class="text-warning fas fa-grip-horizontal"></i> Zona: {{sensor.numberZoneSensor}}</label></td>
+								      		<!-- NUMERO DE ZONA DE TAMPER -->
+								      		<td style="width: auto"><label data-toggle="tooltip" data-placement="top" title="N° de Zona de Tamper" style="font-size: 100%" class="label label-default"><i class="text-warning fas fa-grip-horizontal"></i> Tamper: {{sensor.nroZoneTamper}}</label></td>
+								      		<!-- UBICACION -->
+								      		<td style="width: auto"><label data-toggle="tooltip" data-placement="top" title="Ubicación" style="font-size: 100%" class="label label-default"><i class="text-warning fas fa-compass"> </i> {{sensor.locationLon | uppercase}}</label></td>
+								      		<!-- PUERTO DE CAMERA -->
+								      		<td style="width: auto"><label ng-if="sensor.portCamera!=undefined" data-toggle="tooltip" data-placement="top" title="Puerto de Camara" style="font-size: 100%" class="label label-default"><i class="text-warning fas fa-video"> </i> {{sensor.portCamera | uppercase}}</label></td>
+								      		<!-- BOTONES DE ACCION -->
+								          	<td style="width: 10%;padding-left: 25px;">
+								            	<button data-toggle="tooltip" data-placement="top" title="Ver" ng-click="alarmSensorZoneFn(sensor, 'load_details')" ng-disabled="!sensor.idSensor" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i></button>
+							  					<button ng-if="sensor.idSensor" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="alarmSensorZoneFn(sensor, 'remove')" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
 
 								          	</td>
 								      	</tr>
@@ -299,21 +308,25 @@
 					                      	<span>{{type.descripcion}}</span>
 					                    </label>
 					                </div>
-									<div ng-if="service.new.tipo_conexion_remoto.length>0 && (service.new.tipo_conexion_remoto[0].idTipoConexionRemoto==type.idTipoConexionRemoto)" class="pull-right col-md-3">
-										<button  data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="service.alarmPanel.selected==undefined" ng-click="compServiceProductDetailsFn()" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
+									<div ng-if="tipo_conexion_remoto.length>0 && (tipo_conexion_remoto[0].idTipoConexionRemoto==type.idTipoConexionRemoto)" class="pull-right col-md-3">
+										<button  data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="type.idTipoConexionRemoto==''" ng-click="addServiceModuleConnectionDetailsFn(tipo_conexion_remoto, type.idTipoConexionRemoto, 'details')" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
 									</div>
 								</div>				                
 				            </div>					            			            
 						</div>
 						<div class="form-group col-md-12">
 							<div class="input-group col-md-6">
-								<button  ng-click="compServiceAlarmDetailsFn()" class="btn btn-sm btn-warning"><i class="fas fa-plus"></i> Datos Adicionales</button>
+								<button  ng-click="compServiceAlarmDetailsFn()" class="btn btn-sm" ng-class="{	'btn-success':
+												service.aditional_alarm!='',
+											'btn-warning':
+												service.aditional_alarm=='',
+										  }"><i class="fas fa-plus"></i> Datos Adicionales</button>
 							</div>
 						</div>
 						<!-- Observaciones Generales -->
 						<div class="form-group col-md-12">
 						  <label class="col-xs-12" >Observaciones Generales</label> 
-								<textarea style="resize: none;" name="ObserGenerales" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="service.new.generalComments" ></textarea>							
+								<textarea style="resize: none;" name="ObserGenerales" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="service.new.observation" ></textarea>							
 						</div>
 					</fieldset>
 				</form>
@@ -323,7 +336,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="" ng-disabled="fCustomerNewService.$invalid" class="btn btn-labeled btn-success">
+                        <button type="submit" ng-click="modalConfirmation('newService', 0, service.new)" ng-disabled="fCustomerNewService.$invalid || service.zonesQttyInstalled!=list_sensors.length || aditional_alarm==null" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
                         <a ng-click="modalConfirmation('closeServiceWindow', 0, service.new)" type="button" class="btn btn-labeled btn-danger">
                             <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
@@ -334,8 +347,3 @@
 	</div>
 </div>
 <!-- // CUSTOMER ALARM SERVICE FORM -->
-
-<div ng-include="'views/services/new/components/comp_serviceModuleConnectionDetails.html'"></div>
-<div ng-include="'views/services/new/components/comp_serviceModuleZoneDetails.html'"></div>
-<div ng-include="'views/services/new/components/comp_serviceAlarmDetails.html'"></div>
-<div ng-include="'views/services/new/components/Alarm/comp_peopleDetails.html'"></div>

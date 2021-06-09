@@ -4,11 +4,15 @@
 	    <div class="modal-content">
           	<div class="modal-header">
           		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i alt="Cerrar" class="glyphicon glyphicon-remove-sign"> </i></span><span class="sr-only">Close</span></button>
-            	<h3 class="modal-title"><i class="product-success fas fa-file-signature"></i> CONTRATO - {{contract.update.numeroContrato}}</h3>
+            	<h3 class="modal-title">
+            		<i class="product-success fas fa-file-signature"></i> CONTRATO - {{contract.update.numeroContrato}}
+            		<span style="margin-top: -0.4em;" class="badge badge-success" ng-if="contract.update.fechaFirmaActivacion!=null && contract.update.idStatusFk=='1'"><i class="fas fa-check-circle"></i> ACTIVO</span>
+            		<span style="margin-top: -0.4em;" class="badge badge-warning" ng-if="(contract.update.fechaFirmaActivacion!=null || contract.update.fechaFirmaActivacion==null) && contract.update.idStatusFk=='0'"><i class="fas fa-exclamation-triangle"></i> INACTIVO</span>
+            	</h3>
         	</div>
     		<div class="modal-body"  style="overflow-y: scroll; padding-bottom: 0px;">
 				<!-- FORM CONTAINER-->
-				<form class="form-horizontal" name="fCustomerNewContract" novalidate>
+				<form class="form-horizontal" name="fCustomerUpdateContract" novalidate>
 					<fieldset>
 					<!-- Sign Date -->					  
 					<div class="form-group col-md-6" >  
@@ -65,7 +69,7 @@
 					<!-- SERVICES -->
 					<div class="form-group form-inline col-md-12">
 					    <label style="padding-left: 15px;">Servicios
-					    	<button style="margin-left: 120px;" data-toggle="tooltip" data-placement="right" title="Agregar servicio" ng-click="switchCustomersFn('contract', contract.new, 'assign_contract_service');" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Agregar o Editar</button>
+					    	<button style="margin-left: 120px;" data-toggle="tooltip" data-placement="right" title="Agregar servicio" ng-click="switchCustomersFn('contract', contract.update, 'assign_contract_update_service');" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Agregar o Editar</button>
 					    </label>									
 					</div>
 					<div class="form-group col-md-12" style="padding:10px 10px 0px 10px;">
@@ -106,7 +110,7 @@
 							              		<i class="far fa-sticky-note"></i>
 							              	</span></td>
 								          	<td style="padding-bottom: 5px; width: 10%; cursor: pointer;">
-								            	<button ng-disabled="item.idServiciosDelContratoFk!=undefined" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeServiceItemFn(srvs, item)" class="btn btn-xs btn-danger"><i class="fas fa-minus-circle"></i></button>
+								            	<button ng-disabled="item.idStatusFk=='0'" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="modalConfirmation('contract_remove_service_item', 0, srvs, item)" class="btn btn-xs btn-danger"><i class="fas fa-minus-circle"></i></button>
 
 								          	</td>							              	
 							            </tr>
@@ -124,8 +128,8 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <!--<button type="submit" ng-click="switchCustomersFn('contract', null, 'add');" ng-disabled="fCustomerNewContract.$invalid || !serviceItemListOk" class="btn btn-labeled btn-success">
-                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>-->
+                        <button type="submit" ng-click="switchCustomersFn('contract', null, 'update');" ng-disabled="fCustomerUpdateContract.$invalid || !serviceItemListOk" class="btn btn-labeled btn-success">
+                            <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
                         <a data-dismiss="modal" ng-click="getContractsByCustomerIdFn(customerFound.idClient,'assign')" type="button" class="btn btn-labeled btn-danger">
                             <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
                     </div>

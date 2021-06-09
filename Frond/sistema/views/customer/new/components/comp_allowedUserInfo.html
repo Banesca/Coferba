@@ -10,21 +10,21 @@
 	    	<form class="form-horizontal" name="frmAllowedUserInfo" novalidate>
 	      		<fieldset>        	
 		        	<!-- FORM CONTAINER-->
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-6 col-xs-12">
 					  <label style="padding-left: 15px;">Perfil</label>  
-							  <div class="input-group">
+							  <div class="input-group col-md-12 col-xs-12">
 								  <input ng-disabled="true"  name="allowed_profile" placeholder="Perfil" class="form-control" ng-model="allowedUsers.nameProfile"type="text"/>
 							  </div>
 					</div>
-					<div class="form-group col-md-6 n-padding-l n-padding-r well-checkbox" style="padding: 0px !important;">
-						<div class="form-group col-md-4" style="margin-left: 15%;top: 5px;">
+					<div class="form-group col-md-6 col-xs-12 n-padding-l n-padding-r well-checkbox" style="padding: 0px !important;">
+						<div class="form-group col-md-6 col-xs-6" style="top: 5px;">
 							<label>Estatus: </label> 
 							<div class="input-group" style="margin-bottom: 0px !important;">
 						  		<label ng-if="allowedUsers.idStatusKf==1" class="label label-success">{{allowedUsers.statusTenantName | uppercase}}</label>
 						  		<label ng-if="allowedUsers.idStatusKf!=1" class="label label-danger">Estatus: {{allowedUsers.statusTenantName | uppercase}}</label> 
 						  	</div>
 						</div>
-						<div class="form-group col-md-5" style="top: 5px;">
+						<div class="form-group col-md-6 col-xs-6" style="top: 5px;">
 							<label>Correo:  </label> 
 							<div class="input-group">
 						  		<label ng-if="allowedUsers.isConfirmatedMail==1" class="label label-success text-uppercase">Confirmado</label>
@@ -32,15 +32,15 @@
 						  	</div>
 						</div>
 					</div>											
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-6 col-xs-12">
 					  <label style="padding-left: 15px;">Nombre</label>  
-							  <div class="input-group">
+							  <div class="input-group col-md-12 col-xs-12">
 								  <input ng-disabled="true"  name="allowed_names" placeholder="Nombre" class="form-control" ng-model="allowedUsers.fullNameUser"type="text"/>
 							  </div>
 					</div>	
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-6 col-xs-12">
 					  <label style="padding-left: 15px;">Correo</label>  
-							  <div class="input-group">
+							  <div class="input-group col-md-12 col-xs-12">
 								  <input ng-disabled="true"  name="allowed_email" placeholder="Correo" class="form-control" ng-model="allowedUsers.emailUser"type="text"/>
 							  </div>
 					</div>
@@ -60,4 +60,4 @@
     </div>
   </div>
 </div>
-<!-- // allowed User Info -->			    
+<!-- // allowed User Info -->

@@ -19,7 +19,7 @@
 								(customer.particular.typeInmueble==undefined) && fcpAddress.particular_tipo_inmueble.$touched,
 							}">
 							<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-							<select name="particular_tipo_inmueble" class="form-control" ng-options="item.idTipoInmueble as item.descripcion for item in rsTypeOfPropertyData " ng-required="(customer.info.idClientTypeFk!=2)" ng-model="customer.particular.typeInmueble" ng-change="customer.particular.isBuilding=false" autofocus required >
+							<select name="particular_tipo_inmueble" class="form-control" ng-options="item.idTipoInmueble as item.descripcion for item in rsTypeOfPropertyData " ng-required="(customer.details.idClientTypeFk!=2)" ng-model="customer.particular.typeInmueble" ng-change="customer.particular.isBuilding=false" autofocus required >
 								<option value="">Inmueble</option>
 							</select>
 						</div>

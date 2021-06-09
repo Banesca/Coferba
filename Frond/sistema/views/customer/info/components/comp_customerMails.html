@@ -3,11 +3,11 @@
 	<label class="clf-p-left">Correo de contactos <button style="margin-left: 135px;" ng-disabled="(!fUpdateCustomer.contact_mail.$valid) || (contactMails.idTipoDeMailFk=='' || contactMails.idTipoDeMailFk==undefined)" ng-click="addMailContactFn(contactMails, 'update'); contactMails.idTipoDeMailFk=undefined" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button> </label>  
 	<div class="input-group" ng-init="getTypeOfMailsFn();">
 		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>  
-		<select style="width: 42%; padding-left: 2px; font-size: 12px;" name="typeMail" class="form-control" ng-options="item.idTipoMail as item.descripcion for item in rsTypeOfMailsData" ng-disabled="(customer.info.idClientTypeFk==5)" ng-change="enabledNextBtn()" ng-model="contactMails.idTipoDeMailFk" ng-required="list_mails.length==0" autofocus >
+		<select style="width: 42%; padding-left: 2px; font-size: 12px;" name="typeMail" class="form-control" ng-options="item.idTipoMail as item.descripcion for item in rsTypeOfMailsData" ng-disabled="(customer.details.idClientTypeFk==5)" ng-change="enabledNextBtn()" ng-model="contactMails.idTipoDeMailFk" ng-required="list_mails.length==0" autofocus >
 		    	<option class="text-uppercase" value="">Selecci&#243n Tipo</option>
 	    </select>
 	    								  				
-	  	<input style="width: 58%; font-size: 12px;"id="contactMail" name="contact_mail" autofocus="true" ng-disabled="(customer.info.idClientTypeFk==5)" ng-blur="enabledNextBtn();" class="form-control" ng-model="contactMails.mailContact" type="email" ng-required=true autofocus/>
+	  	<input style="width: 58%; font-size: 12px;"id="contactMail" name="contact_mail" autofocus="true" ng-disabled="(customer.details.idClientTypeFk==5)" ng-blur="enabledNextBtn();" class="form-control" ng-model="contactMails.mailContact" type="email" ng-required=true autofocus/>
 	</div>
 	<div class="well-checkbox n-padding-t n-padding-b" style="margin-left: 0px;margin-right: 0px;">
 	  	<table ng-if="list_mails.length>0">

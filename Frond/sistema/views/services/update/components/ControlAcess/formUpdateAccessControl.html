@@ -21,7 +21,7 @@
 						  <div class="col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fas fa-door-open"></i></span>
-								<select name="service_door" id="service_door" class="form-control text-uppercase" ng-options="item.idAccCrtlDoor as item.itemName for item in rsContractItemListData" ng-model="service.update.idDoorFk" autofocus ng-disabled="true" >
+								<select name="service_door" id="service_door" class="form-control text-uppercase" ng-options="item.idAccCrtlDoor as item.itemName for item in rsContractItemListData" ng-model="service.update.idDoorFk" autofocus ng-disabled="false" >
 								    <option class="text-uppercase" value="">Selecciona una puerta</option>
 							    </select>
 						  </div>
@@ -56,7 +56,7 @@
 								<select name="service_contract" 
 								class="form-control" 
 								ng-options="item.idContrato as item.numeroContrato for item in rsCustomerContractListData" ng-model="service.update.idContratoFk"
-								ng-change="switchContractService(service.update);" required="true" ng-disabled="true" autofocus >
+								ng-change="switchContractService(service.update);" required="true" ng-disabled="false" autofocus >
 								    <option class="text-uppercase" value="">Selecciona un contrato</option>
 							    </select>
 						  </div>
@@ -83,7 +83,7 @@
 						  <div class="col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
-								<input name="service_start_date" type="text" ng-keydown="fnLoadPhoneMask()" required="true" ng-disabled="true" class="form-control input--date" ng-model="service.update.dateUp" />
+								<input name="service_start_date" type="text" ng-keydown="fnLoadPhoneMask()" required="true"  class="form-control input--date" ng-model="service.update.dateUp" />
 						  </div>
 						</div>
 					</div>
@@ -93,7 +93,7 @@
 						  <div class="col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
-								<input name="service_end_date" type="text" ng-keydown="fnLoadPhoneMask()" ng-disabled="true" class="form-control input--date" ng-model="service.update.dateDown" />
+								<input name="service_end_date" type="text" ng-keydown="fnLoadPhoneMask()" class="form-control input--date" ng-model="service.update.dateDown" />
 						  </div>
 						</div>
 					</div>

@@ -72,6 +72,8 @@
                 <li>
                   <a href="" ng-click="switchCustomersFn('edit', item);"><i title="Modificar Datos" class="fas fa-user-edit"></i>  Editar</a>
                 </li>
+                <li ng-if="item.idClientTypeFk==2" role="presentation"><div class="divider"></div>
+                <li ng-if="item.idClientTypeFk==2" class="dropdown-item"><a href="" ng-click="switchCustomersFn('adminChange', item);"><i title="Servicios" class="fas fa-exchange-alt"></i> Cambio de Administración</a></li>
                 <li role="presentation"><div class="divider"></div>
                 <!--<li><a href="" ng-click="switchCustomersFn('enabled', item)"><i title="Activar Usuario" class="far fa-check-circle"></i> Activar</a></li>
                 <li role="presentation"><div class="divider"></div>
@@ -94,6 +96,7 @@
           <button ng-if="item.idClientTypeFk==2" ng-click="switchCustomersFn('departments', item)" class="btn btn-warning btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver departamentos"><i class="far fa-building"></i></button>
           <button ng-if="item.idClientTypeFk==5" ng-click="switchCustomersFn('particularAddress', item)" class="btn btn-success btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Direcciones asociadas"><i class="fas fa-map-marker-alt"></i></button>
           <button ng-if="item.files_uploaded.length>0" ng-click="switchCustomersFn('listFiles', item)" class="btn btn-success btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Ver archivos"><i class="fas fa-photo-video"></i></button>
+          <button ng-if="item.idClientTypeFk==2" ng-click="switchCustomersFn('adminChange', item)" class="btn btn-success btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Cambio de administracion"><i class="fas fa-exchange-alt"></i></button>
           <!--<button ng-if="item.idClientTypeFk!=5" ng-click="switchCustomersFn('allowedUsers', item)" class="btn btn-success btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Usuarios autorizados"><i class="fas fa-lock-open"></i></button>
           <button ng-click="switchCustomersFn('uploadFiles', item)" class="btn btn-success btn-sm btn-xs" data-toggle="tooltip" data-placement="top" title="Subir archivos"><i title="Subir archivos" class="fas fa-paperclip"></i></button>-->
 

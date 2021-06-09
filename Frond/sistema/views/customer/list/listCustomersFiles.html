@@ -13,17 +13,18 @@
           <div ng-if="customer.files.files_uploaded.length>0" class="n-padding-l n-padding-r" style="margin-top: 20px;">
             <ul class="file-list file-list-5">
               <li ng-repeat="file in customer.files.files_uploaded">
-                <a data-toggle="tooltip" data-placement="bottom" title="File-{{$index+1}}" ng-if="file.typeFile.substr(0,5)=='image'" class="thumbnail" ng-click="openLightboxModal(customer.files.files_uploaded, $index)">
+                <a data-toggle="tooltip" data-placement="top" title="{{file.title | limitTo: 20 }}{{file.title.length > 20 ? '...' : ''}}" ng-if="file.typeFile.substr(0,5)=='image'" class="thumbnail" ng-click="openLightboxModal(customer.files.files_uploaded, $index)">
                   <img ng-src="{{file.urlFile}}" />               
                 </a>
-                <a data-toggle="tooltip" data-placement="bottom" title="File-{{$index+1}}" ng-if="file.typeFile=='application/pdf'" ng-click="openPDFModalViewer(file)" class="thumbnail">
+                <a data-toggle="tooltip" data-placement="top" title="{{file.title | limitTo: 20 }}{{file.title.length > 20 ? '...' : ''}}" ng-if="file.typeFile=='application/pdf'" ng-click="openPDFModalViewer(file)" class="thumbnail">
                   <img src="images/pdf-thumb.png" ng-if="file.typeFile=='application/pdf'"/>
                 </a>
-                <a data-toggle="tooltip" data-placement="bottom" title="File-{{$index+1}}" ng-if="file.typeFile.substr(0,5)!='image' && file.typeFile!='application/pdf'" class="thumbnail">
+                <a data-toggle="tooltip" data-placement="top" title="{{file.title | limitTo: 20 }}{{file.title.length > 20 ? '...' : ''}}" ng-if="file.typeFile.substr(0,5)!='image' && file.typeFile!='application/pdf'" class="thumbnail">
                   <img src="images/doc-thumb.png" ng-if="file.typeFile=='application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.typeFile=='application/msword'"/>
                   <img src="images/excel-thumb.png" ng-if="file.typeFile=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.typeFile=='application/vnd.ms-excel'"/>                 
                 </a>
                 <div class="caption">
+                  <span class="label label-default">{{file.title | limitTo: 20 }}{{file.title.length > 20 ? '...' : ''}}</span><br/><br/>
                   <button type="button" data-toggle="tooltip" data-placement="bottom" title="Bajar archivo" class="btn btn-success btn-xs" ng-click="downloadFile(file)">
                       <i class="fas fa-cloud-download-alt"></i>
                   </button>
@@ -38,7 +39,7 @@
                   </button>                   
                 </div>                  
               </li>
-            </ul>
+            </ul>            
           </div>
         </div>
         <!-- Actions Button ng-click="newSysProfileFn()"-->

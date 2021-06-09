@@ -67,7 +67,7 @@
 							         	ng-model="service.aditional_alarm.sysUser.selected"
 							         	ng-disabled="!service.isSysUser"
 							         	ng-required="service.isSysUser">
-							            <ui-select-match placeholder="Selecciona un usuario" >{{$select.selected.fullNameUser}}</ui-select-match>
+							            <ui-select-match allow-clear="true" placeholder="Selecciona un usuario" >{{$select.selected.fullNameUser}}</ui-select-match>
 							            <ui-select-choices repeat="user in rsList.clientUser | filter: $select.search">
 							                <div ng-bind-html="user.fullNameUser | highlight: $select.search"></div>
 							                <small ng-bind-html="user.emailUser | highlight: $select.search"></small>

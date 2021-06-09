@@ -14,6 +14,7 @@ var app = angular.module('systemApp', ["module.LoginUser",
                                              "tokenSystem",
                                                "ngAnimate", 
                                             "ui.bootstrap",
+                                       "angularFileUpload",
                                              "ngclipboard",
                    "angularUtils.directives.dirPagination",                                             
                                              "angularCSS"]);

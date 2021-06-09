@@ -2,13 +2,13 @@
 <div class="form-group" ng-class="
 			{	
 				'col-md-12':
-				customer.info.idClientTypeFk=='' || customer.info.idClientTypeFk==undefined || customer.info.idClientTypeFk=='2' || customer.info.idClientTypeFk=='5',
+				customer.details.idClientTypeFk=='' || customer.details.idClientTypeFk==undefined || customer.details.idClientTypeFk=='2' || customer.details.idClientTypeFk=='5',
 				'col-md-6':
-				(customer.info.idClientTypeFk!='' && customer.info.idClientTypeFk!=undefined && customer.info.idClientTypeFk!='2' && customer.info.idClientTypeFk!='5'),
+				(customer.details.idClientTypeFk!='' && customer.details.idClientTypeFk!=undefined && customer.details.idClientTypeFk!='2' && customer.details.idClientTypeFk!='5'),
 				'has-success': 
-				customer.info.idClientTypeFk!=undefined && fUpdateCustomer.customer_type.$valid,
+				customer.details.idClientTypeFk!=undefined && fUpdateCustomer.customer_type.$valid,
 			 	'has-error':  
-				(customer.info.idClientTypeFk==undefined && fUpdateCustomer.customer_type.$touched),
+				(customer.details.idClientTypeFk==undefined && fUpdateCustomer.customer_type.$touched),
 			}"> 
   <label style="padding-left: 15px;">Tipo de cliente</label>
 	    <div class="input-group " >
@@ -17,9 +17,9 @@
 	    			id="customer_type" 
 	    			name="customer_type" 
 	    			class="form-control" 
-	    			ng-change="customerTypeCustomer(); cleanCustomerFieldFn(); customer.info.nameAddress='';"  
+	    			ng-change="customerTypeCustomer(); cleanCustomerFieldFn(); customer.details.nameAddress='';"  
 	    			ng-options="item.idClientType as item.ClientType for item in rsCustomerTypeData " 
-	    			ng-model="customer.info.idClientTypeFk" required autofocus >
+	    			ng-model="customer.details.idClientTypeFk" required autofocus >
 		    	<option value="">Cliente</option>
 	    	</select>
 		</div>

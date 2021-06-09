@@ -1,4 +1,6 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 require APPPATH.'/libraries/REST_Controller.php';
 
 class Services extends REST_Controller {
@@ -15,7 +17,7 @@ class Services extends REST_Controller {
         }
 
         $product = $this->services_model->addalarm($this->post('service'));
-        // $this->response($product);
+        //$this->response($product);
         if ($product == 1) {
             $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
@@ -37,7 +39,7 @@ class Services extends REST_Controller {
         }
 
         $product = $this->services_model->editAlarm($this->post('service'));
-        // $this->response($product);
+        //$this->response($product);
         if ($product == 1) {
             $this->response([ 'response' => "Registro exitoso" ], 200);
         } else {
@@ -315,9 +317,7 @@ class Services extends REST_Controller {
             }
         }
     }
-
     public function servicesPorIdContrato_get($idContrato) {
-        //$this->response('asdasd', 200);
         $service = null;
         $service = $this->services_model->getServicesPorIdContrato($idContrato);
 

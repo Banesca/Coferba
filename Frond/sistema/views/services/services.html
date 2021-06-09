@@ -1,5 +1,5 @@
 <!-- MANAGE PRODUCTSs-->
-<div class="col-md-12" ng-init="getProductsFn();" style="margin-top: -2em;">
+<div class="col-md-12" ng-init="getProductsFn();">
   <div class="panel panel-default padding-panel">
     <div class="panel-heading">
       <h3 class="panel-title">GESTION DE SERVICIOS </h3>
@@ -64,12 +64,14 @@
                   <div class="panel-body">
                     <!-- CUSTOMER COLUMN -->
                     <div  class="col-md-8 well-checkbox n-margin-r n-margin-l customer-frame">
-                      <div class="col-md-6">
+                      <div class="col-md-6 col-xs-12">
                         <span class="badge badge-default">sistema web</span><span> N° de Cliente : {{customerFound.idClient}}</span>
                       </div>
-                      <div ng-if="customerFound.idClientAssociated_SE!=null" class="col-md-6">
-                        <span class="badge badge-default">sistema de gestion</span><span> N° de Cliente : {{customerFound.idClientAssociated_SE}}</span>
-                      </div>
+                      <div class="col-md-6 col-xs-12">
+                        <span class="badge badge-default">sistema de gestion</span>
+                        <span ng-if="customerFound.idClientAssociated_SE!=null"> N° de Cliente : {{customerFound.idClientAssociated_SE}}</span>
+                        <span ng-if="customerFound.idClientAssociated_SE==null"> N° de Cliente : <label  style="cursor: pointer;" data-toggle="tooltip" data-placement="right" title="no asignado" class="label label-default">n/a</label></span>
+                      </div>                      
                       <div class="col-md-6"><span>Tipo de Cliente: {{customerFound.ClientType | uppercase}}</span></div>
                       <div class="col-md-6"><span>Nombre: {{customerFound.name | uppercase}}</span></div>
                       <div ng-if="customerFound.idClientType=='1' || customerFound.idClientType=='3'" class="col-md-6"><span>Razón Social: {{customerFound.businessName | uppercase}}</span></div>
@@ -140,18 +142,12 @@
 <div ng-include="'views/services/list/listServicesUserLicense.html'"></div>
 <div ng-include="'views/services/list/listCameras.html'"></div>
 
-<div ng-include="'views/services/new/formRegisterContract.html'"></div>
-<div ng-include="'views/services/new/formUpdateContract.html'"></div>
-<div ng-include="'views/services/new/activationDateContract.html'"></div>
-<div ng-include="'views/services/new/components/comp_serviceUnits.html'"></div>
-
 <div ng-include="'views/services/new/components/ControlAcess/formRegisterAccessControl.html'"></div>
 <div ng-include="'views/services/new/components/Alarm/formRegisterAlarm.html'"></div>
 <div ng-include="'views/services/new/components/AppMonitor/formRegisterAppMonitor.html'"></div>
 <div ng-include="'views/services/new/components/Cameras/formRegisterCameras.html'"></div>
 <div ng-include="'views/services/new/components/Totem/formRegisterTotem.html'"></div>
 <div ng-include="'views/services/new/components/Internet/formRegisterInternet.html'"></div>
-
 
 
 <div ng-include="'views/services/update/components/ControlAcess/formUpdateAccessControl.html'"></div>
@@ -161,9 +157,20 @@
 <div ng-include="'views/services/update/components/Totem/formUpdateTotem.html'"></div>
 <div ng-include="'views/services/update/components/Internet/formUpdateInternet.html'"></div>
 
+<div ng-include="'views/services/new/components/comp_serviceModuleConnectionDetails.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceModuleZoneDetails.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceLoadSeletedZoneDetails.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceAlarmDetails.html'"></div>
+<div ng-include="'views/services/new/components/Alarm/comp_peopleDetails.html'"></div>
 
 <div ng-include="'views/services/new/components/comp_serviceProductDetails.html'"></div>
 <div ng-include="'views/services/new/components/comp_serviceUserDetails.html'"></div>
 <div ng-include="'views/services/new/components/comp_serviceLicenceDetails.html'"></div>
 <div ng-include="'views/services/new/components/comp_contractSelect.html'"></div>
 <div ng-include="'views/services/new/components/comp_serviceSelect.html'"></div>
+
+<div ng-include="'views/services/new/formRegisterContract.html'"></div>
+<div ng-include="'views/services/new/components/comp_serviceUnits.html'"></div>
+<div ng-include="'views/services/update/formUpdateContract.html'"></div>
+<div ng-include="'views/services/update/components/comp_serviceUnits.html'"></div>
+<div ng-include="'views/services/new/activationDateContract.html'"></div>

@@ -27,7 +27,7 @@ class Contrato extends REST_Controller {
         $res = $this->contrato_model->update($this->put('contrato'));
 
         if ($res == 1) {
-            $this->response([ 'response' => "Actualización exitosa" ], 200);
+            $this->response([ 'response' => "Actualizacion exitosa" ], 200);
         } elseif ($res == 0) {
             $this->response([ 'error' => "ERROR INESPERADO" ], 500);
         } elseif ($res == 2) {

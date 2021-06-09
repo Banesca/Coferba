@@ -56,9 +56,9 @@ moduleContractServices.service("ContractServices", ['$http', 'tokenSystem', '$ti
           updateContract: function(data) {
             rsCustomer.contrato=data
             //console.log("[Contract Services]: update contract ");
-              return $http.post(serverHost+serverBackend+"Contrato/update",rsCustomer,serverHeaders)
+              return $http.put(serverHost+serverBackend+"Contrato/update",rsCustomer,serverHeaders)
                 .then(function mySucess(response, status) {
-                  rsJson=response.data;
+                  rsJson=response;
                   return rsJson;
                 },function myError(response) { 
                   console.log("Error: "+response.data.error); 

@@ -1,14 +1,14 @@
 <!-- Zone -->
-<div ng-if="customer.info.idClientTypeFk!='' && customer.info.idClientTypeFk!=undefined" class="form-group col-md-12" ng-class="
+<div ng-if="customer.details.idClientTypeFk!='' && customer.details.idClientTypeFk!=undefined" class="form-group col-md-12" ng-class="
 		{	'has-success': 
-			customer.info.zone!='' && fUpdateCustomer.zone.$valid,
+			customer.details.zone!='' && fUpdateCustomer.zone.$valid,
 		 	'has-error':  
-			(customer.info.idZonaFk=='' || customer.info.idZonaFk==undefined) && fUpdateCustomer.zone.$touched,
+			(customer.details.idZonaFk=='' || customer.details.idZonaFk==undefined) && fUpdateCustomer.zone.$touched,
 		}" ng-init="getZonesFn()"> 
   	<label style="padding-left: 15px;">Zona</label>
 	    <div class="input-group">
     		<span class="input-group-addon"><i class="fas fa-map-marker-alt"></i></span>
-	    	<select ng-disabled="customer.info.idZonaFk!='' && customer.info.idZonaFk!=undefined?true:false" name="zone" class="form-control"  ng-options="item.idZona as item.n_zona + ' - ' + (item.descripcion | uppercase) for item in rsZonesData" ng-change="enabledNextBtn();" ng-model="customer.info.idZonaFk" required autofocus >
+	    	<select ng-disabled="customer.details.idZonaFk!='' && customer.details.idZonaFk!=undefined?true:false" name="zone" class="form-control"  ng-options="item.idZona as item.n_zona + ' - ' + (item.descripcion | uppercase) for item in rsZonesData" ng-change="enabledNextBtn();" ng-model="customer.details.idZonaFk" required autofocus >
 		    	<option value="">Selecciona una zona</option>
 	    	</select>
 	  	</div>
