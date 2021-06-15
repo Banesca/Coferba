@@ -32,7 +32,7 @@
             <span class="show-tag-1">&nbsp;Ver</span> <span class="show-tag-2"></span>
           </button>
         </td>
-        <td ng-click="editContractWindowFn(contract)" ng-trim="true" class="media-middle text-center">{{contract.numeroContrato}}</td>
+        <td class="media-middle text-center"><span data-toggle="tooltip" data-placement="bottom" title="Ver detalles del contrato" ng-click="switchCustomersFn('contract', contract, 'info');" ng-trim="true">{{contract.numeroContrato}}</span></td>
 
         <td ng-repeat="service in contract.services"  ng-click="switchCustomersFn('services', service, 'start_new_service');" ng-trim="true" class="media-middle text-center">
           <span ng-if="service.serviceItems.length>=1" >
@@ -61,7 +61,7 @@
           <span data-toggle="tooltip" data-placement="bottom" title="No Contratado" class="text-danger media-middle text-center font-size-18px" ng-if="service.serviceItems.length<=0 || service.serviceItems==undefined"><i class="fas fa-times-circle"></i></span>
         </td>
         <td ng-trim="true" class="media-middle text-center" >{{contract.fechaFirmaVigencia}}</td>
-        <td ng-trim="true" ng-if="contract.fechaFirmaActivacion!=undefined || contract.fechaFirmaActivacion!=null" class="media-middle text-center" >{{contract.fechaFirmaActivacion}}</td>
+        <td ng-trim="true" ng-if="contract.fechaFirmaActivacion=='' || contract.fechaFirmaActivacion!=undefined || contract.fechaFirmaActivacion!=null" class="media-middle text-center" >{{contract.fechaFirmaActivacion}}</td>
         <td ng-trim="true" ng-if="contract.fechaFirmaActivacion==undefined || contract.fechaFirmaActivacion==null" class="media-middle text-center" ><label class="text-uppercase label label-warning">sin firmar</label></td>
         <td ng-trim="true" ng-click="" class="media-middle text-center">
             <label ng-if="contract.idStatusFk==1" class="label label-success">ACTIVO
@@ -73,9 +73,9 @@
         </td>
         
         <td ng-trim="true" ng-click="">
-          <button ng-click="switchCustomersFn('contract', contract, 'edit');" data-toggle="tooltip" data-placement="bottom" title="Ver" type="button" class="btn btn-warning btn-xs"><i class="far fa-eye"></i></button>          
-          <button ng-if="contract.fechaFirmaActivacion==null && contract.idStatusFk==0 " ng-click="switchCustomersFn('contract', contract, 'approveContractWindow');" data-toggle="tooltip" data-placement="bottom" title="Firma & Activar" type="button" class="btn btn-success btn-xs"><i class="fas fa-calendar-check"></i></button>
-          <button ng-if="contract.fechaFirmaActivacion!=null && contract.idStatusFk==0 " ng-click="modalConfirmation('contract_enable', 0, contract)" data-toggle="tooltip" data-placement="bottom" title="Activar" type="button" class="btn btn-success btn-xs"><i class="fas fa-check-circle"></i></button>
+          <button ng-click="switchCustomersFn('contract', contract, 'edit');" data-toggle="tooltip" data-placement="bottom" title="Editar" type="button" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>          
+          <button ng-if="(contract.fechaFirmaActivacion=='' || contract.fechaFirmaActivacion==null) && contract.idStatusFk==0 " ng-click="switchCustomersFn('contract', contract, 'approveContractWindow');" data-toggle="tooltip" data-placement="bottom" title="Firmar & Activar" type="button" class="btn btn-success btn-xs"><i class="fas fa-calendar-check"></i></button>
+          <button ng-if="contract.fechaFirmaActivacion!='' && contract.fechaFirmaActivacion!=null && contract.idStatusFk==0 " ng-click="modalConfirmation('contract_enable', 0, contract)" data-toggle="tooltip" data-placement="bottom" title="Activar" type="button" class="btn btn-success btn-xs"><i class="fas fa-check-circle"></i></button>
           <button ng-if="contract.idStatusFk>0" ng-click="modalConfirmation('contract_disable', 0, contract)" data-toggle="tooltip" data-placement="bottom" title="Desactivar" type="button" class="btn btn-danger btn-xs"><i class="fas fa-ban"></i></button>
 
         </td>        

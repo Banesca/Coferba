@@ -29,7 +29,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 pull-right">
-                        <button type="submit" ng-click="switchCustomersFn('contract', contract.activateDate, 'activateDate');" ng-disabled="fServiceApprovalContract.$invalid" class="btn btn-labeled btn-success">
+                        <button type="submit" ng-click=" modalConfirmation('sign_and_enable_contract', 0, contract.activateDate);" ng-disabled="fServiceApprovalContract.$invalid" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>
                         	<span>Aprobar & Activar</span>
                         </button>

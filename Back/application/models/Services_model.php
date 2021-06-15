@@ -98,7 +98,7 @@ class Services_model extends CI_Model {
             $idClientServicesFk = $data->result_array()[0]['idClientServicesFk'];
         }
 
-        if (isset($item['adicional'])) {
+        if (count($item['adicional']) > 0) {
             $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $idClientServicesFk ]);
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
@@ -292,7 +292,7 @@ class Services_model extends CI_Model {
             $this->insertServiceBatteryAccessControl($item['battery_install'], $item['idClientServicesAccessControl'], true);  //se crean las baterias
         }
 
-        if (isset($item['adicional'])) {
+        if (count($item['adicional']) > 0) {
             $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
@@ -532,7 +532,7 @@ class Services_model extends CI_Model {
             $this->insertServiceEnergy($item['backup_energy'], $item['idClientServicesCamera'], true); //CREAMOS las opciones de energia
         }
 
-        if (isset($item['adicional'])) {
+        if (count($item['adicional']) > 0) {
             $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [
@@ -680,7 +680,7 @@ class Services_model extends CI_Model {
             $this->insertServiceEnergyTotem($item['backup_energy'], $item['idClientServicesTotem'], true); //CREAMOS las opciones de energia
         }
 
-        if (isset($item['adicional'])) {
+        if (count($item['adicional']) > 0) {
             $this->db->delete('tb_detalles_control_acceso', [ 'idServicesFk' => $id ]);
             foreach ($item['adicional'] as $item1) {
                 $this->db->insert('tb_detalles_control_acceso', [

@@ -4823,6 +4823,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   $('#confirmRequestModal').modal('hide');
                   $('#customerParticularAddress').modal('hide');
                   $('#BuildingUnit').modal('hide');
+                  $('#functionalUnit').modal('hide');
                   $("#AddressLatLon").modal('hide');
                   $('#RegisterModalCustomer').modal('hide');
                   $('#UpdateModalCustomer').modal('hide');
@@ -5017,6 +5018,21 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 $('#confirmRequestModal').modal('hide');
               }
             break;
+            case "sign_and_enable_contract":
+              if (confirm==0){
+                $scope.mess2show="El contrato "+obj.numeroContrato+" sera Aprobado y Activado en la fecha: "+$scope.contract.tmpFechaFirmaActivacion+".     Confirmar?";
+                $scope.argObj={};
+                $scope.argObj = obj;
+                console.log('Contrato a Aprovar y Activar ID: '+obj.idContrato+' Contrato: '+obj.numeroContrato);
+                console.log("============================================================================")
+                console.log($scope.argObj);
+                $('#activationDateContractWindows').modal('hide');
+                $('#confirmRequestModal').modal('toggle');
+              }else if (confirm==1){
+                  $scope.switchCustomersFn('contract', $scope.argObj, 'activateDate');
+                  $('#confirmRequestModal').modal('hide');
+              }            
+            break;             
             case "contract_enable":
               if (confirm==0){
                 $scope.mess2show="El contrato "+obj.numeroContrato+" sera activado.     Confirmar?";
@@ -7048,15 +7064,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             break;
             case "edit":              
                 $scope.customerContractFn(cObj, 'edit');
-            break;            
+            break;
             case "update":
                 console.log("Updating Contract")
                 $scope.customerContractFn(null, 'update');
-            break;            
+            break;
+            case "info":              
+                $scope.customerContractFn(cObj, 'info');
+            break;             
             case "approveContractWindow":
               $scope.contract.activateDate={}
               $scope.contract.activateDate=cObj;
-              if ($scope.contract.activateDate.fechaFirmaActivacion!=null && $scope.contract.activateDate.fechaFirmaActivacion!=undefined){
+              if ($scope.contract.activateDate.fechaFirmaActivacion!='' && $scope.contract.activateDate.fechaFirmaActivacion!=null && $scope.contract.activateDate.fechaFirmaActivacion!=undefined){
                 $scope.modalConfirmation('contract_enable', 0, cObj)
               }else{
                 $('#activationDateContractWindows').modal('show');
@@ -8677,15 +8696,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *       GET LIST OF CUSTOMER BY CUSTOMER ID       *
     *                                                 *
     **************************************************/
-      $scope.rsListCustomersOfCustomerData = {};
+      $scope.rsListCustomersOfCustomerData = [];
       $scope.getLisOfCustomersByIdFn = function(id){
-        $scope.rsCustomerListData={};
+        $scope.rsCustomerListData=[];
         CustomerServices.getCustomersListByCustomerId(id).then(function(response){
           //console.log(response);
           if(response.status==200){
             $scope.rsCustomerListData = response.data;
           }else{
-            $scope.rsCustomerListData = '';
+            $scope.rsCustomerListData = [];
           }
           $scope.loadPagination($scope.rsCustomerListData, "idClient", "10");
           //console.log($scope.rsCustomerListData);
@@ -10066,7 +10085,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
              // console.log(key);
                 //console.log("Validando: "+$scope.list_mails_contact[key].mailContact+" == "+obj.idTipoDeMailFk);
                 if ($scope.list_mails_contact[key].mailContact==obj.mailContact && $scope.list_mails_contact[key].idTipoDeMailFk==obj.idTipoDeMailFk){
-                  var tmpTag=objMailTag;
+                  var tmpTag=typeName;
                   var ptag= tmpTag.toUpperCase();
                   inform.add("El Correo: "+obj.mailContact+" ["+ptag+"], ya ha sido agregado.",{
                     ttl:5000, type: 'success'
@@ -10912,7 +10931,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 if($scope.isNewCustomer==true){
                   $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
                 }else{
-                  $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                  if (depto.idClientDepartament!=undefined){
+                    $scope.list_depto_floors[depto.idFloor].deptos[arrIndex].idStatusFk="-1";
+                  }else{
+                    $scope.list_depto_floors[depto.idFloor].deptos.splice(arrIndex, 1);
+                  }
                 }
                 
                 /* UNIDAD LETRAS/NUMEROS CORRELATIVAS POR PISO*/
@@ -10928,7 +10951,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     $scope.list_depto_floors[depto.idFloor].deptos[j].departament=departmentUnidad;
                   }*/   
                 /* UNIDAD EN NUMEROS CORRELATIVOS POR EDIFICIO*/
-              if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {                                               
+              if($scope.list_department_multi.unidad==2 && $scope.list_department_multi.correlacion==2) {
                   for (var i=3; i<$scope.list_depto_floors.length; i++){
                     for (var d in  $scope.list_depto_floors[i].deptos){
                       if($scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="5" && $scope.list_depto_floors[i].deptos[d].idCategoryDepartamentFk!="6" && $scope.list_depto_floors[i].deptos[d].idStatusFk=="1" ){
@@ -10956,6 +10979,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             inform.add($scope.jsonMsg.delete.msg,{
                         ttl:6000, type: 'success'
             });
+            console.log($scope.list_depto_floors[depto.idFloor].deptos[arrIndex]);
           }
         /**************************************************
         *            ASSIGN UNIT NUMBER FUNCTION          *
@@ -11074,6 +11098,20 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               $("#BuildingUnit").modal('hide');
               
             } 
+          }
+        /**************************************************
+        *       SET DEPARTMENT FUNCTIONAL UNIT NUMBER     *
+        ***************************************************/
+          $scope.editUnitNumberFn = function(floor, depto) {
+            $scope.unitFloor=floor;
+            $scope.unitDepto=depto;
+            //console.log(floor);
+            //console.log(depto);
+            $("#functionalUnit").modal('toggle');
+            $("#functional_unit_number").focus();
+            if ($scope.unitDepto.unitNumber=="0"){
+              $scope.unitDepto.unitNumber="";
+            }
           }
     /**************************************************
     *                                                 *
@@ -11664,12 +11702,25 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   $('#UpdateCustomerContract').modal('show');
                   blockUI.stop();
                 }, 1500);
-                console.log($scope.contract.update);
+                //console.log($scope.contract.update);
               break;
               case "update": //UPDATE CUSTOMER CONRACT
                 $scope.contract.update.services             = $scope.list_services_tmp;
                 console.log($scope.contract.update);
                 $scope.updateCustomerContractFn($scope.contract.update);
+              break;
+              case "info": //INFO CUSTOMER CONRACT                
+                $scope.contract.info=contract;
+                blockUI.start('Cargando contrato: '+contract.numeroContrato);
+                $scope.preLoadServicesArrFn();
+                for (var key in $scope.contract.info.services){
+                  $scope.addServiceArrFn("load", $scope.contract.info.services[key]);
+                }
+                $timeout(function() {
+                  $('#detailsCustomerContract').modal('show');
+                  blockUI.stop();
+                }, 1500);
+                //console.log($scope.contract.update);
               break;              
               case "activateDate": //ENABLE CUSTOMER CONRACT
                 contract.idStatusFk=1;
@@ -11903,20 +11954,19 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                     });                        
                                     for (var key in $scope.rsTypeOfMaintenanceData){                      
                                       if ($scope.rsContractServiceData.maintenanceType==$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance){
-                                        $scope.service.new.idTypeMaintenanceFk=$scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
-                                        $scope.service.new.MntType=$scope.rsTypeOfMaintenanceData[key].typeMaintenance;
+                                        $scope.service.new.idTypeMaintenanceFk  = $scope.rsTypeOfMaintenanceData[key].idTypeMaintenance;
+                                        $scope.service.new.MntType              = $scope.rsTypeOfMaintenanceData[key].typeMaintenance;
                                       }
                                     }
-                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                                    $scope.service.new.serviceAvailability=$scope.rsContractServiceData.services[0].disponible;
-                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].serviceItems;
-                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                                     //$scope.service.idContracAssociated_SE=
+                                    $scope.service.new.serviceName              = $scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk               = $scope.rsContractServiceData.idClientFk;
+                                    $scope.service.new.serviceAvailability      = $scope.rsContractServiceData.services[0].disponible;
+                                    $scope.rsContractItemListData               = $scope.rsContractServiceData.services[0].serviceItems;
+                                    $scope.rsCustomerContractListData           = $scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk             = $scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb             = $scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk          = $scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType            = $scope.service.new.idTipeServiceFk;
                                     inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Nuevo servicio [Control de Acceso]. ',{
                                       ttl:5000, type: 'info'
                                     });                    
@@ -11973,7 +12023,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                     }); 
                                   }
                                 }else{
-                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Control de Acceso] no contratado. ',{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Internet] no contratado. ',{
                                     ttl:5000, type: 'danger'
                                   });  
                                 }
@@ -12020,7 +12070,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                     }); 
                                   }
                                 }else{
-                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Camaras] no contratado. ',{
+                                  inform.add('Contrato: '+$scope.rsContractServiceData.numeroContrato+' Servicio [Totem] no contratado. ',{
                                     ttl:5000, type: 'danger'
                                   });  
                                 }
@@ -12432,7 +12482,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       var productIdNumber = 1;
 
                       for (var key in service.adicional){
+                        //console.log("Verificando idProductFk adicional:"+service.adicional[key].idProductoFk);
                         for (var prduct in $scope.rsProductsData){
+                         //console.log("Verificando idProductFk Product table:"+$scope.rsProductsData[prduct].idProduct);
                           if (service.adicional[key].idProductoFk==$scope.rsProductsData[prduct].idProduct){
                             $scope.list_productsDetails.push({'idProductDetail':productIdNumber,'idProductoFk':service.adicional[key].idProductoFk, 'numberSerieFabric':service.adicional[key].numberSerieFabric, 'numberSerieInternal':service.adicional[key].numberSerieInternal,'dateExpiration':service.adicional[key].dateExpiration, 'optAux':service.adicional[key].optAux});
                             $scope.typeOfProductsFn("set", $scope.rsProductsData[prduct].idProductClassificationFk, productIdNumber, service.adicional[key].optAux);
@@ -12455,7 +12507,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.rsCustomerContractListData            = $scope.rsContractsListByCustomerIdData;
                       $scope.rsContractItemListData                = $scope.getSelectedServiceByIdContractFn($scope.service.update.idContratoFk, $scope.service.update.idClientTypeServices);
                       $scope.service.update.isHasInternetConnect   = $scope.service.update.portNumberRouter!=undefined && $scope.service.update.portHttp!=undefined?true: false;
-                      console.log($scope.rsContractItemListData);
+                      console.log($scope.list_productsDetails);
+                      console.log($scope.productListType);
                       console.log($scope.service.update);
                     }, 500);
                    
@@ -13165,7 +13218,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                GET TYPE OF CONTRACTS            *
     *                                                 *
     **************************************************/
-      $scope.rsTypeOfContractsData = {};
+      $scope.rsTypeOfContractsData = [];
       $scope.getTypeOfContractsFn = function(){
         UtilitiesServices.typeOfContracts().then(function(response){
           if(response.status==200){
@@ -13178,7 +13231,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *           GET TYPE OF TypeMaintenance           *
     *                                                 *
     **************************************************/
-      $scope.rsTypeOfMaintenanceData = {};
+      $scope.rsTypeOfMaintenanceData = [];
       $scope.getTypeOfMaintenanceFn = function(){
         UtilitiesServices.typeOfMaintenance().then(function(response){
           if(response.status==200){
@@ -13191,7 +13244,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *             GET INTERNET COMPANIES              *
     *                                                 *
     **************************************************/
-      $scope.rsInternetCompanyListData = {};
+      $scope.rsInternetCompanyListData = [];
       $scope.getInternetCompanyListFn = function(){
         UtilitiesServices.internetCompanyList().then(function(response){
           if(response.status==200){
@@ -13204,7 +13257,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                GET INTERNET PLANS               *
     *                                                 *
     **************************************************/
-      $scope.rsInternetPlanListData = {};
+      $scope.rsInternetPlanListData = [];
       $scope.getInternetPlanListFn = function(){
         UtilitiesServices.internetPlanList().then(function(response){
           if(response.status==200){
@@ -13217,7 +13270,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                GET MONITOR COMPANIES            *
     *                                                 *
     **************************************************/
-      $scope.rsMonitorCompanyListData = {};
+      $scope.rsMonitorCompanyListData = [];
       $scope.getMonitorCompanyListFn = function(){
         UtilitiesServices.monitorCompanyList().then(function(response){
           if(response.status==200){
@@ -13230,7 +13283,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                 GET TOTEM MODELS                *
     *                                                 *
     **************************************************/
-      $scope.rsTotemModelListData = {};
+      $scope.rsTotemModelListData = [];
       $scope.getTotemModelListFn = function(){
         UtilitiesServices.totemModelList().then(function(response){
           if(response.status==200){
@@ -13364,7 +13417,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     $scope.service.adicional.numberSerieInternal  = $scope.list_productsDetails[item].numberSerieInternal;
                     $scope.service.adicional.dateExpiration       = $scope.list_productsDetails[item].dateExpiration;
                   $scope.productDetailsAssigned=true;
-                  ////console.log($scope.list_productsDetails);
+                  //console.log($scope.list_productsDetails);
                   break;
                 }else{
                   $scope.productDetailsAssigned=false;
@@ -13384,7 +13437,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             $("#serviceProductDetails").modal({backdrop: 'static', keyboard: false});
             $('#serviceProductDetails').on('shown.bs.modal', function () {
               $('#serviceProductInternalSerial').focus();  
-             
+              //console.log($scope.service.adicional);
             });        
           }
         /***********************************
@@ -13551,10 +13604,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         'CAMARA':{}, 'PANEL_ALARM':{}, 'TECLADO_ALARM':{}, 
         'SENSOR_ALARM':{}, 'MODULO_IP_ALARM':{},'MODULO_GPRS_ALARM':{}, 'ROUTER':{}, 'MODEM':{}, 'DISP_APERTURA':{}, 'BACKUP_ENERGIA':[], 'PULSADOR_SALIDA':{}, 'PRODUCT_EXIT':{}, 'RECORD_DEVICE':[]
       };
-      $scope.rsProductsList4ServiceData = {};
+      $scope.rsProductsList4ServiceData = [];
       $scope.getProductsList4ServiceFn = function(){
         ProductsServices.listProducts4Service().then(function(data){
             $scope.rsProductsList4ServiceData = data;
+
             if ($scope.rsProductsList4ServiceData.status==200){
               $scope.productListByType.CONTROL_DE_ACCESOS = $scope.rsProductsList4ServiceData.data[0].products;
               $scope.productListByType.CERRADURA          = $scope.rsProductsList4ServiceData.data[1].products;
@@ -13598,7 +13652,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             }else{
               console.log("Error verificar servicio.")
             }
-            
+          console.log($scope.productListByType.PULSADOR_EMERG);  
         });
       };
       $scope.switchProducList=function(opt){
@@ -15126,7 +15180,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *                 LIST PRODUCTS                   *
     *                                                 *
     **************************************************/
-      $scope.rsProductsData = {};
+      $scope.rsProductsData = [];
       $scope.getProductsFn = function(search, opt){
         ProductsServices.listProducts(search).then(function(data){
             $scope.rsProductsData = data;
@@ -15154,7 +15208,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
     *             OPEN DEVICES PRODUCTS               *
     *                                                 *
     **************************************************/
-      $scope.rsOpenDeviceProductsData = {};
+      $scope.rsOpenDeviceProductsData = [];
       $scope.getDiviceOpening = function(){
         ProductsServices.getDiviceOpening().then(function(data){
             $scope.rsOpenDeviceProductsData = data;
@@ -16029,7 +16083,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 $scope.IsCustomerServices=true;
                 $scope.searchCustomerFound=false;
                 $scope.customerSearch={Name:''};
-                $scope.customerFound={};                
+                $scope.customerFound=[];                
                 $scope.manageDepto = 0;
                 $scope.customerSearch.typeClient="all";
                 $scope.getZonesFn();
