@@ -152,6 +152,19 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
               }
           });
       };
+  });
+  moduleMainApp.directive('onlyNumber', function () {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attribute) {        
+        element.bind('keydown keypress', function(event) {
+          var charCode = event.keyCode
+          if (charCode > 31 && (charCode < 48 || charCode > 57)){
+            event.preventDefault();
+          }
+        });
+      },
+    };
   });  
   moduleMainApp.directive('onlyNumbers', function () {
       return {
@@ -163,6 +176,7 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
 
                       if (transformedInput !== text) {
                           ngModelCtrl.$setViewValue(transformedInput);
+                          ngModelCtrl.$commitViewValue();
                           ngModelCtrl.$render();
                       }
                       return transformedInput;
@@ -12777,24 +12791,24 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                       }
                                     }
 
-                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                                    $scope.service.new.idClientTypeFk=$scope.customerFound.idClientTypeFk;
-                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].service_items;
-                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                                    $scope.service.new.numbOfLicence=0;                                    
+                                    $scope.service.new.serviceName        = $scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk         = $scope.rsContractServiceData.idClientFk;
+                                    $scope.service.idClientTypeFk         = $scope.customerFound.idClientTypeFk;
+                                    $scope.rsContractItemListData         = $scope.rsContractServiceData.services[0].service_items;
+                                    $scope.rsCustomerContractListData     = $scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk       = $scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb       = $scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk    = $scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType      = $scope.service.new.idTipeServiceFk;
+                                    $scope.service.new.numbOfLicence      = 0;                                    
                                     $scope.getResourcesFromServiceFn($scope.rsAllServicesListOfCustomer, "dvr");
                                     $scope.getTypeAlarmClientListFn();
                                     $scope.getAlarmServiceAditionalsListFn();
                                     $scope.getTypeConnectionListFn();
                                     $scope.getTransmissionFormatListFn();
-                                    if ($scope.service.new.idClientTypeFk=="2"){
+                                    if ($scope.service.idClientTypeFk=="2"){
                                       $scope.getBuildingsDeptosFn($scope.service.new.idClientFk);  
-                                    }else if ($scope.service.new.idClientTypeFk=="5"){
+                                    }else if ($scope.service.idClientTypeFk=="5"){
                                       $scope.service.new.list_address_particular=$scope.customerFound.list_address_particular;
                                      //$scope.service.idContracAssociated_SE=
                                     }
@@ -12837,19 +12851,19 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                                       }
                                     }
 
-                                    $scope.service.new.serviceName=$scope.rsContractServiceData.services[0].serviceName;
-                                    $scope.service.new.idClientFk=$scope.rsContractServiceData.idClientFk;
-                                    $scope.service.new.idClientTypeFk=$scope.customerFound.idClientTypeFk;
-                                    $scope.rsContractItemListData=$scope.rsContractServiceData.services[0].service_items;
-                                    $scope.rsCustomerContractListData=$scope.rsContractsListByCustomerIdData;
-                                    $scope.service.new.idContratoFk=$scope.rsContractServiceData.idContrato;
-                                    $scope.service.new.contractNumb=$scope.rsContractServiceData.numeroContrato;
-                                    $scope.service.new.idTipeServiceFk=$scope.rsContractServiceData.services[0].idServiceType;
-                                    $scope.service.new.idServiceType=$scope.service.new.idTipeServiceFk;
-                                    $scope.service.new.numbOfLicence=0;
-                                    if ($scope.service.new.idClientTypeFk=="2"){
+                                    $scope.service.new.serviceName      = $scope.rsContractServiceData.services[0].serviceName;
+                                    $scope.service.new.idClientFk       = $scope.rsContractServiceData.idClientFk;
+                                    $scope.service.idClientTypeFk       = $scope.customerFound.idClientTypeFk;
+                                    $scope.rsContractItemListData       = $scope.rsContractServiceData.services[0].service_items;
+                                    $scope.rsCustomerContractListData   = $scope.rsContractsListByCustomerIdData;
+                                    $scope.service.new.idContratoFk     = $scope.rsContractServiceData.idContrato;
+                                    $scope.service.new.contractNumb     = $scope.rsContractServiceData.numeroContrato;
+                                    $scope.service.new.idTipeServiceFk  = $scope.rsContractServiceData.services[0].idServiceType;
+                                    $scope.service.new.idServiceType    = $scope.service.new.idTipeServiceFk;
+                                    $scope.service.new.numbOfLicence    = 0;
+                                    if ($scope.service.idClientTypeFk=="2"){
                                       $scope.getBuildingsDeptosFn($scope.service.new.idClientFk);  
-                                    }else if ($scope.service.new.idClientTypeFk=="5"){
+                                    }else if ($scope.service.idClientTypeFk=="5"){
                                       $scope.service.new.list_address_particular=$scope.customerFound.list_address_particular;
                                      //$scope.service.idContracAssociated_SE=
                                     }
@@ -13343,6 +13357,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                           $scope.moduleConnectionType                 = service.idTypeConectionRemote;
                           $scope.service.update.numberCustomer        = service.numberPay;
                           $scope.service.update.idDatoAdicionalAlarma = service.idDatoAdicionalAlarma;
+                          $scope.service.idClientTypeFk               = $scope.customerFound.idClientTypeFk;
+                          if ($scope.service.idClientTypeFk=="2"){
+                            $scope.getBuildingsDeptosFn($scope.service.update.idClientFk);  
+                          }else if ($scope.service.idClientTypeFk=="5"){
+                            $scope.service.list_address_particular=$scope.customerFound.list_address_particular;
+                           //$scope.service.idContracAssociated_SE=
+                          }                          
                           var productIdNumber = 1;
                           var productIndexNumb = 1;
                           //LOAD ADITIONAL
@@ -13545,9 +13566,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.service.update.MntType             = service.idTypeMaintenanceFk_array[0].typeMaintenance;
                         $scope.rsCustomerContractListData         = $scope.rsContractsListByCustomerIdData;
                         $scope.rsContractItemListData             = $scope.getSelectedServiceByIdContractFn($scope.service.update.idContratoFk, $scope.service.update.idClientTypeServices);
-                        $scope.service.update.idClientTypeFk      = $scope.customerFound.idClientTypeFk;
-
-                        $scope.getBuildingsDeptosFn($scope.service.update.idClientFk);
+                        $scope.service.idClientTypeFk             = $scope.customerFound.idClientTypeFk;
+                       if ($scope.service.idClientTypeFk=="2"){
+                          $scope.getBuildingsDeptosFn($scope.service.update.idClientFk);  
+                        }else if ($scope.service.idClientTypeFk=="5"){
+                          $scope.service.list_address_particular=$scope.customerFound.list_address_particular;
+                         //$scope.service.idContracAssociated_SE=
+                        }
                         for (var key in service.tb_user_license_array){
                           $scope.list_user_licence.push({'idUserFk':service.tb_user_license_array[key].idUserLicense,'fullName':service.tb_user_license_array[key].fullName, 'email':service.tb_user_license_array[key].email, 'phone':service.tb_user_license_array[key].phone, 'keyword':service.tb_user_license_array[key].keyword, 'idOS':service.tb_user_license_array[key].idOS, 'profileUser':service.tb_user_license_array[key].profileUser});
                         }
@@ -14943,6 +14968,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         $scope.list_phones=[];
         $scope.previewData=[];
         $scope.list_user_licence=[];
+        $scope.list_depto_user_licence = [];
+        $scope.list_company_user_licence = [];
+        $scope.list_particular_user_licence = [];        
         $scope.list_user=[];
         $scope.list_tampers=[];
         $scope.list_people_notice=[];
@@ -15144,10 +15172,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             inform.add("Debe asignar la cantidad de nuevas licencias.",{
               ttl:5000, type: 'warning'
             }); 
-        }else if ($scope.service.numbOfLicenceRemains>=1){
+        }else if ($scope.service.numbOfLicenceRemains>=1){         
           $('#serviceLicenceDetails').modal({backdrop: 'static', keyboard: false});
-          $scope.service.users = {'fullName':'','email':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}};
+          $scope.service.users = {'fullName':'','email':'', 'phone':'', 'idOS':'', 'profileUser':'', 'userNumbPasswd':'', 'idDepartmentFk':'', 'idDepartmentList':null, 'idParticularAddressFk':'', 'idDetinationOfLicenseFk':null, 'sysUser':{'selected':undefined}};
           $scope.service.isSysUser=false;
+          $scope.service.isUserLicenceEdit = false;
           $('#serviceUserLicenceName').focus();
           $scope.rsJsonUser={};
         }else{
@@ -15159,19 +15188,31 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       }
       /***********************************
       *    LOAD USER LICENSE SELECTED    *
-      ************************************/       
+      ************************************/
         $scope.loadSelectedUserLicenceFn = function(obj){
-          console.log(obj);
-          $scope.service.users = {'fullName':'','email':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}};
+          $scope.userLicenceSelected={};
+          $scope.userLicenceSelected=obj;
+          $scope.service.users = {'fullName':'','email':'', 'phone':'', 'idOS':'', 'profileUser':'', 'userNumbPasswd':'', 'idDepartmentFk':'', 'idDepartmentList':null, 'idParticularAddressFk':'', 'idDetinationOfLicenseFk':null, 'sysUser':{'selected':undefined}};
           $scope.service.users.fullName                 = obj.fullName;
           $scope.service.users.email                    = obj.email;
           $scope.service.users.phone                    = obj.phone;
           $scope.service.users.keyword                  = obj.keyword;
           $scope.service.users.idOS                     = obj.idOS;
           $scope.service.users.profileUser              = obj.profileUser;
-          $scope.service.sysUser.selected         = {idUser: obj.idUserFk, fullNameUser: obj.fullName};
-          $scope.service.isSysUser=obj.idUserFk?true:false;
+          $scope.service.users.idDepartmentFk           = obj.idDepartmentFk;
+          $scope.service.users.depto                    = obj.depto;
+          $scope.service.users.idDepartmentList         = obj.idDetinationOfLicenseFk=="1"?obj.idDepartmentList:null;
+          $scope.service.users.idParticularAddressFk    = obj.idParticularAddressFk;
+          $scope.service.sysUser.selected               = obj.idUserFk?{idUser: obj.idUserFk, fullNameUser: obj.fullName}:undefined;
+          $scope.service.users.idDetinationOfLicenseFk  = obj.idDetinationOfLicenseFk;
+          $scope.service.users.userNumbPasswd           = obj.userNumbPasswd;
+          $scope.service.users.idListItem               = obj.idListItem;
+          $scope.service.users.idUserFk                 = obj.idUserFk;
+          $scope.service.users.nameProfile              = obj.nameProfile;
+          $scope.service.isSysUser=obj.idUserFk?true:false;          
           $('#serviceLicenceDetails').modal({backdrop: 'static', keyboard: false});
+          $scope.service.isUserLicenceEdit = true;
+          console.log($scope.userLicenceSelected);
         }      
       /***********************************
       *      SET QTTY OF NEW LICENCE     *
@@ -15240,7 +15281,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         $scope.rsJsonUser={};
         $scope.loadSeletedSysUserFields = function(obj){
           $scope.rsJsonUser={};
-          $scope.service.users = {'fullName':'','email':'', 'phone':''};
+          $scope.service.users.fullName    = '';
+          $scope.service.users.email       = '';
+          $scope.service.users.phone       = '';
+          $scope.service.users.nameProfile = ''; 
           if ($scope.list_user_licence.length>0){
             for (var key in  $scope.list_user_licence){
               if ($scope.list_user_licence[key].idUserFk==obj.idUser){
@@ -15262,55 +15306,296 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               $scope.service.users.fullName                 = obj.fullNameUser;
               $scope.service.users.email                    = obj.emailUser;
               $scope.service.users.phone                    = obj.phoneNumberUser;
+              $scope.service.users.nameProfile              = obj.nameProfile;
 
               $('#serviceLicenceSecretWord').focus();
           }else{
               $scope.service.isSysUser=false;
               $scope.service.sysUser.selected=undefined;
-              $scope.service.users = {'fullName':'','email':'', 'phone':''};
+              $scope.service.users.fullName    = '';
+              $scope.service.users.email       = '';
+              $scope.service.users.phone       = '';
+              $scope.service.users.nameProfile = ''; 
               $scope.rsJsonUser={};
           }
 
         };
       /***********************************
-      *          ADD LICENCE USER        *
-      ************************************/ 
-        $scope.addUserLicenceFn = function(obj){
-          if ((obj.idUser!=undefined || obj.idUser!=null) && $scope.rsJsonUser.phoneNumberUser!=obj.phone){
+      *        PROCESS LICENCE USER      *
+      ************************************/
+        $scope.list_depto_user_licence = [];
+        $scope.list_company_user_licence = [];
+        $scope.list_particular_user_licence = [];
+        $scope.processUserLicenceFn = function(obj, opt){
+          if (!$scope.service.isUserLicenceEdit && (obj.idUser!=undefined || obj.idUser!=null) && ($scope.rsJsonUser.phoneNumberUser!=obj.phone)){
             $scope.rsJsonUser.phoneNumberUser=$scope.service.users.phone;
             $scope.modalConfirmation('updateSysUser', 0, $scope.rsJsonUser);
-          }
-            var idUserFk = $scope.service.isSysUser ? obj.idUser : null;
-            var idDepartmentFk = "";
-            var depto="";
-            var idParticularAddressFk=($scope.service.new!=undefined && $scope.service.new.idClientTypeFk=="5"|| $scope.service.update!=undefined && $scope.service.update.idClientTypeFk=="5")?obj.idParticularAddressFk:null;
-            if(($scope.service.new.idClientTypeFk!=undefined || $scope.service.update.idClientTypeFk!=undefined ) && ($scope.service.new.idClientTypeFk=="2" || $scope.service.update.idClientTypeFk=="2") && ($scope.service.idDetinationOfLicenseFk=="1" || $scope.service.idDetinationOfLicenseFk=="2")){
-                idDepartmentFk=$scope.service.idDepartmentFk.idDepto;
-                depto=$scope.service.idDepartmentFk.Depto;                
-            }else{
-              idDepartmentFk=null;
-              depto=null
+          }else if ($scope.service.isUserLicenceEdit && (obj.idUser!=undefined || obj.idUser!=null) && obj.idUser!=obj.idUserFk && ($scope.rsJsonUser.phoneNumberUser!=obj.phone)){
+            $scope.rsJsonUser.phoneNumberUser=$scope.service.users.phone;
+            $scope.modalConfirmation('updateSysUser', 0, $scope.rsJsonUser);
+          }else if ($scope.service.isUserLicenceEdit && (obj.idUser==undefined || obj.idUser==null) && $scope.userLicenceSelected.phone!=obj.phone){
+            for (var usr in $scope.rsList.clientUser){
+              if ($scope.rsList.clientUser[usr].idUser == obj.idUserFk){
+                $scope.modalConfirmation('updateSysUser', 0, $scope.rsList.clientUser[usr]);
+                break;
+              }
             }
-            $scope.list_user_licence.push({'idUserFk':idUserFk,'fullName':obj.fullName, 'email':obj.email, 'idDetinationOfLicenseFk':$scope.service.idDetinationOfLicenseFk, 'idDepartmentFk':idDepartmentFk, 'depto':depto, 'idParticularAddressFk':obj.idParticularAddressFk, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
-             $('#serviceLicenceDetails').modal('hide');
-             if (obj.idUser!=null){$scope.service.sysUser.selected=undefined;};
-              inform.add("Licencia ha sido cargada y asignada a "+obj.fullName+" satisfactoriamente.",{
-                ttl:5000, type: 'success'
-              });
-              $scope.changeLicencesFn("change");        
+          }
+          console.log(obj);          
+          var idDepartmentFk        = "";
+          var depto                 = "";          
+          var idParticularAddressFk = null;
+          var idDetinationOfLicenseFk = null;
+          var idDepartmentList = null;
+          if ($scope.service.new!=undefined && $scope.service.idClientTypeFk!=""){
+            $scope.idClientFkOpt=$scope.service.idClientTypeFk;
+          }else if ($scope.service.update!=undefined && $scope.service.update.idClientTypeFk!=""){
+            $scope.idClientFkOpt=$scope.service.update.idClientTypeFk;
+          }
+          if ($scope.idClientFkOpt!=null){
+            switch (opt){
+              case "new":
+                var idUserFk              = $scope.service.isSysUser ? obj.idUser : null;
+                var idListItem            = $scope.list_user_licence.length==0?1:($scope.list_user_licence.length+1);
+                switch ($scope.idClientFkOpt){
+                  case "1":
+                  case "3":
+                  case "4":
+                    idParticularAddressFk   = null;
+                    idDepartmentFk          = null;
+                    depto                   = null;
+                    idDetinationOfLicenseFk = null;
+                    $scope.list_company_user_licence.push({'idListItem':idListItem, 'idUserFk':idUserFk,'fullName':obj.fullName, 'nameProfile': obj.nameProfile, 'email':obj.email, 'idDetinationOfLicenseFk':idDetinationOfLicenseFk, 'idDepartmentList':obj.idDepartmentList, 'idDepartmentFk':idDepartmentFk, 'depto':depto, 'idParticularAddressFk':idParticularAddressFk, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
+                  break;
+                  case "2":
+                    idParticularAddressFk = null;
+                    switch (obj.idDetinationOfLicenseFk){
+                      case "1":
+                        idDepartmentFk          = obj.idDetinationOfLicenseFk=="1"?obj.idDepartmentList.idDepto:null;
+                        depto                   = obj.idDetinationOfLicenseFk=="1"?obj.idDepartmentList.Depto:null;
+                        idDetinationOfLicenseFk = obj.idDetinationOfLicenseFk;
+                        $scope.list_depto_user_licence.push({'idListItem':idListItem, 'idUserFk':idUserFk,'fullName':obj.fullName, 'nameProfile': obj.nameProfile, 'email':obj.email, 'idDetinationOfLicenseFk':idDetinationOfLicenseFk, 'idDepartmentList':obj.idDepartmentList, 'idDepartmentFk':idDepartmentFk, 'depto':depto, 'idParticularAddressFk':idParticularAddressFk, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
+                      break;
+                      case "2":
+                      case "3":
+                        idDepartmentFk          = null;
+                        depto                   = null;
+                        idDetinationOfLicenseFk = obj.idDetinationOfLicenseFk;
+                        $scope.list_company_user_licence.push({'idListItem':idListItem, 'idUserFk':idUserFk,'fullName':obj.fullName, 'nameProfile': obj.nameProfile, 'email':obj.email, 'idDetinationOfLicenseFk':idDetinationOfLicenseFk, 'idDepartmentList':obj.idDepartmentList, 'idDepartmentFk':idDepartmentFk, 'depto':depto, 'idParticularAddressFk':idParticularAddressFk, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
+                      break;
+                    }
+                  break;
+                  case "5":
+                    idDetinationOfLicenseFk = null;
+                    idDepartmentFk          = obj.idDepartmentList.idDepto!=undefined?obj.idDepartmentList.idDepto:null;
+                    depto                   = obj.idDepartmentList.Depto!=undefined?obj.idDepartmentList.Depto:null;
+                    idParticularAddressFk   = obj.idParticularAddressFk
+                    $scope.list_particular_user_licence.push({'idListItem':idListItem, 'idUserFk':idUserFk,'fullName':obj.fullName, 'nameProfile': obj.nameProfile, 'email':obj.email, 'idDetinationOfLicenseFk':idDetinationOfLicenseFk, 'idDepartmentList':obj.idDepartmentList, 'idDepartmentFk':idDepartmentFk, 'depto':depto, 'idParticularAddressFk':idParticularAddressFk, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
+                  break;
+                }
+                $scope.list_user_licence.push({'idListItem':idListItem, 'idUserFk':idUserFk,'fullName':obj.fullName, 'nameProfile': obj.nameProfile, 'email':obj.email, 'idDetinationOfLicenseFk':idDetinationOfLicenseFk, 'idDepartmentList':obj.idDepartmentList, 'idDepartmentFk':idDepartmentFk, 'depto':depto, 'idParticularAddressFk':idParticularAddressFk, 'phone':obj.phone, 'keyword':obj.keyword, 'idOS':obj.idOS, 'profileUser':obj.profileUser});
+                //console.log($scope.list_user_licence);
+                 $('#serviceLicenceDetails').modal('hide');
+                 if (obj.idUser!=null){$scope.service.sysUser.selected=undefined;};
+                  inform.add("Licencia ha sido cargada y asignada a "+obj.fullName+" satisfactoriamente.",{
+                    ttl:5000, type: 'success'
+                  });
+                  $scope.changeLicencesFn("change");
+              break;
+              case "update":
+                if ($scope.userLicenceSelected.idDetinationOfLicenseFk==obj.idDetinationOfLicenseFk){
+                  var idUserFk              = $scope.service.isSysUser && (obj.idUser!=undefined || obj.idUser!=null)? obj.idUser : obj.idUserFk;
+                  switch ($scope.idClientFkOpt){
+                    case "1":
+                    case "3":
+                    case "4":
+                      idParticularAddressFk   = null;
+                      idDepartmentFk          = null;
+                      depto                   = null;
+                      idDepartmentList        = null;
+                      idDetinationOfLicenseFk = null;
+                      for (var key in $scope.list_company_user_licence){
+                        if ($scope.list_company_user_licence[key].idListItem == obj.idListItem){
+                          $scope.list_company_user_licence[key].idListItem               = obj.idListItem;
+                          $scope.list_company_user_licence[key].idUserFk                 = idUserFk;
+                          $scope.list_company_user_licence[key].fullName                 = obj.fullName;
+                          $scope.list_company_user_licence[key].nameProfile              = obj.nameProfile;
+                          $scope.list_company_user_licence[key].email                    = obj.email;
+                          $scope.list_company_user_licence[key].idDetinationOfLicenseFk  = idDetinationOfLicenseFk;
+                          $scope.list_company_user_licence[key].idDepartmentFk           = idDepartmentFk
+                          $scope.list_company_user_licence[key].depto                    = depto;
+                          $scope.list_company_user_licence[key].idParticularAddressFk    = idParticularAddressFk;
+                          $scope.list_company_user_licence[key].phone                    = obj.phone;
+                          $scope.list_company_user_licence[key].keyword                  = obj.keyword;
+                          $scope.list_company_user_licence[key].idOS                     = obj.idOS;
+                          $scope.list_company_user_licence[key].profileUser              = obj.profileUser;      
+                          break;
+                        }
+                      }
+                    break;
+                    case "2":
+                      idParticularAddressFk = null;
+                      switch (obj.idDetinationOfLicenseFk){
+                        case "1":
+                          idDepartmentFk          = obj.idDetinationOfLicenseFk=="1" && obj.idDepartmentFk!=obj.idDepartmentList.idDepto?obj.idDepartmentList.idDepto:obj.idDepartmentFk;
+                          depto                   = obj.idDetinationOfLicenseFk=="1" && obj.depto!=obj.idDepartmentList.Depto?obj.idDepartmentList.Depto:obj.depto;
+                          idDepartmentList        = obj.idDepartmentList;
+                          idDetinationOfLicenseFk = obj.idDetinationOfLicenseFk;
+                          for (var key in $scope.list_depto_user_licence){
+                            if ($scope.list_depto_user_licence[key].idListItem == obj.idListItem){
+                              $scope.list_depto_user_licence[key].idListItem               = obj.idListItem;
+                              $scope.list_depto_user_licence[key].idUserFk                 = idUserFk;
+                              $scope.list_depto_user_licence[key].fullName                 = obj.fullName;
+                              $scope.list_depto_user_licence[key].nameProfile              = obj.nameProfile;
+                              $scope.list_depto_user_licence[key].email                    = obj.email;
+                              $scope.list_depto_user_licence[key].idDetinationOfLicenseFk  = idDetinationOfLicenseFk;
+                              $scope.list_depto_user_licence[key].idDepartmentFk           = idDepartmentFk
+                              $scope.list_depto_user_licence[key].depto                    = depto;
+                              $scope.list_depto_user_licence[key].idDepartmentList         = idDepartmentList;
+                              $scope.list_depto_user_licence[key].idParticularAddressFk    = idParticularAddressFk;
+                              $scope.list_depto_user_licence[key].phone                    = obj.phone;
+                              $scope.list_depto_user_licence[key].keyword                  = obj.keyword;
+                              $scope.list_depto_user_licence[key].idOS                     = obj.idOS;
+                              $scope.list_depto_user_licence[key].profileUser              = obj.profileUser;      
+                              break;
+                            }
+                          }
+                          console.log($scope.list_depto_user_licence);
+                        break;
+                        case "2":
+                        case "3":
+                          idDepartmentFk          = null;
+                          depto                   = null;
+                          idDepartmentList        = null;
+                          idDetinationOfLicenseFk = obj.idDetinationOfLicenseFk;
+                          for (var key in $scope.list_company_user_licence){
+                            if ($scope.list_company_user_licence[key].idListItem == obj.idListItem){
+                              $scope.list_company_user_licence[key].idListItem               = obj.idListItem;
+                              $scope.list_company_user_licence[key].idUserFk                 = idUserFk;
+                              $scope.list_company_user_licence[key].fullName                 = obj.fullName;
+                              $scope.list_company_user_licence[key].nameProfile              = obj.nameProfile;
+                              $scope.list_company_user_licence[key].email                    = obj.email;
+                              $scope.list_company_user_licence[key].idDetinationOfLicenseFk  = idDetinationOfLicenseFk;
+                              $scope.list_company_user_licence[key].idDepartmentFk           = idDepartmentFk
+                              $scope.list_company_user_licence[key].depto                    = depto;
+                              $scope.list_company_user_licence[key].idDepartmentList         = obj.idDepartmentList;
+                              $scope.list_company_user_licence[key].idParticularAddressFk    = idParticularAddressFk;
+                              $scope.list_company_user_licence[key].phone                    = obj.phone;
+                              $scope.list_company_user_licence[key].keyword                  = obj.keyword;
+                              $scope.list_company_user_licence[key].idOS                     = obj.idOS;
+                              $scope.list_company_user_licence[key].profileUser              = obj.profileUser;      
+                              break;
+                            }
+                          }
+                        break;
+                      }
+                    break;
+                    case "5":
+                      idDetinationOfLicenseFk = null;
+                      idDepartmentFk          = obj.idDepartmentList.idDepto!=undefined?obj.idDepartmentList.idDepto:null;
+                      depto                   = obj.idDepartmentList.Depto!=undefined?obj.idDepartmentList.Depto:null;
+                      idDepartmentList        = obj.idDepartmentList;
+                      idParticularAddressFk   = obj.idParticularAddressFk;
+                      for (var key in $scope.list_particular_user_licence){
+                        if ($scope.list_particular_user_licence[key].idListItem == obj.idListItem){
+                          $scope.list_particular_user_licence[key].idListItem               = obj.idListItem;
+                          $scope.list_particular_user_licence[key].idUserFk                 = idUserFk;
+                          $scope.list_particular_user_licence[key].fullName                 = obj.fullName;
+                          $scope.list_particular_user_licence[key].nameProfile              = obj.nameProfile;
+                          $scope.list_particular_user_licence[key].email                    = obj.email;
+                          $scope.list_particular_user_licence[key].idDetinationOfLicenseFk  = idDetinationOfLicenseFk;
+                          $scope.list_particular_user_licence[key].idDepartmentFk           = idDepartmentFk
+                          $scope.list_particular_user_licence[key].depto                    = depto;
+                          $scope.list_particular_user_licence[key].idDepartmentList              = obj.idDepartmentList;
+                          $scope.list_particular_user_licence[key].idParticularAddressFk    = idParticularAddressFk;
+                          $scope.list_particular_user_licence[key].phone                    = obj.phone;
+                          $scope.list_particular_user_licence[key].keyword                  = obj.keyword;
+                          $scope.list_particular_user_licence[key].idOS                     = obj.idOS;
+                          $scope.list_particular_user_licence[key].profileUser              = obj.profileUser;      
+                          break;
+                        }
+                      }
+                    break;
+                  }
+                  for (var key in $scope.list_user_licence){
+                    if ($scope.list_user_licence[key].idListItem == obj.idListItem){
+                      $scope.list_user_licence[key].idListItem               = obj.idListItem;
+                      $scope.list_user_licence[key].idUserFk                 = idUserFk;
+                      $scope.list_user_licence[key].fullName                 = obj.fullName;
+                      $scope.list_user_licence[key].nameProfile              = obj.nameProfile;
+                      $scope.list_user_licence[key].email                    = obj.email;
+                      $scope.list_user_licence[key].idDetinationOfLicenseFk  = idDetinationOfLicenseFk;
+                      $scope.list_user_licence[key].idDepartmentFk           = idDepartmentFk;
+                      $scope.list_user_licence[key].depto                    = depto;
+                      $scope.list_user_licence[key].idDepartmentList         = idDepartmentList;
+                      $scope.list_user_licence[key].idParticularAddressFk    = idParticularAddressFk;
+                      $scope.list_user_licence[key].phone                    = obj.phone;
+                      $scope.list_user_licence[key].keyword                  = obj.keyword;
+                      $scope.list_user_licence[key].idOS                     = obj.idOS;
+                      $scope.list_user_licence[key].profileUser              = obj.profileUser;      
+                      break;
+                    }
+                  }
+                  console.log($scope.list_user_licence);
+                   $('#serviceLicenceDetails').modal('hide');
+                   if (obj.idUser!=null){$scope.service.sysUser.selected=undefined;};
+                    inform.add("Datos de la licencia asignada a "+obj.fullName+" han sido actualizados satisfactoriamente.",{
+                      ttl:5000, type: 'success'
+                    });
+                }else{
+                  $scope.removeUserLicenceFn($scope.userLicenceSelected);
+                  $timeout(function() {
+                    $scope.processUserLicenceFn(obj, 'new');
+                  }, 500);
+                  
+                }
+              break;
+            }                
+          }      
         }
       /***********************************
       *         REMOVE LICENCE USER      *
       ************************************/
           $scope.removeUserLicenceFn=function(obj){
             var objItem             = $scope.list_user_licence; 
-            var arrItem             = objItem.map(function(i){return i.idUserFk;});        
-            var indexItem           = arrItem.indexOf(obj.idUserFk);
+            var arrItem             = objItem.map(function(i){return i.idListItem;});        
+            var indexItem           = arrItem.indexOf(obj.idListItem);
             $scope.list_user_licence.splice(indexItem, 1);            
-              inform.add("Licencia asignada a "+obj.fullName+" ha sido removida correctamente.",{
-                ttl:5000, type: 'warning'
-              });
-              $scope.changeLicencesFn("remove");
+            inform.add("Licencia asignada a "+obj.fullName+" ha sido removida correctamente.",{
+              ttl:5000, type: 'danger'
+            });
+            for (var key in $scope.list_depto_user_licence){
+              if ($scope.list_depto_user_licence[key].idListItem == obj.idListItem){
+                var objItem             = $scope.list_depto_user_licence; 
+                var arrItem             = objItem.map(function(i){return i.idListItem;});        
+                var indexItem           = arrItem.indexOf(obj.idListItem);
+                $scope.list_depto_user_licence.splice(indexItem, 1);
+                break;
+              }
+            }
+            for (var key in $scope.list_company_user_licence){
+              if ($scope.list_company_user_licence[key].idListItem == obj.idListItem){
+                var objItem             = $scope.list_company_user_licence; 
+                var arrItem             = objItem.map(function(i){return i.idListItem;});        
+                var indexItem           = arrItem.indexOf(obj.idListItem);
+                $scope.list_company_user_licence.splice(indexItem, 1);
+                break;
+              }
+            }            
+            for (var key in $scope.list_particular_user_licence){
+              if ($scope.list_particular_user_licence[key].idListItem == obj.idListItem){
+                var objItem             = $scope.list_particular_user_licence; 
+                var arrItem             = objItem.map(function(i){return i.idListItem;});        
+                var indexItem           = arrItem.indexOf(obj.idListItem);
+                $scope.list_particular_user_licence.splice(indexItem, 1);
+                break;
+              }
+            }
+            console.log($scope.list_depto_user_licence);
+            console.log($scope.list_company_user_licence);
+            console.log($scope.list_particular_user_licence);
+            console.log($scope.list_user_licence);
+            $scope.changeLicencesFn("remove");
           }        
 
     /**************************************************

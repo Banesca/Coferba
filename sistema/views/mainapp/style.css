@@ -24,6 +24,10 @@ body{
     color: #337ab7;
     border-color: #2e6da4;
 }
+.text-default{
+    color: #777777;
+    border-color: #ccc;
+}
 .thumbnail-success{
   border: 1px solid #5cb85c;
   background-color: #5cb85c;
@@ -374,6 +378,9 @@ input.fileUpload{
     font-weight: bold;
 }
 /***********************************/
+.margin-top-4em{
+  margin-top: -4em;
+}
 .disabled {
     pointer-events:none; 
     opacity:0.6;         
