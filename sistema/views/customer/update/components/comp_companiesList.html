@@ -8,7 +8,7 @@
 	<label class="clf-p-left">
 	<span ng-if="customer.update.idClientTypeFk==2">Administracion del Edificio </span>
 	<span style="padding-right: 9em;" ng-if="customer.update.idClientTypeFk==4">Empresa</span><button style="margin-left: 80px;" 
-	ng-disabled="customer.select.company.selected==undefined && customer.select.company.selected.idClient==''"  ng-click="getCustomersByIdFn('details', customer.select.company.selected)" class="btn btn-xs btn-success"><i class="fas fa-info-circle"></i> Detalles</button> </label>  				                  
+	ng-disabled="customer.select.company.selected==undefined && customer.select.company.selected.idClient==''"  ng-click="getCustomersByIdFn('details_company', customer.select.company.selected.idClient, 'show')" class="btn btn-xs btn-success"><i class="fas fa-info-circle"></i> Detalles</button> </label>  				                  
 	<div class="input-group">
 	    <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
 	        <ui-select name="update_admin_id" 

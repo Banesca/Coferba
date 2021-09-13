@@ -21,7 +21,7 @@
 						  <div class="col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fas fa-door-open"></i></span>
-								<select name="service_door" id="service_door" class="form-control text-uppercase" ng-options="door.idAccCrtlDoor as door.itemName for door in rsContractItemListData" ng-model="service.update.idDoorFk" autofocus ng-disabled="true" >
+								<select name="service_door" id="service_door" class="form-control text-uppercase" ng-options="door.idAccCrtlDoor as door.itemName for door in rsContractItemListData | filter:filterContractAvailableItems(door)" ng-change="checkDoorType(service.update.idDoorFk)" ng-model="service.update.idDoorFk" autofocus ng-disabled="true" >
 								<option class="text-uppercase" value="">Selecciona una puerta</option>
 							    </select>
 						  </div>

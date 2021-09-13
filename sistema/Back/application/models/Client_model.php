@@ -437,7 +437,7 @@ class Client_model extends CI_Model {
                 'addressLat'              => $client['addressLat'],
                 'addressLon'              => $client['addressLon'],
                 'idAgentFk'               => $client['idAgentFk'],
-                'isNotCliente'            => $client['isNotCliente'],
+                'isNotCliente'            => $client['isNotClient'],
                 'idClientAdminFk'         => $client['idClientAdminFk'],
                 'observationOrderKey'     => $client['observationOrderKey'],
                 'observationSericeTecnic' => $client['observationSericeTecnic'],

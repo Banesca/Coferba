@@ -373,9 +373,9 @@ input.fileUpload{
 .tr-space-5>td{
   padding-bottom: 5px;
 }
-.table-hover > tbody > tr:hover {
+.table-hover-selected > tbody > tr:hover {
     background-color: rgba(255, 188, 87, 0.46) !important;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 /***********************************/
 .margin-top-4em{

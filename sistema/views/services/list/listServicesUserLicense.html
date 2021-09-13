@@ -37,28 +37,53 @@
           </div>
           <div class="form-group col-md-12">
             <!-- Licence Assigned List -->
-            <div class="well-checkbox n-padding-t n-padding-b" style="margin-left: 0px;margin-right: 0px;">
-                <table ng-if="list_user_licence.length>0">
-                  <tr ng-repeat="licence in list_user_licence">
-                      <!--<td style="width: 0%; padding: 0 10px 0 10px;"><label style="font-size: 100%" class="label label-default">{{$index+1}}</label></td>-->
-                      <td style="width: 35%">
-                        <span class="text-muted text-box">
-                          {{licence.fullName | uppercase}}&nbsp;
-                          <span data-toggle="tooltip" data-placement="top" title="Usuario del sistema" ng-if="licence.idUserFk" class="btn btn-xs btn-warning"><i class="fas fa-users-cog"></i></span>
-                        </span>
-                      </td>
-                      <td style="width: 30%"><span data-toggle="tooltip" data-placement="top" title="Correo" class="text-muted text-box"><label style="font-size: 100%" class="label label-default"><i class="fas fa-envelope"></i></label>&nbsp;{{licence.email}}</span></td>
-                      <td style="width: 5%"><span class="text-muted text-box"><label style="font-size: 100%" class="label label-default">
-                        <span ng-if="licence.idOS=='1'" data-toggle="tooltip" data-placement="top" title="IOS"><i class="fab fa-apple"></i></span>
-                        <span ng-if="licence.idOS=='2'" data-toggle="tooltip" data-placement="top" title="Android"><i class="fab fa-android"></i></span>
-                      </label></span></td>
-                      <td style="width: 20%"><span data-toggle="tooltip" data-placement="top" title="Perfil" class="text-muted text-box"><label style="font-size: 100%" class="label label-default"><i class="fas fa-address-card"></i></label>&nbsp;{{licence.profileUser}}</span></td>
-                        <td style="width: 10%; padding-bottom: 5px;">
-                          <button data-toggle="tooltip" data-placement="top" title="ver" ng-click="loadSelectedUserLicenceFn(licence);" class="btn btn-xs btn-warning"><i class="fas fa-eye"></i></button>
-                        </td>
-                  </tr>
-                </table>
-                <div ng-if="list_user_licence.length==0" class="text-uppercase banner-no-rows banner-no-rows-padding-1 banner-no-rows-warning"><h5><i class="fas fa-exclamation-triangle"> </i> No hay licencias cargadas</h5></div>
+            <!-- Licence Assigned List -->
+            <!-- Licence Assigned to Admin/company -->
+            <div ng-if="list_company_user_licence.length>0" class="form-group col-md-12 n-padding-l n-padding-r">
+              <div class="col-md-12">
+                  <div class="panel panel-default padding-panel">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Licencias Asignadas a la Administración o Encargados </h3>
+                    </div>
+                    <div class="panel-body">
+                    <div ng-include="'views/services/list/userLicencesListByCompany.html'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Licence Assigned to Departments -->
+            <div ng-if="list_depto_user_licence.length>0" class="form-group col-md-12 n-padding-l n-padding-r" ng-class="{'margin-top-4em':list_company_user_licence.length>0}">
+              <div class="col-md-12">
+                  <div class="panel panel-default padding-panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                          <div class="col-md-8" style="margin-top: 0.4em;">Licencias en departamentos</div>
+                      <!-- Deparments for customer building -->
+                        <div class="input-group col-md-4">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                          <select name="deparment_registered_list" 
+                              class="form-control input-sm"
+                              ng-change="search(service.idDepartmentList, '', true);"
+                              ng-options="item.idDepto as item.Depto for item in rsBuildingDepartmentsData" 
+                              ng-required="false"
+                              ng-model="service.idDepartmentList" autofocus >
+                            <option value="">Filtrar por departamento</option>
+                          </select>
+                        </div>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                    <div ng-include="'views/services/list/userLicencesListByDepto.html'"></div>
+                                <!-- PAGINATION -->
+                    <div ng-if="list_depto_user_licence.length>=7" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>
+                                <!-- //PAGINATION -->                     
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div ng-if="list_user_licence.length==0" class="text-uppercase banner-no-rows banner-no-rows-padding-1 banner-no-rows-warning"><h5><i class="fas fa-exclamation-triangle"> </i> No hay Licencias cargadas</h5>
+              </div>
             </div>
           </div>
           <div class="clearfix"> </div> 

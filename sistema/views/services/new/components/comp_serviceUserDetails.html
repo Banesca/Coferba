@@ -19,7 +19,7 @@
 					    <div class="col-xs-12">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="fas fa-user"></i></span>
-				    			<input name="serviceUserName" id="serviceUserName" type="text" class="form-control" ng-required="true" ng-disabled="service.new.isSysUser" ng-model="service.users.name" />
+				    			<input name="serviceUserName" id="serviceUserName" type="text" ng-disabled="isListCustomerService" class="form-control" ng-required="true" ng-disabled="service.new.isSysUser" ng-model="service.users.name" />
 				    		</div>
 				    	</div>
 					</div>
@@ -34,7 +34,7 @@
 					    <div class="col-xs-12">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="fas fa-user"></i></span>
-				    			<input name="serviceUser" id="serviceUser" type="text" class="form-control" ng-required="true" ng-model="service.users.user" />
+				    			<input name="serviceUser" id="serviceUser" type="text" ng-disabled="isListCustomerService" class="form-control" ng-required="true" ng-model="service.users.user" />
 				    		</div>
 				    	</div>
 					</div>
@@ -49,7 +49,7 @@
 					    <div class="col-xs-12">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="fas fa-key"></i></span>
-				    			<input name="serviceUserPass" type="text" ng-required="true" class="form-control" ng-model="service.users.pass" />
+				    			<input name="serviceUserPass" type="text" ng-required="true" ng-disabled="isListCustomerService" class="form-control" ng-model="service.users.pass" />
 				    		</div>
 				    	</div>
 					</div>
@@ -64,7 +64,7 @@
 					    <div class="col-xs-12">
 						    <div class="input-group">
 						    	<span class="input-group-addon"><i class="fas fa-address-card"></i></span>
-				    			<input name="serviceUserProfile" type="text" ng-required="true" class="form-control" ng-model="service.users.profile" />
+				    			<input name="serviceUserProfile" type="text" ng-required="true" ng-disabled="isListCustomerService" class="form-control" ng-model="service.users.profile" />
 				    		</div>
 				    	</div>
 					</div>
@@ -81,10 +81,11 @@
 						    </div>
 						    <div class="panel-body">
 							    	<label for="serviceUserQR" style="cursor: pointer;">	
-										<input id="serviceUserQR" name="serviceUserQR" accept="image/*" onchange="angular.element(this).scope().loadAttachedFilesFn(this)" type="file" class="form-control" ng-model="service.users.qrCode" style="display: none;" />
+										<input id="serviceUserQR" name="serviceUserQR" ng-disabled="isListCustomerService" accept="image/*" onchange="angular.element(this).scope().loadAttachedFilesFn(this)" type="file" class="form-control" ng-model="service.users.qrCode" style="display: none;" />
 										<div class="thumbnail">
-									        <img ng-if="previewData.length==0" src="images/nopictureselected.png" style="width:auto">
-											<img ng-if="previewData.length>0" ng-src="{{data.src}}" ng-repeat="data in previewData track by $index" class="thumbnail box-center" style="width:auto">       
+									        <img ng-if="previewData.length==0 && (service.users.qrBase64==undefined || service.users.qrBase64==null)" src="images/nopictureselected.png" style="width:auto">
+											<img ng-if="previewData.length>0 && (service.users.qrBase64==undefined || service.users.qrBase64==null)" ng-src="{{data.src}}" ng-repeat="data in previewData track by $index" class="thumbnail box-center" style="width:auto">
+											<img ng-if="previewData.length==0 && (service.users.qrBase64!=undefined || service.users.qrBase64!=null)" ng-src="{{service.users.qrBase64}}" class="thumbnail box-center" style="width:auto"> 
 									        <div class="caption">
 									          	<p ng-if="previewData.length>=0">Seleciona una imagen de tipo  jpg|png|jpeg</p>
 	          									<div ng-if="invalidTypeOf" class="alert alert-warning" role="alert"><strong><i class="glyphicon glyphicon-remove-sign">&nbsp </i>El tipo de archivo {{fileTypeOf}}:</strong> no esta permitido, {{invalidTypeOf}}.
@@ -101,7 +102,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button ng-if="isNewCustomerService || isUpdateCustomerService" type="submit" ng-click="addServiceUserDetailsFn(service.users)" ng-disabled="fServiceUserDetails.$invalid" class="btn btn-labeled btn-success">
+                        <button ng-if="isNewCustomerService || isUpdateCustomerService" type="submit" ng-click="processServiceUserDVRFn(service.users)" ng-disabled="fServiceUserDetails.$invalid" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>
                         	<span>Asignar</span>
                         </button>

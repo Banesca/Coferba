@@ -331,9 +331,8 @@ class Services_model extends CI_Model {
                 'idTypeMaintenanceFk'     => $item['idTypeMaintenanceFk'],
                 'idCompanyMonitorFK'      => $item['idCompanyMonitorFK'],
                 'sucribeNumber'           => $item['sucribeNumber'],
-                'idDetinationOfLicenseFk' => $item['idDetinationOfLicenseFk'],
-                'idDepartmentFk'          => $item['idDepartmentFk'],
-                'idParticularAddressFk'   => $item['idParticularAddressFk'],
+                'idApplicationFk'         => $item['idApplicationFk'],
+                'passwdApp'               => $item['passwordApp'],
                 'countNewLicense'         => $item['countNewLicense'],
                 'observation'             => $item['observation'],
             ]
@@ -378,11 +377,10 @@ class Services_model extends CI_Model {
                 'idTypeMaintenanceFk'     => $item['idTypeMaintenanceFk'],
                 'idCompanyMonitorFK'      => $item['idCompanyMonitorFK'],
                 'sucribeNumber'           => $item['sucribeNumber'],
-                'idDetinationOfLicenseFk' => $item['idDetinationOfLicenseFk'],
-                'idDepartmentFk'          => $item['idDepartmentFk'],
+                'idApplicationFk'         => $item['idApplicationFk'],
+                'passwdApp'               => $item['passwordApp'],
                 'countNewLicense'         => $item['countNewLicense'],
-                'observation'             => $item['observation'],
-                'idParticularAddressFk'   => $item['idParticularAddressFk'],
+                'observation'             => $item['observation'],                
             ]
         )->where("idClientServicesSmartPanic", $item['idClientServicesSmartPanic'])->update("tb_client_services_smart_panic");
         $data = $this->db->select("idClientServicesFk")
@@ -888,12 +886,17 @@ class Services_model extends CI_Model {
         }
         foreach ($items as $item) {
             $this->db->insert('tb_user_license', [
+                    "idUserFk"                     => $item['idUserFk'],
                     "fullName"                     => $item['fullName'],
                     "email"                        => $item['email'],
                     "phone"                        => $item['phone'],
                     "keyword"                      => $item['keyword'],
+                    "numberUserPassword"           => $item['userNumbPasswd'],
                     "idOS"                         => $item['idOS'],
                     "profileUser"                  => $item['profileUser'],
+                    "idDetinationOfLicenseFk"      => $item['idDetinationOfLicenseFk'],
+                    "idDepartmentFk"               => $item['idDepartmentFk'],
+                    "idParticularAddressFk"        => $item['idParticularAddressFk'],                    
                     "idClientServicesSmartPanicFk" => $id,
                 ]
             );
@@ -1017,11 +1020,9 @@ class Services_model extends CI_Model {
                 'idContracAssociated_SE'  => [ 'tb_contratos', 'idContrato' ],
                 'idTypeMaintenanceFk'     => [ 'tb_type_maintenance', 'idTypeMaintenance' ],
                 'idCompanyMonitorFK'      => [ 'tb_monitor_company', 'idMonitorCompany' ],
-                'idDetinationOfLicenseFk' => [ 'tb_detination_of_license', 'idDetinationOfLicense' ],
-                'idDepartmentFk'          => [ 'tb_client_departament', 'idClientDepartament' ],
-                'idParticularAddressFk'   => [ 'tb_client_address_particular', 'idAddressParticular' ],
+                'idApplicationFk'         => [ 'tb_app_monitor_application', 'idApplication' ],
                 'fk'                      => [
-                    [ 'tb_user_license', 'idClientServicesSmartPanicFk' ],
+                    [ 'tb_user_license', 'idClientServicesSmartPanicFk' ],                  
                     [ 'tb_detalles_control_acceso', 'idServicesFk' ],
                 ],
             ],
@@ -1119,15 +1120,29 @@ class Services_model extends CI_Model {
                                         }
 
                                     } elseif ($tabla == "tb_client_services_smart_panic" && $id == 'fk') {
+                                        $rsSQL = null;
                                         //return 'a';
-                                        //return $servicios->result_array();
+                                        //return $servicios->result_array();                                       
                                         foreach ($data[$id] as $idFk => $item3Fk) {
-                                            $dataG = $this->db->select(" * ")
-                                                ->from($item3Fk[0])
-                                                ->where($item3Fk[1], $item['idClientServicesSmartPanic'])
+                                            if ($item3Fk[0]=='tb_user_license'){
+                                                //echo $item3Fk[0]." - ".$item3Fk[1]."\n";
+                                                $dataG = $this->db->select(" idClientServicesSmartPanicFk, idClientTypeFk, idDetinationOfLicenseFk, detinationOfLicense, idDepartmentFk, tb_client_departament.idClientDepartament AS idDepto, CONCAT(floor,'-',departament) AS Depto, idClient AS idBuilding, address AS Building, idParticularAddressFk, idUserFk, fullName, nameProfile, email, phone, keyword, idOS, numberUserPassword, profileUser ")
+                                                ->from($item3Fk[0]) 
+                                                ->join('tb_detination_of_license', 'tb_detination_of_license.idDetinationOfLicense = '.$item3Fk[0].'.idDetinationOfLicenseFk', 'LEFT')
+                                                ->join('tb_user', 'tb_user.idUser = '.$item3Fk[0].'.idUserFk', 'LEFT')
+                                                ->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'LEFT')
+                                                ->join('tb_client_departament', 'tb_client_departament.idClientDepartament = '.$item3Fk[0].'.idDepartmentFk', 'LEFT')
+                                                ->join('tb_clients', 'tb_clients.idClient = tb_client_departament.idClientFk', 'LEFT')
+                                                ->where($item3Fk[0].'.'.$item3Fk[1], $item['idClientServicesSmartPanic'])
                                                 ->get();
-                                            //return $this->db->last_query();
-                                            //return $dataG->result_array();
+                                            }else{
+                                                $dataG = $this->db->select(" * ")
+                                                    ->from($item3Fk[0])                                                
+                                                    ->where($item3Fk[1], $item['idClientServicesSmartPanic'])
+                                                    ->get();
+                                                //return $this->db->last_query();
+                                                //return $dataG->result_array();
+                                            }
                                             $aux   = [];
                                             if ($dataG->num_rows() >= 0) {
                                                 foreach ($dataG->result_array() as $ite2) {
@@ -1313,7 +1328,6 @@ class Services_model extends CI_Model {
                                                 } else {
                                                     //echo $data[$id][0]."\n";
                                                     //return $item[$id];['idServiceAsociateFk']
-                                                    
                                                     if ($data[$id][0]=='tb_client_services'){
                                                         $servicesAssociated=[];
                                                         $serviceAsociate_arr=[];

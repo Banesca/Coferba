@@ -23,7 +23,7 @@
 							  <div class="col-xs-12" ng-class="{'col-md-6':service.idApplicationFk=='2'}">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-tag"></i></span>
-									<input id="service_name" name="service_name" type="text" class="form-control" ng-model="service.new.name" required="true" />
+									<input id="service_name" name="service_name" type="text" class="form-control" ng-model="service.new.name" ng-required="true" />
 							  </div>
 							</div>
 						</div>					
@@ -41,7 +41,7 @@
 									<select name="service_contract" 
 									class="form-control" 
 									ng-options="item.idContrato as item.numeroContrato for item in rsCustomerContractListData" ng-model="service.new.idContratoFk"
-									ng-change="switchContractService(service.new)" required="true" autofocus >
+									ng-change="switchContractService(service.new)" ng-required="true" autofocus >
 									    <option class="text-uppercase" value="">Selecciona un contrato</option>
 								    </select>
 							  </div>
@@ -58,7 +58,7 @@
 							  <div class="col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-user-tie"></i></span>
-									<input name="service_numberCustomer" type="text" class="form-control" ng-model="service.new.sucribeNumber" required="true" />
+									<input name="service_numberCustomer" type="text" class="form-control" ng-model="service.new.sucribeNumber" ng-required="true" />
 							  </div>
 							</div>
 						</div>						
@@ -83,7 +83,7 @@
 							  <div class="col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
-									<input name="service_start_date" type="text" ng-keydown="fnLoadPhoneMask()" required="true" class="form-control input--date" ng-model="service.new.dateUp" />
+									<input name="service_start_date" type="text" ng-keydown="fnLoadPhoneMask()" ng-required="true" class="form-control input--date" ng-model="service.new.dateUp" />
 							  </div>
 							</div>
 						</div>
@@ -111,7 +111,7 @@
 									<select name="service_monitorCompany" 
 									class="form-control" 
 									ng-options="item.idMonitorCompany as item.monitorCompany for item in rsMonitorCompanyListData" ng-model="service.new.idCompanyMonitorFK"
-									required="true" autofocus >
+									ng-required="true" autofocus >
 									    <option class="text-uppercase" value="">Selecciona una empresa</option>
 								    </select>
 							  </div>
@@ -131,7 +131,7 @@
 									<select name="application" 
 									class="form-control" 
 									ng-options="item.idApplication as item.applicationName for item in rsAppMonitorApplicationListData" ng-model="service.idApplicationFk"
-									required="true" autofocus >
+									ng-required="true" autofocus >
 									    <option class="text-uppercase" value="">Selecciona una Aplicación</option>
 								    </select>
 							  </div>
@@ -148,7 +148,7 @@
 							  <div class="col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-key"></i></span>
-									<input name="service_passwordApp" type="text" class="form-control" ng-model="service.passwordApp" required="service.idApplicationFk=='2'" />
+									<input name="service_passwordApp" type="text" class="form-control" ng-model="service.passwordApp" ng-required="service.idApplicationFk=='2'" />
 							  </div>
 							</div>
 						</div>						
@@ -170,7 +170,7 @@
 							<div class="col-xs-12">
 							    <div class="input-group">
 							    	<span class="input-group-addon"><i class="fas fa-sort-numeric-up-alt"></i></span>
-									<input name="service_numbOfLicences" class="form-control input--number" type="number" min="0" max="999" ng-min="0" ng-max="999" only-number ng-keydown="fnLoadPhoneMask();" ng-model="service.numbOfNewLicence" required autofocus>				    			
+									<input name="service_numbOfLicences" class="form-control input--number" type="number" min="0" max="999" ng-min="0" ng-max="999" only-number ng-keydown="fnLoadPhoneMask();" ng-model="service.numbOfNewLicence" ng-required="service.numbOfLicenceSet<=0 || list_user_licence.length==0" autofocus>				    			
 					    		</div>
 					    	</div>						
 						</div>
@@ -211,64 +211,33 @@
 						</div>
 						<!-- Licence Assigned List -->
 						<!-- Licence Assigned to Admin/company -->
-						<div class="form-group col-md-12">
-							<div ng-if="list_company_user_licence.length>0" class="col-md-12">
+						<div ng-if="list_company_user_licence.length>0" class="form-group col-md-12 n-padding-l n-padding-r">
+							<div class="col-md-12">
 							  	<div class="panel panel-default padding-panel">
 								    <div class="panel-heading">
 								      <h3 class="panel-title">Licencias Asignadas a la Administración o Encargados </h3>
 								    </div>
 								    <div class="panel-body">
-								      	<div class="row-fluid">
-									    	<div class="col-md-12 n-padding-l n-padding-r" ng-repeat="licence in list_company_user_licence">
-									      		<div class="col-md-1"><label style="font-size: 80%" class="label label-default">{{$index+1}}</label></div>
-									      		<!-- User profile -->
-									      		<div ng-if="licence.idUserFk" class="col-md-1 n-padding-l n-padding-r" >
-									      			<span data-toggle="tooltip" data-placement="top" title="Perfil {{licence.nameProfile}}" class="font-size-18px"><i class="text-primary fas fa-id-card-alt"></i></span>
-									      		</div>
-									      		<!-- Is system User registered -->
-									      		<div ng-if="licence.idUserFk" class="col-md-1 n-padding-l n-padding-r">
-									      			<span data-toggle="tooltip" data-placement="top" title="Usuario registrado" class="font-size-18px"><i class="text-success fas fa-users-cog"></i></span>
-												</div>									      		
-									      		<div class="col-md-6 n-padding-l">
-									      			<span class="text-muted text-box">
-									      				{{licence.fullName | uppercase}}
-									      			</span>
-									      		</div>
-									      		<!-- Operating System -->
-									      		<div class="col-md-2">
-								      				<span class="text-muted text-box" ng-if="licence.idOS=='1'" data-toggle="tooltip" data-placement="top" title="Sistema Operativo">
-								      					<span class="font-size-18px"><i class="text-default fab fa-apple"></i>
-								      					</span> iOS
-								      				</span>
-								      				<span class="text-muted text-box" ng-if="licence.idOS=='2'" data-toggle="tooltip" data-placement="top" title="Sistema Operativo">
-								      					<span class="font-size-18px"><i class="text-default fab fa-android"></i>
-								      					</span> Android
-								      				</span>
-									      		</div>
-												<div class="col-md-1 n-padding-l n-padding-r pull-right" style="padding-bottom: 5px;">
-													<button style="font-size: 70%;" data-toggle="tooltip" data-placement="top" title="ver/editar" ng-click="loadSelectedUserLicenceFn(licence);" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i></button>
-													<button style="font-size: 70%;" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeUserLicenceFn(licence);" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
-												</div>
-									      	</div>
-										</div>
+										<div ng-include="'views/services/list/userLicencesListByCompany.html'"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- Licence Assigned to Departments -->
-						<div class="form-group col-md-12" ng-class="{'margin-top-4em':list_company_user_licence.length>0}">
-							<div ng-if="list_depto_user_licence.length>0" class="col-md-12">
+						<div ng-if="list_depto_user_licence.length>0" class="form-group col-md-12 n-padding-l n-padding-r" ng-class="{'margin-top-4em':list_company_user_licence.length>0}">
+							<div class="col-md-12">
 							  	<div class="panel panel-default padding-panel">
 								    <div class="panel-heading">
 								      	<h3 class="panel-title">
-								      		<div class="col-md-8">Licencias en departamentos</div>
+								      		<div class="col-md-8" style="margin-top: 0.4em;">Licencias en departamentos</div>
 											<!-- Deparments for customer building -->
 										    <div class="input-group col-md-4">
 										    	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-										  		<select name="deparment_registered" 
-										  				class="form-control input-sm" 
+										  		<select name="deparment_registered_list" 
+										  				class="form-control input-sm"
+										  				ng-change="search(service.idDepartmentList, '', true);"
 										  				ng-options="item.idDepto as item.Depto for item in rsBuildingDepartmentsData" 
-										  				ng-required="true"
+										  				ng-required="false"
 										  				ng-model="service.idDepartmentList" autofocus >
 												    <option value="">Filtrar por departamento</option>
 											    </select>
@@ -276,41 +245,10 @@
 								      	</h3>
 								    </div>
 								    <div class="panel-body">
-								      	<div class="row-fluid">							
-									    	<div class="col-md-12 n-padding-l n-padding-r" ng-repeat="licence in list_depto_user_licence | groupBy:'depto' | filter:{idDepartmentFk:service.idDepartmentList}">
-									      		<div ng-show="licence.group_by_key" class="col-md-12" style="padding-bottom: 8px;"><span data-toggle="tooltip" data-placement="top" title="Perfil" class="text-muted text-box" style="font-size: 100%">Departamento: <label class="label label-default">{{licence.depto}}</label></span></div>
-
-									      		<div class="col-md-1 n-padding-l n-padding-r"><label style="font-size: 80%" class="label label-default">{{$index+1}}</label></div>
-									      		<!-- User profile -->
-									      		<div ng-if="licence.idUserFk" class="col-md-1 n-padding-l n-padding-r" >
-									      			<span data-toggle="tooltip" data-placement="top" title="Perfil {{licence.nameProfile}}" class="font-size-18px"><i class="text-primary fas fa-id-card-alt"></i></span>
-									      		</div>
-									      		<!-- Is system User registered -->
-									      		<div ng-if="licence.idUserFk" class="col-md-1 n-padding-l n-padding-r">
-									      			<span data-toggle="tooltip" data-placement="top" title="Usuario registrado" class="font-size-18px"><i class="text-success fas fa-users-cog"></i></span>
-												</div>									      		
-									      		<div class="col-md-6 n-padding-l">
-									      			<span class="text-muted text-box">
-									      				{{licence.fullName | uppercase}}
-									      			</span>
-									      		</div>
-									      		<!-- Operating System -->
-									      		<div class="col-md-2">
-								      				<span class="text-muted text-box" ng-if="licence.idOS=='1'" data-toggle="tooltip" data-placement="top" title="Sistema Operativo">
-								      					<span class="font-size-18px"><i class="text-default fab fa-apple"></i>
-								      					</span> iOS
-								      				</span>
-								      				<span class="text-muted text-box" ng-if="licence.idOS=='2'" data-toggle="tooltip" data-placement="top" title="Sistema Operativo">
-								      					<span class="font-size-18px"><i class="text-default fab fa-android"></i>
-								      					</span> Android
-								      				</span>
-									      		</div>
-												<div class="col-md-1 n-padding-l n-padding-r pull-right" style="padding-bottom: 5px;">
-													<button style="font-size: 70%;" data-toggle="tooltip" data-placement="top" title="ver/editar" ng-click="loadSelectedUserLicenceFn(licence);" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i></button>
-													<button style="font-size: 70%;" data-toggle="tooltip" data-placement="top" title="Remover" ng-click="removeUserLicenceFn(licence);" class="btn btn-xs btn-danger"><i class="far fa-times-circle"></i></button>
-												</div>
-									      	</div>
-										</div>
+										<div ng-include="'views/services/list/userLicencesListByDepto.html'"></div>
+				                      	<!-- PAGINATION -->
+										<div ng-if="list_depto_user_licence.length>=7" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>
+				                      	<!-- //PAGINATION -->								    	
 									</div>
 								</div>
 							</div>
@@ -332,7 +270,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
-                        <button type="submit" ng-click="modalConfirmation('newService', 0, service.new)" ng-disabled="fCustomerNewService.$invalid || list_user_licence.length<=0" class="btn btn-labeled btn-success">
+                        <button type="submit" ng-click="modalConfirmation('newService', 0, service.new)" ng-disabled="fCustomerNewService.$invalid || list_user_licence.length==0" class="btn btn-labeled btn-success">
                             <span class="btn-label"><i class="glyphicon glyphicon-send"></i> </span>Enviar</button>
                         <a ng-click="modalConfirmation('closeServiceWindow', 0, service.new)" type="button" class="btn btn-labeled btn-danger">
                             <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Cancelar</a>
