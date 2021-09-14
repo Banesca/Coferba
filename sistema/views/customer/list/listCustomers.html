@@ -46,7 +46,9 @@
         <!-- BUSINESS NAME -->
         <td ng-click="switchCustomersFn('details_customer', item, 'show');" ng-trim="true" ng-if="item.idClientTypeFk!=2 && item.idClientTypeFk!=4 && item.idClientTypeFk!=5">{{item.businessName}}</td>
         <td ng-click="switchCustomersFn('details_customer', item, 'show');" ng-trim="true" ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4">{{item.address}}</td>
-        <td ng-click="switchCustomersFn('details_customer', item, 'show');" ng-trim="true" ng-if="item.idClientTypeFk==2 || item.idClientTypeFk==4 || item.idClientTypeFk==5">{{item.billing_information[0].businessNameBilling}}</td>
+        <td ng-if="item.billing_information.length>0 && item.idClientTypeFk==2 || item.idClientTypeFk==4 || item.idClientTypeFk==5" ng-click="switchCustomersFn('details_customer', item, 'show');" ng-trim="true">{{item.billing_information[0].businessNameBilling}}</td>
+        <td ng-if="item.billing_information.length==0 && item.idClientTypeFk==2 || item.idClientTypeFk==4 || item.idClientTypeFk==5" ng-click="switchCustomersFn('details_customer', item, 'show');" ng-trim="true"><label class="label label-warning"><i class="fas fa-exclamation-triangle"> </i> No hay datos de facturación
+            </label></td>
         <!--<td>
           <span ng-if="item.mailFronKey" ng-mouseover="showMe=true" ng-mouseleave="showMe=false" class="mailList"><i data-toggle="tooltip" data-placement="top" title="Mail Llaveros" class="fas fa-key"></i> <span ng-if="showMe" data-toggle="tooltip" data-placement="top" title="Click para Copiar" class=" mailListItem" ngclipboard data-clipboard-text="{{item.mailFronKey}}"> {{item.mailFronKey}}</span></span>
 

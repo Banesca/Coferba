@@ -120,6 +120,17 @@ class Clientes extends REST_Controller {
         }
     }
 
+    public function addNotCustomerDepto_post() {
+
+        $res = $this->client_model->addNotCustomerDepto($this->post('client'));
+
+        if(!is_null($res)){
+            $this->response($res, 200);
+        } else {
+            $this->response([ 'error' => "ERROR INESPERADO" ], 500);
+        }
+    }
+
     public function updatecompany_post() {
 
         $rs = $this->client_model->updateCompany($this->post('client'));

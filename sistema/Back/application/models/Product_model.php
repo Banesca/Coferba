@@ -24,6 +24,7 @@ class Product_model extends CI_Model {
                     'isNumberSerieInternal'     => $product['isNumberSerieInternal'],
                     'isDateExpiration'          => $product['isDateExpiration'],
                     'isControlSchedule'         => $product['isControlSchedule'],
+                    'isRequestNumber'           => $product['isRequestNumber'],
                     'priceFabric'               => $product['priceFabric'],
                 ]
             );
@@ -67,6 +68,7 @@ class Product_model extends CI_Model {
                 'isNumberSerieInternal'     => $product['isNumberSerieInternal'],
                 'isDateExpiration'          => $product['isDateExpiration'],
                 'isControlSchedule'         => $product['isControlSchedule'],
+                'isRequestNumber'           => $product['isRequestNumber'],
                 'priceFabric'               => $product['priceFabric'],
             ]
         )->where("idProduct", $product['idProduct'])->update("tb_products");

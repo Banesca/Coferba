@@ -28,6 +28,7 @@
         </td>
         <td class="media-middle text-center">
           <span ng-if="user.qrCode" style="font-size: 75%;" class="btn qrcode btn-xs btn-warning" data-img={{user.qrCode}} title="Codigo QR"><i class="fas fa-eye"></i></span>
+          <span ng-if="!user.qrCode" style="font-size: 75%;" data-toggle="tooltip" data-placement="top" title="No QR asociado" class="text-warning media-middle text-center font-size-18px"><i class="fas fa-exclamation-triangle"></i></span>          
         </td>        
         <!--NAMES -->
         <td ng-click="loadSelectedUserDVRFn(user)" ng-trim="true"> <span class="media-middle font-size-18px"> {{user.name}}</span></td>

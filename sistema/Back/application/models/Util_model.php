@@ -127,7 +127,8 @@ class Util_model extends CI_Model {
         $select="tb_client_departament.idClientDepartament AS idDepto, 
                     UPPER(CONCAT(tb_client_departament.floor,\"-\",tb_client_departament.departament)) AS Depto,
                     tb_clients.idClient AS idBuilding,
-                    tb_clients.name AS Building";
+                    tb_clients.name AS Building,
+                    tb_client_departament.idCategoryDepartamentFk";
         $where="tb_client_departament.idClientFk=".$id." AND tb_client_departament.idStatusFk<>0";
         $this->db->select($select)->from("tb_client_departament");
         $query = $this->db->join('tb_clients', 'tb_client_departament.idClientFk = tb_clients.idClient', 'left')

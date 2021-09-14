@@ -84,7 +84,19 @@ moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem'
                   console.log("Error: "+response.data.error); 
                   return response;
                 })  
-          },          
+          },
+          addNotCustomerDepto: function(data) {
+            rsCustomer.client = data;
+            //console.log("[Customer Services] => new: "+rsCustomer.client.name);
+              return $http.post(serverHost+serverBackend+"Clientes/addNotCustomerDepto",rsCustomer,serverHeaders)
+                .then(function mySucess(response, status) {
+                  rsJson=response;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                })  
+          },            
           getCustomerList: function(searchFilter) {
             var sFilter=searchFilter;
             var sMsg=searchFilter==null||searchFilter==undefined?"All":searchFilter;

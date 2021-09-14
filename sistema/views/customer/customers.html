@@ -155,6 +155,16 @@
                     </div>
                     <!--NOT REGISTERED CUSTOMER PANEL -->
                     <div id="custNotRegistered" ng-if="sysContent=='registeredNotCustomers'" class="panel-body">
+                      <div  class="row">
+                        <div class="form-group">
+                              <!-- Filter Search -->          
+                              <div class="col-md-4 col-sm-12 col-xs-12">              
+                                <div class="input-group search-box-rule col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" ng-disabled="rsCustomerListData.status==404" ng-change="search(searchboxfilter, false)"  ng-model="searchboxfilter" placeholder="Buscar..." style="border-radius: 4px;">
+                                </div>
+                              </div>
+                        </div>
+                      </div>                      
                       <div class="clear-fix"></div>
                       <!-- TABLE LIST WHERE IS DISPLAYED THE CUSTOMER -->
                       <div ng-include="'views/customer/list/listCustomers.html'"></div>
@@ -177,6 +187,10 @@
   </div>
 <div ng-if="!isNewCustomer" ng-include="'views/customer/customer_details/components/comp_allowedUserInfo.html'"></div>
 <div ng-include="'views/customer/change_admin/changeBuildingBetweenAdmin.html'"></div>
+
+<div ng-include="'views/customer/new/formAttachCustomerFiles.html'"></div>
+<div ng-include="'views/customer/update/formUpdateCustomer.html'"></div>
+<div ng-include="'views/customer/new/formRegisterCustomer.html'"></div>
 <div ng-include="'views/customer/list/listAllowedUsers.html'"></div>
 <div ng-include="'views/customer/list/phonesandschedule.html'"></div>
 <div ng-include="'views/customer/list/mailscontact.html'"></div>
@@ -184,9 +198,5 @@
 <div ng-include="'views/customer/list/listDepartments.html'"></div>
 <div ng-include="'views/customer/list/listParticularAddress.html'"></div>
 <div ng-include="'views/customer/list/listCustomersFiles.html'"></div>
-
-<div ng-include="'views/customer/new/formAttachCustomerFiles.html'"></div>
-<div ng-include="'views/customer/new/formRegisterCustomer.html'"></div>
-<div ng-include="'views/customer/update/formUpdateCustomer.html'"></div>
 <div ng-include="'views/customer/customer_details/formCustomerDetails.html'"></div>
 <div ng-include="'views/customer/company_details/formCompanyDetails.html'"></div>

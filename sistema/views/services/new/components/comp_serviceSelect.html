@@ -6,7 +6,7 @@
 				<!-- FORM CONTAINER-->
 				<div class="col-md-12"> 
 					<!-- Department-->                         
-				    <div ng-repeat="item in tmpServiceList.services" ng-if="item.serviceItems.length>0" class="col-md-4 card-depto-colum" ng-click="switchCustomersFn('services', item, 'start_new_service', item.idServiceType);">
+				    <div ng-if="item.service_items.length>0" ng-repeat="item in tmpServiceList.services" class="col-md-4 card-depto-colum" ng-click="switchCustomersFn('services', item, 'start_new_service', item.idServiceType);">
 				        <div class="card-depto cyan white-text text-center">
 				            <div class="card-depto-content">
 				                <i ng-if="item.idServiceType=='1'" class="fas fa-door-open"></i>

@@ -21,7 +21,7 @@
 	            <ui-select-match placeholder="Seleccione una opci&#243n">{{$select.selected.businessName | uppercase}}</ui-select-match>
 	            <ui-select-choices group-by="'ClientType'" repeat="item in rsFrmCustomerListData | filter:filterCustomerByType | filter: $select.search">
 	              <div ng-bind-html="item.businessName | highlight: $select.search"></div>
-	              <small>Tipo de Cliente: </small><small ng-bind-html="item.ClientType | highlight: $select.search"></small>
+	              <small>Tipo de Cliente: </small><small class="label label-default" ng-bind-html="item.ClientType | highlight: $select.search"></small>
 	              <!--<small>Costo de Envio: </small><small ng-bind-html="item.priceShipping | highlight: $select.search"></small>-->
 	            </ui-select-choices>
 	            <ui-select-no-choice>

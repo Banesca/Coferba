@@ -116,7 +116,8 @@
 	                <ui-select-choices repeat="item in rsBuildingAddressData | filter: $select.search">
 	                  <div ng-bind-html="item.address | highlight: $select.search"></div>
 	                    <small ng-bind-html="item.province | highlight: $select.search"></small>
-	                    <small> (</small><small ng-bind-html="item.location | highlight: $select.search"></small><small>)</small>
+	                    <small ng-if="item.isNotCliente=='0'" class="label label-success">Cliente</small>
+	                    <small ng-if="item.isNotCliente=='1'" class="label label-warning">No Cliente</small>
 	                </ui-select-choices>
 	                <ui-select-no-choice>
 					    No hay resultados, contacte are de soporte.
@@ -135,7 +136,12 @@
 								  			 	'has-error':  
 								  				(customer.select.main.department=='' || customer.select.main.department==undefined) && fUpdateCustomer.deparment_registered.$touched,
 								  			}">
-	  	<label style="padding-left: 25px;">Departamento</label>  
+	  		  	<div class="col-md-6 col-xs-6">
+	  		<label style="padding-left: 25px;">Departamento</label>
+	  	</div>
+		<div class="col-md-6 col-xs-6 pull-rigth">
+	  		<button ng-show="customer.select.main.address.selected.isNotCliente=='1'" style="margin-left: 80px;" ng-click="setDepto2CustomerNotClient(customer.select.main.address.selected)" class="btn btn-xs btn-success"><i class="fas fa-plus"></i> Nuevo</button>
+	  	</div>
 	    <div class="col-xs-12 selectContainer">
 		    <div class="input-group">
 		    	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>

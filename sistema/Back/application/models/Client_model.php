@@ -427,6 +427,24 @@ class Client_model extends CI_Model {
 
     }
 
+    public function addNotCustomerDepto($client) {
+        $this->db->insert('tb_client_departament', [
+                'idClientFk'              => $client['idClient'],
+                'floor'                   => $client['floor'],
+                'departament'             => $client['department'],
+                'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
+                'idStatusFk'              => 1,
+                'numberUNF'               => 0,
+            ]
+        );
+        if ($this->db->affected_rows() === 1) {
+            $idDepto = $this->db->insert_id(); 
+        }else{
+            $idDepto = null;
+        }      
+        return $idDepto;
+    }
+
     public function updateBuilding($client) {
 
         $this->db->set(
@@ -451,7 +469,7 @@ class Client_model extends CI_Model {
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
         // DATOS DE FACTURCION
-        if ($client['isNotCliente'] == 1){
+        if ($client['isNotCliente'] == 1 || $client['isBillingInformationEmpty'] == 1){
 
             $this->db->insert('tb_client_billing_information', [
                     'idClientFk'          => $client['idClient'],

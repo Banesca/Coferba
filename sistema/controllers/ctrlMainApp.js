@@ -6887,7 +6887,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.geoLocation = {'address':'','addressLat':'', 'addressLon':'', 'option':''};
       $scope.tmpAddres = {'province':{},'location':{}};
       $scope.service = {'customer':{},'list':{'zones':{}},'new':{'isHasLockingScrew':'0','numbOfLicenceRemains':'', 'numbOfLicenceSet':'', 'people':{}}, 'users':{'fullName':'','emailUser':'', 'phone':'', 'idOS':'', 'profileUser':'', 'sysUser':{'selected':undefined}}, 'update':{}, 'tipo_conexion_remoto':[{}], 'dvr':{'selected':undefined}, 'batteries':{'selected':undefined}, 'cameras':{'selected':undefined}, 'modem':{'selected':undefined}, 'router':{'selected':undefined}, 'crtlAccess':{'selected':undefined}, 'lockedIt':{'selected':undefined}, 'entranceReader':{'selected':undefined}, 'powerSupply':{'selected':undefined}, 'exitReader':{'selected':undefined}, 'emergencyButton':{'selected':undefined}, 'TurnOffKey':{'selected':undefined}, 'alarmPanel':{'selected':undefined}, 'alarmKeyboard':{'selected':undefined}, 'sysUser':{'selected':undefined}, 'sensor':{'selected':undefined}, 'adicional':{}, 'aditional_alarm':{'sysUser':{'selected':undefined}}};
-      $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'upload':{}, 'companyData':{}, 'particular':{}, 'select':{'main':{},'payment':{}, 'company':{}}};
+      $scope.customer = {'new':{}, 'update':{}, 'info':{}, 'upload':{}, 'companyData':{}, 'particular':{}, 'notClient':{}, 'select':{'main':{},'payment':{}, 'company':{}}};
       $scope.contract = {'new':{}, 'update':{}, 'info':{}, 'select':{'main':{},'date':{}, 'codes':{}}};
       $scope.select = {'filterTypeOfClient': {}, 'filterCustomerIdFk':{'selected':undefined}};
       $scope.customer.select.main = {'address':{}, 'department':'', 'province':{'selected':undefined}, 'location':{'selected':undefined}, }
@@ -7047,6 +7047,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               $scope.fnNewCustomerFn(cObj);
           break; 
           case "edit":
+          case "upgrade":
             $scope.isNewCustomer=false;
             $scope.isUpdateCustomer=true;
             $scope.setScheduleListFn();
@@ -7058,7 +7059,11 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               $scope.isUpdateCustomerRegistered=false;
             }
             $scope.customer.update.isNotClient=false;
-            blockUI.start('Cargando datos del cliente '+cObj.ClientType);
+            if (opt1=="edit"){
+              blockUI.start('Cargando datos del cliente '+cObj.ClientType);
+            }else{
+              blockUI.start('Cargando datos del consorcio '+cObj.address);
+            }
             $timeout(function() {
               $scope.customerDataFn(cObj, 'edit');
             }, 1500); 
@@ -7381,7 +7386,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 if ($scope.rsContractsListByCustomerIdData.length>0){
                   $('#SelectContractFirst').modal('show');
                   $scope.tmpContractList=cObj.contratos;
-                  //console.log($scope.tmpContractList);
+                  console.log($scope.tmpContractList);
                   inform.add('Selecciona un contrato para continuar. ',{
                     ttl:4000, type: 'success'
                   });                
@@ -7398,12 +7403,14 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 $('#SelectContractFirst').modal('hide');
                 //$('#SelectServiceWindows').modal('show');
                 $scope.tmpServiceList=cObj;
-                //console.log($scope.tmpServiceList);
+                console.log($scope.tmpServiceList);
                 inform.add('Selecciona un servicio para continuar. ',{
                   ttl:5000, type: 'success'
                 });
               break;
               case "userDVR":
+                $scope.isNewCustomerService=false;
+                $scope.isUpdateCustomerService=false;
                 $scope.isListCustomerService=true;
                 $scope.cleanServiceInputsFn();
                 blockUI.start('Cargando Usuarios del DVR en el servicio '+cObj.clientTypeServices);
@@ -7412,6 +7419,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 }, 1500);            
               break;               
               case "userLicense":
+                $scope.isNewCustomerService=false;
+                $scope.isUpdateCustomerService=false;              
                 $scope.isListCustomerService=true;
                 $scope.cleanServiceInputsFn();
                 blockUI.start('Cargando Licencias de usuario del servicio '+cObj.clientTypeServices);
@@ -7420,6 +7429,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 }, 1500);            
               break;
               case "listCameras":
+                $scope.isNewCustomerService=false;
+                $scope.isUpdateCustomerService=false;              
                 $scope.isListCustomerService=true;
                 $scope.cleanServiceInputsFn();
                 blockUI.start('Cargando Listado de cameras del servicio '+cObj.clientTypeServices);
@@ -7688,6 +7699,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update=obj;
                         $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
                         $scope.customer.update.billing_information_details=obj.billing_information[0];
+                        $scope.customer.update.isBillingInformationEmpty=obj.billing_information.length==0?1:0;
                         var chekbDays = $scope.chekBox.row;
                         /* PUT ALL THE CHECKBOXES TO FALSE OR UNCHECKED STATE */
                         for (var key in chekbDays){
@@ -7785,6 +7797,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update=obj;
                         $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
                         $scope.customer.update.billing_information_details=obj.billing_information[0];
+                        $scope.customer.update.isBillingInformationEmpty=obj.billing_information.length==0?1:0;
                         console.info($scope.customer.update);
                         var chekbDays = $scope.chekBox.row;
                         //console.log($scope.tmpVars.billing_information);
@@ -7926,6 +7939,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update=obj;
                         $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
                         $scope.customer.update.billing_information_details=obj.billing_information[0];
+                        $scope.customer.update.isBillingInformationEmpty=obj.billing_information.length==0?1:0;
                         console.info($scope.customer.update);
                         var chekbDays = $scope.chekBox.row;
                         //console.log($scope.tmpVars.billing_information);
@@ -8020,6 +8034,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update=obj;
                         $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
                         $scope.customer.update.billing_information_details=obj.billing_information[0];
+                        $scope.customer.update.isBillingInformationEmpty=obj.billing_information.length==0?1:0;
                         console.info($scope.customer.update);
                         var chekbDays = $scope.chekBox.row;
                         //console.log($scope.tmpVars.billing_information);
@@ -8119,6 +8134,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $timeout(function() {
                         $scope.customer.update=obj;
                         $scope.customer.update.billing_information_details=obj.billing_information[0];
+                        $scope.customer.update.isBillingInformationEmpty=obj.billing_information.length==0?1:0;
                         console.info($scope.customer.update);
 
                         //PHONES
@@ -8213,15 +8229,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                           $scope.customer.update.list_client_user                          = $scope.list_client_user;
                           $scope.customer.update.idProvinceFk                              = $scope.customer.select.main.province.selected.idProvince;
                           $scope.customer.update.idLocationFk                              = $scope.customer.select.main.location.selected.idLocation;
-                          $scope.customer.update.billing_information                       = {};
+                          $scope.customer.update.billing_information                       = {'businessNameBilling':'','cuitBilling':'','idTypeTaxFk':'','nameAddress':'','idLocationBillingFk':'','idProvinceBillingFk':''};
                           $scope.customer.update.billing_information                       = $scope.customer.update.billing_information_details;
+                          //console.log($scope.customer.update.billing_information_details);
+                          //$scope.customer.update.billing_information.nameAddress           = $scope.customer.update.billing_information_details;
                           $scope.customer.update.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
                           $scope.customer.update.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
+                          console.log($scope.customer.update.billing_information);
                           //console.log("Count: "+$scope.customer.update.billing_information.length)
                           //Assigning the default value to 0
                           $scope.customer.update.isNotClient                               = 0;
                           $scope.customer.update.isNotCliente                              = 0;
-                          $scope.customer.update.idClientAdminFk                           = $scope.customer.select.company.selected.idClient;
+                          $scope.customer.update.idClientAdminFk                           = $scope.customer.select.company.selected!=undefined?$scope.customer.select.company.selected.idClient:null;
                           $scope.customer.update.idClientCompaniFk                         = null;
                           $scope.customer.update.idDepartmentFk                            = null;
                           $scope.customer.update.idTipoInmuebleFk                          = null;
@@ -8411,14 +8430,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   for (arrList in $scope.list_depto_floors){
                      d=0;
                     for (var depto in $scope.customer.info.list_departament){
-
                         if($scope.customer.info.list_departament[depto].floor==$scope.list_depto_floors[arrList].nameFloor){
                           //$scope.list_depto_floors[d].deptos.push($scope.customer.info.list_departament[depto]);
                           $scope.list_depto_floors[arrList].deptos.push({'idClientDepartament':$scope.customer.info.list_departament[depto].idClientDepartament, 'idDepto':(d+1), 'unitNumber':$scope.customer.info.list_departament[depto].numberUNF, 'floor':$scope.customer.info.list_departament[depto].floor, 'departament':$scope.customer.info.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.info.list_departament[depto].idCategoryDepartamentFk, 'idStatusFk':$scope.customer.info.list_departament[depto].idStatusFk, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
                         }
                         d++;
                     }
-                  }//console.log($scope.list_depto_floors);
+                  }console.log($scope.list_depto_floors);
                   //console.log($scope.list_depto_floors);
                   $('#DepartmentsCustomer').modal('toggle');                      
                 break;
@@ -9907,7 +9925,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.getBuildingsFn = function(){
         addressServices.getBuildings().then(function(data){
             $scope.rsBuildingAddressData = data;
-            //console.log($scope.rsProfileData);
+            //console.log($scope.rsBuildingAddressData);
         });
       };
     /**************************************************
@@ -9919,7 +9937,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         //console.log(obj);
         addressServices.getBuildingsDeptos(idClient).then(function(data){
             $scope.rsBuildingDepartmentsData = data;
-            //console.log($scope.rsProfileData);
+            console.log($scope.rsBuildingDepartmentsData);
         });
       };
     /**************************************************
@@ -10317,13 +10335,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 $scope.rsAddress_API_Data_Main=null;
               break;
               case "payment":
-                //console.log(obj);
+                console.log(obj);
                 if ($scope.isNewCustomer){
                   $scope.customer.new.billing_information_details.nameAddress=obj.calle.nombre+" "+obj.altura.valor;
                 }else{
                   $scope.customer.update.billing_information_details.nameAddress=obj.calle.nombre+" "+obj.altura.valor;
                 }
-               
+                console.log($scope.customer.update.billing_information_details);
                 $scope.rsAddress_API_Data_Payment=null;
                 $scope.addrrSelected=true;
                 $scope.enabledNextBtn();
@@ -10982,12 +11000,18 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               $scope.orderScheduleTimeFn($scope.list_schedule_atention);
               if ($scope.customer.update.isNotCliente=="0"){
                 $scope.addrrSelected=true;
-                $scope.customer.update.billing_information_details.businessNameBilling = $scope.customer.update.billing_information_details.businessNameBilling;           
-                $scope.customer.update.billing_information_details.cuitBilling         = $scope.customer.update.billing_information_details.cuitBilling;
-                $scope.customer.update.billing_information_details.nameAddress         = ($scope.customer.update.idClientTypeFk=="2" || $scope.customer.update.idClientTypeFk=="4") && ($scope.customer.update.billing_information_details.businessAddress=='' || $scope.customer.update.billing_information_details.businessAddress==null)?$scope.customer.update.address:$scope.customer.update.billing_information_details.businessAddress;
-                $scope.customer.update.billing_information_details.idTypeTaxFk         = $scope.customer.update.billing_information_details.idTypeTaxFk;
-                $scope.customer.select.payment.province.selected                       = {idProvince: $scope.customer.update.billing_information_details.idProvinceBillingFk, province: $scope.customer.update.billing_information_details.province};
-                $scope.customer.select.payment.location.selected                       = {idLocation: $scope.customer.update.billing_information_details.idLocationBillingFk, location: $scope.customer.update.billing_information_details.location};
+                if ($scope.customer.update.billing_information_details==undefined || $scope.customer.update.billing_information.length==0){
+                  inform.add('Datos de facturacion incompletos, por favor complete los datos y guarde los cambios. ',{
+                        ttl:6000, type: 'warning'
+                  });
+                }else{
+                  $scope.customer.update.billing_information_details.businessNameBilling = $scope.customer.update.billing_information_details.businessNameBilling;           
+                  $scope.customer.update.billing_information_details.cuitBilling         = $scope.customer.update.billing_information_details.cuitBilling;
+                  $scope.customer.update.billing_information_details.nameAddress         = ($scope.customer.update.idClientTypeFk=="2" || $scope.customer.update.idClientTypeFk=="4") && ($scope.customer.update.billing_information_details.businessAddress=='' || $scope.customer.update.billing_information_details.businessAddress==null)?$scope.customer.update.address:$scope.customer.update.billing_information_details.businessAddress;
+                  $scope.customer.update.billing_information_details.idTypeTaxFk         = $scope.customer.update.billing_information_details.idTypeTaxFk;
+                  $scope.customer.select.payment.province.selected                       = {idProvince: $scope.customer.update.billing_information_details.idProvinceBillingFk, province: $scope.customer.update.billing_information_details.province};
+                  $scope.customer.select.payment.location.selected                       = {idLocation: $scope.customer.update.billing_information_details.idLocationBillingFk, location: $scope.customer.update.billing_information_details.location};
+                }
               }else{
                 $scope.addrrSelected=false;                
                 $scope.customer.update.billing_information_details={};
@@ -11709,17 +11733,108 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               $scope.unitDepto.unitNumber="";
             }
           }
-
         /**************************************************
         * OPEN MODAL OF NEW DEPTO FOR CUSTOMER NOT CLIENT *
         ***************************************************/
-          $scope.setDepto2CustomerNotClient = function(){
-            $('#newDeptoCustomerNotClient').modal('show');
+          $scope.setDepto2CustomerNotClient = function(obj){
+            $scope.customer.notClient={};
+            $scope.customer.notClient=obj;
+            $("#newDeptoCustomerNotClient").modal({backdrop: 'static', keyboard: false});
           }
           $scope.closeDepto2CustomerNotClient = function(){
             $("#newDeptoCustomerNotClient").modal("hide");
           }
+        /**************************************************
+        *    ADD NEW DEPARTMENT TO A NO CLIENT BUILDING   *
+        ***************************************************/
+          $scope.isDeptoRegistered = false;
+          $scope.addDepto2NotClientCustomer = function (obj){
+            console.log(obj);
+            var depto = obj.floor+'-'+obj.department;
+            for (var key in $scope.rsBuildingDepartmentsData){
+              if ($scope.rsBuildingDepartmentsData[key].Depto == depto.toUpperCase() && $scope.rsBuildingDepartmentsData[key].idCategoryDepartamentFk == obj.idCategoryDepartamentFk){
+                inform.add('El departamento '+depto.toUpperCase()+' ya esta registrado. ',{
+                        ttl:6000, type: 'warning'
+                });
+                $scope.isDeptoRegistered = true;
+                $scope.customer.notClient.idCategoryDepartamentFk='';
+                $scope.customer.notClient.department='';
+                $scope.customer.notClient.floor='';
+                //$("#newDeptoCustomerNotClient").modal("hide");
+                break;                
+              }else{
+                $scope.isDeptoRegistered = false;
+              }
+            }
+            if (!$scope.isDeptoRegistered){
+              CustomerServices.addNotCustomerDepto(obj).then(function(response){
+                  console.log(response);
+                  $scope.rsJsonData = response;
+                  if($scope.rsJsonData.status==200){
+                    console.log("New Depto Successfully registered");
+                    inform.add('Departamento '+depto.toUpperCase()+' registrado con exito. ',{
+                          ttl:2000, type: 'success'
+                    });
+                    $scope.getBuildingsDeptosFn(obj.idClient);
+                    blockUI.start('Cargando departamento nuevo '+depto.toUpperCase()+' a la lista.');                     
+                    $timeout(function() {
+                      var idDepto = $scope.rsJsonData.data
+                      $scope.customer.select.main.department=idDepto.toString();
+                      blockUI.stop();  
+                    }, 1500);
+                  }else if($scope.rsJsonData.status==500){
+                    console.log("Customer not Created, contact administrator");
+                    inform.add('Error: [500] Contacta al area de soporte. ',{
+                          ttl:2000, type: 'danger'
+                    });
+                  }
+              });
+              $scope.customer.notClient={};
+              $("#newDeptoCustomerNotClient").modal("hide");
+            }
 
+          }
+        /**************************************************
+        *     SET THE FLOOR DIFFERENT THAN DEPARTMENT     *
+        ***************************************************/          
+          $scope.setNewDeptoFloor = function(opt){
+            switch (opt){         
+              case "2":
+                if($scope.isNewCustomer){
+                  $scope.customer.new.floor = "co";
+                  $scope.customer.new.department = "";
+                }else{
+                  $scope.customer.notClient.floor = "co";
+                  $scope.customer.notClient.department = "";
+                }
+              break;
+              case "3":
+                if($scope.isNewCustomer){
+                  $scope.customer.new.floor = "ba";
+                  $scope.customer.new.department = "";
+                }else{              
+                  $scope.customer.notClient.floor = "ba";
+                  $scope.customer.notClient.department = "";
+                }
+              break;
+              case "4":
+                if($scope.isNewCustomer){
+                  $scope.customer.new.floor = "lo";
+                  $scope.customer.new.department = "";
+                }else{              
+                  $scope.customer.notClient.floor = "lo";
+                  $scope.customer.notClient.department = "";
+                }
+              break;
+              case "5":
+                if($scope.isNewCustomer){
+                  $scope.customer.new.department = "po-"+$scope.customer.new.floor;
+                }else{              
+                  $scope.customer.notClient.department = "po-"+$scope.customer.notClient.floor;
+                }
+              break;
+            }
+          }
     /**************************************************
     *                                                 *
     *             OTHER FUNCTIONAL UNITS              *
@@ -15233,10 +15348,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                    $scope.service.users.idUser=null;
                   $scope.service.users.name='';
                 }
+                $scope.isDVRUserEdit = false;
           }
         /***********************************
         *       LOAD USER DVR SELECTED     *
         ************************************/
+          $scope.isDVRUserEdit = false;
           $scope.loadSelectedUserDVRFn = function(obj){
             $scope.previewData = [];
             $scope.service.users = {'idItem':'', 'name':'','user':'', 'pass':'', 'profile':'', 'userProfile':'', 'qrCode':'', 'qrBase64':''};
@@ -15247,7 +15364,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             $scope.service.users.profile         = obj.profile;
             $scope.service.users.userProfile    = obj.profile;
             $scope.service.users.qrCode          = obj.qrBase64==null?obj.qrCode:obj.qrBase64;
-            $scope.service.users.qrBase64        = obj.qrBase64==null?obj.qrCode:obj.qrBase64;      
+            $scope.service.users.qrBase64        = obj.qrBase64==null?obj.qrCode:obj.qrBase64;
+            $scope.isDVRUserEdit = true;
             $('#serviceUserDetails').modal({backdrop: 'static', keyboard: false});
             console.log($scope.service.users);
           }            
@@ -15261,7 +15379,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
             var idProfile   = obj.profile==null || obj.profile==undefined?obj.userProfile:obj.profile;
             var qrCode      = obj.qrCode==null  || obj.qrCode==undefined?obj.qrBase64:obj.qrCode;
             var idListItem  = $scope.list_user.length==0?1:($scope.list_user_licence.length+1);
-            if ($scope.list_user.length==0){
+            if ($scope.list_user.length==0 || !$scope.isDVRUserEdit){
               $scope.list_user.push({'idItem':idListItem,'idClientFk':idUser,'name':obj.name, 'user':obj.user, 'pass':obj.pass, 'profile':idProfile, 'userProfile':idProfile, 'qrCode':qrCode, 'qrBase64':qrCode});
               inform.add("Usuario DVR: "+obj.user+" ha sido cargado correctamente.",{
                 ttl:5000, type: 'success'
@@ -15418,8 +15536,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
         /***********************************
         *   GENERATE PDF FILE & DOWNLOAD   *
         ************************************/
-          $scope.generatePDF = function(user, service){
-            //console.log(service);
+          $scope.generatePDF = function(user, service){            
             var blobUrlObject = null;
             console.log("isListCustomerService: "+$scope.isListCustomerService+" isNewCustomerService: "+$scope.isNewCustomerService+" isUpdateCustomerService: "+$scope.isUpdateCustomerService);
             if (($scope.isNewCustomerService && $scope.service.new.isHasInternetConnect) || ($scope.isUpdateCustomerService && $scope.service.update.isHasInternetConnect==true) || ($scope.isListCustomerService)){
@@ -15432,8 +15549,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 serviceProcess=service.list;
               }
               console.log(user);
-              //console.log(serviceProcess);              
-                if ((serviceProcess.idTipeServiceFk=="4" && serviceProcess.addessClient=="") || (serviceProcess.idTipeServiceFk=="3" && serviceProcess.addressClientInter=="") || ((serviceProcess.idTipeServiceFk=="3" || serviceProcess.idTipeServiceFk=="4") &&  serviceProcess.nroPort2=="")){
+              console.log(serviceProcess);
+                if (user.qrCode==null){
+                  inform.add("Error al generar PDF, no existe un codigo QR asociado.",{
+                    ttl:5000, type: 'warning'
+                  });  
+                }else if ((serviceProcess.idTipeServiceFk=="4" && (serviceProcess.addessClient==null || serviceProcess.addessClient=="") && (serviceProcess.nroPort2==null || serviceProcess.nroPort2=="")) || (serviceProcess.idTipeServiceFk=="3" && (serviceProcess.addressClientInter==null || serviceProcess.addressClientInter=="") && (serviceProcess.numberPort2==null || serviceProcess.numberPort2==""))){
                   inform.add("Error al generar PDF completar campos requeridos de conexion a internet.",{
                     ttl:5000, type: 'warning'
                   });                
@@ -15499,12 +15620,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       doc.setTextColor(0,0,0);
                       doc.setFontSize(16);
                       doc.text("PARA CONFIGURAR LOS PROGRAMAS DE VISUALIZACIÓN", 33, 52);
-                      var imageData ="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIbGNtcwIQAABtbnRyUkdCIFhZWiAH4gADABQACQAOAB1hY3NwTVNGVAAAAABzYXdzY3RybAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWhhbmSdkQA9QICwPUB0LIGepSKOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAF9jcHJ0AAABDAAAAAx3dHB0AAABGAAAABRyWFlaAAABLAAAABRnWFlaAAABQAAAABRiWFlaAAABVAAAABRyVFJDAAABaAAAAGBnVFJDAAABaAAAAGBiVFJDAAABaAAAAGBkZXNjAAAAAAAAAAV1UkdCAAAAAAAAAAAAAAAAdGV4dAAAAABDQzAAWFlaIAAAAAAAAPNUAAEAAAABFslYWVogAAAAAAAAb6AAADjyAAADj1hZWiAAAAAAAABilgAAt4kAABjaWFlaIAAAAAAAACSgAAAPhQAAtsRjdXJ2AAAAAAAAACoAAAB8APgBnAJ1A4MEyQZOCBIKGAxiDvQRzxT2GGocLiBDJKwpai5+M+s5sz/WRldNNlR2XBdkHWyGdVZ+jYgskjacq6eMstu+mcrH12Xkd/H5////2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCABMALMDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/K5n4wfGTwr+z/8ADfVvGHjbxBpPhfwxoUBub/U9SuFt7e2QcfMzdycAKMszEAAkgUfGf4uaL8BPhN4k8beJJri30Hwrp0+qahJBbSXMqQQoXcpFGC7tgcKoJJwBX80v/BUH/htX/gvJ4hh8d+DPh3qWu/Aewnf/AIRTRfC3iHTtVtrbAwZrxbe4ZjflT8wkUGIMUUAbiwB9Cf8ABR//AIPMGttSv/Df7MvhO3nt4y0X/CZeKLdiJunz2thlSB3V7hsnPMIr8jf2jf8Agrn+0t+1dqM83jj41fEDU4LgktYW2qvp+njPYW1t5cI/75rm/j5/wTo+PH7L2jf2l8Q/g/8AEfwfpeSDf6noNxDZgjrmbb5f5tXi5jxQBcu/El/fXTTzX15NMx3NI87MxPqSTmvUfgj+358bf2btShuvAfxa+InhVoTlY9P1+5jgb2aLeY2HsykV5BtNGKAP2Y/YF/4PG/jB8HtTsdJ+O2g6f8VPDWVjm1bToYtM163XoXwgW2uCBj5WSIk9ZK/f79h/9v8A+FP/AAUS+EMfjT4U+KrPxFpsZWK+tiPJvtImYZ8m6gb54n4OMjawGVZl5r+GkHFexfsQ/t0/En/gnx8eNM+IXwx8QTaLrViwS4gYl7LVrfIL2t1FkCWFscqeVOGUq6hgAf3NUV8y/wDBKL/gp34L/wCCqv7KunfEDwxt03WLZhY+JNAknElxoN+FBaMnjfE4+eKXADoeQGV1X6aoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKADrXx7+0N/wRz8G+LviXdfE34M+Ita/Z1+Mk/zyeJfByJHZay/JC6npjf6LfR7iWO5Vck5LmvsInArzP9pn9sr4V/sa+Djr3xS8feF/A+mFS0T6rfJDLdY6rDFzJM3+zGrH2oA+Xfh3/wAFGPiJ+yv8WNB+E/7Yfhnwz4fXxdIdO8M/FDw+7/8ACH+J5zwtndpMN2m3kichJSYpDvCMABn5y/4Krf8ABK79n/8AbQ/4KH/B34H+Evhh4Z8NeLtWM3jr4j+JPDlqunXWmeG7bMKxOsOIjNe3TLEkjxsyiJmFewfG79szx1/wVS+FWs+Afgt+zDJ42+Hfiq3NpdeMfjFFJ4d8KzxnBSa3s8f2hdgHDK8axFGUEMpANcz/AMG9H7Nmp/sqfG39p/4f+PPEU3jn4p+A9Y8PaJc+Ip5J5PM0P+yI5tNtYBOzukEW6dVG452jP3RgA4Dx9/wZefs0+IMvofjb4w+H5OynUrG8iH4Pahv/AB6vyR/4Lmf8EDvFX/BI/wASaTr+j6lqHjb4S+Iitta69NarDPpt9tJa0ulTKKzBS8bjAcBhgMhz/XdXkP7ff7Mlj+2V+xd8TfhjfW8Fx/wmXh67sLXzVDLBdmMtbSjPG6OdYnB6gqDxQB/DCRg0A4q1rOlXGiancWd5DJb3dpK0M8Ug2tFIpKspHYhgR+FVaAPtz/ggb/wU0vv+CZv7fXh3Wr2+kh+HvjOWLw/4wty37r7JJIBHd4PG+2kYSg9dnmqPvmv7HoJluYVkjZXRxuVlOQw9QfSv4B4j81f2cf8ABBH9p+4/a3/4JL/BnxTqF011rNno39galI/+skuNPkazLue7OkKOT335oA+wqKTePUUbx6igBaKTePUUbx6igBaKM0UAFFFFABRRRQAUUUUAFFFFAH56/DvVf2wP+CnngjS/FFp43+H/AOzP8JfEsAu7H/hELmDxl4t1O1b/AKiB/wBAttwx80KyOh3DORXs37M3/BHP4F/s0+MP+Ev/AOEdvfiJ8SJCHn8b+PL9/EevzSDo6z3GVhPX/UJGOa/lt/4Jaf8ABan4zf8ABJvx4w8J6g2u+B7q436v4M1aVzpt2c4d4urWtxjjzYxyQu9ZANtf1Ff8ExP+CxnwZ/4Kp/D5b7wHrQ0/xXYwq+seE9TdI9W0xsDcwQHE8Oek0WVORu2NlQAfVgGK+HPh/wD8Wg/4ODviFpa4htfjJ8HNK8Q7+1xeaPqM1k6/7wguoj9K+4wcivhv9rp9/wDwXJ/ZDXRMyarH4X8bt4hQHCx6Oba0ETt3/wCP0RBR0OW6YoA+43fy0ZvmO0ZwBk1498L/ANu/4Z/Gf9obxB8KfD+ratceP/Cdiuo61pN14f1CybSoWKCNpZJ4UjBk3qUAYl1yy5UEj2Kq8OlWttqM95HbwR3V0iRzTLGBJKqbtgZsZIXc2Aem446mgD+OD/g4R/ZSP7In/BWr4uaHb2wttG8Sal/wlekhQVQ2+oD7QwUf3UmaeP8A7Z18VV/QR/we0/srrLpPwb+NNnbN5kMtz4N1WYJ1Vg13Zgn2K3g5/vAV/PueDQAq9a/qb/4M3tam1X/gkzq0EzFk034g6pbw5P3Ua2sZSP8AvqRj+NfyyoMtX9Zn/Bph8Jrr4af8EbvCuoXULQ/8Jt4g1bXo1YYLRmcWqN+K2uR7EUAfjn/wUR/4L4ftd/B39vj41eE/Dfxu8QaX4e8M+OdZ0vTLKOwsGS0tob2WOKIFrcsQqqFBJJ45JNeN/wDERv8Atrf9F88S/wDgu07/AORq/qo8Wf8ABL39nDx54q1LXNb+BPwl1bWdZupL2/vrvwrZzXF5PIxeSWR2jJZ2YklickkmvyD/AODvL9iv4Qfsx/sb/C/U/hz8L/APgXUtQ8aNa3N3oWh29hNcQ/YJ28t3iRSy7lB2njIBoA/NP/iI3/bW/wCi+eJv/Bdp3/yNQP8Ag43/AG1j/wA198S/+C/Tv/keu+/4Nbvgd4M/aE/4Kp2Ph3x54T8O+MtAk8LarcNp2tafFfWpkRItj+XICu5cnBxkZ4r9r/8Agpr4j/4J4/8ABKbwvZz/ABI+CPwlvPEmsQtPpXhjRvBWn3OrX8YJXzdjKqRQ7gV8yVlUkMF3EEUAfW//AAS3+K3iD46f8E5vgj4y8WapNrXibxP4L0zU9Tv5URXvLiW3R5JCECqCzEnAAHtXvVfz2Tf8HpWkfC/R9O8N/DX9mLTdF8I6HAlnp1pN4oW1S3t0G1I44YLQpGoUABVJAr139mj/AIPWvhj448U2enfFL4T+J/AFlcOI5NW0nU01y3tc/wAckPlwy7B38sSN6KaAP22orgIf2n/A+pfCDRfHel+ILHXPDPiS1jvNIvNOcXCanE67laLHUY65xjocHivNtU/b3jWYix8NyPHnhp70Kx/BVOPzr5bPONclyip7HH11Ge/Kk5P5qKbXzse5lnDeZZhD2mFpOUe90l8m2r/I+iKK8J8J/t06RqV7HDrGk3elo5wZopBcInuRgNj6An2rN/4KAf8ABUn4O/8ABNf4IWfjn4keIWS11klNE03TYxdajr8gUMy20WQCFUgtI7LGm5dzAsoPXkfE+V5xFyy6sp8u61TXqmk/naxhmeSY7L2ljKbjfZ6NP5q6/E+iKK/Aj4lf8HwUEOrPH4P/AGe5rjT1YhLjWfFohmkHbMcNs6qfbe31r0f9ln/g9Q+FvxD8WWOl/Fb4W+JPhzaXTiN9Y0zUV1y0tc/xyxCKKYIO/lrI3+ya948o/bCisX4d/EbQvi14E0jxP4Z1ax17w9r1pHfadqNjKJ7a9gkUMkkbrwykEEGigD+Of/gvT+wzdfsDf8FOPiN4Yjs3t/DPiK9bxR4afbtjk0+8dpAie0MvnQH3h9xXyj8OviT4g+EfjbTfEnhbW9W8OeIdGmFxY6lpt29rdWcg6PHIhDKfcGv60P8Ag4u/4JAf8PRf2Sk1Dwnaw/8AC3Phus1/4b4VDrELAG4013PTzdqtGTwsqKCVV3NfyP69oN74Z1m807UrO60/UNPme2urW5iaGa2lRirxujAMrqwIKkZBBFAH7uf8Eof+DwW/8OjTfBX7UtjLqlku2CHx5pFoPtUKgY3X9pGMSj1ltwGwOYnJLV9Zfs9f8FSf2dfix/wXP+LHjbWPjJ8P9P07w/8AD3Q/BXge+vdVS3sdXiuHfU9RkhuJMQhlla3iILhyUIx8px/LMDtpfMOaAP7q5/22vg1aaVDfzfFr4ZRWFw4jiuX8U2KwysSAFVvNwSSQMD1Fen1/AMJM9l/IV/Uh/wAGv3/BVr4jf8FH/gD8SPCHxC8RWN540+G502PS9QWwSOSSwlgaJGlUYErrLbPuc4ZvNHtU1JOMXJK9ui3fkr2X3tIqMU5JN28+x9T/APBev9lBP2xP+CUfxg8MxW4uNY0nR28SaRgfOLvT/wDSlVP9p0jki+kpr+MeQc1/d18N/Htx4rfUPCniy1t4fENnGy3EO39xqNu3y+bGO6kHBHb25A/iR/bP+ENn8Av2vvil4F0+VZtP8G+LdU0W1cfxRW93LEh/75UVx5dmFHG0FXo3ts01Zxa0cZLo09GjoxmDqYaq6VTfdNapp7NPqn0ZzvwN+DmvftC/GLwv4F8L2cmoeIvF+qW+kadbqD8888ixpnGcKC2SegAJPAr+4/8AZR/Z80n9lD9mnwH8NdDC/wBl+B9CtNFhkxgz+REqNKf9p2DOfdzX4vf8Gln/AARgvPAsFv8AtS/EnS/s99qVo8Hw/wBOuoissNvKpSXVWU8r5qFo4c4zG0kmMPG1fvFXccoV+Lf/AAey/wDJjnwj/wCx7b/03XNftJX4t/8AB7L/AMmOfCP/ALHtv/Tdc0Afnb/waF8/8FhtNz0/4RHWM/8AfEVfRX/BUD/g3B/bF/b6/b0+JnxSkvPh3cab4k1ub+xIrvxNIJLXTIj5VnDs8ghCsCplRwGZjySSfnX/AINDP+Uw2m9B/wAUjrHX/cirS/4LAf8ABzD8b/2mv2hPE3hv4QeNNa+Gfwr0W9n0zTBoM32TUtbSNzH9rnul/er5mCyxRsqqjKDuYFiAfs9+wV/wb8/s2fskfskeF9H+Inwr+HPjHxtHpUMnivXvEVjFqXnX7IGuBFJcDbHAjkogQINiKTlixP8APX/wcIfBz4F/A3/gpJr2i/s/XWgyeDW0y0ub6z0S9F3p+lam3mC4toXDMAAFjcorMI2kZRtxsX64+Bn/AAasftaftj+CNN8VfFr4p6f4R/tyFLsWHiHU7/XNYhRwGHnxg+WjkEEoZSwPDbTkD4h/4LP/APBMqy/4JP8A7VOi/C+18YXHje4n8LWeuX2pSWC2KefPNcIY44g7lUCwqQWYkkk8cCgD9Vv+DfTxpqniP/glr4Z0+81G6vLLQPEutWdjDKTssY2e3naNO23fM78d5DX6mfswaj8Nz4Ya18QQ6SuuNMxd9TjBSRD93YzfKMDgjg5r4Z/4NWvhToXxU/4I5Q22uStazQ+ONYezuFmEckQKWoO3dwVJHII6jsa+4vEX7DOrQxtLoutafqMLfMizKYWYexG5T+lfzznfC+d5fxHWzrBYeGKhNt8rs2k7acraaatZNX09bH61lOdZZismp5Zia0qEo9VdJ6vqtLO+qdtfvOj+KX7JNj491S21DwZcaPYW7IRcIJWMLNn5WQIGA4yCOBwPev5tv+DqjT/FHgn/AIKN6T4P1y8luNJ8N+DdPOjIAywCOd5pZ3jB/vXHmgnuUA7V+7XiDwz4q+B2vRrdLfaLdt88UsE21ZQOpV1OGxxke/Nch+2L+xH8C/8Agsh8JYdC+NGo2Phvx54KBi0nxRYana2eqQRyjcUdJCVkjLBS0Ui4+YMpQsSezgPNsnrcQzUsHLC4uSa5bvk2TkuW0eV2XNa1t9b2vhxVl+Y08pg1iFXw8WtbLm7J3u+be29/I/Nj/g3C8ff8E+X/AGcLjw38eNG+Gdv8YptWnNxe/EKxjms721YgW4tJ7gG3hCr8rISjl8t8wIx7P/wUt/4NafCf7bfxN0Tx1+yBr3wl8J+Gb2zdNdsV1eaXS3uQwMU1oLZJ1QMhYOgKqCilVyzGvBvjz/wZf/FfR7CXVPhJ8WfAPxB0qVfOtY9Tjl0i4uIzyNrp58DHHfeoPtX52fHL9nn9pT/gjn8c7G18R2/jb4P+LJAbnTdQ0vVGhj1BI3ALwXVtIY5lB27gGJG4BlGcV+9H5Yfsb8Bf+CEf/BRb9mf4TaT4I8FftEfDHRfDGhiUWVlBrGqrHAJZnmcKBaYAMkjnj1or5l+CP/B5h+0H8NPhToug+IfBfgHx1rGlweRca9qPn213qWGO15UgZYw4XapKqNxXdjJNFAH9OxGRX5S/8F2f+Da3w7/wUZu9Q+KHwrm03wb8ZhEXvYph5Wl+LtowBcFQTDdADCzgENwsgPDp+rVFAH8Iv7Sn7KnxE/Y/+J954N+Jvg/XPBfiSyJ3Weo25j81f+ekTjKTRntJGzIexrz4qQa/u6/aP/ZX+G/7W3gCTwz8TPBPhvxxobZZbXV7FLgQMcDfExG6J+B88ZVh61+NH/BWz/g2X/Zp+A3wyvPHHgb/AIWB4Vn3OV0q21tLnT078C5hlmx/21oA/nb6V+uv/Bmp8ZW8C/8ABTjxJ4Vkb/RfHHgm7iVCfvT2s8Fwhx6iMT/ma/LP4jeDbXwl8SLnR7aS4ktoZljVpCDJgnHUAD9K/cv/AINf/wDgmZ4HsP2i9B+MsOueM4/E/ha2ujbWq3dsLCcT2zwOsqeR5jDbISAJByB1HBAP3r8XeA7XxVe6ffc2+qaTMJrS7QfPH/eQ/wB5HGQy9weMHBr8bv2M/wDg2AT4oft9/E/48ftHW9jNoWrePNX13w34GicTR6hFLfzSwXGosCR5RUo62yliwI81gA0TftdRXPTwtKnVlWgrOVr+bWib87aX3aST0StrOtOcI05O6jt5X6el9bd792R2dnFp9rHBBHHDDCoRERQqooGAABwABxgdKkooroMgr8W/+D2U/wDGDnwj/wCx7b/03XNftJXH/GP9nvwH+0Ro1pp3j7wX4V8bafp8/wBqtrbXdKg1CG3l2lfMRZlYK21iMgZwSKAP5df+DRi1jvP+CvtjDKf3c3g/WUba3ODHEDXxT+3T+yb4y/4J/ftg+LPh74qsLzTdY8M6rJJYXEkWE1G181mtryEkYeKRArAjjO5TgqQP7QfhX+xL8G/gZ4vj8QeCvhR8OfCOvRwvbpqOjeHLOxuljfG9BJFGrbWwMjODgUftM/safCj9sLw5DpvxS+HnhLx5Z2hJthrGnR3EloT1MUhG+MnvsYZoA/Fj4cf8Hudrp/wiso/FXwIv9Q8cW1osdzNp/iOO3029nC4MoDwNJCrHnZ8+3ONx61+Q/wDwUz/aR+LH7bf7Q7fHD4qaHdaDJ8TLcXXh5Psr29idNt2NvElnv5khjKMpk53uHbJJNf1efC//AIIe/sj/AAl8Sw6pon7P/wAOUv4GDxSXunnUREw6FVuGkUEeoFe3fFn9kP4U/Hq40ybxx8M/APjGbRYDa6e+taBa37WMJIJjiMqNsQlV+VcDgcUAfjH/AMG7+rap8SP+CUOlXCtHfWfgPxRqvh9xCN0ljG5hvo/NGScM15NhgAuMDqOf00+DX7X83w98KW+j6lpbajb2S7LeaGUJIqdlYEYOM4BGOMda94+Dv7N/w9/Z40zULHwD4G8I+CbPVpFmvYNC0iDT4rtwu0PIsSqGYLxkgnHFSax8CPButXLS3HhvSmkY5Zkh8ssffbivyPMfD3MsNm1TOOHsUqU6t3KMldNt3fR3TetmtHsz9AwPFmCq5fDLc3oOpGHwuLs9Nuq2Wm+q3R8u/H749z/HG+sYlsVsLGxLeVFv8ySRmwCWOB6DAA9etfh5/wAHJn/BKH4j/Cz4qQ/tF2Hh7UNQ8E+OrS3GvPBbmR/Dd9bwpbK1yoH7uG4jijkWRuBIzqxUlA39OPhj4R+GPCNys+m6FptrcJ92VYQZF+jHJH51vX1hDqdnNb3EMdxb3CNFLHIgZJEYYZWB4II4IPBr0OE+Ccfgs0q53muJ9rWqR5Woq0baeS25VZJK1upx5/xJhMVgqeW4CjyU4O6u7vr693dts/mT/wCCSf8Awdda1+wZ+zHofwn+Ifw4m8f6H4RhNpoWq6bqi2V9bWoYsltMjxskoTcVV1ZCECghiM182/8ABcD/AILea9/wWV+IHg+GHwXB4J8I+CBcjSNN+1fbr66uLnyhLNNKEQEkQxqsaLhfmyWJGP6VPil/wRC/ZH+LfiCbUtc/Z/8Ahu99O/mSy2Wnf2d5rHqWFsYwSfcV1X7On/BKn9m/9ljxDDrHgD4K/D3w5rVqwaDUo9KSe+tyO6Ty75EPurA1+mHxZ/Nz+zx/waoftU/tB/BXw940j0vwz4Vh8RW32uHS/EF69nqVvGWYIZodhMZdQHCt8wV1yAcgFf1mAYFFAH//2Q=="
-                      doc.addImage(imageData, "jpg", 170, 6, 40, 20);
+                      var imageData ="data:image/jpeg;base64,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"
+                      doc.addImage(imageData, "jpg", 170, 6, 40, 17);
                       doc.setFont('Roboto-Regular');
                       doc.setTextColor(0,0,0);
                       doc.setFontSize(12);
-                      var reportTitle = "Cuando el Manual de instalación y configuracion correspondiente se lo indique, complete los siguientes datos:";
+                      var reportTitle = "Cuando el Manual de instalación y configuración correspondiente se lo indique, complete los siguientes datos:";
                       var splitTitle = doc.splitTextToSize(reportTitle, 170);
                       doc.text(splitTitle, 15, 70);
 
@@ -18033,6 +18154,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $('.input--phone').mask('9999999999999999999999999');
           $('.input--time').mask('00:00');
           $('.input--dni').mask('99999999');
+          $('.input--number--2').mask('99');
           $('.input--number').mask('999');
           $('.input--depto').mask('ZZZ',
               {
