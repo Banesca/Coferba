@@ -455,7 +455,7 @@ class Client_model extends CI_Model {
                 'addressLat'              => $client['addressLat'],
                 'addressLon'              => $client['addressLon'],
                 'idAgentFk'               => $client['idAgentFk'],
-                'isNotCliente'            => $client['isNotClient'],
+                'isNotCliente'            => $client['isNotCliente'],
                 'idClientAdminFk'         => $client['idClientAdminFk'],
                 'observationOrderKey'     => $client['observationOrderKey'],
                 'observationSericeTecnic' => $client['observationSericeTecnic'],
@@ -468,7 +468,7 @@ class Client_model extends CI_Model {
             ]
         )->where("idClient", $client['idClient'])->update("tb_clients");
 
-        // DATOS DE FACTURCION
+        // DATOS DE FACTURACION
         if ($client['isNotCliente'] == 1 || $client['isBillingInformationEmpty'] == 1){
 
             $this->db->insert('tb_client_billing_information', [
@@ -1361,6 +1361,7 @@ class Client_model extends CI_Model {
 
             $this->db->select("*")->from("tb_clients");
             $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
+            $this->db->join('tb_zonas', 'tb_zonas.idZona = tb_clients.idZonaFk', 'left');
             $quuery = $this->db->where("tb_clients.idClient =", $idClient)->get();
 
 
@@ -1370,6 +1371,7 @@ class Client_model extends CI_Model {
                 $where="tb_clients.idClientAdminFk=".$idClient." OR tb_clients.idClientCompaniFk=".$idClient;
                 $this->db->select("*")->from("tb_clients");
                 $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
+                $this->db->join('tb_zonas', 'tb_zonas.idZona = tb_clients.idZonaFk', 'left');
                 $quuery = $this->db->where($where)->get();
                 if ($quuery->num_rows() > 0) {
                     $rs = $quuery->result_array();

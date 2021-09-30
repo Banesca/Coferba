@@ -2,7 +2,7 @@ var moduleLoginUser = angular.module("module.LoginUser", ["tokenSystem", "servic
 
 
 moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $routeParams, blockUI, $timeout, inform, inputService, userServices, tokenSystem, serverHost, serverBackend, $window){
-
+  console.log("WELCOME");
   $scope.login               = {email:'', passwd:''};
   $scope.signup              = {email:''};
   $scope.signupUser          = false;
@@ -143,15 +143,15 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
       switch ($scope.loginResult){
         case 1:
           $scope.redirect2MainApp = true;
-          $scope.countDownRedirect("/mainapp", 3);
+          location.href = "/";
         break;
         case 2:
           $scope.redirect2NewPwd = true;
-          $scope.countDownRedirect("/newpwd", 3);
+          location.href = "/";
         break;
         case 3:
           //$scope.redirect2ResendEmail = true;
-          //$scope.countDownRedirect("#/resendemail", 3);
+          //location.href = "#/resendemail";
           var rsTmpUser = tokenSystem.getTokenStorage(3);
           $scope.msg1="Disculpa, "+rsTmpUser.fullNameUser+", para continuar debe confirmar su correo electronico.";
           $scope.msg2="Verifica tu casilla de correo."
@@ -240,7 +240,7 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
         console.log("Email registrado / "+ $scope.signup.email);
       }else{
         $scope.redirect2Register = true;
-        $scope.countDownRedirect("/register", 5);
+        location.href = "/register";
       }
     });
   } 
@@ -271,11 +271,11 @@ moduleLoginUser.controller('LoginCtrl', function($scope, $location, $http, $rout
       switch (value){
         case 'register':
           $scope.redirect2Register = true;
-          $scope.countDownRedirect("/register", 3);
+          location.href = "/register";
         break;
         case 'forgotpwd':
           $scope.redirect2RestorePwd = true;
-          $scope.countDownRedirect("/forgotpwd", 3);
+          location.href = "/forgotpwd";
         break;
 
         default:

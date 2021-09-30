@@ -366,7 +366,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.sysToken             = tokenSystem.getTokenStorage(1);
       $scope.sysLoggedUser        = tokenSystem.getTokenStorage(2);
       $scope.sysLoggedUserModules = tokenSystem.getTokenStorage(6);
-      $scope.sysModules = {'idMonitor':false, 'idLlaveros':false, 'idEdificios':false, 'idConfiguracion':false, 'idPerfilUsuario':false, 'idCliente':false, 'idServicio':false, 'idProducto': false};
+      $scope.sysModules = {'idMonitor':false, 'idLlaveros':false, 'idEdificios':false, 'idConfiguracion':false, 'idPerfilUsuario':false, 'idCliente':false, 'idServicio':false, 'idProducto': false, 'idUsers': false};
       for (var key in $scope.sysLoggedUserModules){
         switch ($scope.sysLoggedUserModules[key].idModuleFk){
           case "1":
@@ -393,6 +393,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           case "8":
             $scope.sysModules.idProducto=true;
           break;
+          case "9":
+            $scope.sysModules.idUsers=true;
+          break;          
           default:
         }
       }
@@ -7493,7 +7496,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.customer.new.idDepartmentFk                          = null;
                       $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
                       $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
-                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
                       $scope.customer.new.numberUNF                               = null;
                     }
                     $scope.customer.new.billing_information                       = {};
@@ -7563,7 +7565,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.customer.new.idDepartmentFk                          = null;
                       $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
                       $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
-                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
                       $scope.customer.new.numberUNF                               = null;
                     }
                     $scope.customer.new.billing_information                       = {};
@@ -7602,7 +7603,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.customer.new.idDepartmentFk                          = null;
                       $scope.customer.new.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
                       $scope.customer.new.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
-                      $scope.customer.new.idCategoryDepartamentFk                 = "1";
                       $scope.customer.new.numberUNF                               = null;
                     }
                     $scope.customer.new.billing_information                       = {};
@@ -7822,6 +7822,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         //console.log(arrCompany);
                         if (arrCompany.length==1){
                           $scope.customer.select.company.selected= {'idClient':arrCompany[0].idClient, 'businessName':arrCompany[0].businessName}
+                          //console.log($scope.customer.select.company.selected);
                         }
                         //PHONES
                         $scope.list_phone_contact=[];
@@ -8073,8 +8074,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         if (obj.list_phone_contact.length>0){
                           for (var key in  obj.list_phone_contact){
                             //console.log(obj.list_phone_contact[key]);
-                            $scope.list_mails_contact.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
-                            $scope.list_mails.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
+                            $scope.list_phone_contact.push({'idClientFk': obj.list_phone_contact[key].idClientFk,'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
+                            $scope.list_phones.push({'phoneTag':obj.list_phone_contact[key].phoneTag, 'phoneContact':obj.list_phone_contact[key].phoneContact});
                           }
                         }
                         //MAILS
@@ -8199,7 +8200,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update.idClientDepartamentFk                   = null;
                         $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
                         $scope.customer.update.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
-                        $scope.customer.update.idCategoryDepartamentFk                 = "1";
                         $scope.customer.update.numberUNF                               = null;
                       }
                       $scope.customer.update.billing_information                       = {};
@@ -8207,7 +8207,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.customer.update.billing_information.idProvinceBillingFk   = $scope.customer.select.payment.province.selected.idProvince;
                       $scope.customer.update.billing_information.idLocationBillingFk   = $scope.customer.select.payment.location.selected.idLocation;
                       //Assigning the default value to 0
-                      $scope.customer.update.isNotClient                              = 0;
+                      $scope.customer.update.isNotClient                               = 0;
                       $scope.customer.update.idClientAdminFk                           = 0;
                       $scope.customer.update.idClientCompaniFk                         = 0;
                       //Printing the current array before add the customer
@@ -8276,7 +8276,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update.idDepartmentFk                          = null;
                         $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
                         $scope.customer.update.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
-                        $scope.customer.update.idCategoryDepartamentFk                 = "1";
                         $scope.customer.update.numberUNF                               = null;
                       }
                       $scope.customer.update.billing_information                       = {};
@@ -8317,7 +8316,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.customer.update.idDepartmentFk                          = null;
                         $scope.customer.update.idProvinceFk                            = $scope.customer.select.main.province.selected.idProvince;
                         $scope.customer.update.idLocationFk                            = $scope.customer.select.main.location.selected.idLocation;
-                        $scope.customer.update.idCategoryDepartamentFk                 = "1";
                         $scope.customer.update.numberUNF                               = null;
                       }
                       $scope.customer.update.billing_information                       = {};
@@ -8401,6 +8399,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   $scope.rolePermission="ro";
                   $scope.list_depto_floors=[];              
                   $scope.customer.info = obj;
+                  console.log(obj);
                   $scope.list_floor="";
                   $scope.floorExist=null;
                   var i=3;
@@ -8416,21 +8415,22 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   });
                   //console.table($scope.customer.info.list_departament);
                   for (var floor in $scope.customer.info.list_departament){
-                    if ($scope.customer.info.list_departament[floor].floor!="co" && $scope.customer.info.list_departament[floor].floor!="ba" && $scope.customer.info.list_departament[floor].floor!="lo" && $scope.customer.info.list_departament[floor].floor!="pb"){
+                    if ($scope.customer.info.list_departament[floor].floor!="co" && $scope.customer.info.list_departament[floor].floor!="ba" && $scope.customer.info.list_departament[floor].floor!="lo" && $scope.customer.info.list_departament[floor].floor.toLowerCase()!="pb"){
                       var lastFloor=parseInt($scope.customer.info.list_departament[floor].floor);
+                      //console.log($scope.customer.info.list_departament[floor].floor);
                       break;
                     }
                   }
 
                   for (var floorItem=1;  floorItem<=lastFloor; floorItem++){
                     $scope.list_depto_floors.push({'id':(floorItem+3),'nameFloor':floorItem.toString(), 'deptos':[]});
-                  }//console.log($scope.list_depto_floors);
+                  }console.log($scope.list_depto_floors);
                   var d=0;
                   //DEPTOS
                   for (arrList in $scope.list_depto_floors){
                      d=0;
                     for (var depto in $scope.customer.info.list_departament){
-                        if($scope.customer.info.list_departament[depto].floor==$scope.list_depto_floors[arrList].nameFloor){
+                        if($scope.customer.info.list_departament[depto].floor.toLowerCase()==$scope.list_depto_floors[arrList].nameFloor){
                           //$scope.list_depto_floors[d].deptos.push($scope.customer.info.list_departament[depto]);
                           $scope.list_depto_floors[arrList].deptos.push({'idClientDepartament':$scope.customer.info.list_departament[depto].idClientDepartament, 'idDepto':(d+1), 'unitNumber':$scope.customer.info.list_departament[depto].numberUNF, 'floor':$scope.customer.info.list_departament[depto].floor, 'departament':$scope.customer.info.list_departament[depto].departament, 'idCategoryDepartamentFk': $scope.customer.info.list_departament[depto].idCategoryDepartamentFk, 'idStatusFk':$scope.customer.info.list_departament[depto].idStatusFk, 'categoryDepartament':[],'idFloor':$scope.list_depto_floors[arrList].id});
                         }
@@ -8492,7 +8492,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   var arrProvince  = [];
                   var arrLocation = []; 
                   var subOption = obj.idClientTypeFk;
-                  $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;                  
+                  $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
                   $scope.customer.details=obj;
                   $scope.customer.details.billing_information_details=obj.billing_information[0];
                   switch (subOption){
@@ -8501,7 +8501,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.details.idLocationFk, $scope.customer.details.idProvinceFk);
                       $scope.customer.details.province = arrProvince[0].province;
                       $scope.customer.details.location = arrLocation[0].location;
-                      if($scope.customer.details.idClientDepartamentFk){                          
+                      if($scope.customer.details.idClientDepartamentFk){
                         $scope.customer.update.isNotClient=true;
                         $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.details.idClientDepartamentFk);
                         $timeout(function() {
@@ -8519,8 +8519,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     break;
                     case "2": //BUILDING CUSTOMER
                       arrCompany=$scope.getCustomerBusinessNameByIdFn($scope.customer.details.idClientAdminFk);
-                      $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
-                             
+                      if (arrCompany.length==1){
+                        $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
+                      }
                       arrProvince = $scope.getCustomerProvinceNameFromIdFn($scope.customer.details.idProvinceFk);
                       arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.details.idLocationFk, $scope.customer.details.idProvinceFk);
                       $scope.customer.details.province = arrProvince[0].province;
@@ -8591,12 +8592,15 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     break;
                     case "4": //BRANCH CUSTOMER
                       arrCompany=$scope.getCustomerBusinessNameByIdFn($scope.customer.details.idClientCompaniFk);
-                      $scope.customer.details.companyBusinessName=arrCompany[0].businessName;                             
+                      $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
+                      if (arrCompany.length==1){
+                        $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
+                      }
                       arrProvince = $scope.getCustomerProvinceNameFromIdFn($scope.customer.details.idProvinceFk);
                       arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.details.idLocationFk, $scope.customer.details.idProvinceFk);
                       $scope.customer.details.province = arrProvince[0].province;
                       $scope.customer.details.location = arrLocation[0].location;
-                      if($scope.customer.details.idClientDepartamentFk){                          
+                      if($scope.customer.details.idClientDepartamentFk){
                         $scope.customer.details.isNotClient=true;
                         $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.details.idClientDepartamentFk);
                         $timeout(function() {
@@ -8610,7 +8614,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                        }else{
                         $scope.customer.details.isNotClient=false;
                         $scope.addrrSelected=true;
-                      }                      
+                      }
                     break;
                     case "5": //PARTICULAR CUSTOMER
                     break;
@@ -8640,7 +8644,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         $scope.list_mails_contact.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
                         $scope.list_mails.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
                       }
-                    }                  
+                    }
                     //USERS
                     $scope.list_users       = [];
                     $scope.list_client_user = [];
@@ -8658,7 +8662,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     }
                     //SCHEDULE
                     $scope.list_schedule_details=$scope.list_schedule;
-                    $scope.list_schedule_atention_details=[];                    
+                    $scope.list_schedule_atention_details=[];
                     if (obj.list_schedule_atention.length>0){
                       for (var i = 0; i < $scope.tmpVars.list_schedule_atention.length; i++) {
                           //Load the data to a temp array to handle the schedule
@@ -8678,7 +8682,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     console.log($scope.customer.details);
                     $('#customerModalDetails').modal({backdrop: 'static', keyboard: false});
                     $('#customerModalDetails').on('shown.bs.modal', function () {
-                    });                    
+                    });
                 break;
                 case "details_company": //CUSTOMER Company or Administration
                   var arrProvince  = [];
@@ -8694,7 +8698,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                       $scope.customer.companyDetails.province = arrProvince[0].province;
                       $scope.customer.companyDetails.location = arrLocation[0].location;
                       if($scope.customer.companyDetails.idClientDepartamentFk){                          
-                        $scope.customer.update.isNotClient=true;
+                        $scope.customer.companyDetails.isNotClient=true;
                         $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.companyDetails.idClientDepartamentFk);
                         $timeout(function() {
                           for (var depto in $scope.rsBuildingDepartmentsData){
@@ -8705,7 +8709,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         blockUI.stop();
                         }, 1000);
                        }else{
-                        $scope.customer.update.isNotClient=false;
+                        $scope.customer.companyDetails.isNotClient=false;
                         $scope.addrrSelected=true;
                       }
                     break;
@@ -8939,13 +8943,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                   }, 1500);
                     $('#changeModalAdmin').modal({backdrop: 'static', keyboard: false});
                 break;
-                case "removeLinkedAdminData":                  
-                  $scope.buildingOldData.list_emails=$scope.customer.buildingSelected.list_emails;                  
+                case "removeLinkedAdminData":
+                  $scope.buildingOldData.list_emails=$scope.customer.buildingSelected.list_emails;
                   $scope.buildingOldData.list_phone_contact=$scope.customer.buildingSelected.list_phone_contact;
                   $scope.buildingOldData.list_client_user=$scope.customer.buildingSelected.list_client_user;
                   //EMAILS
                   for (var item1 in $scope.buildingOldData.list_emails){
-                    for (var item2 in $scope.customer.currentAdmin.list_emails){                        
+                    for (var item2 in $scope.customer.currentAdmin.list_emails){
                       console.log("Mail Building: "+$scope.buildingOldData.list_emails[item1].mailContact+" / Mail Administration: "+$scope.customer.currentAdmin.list_emails[item2].mailContact);
                       if ($scope.buildingOldData.list_emails[item1].mailContact==$scope.customer.currentAdmin.list_emails[item2].mailContact && $scope.buildingOldData.list_emails[item1].idTipoDeMailFk==$scope.customer.currentAdmin.list_emails[item2].idTipoDeMailFk){
                         var objItem             = $scope.buildingOldData.list_emails;
@@ -8961,7 +8965,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     for (var item2 in $scope.customer.currentAdmin.list_phone_contact){
                       if ($scope.buildingOldData.list_phone_contact[item1].phoneContact==$scope.customer.currentAdmin.list_phone_contact[item2].phoneContact && $scope.buildingOldData.list_phone_contact[item1].phoneTag==$scope.customer.currentAdmin.list_phone_contact[item2].phoneTag){
                         var objItem             = $scope.buildingOldData.list_phone_contact; 
-                        var arrItem             = objItem.map(function(i){return i.idClientPhoneFk;});        
+                        var arrItem             = objItem.map(function(i){return i.idClientPhoneFk;});
                         var indexItem           = arrItem.indexOf($scope.buildingOldData.list_phone_contact[item1].idClientPhoneFk);
                         $scope.buildingOldData.list_phone_contact.splice(indexItem, 1);
                       }
@@ -8972,7 +8976,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     for (var item2 in $scope.customer.currentAdmin.list_client_user){
                       if ($scope.buildingOldData.list_client_user[item1].idUserFk==$scope.customer.currentAdmin.list_client_user[item2].idUserFk && $scope.buildingOldData.list_client_user[item1].emailUser==$scope.customer.currentAdmin.list_client_user[item2].emailUser){
                         var objItem             = $scope.buildingOldData.list_client_user; 
-                        var arrItem             = objItem.map(function(i){return i.idUserFk;});        
+                        var arrItem             = objItem.map(function(i){return i.idUserFk;});
                         var indexItem           = arrItem.indexOf($scope.buildingOldData.list_client_user[item1].idUserFk);
                         $scope.buildingOldData.list_client_user.splice(indexItem, 1);
                       }
@@ -9026,20 +9030,22 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                 case "updateBuildingAdmin":
                   $('#changeModalAdmin').modal('hide');
                   $timeout(function() {
-                  blockUI.message('Actualizando datos del Edificio '+obj.address);                  
+                  blockUI.message('Actualizando datos del Edificio '+obj.address);
                     $scope.customer.update=obj;
                     $scope.customer.update.list_emails                      = [];
                     $scope.customer.update.list_client_user                 = [];
                     $scope.customer.update.billing_information              = [];
                     $scope.customer.update.billing_information              = $scope.buildingNewData.billing_information;
                     $scope.customer.update.billing_information.nameAddress  = $scope.buildingNewData.billing_information.businessAddress;
+                    $scope.customer.update.isBillingInformationEmpty        = $scope.buildingNewData.billing_information.length==0 || $scope.buildingNewData.billing_information==undefined?1:0;
                     $scope.customer.update.idClientAdminFk                  = $scope.customer.newAdmin.idClient;
                     $scope.customer.update.list_emails                      = $scope.buildingNewData.list_emails;
                     $scope.customer.update.list_client_user                 = $scope.buildingNewData.list_client_user;
                     $scope.customer.update.observationOrderKey              = $scope.buildingNewData.observationOrderKey;
                     $scope.customer.update.observationSericeTecnic          = $scope.buildingNewData.observationSericeTecnic;
                     $scope.customer.update.observationCollection            = $scope.buildingNewData.observationCollection;
-                    $scope.customer.update.observation                      = $scope.buildingNewData.observation;                    
+                    $scope.customer.update.observation                      = $scope.buildingNewData.observation;
+
                     //Send the customer data to the addcustomer service
                     console.log($scope.customer.update);
                   }, 2000); 
@@ -10273,8 +10279,9 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
               case "particular":
                 if(obj.status==200){
                   if (opt2=="main"){
+                    console.log(obj.data);
                     $scope.customer.new.isNotClient=true;                  
-                    $scope.customer.select.main.address.selected={address:obj.data.address};
+                    $scope.customer.select.main.address.selected=(obj.data);
                     $scope.rsAddress_API_Data_Main=null;
                   }else if (opt2=="particular"){
                     $scope.customer.particular.isBuilding=true;
@@ -11800,36 +11807,47 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           $scope.setNewDeptoFloor = function(opt){
             switch (opt){         
               case "2":
-                if($scope.isNewCustomer){
+                if($scope.isNewCustomer && !$scope.customer.new.isNotClient){
                   $scope.customer.new.floor = "co";
                   $scope.customer.new.department = "";
+                }else if($scope.isUpdateCustomer && !$scope.customer.update.isNotClient){
+                  $scope.customer.update.floor = "co";
+                  $scope.customer.update.department = "";
                 }else{
                   $scope.customer.notClient.floor = "co";
                   $scope.customer.notClient.department = "";
                 }
               break;
               case "3":
-                if($scope.isNewCustomer){
+                if($scope.isNewCustomer && !$scope.customer.new.isNotClient){
                   $scope.customer.new.floor = "ba";
                   $scope.customer.new.department = "";
-                }else{              
+                }else if($scope.isUpdateCustomer && !$scope.customer.update.isNotClient){              
+                  $scope.customer.update.floor = "ba";
+                  $scope.customer.update.department = "";
+                }else{
                   $scope.customer.notClient.floor = "ba";
                   $scope.customer.notClient.department = "";
                 }
               break;
               case "4":
-                if($scope.isNewCustomer){
+                if($scope.isNewCustomer && !$scope.customer.new.isNotClient){
                   $scope.customer.new.floor = "lo";
                   $scope.customer.new.department = "";
-                }else{              
+                }else if($scope.isUpdateCustomer && !$scope.customer.update.isNotClient){              
+                  $scope.customer.update.floor = "lo";
+                  $scope.customer.update.department = "";
+                }else{
                   $scope.customer.notClient.floor = "lo";
                   $scope.customer.notClient.department = "";
                 }
               break;
               case "5":
-                if($scope.isNewCustomer){
+                if($scope.isNewCustomer && !$scope.customer.new.isNotClient){
                   $scope.customer.new.department = "po-"+$scope.customer.new.floor;
-                }else{              
+                }else if($scope.isUpdateCustomer && !$scope.customer.update.isNotClient){              
+                  $scope.customer.update.department = "po-"+$scope.customer.new.floor;
+                }else{
                   $scope.customer.notClient.department = "po-"+$scope.customer.notClient.floor;
                 }
               break;
@@ -13515,6 +13533,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                             }
                           }
                           //LOAD DVR USERS
+                          $scope.getUserLists();
                           var idListItem = 1;
                           for (var dvrUser in service.tb_client_totem_array){
                             $scope.list_user.push({'idItem':idListItem,'idClientFk':service.tb_client_totem_array[dvrUser].idClientFk,'name':service.tb_client_totem_array[dvrUser].name, 'user':service.tb_client_totem_array[dvrUser].user, 'pass':service.tb_client_totem_array[dvrUser].pass, 'profile':service.tb_client_totem_array[dvrUser].userProfile, 'userProfile':service.tb_client_totem_array[dvrUser].userProfile, 'qrCode':service.tb_client_totem_array[dvrUser].qrBase64, 'qrBase64':service.tb_client_totem_array[dvrUser].qrBase64});
@@ -13583,6 +13602,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                           }
                         }
                         //LOAD DVR USERS
+                        $scope.getUserLists();
                         var idListItem = 1;
                         for (var dvrUser in service.tb_client_camera_array){                           
                           $scope.list_user.push({'idItem':idListItem,'idClientFk':service.tb_client_camera_array[dvrUser].idClientFk,'name':service.tb_client_camera_array[dvrUser].name, 'user':service.tb_client_camera_array[dvrUser].user, 'pass':service.tb_client_camera_array[dvrUser].pass, 'profile':service.tb_client_camera_array[dvrUser].userProfile, 'userProfile':service.tb_client_camera_array[dvrUser].userProfile, 'qrCode':service.tb_client_camera_array[dvrUser].qrBase64, 'qrBase64':service.tb_client_camera_array[dvrUser].qrBase64});
@@ -13850,7 +13870,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         }else if ($scope.service.idClientTypeFk=="5"){
                           $scope.service.update.list_address_particular=$scope.customerFound.list_address_particular;
                          //$scope.service.idContracAssociated_SE=
-                        }                        
+                        }
+                        $scope.getUserLists();
                         $scope.list_user_licence_tmp=[];
                         $scope.list_user_licence_idDepartmentList={'idDepto':'', 'Depto':'', 'idBuilding':'', 'Building':''};
                         for (var key in service.tb_user_license_array){
@@ -13875,7 +13896,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                     $timeout(function() {
                         service.idContracAssociated_SE   = service.idContratoFk;
                         service.idAccessControlFk        = $scope.service.crtlAccess.selected.idProduct;
-                        service.lock                     = $scope.service.lockedIt.selected.idProduct;                        
+                        service.lock                     = $scope.service.lockedIt.selected.idProduct;
                         service.idInputReaderFk          = $scope.service.entranceReader.selected.idProduct;
                         service.ouputReader              = service.isOuputButom==undefined || !service.isOuputButom?$scope.service.exitReader.selected.idProduct:null;
                         service.ouputButom               = service.isOuputButom?$scope.service.exitReader.selected.idProduct:null;
@@ -13883,7 +13904,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
                         service.idEmergencyButtonFk      = $scope.service.emergencyButton.selected.idProduct;
                         service.idShutdownKeyFk          = $scope.service.TurnOffKey.selected.idProduct;
                         service.isOuputReader            = service.isOuputButom?null:'1';
-                        service.isOuputButom             = service.isOuputButom?'1':null;                       
+                        service.isOuputButom             = service.isOuputButom?'1':null;
                         service.battery_install={};
                         service.battery_install= $scope.list_batteries;
                         service.adicional=[];
@@ -18108,7 +18129,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
       $scope.checkBefore2Load = function(){
         $scope.sysLoadLStorage(); 
         $scope.refresSession($scope.sessionMail);
-        $scope.getUserLists(); /* New Function using angular Services: userServices.userLists*/
+        //$scope.getUserLists(); /* New Function using angular Services: userServices.userLists*/
         $scope.CallFilterFormU(); 
         $scope.CallFilterFormT(); 
         $scope.getAllAddress(); 

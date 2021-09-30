@@ -127,6 +127,12 @@
 		                    <br>Servicios
 		                 	</a>
 		              	</li>
+		               	<li id="m_users" class="icon-m" ng-if="sysModules.idUsers">
+		                 	<a  ng-click="fnShowHide('users', 'open')"> 
+		                    <i style="margin-left: -0.4em" class="fas fa-users icon-4x"></i>
+		                    <br>Usuarios
+		                 	</a>
+		              	</li>			              	
 		               	<li id="m_config" class="icon-m" ng-if="sysModules.idConfiguracion">
 		                 	<a  ng-click="fnShowHide('sysConfig', 'open')"> 
 		                    <i style="margin-left: -0.4em" class="icon-cogs icon-4x"></i>
@@ -163,7 +169,7 @@
 			<div ng-if="rukeydown" ng-include="'views/tickets/bajaLlave.html'"></div>
 			<div ng-if="ruservice" ng-include="'views/tickets/frmServicio.html'"></div>
 			<div ng-if="ruother" ng-include="'views/tickets/frmOtrasConsultas.html'"></div>
-			<div ng-show="rusysconfig" ng-include="'views/system/formConfig.html'"></div>
+			<div ng-if="rusysconfig" ng-include="'views/system/formConfig.html'"></div>
 			<div ng-if="rucontact" ng-include="'views/contact/formContact.html'"></div>
 			<div ng-if="rucost" ng-include="'views/tickets/formCost.html'"></div>
 			<div ng-if="rucustomer" ng-include="'views/customer/customers.html'"></div>
