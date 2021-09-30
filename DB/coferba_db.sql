@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 10.4.14-MariaDB : Database - db_coferba
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -2126,6 +2127,7 @@ CREATE TABLE `tb_user` (
   `isConfirmatedMail` tinyint(4) DEFAULT 0,
   `SA_ID` int(11) DEFAULT NULL,
   `idSysProfileFk` int(11) DEFAULT NULL,
+  `dni` VARCHAR(50) NULL,
   PRIMARY KEY (`idUser`),
   KEY `idProfileKf` (`idProfileKf`),
   KEY `idAddresKf` (`idAddresKf`),

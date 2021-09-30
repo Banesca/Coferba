@@ -179,6 +179,7 @@ class User_model extends CI_Model
             'requireAuthentication' => @$user['requireAuthentication'],
             'resetPasword' => 1,
 			'tokenMail' => $tokenMail,
+			'dni' => $dni,
 			'idSysProfileFk'=> @$user['idSysProfileFk']
                 )
         );
@@ -338,7 +339,8 @@ class User_model extends CI_Model
                     'requireAuthentication' => @$user['requireAuthentication'],
                     'isDepartmentApproved' => @$user['isDepartmentApproved'],
                     'isEdit' => @$user['isEdit'],
-                    'idSysProfileFk'=> @$user['idSysProfileFk']
+                    'idSysProfileFk'=> @$user['idSysProfileFk'],
+					'dni' => $dni
                 )
         )->where("idUser", $user['idUser'])->update("tb_user");
 
