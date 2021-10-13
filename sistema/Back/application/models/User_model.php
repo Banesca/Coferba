@@ -12,7 +12,7 @@ class User_model extends CI_Model
 
  	public function auth($user)
 	{
-		
+		//se inicia sesion por mail o por dni
         //echo(sha1(md5($user['passwordUser'])));
         
         //return sha1(md5($user['']));
@@ -25,6 +25,9 @@ class User_model extends CI_Model
         $this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
         $this->db->where("passwordUser =",sha1(md5($user['passwordUser'])));
         $this->db->where("emailUser =",$user['fullNameUser']);
+			$this->db->or_group_start();
+				$this->db->where("dni =",$user['fullNameUser']);
+			$this->db->group_end();
         $query =$this->db->or_where("fullNameUser =",$user['fullNameUser'])->get();
 		 
 		
