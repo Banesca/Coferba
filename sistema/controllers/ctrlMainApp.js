@@ -15,7 +15,7 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
                                                 "services.Contracts",
                                                        "ngclipboard",
                                                      "Service.Pager",
-                             "angularUtils.directives.dirPagination",                             
+                             "angularUtils.directives.dirPagination",
                                                          "ngCookies",
                                                     "angular.filter",
                                                 "bootstrapLightbox"]);
@@ -354,7 +354,7 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
   });
 /*************************************************/
 //Controller.$inject = ['$scope'];
-moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, UtilitiesServices, PagerService, $cookies){
+moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document, $scope, $interval, Lightbox, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, UtilitiesServices, PagerService, $cookies){
     /**************************************************************/
       $scope.redirectSuccessfull = false;
       $scope.locationHref=window.location.href;
@@ -433,7 +433,124 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce
           userServices.letLogin().then(function(data){
 
           });
-        }  
+        }
+        // Timeout timer value
+        $scope.TimeOutTimeValue   = 900000;//900000; //15 min
+        $scope.IntervalTimerValue   = (20/100)*$scope.TimeOutTimeValue;
+        $scope.intervalCountDown = 0;
+        $scope.timeOutCountDown  = 0;
+        $scope.counterTimeDown   = 0;
+        var timeOutCounter;
+        var intervalCounter;
+        var TimeOut_Thread;
+        console.log("Inactivity timer: "+($scope.TimeOutTimeValue/1000/60));
+        console.log("User Warning start from the last: "+Math.round(($scope.IntervalTimerValue/1000/60))+" minutes");
+        // Start a timeout
+        $scope.warningTimeOut = function(action){
+          switch (action){
+            case "start_timeout":
+              //Start the no activity timeout of the user
+              $scope.timeOutCountDown  = 0;
+              TimeOut_Thread = $timeout(function(){ timesUp();}, $scope.TimeOutTimeValue);
+              $scope.timeOutCountDown  = ($scope.TimeOutTimeValue/1000);
+              $scope.intervalCountDown = ($scope.IntervalTimerValue/1000);
+
+              timeOutCounter = $interval( function(){
+                $scope.timeOutCountDown--;
+                if ($scope.timeOutCountDown == $scope.intervalCountDown) {
+                  $interval.cancel(timeOutCounter);
+                  $timeout.cancel(TimeOut_Thread);
+                  $scope.warningTimeOut("start_interval");
+                }else{
+                  var ms = $scope.timeOutCountDown;
+                  var d = new Date(1000*Math.round(ms)); // round to nearest second
+                  function pad(i) { return ('0'+i).slice(-2); }
+                  $scope.counterTimeOutDown = d.getUTCHours() + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+                  console.clear();
+                  console.log($scope.counterTimeOutDown);
+                }
+              }, 1000);
+            break;
+            case "start_interval":
+              $scope.showTimeOutWarning = true;
+              $scope.intervalCountDown = ($scope.IntervalTimerValue/1000);
+              //Start the user Warning
+              intervalCounter = $interval( function(){
+                //console.log($scope.intervalCountDown);
+                var ms = $scope.intervalCountDown;
+                var d = new Date(1000*Math.round(ms)); // round to nearest second
+                function pad(i) { return ('0'+i).slice(-2); }
+                $scope.counterTimeDown = d.getUTCHours() + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+                $scope.mess2show="La sesión finalizara en "+$scope.counterTimeDown+" minutos.     Desea mantener la sesión activa, Confirmar?";
+                if ($scope.intervalCountDown == 0) {
+                  timesUp();
+                }else if($scope.timeOutCountDown == $scope.intervalCountDown){
+                  $timeout(function() {
+                    console.log("La sesión finalizara en "+$scope.counterTimeDown+" minutos.");
+                    console.log("============================================================================")
+                    //console.log(obj);
+                    $('#sessionExpiredModal').modal({backdrop: 'static', keyboard: false});
+                    $('#sessionExpiredModal').on('shown.bs.modal', function () {
+                      $scope.showTimeOutWarning = true;
+                      $scope.mess2show="La sesión finalizara en "+$scope.counterTimeDown+" minutos.     Desea mantener la sesión activa, Confirmar?";
+                    });
+                    inform.add('Su sesión expirara pronto.' ,{
+                      ttl:8000, type: 'warning'
+                    });
+                  }, 0);
+                }
+                $scope.intervalCountDown--;
+              }, 1000);
+            break;
+            case "stop_timeout":
+              $scope.showTimeOutWarning = false;
+              $timeout.cancel(TimeOut_Thread);
+              $interval.cancel(timeOutCounter);
+              $scope.warningTimeOut("start_timeout");
+            break;
+            case "stop_interval":
+              $scope.showTimeOutWarning = false;
+              $('#sessionExpiredModal').modal('hide');
+              $interval.cancel(intervalCounter);
+              $scope.warningTimeOut("start_timeout");
+            break;
+            case "close_session":
+              $('#sessionExpiredModal').modal('hide');
+              blockUI.start('Cerrando session...');
+              $timeout(function() {
+                timesUp();
+                blockUI.stop();
+              }, 3000);
+            break;
+          }
+        }
+        //Actions in case of the timeout is up.
+        function timesUp(){
+            console.log('Logout');
+            localStorage.clear();
+            location.href = "/login";
+        }
+        function NoActivityTimeOut_Resetter(e){
+            //console.log(e.type);
+            /// Stop the reset the timeout timer
+            if (!$scope.showTimeOutWarning){
+              console.log("Timer count down resetted");
+              $scope.warningTimeOut("stop_timeout");
+            }
+        }
+        $scope.timeOutFn = function(){
+          var currentLocation = $location.path();
+          if (currentLocation!="/login" && currentLocation!="/register" && currentLocation!="/forgotpwd" &&  currentLocation!="/newpwd"){
+              console.log('starting session timer');
+              $scope.warningTimeOut("start_timeout");
+              //Get the inputs Events of mouse/keyboard to check the activity.
+              var bodyElement = angular.element($document);
+              angular.forEach(['keydown', 'keyup', 'click', 'mousemove', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'scroll', 'focus'], 
+              function(EventName) {
+                  bodyElement.bind(EventName, function (e) { NoActivityTimeOut_Resetter(e) });  
+              });              
+          }
+        };$scope.timeOutFn();
     /**************************************************
     *                                                 *
     *          COLLAPSE / EXPAND TABLE ROWS           *

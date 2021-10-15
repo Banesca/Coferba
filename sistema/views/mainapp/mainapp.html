@@ -5,10 +5,15 @@
 		<div class="navbar-inverse navbar-inner m-h-30">
 	        <div class="container-fluid">
 	            <div>
-	            	<div class="nav navbar-nav navbar-left">
+	            	<div class="nav navbar-nav navbar-left col-md-5 col-sm-3 col-xs-3">
 	            		<img id="comp-k1xl6bdlimgimage" class="sys-logo" data-type="image" itemprop="image" src="https://static.wixstatic.com/media/b2c01b_142b5431aa03446eb145220aeee6a0e8~mv2.png/v1/fill/w_179,h_75,al_c,q_85,usm_0.66_1.00_0.01/LogoTassHorizontal.webp">
 	            	</div>
+					<!-- USER SESSION EXPIRATION  -->
+					<!--<div ng-if="showTimeOutWarning" class="nav navbar-nav navbar-left col-md-3 col-sm-3 col-xs-3">
+						<h3><span data-toggle="tooltip" data-placement="bottom" title="Desconexión en" class="label label-warning" ><i class="fas fa-clock"></i> {{ counterTimeDown }}</span> </h3>
+					</div>-->
 	            	<ul class="nav navbar-nav navbar-right nav-prof nav-role">
+						<!-- USER PROFILE NAME -->
 	            		<li class="dropdown gray">
 	            			<h3><i class="fas fa-id-card-alt"></i> <span data-toggle="tooltip" data-placement="bottom" title="Perfil de usuario" >{{sessionProfileName}}</span> <span data-toggle="tooltip" data-placement="bottom" title="Role Asignado">[{{sessionProfileRoleName}}] </span></h3>
 	            		</li>
@@ -1433,7 +1438,24 @@
 			  </div>
 			</div>
 			<!-- //Modal Confirmation -->
-
+			<!-- Modal Session Expired -->
+			<div class="modal fade" id="sessionExpiredModal" role="dialog"  style="top: 150px;">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+				   <div class="modal-header"style="padding: 10px !important; background-color: rgba(255, 188, 87, 0.66);">
+					  <h5 class="modal-title" id="ModalLabel" style="font-weight: 600;">TASS Seguridad </h5>
+					</div>
+					<div class="modal-body">
+						<span class="font-size-18px"><i class="fas fa-clock"></i> </span> <span style="text-align: initial;">{{mess2show}}</span>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" ng-click="warningTimeOut('stop_interval')" class="btn btn-success">Si</button>
+					  <button type="button"  class="btn btn-danger" ng-click="warningTimeOut('close_session')" >No</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <!-- //Modal Session Expired -->
 			<!-- Modal Password Change -->
 			<div id="PasswdModalUser" style="top: 130px;" class="modal fade modal-dialog-centered" role="dialog">
 	  			<div class="modal-dialog modal-md" >
