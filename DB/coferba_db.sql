@@ -964,6 +964,7 @@ CREATE TABLE `tb_clients` (
   `isNotCliente` tinyint(1) DEFAULT 0,
   `idClientAdminFk` int(11) DEFAULT NULL,
   `mailServiceTecnic` varchar(100) DEFAULT NULL,
+  `idSecurityCode` varchar(100) DEFAULT NULL,
   `observationSericeTecnic` varchar(100) DEFAULT NULL,
   `mailCollection` varchar(100) DEFAULT NULL,
   `observationCollection` varchar(500) DEFAULT NULL,

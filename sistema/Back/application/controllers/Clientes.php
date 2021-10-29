@@ -187,7 +187,20 @@ class Clientes extends REST_Controller {
         }
     }
 
-    public function search_post() {
+
+	/*Solicitud para generar código de seguridad para cliente*/
+	public function segurityCodeCliente_post($idClient){
+
+		$user = $this->client_model->getSegurityCodeClient($idClient);
+		if (! is_null($user)) {
+			$this->response($user, 200);
+		} else {
+			$this->response([ 'error' => 'NO HAY RESULTADOS' ], 404);
+		}
+	}
+
+
+	public function search_post() {
 
         $searchFilter   = $this->post('filter');
         $idClientTypeFk = $this->post('idClientTypeFk');
