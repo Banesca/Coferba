@@ -189,7 +189,7 @@ class Clientes extends REST_Controller {
 
 
 	/*Solicitud para generar código de seguridad para cliente*/
-	public function segurityCodeCliente_post($idClient){
+	public function segurityCodeCliente_get($idClient){
 
 		$user = $this->client_model->getSegurityCodeClient($idClient);
 		if (! is_null($user)) {
