@@ -376,7 +376,7 @@ class User extends REST_Controller {
         }
 
         $user = null;
-        $user = $this->user_model->findUserByEmail($this->post('mail')['email']);
+        $user = $this->user_model->findUserByEmail($this->post('mail'));
 
         if (!is_null($user)) {
             $this->response($user, 200);

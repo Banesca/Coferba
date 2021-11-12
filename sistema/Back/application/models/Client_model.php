@@ -39,6 +39,11 @@ class Client_model extends CI_Model
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
 						'idStatusFk'              => 1,
 						'numberUNF'               => $client['numberUNF'],
+						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+						'idUserKf'                => $client['idUserKf'],
+						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+						'isRequesLowByProp'       => $client['isRequesLowByProp'],
 					]
 				);
 				$idDepartmentKf = $this->db->insert_id();
@@ -188,6 +193,11 @@ class Client_model extends CI_Model
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
 						'idStatusFk'              => 1,
 						'numberUNF'               => $client['numberUNF'],
+						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+						'idUserKf'                => $client['idUserKf'],
+						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+						'isRequesLowByProp'       => $client['isRequesLowByProp'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
@@ -382,6 +392,11 @@ class Client_model extends CI_Model
 								'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
 								'idStatusFk'              => 1,
 								'numberUNF'               => $valor['numberUNF'],
+								'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+								'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
+								'idUserKf'                => $valor['idUserKf'],
+								'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
+								'isRequesLowByProp'       => $valor['isRequesLowByProp'],
 							]
 						);
 					}
@@ -436,15 +451,20 @@ class Client_model extends CI_Model
 	public function addNotCustomerDepto ($client)
 	{
 		$this->db->insert('tb_client_departament', [
-				'idClientFk'              => $client['idClient'],
-				'floor'                   => $client['floor'],
-				'departament'             => $client['department'],
-				'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-				'idStatusFk'              => 1,
-				'numberUNF'               => 0,
-			]
-		);
-		if ($this->db->affected_rows() === 1) {
+			'idClientFk'              => $client['idClient'],
+			'floor'                   => $client['floor'],
+			'departament'             => $client['department'],
+			'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
+			'idStatusFk'              => 1,
+			'numberUNF'               => 0,
+			'idUserAdminRKf'          => $client['idUserAdminRKf'],
+			'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+			'idUserKf'                => $client['idUserKf'],
+			'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+			'isRequesLowByProp'       => $client['isRequesLowByProp'],
+		]);
+
+		if ($this->dbisRequesLowByPropaffected_rows() === 1) {
 			$idDepto = $this->db->insert_id();
 		} else {
 			$idDepto = null;
@@ -534,6 +554,11 @@ class Client_model extends CI_Model
 							'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
 							'idStatusFk'              => 1,
 							'numberUNF'               => $valor['numberUNF'],
+							'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+							'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
+							'idUserKf'                => $valor['idUserKf'],
+							'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
+							'isRequesLowByProp'       => $valor['isRequesLowByProp'],
 							//'idStatusFk'              => $valor['idStatusFk'],
 						]
 					);
@@ -546,6 +571,11 @@ class Client_model extends CI_Model
 							'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
 							'numberUNF'               => $valor['numberUNF'],
 							'idStatusFk'              => $valor['idStatusFk'],
+							'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+							'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
+							'idUserKf'                => $valor['idUserKf'],
+							'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
+							'isRequesLowByProp'       => $valor['isRequesLowByProp'],
 
 						]
 					)->where("idClientDepartament", $valor['idClientDepartament'])->update("tb_client_departament");
@@ -649,6 +679,11 @@ class Client_model extends CI_Model
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
 						'idStatusFk'              => 1,
 						'numberUNF'               => $client['numberUNF'],
+						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+						'idUserKf'                => $client['idUserKf'],
+						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+						'isRequesLowByProp'       => $client['isRequesLowByProp'],
 					]
 				);
 				$idDepartmentKf = $this->db->insert_id();
@@ -793,6 +828,11 @@ class Client_model extends CI_Model
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
 						'idStatusFk'              => 1,
 						'numberUNF'               => $client['numberUNF'],
+						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+						'idUserKf'                => $client['idUserKf'],
+						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+						'isRequesLowByProp'       => $client['isRequesLowByProp'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
@@ -927,6 +967,11 @@ class Client_model extends CI_Model
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
 						'idStatusFk'              => 1,
 						'numberUNF'               => $client['numberUNF'],
+						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+						'idUserKf'                => $client['idUserKf'],
+						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+						'isRequesLowByProp'       => $client['isRequesLowByProp'],
 					]
 				);
 				$idDepartmentKf = $this->db->insert_id();
@@ -1060,6 +1105,11 @@ class Client_model extends CI_Model
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
 						'idStatusFk'              => 1,
 						'numberUNF'               => $client['numberUNF'],
+						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
+						'idUserKf'                => $client['idUserKf'],
+						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
+						'isRequesLowByProp'       => $client['isRequesLowByProp'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
@@ -1208,9 +1258,7 @@ class Client_model extends CI_Model
 					]
 				);
 
-				if (count(@$client['list_address_particular']) > 0
-					&& count(@$client['list_phone_contact']) > 0
-				) {
+				if (count(@$client['list_address_particular']) > 0 && count(@$client['list_phone_contact']) > 0) {
 
 					//  TELEFONOS DE CONTACTO
 					foreach (@$client['list_phone_contact'] as $valor) {
@@ -1250,6 +1298,11 @@ class Client_model extends CI_Model
 										'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
 										'idStatusFk'              => 1,
 										'numberUNF'               => $valor['numberUNF'],
+										'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+										'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
+										'idUserKf'                => $valor['idUserKf'],
+										'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
+										'isRequesLowByProp'       => $valor['isRequesLowByProp'],
 									]
 								);
 								$idDepartmentKf = $this->db->insert_id();
@@ -1260,6 +1313,7 @@ class Client_model extends CI_Model
 
 							$idDepartmentKf = $client['idDepartmentFk'];
 						}
+
 						$this->db->insert('tb_client_address_particular', [
 								'idClientFk'                => $idClientFk,
 								'address'                   => $valor['address'],
@@ -1271,8 +1325,7 @@ class Client_model extends CI_Model
 								'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
 								'idParticularDepartamentKf' => @$idDepartmentKf,
 								'idZonaFk'                  => $valor['idZonaFk'],
-							]
-						);
+							]);
 					}
 				}
 
@@ -1370,6 +1423,11 @@ class Client_model extends CI_Model
 								'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
 								'idStatusFk'              => 1,
 								'numberUNF'               => $valor['numberUNF'],
+								'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+								'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
+								'idUserKf'                => $valor['idUserKf'],
+								'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
+								'isRequesLowByProp'       => $valor['isRequesLowByProp'],
 							]
 						);
 						$idDepartmentKf = $this->db->insert_id();

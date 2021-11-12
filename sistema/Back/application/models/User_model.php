@@ -20,8 +20,8 @@ class User_model extends CI_Model
 		/* verificamos el usuario  */
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
-		$this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 		$this->db->where("passwordUser =", sha1(md5($user['passwordUser'])));
 		$this->db->where("emailUser =", $user['fullNameUser']);
@@ -72,7 +72,7 @@ class User_model extends CI_Model
 		$sql = "
              SELECT distinct idUser,tb_user.idDepartmentKf,tb_user.* from tb_user 
              where idUser NOT in
-            (SELECT distinct idUserKf as id from  tb_department as tbaux1 where  tbaux1.idDepartment=$id AND tbaux1.idUserKf != '' )
+            (SELECT distinct idUserKf as id from  tb_client_departament as tbaux1 where  tbaux1.idClientDepartament=$id AND tbaux1.idUserKf != '' )
             AND  idUser NOT IN 
             (SELECT distinct idUser as id from  tb_user as tbaux2 where  tbaux2.idDepartmentKf  != '')
             AND tb_user.idStatusKf != -1 AND tb_user.idTypeTenantKf in (1,2)";
@@ -374,13 +374,14 @@ class User_model extends CI_Model
 	/*BUSCAR USUARIO POR EL EMAIL*/
 	public function findUserByEmail ($mail)
 	{
+
 		$user = null;
 
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
-		$this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->where("tb_user.emailUser", $mail);
 		$this->db->or_where("dni", $mail);
 
@@ -422,18 +423,18 @@ class User_model extends CI_Model
 			$type = $query->result_array();
 		}
 
-		$query = $this->db->select("*")->from("tb_company")->get();
-		if ($query->num_rows() > 0) {
-			$company = $query->result_array();
-
-		}
+//		$query = $this->db->select("*")->from("tb_company")->get();
+//		if ($query->num_rows() > 0) {
+//			$company = $query->result_array();
+//
+//		}
 
 
 		$filter = array(
 			'status'  => $status,
 			'profile' => $profile,
 			'type'    => $type,
-			'company' => $company
+//			'company' => $company
 		);
 
 		return $filter;
@@ -654,8 +655,8 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
-		$this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 		$this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
 		$where = "idProfileKf!=1";
 		$this->db->where($where);
@@ -668,8 +669,8 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
-		$this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 		$this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
 		$where = "idProfileKf = 3 OR idProfileKf = 5 OR (idProfileKf = 6 AND idTypeTenantKf IN (1,2))";
 		$this->db->where($where);
@@ -681,8 +682,8 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
-		$this->db->join('tb_addres', 'tb_addres.idAdress = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 		$this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
 		$query = $this->db->where("idProfileKf", 6)->order_by("tb_user.idUser", "ASC")->get();
 		if ($query->num_rows() > 0) {
@@ -692,7 +693,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->where("idProfileKf", 2);
 		$this->db->or_where("idProfileKf", 4);
 		$query = $this->db->order_by("tb_user.idUser", "DESC")->get();

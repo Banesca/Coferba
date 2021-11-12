@@ -470,6 +470,12 @@ CREATE TABLE `tb_client_departament` (
   `idStatusFk` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `numberUNF` int(11) DEFAULT NULL,
+   `idUserAdminRKf` int(11) NULL,
+    `idUserAdminPropietariKf` int(11) NULL,
+    `idUserKf` int(11) NULL ,
+     `isAprobatedAdmin` int(11) NULL,
+     `isRequesLowByProp` int(11) NULL;
+
   PRIMARY KEY (`idClientDepartament`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1108 DEFAULT CHARSET=utf8;
 
@@ -972,6 +978,7 @@ CREATE TABLE `tb_clients` (
   `idZonaFk` int(11) DEFAULT NULL,
   `idClientDepartamentFk` int(11) DEFAULT NULL,
   `idTipoInmuebleFk` int(11) DEFAULT NULL,
+  `IsInDebt` int(11) DEFAULT NULL,
   `departmentUnit` int(11) DEFAULT NULL COMMENT 'Designacion de Edificio Tipos {Letras o Numeros}',
   `departmentCorrelation` int(11) DEFAULT NULL COMMENT 'Designacion de correlacion {por piso o todo el edificio}',
   PRIMARY KEY (`idClient`)
