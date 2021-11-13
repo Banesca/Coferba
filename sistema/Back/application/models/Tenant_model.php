@@ -19,7 +19,7 @@ class Tenant_model extends CI_Model
         {
 
             $this->db->select("*")->from("tb_user");
-            $this->db->join('tb_department', 'tb_department.idDepartment = tb_user.idDepartmentKf', 'left');
+            $this->db->join('tb_client_departament', 'tb_client_departament.idClientDepartament = tb_user.idDepartmentKf', 'left');
             $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTyepeAttendantKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
             $quuery = $this->db->where("tb_user.idUser = ", $id)->get();
@@ -34,14 +34,14 @@ class Tenant_model extends CI_Model
          { 
 
             $this->db->select("*")->from("tb_user");
-            $this->db->join('tb_department', 'tb_department.idDepartment = tb_user.idDepartmentKf', 'left');
+            $this->db->join('tb_client_departament', 'tb_client_departament.idClientDepartament = tb_user.idDepartmentKf', 'left');
             $this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTyepeAttendantKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 
             // Si recibimos id de administrador de cnosorcio  //
             if (@$searchFilter['idAdminR'] > 0) {
                 $this->db->where('idDepartmentKf in (
-                SELECT  idDepartment  FROM tb_department WHERE idUserAdminRKf = '.$searchFilter['idAdminR'].' )',NULL, FALSE);
+                SELECT  idDepartment  FROM tb_client_departament WHERE idUserAdminRKf = '.$searchFilter['idAdminR'].' )',NULL, FALSE);
             } 
 
             if(@$searchFilter['idTypeTenantKf'] > 0)
@@ -118,7 +118,7 @@ class Tenant_model extends CI_Model
         $typetenant = null;
 
 
-        $query =  $this->db->select("*")->from("tb_department")->get();
+        $query =  $this->db->select("*")->from("tb_client_departament")->get();
         if ($query->num_rows() > 0) {
             $department = $query->result_array();
         }
@@ -142,9 +142,7 @@ class Tenant_model extends CI_Model
     public function getTenanatByIdDepartament($id, $idType) {
         
                 $tenant = null;
-        
-               
-        
+
                 if (@$idType > 0){
                     $this->db->select("*")->from("tb_user");
                     
@@ -194,7 +192,7 @@ class Tenant_model extends CI_Model
                 $rs = null;
 
                 if($id > 0){
-                    $extrawhere = " where  t1.idDepartmentKf = ".$id."  or idUser in (select idUserKf from  tb_department where idDepartment = ".$id." ) ";
+                    $extrawhere = " where  t1.idDepartmentKf = ".$id."  or idUser in (select idUserKf from  tb_client_departament where idClientDepartament = ".$id." ) ";
                 }
                 
                 $query = $query = $this->db->query(" select * from tb_user t1 ".$extrawhere);
@@ -236,8 +234,8 @@ class Tenant_model extends CI_Model
         
                 $tenant = null;
         
-                $this->db->select("*")->from("tb_department");
-                $query = $this->db->where("tb_department.idUserAdminRKf =", $id)->get();
+                $this->db->select("*")->from("tb_client_departament");
+                $query = $this->db->where("tb_client_departament.idUserAdminRKf =", $id)->get();
                 if ($query->num_rows() > 0) {
                     $tenant = $query->result_array();
                 }
