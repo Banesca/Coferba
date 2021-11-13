@@ -109,7 +109,7 @@ class Direccion_model extends CI_Model
 		$rs     = null;
 		$this->db->select("*")->from("tb_clients");
 		$this->db->join('tb_client_departament', 'tb_client_departament.idClientDepartament = tb_clients.idClient', 'inner');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_clients.idCompanyKf', 'left'); //falta
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_clients.idCompanyKf', 'left');
 		if ($idDpto) {
 			$this->db->join('tb_user', 'tb_user.idDepartmentKf = tb_client_departament.idClientDepartament', 'left'); //falta
 		}

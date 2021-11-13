@@ -21,7 +21,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 		$this->db->where("passwordUser =", sha1(md5($user['passwordUser'])));
 		$this->db->where("emailUser =", $user['fullNameUser']);
@@ -381,7 +381,7 @@ class User_model extends CI_Model
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->where("tb_user.emailUser", $mail);
 		$this->db->or_where("dni", $mail);
 
@@ -423,11 +423,11 @@ class User_model extends CI_Model
 			$type = $query->result_array();
 		}
 
-//		$query = $this->db->select("*")->from("tb_company")->get();
-//		if ($query->num_rows() > 0) {
-//			$company = $query->result_array();
-//
-//		}
+		$query = $this->db->select("*")->from("tb_company")->get();
+		if ($query->num_rows() > 0) {
+			$company = $query->result_array();
+
+		}
 
 
 		$filter = array(
@@ -655,7 +655,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 		$this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
 		$where = "idProfileKf!=1";
@@ -669,7 +669,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 		$this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
 		$where = "idProfileKf = 3 OR idProfileKf = 5 OR (idProfileKf = 6 AND idTypeTenantKf IN (1,2))";
@@ -682,7 +682,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 		$this->db->join('tb_type_attendant', 'tb_type_attendant.idTyepeAttendant = tb_user.idTyepeAttendantKf', 'left');
 		$query = $this->db->where("idProfileKf", 6)->order_by("tb_user.idUser", "ASC")->get();
@@ -693,7 +693,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
-//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->where("idProfileKf", 2);
 		$this->db->or_where("idProfileKf", 4);
 		$query = $this->db->order_by("tb_user.idUser", "DESC")->get();
