@@ -20,8 +20,8 @@ class User_model extends CI_Model
 		/* verificamos el usuario  */
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
-		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+//		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 		$this->db->where("passwordUser =", sha1(md5($user['passwordUser'])));
 		$this->db->where("emailUser =", $user['fullNameUser']);
@@ -36,15 +36,13 @@ class User_model extends CI_Model
 			$user = $query->row_array();
 
 			$idProfiles = $user['idSysProfileFk'];
-			if ($idProfiles > 0) {
+			$idProfile  = $user['idProfileKf'];
+			if (isset($idProfiles) && !is_null($idProfiles) && $idProfiles > 0) {
 				// Buscamos los perfiles de sistema //
 				$this->db->select("*")->from("tb_profiles");
 				$quuery = $this->db->where("tb_profiles.idProfiles =", $idProfiles)->get();
-
-
 				if ($quuery->num_rows() === 1) {
 					$rs = $quuery->row_array();
-
 
 					$this->db->select("*")->from("tb_profiles_modules");
 					$this->db->join('tb_modules', 'tb_modules.idModule = tb_profiles_modules.idModuleFk', 'inner');
@@ -53,6 +51,28 @@ class User_model extends CI_Model
 					$rs2 = $quuery->result_array();
 
 					$user['modules'] = $rs2;
+				}
+			}
+			$query2;
+			if ($idProfile == 2 || $idProfile == 4) {
+
+				$query2 = $this->db->select("*")->from("tb_clients");
+				$query2 = $this->db->join('tb_user', 'tb_user.idCompanyKf = tb_clients.idClient', 'left');
+				$query2 = $this->db->get();
+
+				if ($query2->num_rows() > 0) {
+					$user['empresas'] = $query2->result_array();
+				}
+
+			}
+			if ($idProfile == 5 || ($idProfile == 6 && $user['idTypeTenantKf'] == 2)) {
+				return "as";
+				$query2 = $this->db->select("*")->from("tb_clients");
+				$query2 = $this->db->join('tb_user', 'tb_user.idAddresKf = tb_clients.idClient', 'left');
+				$query2 = $this->get();
+
+				if ($query2->num_rows() > 0) {
+					$user['inquilinos'] = $query2->result_array();
 				}
 			}
 
@@ -380,8 +400,8 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
-		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
-		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
+//		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
+//		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->where("tb_user.emailUser", $mail);
 		$this->db->or_where("dni", $mail);
 
@@ -389,6 +409,29 @@ class User_model extends CI_Model
 
 		if ($query->num_rows() > 0) {
 			$user = $query->row_array();
+			$idProfile  = $user['idProfileKf'];
+			$query2;
+			if ($idProfile == 2 || $idProfile == 4) {
+
+				$query2 = $this->db->select("*")->from("tb_clients");
+				$query2 = $this->db->join('tb_user', 'tb_user.idCompanyKf = tb_clients.idClient', 'left');
+				$query2 = $this->db->get();
+
+				if ($query2->num_rows() > 0) {
+					$user['empresas'] = $query2->result_array();
+				}
+
+			}
+			if ($idProfile == 5 || ($idProfile == 6 && $user['idTypeTenantKf'] == 2)) {
+				return "as";
+				$query2 = $this->db->select("*")->from("tb_clients");
+				$query2 = $this->db->join('tb_user', 'tb_user.idAddresKf = tb_clients.idClient', 'left');
+				$query2 = $this->get();
+
+				if ($query2->num_rows() > 0) {
+					$user['inquilinos'] = $query2->result_array();
+				}
+			}
 			return $user;
 		} else {
 			return null;
@@ -434,7 +477,7 @@ class User_model extends CI_Model
 			'status'  => $status,
 			'profile' => $profile,
 			'type'    => $type,
-//			'company' => $company
+			//			'company' => $company
 		);
 
 		return $filter;
