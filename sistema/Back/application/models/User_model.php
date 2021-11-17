@@ -57,7 +57,8 @@ class User_model extends CI_Model
 			if ($idProfile == 2 || $idProfile == 4) {
 
 				$query2 = $this->db->select("*")->from("tb_clients");
-				$query2 = $this->db->join('tb_user', 'tb_user.idCompanyKf = tb_clients.idClient', 'left');
+//				$query2 = $this->db->join('tb_user', 'tb_user.idCompanyKf = tb_clients.idClient', 'left');
+				$query2 = $this->db->where('idClient', $user['idCompanyKf']);
 				$query2 = $this->db->get();
 
 				if ($query2->num_rows() > 0) {
@@ -66,9 +67,9 @@ class User_model extends CI_Model
 
 			}
 			if ($idProfile == 5 || ($idProfile == 6 && $user['idTypeTenantKf'] == 2)) {
-				return "as";
+//				return "as";
 				$query2 = $this->db->select("*")->from("tb_clients");
-				$query2 = $this->db->join('tb_user', 'tb_user.idAddresKf = tb_clients.idClient', 'left');
+				$query2 = $this->db->where('idClient', $user['idAddresKf']);
 				$query2 = $this->get();
 
 				if ($query2->num_rows() > 0) {
@@ -122,10 +123,10 @@ class User_model extends CI_Model
 
 			$this->db->select("*")->from("tb_user");
 			$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+			$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 			$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 			$quuery = $this->db->where("tb_user.idUser = ", $id)->get();
-
 
 			if ($quuery->num_rows() === 1) {
 				$rs = $quuery->row_array();
@@ -135,6 +136,7 @@ class User_model extends CI_Model
 
 			$this->db->select("*")->from("tb_user");
 			$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
+			$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 			$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 
@@ -152,12 +154,31 @@ class User_model extends CI_Model
 			if ($searchFilter['topFilter'] > 0) {
 				$this->db->limit($searchFilter['topFilter']);
 			}
-
 			$quuery = $this->db->order_by("tb_user.idUser", "ASC")->get();
-
-
 			if ($quuery->num_rows() > 0) {
-				return $quuery->result_array();
+				$user = $quuery->result_array();
+				foreach ($user as $key => $item) {
+					$idProfile = null;
+					$idProfile = $item['idProfileKf'];
+					$query2    = null;
+					if ($idProfile == 2 || $idProfile == 4) {
+						$query2 = $this->db->select("*")->from("tb_clients");
+						$query2 = $this->db->where('idClient', $item['idCompanyKf']);
+						$query2 = $this->db->get();
+						if ($query2->num_rows() > 0) {
+							$user[$key]['empresas'] = $query2->result_array();
+						}
+					}
+					if ($idProfile == 5 || ($idProfile == 6 && $item['idTypeTenantKf'] == 2)) {
+						$query2 = $this->db->select("*")->from("tb_clients");
+						$query2 = $this->db->where('idClient', $item['idAddresKf']);
+						$query2 = $this->db->get();
+						if ($query2->num_rows() > 0) {
+							$user[$key]['inquilinos'] = $query2->result_array();
+						}
+					}
+				}
+				return $user;
 			}
 			return null;
 		}
@@ -408,13 +429,15 @@ class User_model extends CI_Model
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0) {
-			$user = $query->row_array();
-			$idProfile  = $user['idProfileKf'];
+			$user      = $query->row_array();
+
+			$idProfile = $user['idProfileKf'];
 			$query2;
 			if ($idProfile == 2 || $idProfile == 4) {
 
 				$query2 = $this->db->select("*")->from("tb_clients");
-				$query2 = $this->db->join('tb_user', 'tb_user.idCompanyKf = tb_clients.idClient', 'left');
+//				$query2 = $this->db->join('tb_user', 'tb_user.idCompanyKf = tb_clients.idClient', 'left');
+				$query2 = $this->db->where('idClient', $user['idCompanyKf']);
 				$query2 = $this->db->get();
 
 				if ($query2->num_rows() > 0) {
@@ -423,9 +446,9 @@ class User_model extends CI_Model
 
 			}
 			if ($idProfile == 5 || ($idProfile == 6 && $user['idTypeTenantKf'] == 2)) {
-				return "as";
+//				return "as";
 				$query2 = $this->db->select("*")->from("tb_clients");
-				$query2 = $this->db->join('tb_user', 'tb_user.idAddresKf = tb_clients.idClient', 'left');
+				$query2 = $this->db->where('idClient', $user['idAddresKf']);
 				$query2 = $this->get();
 
 				if ($query2->num_rows() > 0) {
