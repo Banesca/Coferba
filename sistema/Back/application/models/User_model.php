@@ -23,6 +23,7 @@ class User_model extends CI_Model
 //		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 //		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
+		$this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTypeTenantKf', 'left');
 		$this->db->where("passwordUser =", sha1(md5($user['passwordUser'])));
 		$this->db->where("emailUser =", $user['fullNameUser']);
 		$this->db->or_group_start();
@@ -124,6 +125,7 @@ class User_model extends CI_Model
 			$this->db->select("*")->from("tb_user");
 			$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 			$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
+			$this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTypeTenantKf', 'left');
 			$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 			$quuery = $this->db->where("tb_user.idUser = ", $id)->get();
@@ -137,6 +139,7 @@ class User_model extends CI_Model
 			$this->db->select("*")->from("tb_user");
 			$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 			$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
+			$this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTypeTenantKf', 'left');
 			$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_user.idStatusKf', 'left');
 			$this->db->where("tb_user.idStatusKf !=", -1);
 
@@ -421,6 +424,7 @@ class User_model extends CI_Model
 		$this->db->select("*")->from("tb_user");
 		$this->db->join('tb_profile', 'tb_profile.idProfile = tb_user.idProfileKf', 'left');
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
+		$this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTypeTenantKf', 'left');
 //		$this->db->join('tb_clients', 'tb_clients.idClient = tb_user.idAddresKf', 'left');
 //		$this->db->join('tb_company', 'tb_company.idCompany = tb_user.idCompanyKf', 'left');
 		$this->db->where("tb_user.emailUser", $mail);
