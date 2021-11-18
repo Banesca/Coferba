@@ -307,7 +307,9 @@ class User_model extends CI_Model
 				'passwordUser' => sha1(md5($recoverRamdonPwd)),
 				'resetPasword' => 1
 			)
-		)->where("emailUser", $user['emailUser'])->update("tb_user");
+		)->where("emailUser", $user['emailUser'])
+			->or_where("dni", $user['emailUser'])
+			->update("tb_user");
 
 		/*MAIL*/
 		$title = "Mail de Clave de Acceso a Coferba";
