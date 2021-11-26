@@ -25,11 +25,11 @@ class User_model extends CI_Model
 		$this->db->join('tb_profiles', 'tb_profiles.idProfiles = tb_user.idSysProfileFk', 'left');
 		$this->db->join('tb_typetenant', 'tb_typetenant.idTypeTenant = tb_user.idTypeTenantKf', 'left');
 		$this->db->where("passwordUser =", sha1(md5($user['passwordUser'])));
-		$this->db->where("emailUser =", $user['fullNameUser']);
-		$this->db->or_group_start();
-		$this->db->where("dni =", $user['fullNameUser']);
+		$this->db->group_start();
+		$this->db->where("emailUser", $user['fullNameUser']);
+		$this->db->or_where("dni", $user['fullNameUser']);
 		$this->db->group_end();
-		$query = $this->db->or_where("fullNameUser =", $user['fullNameUser'])->get();
+		$query = $this->db->get();
 
 
 		if ($query->num_rows() == 1) {
