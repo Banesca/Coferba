@@ -557,7 +557,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"user\":\n  {\n    \"fullNameUser\" : \"soporte@coferba.com.ar\",\n    \"passwordUser\" : \"12345\"\n    }\n}"
+							"raw": "{\n    \"user\": {\n        \"fullNameUser\": \"sofia.rincon@asdasdsad.com\",\n        \"passwordUser\": \"12345\"\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost/Coferba/sistema/Back/index.php/User/auth",
@@ -669,6 +669,36 @@
 								"index.php",
 								"User",
 								"filterForm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/User/index",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"User",
+								"index"
 							]
 						}
 					},
@@ -3463,6 +3493,271 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Llaveros",
+			"item": [
+				{
+					"name": "Agregar un llavero",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"llavero\": {\n        \"dptoContact\": \"822\",\n        \"cantKeyChain\": \"82\",\n        \"idProductKf\": \"81\",\n        \"modelo\": \"82\",\n        \"codigo\": \"833\",\n        \"idDepartmenKf\": \"82\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar llaveros masivos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "excel",
+									"type": "file",
+									"src": "/C:/Users/AJPC_/Downloads/JURAMENTO 1449.xlsx"
+								},
+								{
+									"key": "a",
+									"value": "ss",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/varios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"varios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos los llavero",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/index",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"index"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar un llavero",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"llavero\": {\n        \"idKeychain\": \"2\",\n        \"dptoContact\": \"822\",\n        \"cantKeyChain\": \"82\",\n        \"idProductKf\": \"81\",\n        \"modelo\": \"82\",\n        \"codigo\": \"833\",\n        \"idDepartmenKf\": \"82\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos los llaveros por $idDepartmenKf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/findIdDeparment/82",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"findIdDeparment",
+								"82"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Listar todos los llaveros por $idDepartmenKf",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/findIdDeparment/82",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Coferba",
+										"sistema",
+										"Back",
+										"index.php",
+										"Llavero",
+										"findIdDeparment",
+										"82"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 26 Nov 2021 19:32:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.47 (Win64) OpenSSL/1.1.1k PHP/7.4.19"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.19"
+								},
+								{
+									"key": "Content-Length",
+									"value": "257"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"idKeychain\": \"2\",\n        \"dptoContact\": \"822\",\n        \"cantKeyChain\": \"82\",\n        \"idProductKf\": \"81\",\n        \"modelo\": \"82\",\n        \"codigo\": \"833\",\n        \"idDepartmenKf\": \"82\"\n    },\n    {\n        \"idKeychain\": \"3\",\n        \"dptoContact\": \"822\",\n        \"cantKeyChain\": \"82\",\n        \"idProductKf\": \"81\",\n        \"modelo\": \"82\",\n        \"codigo\": \"833\",\n        \"idDepartmenKf\": \"82\"\n    }\n]"
+						}
+					]
 				}
 			]
 		}

@@ -17,6 +17,9 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_coferba` /*!40100 DEFAULT CHARACTER 
 
 USE `db_coferba`;
 
+DROP TABLE IF EXISTS `tb_keychain`;
+
+CREATE TABLE `tb_keychain`( `idKeychain` INT UNSIGNED NOT NULL AUTO_INCREMENT, `idAdificioKf` INT, `dptoContact` VARCHAR(255), `cantKeyChain` INT, `idProductKf` VARCHAR(255), `modelo` VARCHAR(255), `codigo` VARCHAR(255), `idDepartmenKf` INT, PRIMARY KEY (`idKeychain`) );
 /*Table structure for table `tb_access_control` */
 
 DROP TABLE IF EXISTS `tb_access_control`;
