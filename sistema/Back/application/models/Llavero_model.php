@@ -59,6 +59,20 @@ class Llavero_model extends CI_Model
 		return null;
 	}
 
+	public function getLlaveroSinDepartameto()
+	{
+		$quuery = null;
+		$rs = null;
+
+		$quuery = $this->db->select("*")->from("tb_keychain")->where('idDepartmenKf is NULL')->get();
+
+		if ($quuery->num_rows() > 0) {
+			$rs = $quuery->result_array();
+			return $rs;
+		}
+		return null;
+	}
+
 	public function add($items, $is_multiple = true)
 	{
 		$errors_multiple = null;

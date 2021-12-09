@@ -109,4 +109,14 @@ class Llavero extends REST_Controller
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
 	}
+	public function findLlaveroSinDepartamento_get()
+	{
+
+		$user = $this->llavero_model->getLlaveroSinDepartameto();
+		if (!is_null($user)) {
+			$this->response($user, 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
 }
