@@ -82,12 +82,15 @@ class Llavero_model extends CI_Model
 					$errors_multiple[] = $items['codigo'][$i];
 				} else {
 					$this->db->insert('tb_keychain', [
-							"dptoContact" => $items['departamento'][$i],
-							"cantKeyChain" => $items['cantidad'][$i],
-							"idProductKf" => $items['tipo'][$i],
-							"modelo" => $items['modelo'][$i],
+							"idProductKf" => $items['producto'][$i],
+							"codExt" => $items['codigoExt'][$i],
 							"codigo" => $items['codigo'][$i],
-//					"idDepartmenKf" => $item['']
+							"idDepartmenKf" => $items['departamento'][$i],
+							"idClientKf" => $items['cliente'][$i],
+							"idCategoryKf" => $items['categoria'][$i],
+//						"idUserKf" => $items['idUserKf'][$i],
+//						"isKeyTenantOnly" => $items['isKeyTenantOnly'][$i],
+
 						]
 					);
 				}
@@ -100,12 +103,14 @@ class Llavero_model extends CI_Model
 				return 2;
 			} else {
 				$this->db->insert('tb_keychain', [
-						"dptoContact" => $items['dptoContact'],
-						"cantKeyChain" => $items['cantKeyChain'],
 						"idProductKf" => $items['idProductKf'],
-						"modelo" => $items['modelo'],
+						"codExt" => $items['idProductKf'],
 						"codigo" => $items['codigo'],
-						"idDepartmenKf" => $items['idDepartmenKf']
+						"idDepartmenKf" => $items['idDepartmenKf'],
+						"idClientKf" => $items['idClientKf'],
+						"idUserKf" => $items['idUserKf'],
+						"idCategoryKf" => $items['idCategoryKf'],
+						"isKeyTenantOnly" => $items['isKeyTenantOnly'],
 					]
 				);
 			}
@@ -126,12 +131,14 @@ class Llavero_model extends CI_Model
 		if ($quuery->num_rows() > 0) {
 			$this->db->set(
 				[
-					"dptoContact" => $item['dptoContact'],
-					"cantKeyChain" => $item['cantKeyChain'],
 					"idProductKf" => $item['idProductKf'],
-					"modelo" => $item['modelo'],
+					"codExt" => $item['idProductKf'],
 					"codigo" => $item['codigo'],
-					"idDepartmenKf" => $item['idDepartmenKf']
+					"idDepartmenKf" => $item['idDepartmenKf'],
+					"idClientKf" => $item['idClientKf'],
+					"idUserKf" => $item['idUserKf'],
+					"idCategoryKf" => $item['idCategoryKf'],
+					"isKeyTenantOnly" => $item['isKeyTenantOnly'],
 				]
 			)->where("idKeychain", $item['idKeychain'])->update("tb_keychain");
 
@@ -145,6 +152,7 @@ class Llavero_model extends CI_Model
 		}
 	}
 
+//ya no se usa
 	public function addVarios($file)
 	{ //recibe excel y lo decodifica
 
@@ -176,7 +184,6 @@ class Llavero_model extends CI_Model
 			echo "Error! no es una plantilla de excel valida<br>";
 			$archivo_valido = false;
 		}
-//$objFecha = new PHPExcel_Shared_Date();
 		if ($archivo_valido) {
 			$locale = 'es_es';
 			$validLocale = PHPExcel_Settings::setLocale($locale);
@@ -227,20 +234,92 @@ class Llavero_model extends CI_Model
 			echo "Error! no es una plantilla de excel valida<br>";
 		}
 
-//		$this->db->insert('tb_keychain', [
-//				"dptoContact" => $item['dptoContact'],
-//				"cantKeyChain" => $item['cantKeyChain'],
-//				"idProductKf" => $item['idProductKf'],
-//				"modelo" => $item['modelo'],
-//				"codigo" => $item['codigo'],
-//				"idDepartmenKf" => $item['idDepartmenKf']
-//			]
-//		);
-//		if ($this->db->affected_rows() === 1) {
-//			return 1;
-//		} else {
-//			return 0;
-//		}
+	}
+
+	public function asignar($obj)
+	{
+		$quuery = $this->db->select("*")->from("tb_keychain")->where("idKeychain", $obj['idKeychain'])->get();
+		if ($quuery->num_rows() > 0) {
+			$this->db->set(
+				[
+					"idUserKf" => $obj['idUserKf'],
+				]
+			)->where("idKeychain", $obj['idKeychain'])->update("tb_keychain");
+
+			if ($this->db->affected_rows() === 1) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			return 3;
+		}
+
+	}
+
+	public function addVarios2($file)
+	{ //recibe excel y lo decodifica
+
+		$uploaddir = 'uploads/';
+		$path = $_FILES['excel']['name'];
+		$ext = pathinfo($path, PATHINFO_EXTENSION);
+		$user_img = time() . rand() . '.' . $ext;
+		$uploadfile = $uploaddir . time() . '_' . str_replace(" ", "", $path);
+//		$this->response($uploadfile, 200);
+		if ($file["excel"]["name"]) {
+			move_uploaded_file($file["excel"]["tmp_name"], "$uploadfile");
+		}
+
+		$archivo_plantilla = null;
+		$ruta = $uploadfile;
+		if (!file_exists($ruta)) {
+			return "No existe el archivo";
+		}
+		$objReader = new PHPExcel_Reader_Excel2007();
+		$objPHPExcel = new PHPExcel();
+		$archivo_valido = false;
+		try {
+			$inputFileType = PHPExcel_IOFactory::identify($ruta);
+			if ($inputFileType == "Excel2007") {
+				$archivo_valido = true;
+				$objPHPExcel = PHPExcel_IOFactory::load($ruta);
+			}
+		} catch (Exception $e) {
+			echo "Error! no es una plantilla de excel valida<br>";
+			$archivo_valido = false;
+		}
+		if ($archivo_valido) {
+			$locale = 'es_es';
+			$validLocale = PHPExcel_Settings::setLocale($locale);
+			if (!$validLocale) {
+				echo "Unable to set locale to " . $locale . " - reverting to en_us";
+			}
+			$fila = 2; //ajuste de inicio
+			$salida = true;
+			for ($fila; $salida; $fila++) {
+				if ($objPHPExcel->getActiveSheet()->getCell('A' . $fila)->getValue() ||
+					$objPHPExcel->getActiveSheet()->getCell('B' . $fila)->getValue() ||
+					$objPHPExcel->getActiveSheet()->getCell('E' . $fila)->getValue() ||
+					$objPHPExcel->getActiveSheet()->getCell('G' . $fila)->getValue() ||
+					$objPHPExcel->getActiveSheet()->getCell('H' . $fila)->getValue() ||
+					$objPHPExcel->getActiveSheet()->getCell('I' . $fila)->getValue()
+				) {
+					$a['departamento'][] = $objPHPExcel->getActiveSheet()->getCell('A' . $fila)->getValue();
+					$a['cliente'][] = $objPHPExcel->getActiveSheet()->getCell('B' . $fila)->getValue();
+					$a['producto'][] = $objPHPExcel->getActiveSheet()->getCell('E' . $fila)->getValue();
+					$a['codigo'][] = (string)$objPHPExcel->getActiveSheet()->getCell('G' . $fila)->getValue();
+					$a['codigoExt'][] = (string)$objPHPExcel->getActiveSheet()->getCell('H' . $fila)->getValue();
+					$a['categoria'][] = (string)$objPHPExcel->getActiveSheet()->getCell('I' . $fila)->getValue();
+
+				} else {
+					$salida = false;
+				}
+			}
+			return $this->add($a);
+
+		} else {
+			echo "Error! no es una plantilla de excel valida<br>";
+		}
 
 	}
 

@@ -3513,7 +3513,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"llavero\": {\n        \"dptoContact\": \"822\",\n        \"cantKeyChain\": \"82\",\n        \"idProductKf\": \"81\",\n        \"modelo\": \"82\",\n        \"codigo\": \"833\",\n        \"idDepartmenKf\": \"82\"\n    }\n}"
+							"raw": "{\n    \"llavero\": {\n        \"idProductKf\": \"1\",\n        \"codExt\": \"000\",\n        \"codigo\": \"0\",\n        \"idDepartmenKf\": \"1\",\n        \"idClientKf\": \"1\",\n        \"idUserKf\": \"1\",\n        \"idCategoryKf\": \"1\",\n        \"isKeyTenantOnly\": \"1\"\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/add",
@@ -3552,7 +3552,7 @@
 								{
 									"key": "excel",
 									"type": "file",
-									"src": "/C:/Users/AJPC_/Downloads/JURAMENTO 1449.xlsx"
+									"src": "/C:/Users/AJPC_/Downloads/JURAMENTO_1449.xlsx"
 								},
 								{
 									"key": "a",
@@ -3631,7 +3631,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"llavero\": {\n        \"idKeychain\": \"2\",\n        \"dptoContact\": \"822\",\n        \"cantKeyChain\": \"82\",\n        \"idProductKf\": \"81\",\n        \"modelo\": \"82\",\n        \"codigo\": \"833\",\n        \"idDepartmenKf\": \"82\"\n    }\n}"
+							"raw": "{\n    \"llavero\": {\n        \"idKeychain\": \"2\",\n        \"idProductKf\": \"1\",\n        \"codExt\": \"000\",\n        \"codigo\": \"0\",\n        \"idDepartmenKf\": \"1\",\n        \"idClientKf\": \"1\",\n        \"idUserKf\": \"1\",\n        \"idCategoryKf\": \"1\",\n        \"isKeyTenantOnly\": \"1\"\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/edit",
@@ -3791,6 +3791,40 @@
 								"index.php",
 								"Llavero",
 								"findLlaveroSinDepartamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"asignar\": {\r\n        \"idKeychain\": 1,\r\n        \"idUserKf\": 1\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/asignar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"asignar"
 							]
 						}
 					},
