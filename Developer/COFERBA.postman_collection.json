@@ -3797,7 +3797,7 @@
 					"response": []
 				},
 				{
-					"name": "Asignar",
+					"name": "Asignar_Editar",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -3825,6 +3825,70 @@
 								"index.php",
 								"Llavero",
 								"asignar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignar_Eliminar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eliminar\": {\r\n        \"idKeychain\": 2\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/asignareliminar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"asignareliminar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar solo los asignados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/listarasignar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"listarasignar"
 							]
 						}
 					},

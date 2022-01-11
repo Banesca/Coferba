@@ -56,6 +56,38 @@ class Llavero extends REST_Controller
 		}
 	}
 
+	public function asignareliminar_post()
+	{
+		$obj = null;
+		if (!$this->post('eliminar')) {
+			$this->response(null, 404);
+		}
+		$obj = $this->llavero_model->asignareliminar($this->post('eliminar'));
+		if ($obj == 1) {
+			$this->response(['response' => "Eliminación exitosa"], 200);
+		} else {
+			if ($obj == 0) {
+				$this->response(['error' => "El llavero no tiene usuario asignado"], 500);
+			} else {
+				if ($obj == 2) {
+					$this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+				}
+			}
+		}
+	}
+
+	public function listarasignar_get()
+	{
+		$obj = null;
+
+		$obj = $this->llavero_model->listarasignar();
+		if (!is_null($obj)) {
+			$this->response($obj, 200);
+		} else {
+			$this->response(['response' => "Elemento ya se encuentra registrado"], 203);
+		}
+	}
+
 	public function varios_post()
 	{
 //		$this->response( $_FILES['excel'], 200);

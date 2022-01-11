@@ -257,6 +257,51 @@ class Llavero_model extends CI_Model
 
 	}
 
+	public function asignareliminar($obj)
+	{
+		$quuery = $this->db->select("*")->from("tb_keychain")->where("idKeychain", $obj['idKeychain'])->get();
+		if ($quuery->num_rows() > 0) {
+			$this->db->set(
+				[
+					"idUserKf" => null,
+				]
+			)->where("idKeychain", $obj['idKeychain'])->update("tb_keychain");
+
+			if ($this->db->affected_rows() === 1) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			return 3;
+		}
+
+	}
+
+	public function listarasignar()
+	{
+		$quuery = $this->db->select("*")
+			->from("tb_keychain")
+			->where("idUserKf is not NULL")
+			->get();
+		if ($quuery->num_rows() > 0) {
+			$rs = $quuery->result_array();
+			foreach ($quuery->result_array() as $key => $keyChain) {
+				$quuery2 = $this->db->select("*")
+					->from("tb_user")
+					->where("idUser", $keyChain['idUserKf'])
+					->get();
+				if ($quuery2->num_rows() > 0) {
+					$rs[$key]['user'] = $quuery2->result_array()[0];
+				}
+			}
+			return $rs;
+		} else {
+			return 0;
+		}
+
+	}
+
 	public function addVarios2($file)
 	{ //recibe excel y lo decodifica
 
