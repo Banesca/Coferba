@@ -160,6 +160,18 @@ class Llavero extends REST_Controller
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
 	}
+	public function findKeychainOnlineAssociate_post()
+	{
+		if (!$this->post('search')) {
+			$this->response(null, 404);
+		}
+		$obj = $this->llavero_model->findKeychainOnlineAssociate($this->post('search'));
+		if (!is_null($obj)) {
+			$this->response($obj, 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
 
 	public function findLlaveroSinDepartamento_get()
 	{

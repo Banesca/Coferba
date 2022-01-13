@@ -302,6 +302,52 @@ class Llavero_model extends CI_Model
 
 	}
 
+	public function findKeychainOnlineAssociate($obj)
+	{
+		/*
+		   [
+			   {
+				 "idTypeTenant":"1",
+				"typeTenantName":"Propietario"
+			  },
+			  {
+				 "idTypeTenant":"2",
+				"typeTenantName":"Inquilino"
+			  }
+			]
+		*/
+
+		$this->db->select("*")->from("tb_keychain");
+		if ($obj['idTypeTenant'] == 1) {
+			$this->db->group_start();
+			$this->db->where("isKeyTenantOnly", 1);
+			$this->db->or_where("isKeyTenantOnly", 0);
+			$this->db->or_where("isKeyTenantOnly is null");
+			$this->db->group_end();
+		} elseif ($obj['idTypeTenant'] == 2) {
+			$this->db->where("isKeyTenantOnly", 1);
+		}
+		$this->db->where("idDepartmenKf", $obj['idDepartmenKf']); //solo por el departamento del usuario
+
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			$rs = $result->result_array();
+			foreach ($result->result_array() as $key => $keyChain) {
+				$quuery2 = $this->db->select("*")
+					->from("tb_user")
+					->where("idUser", $keyChain['idUserKf'])
+					->get();
+				if ($quuery2->num_rows() > 0) {
+					$rs[$key]['user'] = $quuery2->result_array()[0];
+				}
+			}
+			return $rs;
+		} else {
+			return null;
+		}
+
+	}
+
 	public function addVarios2($file)
 	{ //recibe excel y lo decodifica
 

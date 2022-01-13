@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c7ae513a-2a19-4a40-bd5c-f850a88b5637",
+		"_postman_id": "e9d52f30-80c2-4687-9388-413ea781a223",
 		"name": "COFERBA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -3700,10 +3700,6 @@
 										"value": "application/json"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
 									"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/findIdDeparment/82",
 									"protocol": "http",
@@ -3889,6 +3885,40 @@
 								"index.php",
 								"Llavero",
 								"listarasignar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar los llaveros activos para asignar por departamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"search\": {\r\n        \"idDepartmenKf\": 1,\r\n        \"idTypeTenant\": 1\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Llavero/findKeychainOnlineAssociate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Llavero",
+								"findKeychainOnlineAssociate"
 							]
 						}
 					},
