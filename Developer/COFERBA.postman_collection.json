@@ -1743,6 +1743,94 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "aprobar pedido de propietarios",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiIyNWRhYWQzZDllNjBiNDUwNDNhNzBjNGFiN2QzYjFjNiIsImlhdCI6MTY0MjY5ODY1MX0.eQjJKkeBYY8gNbwKN_bcOXoYfySlpFJv5zS_WDt6wX4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client\": {\n        \"idClient\":\"1\",\n        \"autoApproveAll\": \"1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Clientes/aprobarPedidoClient",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Clientes",
+								"aprobarPedidoClient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aprobarPedidoClientDepartment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiIyNWRhYWQzZDllNjBiNDUwNDNhNzBjNGFiN2QzYjFjNiIsImlhdCI6MTY0MjY5ODY1MX0.eQjJKkeBYY8gNbwKN_bcOXoYfySlpFJv5zS_WDt6wX4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client\": {\n        \"idClientDepartament\": \"1\",\n        \"autoApproveFloor\": \"1\",\n        \"autoApproveDepto\": \"1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Clientes/aprobarPedidoClientDepartment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Clientes",
+								"aprobarPedidoClientDepartment"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

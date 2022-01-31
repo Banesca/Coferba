@@ -4,46 +4,46 @@
 class Client_model extends CI_Model
 {
 
-	public function __construct ()
+	public function __construct()
 	{
 		parent::__construct();
 	}
 
 
 	// ADMINISTRADORES //
-	public function addAdmin ($client)
+	public function addAdmin($client)
 	{
 		$idClientDepartamentFk = null;
-		$idDepartmentKf        = null;
+		$idDepartmentKf = null;
 		if ($client['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
 			$idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
 			if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 				$this->db->insert('tb_clients', [
 						'idClientTypeFk' => 2,
-						'name'           => $client['address'],
-						'address'        => $client['address'],
-						'isNotCliente'   => 1,
-						'idStatusFk'     => 0,
-						'addressLat'     => $client['addressLat'],
-						'addressLon'     => $client['addressLon'],
-						'idLocationFk'   => $client['idLocationFk'],
-						'idProvinceFk'   => $client['idProvinceFk'],
+						'name' => $client['address'],
+						'address' => $client['address'],
+						'isNotCliente' => 1,
+						'idStatusFk' => 0,
+						'addressLat' => $client['addressLat'],
+						'addressLon' => $client['addressLon'],
+						'idLocationFk' => $client['idLocationFk'],
+						'idProvinceFk' => $client['idProvinceFk'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
 				//  DEPARTAMENTO
 				$this->db->insert('tb_client_departament', [
-						'idClientFk'              => $idClientDepartamentFk,
-						'floor'                   => $client['floor'],
-						'departament'             => $client['department'],
+						'idClientFk' => $idClientDepartamentFk,
+						'floor' => $client['floor'],
+						'departament' => $client['department'],
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-						'idStatusFk'              => 1,
-						'numberUNF'               => $client['numberUNF'],
-						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idStatusFk' => 1,
+						'numberUNF' => $client['numberUNF'],
+						'idUserAdminRKf' => $client['idUserAdminRKf'],
 						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-						'idUserKf'                => $client['idUserKf'],
-						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-						'isRequesLowByProp'       => $client['isRequesLowByProp'],
+						'idUserKf' => $client['idUserKf'],
+						'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+						'isRequesLowByProp' => $client['isRequesLowByProp'],
 					]
 				);
 				$idDepartmentKf = $this->db->insert_id();
@@ -60,29 +60,29 @@ class Client_model extends CI_Model
 		if ($query->num_rows() < 1) {
 
 			$this->db->insert('tb_clients', [
-					'idClientTypeFk'          => $client['idClientTypeFk'],
-					'name'                    => $client['name'],
-					'address'                 => $client['address'],
-					'addressLat'              => $client['addressLat'],
-					'addressLon'              => $client['addressLon'],
-					'idAgentFk'               => $client['idAgentFk'],
-					'businessName'            => $client['businessName'],
-					'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-					'CUIT'                    => $client['CUIT'],
-					'idLocationFk'            => $client['idLocationFk'],
-					'idProvinceFk'            => $client['idProvinceFk'],
-					'observation'             => $client['observation'],
-					'pageWeb'                 => $client['pageWeb'],
-					'idStatusFk'              => 1,
-					'observationOrderKey'     => $client['observationOrderKey'],
-					'isNotCliente'            => $client['isNotCliente'],
-					'idClientAdminFk'         => $client['idClientAdminFk'],
+					'idClientTypeFk' => $client['idClientTypeFk'],
+					'name' => $client['name'],
+					'address' => $client['address'],
+					'addressLat' => $client['addressLat'],
+					'addressLon' => $client['addressLon'],
+					'idAgentFk' => $client['idAgentFk'],
+					'businessName' => $client['businessName'],
+					'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+					'CUIT' => $client['CUIT'],
+					'idLocationFk' => $client['idLocationFk'],
+					'idProvinceFk' => $client['idProvinceFk'],
+					'observation' => $client['observation'],
+					'pageWeb' => $client['pageWeb'],
+					'idStatusFk' => 1,
+					'observationOrderKey' => $client['observationOrderKey'],
+					'isNotCliente' => $client['isNotCliente'],
+					'idClientAdminFk' => $client['idClientAdminFk'],
 					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'observationCollection'   => $client['observationCollection'],
-					'idClientCompaniFk'       => $client['idClientCompaniFk'],
-					'idZonaFk'                => @$client['idZonaFk'],
-					'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
-					'idClientDepartamentFk'   => @$idDepartmentKf,
+					'observationCollection' => $client['observationCollection'],
+					'idClientCompaniFk' => $client['idClientCompaniFk'],
+					'idZonaFk' => @$client['idZonaFk'],
+					'idTipoInmuebleFk' => @$client['idTipoInmuebleFk'],
+					'idClientDepartamentFk' => @$idDepartmentKf,
 
 				]
 			);
@@ -92,13 +92,13 @@ class Client_model extends CI_Model
 
 				// DATOS DE FACTURCION
 				$this->db->insert('tb_client_billing_information', [
-						'idClientFk'          => $idClientFk,
+						'idClientFk' => $idClientFk,
 						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'businessAddress'     => $client['billing_information']['nameAddress'],
-						'cuitBilling'         => $client['billing_information']['cuitBilling'],
+						'businessAddress' => $client['billing_information']['nameAddress'],
+						'cuitBilling' => $client['billing_information']['cuitBilling'],
 						'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 						'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk'],
+						'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk'],
 					]
 				);
 
@@ -113,11 +113,11 @@ class Client_model extends CI_Model
 
 						$this->db->insert('tb_client_schedule_atention', [
 								'idClienteFk' => $idClientFk,
-								'day'         => $valor['day'],
-								'fronAm'      => $valor['fronAm'],
-								'toAm'        => $valor['toAm'],
-								'fronPm'      => $valor['fronPm'],
-								'toPm'        => $valor['toPm'],
+								'day' => $valor['day'],
+								'fronAm' => $valor['fronAm'],
+								'toAm' => $valor['toAm'],
+								'fronPm' => $valor['fronPm'],
+								'toPm' => $valor['toPm'],
 							]
 						);
 					}
@@ -125,8 +125,8 @@ class Client_model extends CI_Model
 					foreach (@$client['list_phone_contact'] as $valor) {
 
 						$this->db->insert('tb_client_phone_contact', [
-								'idClientFk'   => $idClientFk,
-								'phoneTag'     => $valor['phoneTag'],
+								'idClientFk' => $idClientFk,
+								'phoneTag' => $valor['phoneTag'],
 								'phoneContact' => $valor['phoneContact'],
 							]
 						);
@@ -137,18 +137,18 @@ class Client_model extends CI_Model
 
 						$this->db->insert('tb_client_users', [
 								'idClientFk' => $idClientFk,
-								'idUserFk'   => $valor['idUserFk'],
+								'idUserFk' => $valor['idUserFk'],
 							]
 						);
 					}
 					// MAILS
 					foreach ($client['list_emails'] as $valor) {
 						$this->db->insert('tb_client_mails', [
-								'idClientFk'     => $idClientFk,
-								'mailTag'        => $valor['mailTag'],
-								'mailContact'    => $valor['mailContact'],
+								'idClientFk' => $idClientFk,
+								'mailTag' => $valor['mailTag'],
+								'mailContact' => $valor['mailContact'],
 								'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-								'status'         => 1,
+								'status' => 1,
 							]
 						);
 					}
@@ -164,8 +164,75 @@ class Client_model extends CI_Model
 
 	}
 
+	public function aprobarPedidoClient($client)
+	{
+		$val = false;
+		$query = $this->db->select("*")->from("tb_clients")->where('idClient', $client['idClient'])->get();
+		if ($query->num_rows() > 0) { //si existe el cliente
+			if (!is_null($client['autoApproveAll'])) {
+				if ($client['autoApproveAll'] == 1) {
+					$val = true;
+				}
+				if ($client['autoApproveAll'] == 0) {
+					$val = true;
+				}
+			}
+		} else {
+			return 0;
+		}
+		if ($val) {
+			$this->db->set(
+				[
+					'autoApproveAll' => $client['autoApproveAll'],
+				]
+			)->where("idClient", $client['idClient'])->update("tb_clients");
+			return 1;
+		} else {
+			return 0;
+		}
 
-	public function updateAdmin ($client)
+	}
+	public function aprobarPedidoClientDepartment($client)
+	{
+		$val = false;
+		$val2 = false;
+		$query = $this->db->select("*")->from("tb_client_departament")->where('idClientDepartament', $client['idClientDepartament'])->get();
+		if ($query->num_rows() > 0) { //si existe el cliente
+			if (!is_null($client['autoApproveFloor'])) {
+				if ($client['autoApproveFloor'] == 1) {
+					$val = true;
+				}
+				if ($client['autoApproveFloor'] == 0) {
+					$val = true;
+				}
+			}
+			if (!is_null($client['autoApproveDepto'])) {
+				if ($client['autoApproveDepto'] == 1) {
+					$val2 = true;
+				}
+				if ($client['autoApproveDepto'] == 0) {
+					$val2 = true;
+				}
+			}
+		} else {
+			return 0;
+		}
+		if ($val && $val2) {
+			$this->db->set(
+				[
+					'autoApproveFloor' => $client['autoApproveFloor'],
+					'autoApproveDepto' => $client['autoApproveDepto'],
+				]
+			)->where("idClientDepartament", $client['idClientDepartament'])->update("tb_client_departament");
+			return 1;
+		} else {
+			return 0;
+		}
+
+	}
+
+
+	public function updateAdmin($client)
 	{
 
 		$idClientDepartamentFk = null;
@@ -174,30 +241,30 @@ class Client_model extends CI_Model
 			if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 				$this->db->insert('tb_clients', [
 						'idClientTypeFk' => 2,
-						'name'           => $client['address'],
-						'address'        => $client['address'],
-						'isNotCliente'   => 1,
-						'idStatusFk'     => 0,
-						'addressLat'     => $client['addressLat'],
-						'addressLon'     => $client['addressLon'],
-						'idLocationFk'   => $client['idLocationFk'],
-						'idProvinceFk'   => $client['idProvinceFk'],
+						'name' => $client['address'],
+						'address' => $client['address'],
+						'isNotCliente' => 1,
+						'idStatusFk' => 0,
+						'addressLat' => $client['addressLat'],
+						'addressLon' => $client['addressLon'],
+						'idLocationFk' => $client['idLocationFk'],
+						'idProvinceFk' => $client['idProvinceFk'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
 				//  DEPARTAMENTO
 				$this->db->insert('tb_client_departament', [
-						'idClientFk'              => $idClientDepartamentFk,
-						'floor'                   => $client['floor'],
-						'departament'             => $client['department'],
+						'idClientFk' => $idClientDepartamentFk,
+						'floor' => $client['floor'],
+						'departament' => $client['department'],
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-						'idStatusFk'              => 1,
-						'numberUNF'               => $client['numberUNF'],
-						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idStatusFk' => 1,
+						'numberUNF' => $client['numberUNF'],
+						'idUserAdminRKf' => $client['idUserAdminRKf'],
 						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-						'idUserKf'                => $client['idUserKf'],
-						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-						'isRequesLowByProp'       => $client['isRequesLowByProp'],
+						'idUserKf' => $client['idUserKf'],
+						'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+						'isRequesLowByProp' => $client['isRequesLowByProp'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
@@ -210,42 +277,42 @@ class Client_model extends CI_Model
 
 		$this->db->set(
 			[
-				'idClientTypeFk'          => $client['idClientTypeFk'],
-				'name'                    => $client['name'],
-				'address'                 => $client['address'],
-				'addressLat'              => $client['addressLat'],
-				'addressLon'              => $client['addressLon'],
-				'idAgentFk'               => $client['idAgentFk'],
-				'businessName'            => $client['businessName'],
-				'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-				'CUIT'                    => $client['CUIT'],
-				'idLocationFk'            => $client['idLocationFk'],
-				'idProvinceFk'            => $client['idProvinceFk'],
-				'observation'             => $client['observation'],
-				'pageWeb'                 => $client['pageWeb'],
-				'idStatusFk'              => 1,
-				'observationOrderKey'     => $client['observationOrderKey'],
-				'isNotCliente'            => $client['isNotCliente'],
-				'idClientAdminFk'         => $client['idClientAdminFk'],
+				'idClientTypeFk' => $client['idClientTypeFk'],
+				'name' => $client['name'],
+				'address' => $client['address'],
+				'addressLat' => $client['addressLat'],
+				'addressLon' => $client['addressLon'],
+				'idAgentFk' => $client['idAgentFk'],
+				'businessName' => $client['businessName'],
+				'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+				'CUIT' => $client['CUIT'],
+				'idLocationFk' => $client['idLocationFk'],
+				'idProvinceFk' => $client['idProvinceFk'],
+				'observation' => $client['observation'],
+				'pageWeb' => $client['pageWeb'],
+				'idStatusFk' => 1,
+				'observationOrderKey' => $client['observationOrderKey'],
+				'isNotCliente' => $client['isNotCliente'],
+				'idClientAdminFk' => $client['idClientAdminFk'],
 				'observationSericeTecnic' => $client['observationSericeTecnic'],
-				'observationCollection'   => $client['observationCollection'],
-				'idClientCompaniFk'       => $client['idClientCompaniFk'],
-				'idZonaFk'                => @$client['idZonaFk'],
-				'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
-				'idClientDepartamentFk'   => @$idClientDepartamentFk,
+				'observationCollection' => $client['observationCollection'],
+				'idClientCompaniFk' => $client['idClientCompaniFk'],
+				'idZonaFk' => @$client['idZonaFk'],
+				'idTipoInmuebleFk' => @$client['idTipoInmuebleFk'],
+				'idClientDepartamentFk' => @$idClientDepartamentFk,
 			]
 		)->where("idClient", $client['idClient'])->update("tb_clients");
 
 
 		$this->db->set(
 			[
-				'idClientFk'          => $client['idClient'],
+				'idClientFk' => $client['idClient'],
 				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'businessAddress'     => $client['billing_information']['nameAddress'],
-				'cuitBilling'         => $client['billing_information']['cuitBilling'],
+				'businessAddress' => $client['billing_information']['nameAddress'],
+				'cuitBilling' => $client['billing_information']['cuitBilling'],
 				'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 				'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk']
+				'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk']
 			]
 		)->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
@@ -262,11 +329,11 @@ class Client_model extends CI_Model
 
 				$this->db->insert('tb_client_schedule_atention', [
 					'idClienteFk' => $client['idClient'],
-					'day'         => $valor['day'],
-					'fronAm'      => $valor['fronAm'],
-					'toAm'        => $valor['toAm'],
-					'fronPm'      => $valor['fronPm'],
-					'toPm'        => $valor['toPm'],
+					'day' => $valor['day'],
+					'fronAm' => $valor['fronAm'],
+					'toAm' => $valor['toAm'],
+					'fronPm' => $valor['fronPm'],
+					'toPm' => $valor['toPm'],
 				]);
 			}
 			// TELEFONOS
@@ -275,8 +342,8 @@ class Client_model extends CI_Model
 			foreach ($client['list_phone_contact'] as $valor) {
 
 				$this->db->insert('tb_client_phone_contact', [
-					'idClientFk'   => $client['idClient'],
-					'phoneTag'     => $valor['phoneTag'],
+					'idClientFk' => $client['idClient'],
+					'phoneTag' => $valor['phoneTag'],
 					'phoneContact' => $valor['phoneContact'],
 				]);
 			}
@@ -285,7 +352,7 @@ class Client_model extends CI_Model
 			foreach ($client['list_client_user'] as $valor) {
 				$this->db->insert('tb_client_users', [
 						'idClientFk' => $client['idClient'],
-						'idUserFk'   => $valor['idUserFk'],
+						'idUserFk' => $valor['idUserFk'],
 					]
 				);
 			}
@@ -293,11 +360,11 @@ class Client_model extends CI_Model
 			$this->db->delete('tb_client_mails', ['idClientFk' => $client['idClient']]);
 			foreach ($client['list_emails'] as $valor) {
 				$this->db->insert('tb_client_mails', [
-						'idClientFk'     => $client['idClient'],
-						'mailTag'        => $valor['mailTag'],
-						'mailContact'    => $valor['mailContact'],
+						'idClientFk' => $client['idClient'],
+						'mailTag' => $valor['mailTag'],
+						'mailContact' => $valor['mailContact'],
 						'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-						'status'         => $valor['status'],
+						'status' => $valor['status'],
 					]
 				);
 			}
@@ -310,7 +377,7 @@ class Client_model extends CI_Model
 	// ****************  //
 
 	//  EDIFICIO //
-	public function addBuilding ($client)
+	public function addBuilding($client)
 	{
 
 		$user = null;
@@ -323,25 +390,25 @@ class Client_model extends CI_Model
 
 
 			$this->db->insert('tb_clients', [
-					'idClientTypeFk'          => $client['idClientTypeFk'],
-					'name'                    => $client['name'],
-					'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-					'address'                 => $client['address'],
-					'addressLat'              => $client['addressLat'],
-					'addressLon'              => $client['addressLon'],
-					'idLocationFk'            => $client['idLocationFk'],
-					'idProvinceFk'            => $client['idProvinceFk'],
-					'idAgentFk'               => $client['idAgentFk'],
-					'isNotCliente'            => $client['isNotCliente'],
-					'idClientAdminFk'         => $client['idClientAdminFk'],
-					'observationOrderKey'     => $client['observationOrderKey'],
+					'idClientTypeFk' => $client['idClientTypeFk'],
+					'name' => $client['name'],
+					'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+					'address' => $client['address'],
+					'addressLat' => $client['addressLat'],
+					'addressLon' => $client['addressLon'],
+					'idLocationFk' => $client['idLocationFk'],
+					'idProvinceFk' => $client['idProvinceFk'],
+					'idAgentFk' => $client['idAgentFk'],
+					'isNotCliente' => $client['isNotCliente'],
+					'idClientAdminFk' => $client['idClientAdminFk'],
+					'observationOrderKey' => $client['observationOrderKey'],
 					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'observationCollection'   => $client['observationCollection'],
-					'observation'             => $client['observation'],
-					'idStatusFk'              => 1,
-					'departmentUnit'          => $client['departmentUnit'],
-					'departmentCorrelation'   => $client['departmentCorrelation'],
-					'idZonaFk'                => @$client['idZonaFk'],
+					'observationCollection' => $client['observationCollection'],
+					'observation' => $client['observation'],
+					'idStatusFk' => 1,
+					'departmentUnit' => $client['departmentUnit'],
+					'departmentCorrelation' => $client['departmentCorrelation'],
+					'idZonaFk' => @$client['idZonaFk'],
 				]
 			);
 
@@ -350,13 +417,13 @@ class Client_model extends CI_Model
 
 				// DATOS DE FACTURCION
 				$this->db->insert('tb_client_billing_information', [
-						'idClientFk'          => $idClientFk,
+						'idClientFk' => $idClientFk,
 						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'businessAddress'     => $client['billing_information']['nameAddress'],
-						'cuitBilling'         => $client['billing_information']['cuitBilling'],
+						'businessAddress' => $client['billing_information']['nameAddress'],
+						'cuitBilling' => $client['billing_information']['cuitBilling'],
 						'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 						'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk'],
+						'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk'],
 					]
 				);
 
@@ -372,11 +439,11 @@ class Client_model extends CI_Model
 
 						$this->db->insert('tb_client_schedule_atention', [
 								'idClienteFk' => $idClientFk,
-								'day'         => $valor['day'],
-								'fronAm'      => $valor['fronAm'],
-								'toAm'        => $valor['toAm'],
-								'fronPm'      => $valor['fronPm'],
-								'toPm'        => $valor['toPm'],
+								'day' => $valor['day'],
+								'fronAm' => $valor['fronAm'],
+								'toAm' => $valor['toAm'],
+								'fronPm' => $valor['fronPm'],
+								'toPm' => $valor['toPm'],
 							]
 						);
 					}
@@ -386,17 +453,17 @@ class Client_model extends CI_Model
 					foreach ($client['list_departament'] as $valor) {
 
 						$this->db->insert('tb_client_departament', [
-								'idClientFk'              => $idClientFk,
-								'floor'                   => $valor['floor'],
-								'departament'             => $valor['departament'],
+								'idClientFk' => $idClientFk,
+								'floor' => $valor['floor'],
+								'departament' => $valor['departament'],
 								'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-								'idStatusFk'              => 1,
-								'numberUNF'               => $valor['numberUNF'],
-								'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+								'idStatusFk' => 1,
+								'numberUNF' => $valor['numberUNF'],
+								'idUserAdminRKf' => $valor['idUserAdminRKf'],
 								'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
-								'idUserKf'                => $valor['idUserKf'],
-								'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
-								'isRequesLowByProp'       => $valor['isRequesLowByProp'],
+								'idUserKf' => $valor['idUserKf'],
+								'isAprobatedAdmin' => $valor['isAprobatedAdmin'],
+								'isRequesLowByProp' => $valor['isRequesLowByProp'],
 							]
 						);
 					}
@@ -406,8 +473,8 @@ class Client_model extends CI_Model
 						foreach ($client['list_phone_contact'] as $valor) {
 
 							$this->db->insert('tb_client_phone_contact', [
-									'idClientFk'   => $idClientFk,
-									'phoneTag'     => $valor['phoneTag'],
+									'idClientFk' => $idClientFk,
+									'phoneTag' => $valor['phoneTag'],
 									'phoneContact' => $valor['phoneContact'],
 								]
 							);
@@ -419,18 +486,18 @@ class Client_model extends CI_Model
 
 							$this->db->insert('tb_client_users', [
 									'idClientFk' => $idClientFk,
-									'idUserFk'   => $valor['idUserFk'],
+									'idUserFk' => $valor['idUserFk'],
 								]
 							);
 						}
 					}
 					foreach ($client['list_emails'] as $valor) {
 						$this->db->insert('tb_client_mails', [
-								'idClientFk'     => $idClientFk,
-								'mailTag'        => $valor['mailTag'],
-								'mailContact'    => $valor['mailContact'],
+								'idClientFk' => $idClientFk,
+								'mailTag' => $valor['mailTag'],
+								'mailContact' => $valor['mailContact'],
 								'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-								'status'         => 1,
+								'status' => 1,
 							]
 						);
 					}
@@ -448,20 +515,20 @@ class Client_model extends CI_Model
 
 	}
 
-	public function addNotCustomerDepto ($client)
+	public function addNotCustomerDepto($client)
 	{
 		$this->db->insert('tb_client_departament', [
-			'idClientFk'              => $client['idClient'],
-			'floor'                   => $client['floor'],
-			'departament'             => $client['department'],
+			'idClientFk' => $client['idClient'],
+			'floor' => $client['floor'],
+			'departament' => $client['department'],
 			'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-			'idStatusFk'              => 1,
-			'numberUNF'               => 0,
-			'idUserAdminRKf'          => $client['idUserAdminRKf'],
+			'idStatusFk' => 1,
+			'numberUNF' => 0,
+			'idUserAdminRKf' => $client['idUserAdminRKf'],
 			'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-			'idUserKf'                => $client['idUserKf'],
-			'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-			'isRequesLowByProp'       => $client['isRequesLowByProp'],
+			'idUserKf' => $client['idUserKf'],
+			'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+			'isRequesLowByProp' => $client['isRequesLowByProp'],
 		]);
 
 		if ($this->dbisRequesLowByPropaffected_rows() === 1) {
@@ -472,26 +539,26 @@ class Client_model extends CI_Model
 		return $idDepto;
 	}
 
-	public function updateBuilding ($client)
+	public function updateBuilding($client)
 	{
 		$this->db->set(
 			[
-				'name'                    => $client['name'],
-				'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-				'address'                 => $client['address'],
-				'addressLat'              => $client['addressLat'],
-				'addressLon'              => $client['addressLon'],
-				'idAgentFk'               => $client['idAgentFk'],
-				'isNotCliente'            => $client['isNotCliente'],
-				'idClientAdminFk'         => $client['idClientAdminFk'],
-				'observationOrderKey'     => $client['observationOrderKey'],
+				'name' => $client['name'],
+				'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+				'address' => $client['address'],
+				'addressLat' => $client['addressLat'],
+				'addressLon' => $client['addressLon'],
+				'idAgentFk' => $client['idAgentFk'],
+				'isNotCliente' => $client['isNotCliente'],
+				'idClientAdminFk' => $client['idClientAdminFk'],
+				'observationOrderKey' => $client['observationOrderKey'],
 				'observationSericeTecnic' => $client['observationSericeTecnic'],
-				'observationCollection'   => $client['observationCollection'],
-				'observation'             => $client['observation'],
-				'idStatusFk'              => $client['idStatusFk'],
-				'idZonaFk'                => @$client['idZonaFk'],
-				'departmentUnit'          => $client['departmentUnit'],
-				'departmentCorrelation'   => $client['departmentCorrelation'],
+				'observationCollection' => $client['observationCollection'],
+				'observation' => $client['observation'],
+				'idStatusFk' => $client['idStatusFk'],
+				'idZonaFk' => @$client['idZonaFk'],
+				'departmentUnit' => $client['departmentUnit'],
+				'departmentCorrelation' => $client['departmentCorrelation'],
 				//				'idSecurityCode'          => $code,
 			]
 		)->where("idClient", $client['idClient'])->update("tb_clients");
@@ -500,25 +567,25 @@ class Client_model extends CI_Model
 		if ($client['isNotCliente'] == 1 || $client['isBillingInformationEmpty'] == 1) {
 
 			$this->db->insert('tb_client_billing_information', [
-					'idClientFk'          => $client['idClient'],
+					'idClientFk' => $client['idClient'],
 					'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-					'businessAddress'     => $client['billing_information']['nameAddress'],
-					'cuitBilling'         => $client['billing_information']['cuitBilling'],
+					'businessAddress' => $client['billing_information']['nameAddress'],
+					'cuitBilling' => $client['billing_information']['cuitBilling'],
 					'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 					'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-					'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk'],
+					'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk'],
 				]
 			);
 		} else {
 			$this->db->set(
 				[
-					'idClientFk'          => $client['idClient'],
+					'idClientFk' => $client['idClient'],
 					'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-					'businessAddress'     => $client['billing_information']['nameAddress'],
-					'cuitBilling'         => $client['billing_information']['cuitBilling'],
+					'businessAddress' => $client['billing_information']['nameAddress'],
+					'cuitBilling' => $client['billing_information']['cuitBilling'],
 					'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 					'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-					'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk']
+					'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk']
 				]
 			)->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 		}
@@ -534,11 +601,11 @@ class Client_model extends CI_Model
 
 				$this->db->insert('tb_client_schedule_atention', [
 					'idClienteFk' => $client['idClient'],
-					'day'         => $valor['day'],
-					'fronAm'      => $valor['fronAm'],
-					'toAm'        => $valor['toAm'],
-					'fronPm'      => $valor['fronPm'],
-					'toPm'        => $valor['toPm'],
+					'day' => $valor['day'],
+					'fronAm' => $valor['fronAm'],
+					'toAm' => $valor['toAm'],
+					'fronPm' => $valor['fronPm'],
+					'toPm' => $valor['toPm'],
 				]);
 			}
 
@@ -548,17 +615,17 @@ class Client_model extends CI_Model
 			foreach ($client['list_departament'] as $valor) {
 				if ($valor['idClientDepartament'] == 0) { //si el valor es 0 entonces se crea un nuevo registro
 					$this->db->insert('tb_client_departament', [
-							'idClientFk'              => $client['idClient'],
-							'floor'                   => $valor['floor'],
-							'departament'             => $valor['departament'],
+							'idClientFk' => $client['idClient'],
+							'floor' => $valor['floor'],
+							'departament' => $valor['departament'],
 							'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-							'idStatusFk'              => 1,
-							'numberUNF'               => $valor['numberUNF'],
-							'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+							'idStatusFk' => 1,
+							'numberUNF' => $valor['numberUNF'],
+							'idUserAdminRKf' => $valor['idUserAdminRKf'],
 							'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
-							'idUserKf'                => $valor['idUserKf'],
-							'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
-							'isRequesLowByProp'       => $valor['isRequesLowByProp'],
+							'idUserKf' => $valor['idUserKf'],
+							'isAprobatedAdmin' => $valor['isAprobatedAdmin'],
+							'isRequesLowByProp' => $valor['isRequesLowByProp'],
 							//'idStatusFk'              => $valor['idStatusFk'],
 						]
 					);
@@ -566,16 +633,16 @@ class Client_model extends CI_Model
 					$this->db->set(
 						[
 							//'idClientFk'              => $client['idClient'],
-							'floor'                   => $valor['floor'],
-							'departament'             => $valor['departament'],
+							'floor' => $valor['floor'],
+							'departament' => $valor['departament'],
 							'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-							'numberUNF'               => $valor['numberUNF'],
-							'idStatusFk'              => $valor['idStatusFk'],
-							'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+							'numberUNF' => $valor['numberUNF'],
+							'idStatusFk' => $valor['idStatusFk'],
+							'idUserAdminRKf' => $valor['idUserAdminRKf'],
 							'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
-							'idUserKf'                => $valor['idUserKf'],
-							'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
-							'isRequesLowByProp'       => $valor['isRequesLowByProp'],
+							'idUserKf' => $valor['idUserKf'],
+							'isAprobatedAdmin' => $valor['isAprobatedAdmin'],
+							'isRequesLowByProp' => $valor['isRequesLowByProp'],
 
 						]
 					)->where("idClientDepartament", $valor['idClientDepartament'])->update("tb_client_departament");
@@ -586,8 +653,8 @@ class Client_model extends CI_Model
 			foreach ($client['list_phone_contact'] as $valor) {
 
 				$this->db->insert('tb_client_phone_contact', [
-					'idClientFk'   => $client['idClient'],
-					'phoneTag'     => $valor['phoneTag'],
+					'idClientFk' => $client['idClient'],
+					'phoneTag' => $valor['phoneTag'],
 					'phoneContact' => $valor['phoneContact'],
 				]);
 			}
@@ -596,7 +663,7 @@ class Client_model extends CI_Model
 			foreach ($client['list_client_user'] as $valor) {
 				$this->db->insert('tb_client_users', [
 						'idClientFk' => $client['idClient'],
-						'idUserFk'   => $valor['idUserFk'],
+						'idUserFk' => $valor['idUserFk'],
 					]
 				);
 			}
@@ -604,11 +671,11 @@ class Client_model extends CI_Model
 			$this->db->delete('tb_client_mails', ['idClientFk' => $client['idClient']]);
 			foreach ($client['list_emails'] as $valor) {
 				$this->db->insert('tb_client_mails', [
-						'idClientFk'     => $client['idClient'],
-						'mailTag'        => $valor['mailTag'],
-						'mailContact'    => $valor['mailContact'],
+						'idClientFk' => $client['idClient'],
+						'mailTag' => $valor['mailTag'],
+						'mailContact' => $valor['mailContact'],
 						'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-						'status'         => $valor['status'],
+						'status' => $valor['status'],
 					]
 				);
 			}
@@ -621,22 +688,22 @@ class Client_model extends CI_Model
 
 	// ****************  //
 	//PARA GENERAR EL IdSecurityCode DEL CLIENTE
-	function generateRandomString ($length = 30)
+	function generateRandomString($length = 30)
 	{
-		$characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
-		$randomString     = '';
+		$randomString = '';
 		for ($i = 0; $i < $length; $i++) {
 			$randomString .= $characters[rand(0, $charactersLength - 1)];
 		}
 		return $randomString;
 	}
 
-	public function getSegurityCodeClient ($idClient)
+	public function getSegurityCodeClient($idClient)
 	{
 		$code = null;
 		do {
-			$code  = $this->generateRandomString();
+			$code = $this->generateRandomString();
 			$query = $this->db->select("*")->from("tb_clients")->where('IdSecurityCode', $code)->get();
 		} while ($query->num_rows() > 0);
 
@@ -651,39 +718,39 @@ class Client_model extends CI_Model
 	}
 
 	// EMPRESA //
-	public function addCompany ($client)
+	public function addCompany($client)
 	{
 		$idClientDepartamentFk = null;
-		$idDepartmentKf        = null;
+		$idDepartmentKf = null;
 		if ($client['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
 			$idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
 			if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 				$this->db->insert('tb_clients', [
 						'idClientTypeFk' => 2,
-						'name'           => $client['address'],
-						'address'        => $client['address'],
-						'isNotCliente'   => 1,
-						'idStatusFk'     => 0,
-						'addressLat'     => $client['addressLat'],
-						'addressLon'     => $client['addressLon'],
-						'idLocationFk'   => $client['idLocationFk'],
-						'idProvinceFk'   => $client['idProvinceFk'],
+						'name' => $client['address'],
+						'address' => $client['address'],
+						'isNotCliente' => 1,
+						'idStatusFk' => 0,
+						'addressLat' => $client['addressLat'],
+						'addressLon' => $client['addressLon'],
+						'idLocationFk' => $client['idLocationFk'],
+						'idProvinceFk' => $client['idProvinceFk'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
 				//  DEPARTAMENTO
 				$this->db->insert('tb_client_departament', [
-						'idClientFk'              => $idClientDepartamentFk,
-						'floor'                   => $client['floor'],
-						'departament'             => $client['department'],
+						'idClientFk' => $idClientDepartamentFk,
+						'floor' => $client['floor'],
+						'departament' => $client['department'],
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-						'idStatusFk'              => 1,
-						'numberUNF'               => $client['numberUNF'],
-						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idStatusFk' => 1,
+						'numberUNF' => $client['numberUNF'],
+						'idUserAdminRKf' => $client['idUserAdminRKf'],
 						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-						'idUserKf'                => $client['idUserKf'],
-						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-						'isRequesLowByProp'       => $client['isRequesLowByProp'],
+						'idUserKf' => $client['idUserKf'],
+						'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+						'isRequesLowByProp' => $client['isRequesLowByProp'],
 					]
 				);
 				$idDepartmentKf = $this->db->insert_id();
@@ -700,25 +767,25 @@ class Client_model extends CI_Model
 
 		if ($query->num_rows() < 1) {
 			$this->db->insert('tb_clients', [
-					'idClientTypeFk'          => $client['idClientTypeFk'],
-					'name'                    => $client['name'],
-					'address'                 => $client['address'],
-					'addressLat'              => $client['addressLat'],
-					'addressLon'              => $client['addressLon'],
-					'idAgentFk'               => $client['idAgentFk'],
-					'businessName'            => $client['businessName'],
-					'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-					'CUIT'                    => $client['CUIT'],
-					'idStatusFk'              => 1,
-					'idLocationFk'            => $client['idLocationFk'],
-					'idProvinceFk'            => $client['idProvinceFk'],
+					'idClientTypeFk' => $client['idClientTypeFk'],
+					'name' => $client['name'],
+					'address' => $client['address'],
+					'addressLat' => $client['addressLat'],
+					'addressLon' => $client['addressLon'],
+					'idAgentFk' => $client['idAgentFk'],
+					'businessName' => $client['businessName'],
+					'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+					'CUIT' => $client['CUIT'],
+					'idStatusFk' => 1,
+					'idLocationFk' => $client['idLocationFk'],
+					'idProvinceFk' => $client['idProvinceFk'],
 					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'observationCollection'   => $client['observationCollection'],
-					'pageWeb'                 => $client['pageWeb'],
-					'observation'             => $client['observation'],
-					'idZonaFk'                => @$client['idZonaFk'],
-					'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
-					'idClientDepartamentFk'   => @$idDepartmentKf,
+					'observationCollection' => $client['observationCollection'],
+					'pageWeb' => $client['pageWeb'],
+					'observation' => $client['observation'],
+					'idZonaFk' => @$client['idZonaFk'],
+					'idTipoInmuebleFk' => @$client['idTipoInmuebleFk'],
+					'idClientDepartamentFk' => @$idDepartmentKf,
 				]
 			);
 			if ($this->db->affected_rows() === 1) {
@@ -726,13 +793,13 @@ class Client_model extends CI_Model
 
 				// DATOS DE FACTURCION
 				$this->db->insert('tb_client_billing_information', [
-						'idClientFk'          => $idClientFk,
+						'idClientFk' => $idClientFk,
 						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'businessAddress'     => $client['billing_information']['nameAddress'],
-						'cuitBilling'         => $client['billing_information']['cuitBilling'],
+						'businessAddress' => $client['billing_information']['nameAddress'],
+						'cuitBilling' => $client['billing_information']['cuitBilling'],
 						'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 						'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk'],
+						'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk'],
 					]
 				);
 
@@ -747,11 +814,11 @@ class Client_model extends CI_Model
 
 						$this->db->insert('tb_client_schedule_atention', [
 								'idClienteFk' => $idClientFk,
-								'day'         => $valor['day'],
-								'fronAm'      => $valor['fronAm'],
-								'toAm'        => $valor['toAm'],
-								'fronPm'      => $valor['fronPm'],
-								'toPm'        => $valor['toPm'],
+								'day' => $valor['day'],
+								'fronAm' => $valor['fronAm'],
+								'toAm' => $valor['toAm'],
+								'fronPm' => $valor['fronPm'],
+								'toPm' => $valor['toPm'],
 							]
 						);
 					}
@@ -759,8 +826,8 @@ class Client_model extends CI_Model
 					foreach (@$client['list_phone_contact'] as $valor) {
 
 						$this->db->insert('tb_client_phone_contact', [
-								'idClientFk'   => $idClientFk,
-								'phoneTag'     => $valor['phoneTag'],
+								'idClientFk' => $idClientFk,
+								'phoneTag' => $valor['phoneTag'],
 								'phoneContact' => $valor['phoneContact'],
 							]
 						);
@@ -771,18 +838,18 @@ class Client_model extends CI_Model
 
 						$this->db->insert('tb_client_users', [
 								'idClientFk' => $idClientFk,
-								'idUserFk'   => $valor['idUserFk'],
+								'idUserFk' => $valor['idUserFk'],
 							]
 						);
 					}
 					// MAILS
 					foreach ($client['list_emails'] as $valor) {
 						$this->db->insert('tb_client_mails', [
-								'idClientFk'     => $idClientFk,
-								'mailTag'        => $valor['mailTag'],
-								'mailContact'    => $valor['mailContact'],
+								'idClientFk' => $idClientFk,
+								'mailTag' => $valor['mailTag'],
+								'mailContact' => $valor['mailContact'],
 								'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-								'status'         => 1,
+								'status' => 1,
 							]
 						);
 					}
@@ -800,7 +867,7 @@ class Client_model extends CI_Model
 
 	}
 
-	public function updateCompany ($client)
+	public function updateCompany($client)
 	{
 
 		$idClientDepartamentFk = null;
@@ -809,30 +876,30 @@ class Client_model extends CI_Model
 			if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 				$this->db->insert('tb_clients', [
 						'idClientTypeFk' => 2,
-						'name'           => $client['address'],
-						'address'        => $client['address'],
-						'isNotCliente'   => 1,
-						'idStatusFk'     => 0,
-						'addressLat'     => $client['addressLat'],
-						'addressLon'     => $client['addressLon'],
-						'idLocationFk'   => $client['idLocationFk'],
-						'idProvinceFk'   => $client['idProvinceFk'],
+						'name' => $client['address'],
+						'address' => $client['address'],
+						'isNotCliente' => 1,
+						'idStatusFk' => 0,
+						'addressLat' => $client['addressLat'],
+						'addressLon' => $client['addressLon'],
+						'idLocationFk' => $client['idLocationFk'],
+						'idProvinceFk' => $client['idProvinceFk'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
 				//  DEPARTAMENTO
 				$this->db->insert('tb_client_departament', [
-						'idClientFk'              => $idClientDepartamentFk,
-						'floor'                   => $client['floor'],
-						'departament'             => $client['department'],
+						'idClientFk' => $idClientDepartamentFk,
+						'floor' => $client['floor'],
+						'departament' => $client['department'],
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-						'idStatusFk'              => 1,
-						'numberUNF'               => $client['numberUNF'],
-						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idStatusFk' => 1,
+						'numberUNF' => $client['numberUNF'],
+						'idUserAdminRKf' => $client['idUserAdminRKf'],
 						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-						'idUserKf'                => $client['idUserKf'],
-						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-						'isRequesLowByProp'       => $client['isRequesLowByProp'],
+						'idUserKf' => $client['idUserKf'],
+						'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+						'isRequesLowByProp' => $client['isRequesLowByProp'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
@@ -844,36 +911,36 @@ class Client_model extends CI_Model
 		}
 		$this->db->set(
 			[
-				'name'                    => $client['name'],
-				'address'                 => $client['address'],
-				'addressLat'              => $client['addressLat'],
-				'addressLon'              => $client['addressLon'],
-				'idAgentFk'               => $client['idAgentFk'],
-				'businessName'            => $client['businessName'],
-				'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-				'CUIT'                    => $client['CUIT'],
-				'idLocationFk'            => $client['idLocationFk'],
-				'idProvinceFk'            => $client['idProvinceFk'],
+				'name' => $client['name'],
+				'address' => $client['address'],
+				'addressLat' => $client['addressLat'],
+				'addressLon' => $client['addressLon'],
+				'idAgentFk' => $client['idAgentFk'],
+				'businessName' => $client['businessName'],
+				'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+				'CUIT' => $client['CUIT'],
+				'idLocationFk' => $client['idLocationFk'],
+				'idProvinceFk' => $client['idProvinceFk'],
 				'observationSericeTecnic' => $client['observationSericeTecnic'],
-				'observationCollection'   => $client['observationCollection'],
-				'pageWeb'                 => $client['pageWeb'],
-				'observation'             => $client['observation'],
-				'idZonaFk'                => @$client['idZonaFk'],
-				'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
-				'idClientDepartamentFk'   => @$idClientDepartamentFk,
+				'observationCollection' => $client['observationCollection'],
+				'pageWeb' => $client['pageWeb'],
+				'observation' => $client['observation'],
+				'idZonaFk' => @$client['idZonaFk'],
+				'idTipoInmuebleFk' => @$client['idTipoInmuebleFk'],
+				'idClientDepartamentFk' => @$idClientDepartamentFk,
 			]
 		)->where("idClient", $client['idClient'])->update("tb_clients");
 
 
 		$this->db->set(
 			[
-				'idClientFk'          => $client['idClient'],
+				'idClientFk' => $client['idClient'],
 				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'businessAddress'     => $client['billing_information']['nameAddress'],
-				'cuitBilling'         => $client['billing_information']['cuitBilling'],
+				'businessAddress' => $client['billing_information']['nameAddress'],
+				'cuitBilling' => $client['billing_information']['cuitBilling'],
 				'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 				'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk']
+				'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk']
 			]
 		)->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
@@ -889,11 +956,11 @@ class Client_model extends CI_Model
 
 				$this->db->insert('tb_client_schedule_atention', [
 					'idClienteFk' => $client['idClient'],
-					'day'         => $valor['day'],
-					'fronAm'      => $valor['fronAm'],
-					'toAm'        => $valor['toAm'],
-					'fronPm'      => $valor['fronPm'],
-					'toPm'        => $valor['toPm'],
+					'day' => $valor['day'],
+					'fronAm' => $valor['fronAm'],
+					'toAm' => $valor['toAm'],
+					'fronPm' => $valor['fronPm'],
+					'toPm' => $valor['toPm'],
 				]);
 			}
 			// TELEFONOS
@@ -902,8 +969,8 @@ class Client_model extends CI_Model
 			foreach ($client['list_phone_contact'] as $valor) {
 
 				$this->db->insert('tb_client_phone_contact', [
-					'idClientFk'   => $client['idClient'],
-					'phoneTag'     => $valor['phoneTag'],
+					'idClientFk' => $client['idClient'],
+					'phoneTag' => $valor['phoneTag'],
 					'phoneContact' => $valor['phoneContact'],
 				]);
 			}
@@ -913,7 +980,7 @@ class Client_model extends CI_Model
 
 				$this->db->insert('tb_client_users', [
 						'idClientFk' => $client['idClient'],
-						'idUserFk'   => $valor['idUserFk'],
+						'idUserFk' => $valor['idUserFk'],
 					]
 				);
 			}
@@ -921,11 +988,11 @@ class Client_model extends CI_Model
 			$this->db->delete('tb_client_mails', ['idClientFk' => $client['idClient']]);
 			foreach ($client['list_emails'] as $valor) {
 				$this->db->insert('tb_client_mails', [
-						'idClientFk'     => $client['idClient'],
-						'mailTag'        => $valor['mailTag'],
-						'mailContact'    => $valor['mailContact'],
+						'idClientFk' => $client['idClient'],
+						'mailTag' => $valor['mailTag'],
+						'mailContact' => $valor['mailContact'],
 						'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-						'status'         => $valor['status'],
+						'status' => $valor['status'],
 					]
 				);
 			}
@@ -939,39 +1006,39 @@ class Client_model extends CI_Model
 	// ****************  //
 
 	// SUCURSAL //
-	public function addBranch ($client)
+	public function addBranch($client)
 	{
 		$idClientDepartamentFk = null;
-		$idDepartmentKf        = null;
+		$idDepartmentKf = null;
 		if ($client['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
 			$idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);
 			if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 				$this->db->insert('tb_clients', [
 						'idClientTypeFk' => 2,
-						'name'           => $client['address'],
-						'address'        => $client['address'],
-						'isNotCliente'   => 1,
-						'idStatusFk'     => 0,
-						'addressLat'     => $client['addressLat'],
-						'addressLon'     => $client['addressLon'],
-						'idLocationFk'   => $client['idLocationFk'],
-						'idProvinceFk'   => $client['idProvinceFk'],
+						'name' => $client['address'],
+						'address' => $client['address'],
+						'isNotCliente' => 1,
+						'idStatusFk' => 0,
+						'addressLat' => $client['addressLat'],
+						'addressLon' => $client['addressLon'],
+						'idLocationFk' => $client['idLocationFk'],
+						'idProvinceFk' => $client['idProvinceFk'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
 				//  DEPARTAMENTO
 				$this->db->insert('tb_client_departament', [
-						'idClientFk'              => $idClientDepartamentFk,
-						'floor'                   => $client['floor'],
-						'departament'             => $client['department'],
+						'idClientFk' => $idClientDepartamentFk,
+						'floor' => $client['floor'],
+						'departament' => $client['department'],
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-						'idStatusFk'              => 1,
-						'numberUNF'               => $client['numberUNF'],
-						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idStatusFk' => 1,
+						'numberUNF' => $client['numberUNF'],
+						'idUserAdminRKf' => $client['idUserAdminRKf'],
 						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-						'idUserKf'                => $client['idUserKf'],
-						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-						'isRequesLowByProp'       => $client['isRequesLowByProp'],
+						'idUserKf' => $client['idUserKf'],
+						'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+						'isRequesLowByProp' => $client['isRequesLowByProp'],
 					]
 				);
 				$idDepartmentKf = $this->db->insert_id();
@@ -991,23 +1058,23 @@ class Client_model extends CI_Model
 
 
 			$this->db->insert('tb_clients', [
-					'idClientTypeFk'          => $client['idClientTypeFk'],
-					'address'                 => $client['address'],
-					'name'                    => $client['name'],
-					'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-					'addressLat'              => $client['addressLat'],
-					'addressLon'              => $client['addressLon'],
-					'idLocationFk'            => $client['idLocationFk'],
-					'idProvinceFk'            => $client['idProvinceFk'],
-					'isNotCliente'            => $client['isNotCliente'],
-					'idStatusFk'              => 1,
-					'idClientCompaniFk'       => $client['idClientCompaniFk'],
+					'idClientTypeFk' => $client['idClientTypeFk'],
+					'address' => $client['address'],
+					'name' => $client['name'],
+					'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+					'addressLat' => $client['addressLat'],
+					'addressLon' => $client['addressLon'],
+					'idLocationFk' => $client['idLocationFk'],
+					'idProvinceFk' => $client['idProvinceFk'],
+					'isNotCliente' => $client['isNotCliente'],
+					'idStatusFk' => 1,
+					'idClientCompaniFk' => $client['idClientCompaniFk'],
 					'observationSericeTecnic' => $client['observationSericeTecnic'],
-					'observationCollection'   => $client['observationCollection'],
-					'observation'             => $client['observation'],
-					'idZonaFk'                => @$client['idZonaFk'],
-					'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
-					'idClientDepartamentFk'   => @$idDepartmentKf,
+					'observationCollection' => $client['observationCollection'],
+					'observation' => $client['observation'],
+					'idZonaFk' => @$client['idZonaFk'],
+					'idTipoInmuebleFk' => @$client['idTipoInmuebleFk'],
+					'idClientDepartamentFk' => @$idDepartmentKf,
 				]
 			);
 
@@ -1016,13 +1083,13 @@ class Client_model extends CI_Model
 
 				// DATOS DE FACTURCION
 				$this->db->insert('tb_client_billing_information', [
-						'idClientFk'          => $idClientFk,
+						'idClientFk' => $idClientFk,
 						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'businessAddress'     => $client['billing_information']['nameAddress'],
-						'cuitBilling'         => $client['billing_information']['cuitBilling'],
+						'businessAddress' => $client['billing_information']['nameAddress'],
+						'cuitBilling' => $client['billing_information']['cuitBilling'],
 						'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 						'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk'],
+						'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk'],
 					]
 				);
 
@@ -1036,11 +1103,11 @@ class Client_model extends CI_Model
 
 						$this->db->insert('tb_client_schedule_atention', [
 								'idClienteFk' => $idClientFk,
-								'day'         => $valor['day'],
-								'fronAm'      => $valor['fronAm'],
-								'toAm'        => $valor['toAm'],
-								'fronPm'      => $valor['fronPm'],
-								'toPm'        => $valor['toPm'],
+								'day' => $valor['day'],
+								'fronAm' => $valor['fronAm'],
+								'toAm' => $valor['toAm'],
+								'fronPm' => $valor['fronPm'],
+								'toPm' => $valor['toPm'],
 							]
 						);
 					}
@@ -1048,8 +1115,8 @@ class Client_model extends CI_Model
 					foreach ($client['list_phone_contact'] as $valor) {
 
 						$this->db->insert('tb_client_phone_contact', [
-								'idClientFk'   => $idClientFk,
-								'phoneTag'     => $valor['phoneTag'],
+								'idClientFk' => $idClientFk,
+								'phoneTag' => $valor['phoneTag'],
 								'phoneContact' => $valor['phoneContact'],
 							]
 						);
@@ -1057,11 +1124,11 @@ class Client_model extends CI_Model
 					// MAILS
 					foreach ($client['list_emails'] as $valor) {
 						$this->db->insert('tb_client_mails', [
-								'idClientFk'     => $idClientFk,
-								'mailTag'        => $valor['mailTag'],
-								'mailContact'    => $valor['mailContact'],
+								'idClientFk' => $idClientFk,
+								'mailTag' => $valor['mailTag'],
+								'mailContact' => $valor['mailContact'],
 								'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-								'status'         => 1,
+								'status' => 1,
 							]
 						);
 					}
@@ -1078,7 +1145,7 @@ class Client_model extends CI_Model
 
 	}
 
-	public function updateBranch ($client)
+	public function updateBranch($client)
 	{
 		$idClientDepartamentFk = null;
 		if ($client['idTipoInmuebleFk'] == '1' && ($client['idClientDepartamentFk'] == null || $client['idClientDepartamentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
@@ -1086,30 +1153,30 @@ class Client_model extends CI_Model
 			if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 				$this->db->insert('tb_clients', [
 						'idClientTypeFk' => 2,
-						'name'           => $client['address'],
-						'address'        => $client['address'],
-						'isNotCliente'   => 1,
-						'idStatusFk'     => 0,
-						'addressLat'     => $client['addressLat'],
-						'addressLon'     => $client['addressLon'],
-						'idLocationFk'   => $client['idLocationFk'],
-						'idProvinceFk'   => $client['idProvinceFk'],
+						'name' => $client['address'],
+						'address' => $client['address'],
+						'isNotCliente' => 1,
+						'idStatusFk' => 0,
+						'addressLat' => $client['addressLat'],
+						'addressLon' => $client['addressLon'],
+						'idLocationFk' => $client['idLocationFk'],
+						'idProvinceFk' => $client['idProvinceFk'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
 				//  DEPARTAMENTO
 				$this->db->insert('tb_client_departament', [
-						'idClientFk'              => $idClientDepartamentFk,
-						'floor'                   => $client['floor'],
-						'departament'             => $client['department'],
+						'idClientFk' => $idClientDepartamentFk,
+						'floor' => $client['floor'],
+						'departament' => $client['department'],
 						'idCategoryDepartamentFk' => $client['idCategoryDepartamentFk'],
-						'idStatusFk'              => 1,
-						'numberUNF'               => $client['numberUNF'],
-						'idUserAdminRKf'          => $client['idUserAdminRKf'],
+						'idStatusFk' => 1,
+						'numberUNF' => $client['numberUNF'],
+						'idUserAdminRKf' => $client['idUserAdminRKf'],
 						'idUserAdminPropietariKf' => $client['idUserAdminPropietariKf'],
-						'idUserKf'                => $client['idUserKf'],
-						'isAprobatedAdmin'        => $client['isAprobatedAdmin'],
-						'isRequesLowByProp'       => $client['isRequesLowByProp'],
+						'idUserKf' => $client['idUserKf'],
+						'isAprobatedAdmin' => $client['isAprobatedAdmin'],
+						'isRequesLowByProp' => $client['isRequesLowByProp'],
 					]
 				);
 				$idClientDepartamentFk = $this->db->insert_id();
@@ -1122,34 +1189,34 @@ class Client_model extends CI_Model
 
 		$this->db->set(
 			[
-				'name'                    => $client['name'],
-				'idClientAssociated_SE'   => $client['idClientAssociated_SE'],
-				'address'                 => $client['address'],
-				'addressLat'              => $client['addressLat'],
-				'addressLon'              => $client['addressLon'],
-				'idLocationFk'            => $client['idLocationFk'],
-				'idProvinceFk'            => $client['idProvinceFk'],
-				'isNotCliente'            => $client['isNotCliente'],
-				'idClientCompaniFk'       => $client['idClientCompaniFk'],
+				'name' => $client['name'],
+				'idClientAssociated_SE' => $client['idClientAssociated_SE'],
+				'address' => $client['address'],
+				'addressLat' => $client['addressLat'],
+				'addressLon' => $client['addressLon'],
+				'idLocationFk' => $client['idLocationFk'],
+				'idProvinceFk' => $client['idProvinceFk'],
+				'isNotCliente' => $client['isNotCliente'],
+				'idClientCompaniFk' => $client['idClientCompaniFk'],
 				'observationSericeTecnic' => $client['observationSericeTecnic'],
-				'observationCollection'   => $client['observationCollection'],
-				'observation'             => $client['observation'],
-				'idZonaFk'                => @$client['idZonaFk'],
-				'idTipoInmuebleFk'        => @$client['idTipoInmuebleFk'],
-				'idClientDepartamentFk'   => @$idClientDepartamentFk,
+				'observationCollection' => $client['observationCollection'],
+				'observation' => $client['observation'],
+				'idZonaFk' => @$client['idZonaFk'],
+				'idTipoInmuebleFk' => @$client['idTipoInmuebleFk'],
+				'idClientDepartamentFk' => @$idClientDepartamentFk,
 			]
 		)->where("idClient", $client['idClient'])->update("tb_clients");
 
 
 		$this->db->set(
 			[
-				'idClientFk'          => $client['idClient'],
+				'idClientFk' => $client['idClient'],
 				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'businessAddress'     => $client['billing_information']['nameAddress'],
-				'cuitBilling'         => $client['billing_information']['cuitBilling'],
+				'businessAddress' => $client['billing_information']['nameAddress'],
+				'cuitBilling' => $client['billing_information']['cuitBilling'],
 				'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 				'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk']
+				'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk']
 			]
 		)->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
@@ -1164,11 +1231,11 @@ class Client_model extends CI_Model
 
 				$this->db->insert('tb_client_schedule_atention', [
 					'idClienteFk' => $client['idClient'],
-					'day'         => $valor['day'],
-					'fronAm'      => $valor['fronAm'],
-					'toAm'        => $valor['toAm'],
-					'fronPm'      => $valor['fronPm'],
-					'toPm'        => $valor['toPm'],
+					'day' => $valor['day'],
+					'fronAm' => $valor['fronAm'],
+					'toAm' => $valor['toAm'],
+					'fronPm' => $valor['fronPm'],
+					'toPm' => $valor['toPm'],
 				]);
 			}
 
@@ -1177,8 +1244,8 @@ class Client_model extends CI_Model
 			foreach ($client['list_phone_contact'] as $valor) {
 
 				$this->db->insert('tb_client_phone_contact', [
-					'idClientFk'   => $client['idClient'],
-					'phoneTag'     => $valor['phoneTag'],
+					'idClientFk' => $client['idClient'],
+					'phoneTag' => $valor['phoneTag'],
 					'phoneContact' => $valor['phoneContact'],
 				]);
 			}
@@ -1188,7 +1255,7 @@ class Client_model extends CI_Model
 
 				$this->db->insert('tb_client_users', [
 						'idClientFk' => $client['idClient'],
-						'idUserFk'   => $valor['idUserFk'],
+						'idUserFk' => $valor['idUserFk'],
 					]
 				);
 			}
@@ -1196,11 +1263,11 @@ class Client_model extends CI_Model
 			$this->db->delete('tb_client_mails', ['idClientFk' => $client['idClient']]);
 			foreach ($client['list_emails'] as $valor) {
 				$this->db->insert('tb_client_mails', [
-						'idClientFk'     => $client['idClient'],
-						'mailTag'        => $valor['mailTag'],
-						'mailContact'    => $valor['mailContact'],
+						'idClientFk' => $client['idClient'],
+						'mailTag' => $valor['mailTag'],
+						'mailContact' => $valor['mailContact'],
 						'idTipoDeMailFk' => $valor['idTipoDeMailFk'],
-						'status'         => $valor['status'],
+						'status' => $valor['status'],
 					]
 				);
 			}
@@ -1214,11 +1281,11 @@ class Client_model extends CI_Model
 
 
 	// PARTICULAR //
-	public function addParticular ($client)
+	public function addParticular($client)
 	{
 		$idClientDepartamentFk = null;
-		$idDepartmentKf        = null;
-		$user                  = null;
+		$idDepartmentKf = null;
+		$user = null;
 
 		$this->db->select("*")->from("tb_clients");
 		$this->db->where("tb_clients.name =", $client['name']);
@@ -1226,21 +1293,21 @@ class Client_model extends CI_Model
 
 		if ($query->num_rows() < 1) {
 			$this->db->insert('tb_clients', [
-					'idClientTypeFk'        => $client['idClientTypeFk'],
-					'name'                  => $client['name'],
+					'idClientTypeFk' => $client['idClientTypeFk'],
+					'name' => $client['name'],
 					'idClientAssociated_SE' => $client['idClientAssociated_SE'],
-					'address'               => $client['address'],
-					'addressLat'            => $client['addressLat'],
-					'addressLon'            => $client['addressLon'],
-					'idAgentFk'             => $client['idAgentFk'],
-					'isNotCliente'          => $client['isNotCliente'],
-					'idStatusFk'            => 1,
-					'idLocationFk'          => $client['idLocationFk'],
-					'idProvinceFk'          => $client['idProvinceFk'],
-					'observation'           => $client['observation'],
-					'phoneMobile'           => $client['mobile'],
-					'phoneLocal'            => $client['local'],
-					'mail'                  => $client['mail'],
+					'address' => $client['address'],
+					'addressLat' => $client['addressLat'],
+					'addressLon' => $client['addressLon'],
+					'idAgentFk' => $client['idAgentFk'],
+					'isNotCliente' => $client['isNotCliente'],
+					'idStatusFk' => 1,
+					'idLocationFk' => $client['idLocationFk'],
+					'idProvinceFk' => $client['idProvinceFk'],
+					'observation' => $client['observation'],
+					'phoneMobile' => $client['mobile'],
+					'phoneLocal' => $client['local'],
+					'mail' => $client['mail'],
 				]
 			);
 			if ($this->db->affected_rows() === 1) {
@@ -1248,13 +1315,13 @@ class Client_model extends CI_Model
 
 				// DATOS DE FACTURCION
 				$this->db->insert('tb_client_billing_information', [
-						'idClientFk'          => $idClientFk,
+						'idClientFk' => $idClientFk,
 						'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-						'businessAddress'     => $client['billing_information']['nameAddress'],
-						'cuitBilling'         => $client['billing_information']['cuitBilling'],
+						'businessAddress' => $client['billing_information']['nameAddress'],
+						'cuitBilling' => $client['billing_information']['cuitBilling'],
 						'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 						'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-						'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk'],
+						'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk'],
 					]
 				);
 
@@ -1263,8 +1330,8 @@ class Client_model extends CI_Model
 					//  TELEFONOS DE CONTACTO
 					foreach (@$client['list_phone_contact'] as $valor) {
 						$this->db->insert('tb_client_phone_contact', [
-								'idClientFk'   => $idClientFk,
-								'phoneTag'     => $valor['phoneTag'],
+								'idClientFk' => $idClientFk,
+								'phoneTag' => $valor['phoneTag'],
 								'phoneContact' => $valor['phoneContact'],
 							]
 						);
@@ -1272,37 +1339,37 @@ class Client_model extends CI_Model
 					//  DIRECCIONES DE UN PARTICULAR
 					foreach ($client['list_address_particular'] as $valor) {
 						$idClientDepartamentFk = null;
-						$idDepartmentKf        = null;
+						$idDepartmentKf = null;
 						//SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
 						if ($valor['idTipoInmuebleFk'] == '1' && ($client['idDepartmentFk'] == null || $client['idDepartmentFk'] == "")) {
 							$idClientDepartamentFk = $this->searchAddress($valor['address'], $valor['idProvinceFk'], $valor['idLocationFk']);
 							if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 								$this->db->insert('tb_clients', [
 										'idClientTypeFk' => 2,
-										'name'           => $valor['address'],
-										'address'        => $valor['address'],
-										'isNotCliente'   => 1,
-										'idStatusFk'     => 0,
-										'addressLat'     => $valor['addressLat'],
-										'addressLon'     => $valor['addressLon'],
-										'idLocationFk'   => $valor['idLocationFk'],
-										'idProvinceFk'   => $valor['idProvinceFk'],
+										'name' => $valor['address'],
+										'address' => $valor['address'],
+										'isNotCliente' => 1,
+										'idStatusFk' => 0,
+										'addressLat' => $valor['addressLat'],
+										'addressLon' => $valor['addressLon'],
+										'idLocationFk' => $valor['idLocationFk'],
+										'idProvinceFk' => $valor['idProvinceFk'],
 									]
 								);
 								$idClientDepartamentFk = $this->db->insert_id();
 								//  DEPARTAMENTO
 								$this->db->insert('tb_client_departament', [
-										'idClientFk'              => $idClientDepartamentFk,
-										'floor'                   => $valor['floor'],
-										'departament'             => $valor['department'],
+										'idClientFk' => $idClientDepartamentFk,
+										'floor' => $valor['floor'],
+										'departament' => $valor['department'],
 										'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-										'idStatusFk'              => 1,
-										'numberUNF'               => $valor['numberUNF'],
-										'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+										'idStatusFk' => 1,
+										'numberUNF' => $valor['numberUNF'],
+										'idUserAdminRKf' => $valor['idUserAdminRKf'],
 										'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
-										'idUserKf'                => $valor['idUserKf'],
-										'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
-										'isRequesLowByProp'       => $valor['isRequesLowByProp'],
+										'idUserKf' => $valor['idUserKf'],
+										'isAprobatedAdmin' => $valor['isAprobatedAdmin'],
+										'isRequesLowByProp' => $valor['isRequesLowByProp'],
 									]
 								);
 								$idDepartmentKf = $this->db->insert_id();
@@ -1315,17 +1382,17 @@ class Client_model extends CI_Model
 						}
 
 						$this->db->insert('tb_client_address_particular', [
-								'idClientFk'                => $idClientFk,
-								'address'                   => $valor['address'],
-								'depto'                     => $valor['depto'],
-								//'isBuilding'                => $valor['isBuilding'],
-								'idProvinceFk'              => $valor['idProvinceFk'],
-								'idLocationFk'              => $valor['idLocationFk'],
-								'clarification'             => $valor['clarification'],
-								'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
-								'idParticularDepartamentKf' => @$idDepartmentKf,
-								'idZonaFk'                  => $valor['idZonaFk'],
-							]);
+							'idClientFk' => $idClientFk,
+							'address' => $valor['address'],
+							'depto' => $valor['depto'],
+							//'isBuilding'                => $valor['isBuilding'],
+							'idProvinceFk' => $valor['idProvinceFk'],
+							'idLocationFk' => $valor['idLocationFk'],
+							'clarification' => $valor['clarification'],
+							'idTipoInmuebleFk' => $valor['idTipoInmuebleFk'],
+							'idParticularDepartamentKf' => @$idDepartmentKf,
+							'idZonaFk' => $valor['idZonaFk'],
+						]);
 					}
 				}
 
@@ -1341,24 +1408,24 @@ class Client_model extends CI_Model
 
 	}
 
-	public function updateParticular ($client)
+	public function updateParticular($client)
 	{
 		$this->db->set(
 			[
-				'name'                  => $client['name'],
+				'name' => $client['name'],
 				'idClientAssociated_SE' => $client['idClientAssociated_SE'],
-				'address'               => $client['address'],
-				'addressLat'            => $client['addressLat'],
-				'addressLon'            => $client['addressLon'],
-				'idAgentFk'             => $client['idAgentFk'],
-				'isNotCliente'          => $client['isNotCliente'],
-				'idStatusFk'            => $client['idStatusFk'],
-				'idLocationFk'          => $client['idLocationFk'],
-				'idProvinceFk'          => $client['idProvinceFk'],
-				'observation'           => $client['observation'],
-				'phoneMobile'           => $client['mobile'],
-				'phoneLocal'            => $client['local'],
-				'mail'                  => $client['mail'],
+				'address' => $client['address'],
+				'addressLat' => $client['addressLat'],
+				'addressLon' => $client['addressLon'],
+				'idAgentFk' => $client['idAgentFk'],
+				'isNotCliente' => $client['isNotCliente'],
+				'idStatusFk' => $client['idStatusFk'],
+				'idLocationFk' => $client['idLocationFk'],
+				'idProvinceFk' => $client['idProvinceFk'],
+				'observation' => $client['observation'],
+				'phoneMobile' => $client['mobile'],
+				'phoneLocal' => $client['local'],
+				'mail' => $client['mail'],
 
 			]
 		)->where("idClient", $client['idClient'])->update("tb_clients");
@@ -1366,13 +1433,13 @@ class Client_model extends CI_Model
 
 		$this->db->set(
 			[
-				'idClientFk'          => $client['idClient'],
+				'idClientFk' => $client['idClient'],
 				'businessNameBilling' => $client['billing_information']['businessNameBilling'],
-				'businessAddress'     => $client['billing_information']['nameAddress'],
-				'cuitBilling'         => $client['billing_information']['cuitBilling'],
+				'businessAddress' => $client['billing_information']['nameAddress'],
+				'cuitBilling' => $client['billing_information']['cuitBilling'],
 				'idLocationBillingFk' => $client['billing_information']['idLocationBillingFk'],
 				'idProvinceBillingFk' => $client['billing_information']['idProvinceBillingFk'],
-				'idTypeTaxFk'         => $client['billing_information']['idTypeTaxFk']
+				'idTypeTaxFk' => $client['billing_information']['idTypeTaxFk']
 			]
 		)->where("idClientFk", $client['idClient'])->update("tb_client_billing_information");
 
@@ -1387,8 +1454,8 @@ class Client_model extends CI_Model
 			foreach ($client['list_phone_contact'] as $valor) {
 
 				$this->db->insert('tb_client_phone_contact', [
-					'idClientFk'   => $client['idClient'],
-					'phoneTag'     => $valor['phoneTag'],
+					'idClientFk' => $client['idClient'],
+					'phoneTag' => $valor['phoneTag'],
 					'phoneContact' => $valor['phoneContact'],
 				]);
 			}
@@ -1397,37 +1464,37 @@ class Client_model extends CI_Model
 			//DIRECCIONES DE UN PARTICULAR
 			foreach ($client['list_address_particular'] as $valor) {
 				$idClientDepartamentFk = null;
-				$idDepartmentKf        = null;
+				$idDepartmentKf = null;
 				//SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
 				if ($client['idTipoInmuebleFk'] == '1' && ($client['idClientDepartamentFk'] == null || $client['idClientDepartamentFk'] == "")) {
 					$idClientDepartamentFk = $this->searchAddress($valor['address'], $valor['idProvinceFk'], $valor['idLocationFk']);
 					if ($idClientDepartamentFk == '0') { //SI NO EXISTE LA DIRECCION
 						$this->db->insert('tb_clients', [
 								'idClientTypeFk' => 2,
-								'name'           => $valor['address'],
-								'address'        => $valor['address'],
-								'isNotCliente'   => 1,
-								'idStatusFk'     => 0,
-								'addressLat'     => $valor['addressLat'],
-								'addressLon'     => $valor['addressLon'],
-								'idLocationFk'   => $valor['idLocationFk'],
-								'idProvinceFk'   => $valor['idProvinceFk'],
+								'name' => $valor['address'],
+								'address' => $valor['address'],
+								'isNotCliente' => 1,
+								'idStatusFk' => 0,
+								'addressLat' => $valor['addressLat'],
+								'addressLon' => $valor['addressLon'],
+								'idLocationFk' => $valor['idLocationFk'],
+								'idProvinceFk' => $valor['idProvinceFk'],
 							]
 						);
 						$idClientDepartamentFk = $this->db->insert_id();
 						//  DEPARTAMENTO
 						$this->db->insert('tb_client_departament', [
-								'idClientFk'              => $idClientDepartamentFk,
-								'floor'                   => $valor['floor'],
-								'departament'             => $valor['department'],
+								'idClientFk' => $idClientDepartamentFk,
+								'floor' => $valor['floor'],
+								'departament' => $valor['department'],
 								'idCategoryDepartamentFk' => $valor['idCategoryDepartamentFk'],
-								'idStatusFk'              => 1,
-								'numberUNF'               => $valor['numberUNF'],
-								'idUserAdminRKf'          => $valor['idUserAdminRKf'],
+								'idStatusFk' => 1,
+								'numberUNF' => $valor['numberUNF'],
+								'idUserAdminRKf' => $valor['idUserAdminRKf'],
 								'idUserAdminPropietariKf' => $valor['idUserAdminPropietariKf'],
-								'idUserKf'                => $valor['idUserKf'],
-								'isAprobatedAdmin'        => $valor['isAprobatedAdmin'],
-								'isRequesLowByProp'       => $valor['isRequesLowByProp'],
+								'idUserKf' => $valor['idUserKf'],
+								'isAprobatedAdmin' => $valor['isAprobatedAdmin'],
+								'isRequesLowByProp' => $valor['isRequesLowByProp'],
 							]
 						);
 						$idDepartmentKf = $this->db->insert_id();
@@ -1439,16 +1506,16 @@ class Client_model extends CI_Model
 					$idDepartmentKf = $client['idDepartmentFk'];
 				}
 				$this->db->insert('tb_client_address_particular', [
-						'idClientFk'                => $client['idClient'],
-						'address'                   => $valor['address'],
-						'depto'                     => $valor['depto'],
+						'idClientFk' => $client['idClient'],
+						'address' => $valor['address'],
+						'depto' => $valor['depto'],
 						//'isBuilding'                => $valor['isBuilding'],
-						'idProvinceFk'              => $valor['idProvinceFk'],
-						'idLocationFk'              => $valor['idLocationFk'],
-						'clarification'             => $valor['clarification'],
-						'idTipoInmuebleFk'          => $valor['idTipoInmuebleFk'],
+						'idProvinceFk' => $valor['idProvinceFk'],
+						'idLocationFk' => $valor['idLocationFk'],
+						'clarification' => $valor['clarification'],
+						'idTipoInmuebleFk' => $valor['idTipoInmuebleFk'],
 						'idParticularDepartamentKf' => @$idDepartmentKf,
-						'idZonaFk'                  => $valor['idZonaFk'],
+						'idZonaFk' => $valor['idZonaFk'],
 					]
 				);
 			}
@@ -1458,10 +1525,10 @@ class Client_model extends CI_Model
 
 	}
 
-	public function getListCustomersById ($idClient = null)
+	public function getListCustomersById($idClient = null)
 	{
 		$quuery = null;
-		$rs     = null;
+		$rs = null;
 		if (!is_null($idClient)) {
 
 			$this->db->select("*")->from("tb_clients");
@@ -1480,20 +1547,20 @@ class Client_model extends CI_Model
 				$quuery = $this->db->where($where)->get();
 				if ($quuery->num_rows() > 0) {
 					$rs = $quuery->result_array();
-					$i  = 0;
+					$i = 0;
 					foreach ($quuery->result() as &$row) {
 
 						$this->db->select("*")->from("tb_client_schedule_atention");
 						$quuery = $this->db->where("tb_client_schedule_atention.idClienteFk =", $row->idClient)->get();
 
-						$rs1                              = $quuery->result_array();
+						$rs1 = $quuery->result_array();
 						$rs[$i]['list_schedule_atention'] = $rs1;
 
 
 						$this->db->select("*")->from("tb_client_phone_contact");
 						$quuery = $this->db->where("tb_client_phone_contact.idClientFk =", $row->idClient)->get();
 
-						$rs2                          = $quuery->result_array();
+						$rs2 = $quuery->result_array();
 						$rs[$i]['list_phone_contact'] = $rs2;
 
 
@@ -1501,7 +1568,7 @@ class Client_model extends CI_Model
 						$this->db->join('tb_user', 'tb_user.idUser = tb_client_users.idUserFk', 'inner');
 						$quuery = $this->db->where("tb_client_users.idClientFk =", $row->idClient)->get();
 
-						$rs3                        = $quuery->result_array();
+						$rs3 = $quuery->result_array();
 						$rs[$i]['list_client_user'] = $rs3;
 
 
@@ -1509,7 +1576,7 @@ class Client_model extends CI_Model
 						$this->db->join('tb_tipo_mails', 'tb_tipo_mails.idTipoMail = tb_client_mails.idTipoDeMailFk', 'left');
 						$quuery = $this->db->where("tb_client_mails.idClientFk =", $row->idClient)->get();
 
-						$rs4                   = $quuery->result_array();
+						$rs4 = $quuery->result_array();
 						$rs[$i]['list_emails'] = $rs4;
 
 
@@ -1520,7 +1587,7 @@ class Client_model extends CI_Model
 						$this->db->join('tb_province', 'tb_province.idProvince = tb_client_billing_information.idProvinceBillingFk', 'inner');
 						$quuery = $this->db->where("tb_client_billing_information.idClientFk =", $row->idClient)->get();
 
-						$rs5                           = $quuery->result_array();
+						$rs5 = $quuery->result_array();
 						$rs[$i]['billing_information'] = $rs5;
 
 						//DEPARTAMENTOS
@@ -1528,7 +1595,7 @@ class Client_model extends CI_Model
 						$this->db->join('tb_category_departament', 'tb_category_departament.idCategoryDepartament = tb_client_departament.idCategoryDepartamentFk', 'left');
 						$quuery = $this->db->where("tb_client_departament.idClientFk =", $row->idClient)->get();
 
-						$rs6                        = $quuery->result_array();
+						$rs6 = $quuery->result_array();
 						$rs[$i]['list_departament'] = $rs6;
 
 						$i++;
@@ -1544,7 +1611,7 @@ class Client_model extends CI_Model
 
 	}
 
-	public function searchAddress ($address, $idProvince, $idLocation)
+	public function searchAddress($address, $idProvince, $idLocation)
 	{
 		$user = null;
 		$this->db->select("*")->from("tb_clients");
@@ -1566,7 +1633,7 @@ class Client_model extends CI_Model
 	}
 
 	//SEARCH DEPARTMENT BY CLIENTID | FLOOR | DEPARTMENT
-	public function getDepartmentId ($clientId, $floor, $department)
+	public function getDepartmentId($clientId, $floor, $department)
 	{
 
 		$where = "idClientFk=\"$clientId\" AND floor=\"$floor\" AND departament=\"$department\"";
@@ -1582,7 +1649,7 @@ class Client_model extends CI_Model
 		}
 	}
 
-	public function delete ($idClient)
+	public function delete($idClient)
 	{
 
 		$this->db->set(
@@ -1593,10 +1660,10 @@ class Client_model extends CI_Model
 
 	}
 
-	public function getadmin ($id, $searchFilter, $idClientTypeFk, $isNotCliente)
+	public function getadmin($id, $searchFilter, $idClientTypeFk, $isNotCliente)
 	{
 		$quuery = null;
-		$rs     = null;
+		$rs = null;
 
 		if (!is_null($id)) {
 
@@ -1614,20 +1681,20 @@ class Client_model extends CI_Model
 				$this->db->select("*")->from("tb_client_schedule_atention");
 				$quuery = $this->db->where("tb_client_schedule_atention.idClienteFk =", $id)->get();
 
-				$rs1                          = $quuery->result_array();
+				$rs1 = $quuery->result_array();
 				$rs['list_schedule_atention'] = $rs1;
 
 
 				$this->db->select("*")->from("tb_client_phone_contact");
 				$quuery = $this->db->where("tb_client_phone_contact.idClientFk =", $id)->get();
 
-				$rs2                      = $quuery->result_array();
+				$rs2 = $quuery->result_array();
 				$rs['list_phone_contact'] = $rs2;
 
 				$this->db->select("*")->from("tb_client_mails");
 				$quuery = $this->db->where("tb_client_mails.idClientFk =", $id)->get();
 
-				$rs6               = $quuery->result_array();
+				$rs6 = $quuery->result_array();
 				$rs['list_emails'] = $rs6;
 
 
@@ -1635,7 +1702,7 @@ class Client_model extends CI_Model
 				$this->db->join('tb_user', 'tb_user.idUser = tb_client_users.idUserFk', 'inner');
 				$quuery = $this->db->where("tb_client_users.idClientFk =", $id)->get();
 
-				$rs3                    = $quuery->result_array();
+				$rs3 = $quuery->result_array();
 				$rs['list_client_user'] = $rs3;
 
 
@@ -1646,22 +1713,22 @@ class Client_model extends CI_Model
 				$this->db->join('tb_province', 'tb_province.idProvince = tb_client_billing_information.idProvinceBillingFk', 'inner');
 				$quuery = $this->db->where("tb_client_billing_information.idClientFk =", $id)->get();
 
-				$rs4                       = $quuery->result_array();
+				$rs4 = $quuery->result_array();
 				$rs['billing_information'] = $rs4;
 
 				//DEPARTAMENTOS
 				$this->db->select("*")->from("tb_client_departament");
 				$where_department = "tb_client_departament.idClientFk=$id AND tb_client_departament.idStatusFk=1";
-				$quuery           = $this->db->where($where_department)->get();
+				$quuery = $this->db->where($where_department)->get();
 
-				$rs5                    = $quuery->result_array();
+				$rs5 = $quuery->result_array();
 				$rs['list_departament'] = $rs5;
 
 				// ARCHIVOS SUBIDOS
 				$this->db->select("*")->from("tb_client_files_list");
 				$quuery = $this->db->where("tb_client_files_list.idClientfK =", $id)->get();
 
-				$rs6                  = $quuery->result_array();
+				$rs6 = $quuery->result_array();
 				$rs['files_uploaded'] = $rs6;
 
 				return $rs;
@@ -1704,14 +1771,14 @@ class Client_model extends CI_Model
 					$this->db->select("*")->from("tb_client_schedule_atention");
 					$quuery = $this->db->where("tb_client_schedule_atention.idClienteFk =", $row->idClient)->get();
 
-					$rs1                              = $quuery->result_array();
+					$rs1 = $quuery->result_array();
 					$rs[$i]['list_schedule_atention'] = $rs1;
 
 
 					$this->db->select("*")->from("tb_client_phone_contact");
 					$quuery = $this->db->where("tb_client_phone_contact.idClientFk =", $row->idClient)->get();
 
-					$rs2                          = $quuery->result_array();
+					$rs2 = $quuery->result_array();
 					$rs[$i]['list_phone_contact'] = $rs2;
 
 
@@ -1719,14 +1786,14 @@ class Client_model extends CI_Model
 					$this->db->join('tb_user', 'tb_user.idUser = tb_client_users.idUserFk', 'inner');
 					$quuery = $this->db->where("tb_client_users.idClientFk =", $row->idClient)->get();
 
-					$rs3                        = $quuery->result_array();
+					$rs3 = $quuery->result_array();
 					$rs[$i]['list_client_user'] = $rs3;
 
 
 					$this->db->select("*")->from("tb_client_mails");
 					$quuery = $this->db->where("tb_client_mails.idClientFk =", $row->idClient)->get();
 
-					$rs4                   = $quuery->result_array();
+					$rs4 = $quuery->result_array();
 					$rs[$i]['list_emails'] = $rs4;
 
 
@@ -1737,28 +1804,28 @@ class Client_model extends CI_Model
 					$this->db->join('tb_province', 'tb_province.idProvince = tb_client_billing_information.idProvinceBillingFk', 'inner');
 					$quuery = $this->db->where("tb_client_billing_information.idClientFk =", $row->idClient)->get();
 
-					$rs5                           = $quuery->result_array();
+					$rs5 = $quuery->result_array();
 					$rs[$i]['billing_information'] = $rs5;
 
 					//DEPARTAMENTOS
 					$this->db->select("*")->from("tb_client_departament");
 					$this->db->where("tb_client_departament.idClientFk =", $row->idClient);
-					$quuery                     = $this->db->where("tb_client_departament.idStatusFk =", 1)->get();
-					$rs6                        = $quuery->result_array();
+					$quuery = $this->db->where("tb_client_departament.idStatusFk =", 1)->get();
+					$rs6 = $quuery->result_array();
 					$rs[$i]['list_departament'] = $rs6;
 
 					//DIRECCIONES PARTICULAR
 					$this->db->select("*")->from("tb_client_address_particular");
 					$quuery = $this->db->where("tb_client_address_particular.idClientFk =", $row->idClient)->get();
 
-					$rs7                               = $quuery->result_array();
+					$rs7 = $quuery->result_array();
 					$rs[$i]['list_address_particular'] = $rs7;
 
 					// ARCHIVOS SUBIDOS
 					$this->db->select("*")->from("tb_client_files_list");
 					$quuery = $this->db->where("tb_client_files_list.idClientfK =", $row->idClient)->get();
 
-					$rs8                      = $quuery->result_array();
+					$rs8 = $quuery->result_array();
 					$rs[$i]['files_uploaded'] = $rs8;
 
 					$i++;
@@ -1773,9 +1840,9 @@ class Client_model extends CI_Model
 		}
 	}
 
-	public function postUploadFiles ($customerId, $fileName, $file)
+	public function postUploadFiles($customerId, $fileName, $file)
 	{
-		$image_path    = realpath(APPPATH . '../../files');
+		$image_path = realpath(APPPATH . '../../files');
 		$file_name_ext = explode(".", $file["file"]["name"])[1];
 		$file_name_tmp = explode(".", $file["file"]["name"])[0];
 		if ($fileName != '') {
@@ -1787,7 +1854,7 @@ class Client_model extends CI_Model
 		//$file_size  = $file['file']['size'];
 		$file_type = $file['file']['type'];
 		//$error      = $file['file']['error'];
-		$tempPath   = $file['file']['tmp_name'];
+		$tempPath = $file['file']['tmp_name'];
 		$uploadPath = $image_path . DIRECTORY_SEPARATOR . $file_name;
 		move_uploaded_file($tempPath, $uploadPath);
 		$answer = array('dir' => '/files/', 'filename' => $file_name, 'type' => $file_type);
@@ -1795,13 +1862,13 @@ class Client_model extends CI_Model
 		return $answer;
 	}
 
-	public function addCustomerUploadedFile ($client)
+	public function addCustomerUploadedFile($client)
 	{
 		$this->db->insert('tb_client_files_list', [
 				'idClientfK' => $client['idClient'],
-				'title'      => $client['name'],
-				'urlFile'    => $client['urlFile'],
-				'typeFile'   => $client['type'],
+				'title' => $client['name'],
+				'urlFile' => $client['urlFile'],
+				'typeFile' => $client['type'],
 			]
 		);
 		if ($this->db->affected_rows() === 1) {
@@ -1812,15 +1879,15 @@ class Client_model extends CI_Model
 
 	}
 
-	public function postDeleteFiles ($fileName)
+	public function postDeleteFiles($fileName)
 	{
 		$image_path = realpath(APPPATH . '../../files');
-		$filePath   = $image_path . DIRECTORY_SEPARATOR . $fileName;
+		$filePath = $image_path . DIRECTORY_SEPARATOR . $fileName;
 		unlink($filePath);
 		return true;
 	}
 
-	public function deleteCustomerUploadedFile ($idClientFile)
+	public function deleteCustomerUploadedFile($idClientFile)
 	{
 
 		$this->db->delete('tb_client_files_list', array('idClientFiles' => $idClientFile));

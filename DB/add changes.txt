@@ -1,0 +1,9 @@
+
+USE `db_coferba`;
+ALTER TABLE `tb_client_departament`
+	ADD COLUMN `autoApproveFloor` int(11)   NULL after `numberUNF` ,
+	ADD COLUMN `autoApproveDepto` int(11)   NULL after `autoApproveFloor` ;
+
+ALTER TABLE `tb_clients`
+	ADD COLUMN `idSecurityCode` varchar(100)  COLLATE utf8mb3_general_ci NULL after `mailServiceTecnic` ,
+	ADD COLUMN `autoApproveAll` int(11)   NULL after `departmentCorrelation` ;
