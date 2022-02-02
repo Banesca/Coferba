@@ -192,6 +192,7 @@ class Client_model extends CI_Model
 		}
 
 	}
+
 	public function aprobarPedidoClientDepartment($client)
 	{
 		$val = false;
@@ -1660,7 +1661,7 @@ class Client_model extends CI_Model
 
 	}
 
-	public function getadmin($id, $searchFilter, $idClientTypeFk, $isNotCliente)
+	public function getadmin($id, $searchFilter, $idClientTypeFk, $isNotCliente, $limit = '', $start = '')
 	{
 		$quuery = null;
 		$rs = null;
@@ -1682,20 +1683,26 @@ class Client_model extends CI_Model
 				$quuery = $this->db->where("tb_client_schedule_atention.idClienteFk =", $id)->get();
 
 				$rs1 = $quuery->result_array();
-				$rs['list_schedule_atention'] = $rs1;
+				if ($rs1->num_rows() > 0) {
+					$rs['list_schedule_atention'] = $rs1;
+				}
 
 
 				$this->db->select("*")->from("tb_client_phone_contact");
 				$quuery = $this->db->where("tb_client_phone_contact.idClientFk =", $id)->get();
 
 				$rs2 = $quuery->result_array();
-				$rs['list_phone_contact'] = $rs2;
+				if ($rs2->num_rows() > 0) {
+					$rs['list_phone_contact'] = $rs2;
+				}
 
 				$this->db->select("*")->from("tb_client_mails");
 				$quuery = $this->db->where("tb_client_mails.idClientFk =", $id)->get();
 
 				$rs6 = $quuery->result_array();
-				$rs['list_emails'] = $rs6;
+				if ($rs6->num_rows() > 0) {
+					$rs['list_emails'] = $rs6;
+				}
 
 
 				$this->db->select("*")->from("tb_client_users");
@@ -1703,7 +1710,9 @@ class Client_model extends CI_Model
 				$quuery = $this->db->where("tb_client_users.idClientFk =", $id)->get();
 
 				$rs3 = $quuery->result_array();
-				$rs['list_client_user'] = $rs3;
+				if ($rs3->num_rows() > 0) {
+					$rs['list_client_user'] = $rs3;
+				}
 
 
 				// DATOS DE FACTURCION
@@ -1714,7 +1723,9 @@ class Client_model extends CI_Model
 				$quuery = $this->db->where("tb_client_billing_information.idClientFk =", $id)->get();
 
 				$rs4 = $quuery->result_array();
-				$rs['billing_information'] = $rs4;
+				if ($rs4->num_rows() > 0) {
+					$rs['billing_information'] = $rs4;
+				}
 
 				//DEPARTAMENTOS
 				$this->db->select("*")->from("tb_client_departament");
@@ -1722,20 +1733,26 @@ class Client_model extends CI_Model
 				$quuery = $this->db->where($where_department)->get();
 
 				$rs5 = $quuery->result_array();
-				$rs['list_departament'] = $rs5;
+				if ($rs5->num_rows() > 0) {
+					$rs['list_departament'] = $rs5;
+				}
 
 				// ARCHIVOS SUBIDOS
 				$this->db->select("*")->from("tb_client_files_list");
 				$quuery = $this->db->where("tb_client_files_list.idClientfK =", $id)->get();
 
 				$rs6 = $quuery->result_array();
-				$rs['files_uploaded'] = $rs6;
+				if ($rs6->num_rows() > 0) {
+					$rs['files_uploaded'] = $rs6;
+				}
+
 
 				return $rs;
 			}
 
 			return null;
 		} else {
+
 
 			$this->db->select("*")->from("tb_clients");
 			$this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
@@ -1755,6 +1772,9 @@ class Client_model extends CI_Model
 				$this->db->like('tb_clients.name', $searchFilter);
 			}
 
+			if ($limit != '' && $start != '') {
+				$this->db->limit($limit, $start);
+			}
 
 			$quuery = $this->db->order_by("tb_clients.idClient", "DESC")->get();
 
