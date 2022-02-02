@@ -1662,19 +1662,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"filter\":\"prueba\",\n\t\"idClientTypeFk\":null,\n\t\"isNotCliente\":null\n}"
+							"raw": "{\n\t\"filter\":\"\",\n\t\"idClientTypeFk\":null,\n\t\"isNotCliente\":null,\n    \"limit\":3,\n    \"start\":1\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1/Coferba/Back/index.php/Clientes/search",
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Clientes/search",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"localhost"
 							],
 							"path": [
 								"Coferba",
+								"sistema",
 								"Back",
 								"index.php",
 								"Clientes",
