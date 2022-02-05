@@ -6,4 +6,7 @@ ALTER TABLE `tb_client_departament`
 
 ALTER TABLE `tb_clients`
 	ADD COLUMN `idSecurityCode` varchar(100)  COLLATE utf8mb3_general_ci NULL after `mailServiceTecnic` ,
-	ADD COLUMN `autoApproveAll` int(11)   NULL after `departmentCorrelation` ;
+	ADD COLUMN `autoApproveAll` int(11)   NULL after `departmentCorrelation` ,
+	ADD COLUMN `IsInDebt` int(11)   NULL COMMENT 'para indicar que el edificio está en mora' after `idTipoInmuebleFk` ,
+	ADD COLUMN `chargeForExpenses` int(11)   NULL COMMENT 'cobro por expensas' after `autoApproveAll` ;
+

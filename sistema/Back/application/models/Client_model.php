@@ -232,10 +232,64 @@ class Client_model extends CI_Model
 
 	}
 
+	public function chargeForExpenses($client)
+	{
+		$val = false;
+		$query = $this->db->select("*")->from("tb_clients")->where('idClient', $client['idClient'])->get();
+		if ($query->num_rows() > 0) { //si existe el cliente
+			if (!is_null($client['chargeForExpenses'])) {
+				if ($client['chargeForExpenses'] == 1) {
+					$val = true;
+				}
+				if ($client['chargeForExpenses'] == 0) {
+					$val = true;
+				}
+			}
+		} else {
+			return 0;
+		}
+		if ($val) {
+			$this->db->set(
+				[
+					'chargeForExpenses' => $client['chargeForExpenses'],
+				]
+			)->where("idClient", $client['idClient'])->update("tb_clients");
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	public function IsInDebt($client)
+	{
+		$val = false;
+		$query = $this->db->select("*")->from("tb_clients")->where('idClient', $client['idClient'])->get();
+		if ($query->num_rows() > 0) { //si existe el cliente
+			if (!is_null($client['IsInDebt'])) {
+				if ($client['IsInDebt'] == 1) {
+					$val = true;
+				}
+				if ($client['IsInDebt'] == 0) {
+					$val = true;
+				}
+			}
+		} else {
+			return 0;
+		}
+		if ($val) {
+			$this->db->set(
+				[
+					'IsInDebt' => $client['IsInDebt'],
+				]
+			)->where("idClient", $client['idClient'])->update("tb_clients");
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
 
 	public function updateAdmin($client)
 	{
-
 		$idClientDepartamentFk = null;
 		if ($client['idTipoInmuebleFk'] == '1' && ($client['idClientDepartamentFk'] == null || $client['idClientDepartamentFk'] == "")) { //SI EL TIPO DE INMUEBLE ES DEPARTAMENTO
 			$idClientDepartamentFk = $this->searchAddress($client['address'], $client['idProvinceFk'], $client['idLocationFk']);

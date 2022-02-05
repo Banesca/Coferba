@@ -68,6 +68,43 @@ class Clientes extends REST_Controller
 		}
 	}
 
+public function chargeForExpenses_post()
+	{
+
+		$pofile = null;
+		if (!$this->post('client')) {
+			$this->response(null, 404);
+		}
+
+		$pofile = $this->client_model->chargeForExpenses($this->post('client'));
+//		$this->response($pofile);
+		if ($pofile == 1) {
+			$this->response(['response' => "Registro exitoso"], 200);
+		} elseif ($pofile == 0) {
+			$this->response(['error' => "Sin Resultados"], 500);
+		} elseif ($pofile == 2) {
+			$this->response(['response' => "Cliente ya se encuentra registrado"], 203);
+		}
+	}
+	public function IsInDebt_post()
+	{
+
+		$pofile = null;
+		if (!$this->post('client')) {
+			$this->response(null, 404);
+		}
+
+		$pofile = $this->client_model->IsInDebt($this->post('client'));
+//		$this->response($pofile);
+		if ($pofile == 1) {
+			$this->response(['response' => "Registro exitoso"], 200);
+		} elseif ($pofile == 0) {
+			$this->response(['error' => "Sin Resultados"], 500);
+		} elseif ($pofile == 2) {
+			$this->response(['response' => "Cliente ya se encuentra registrado"], 203);
+		}
+	}
+
 	public function building_post()
 	{
 
