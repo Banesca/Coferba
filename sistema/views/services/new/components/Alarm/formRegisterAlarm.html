@@ -276,7 +276,7 @@
 						                    <ui-select-choices repeat="item in productListByType.BACKUP_ENERGIA | filter: $select.search">
 						                    	<div ng-bind-html="item.descriptionProduct | highlight: $select.search"></div>
 						                      	<small ng-bind-html="item.model | highlight: $select.search"></small>
-						                      	<small ng-bind-html="item.brand | highlight: $select.search"></small>					                      	
+						                      	<small ng-bind-html="item.brand | highlight: $select.search"></small>
 						                    </ui-select-choices>
 						                    <ui-select-no-choice>
 											    No hay resultados, contacte are de soporte.
@@ -299,7 +299,7 @@
 								      	</tr>
 								  	</table>
 								  	<div ng-if="list_batteries.length==0" class="text-uppercase banner-no-rows banner-no-rows-padding-1 banner-no-rows-warning"><h5><i class="fas fa-exclamation-triangle"> </i> No hay baterias o ups cargados</h5></div>
-								</div>						  	
+								</div>
 							</div>
 						</div>
 						<div class="well-checkbox form-group col-md-6 n-padding-l n-padding-r" style="height: 262px;">
@@ -311,7 +311,7 @@
 										<label class="switch switch-2x" for="remoteConnectionType-{{type.idTipoConexionRemoto}}">
 						                    <input type="checkbox" class="success" ng-click="compServiceModuleConnectionDetailsFn(type.selected, type.idTipoConexionRemoto);" ng-model="type.selected" id="remoteConnectionType-{{type.idTipoConexionRemoto}}">
 						                    <span class="slider slider-2x flat"></span>
-						                </label>						                
+						                </label>
 					                </div>
 					                <div class="col-md-7 col-xs-7 n-padding-l">
 					                	<span>{{type.descripcion}}</span>
@@ -319,8 +319,8 @@
 									<div ng-repeat="item in tipo_conexion_remoto" class="pull-right col-md-3">
 										<button ng-if="item.idTipoConexionRemoto==type.idTipoConexionRemoto && type.selected" data-toggle="tooltip" data-placement="top" title="Ver" ng-disabled="type.idTipoConexionRemoto==''" ng-click="addServiceModuleConnectionDetailsFn(item, 'details', '')" class="btn btn-xs btn-warning"><i class="fas fa-external-link-alt"></i> Detalles</button>
 									</div>
-								</div>				                
-				            </div>					            			            
+								</div>
+				            </div>
 						</div>
 						<div class="form-group col-md-2">
 							<div class="input-group col-md-12">

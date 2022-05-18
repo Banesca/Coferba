@@ -83,6 +83,7 @@ class Profiles_model extends CI_Model
 			{
 	
 				$this->db->select("*")->from("tb_profiles");
+				$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_profiles.idStatus', 'left');
 				$quuery = $this->db->where("tb_profiles.idProfiles =", $id)->get();
 	
 	
@@ -105,6 +106,7 @@ class Profiles_model extends CI_Model
 			{ 
    
 				$this->db->select("*")->from("tb_profiles");
+				$this->db->join('tb_status', 'tb_status.idStatusTenant = tb_profiles.idStatus', 'left');
 				$this->db->where("tb_profiles.idStatus !=", -1);
    
 		  
@@ -126,7 +128,13 @@ class Profiles_model extends CI_Model
 
 					$i = 0;
 					foreach ($quuery->result() as &$row){
+						//USERS
+						$this->db->select("*")->from("tb_user");
+						$quuery = $this->db->where("tb_user.idSysProfileFk =", $row->idProfiles)->get();
 
+						$rs3 =  $quuery->result_array();
+						$rs[$i]['users'] =  $rs3;
+						//MODULES						
 						$this->db->select("*")->from("tb_profiles_modules");
 						$this->db->join('tb_modules', 'tb_modules.idModule = tb_profiles_modules.idModuleFk', 'inner');
 						$quuery = $this->db->where("tb_profiles_modules.idProfilesFk =", $row->idProfiles)->get();

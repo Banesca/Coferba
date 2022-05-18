@@ -23,6 +23,19 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
                     return checkResult;
             });   
           },
+          /* GET BUILDING LIST BY ADMIN ID */
+          buildingListByAdminId: function(idAdmin) {
+            console.log("[Address Services] => Listado de consorcios por id de administracion: "+idAdmin);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Direccion/addressListByCompanyid/"+idAdmin
+                  }).then(function mySuccess(response) {
+                      return response;
+                  },function myError(response) { 
+                      console.log("Error: "+response.data.error); 
+                      return response;
+                  })
+          },
           /* GET ALL BUILDINGS CUSTOMERS */
           getBuildings: function() {
             rsJson={};
@@ -67,7 +80,7 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
                     console.log("Error: "+response.data.error); 
                     return response;
             });   
-          },          
+          },
           getLocations: function(idProvince) {
             rsJson={};
             //console.log("[Address Services]: Get Locations of province id:"+idProvince);
@@ -80,7 +93,21 @@ moduleAddressServices.service("addressServices", ['$http', 'tokenSystem', '$time
                   },function myError(response) { 
                     console.log("Error: "+response.data.error); 
                     return response;
-            });   
+            });
+          },
+          getLocationsZones: function(idProvince) {
+            rsJson={};
+            //console.log("[Address Services]: Get Locations of province id:"+idProvince);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Util/locationsZone/"+idProvince
+                  }).then(function mySuccess(response) {
+                    rsJson=response.data;
+                    return rsJson;
+                  },function myError(response) { 
+                    console.log("Error: "+response.data.error); 
+                    return response;
+            });
           },
           getAllLocations: function() {
             rsJson={};

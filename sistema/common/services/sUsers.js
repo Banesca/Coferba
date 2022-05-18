@@ -1,12 +1,14 @@
 var moduleUserServices = angular.module("services.User", ["tokenSystem"]);
 
-moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 'serverHost', 'serverBackend', 'serverHeaders', 
-  function($http, tokenSystem, $timeout, serverHost, serverBackend, serverHeaders){
+moduleUserServices.service("userServices", ['$http', '$q', 'tokenSystem', '$timeout', 'serverHost', 'serverBackend', 'serverHeaders', 
+  function($http, $q, tokenSystem, $timeout, serverHost, serverBackend, serverHeaders){
       var checkResult=0;
+      var rsJson = {};
       var attempsToken = {emailAttempted:'', attempsCount: 0};
       var loginResult="";
       var rsJSON;
       var mail2Search = {mail:{ email: ''}};
+      var deferred = $q.defer();
       return {
           /* FIND USER BY EMAIL */
           checkUserMail: function(userMail, typeOfCheck) {
@@ -18,11 +20,10 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                       //console.log("Email registrado: "+response.data.emailUser);
                       if(typeOfCheck!="updatesession"){
                         tokenSystem.destroyTokenStorage(3)
-                        tokenSystem.temporalStorage(response.data);
+                        tokenSystem.temporalStorage(response.data[0]);
                       }
                       if(typeOfCheck=="updatesession"){
                         tokenSystem.destroyTokenStorage(5);
-                        tokenSystem.setLoggedUserStorage(response.data);
                       }
                       return checkResult;
                       //console.log(response.data)
@@ -57,18 +58,40 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                     }
             });   
           },
+          /* FIND USER BY EMAIL */
+          findUserByEmail: function(userMail) {
+            mail2Search.mail.email=userMail;
+            //console.log("Email a verificar: "+userMail);  
+              return $http.post(serverHost+serverBackend+"User/findUserByEmail",mail2Search, serverHeaders)
+                .then(function mySucess(response, status, data) {
+                    return response;
+                  }).catch(function onError(response) {
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
+                    return response;
+                  })
+          },
+          /* FIND USER BY ID */
+          findUserById: function(idUser) {
+            return $http({
+              method : "GET",
+              url : serverHost+serverBackend+"User/index/"+idUser
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
+                    return response;
+                  })
+          },
           /* RESTORE PASSWORD */
           recoverPwd: function(userPwd2Recover) {
             var rsTmpUser=tokenSystem.getTokenStorage(3);
               console.log("Cuenta a restablecer: "+rsTmpUser.emailUser);
               return $http.post(serverHost+serverBackend+"User/updatePass",userPwd2Recover, serverHeaders)
                 .then(function mySucess(response, status, data) {
-                  checkResult = 1;
-                  return checkResult;
+                  return response;
               },function myError(response) { 
                 console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
-                checkResult = 0;
-                return checkResult;
+                return response;
               });
           },
           /* UPDATE AN USER AND CHANGE PASSWORD */
@@ -78,12 +101,10 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
             console.log(data2update);
               return $http.post(serverHost+serverBackend+"User/update",data2update, serverHeaders)
                 .then(function mySucess(response) {
-                  rsJSON = response;
-                  return rsJSON;
+                  return response;
               },function myError(response, error) { 
                 console.log("Method: "+response.config.method+" - Error code["+response.status+"]");  
-                checkResult = 0;
-                return checkResult;
+                return response;
               });
           },
           /* ADD AN USER */
@@ -92,18 +113,16 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
               console.log(userData2Add);
               return $http.post(serverHost+serverBackend+"User/", userData2Add, serverHeaders)
                 .then(function mySucess(response, status, data) {
-                  checkResult = 1;
-                  return checkResult;
+                  return response;
               },function myError(response, error) { 
                 console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
-                checkResult = 0;
                 return checkResult;
               });
           },
           /* LOGIN SERVICE */
           letLogin: function(jsonLogin) {
             var jsonUser=jsonLogin.user.fullNameUser;
-              //console.log("Login con el email: "+jsonUser);
+              console.log(jsonLogin);
               return $http.post(serverHost+serverBackend+"User/auth",jsonLogin, serverHeaders)
                 .then(function mySucess(response, status) {
                   rsJSON=response.data.response;
@@ -140,39 +159,43 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                         $timeout(function() {
                             var jsonTokenUser = tokenSystem.getTokenStorage(2);
                             console.log('Login Successfully', jsonTokenUser.emailUser);
+                            
                         }, 1500);
                         loginResult = 1;
                         return loginResult;
                       }
                       break;
-
                       case 203:
                         //tokenSystem.temporalStorage(rsJSON);
                         var jsonTokenUser = tokenSystem.getTokenStorage(3);
                         console.log('<<<Incorrect Password>>>');
                         console.log("Error: " + response.data.error);
-                          var attempsTkn=!JSON.parse(localStorage.getItem("attempsToken"))? false :JSON.parse(localStorage.getItem("attempsToken"));
-                          if(attempsTkn==false || attempsTkn==undefined){
-                              attempsToken['attempsCount']=0;
-                              attempsToken['attempsCount']++;
-                              attempsToken['emailAttempted']=jsonUser;
-                          }else if(jsonUser!==attempsTkn.emailAttempted) {
-                              localStorage.removeItem("attempsToken");
-                              attempsToken['attempsCount']=0;
-                              attempsToken['attempsCount']++;
-                              attempsToken['emailAttempted']=jsonUser;
+                          var rsTmpUser = tokenSystem.getTokenStorage(3);
+                          if (rsTmpUser.idStatusKf=='1' && rsTmpUser.isConfirmatedMail=='1'){
+                            var attempsTkn=!JSON.parse(localStorage.getItem("attempsToken"))? false :JSON.parse(localStorage.getItem("attempsToken"));
+                            if(attempsTkn==false || attempsTkn==undefined){
+                                attempsToken['attempsCount']=0;
+                                attempsToken['attempsCount']++;
+                                attempsToken['emailAttempted']=jsonUser;
+                            }else if(jsonUser!==attempsTkn.emailAttempted) {
+                                localStorage.removeItem("attempsToken");
+                                attempsToken['attempsCount']=0;
+                                attempsToken['attempsCount']++;
+                                attempsToken['emailAttempted']=jsonUser;
+                            }else{
+                                attempsToken['attempsCount']=attempsTkn.attempsCount+1;
+                                attempsToken['emailAttempted']=attempsTkn.emailAttempted;
+                            }  
+                            localStorage.setItem("attempsToken", JSON.stringify(attempsToken));
+                            loginResult = 5;
                           }else{
-                              attempsToken['attempsCount']=attempsTkn.attempsCount+1;
-                              attempsToken['emailAttempted']=attempsTkn.emailAttempted;
-                          }  
-                        localStorage.setItem("attempsToken", JSON.stringify(attempsToken));
-                        loginResult = 5;
+                            loginResult = 6;
+                          }
                         return loginResult;
                       break;
                       default:
                     }
                 },function myError(response) {
-                  alert(status);
                     if(response.status == 404){
                       console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
                       /*inform.add(response.data.error,{
@@ -188,73 +211,22 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                 })   
           },
           /*/LOGIN SERVICE*/
-          approveDepto: function(idDepto) {
-            //console.log(serverHeaders);
-              console.log("[Service][approveDepto]---> idDepto: "+idDepto);
-              return $http({
-                    method : "GET",
-                    url : serverHost+serverBackend+"Department/aprobated/"+idDepto
-                  }).then(function mySuccess(response) {
-                      console.log("[Service][approveDepto]---> idDepto: "+idDepto+" (Successfully Approved)");
-                      return response;
-
-                  },function myError(response, error) { 
-                      console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
-                      return response;
-                  });
-          },
-          approveOwnerDepto: function(idDepto) {
-            //console.log(serverHeaders);
-              console.log("[Service][approveOwnerDepto]---> idDepto: "+idDepto);
-              return $http({
-                    method : "GET",
-                    url : serverHost+serverBackend+"Department/aprobated/"+idDepto
-                  }).then(function mySuccess(response) {
-                      console.log("[Service][approveOwnerDepto]---> idDepto: "+idDepto+" (Successfully Approved)");
-                      return response;
-
-                  },function myError(response, error) { 
-                      console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
-                      return response;
-                  });
-          },
-          approveTenantDepto: function(idUser, idStatus) {
-            //console.log(serverHeaders);
-              console.log("[Service][approveTenantDepto]---> idDepto: "+idUser+' / idStatus: '+idStatus);
-              return $http({
-                    method : "GET",
-                    url: serverHost+serverBackend+"Department/deptoTenantStatus/"+idUser+"/"+idStatus
-                  }).then(function mySuccess(response) {
-                      console.log("[Service][approveTenantDepto]---> idDepto: "+idUser+" (Successfully Approved)");
-                      return response;
-
-                  },function myError(response, error) { 
-                      console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
-                      return response;
-                  });
-          },
-          assignDepto: function(userData2Assign) {
-              console.log("[Service][assignDepto]---> Department to Assign: "+userData2Assign.department.idDepartment);
-              return $http.post(serverHost+serverBackend+"Department/update",userData2Assign, serverHeaders)
-                .then(function mySucess(response) {
-                  console.log("[Service][assignDepto]---> Department N°: "+userData2Assign.department.idDepartment+" (Successfully Assigned)");
+          /* UPDATE LOGGED USER DATA SERVICE */
+          updateLoggedUserData: function(idUser) {
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"User/index/"+idUser
+                }).then(function mySuccess(response) {
+                  
+                  tokenSystem.destroyTokenStorage(5);
+                  tokenSystem.setTokenStorage(true, response.data, response.data.modules);
                   return response;
-              },function myError(response) { 
-                  console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
-                  return response
-              });
+                }).catch(function onError(response) {
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
           },
-          removeTenantDepto: function(userData2Remove) {
-              console.log("[Service][removeTenantDepto]---> Department to remove: "+userData2Remove.department.idDepartment);
-              return $http.post(serverHost+serverBackend+"Department/removeTenant",userData2Remove, serverHeaders)
-                .then(function mySucess(response) {
-                  console.log("[Service][removeTenantDepto]---> Department N°: "+userData2Remove.department.idDepartment+" (Successfully removed)");
-                  return response;
-              },function myError(response) { 
-                  console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
-                  return response
-              });
-          },
+          /*/LOGIN SERVICE*/
           /*GET OFFICES BY COMPANY ID*/
           officeList: function(idCompany) {
               var rsData = {};
@@ -267,7 +239,7 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                       //console.log(rsData);
                       return rsData;
 
-                  },function myError(response, error) { 
+                  }).catch(function onError(response) {
                       console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
                       return response;
                   });
@@ -304,20 +276,31 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                   });
           },
           /*/GET THE TENANT WITHOUT DEPT AND OWNER WITH OR WITHOUT DEPT*/
-          usersWithoutDepto: function(idDepto) {
+          userListToAssing: function(idDepto) {
               console.log("[Service][usersWithoutDepto]---> idDeparment: "+idDepto);
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"user/usernoregister/"+idDepto
                   }).then(function mySuccess(response) {
-                      response = response.data;
                       return response;
-
                   },function myError(response, error) { 
                       console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
                       return response;
                   });
           },
+          /*/GET THE TENANT WITHOUT DEPT AND OWNER WITH OR WITHOUT DEPT*/
+          attendantsListToAssing: function() {
+            console.log("[Service][attendantsWithoutAddressAssigned]");
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"user/attendantWithNobuildingAssigned/"
+                }).then(function onSuccess(response) {
+                  return response;
+                }).catch(function onError(response) {
+                  console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                  return response;
+                });
+         },
           /*GET USER LIST BY GROUP*/
           userLists: function() {
               var rsData = {};
@@ -335,5 +318,115 @@ moduleUserServices.service("userServices", ['$http', 'tokenSystem', '$timeout', 
                       return response;
                   });
           },
+          /*GET ATTENDANT LIST BY ADDRESS*/
+          attendantList: function(idAddress) {
+              var rsData = {};
+              console.log("[Service][Getting]--->[attendants] by Address "+idAddress);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"User/attendantByIdDirecction/"+idAddress
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                      console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                      return response;
+                  });
+          },
+          /*GET ATTENDANT LIST ONLY BY ADDRESS*/
+          attendantsOnlyList: function(idAddress) {
+              var rsData = {};
+              console.log("[Service][Getting]--->[attendants] by Address "+idAddress);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"User/attendantsOnlyByIdDirecction/"+idAddress
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                      console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                      return response;
+                  });
+          },
+          /*CHECK IF THE BUILDING HAVE A TITULAR ATTENDANT ASSOCIATED*/
+          checBuildingTitularAttendant: function(idAddress) {
+            var rsData = {};
+            console.log("[Service][Getting]--->[attendants] by Address "+idAddress);
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"User/chekBuildingTitularAttendant/"+idAddress
+                }).then(function mySuccess(response) {
+                  return response;
+                }).catch(function onError(response) {
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
+          },
+          /*GET FILTER FORM LIST*/
+          filterForm: function() {
+            var rsData = {};
+            console.log("[Service][Getting]--->[filterForm]");
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"User/filterForm/"
+                }).then(function mySuccess(response) {
+                    return response;
+                },function myError(response, error) { 
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
+          },
+          /*ENABLED AN USER*/
+          enabled: function(idUser) {
+            console.log("[Service][id]: "+idUser+" --->[enable]");
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"User/active/"+idUser
+                }).then(function mySuccess(response) {
+                  return response;
+                },function myError(response, error) { 
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
+          },
+          /*DISABLED AN USER*/
+          disabled: function(idUser) {
+            console.log("[Service][user][id]: "+idUser+" --->[disabled]");
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"User/inactive/"+idUser
+                }).then(function mySuccess(response) {
+                  return response;
+                },function myError(response, error) { 
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
+          },
+          /*REMOVE AN USER*/
+          remove: function(idUser) {
+            console.log("[Service][user][id]: "+idUser+" --->[remove]");
+            return $http({
+                  method : "DELETE",
+                  url : serverHost+serverBackend+"User/delete/"+idUser
+                }).then(function mySuccess(response) {
+                  return response;
+                },function myError(response, error) { 
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
+          },
+          /*GET OFFICES BY COMPANY ID*/
+          getUsersByCompanyClientId: function(idCompany) {
+            var rsData = {};
+            console.log("[Service][userList]---> idCompany: "+idCompany);
+            return $http({
+                  method : "GET",
+                  url : serverHost+serverBackend+"User/getUsersByCompanyClientId/"+idCompany
+                }).then(function mySuccess(response) {
+                    return response;
+
+                }).catch(function onError(response) {
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                    return response;
+                });
+        },
       }
 }]);

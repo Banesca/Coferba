@@ -15,7 +15,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -29,7 +29,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -40,7 +40,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                 .then(function mySucess(response, status) {
                   rsJson=response;
                   return rsJson;
-                },function myError(response) { 
+                }).catch(function onError(response) {
                   console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                   return response;
                 })  
@@ -51,7 +51,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                 .then(function mySucess(response, status) {
                   rsJson=response;
                   return rsJson;
-                },function myError(response) { 
+                }).catch(function onError(response) {
                   console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                   return response;
                 })  
@@ -64,7 +64,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -77,10 +77,22 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
+          },
+          checkZonaByLocationAndCustomerId: function(idClient, idLocation) {
+            //console.log("[Customer Services] => get customer by id: "+sMsg);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Zonas/checkZonaByLocationAndCustomerId/"+idClient+"/"+idLocation
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                    console.log("Error: "+response.data.error); 
+                    return response;
+              })
           },
           categoryDepartament: function() {
             //console.log("[Utilities Services]: Get Department Category ");
@@ -90,11 +102,23 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
-            });   
+            });
           },
+          CategoryKeyChains: function() {
+            //console.log("[Utilities Services]: Get KeyChains Category ");
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"seeds/CategoryKeyChains"
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                    console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
+                    return response;
+            });
+          },          
           typeOfMails: function() {
             //console.log("[Utilities Services]: Get Type of Mails");
               return $http({
@@ -103,7 +127,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -116,7 +140,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -129,7 +153,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response.data;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -142,7 +166,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -155,7 +179,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -168,7 +192,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -181,7 +205,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -194,7 +218,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -207,7 +231,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -220,7 +244,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -233,7 +257,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -246,7 +270,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -260,7 +284,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -274,7 +298,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -288,7 +312,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   
@@ -302,7 +326,7 @@ moduleUtilitiesServices.service("UtilitiesServices", ['$http', 'tokenSystem', '$
                   }).then(function mySuccess(response) {
                     rsJson=response;
                     return rsJson;
-                  },function myError(response) { 
+                  }).catch(function onError(response) {
                     console.log("Method: "+response.config.method+" - Error code["+response.status+"]");
                     return response;
             });   

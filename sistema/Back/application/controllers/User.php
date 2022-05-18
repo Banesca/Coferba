@@ -35,7 +35,7 @@ class User extends REST_Controller {
 
         if (!is_null($user)) {
             if($user == -1){
-                $this->response(array('error' => "Mail ya se encuentra registrado"),203);
+                $this->response(array('error' => "DNI ya se encuentra registrado"),203);
             }else{
                 $this->response(array('response' => "USUARIO SISTEMA AGREGADO "), 200);
             }
@@ -46,9 +46,9 @@ class User extends REST_Controller {
 
 
     /* SERVICIO GET QUE OBTIENE TODO LOS USUARIOS REGISTRADOS */
-    public function index_get() {
+    public function index_get($id) {
 
-        $user = $this->user_model->get();
+        $user = $this->user_model->get($id);
         if (!is_null($user)) {
             $this->response($user, 200);
         } else {
@@ -71,6 +71,14 @@ class User extends REST_Controller {
         }
     }
 
+    public function attendantWithNobuildingAssigned_get() {
+        $attendants = $this->user_model->attendantsNotBuildingAssigned();
+        if (!is_null($attendants)) {
+            $this->response($attendants, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
      public function filterForm_get() {
         $filters = $this->user_model->getFilterForm();
 
@@ -158,6 +166,36 @@ class User extends REST_Controller {
         }
     }
 
+    public function attendantsOnlyByIdDirecction_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->user_model->attendantsOnlyByIdDirection($id);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
+    public function chekBuildingTitularAttendant_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = null;
+        $rs = $this->user_model->chekBuildingTitularAttendant($id);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+
     /* SERVICIO GET QUE OBTIENE LOS USUARIOS POR FILTRO */
     public function search_post() {
 
@@ -233,34 +271,34 @@ class User extends REST_Controller {
      /* SERVICIO EDITA UN USUARIOS  */
      public function updateMailSmtp_post() {
         
-                if (!$this->post('mail')) {
-                    $this->response(NULL, 404);
-                }
-        
-                $rs = $this->user_model->updateMailSmtp($this->post('mail'));
-        
-                if (!is_null($rs)) {
-                    $this->response(array('response' => "Mail De envio Configurado"), 200);
-                } else {
-                    $this->response(array('error' => "ERROR INESPERADO"), 500);
-                }
-            }
+        if (!$this->post('mail')) {
+            $this->response(NULL, 404);
+        }
+
+        $rs = $this->user_model->updateMailSmtp($this->post('mail'));
+
+        if (!is_null($rs)) {
+            $this->response(array('response' => "Mail De envio Configurado"), 200);
+        } else {
+            $this->response(array('error' => "ERROR INESPERADO"), 500);
+        }
+    }
 
 
-            public function inactive_get($id) {
-                if (!$id) {
-                    $this->response(NULL, 404);
-                }
-        
-                $user = null;
-                $user = $this->user_model->changueStatus($id, 0);
-        
-                if (!is_null($user)) {
-                    $this->response($user, 200);
-                } else {
-                    $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
-                }
-            }
+    public function inactive_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+
+        $user = null;
+        $user = $this->user_model->changueStatus($id, 0);
+
+        if (!is_null($user)) {
+            $this->response($user, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 
     /* SERVICIO INACTIVA  UN USUARIOS POR ID */
     public function mailsmtp_get() {
@@ -376,7 +414,7 @@ class User extends REST_Controller {
         }
 
         $user = null;
-        $user = $this->user_model->findUserByEmail($this->post('mail'));
+        $user = $this->user_model->findUserByEmail($this->post('mail')['email']);
 
         if (!is_null($user)) {
             $this->response($user, 200);
@@ -403,10 +441,6 @@ empresa
         }
     }
     
-
-    
-
-
     public function getCompany_get() {
         $filters = $this->user_model->getCompany();
 
@@ -421,6 +455,19 @@ empresa
     public function getListOfUsers_get() {
 
         $lists = $this->user_model->getListOfUsers();
+        if (!is_null($lists)) {
+            $this->response($lists, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
+    
+    /* SERVICIO GET QUE OBTIENE TODO LOS USUARIOS ASOCIADOS A UNA ADMINISTRACION/COMPAÑIA*/
+    public function getUsersByCompanyClientId_get($id) {
+        if (!$id) {
+            $this->response(NULL, 404);
+        }
+        $lists = $this->user_model->getUsersByCompanyClientId($id);
         if (!is_null($lists)) {
             $this->response($lists, 200);
         } else {

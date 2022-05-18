@@ -47,14 +47,16 @@
 										<option class="text-uppercase" value="2V"> 2V</option>
 										<option class="text-uppercase" value="1NC/APP"> 1NC/APP</option>
 										<option class="text-uppercase" value="4NC"> 4NC</option>
-										<option class="text-uppercase" value="4/1PNC"> 4/1PNC</option>
+										<option class="text-uppercase" value="5NC"> 5NC</option>
+										<option class="text-uppercase" value="6NC"> 6NC</option>
+										<!--<option class="text-uppercase" value="4/1PNC"> 4/1PNC</option>
 										<option class="text-uppercase" value="4/1NC"> 4/1NC</option>
 										<option class="text-uppercase" value="4/2PNC"> 4/2PNC</option>
 										<option class="text-uppercase" value="4/3NC"> 4/3NC</option>
 										<option class="text-uppercase" value="4/3PNC"> 4/3PNC</option>
 										<option class="text-uppercase" value="5/2NC"> 5/2NC</option>
 										<option class="text-uppercase" value="5/3NC"> 5/3NC</option>
-										<option class="text-uppercase" value="5/4NC"> 5/4NC</option>
+										<option class="text-uppercase" value="5/4NC"> 5/4NC</option>-->
 										<option class="text-uppercase" value="2NM"> 2NM</option>
 										<option class="text-uppercase" value="2NM/APP"> 2NM/APP</option>
 										<option class="text-uppercase" value="1NM"> 1NM</option>
@@ -64,10 +66,9 @@
 										<option class="text-uppercase" value="AN-APP"> AN-APP</option>
 										<option class="text-uppercase" value="AN-LTE"> AN-LTE</option>
 							    </select>
-							    								  				
 							  	<input style="width: 25%" id="dateCodeDigits" name="dateCodeDigits" autofocus="true" class="form-control input--date-number" ng-pattern="pattOnlyNumbersX6" ng-keydown="fnLoadPhoneMask()" ng-model="contract.new.dateCodeDigits" ng-required="true" type="text" autofocus/>
 						  </div>
-						</div>																		
+						</div>
 					</div>
 					<!-- Contract Type-->
 					<!--ng-options="item.idDepartment as item.departmentFloor for item in ListDpto"-->
@@ -89,8 +90,8 @@
 							    </select>
 						    </div>
 					  	</div>
-					</div>					
-					<!-- Maintenance Type-->
+					</div>
+					<!-- Maintenance -->
 					<!--ng-options="item.idDepartment as item.departmentFloor for item in ListDpto"-->
 					<div class="form-group col-md-6" ng-class="
 								{	'has-success': 
@@ -110,13 +111,13 @@
 							    </select>
 						    </div>
 					  	</div>
-					</div>					
+					</div>
 					<!-- SERVICES -->
 					<div class="form-group form-inline col-md-12">
 					    <label style="padding-left: 15px;">Servicios
 					    	<button style="margin-left: 120px;" data-toggle="tooltip" data-placement="right" title="Agregar servicio" ng-click="switchCustomersFn('contract', contract.new, 'assign_contract_new_service');" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Agregar</button>
 							<!--<button style="margin-left: 120px;" data-toggle="tooltip" data-placement="right" title="Agregar servicio test" ng-click="switchCustomersFn('services', customerFound, 'new_service');" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Servicio Test</button>-->
-					    </label>									
+					    </label>
 					</div>
 					<div class="form-group col-md-12" style="padding:10px 10px 0px 10px;">
 						<div ng-if="list_services_tmp.length>=1" ng-repeat="srvs in list_services_tmp" class="col-md-6" style="margin:5px 0px 25px 0px;">
@@ -172,11 +173,11 @@
 							              	</td>
 								          	<td style="padding-bottom: 5px; width: 10%; cursor: pointer;">
 								            	<button ng-disabled="item.used>=1 || srvs.items_available==0 || srvs.cameras_available==0" data-toggle="tooltip" data-placement="right" title="Remover" ng-click="removeServiceItemFn(srvs, item)" class="btn btn-xs btn-danger"><i class="fas fa-minus-circle"></i></button>
-								          	</td>							              	
-							            </tr>							            
-							        </table>									
+								          	</td>
+							            </tr>
+							        </table>
 								<!--</div>-->
-					    	</div>							
+					    	</div>
 						</div>
 					  	<div ng-if="list_services_tmp.length==0" class="col-md-6 col-md-offset-3 text-uppercase banner-no-rows banner-no-rows-padding-1 banner-no-rows-warning"><h5><i class="fas fa-exclamation-triangle"> </i> No hay servicios creados</h5></div>                                
 					</div>

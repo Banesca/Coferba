@@ -37,7 +37,7 @@
 											  <span class="input-group-addon"><i class="fas fa-file-invoice"></i></span>
 											  <input  name="ridClientAssociated_SE" autofocus="true" placeholder="numero de cliente" class="form-control" ng-model="customer.new.idClientAssociated_SE" ng-blur="enabledNextBtn();"  type="text" autofocus/>
 										  </div>
-								</div>								
+								</div>
 									<!--<div style="margin-top: 2em;" class="form-group form-inline col-md-6" ng-if="(customer.new.idClientTypeFk==4 || customer.new.idClientTypeFk==5) && customer.new.idClientTypeFk!='' && customer.new.typeInmueble==1">
 										<table>
 											<tr>
@@ -54,14 +54,14 @@
 										</table>
 
 								  		<input id="radiobuttonBuilding" type="checbox" name="radiobuttonBuilding" class="radio-customers" ng-model="customer.new.isNotCliente" required autofocus>										  
-								  	</div>-->								  	
-								</div>									
+								  	</div>-->
+								</div>
 								<!-- Customer Basic Inputs -->
 								<div ng-if="customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined" ng-include="'views/customer/new/components/comp_customerBasicInputs.html'"></div>	
 								<!-- Address list-->
 								<div ng-if="customer.new.idClientTypeFk!='' && customer.new.idClientTypeFk!=undefined && customer.new.idClientTypeFk!='5'" ng-include="'views/customer/new/components/comp_addressInputs.html'"></div>
 								<!-- DIRECCIONES DE UN PARTICULAR -->
-								<div ng-if="customer.new.idClientTypeFk==5" ng-include="'views/customer/new/components/comp_particularAddress.html'"></div>		
+								<div ng-if="customer.new.idClientTypeFk==5" ng-include="'views/customer/new/components/comp_particularAddress.html'"></div>
 								<!-- Administration list-->
 				                <div ng-include="'views/customer/new/components/comp_companiesList.html'"></div>
 								<!-- Zone -->
@@ -94,20 +94,20 @@
 								  	<br>
 										<div ng-if="emailFound && customer.new.mail && msgTimer && mailCustomer" class="alert alert-warning" role="alert">
 						            		<strong><i class="fas fa-exclamation-circle">&nbsp </i>INFO: </strong><br>correo registrado en el usuario, <strong>{{mailFoundNameUser}}</strong>.
-						        		</div>					
-								</div>-->																	
+						        		</div>
+								</div>-->
 							</div>		
 						</fieldset>
 						<fieldset class="animate-switch" ng-init="enabledNextBtn();" ng-switch-when="PASO 2">
 							<!-- Left Colunm -->
-							<div class="col-md-6" ng-if="customer.new.idClientTypeFk!=5">		
+							<div class="col-md-6" ng-if="customer.new.idClientTypeFk!=5">
 								<!-- Mails -->
 								<div ng-include="'views/customer/new/components/comp_customerMails.html'"></div>
-								<!-- Phones List -->								
+								<!-- Phones List -->
 					            <div class="form-group form-inline col-md-12" ng-include="'views/customer/new/components/comp_phonesList.html'">
 					            </div>		
 								<!-- allowed users -->
-								<div ng-include="'views/customer/new/components/comp_allowedUserList.html'"></div>					
+								<div ng-include="'views/customer/new/components/comp_allowedUserList.html'"></div>
 							</div>
 							<!-- Right Colunm -->
 							<div ng-class="{'col-md-6':customer.new.idClientTypeFk!=5, 'col-md-6 col-md-offset-3': customer.new.idClientTypeFk==5 }">
@@ -116,22 +116,22 @@
 								<!-- PAYMENT FIELDS -->
 								<div ng-if="customer.new.idClientTypeFk==5" ng-include="'views/customer/new/components/comp_paymentInputsFields.html'">
 								</div>
-							</div>								
+							</div>
 						</fieldset>
 						<fieldset  class="animate-switch" ng-init="enabledNextBtn();" ng-switch-when="DEPARTAMENTOS">
 							<div class="col-md-12">
-								<!-- DEPARTMENTS -->						
+								<!-- DEPARTMENTS -->
 					            <div ng-if="customer.new.idClientTypeFk==2" class="col-md-12 n-padding-l n-padding-r" style="padding-right: 0px;" ng-include="'views/customer/new/components/comp_departmentList.html'">				                
-					            </div>								
+					            </div>
 							</div>
-						</fieldset>							
-						<fieldset ng-switch-when="FINALIZAR">
+						</fieldset>
+						<fieldset class="animate-switch" ng-switch-when="FINALIZAR">
 							<div class="col-md-6 col-md-offset-3">
 								<!-- PAYMENT FIELDS -->
 								<div ng-if="(customer.new.idClientTypeFk!=5)" ng-include="'views/customer/new/components/comp_paymentInputsFields.html'">
 								</div>
 							</div>
-						</fieldset>					
+						</fieldset>
 					</div>
 				</form>
 				<div class="clearfix"> </div> 
@@ -145,7 +145,7 @@
 	                    		ng-show="!hasNextStep() || (customer.new.idClientTypeFk==5 && stepIndexTmp==1)" 
 	                    		ng-disabled="fNewCustomer.$invalid" 
 	                    		class="btn btn-labeled btn-success">
-	                        Enviar<span class="btn-label-right"><i class="glyphicon glyphicon-send"></i> </span></button>	                        
+	                        Enviar<span class="btn-label-right"><i class="glyphicon glyphicon-send"></i> </span></button>
 	                        <!--enabledNextBtn(); loadFieldsTo2Step();  ng-disabled="formValidated!=true"-->
 	                    <button ng-click="enabledNextBtn(); incrementStep(); loadFieldsTo2Step('new');" ng-disabled="formValidated!=true" ng-if="((customer.new.idClientTypeFk==5 && stepIndexTmp==0) || (customer.new.idClientTypeFk!=5 && btnShow))" class="btn btn-labeled btn-primary">
 	                        Siguiente<span class="btn-label-right"><i class="fas fa-arrow-circle-right"></i></span></button>

@@ -103,8 +103,7 @@ moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem'
             //console.log("[Customer Services] => criterio de busqueda: "+sMsg);
               return $http.post(serverHost+serverBackend+"Clientes/search",sFilter,serverHeaders)
                 .then(function mySucess(response, status) {
-                  rsJson=response.data;
-                  return rsJson;
+                  return response;
                 },function myError(response) { 
                   console.log("Error: "+response.data.error); 
                   return response;
@@ -122,7 +121,7 @@ moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem'
                   console.log("Error: "+response.data.error); 
                   return response;
                 })  
-          },          
+          },
           getCustomersListByCustomerId: function(id) {
             //console.log("[Customer Services] => Listado de clientes asociado a un cliente: "+sMsg);
               return $http({
@@ -147,7 +146,7 @@ moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem'
                   headers: {'Content-Type': undefined}
               }).then(function mySuccess(response) {
                 rsJson=response;
-                return rsJson;                
+                return rsJson;
               },function myError(response) { 
                 console.log("Error: "+response); 
                 return response;
@@ -176,8 +175,8 @@ moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem'
               console.log("Error: "+response); 
               return response;
             })
-          },          
-          deleteUploadedCustomerFile: function(idClientFiles) {     
+          },
+          deleteUploadedCustomerFile: function(idClientFiles) {
             console.log("[Customer Services] => Delete Customer Uploaded File from db");
             return $http.delete(serverHost+serverBackend+"Clientes/deleteCustomerUploadedFile/"+idClientFiles)
               .then(function mySucess(response, status) {
@@ -187,6 +186,73 @@ moduleCustomerServices.service("CustomerServices", ['$http', '$q', 'tokenSystem'
                 console.log("Error: "+response); 
                 return response;
               });
-          },             
+          },
+          generateCustomerSecurityCode: function(id) {
+            //console.log("[Customer Services] => Generando codigo de seguridad del cliente: "+id);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Clientes/segurityCodeCliente/"+id
+                  }).then(function mySuccess(response) {
+                  rsJson=response;
+                  return rsJson;
+                },function myError(response) { 
+                  console.log("Error: "+response.data.error); 
+                  return response;
+                })  
+          },
+          chargeForExpenses: function(userData) {
+            console.log("[Service][chargeForExpenses]---> Customer Configuration Charge for Expenses: ");
+            return $http.post(serverHost+serverBackend+"Clientes/chargeForExpenses",userData, serverHeaders)
+              .then(function mySucess(response) {
+                 return response;
+            }).catch(function onError(response) {
+                console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                 return response;
+            });
+          },
+          autoApproveAll: function(userData) {
+            console.log("[Service][autoApproveAll]---> Customer Auto Approve All: ");
+            return $http.post(serverHost+serverBackend+"Clientes/aprobarPedidoClient",userData, serverHeaders)
+              .then(function mySucess(response) {
+                 return response;
+            }).catch(function onError(response) {
+                console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                 return response;
+            });
+          },
+          autoApproveOwners: function(userData) {
+            console.log("[Service][autoApproveOwners]---> Customer Auto Approve Owners Only: ");
+            return $http.post(serverHost+serverBackend+"Clientes/autoAprobarPedidosOwners",userData, serverHeaders)
+              .then(function mySucess(response) {
+                 return response;
+            }).catch(function onError(response) {
+                console.log("Method: "+response.config.method+" - Error code["+response.status+"]"); 
+                 return response;
+            });
+          },
+          getKeysAssociatedToACustomerService: function(id) {
+            //console.log("[Customer Services] => get customer by id: "+sMsg);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Clientes/keysAssociatedToACustomerService/"+id
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                    console.log("Error: "+response.data.error); 
+                    return response;
+              })
+          },
+          getControlAccessDoorsAssociatedToACustomerServices: function(id) {
+            //console.log("[Customer Services] => get customer by id: "+sMsg);
+              return $http({
+                    method : "GET",
+                    url : serverHost+serverBackend+"Clientes/controlAccessDoorsAssociatedToACustomerServices/"+id
+                  }).then(function mySuccess(response) {
+                    return response;
+                  }).catch(function onError(response) {
+                    console.log("Error: "+response.data.error); 
+                    return response;
+              })
+          },
       }
 }]);

@@ -17,7 +17,7 @@
 			customer.new.idAgentFk!='' && fNewCustomer.Agent.$valid,
 		 	'has-error':  
 			(customer.new.idAgentFk=='' || customer.new.idAgentFk==undefined) && fNewCustomer.Agent.$touched,
-		}" ng-init="getAgentsFn()"> 
+		}" > 
   	<label style="padding-left: 15px;">Agente</label>
 	    <div class="input-group">
     		<span class="input-group-addon"><i class="fas fa-cogs"></i></span>

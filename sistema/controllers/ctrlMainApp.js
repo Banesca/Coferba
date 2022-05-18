@@ -76,32 +76,32 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
       return [];
     };
   });
-  /*moduleMainApp.filter("groupBy",["$parse","$filter",function($parse,$filter){
-    return function(array,groupByField){
-      var result  = [];
-              var prev_item = null;
-              var groupKey = false;
-              var filteredData = $filter('orderBy')(array,groupByField);
-              for(var i=0;i<filteredData.length;i++){
-                groupKey = false;
-                if(prev_item !== null){
-                  if(prev_item[groupByField] !== filteredData[i][groupByField]){
-                    groupKey = true;
+    /*moduleMainApp.filter("groupBy",["$parse","$filter",function($parse,$filter){
+      return function(array,groupByField){
+        var result  = [];
+                var prev_item = null;
+                var groupKey = false;
+                var filteredData = $filter('orderBy')(array,groupByField);
+                for(var i=0;i<filteredData.length;i++){
+                  groupKey = false;
+                  if(prev_item !== null){
+                    if(prev_item[groupByField] !== filteredData[i][groupByField]){
+                      groupKey = true;
+                    }
+                  } else {
+                    groupKey = true;  
                   }
-                } else {
-                  groupKey = true;  
+                  if(groupKey){
+                    filteredData[i]['group_by_key'] =true;  
+                  } else {
+                    filteredData[i]['group_by_key'] =false;  
+                  }
+                  result.push(filteredData[i]);
+                  prev_item = filteredData[i];
                 }
-                if(groupKey){
-                  filteredData[i]['group_by_key'] =true;  
-                } else {
-                  filteredData[i]['group_by_key'] =false;  
-                }
-                result.push(filteredData[i]);
-                prev_item = filteredData[i];
-              }
-              return result;
-    }
-  }]);*/
+                return result;
+      }
+    }]);*/
   moduleMainApp.filter('unique', function () {
 
       return function (items, filterOn) {
@@ -354,7 +354,7 @@ var moduleMainApp = angular.module("module.MainCtrl", ["tokenSystem",
   });
 /*************************************************/
 //Controller.$inject = ['$scope'];
-moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document, $scope, $interval, Lightbox, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, UtilitiesServices, PagerService, $cookies){
+moduleMainApp.controller('MainAppCtrl',  function($route, $scope, Lightbox, $sce, $location, $anchorScroll, $filter, $http, blockUI, $timeout, inform, inputService, userServices, serviceServices, ProfileServices, ProductsServices, ticketServices, addressServices, tokenSystem, mailServices, CustomerServices, ContractServices, serverHost, serverBackend, $window, UtilitiesServices, PagerService, $cookies){
     /**************************************************************/
       $scope.redirectSuccessfull = false;
       $scope.locationHref=window.location.href;
@@ -433,124 +433,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
           userServices.letLogin().then(function(data){
 
           });
-        }
-        // Timeout timer value
-        $scope.TimeOutTimeValue   = 900000;//900000; //15 min
-        $scope.IntervalTimerValue   = (20/100)*$scope.TimeOutTimeValue;
-        $scope.intervalCountDown = 0;
-        $scope.timeOutCountDown  = 0;
-        $scope.counterTimeDown   = 0;
-        var timeOutCounter;
-        var intervalCounter;
-        var TimeOut_Thread;
-        console.log("Inactivity timer: "+($scope.TimeOutTimeValue/1000/60));
-        console.log("User Warning start from the last: "+Math.round(($scope.IntervalTimerValue/1000/60))+" minutes");
-        // Start a timeout
-        $scope.warningTimeOut = function(action){
-          switch (action){
-            case "start_timeout":
-              //Start the no activity timeout of the user
-              $scope.timeOutCountDown  = 0;
-              TimeOut_Thread = $timeout(function(){ timesUp();}, $scope.TimeOutTimeValue);
-              $scope.timeOutCountDown  = ($scope.TimeOutTimeValue/1000);
-              $scope.intervalCountDown = ($scope.IntervalTimerValue/1000);
-
-              timeOutCounter = $interval( function(){
-                $scope.timeOutCountDown--;
-                if ($scope.timeOutCountDown == $scope.intervalCountDown) {
-                  $interval.cancel(timeOutCounter);
-                  $timeout.cancel(TimeOut_Thread);
-                  $scope.warningTimeOut("start_interval");
-                }else{
-                  var ms = $scope.timeOutCountDown;
-                  var d = new Date(1000*Math.round(ms)); // round to nearest second
-                  function pad(i) { return ('0'+i).slice(-2); }
-                  $scope.counterTimeOutDown = d.getUTCHours() + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
-                  console.clear();
-                  console.log($scope.counterTimeOutDown);
-                }
-              }, 1000);
-            break;
-            case "start_interval":
-              $scope.showTimeOutWarning = true;
-              $scope.intervalCountDown = ($scope.IntervalTimerValue/1000);
-              //Start the user Warning
-              intervalCounter = $interval( function(){
-                //console.log($scope.intervalCountDown);
-                var ms = $scope.intervalCountDown;
-                var d = new Date(1000*Math.round(ms)); // round to nearest second
-                function pad(i) { return ('0'+i).slice(-2); }
-                $scope.counterTimeDown = d.getUTCHours() + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
-                $scope.mess2show="La sesión finalizara en "+$scope.counterTimeDown+" minutos.     Desea mantener la sesión activa, Confirmar?";
-                if ($scope.intervalCountDown == 0) {
-                  timesUp();
-                }else if($scope.timeOutCountDown == $scope.intervalCountDown){
-                  $timeout(function() {
-                    console.log("La sesión finalizara en "+$scope.counterTimeDown+" minutos.");
-                    console.log("============================================================================")
-                    //console.log(obj);
-                    $('#sessionExpiredModal').modal({backdrop: 'static', keyboard: false});
-                    $('#sessionExpiredModal').on('shown.bs.modal', function () {
-                      $scope.showTimeOutWarning = true;
-                      $scope.mess2show="La sesión finalizara en "+$scope.counterTimeDown+" minutos.     Desea mantener la sesión activa, Confirmar?";
-                    });
-                    inform.add('Su sesión expirara pronto.' ,{
-                      ttl:8000, type: 'warning'
-                    });
-                  }, 0);
-                }
-                $scope.intervalCountDown--;
-              }, 1000);
-            break;
-            case "stop_timeout":
-              $scope.showTimeOutWarning = false;
-              $timeout.cancel(TimeOut_Thread);
-              $interval.cancel(timeOutCounter);
-              $scope.warningTimeOut("start_timeout");
-            break;
-            case "stop_interval":
-              $scope.showTimeOutWarning = false;
-              $('#sessionExpiredModal').modal('hide');
-              $interval.cancel(intervalCounter);
-              $scope.warningTimeOut("start_timeout");
-            break;
-            case "close_session":
-              $('#sessionExpiredModal').modal('hide');
-              blockUI.start('Cerrando session...');
-              $timeout(function() {
-                timesUp();
-                blockUI.stop();
-              }, 3000);
-            break;
-          }
-        }
-        //Actions in case of the timeout is up.
-        function timesUp(){
-            console.log('Logout');
-            localStorage.clear();
-            location.href = "/login";
-        }
-        function NoActivityTimeOut_Resetter(e){
-            //console.log(e.type);
-            /// Stop the reset the timeout timer
-            if (!$scope.showTimeOutWarning){
-              console.log("Timer count down resetted");
-              $scope.warningTimeOut("stop_timeout");
-            }
-        }
-        $scope.timeOutFn = function(){
-          var currentLocation = $location.path();
-          if (currentLocation!="/login" && currentLocation!="/register" && currentLocation!="/forgotpwd" &&  currentLocation!="/newpwd"){
-              console.log('starting session timer');
-              $scope.warningTimeOut("start_timeout");
-              //Get the inputs Events of mouse/keyboard to check the activity.
-              var bodyElement = angular.element($document);
-              angular.forEach(['keydown', 'keyup', 'click', 'mousemove', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'scroll', 'focus'], 
-              function(EventName) {
-                  bodyElement.bind(EventName, function (e) { NoActivityTimeOut_Resetter(e) });  
-              });              
-          }
-        };$scope.timeOutFn();
+        }  
     /**************************************************
     *                                                 *
     *          COLLAPSE / EXPAND TABLE ROWS           *
@@ -570,7 +453,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
         $scope.vIndex=null;
         $scope.selectTableRow = function (value, idItem, opt) {
           $scope.vIndex = value;
-          $scope.idDeptoKf = idItem;           
+          $scope.idDeptoKf = idItem;
           console.log("[selectTableRow]->idItem: "+idItem);
             if ($scope.dayDataCollapse === 'undefined') {
                 $scope.dayDataCollapse = $scope.dayDataCollapseFn();
@@ -1940,19 +1823,19 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
     **************************************************/
       $scope.approveOwnerDepto = function (idDepto) {
         userServices.approveOwnerDepto(idDepto).then(function(data) {
-                  $scope.approveDeptoResult= data;
-                  if($scope.approveDeptoResult){
-                    inform.add('Propietario autorizado satisfactoriamente.',{
-                                ttl:5000, type: 'success'
-                    });
-                    $scope.listUserDepto(1,$scope.selectIdAddressKf.selected.idAdress);
-                    $scope.searchTenant('listTenant', idDepto);
-                  }else{
-                    inform.add('Contacte con la administracion del consorcio.',{
-                      ttl:6000, type: 'danger'
-                    });
-                  }
-                });
+          $scope.approveDeptoResult= data;
+          if($scope.approveDeptoResult){
+            inform.add('Propietario autorizado satisfactoriamente.',{
+                        ttl:5000, type: 'success'
+            });
+            $scope.listUserDepto(1,$scope.selectIdAddressKf.selected.idAdress);
+            $scope.searchTenant('listTenant', idDepto);
+          }else{
+            inform.add('Contacte con la administracion del consorcio.',{
+              ttl:6000, type: 'danger'
+            });
+          }
+        });
        };
 
     /**************************************************
@@ -2155,7 +2038,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                          });          
                     }
             });
-        }
+      }
 
 
     /**************************************************
@@ -3839,7 +3722,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     $scope.lisTenantByType($scope.select.idDepartmentKf,$scope.typeTenant);
                   }
                 break;
-                /*case "depto":
+                  /*case "depto":
                   if ($scope.sessionidProfile==3){
                     $scope.typeTenant = 2;
                     $scope.lisTenantByType(idDpto,$scope.typeTenant);
@@ -6551,7 +6434,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                 });
               }
           });
-      }  
+      }
     
     /**************************************************
     *                                                 *
@@ -7360,6 +7243,23 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
               $scope.customerDataFn(cObj, 'updateBuildingAdmin');                    
             }, 1500);         
           break;               
+          case "allowedUsers":
+            $scope.isNewCustomer=false;
+            $scope.isUpdateCustomer=false;
+            $scope.isListCustomer=true;
+            $scope.customerDataFn(cObj,'allowedUsers'); 
+          break;
+          case "allowedUsers_update":
+  
+              $scope.customerDataFn(cObj,'allowedUsers_update'); 
+          break;
+          case "info":
+            $scope.isInfoCustomer=true;
+            $scope.customer.info={};
+            $scope.customer.info.isNotCliente=false;
+            console.log(cObj)
+            $scope.customerDataFn(cObj,'info');
+          break;
         /******************************
         *     CUSTOMERS CONTRACTS     *
         ******************************/ 
@@ -7560,22 +7460,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
               break;
             }
           break;                                      
-        case "allowedUsers":
-          $scope.isNewCustomer=false;
-          $scope.isUpdateCustomer=false;
-          $scope.isListCustomer=true;
-          $scope.customerDataFn(cObj,'allowedUsers'); 
-        break;
-        case "allowedUsers_update":
-
-            $scope.customerDataFn(cObj,'allowedUsers_update'); 
-        break;
-        case "info":
-          $scope.isInfoCustomer=true;
-          $scope.customer.info={};
-          $scope.customer.info.isNotCliente=false;
-          console.log(cObj)
-          $scope.customerDataFn(cObj,'info'); 
+       
         break;        
         default:
       }
@@ -7825,7 +7710,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                             }
                         }
                         var arrProvince  = [];
-                        var arrLocation = [];                              
+                        var arrLocation = [];
                         arrProvince = $scope.getCustomerProvinceNameFromIdFn($scope.customer.update.idProvinceFk);
                         arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.update.idLocationFk, $scope.customer.update.idProvinceFk);
                         $scope.customer.select.main.province.selected = {idProvince: arrProvince[0].idProvince, province: arrProvince[0].province};
@@ -7939,7 +7824,6 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                         //console.log(arrCompany);
                         if (arrCompany.length==1){
                           $scope.customer.select.company.selected= {'idClient':arrCompany[0].idClient, 'businessName':arrCompany[0].businessName}
-                          //console.log($scope.customer.select.company.selected);
                         }
                         //PHONES
                         $scope.list_phone_contact=[];
@@ -8609,7 +8493,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                   var arrProvince  = [];
                   var arrLocation = []; 
                   var subOption = obj.idClientTypeFk;
-                  $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;
+                  $scope.tmpVars.list_schedule_atention=obj.list_schedule_atention;                  
                   $scope.customer.details=obj;
                   $scope.customer.details.billing_information_details=obj.billing_information[0];
                   switch (subOption){
@@ -8618,7 +8502,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                       arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.details.idLocationFk, $scope.customer.details.idProvinceFk);
                       $scope.customer.details.province = arrProvince[0].province;
                       $scope.customer.details.location = arrLocation[0].location;
-                      if($scope.customer.details.idClientDepartamentFk){
+                      if($scope.customer.details.idClientDepartamentFk){                          
                         $scope.customer.update.isNotClient=true;
                         $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.details.idClientDepartamentFk);
                         $timeout(function() {
@@ -8636,9 +8520,8 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     break;
                     case "2": //BUILDING CUSTOMER
                       arrCompany=$scope.getCustomerBusinessNameByIdFn($scope.customer.details.idClientAdminFk);
-                      if (arrCompany.length==1){
-                        $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
-                      }
+                      $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
+                             
                       arrProvince = $scope.getCustomerProvinceNameFromIdFn($scope.customer.details.idProvinceFk);
                       arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.details.idLocationFk, $scope.customer.details.idProvinceFk);
                       $scope.customer.details.province = arrProvince[0].province;
@@ -8709,15 +8592,12 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     break;
                     case "4": //BRANCH CUSTOMER
                       arrCompany=$scope.getCustomerBusinessNameByIdFn($scope.customer.details.idClientCompaniFk);
-                      $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
-                      if (arrCompany.length==1){
-                        $scope.customer.details.companyBusinessName=arrCompany[0].businessName;
-                      }
+                      $scope.customer.details.companyBusinessName=arrCompany[0].businessName;                             
                       arrProvince = $scope.getCustomerProvinceNameFromIdFn($scope.customer.details.idProvinceFk);
                       arrLocation= $scope.getCustomerLocationNameFromIdFn($scope.customer.details.idLocationFk, $scope.customer.details.idProvinceFk);
                       $scope.customer.details.province = arrProvince[0].province;
                       $scope.customer.details.location = arrLocation[0].location;
-                      if($scope.customer.details.idClientDepartamentFk){
+                      if($scope.customer.details.idClientDepartamentFk){                          
                         $scope.customer.details.isNotClient=true;
                         $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.details.idClientDepartamentFk);
                         $timeout(function() {
@@ -8731,7 +8611,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                        }else{
                         $scope.customer.details.isNotClient=false;
                         $scope.addrrSelected=true;
-                      }
+                      }                      
                     break;
                     case "5": //PARTICULAR CUSTOMER
                     break;
@@ -8761,7 +8641,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                         $scope.list_mails_contact.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
                         $scope.list_mails.push({'idClientMail':obj.list_emails[key].idClientMail, 'idClientFk': obj.list_emails[key].idClientFk, 'mailTag':obj.list_emails[key].mailTag, 'mailContact':obj.list_emails[key].mailContact, 'idTipoDeMailFk': obj.list_emails[key].idTipoDeMailFk, 'status':obj.list_emails[key].status, 'typeName':typeName});
                       }
-                    }
+                    }                  
                     //USERS
                     $scope.list_users       = [];
                     $scope.list_client_user = [];
@@ -8779,7 +8659,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     }
                     //SCHEDULE
                     $scope.list_schedule_details=$scope.list_schedule;
-                    $scope.list_schedule_atention_details=[];
+                    $scope.list_schedule_atention_details=[];                    
                     if (obj.list_schedule_atention.length>0){
                       for (var i = 0; i < $scope.tmpVars.list_schedule_atention.length; i++) {
                           //Load the data to a temp array to handle the schedule
@@ -8799,7 +8679,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     console.log($scope.customer.details);
                     $('#customerModalDetails').modal({backdrop: 'static', keyboard: false});
                     $('#customerModalDetails').on('shown.bs.modal', function () {
-                    });
+                    });                    
                 break;
                 case "details_company": //CUSTOMER Company or Administration
                   var arrProvince  = [];
@@ -8815,7 +8695,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                       $scope.customer.companyDetails.province = arrProvince[0].province;
                       $scope.customer.companyDetails.location = arrLocation[0].location;
                       if($scope.customer.companyDetails.idClientDepartamentFk){                          
-                        $scope.customer.companyDetails.isNotClient=true;
+                        $scope.customer.update.isNotClient=true;
                         $scope.getBuildingsDeptosByDeptoIdFn($scope.customer.companyDetails.idClientDepartamentFk);
                         $timeout(function() {
                           for (var depto in $scope.rsBuildingDepartmentsData){
@@ -8826,7 +8706,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                         blockUI.stop();
                         }, 1000);
                        }else{
-                        $scope.customer.companyDetails.isNotClient=false;
+                        $scope.customer.update.isNotClient=false;
                         $scope.addrrSelected=true;
                       }
                     break;
@@ -9060,13 +8940,13 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                   }, 1500);
                     $('#changeModalAdmin').modal({backdrop: 'static', keyboard: false});
                 break;
-                case "removeLinkedAdminData":
-                  $scope.buildingOldData.list_emails=$scope.customer.buildingSelected.list_emails;
+                case "removeLinkedAdminData":                  
+                  $scope.buildingOldData.list_emails=$scope.customer.buildingSelected.list_emails;                  
                   $scope.buildingOldData.list_phone_contact=$scope.customer.buildingSelected.list_phone_contact;
                   $scope.buildingOldData.list_client_user=$scope.customer.buildingSelected.list_client_user;
                   //EMAILS
                   for (var item1 in $scope.buildingOldData.list_emails){
-                    for (var item2 in $scope.customer.currentAdmin.list_emails){
+                    for (var item2 in $scope.customer.currentAdmin.list_emails){                        
                       console.log("Mail Building: "+$scope.buildingOldData.list_emails[item1].mailContact+" / Mail Administration: "+$scope.customer.currentAdmin.list_emails[item2].mailContact);
                       if ($scope.buildingOldData.list_emails[item1].mailContact==$scope.customer.currentAdmin.list_emails[item2].mailContact && $scope.buildingOldData.list_emails[item1].idTipoDeMailFk==$scope.customer.currentAdmin.list_emails[item2].idTipoDeMailFk){
                         var objItem             = $scope.buildingOldData.list_emails;
@@ -9082,7 +8962,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     for (var item2 in $scope.customer.currentAdmin.list_phone_contact){
                       if ($scope.buildingOldData.list_phone_contact[item1].phoneContact==$scope.customer.currentAdmin.list_phone_contact[item2].phoneContact && $scope.buildingOldData.list_phone_contact[item1].phoneTag==$scope.customer.currentAdmin.list_phone_contact[item2].phoneTag){
                         var objItem             = $scope.buildingOldData.list_phone_contact; 
-                        var arrItem             = objItem.map(function(i){return i.idClientPhoneFk;});
+                        var arrItem             = objItem.map(function(i){return i.idClientPhoneFk;});        
                         var indexItem           = arrItem.indexOf($scope.buildingOldData.list_phone_contact[item1].idClientPhoneFk);
                         $scope.buildingOldData.list_phone_contact.splice(indexItem, 1);
                       }
@@ -9093,7 +8973,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                     for (var item2 in $scope.customer.currentAdmin.list_client_user){
                       if ($scope.buildingOldData.list_client_user[item1].idUserFk==$scope.customer.currentAdmin.list_client_user[item2].idUserFk && $scope.buildingOldData.list_client_user[item1].emailUser==$scope.customer.currentAdmin.list_client_user[item2].emailUser){
                         var objItem             = $scope.buildingOldData.list_client_user; 
-                        var arrItem             = objItem.map(function(i){return i.idUserFk;});
+                        var arrItem             = objItem.map(function(i){return i.idUserFk;});        
                         var indexItem           = arrItem.indexOf($scope.buildingOldData.list_client_user[item1].idUserFk);
                         $scope.buildingOldData.list_client_user.splice(indexItem, 1);
                       }
@@ -9147,22 +9027,20 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
                 case "updateBuildingAdmin":
                   $('#changeModalAdmin').modal('hide');
                   $timeout(function() {
-                  blockUI.message('Actualizando datos del Edificio '+obj.address);
+                  blockUI.message('Actualizando datos del Edificio '+obj.address);                  
                     $scope.customer.update=obj;
                     $scope.customer.update.list_emails                      = [];
                     $scope.customer.update.list_client_user                 = [];
                     $scope.customer.update.billing_information              = [];
                     $scope.customer.update.billing_information              = $scope.buildingNewData.billing_information;
                     $scope.customer.update.billing_information.nameAddress  = $scope.buildingNewData.billing_information.businessAddress;
-                    $scope.customer.update.isBillingInformationEmpty        = $scope.buildingNewData.billing_information.length==0 || $scope.buildingNewData.billing_information==undefined?1:0;
                     $scope.customer.update.idClientAdminFk                  = $scope.customer.newAdmin.idClient;
                     $scope.customer.update.list_emails                      = $scope.buildingNewData.list_emails;
                     $scope.customer.update.list_client_user                 = $scope.buildingNewData.list_client_user;
                     $scope.customer.update.observationOrderKey              = $scope.buildingNewData.observationOrderKey;
                     $scope.customer.update.observationSericeTecnic          = $scope.buildingNewData.observationSericeTecnic;
                     $scope.customer.update.observationCollection            = $scope.buildingNewData.observationCollection;
-                    $scope.customer.update.observation                      = $scope.buildingNewData.observation;
-
+                    $scope.customer.update.observation                      = $scope.buildingNewData.observation;                    
                     //Send the customer data to the addcustomer service
                     console.log($scope.customer.update);
                   }, 2000); 
@@ -10110,7 +9988,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
             $scope.rsInternetTypesData = data;
             //console.log($scope.rsProfileData);
         });
-      };      
+      };
     /**************************************************
     *                                                 *
     *             GET TYPE OF Property                *
@@ -10122,7 +10000,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
             $scope.rsTypeOfPropertyData = data;
             //console.log($scope.rsProfileData);
         });
-      };       
+      };
     /**************************************************
     *                                                 *
     *                   GET STATES                    *
@@ -10169,7 +10047,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
             $scope.rsLocations_All2 = data;
             //console.log($scope.rsLocations_API_Data);
         });
-      };        
+      };
     
     /**************************************************
     *                                                 *
@@ -16831,7 +16709,7 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
       ************************************/
         $scope.zoneFilter = function(item){
             return $scope.service.sensor.zones.zoneNumber!=item.tamper;
-        }        
+        }
     /********************************************************************************************************************************************
     *                                                                                                                                           *
     *                                                                                                                                           *
@@ -17490,11 +17368,10 @@ moduleMainApp.controller('MainAppCtrl',  function($route, $rootScope, $document,
               $scope.chkBox.modulo[key]=false;
             }
         }
-        $scope.sysUpProfile.Name=$scope.tmpSysModules.name;  
+        $scope.sysUpProfile.Name=$scope.tmpSysModules.name;
         $('#updateSysProfile').modal('show');
         console.log($scope.tmpSysModules.modules);
         //console.log($scope.tmpSysModules.length);
-        $scope.chkBox.modulo.row
         for (var i = 0; i < $scope.tmpSysModules.modules.length; i++) {
           $scope.chkBox.modulo[$scope.tmpSysModules.modules[i].idModule]=true;
         }

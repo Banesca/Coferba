@@ -7,9 +7,9 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
       var checkResult =0;
       return {
           /* GET ALL PRODUCTS OR SEARCH BY ANY CRITERIA */
-          listProducts: function(searchFilter) {
+          list: function(searchFilter) {
             var sFilter=searchFilter;
-            var sMsg=searchFilter==null||searchFilter==undefined?"All":searchFilter;
+            var sMsg=searchFilter=='' || searchFilter==null||searchFilter==undefined?"All":searchFilter;
             console.log("[Products Services] => criterio de busqueda: "+sMsg);
               return $http.post(serverHost+serverBackend+"Product/search",sFilter,serverHeaders)
                 .then(function mySucess(response, status) {
@@ -34,7 +34,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
             });   
           },
           getDiviceOpening: function() {
-            console.log("[Products Services]: Products Classification");
+            console.log("[Products Services]: Products Device Opening");
               return $http({
                     method : "GET",
                     url : serverHost+serverBackend+"Seeds/DiviceOpening/"
@@ -47,7 +47,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
             });   
           },
           /* NEW PRODUCT */
-          newProduct: function(newProduct) {
+          new: function(newProduct) {
             sndJson = newProduct;
             console.log("[Product Services] => New Product ");
             console.log(sndJson);
@@ -63,7 +63,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
                 }); 
           },
           /* NEW PRODUCT */
-          updateProduct: function(updateProduct) {
+          update: function(updateProduct) {
             sndJson = updateProduct;
             console.log("[Product Services] => Update Product ");
             console.log(sndJson);
@@ -78,7 +78,7 @@ moduleProductsServices.service("ProductsServices", ['$http', 'tokenSystem', '$ti
                   return response;
                 }); 
           },
-          deleteProduct: function(id) {
+          delete: function(id) {
             console.log("[Product Services] => Delete Product ");
               return $http({
                     method : "delete",

@@ -42,7 +42,7 @@
                 <span ng-if="customer.details.idClientType=='4'">Empresa: {{customer.details.companyBusinessName}}</span>
                 <button ng-if="customer.details.idClientType=='2'" style="margin-left: 20px; margin-top: -0.5em;" ng-disabled="!customer.details.idClientAdminFk"  ng-click="getCustomersByIdFn('details_company', customer.details.idClientAdminFk, 'show')" class="btn btn-xs btn-success"><i class="fas fa-info-circle"></i> Ver Administraión</button>
                 <button ng-if="customer.details.idClientType=='4'" style="margin-left: 20px; margin-top: -0.5em;" ng-disabled="!customer.details.idClientCompaniFk"  ng-click="getCustomersByIdFn('details_company', customer.details.idClientCompaniFk, 'show')" class="btn btn-xs btn-success"><i class="fas fa-info-circle"></i> Ver Empresa</button>                
-              </div>              
+              </div>
             </div>
             <!-- RIGHT COLUMN -->
             <div class="col-md-6 n-padding-l n-padding-r">
@@ -56,7 +56,9 @@
               <div ng-if="customer.details.idClientType=='1' || customer.details.idClientType=='3'" class="col-md-12">
                 <span>CUIT: {{customer.details.CUIT}}</span>
               </div>
-              <div class="col-md-12"><span>IVA: {{customer.details.billing_information[0].typeTax | uppercase}}</span></div>              
+              <div class="col-md-12"><span>IVA: {{customer.details.billing_information[0].typeTax | uppercase}}</span></div>
+              <div class="col-md-12" ng-if="customer.details.idClientType=='2' && (customer.details.idSecurityCode!=undefined && customer.details.idSecurityCode!=null && customer.details.idSecurityCode!='')"><span>Codigo de seguridad: </span><span class="badge badge-default">{{customer.details.idSecurityCode}}</span></div>
+              <div class="col-md-12" ng-if="customer.details.idClientType=='2' && (customer.details.idSecurityCode==null)"><span>Codigo de seguridad: </span><label  style="cursor: pointer;" data-toggle="tooltip" data-placement="right" title="no asignado" class="badge badge-warning">no asignado</label></div>
               </div>
               <div ng-if="customer.details.idClientType!='5'" class="col-md-12">
                 <span ng-if="customer.details.zona!=null">Zona: {{customer.details.zona.n_zona}} - {{customer.details.zona.descripcion | uppercase}}</span>

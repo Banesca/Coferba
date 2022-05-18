@@ -98,7 +98,7 @@ class Llavero extends REST_Controller
 		}
 		$obj = $this->llavero_model->addVarios2($_FILES);
 		if (is_array($obj)) {
-			$this->response(['response' => "Codigos repetidos", "codigos" => $obj], 200);
+			$this->response(['response' => "Codigos repetidos, se encuentran registrados", "codigos" => $obj], 203);
 		} else {
 			if ($obj == 1) {
 				$this->response(['response' => "Registro exitoso"], 200);
@@ -150,6 +150,17 @@ class Llavero extends REST_Controller
 		}
 	}
 
+	public function findByBuldingId_get($idClientKf)
+	{
+
+		$user = $this->llavero_model->getByBuilding($idClientKf);
+		if (!is_null($user)) {
+			$this->response($user, 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+		}
+	}
+
 	public function findIdDeparment_get($idDepartmenKf)
 	{
 
@@ -183,4 +194,18 @@ class Llavero extends REST_Controller
 			$this->response(array('error' => 'NO HAY RESULTADOS'), 404);
 		}
 	}
+    public function verifyKeysByIdUser_get($idDepto, $idUser) {
+        if (!$idDepto || !$idUser) {
+            $this->response(NULL, 500);
+        }
+
+        $rs = null;
+        $rs = $this->llavero_model->verifyKeysByidUser($idDepto, $idUser);
+
+        if (!is_null($rs)) {
+            $this->response($rs, 200);
+        } else {
+            $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+        }
+    }
 }

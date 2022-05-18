@@ -26,13 +26,12 @@ moduleNewPwd.directive('noSpaces', function() {
     }
   };
 });
-moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI,userServices, inputService, userServices, $timeout, tokenSystem, serverHost, serverHeaders, inform, $window){
+moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI,userServices, inputService, userServices, $timeout, tokenSystem, inform, $window, APP_SYS, APP_REGEX){
 
+  console.log("Bienvenido al sistema de "+APP_SYS.app_name);
+  console.log("Version v"+APP_SYS.version);
   //console.log(serverHeaders)
   $scope.new = {pwd1: '', pwd2:''};
-  $scope.redirectSuccessfull = false;
-  $scope.counT  =5;
-  $scope.redirect ="/login";
   tokenSystem.destroyTokenStorage(2);
   $scope.sysToken      = tokenSystem.getTokenStorage(1);
   $scope.sysLoggedUser = tokenSystem.getTokenStorage(2);
@@ -56,67 +55,83 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   *                 NEW PWD INIT                    *
   *                                                 *
   **************************************************/
-  $scope.sysRequestInit = function(){
-    if (!$scope.new.pwd1 && !$scope.new.pwd2){
-      console.log("Modo cambio de clave activado: "+data2update.user.isEditUser);
-      inform.add('Estimado '+data2update.user.fullNameUser + ', ha iniciado el proceso de cambio de clave.',{
-                ttl:4000, type: 'warning'
-      });
+    $scope.sysRequestInit = function(){
+      if (!$scope.new.pwd1 && !$scope.new.pwd2){
+        console.log("Modo cambio de clave activado: "+data2update.user.isEditUser);
+        inform.add('Estimado '+data2update.user.fullNameUser + ', ha iniciado el proceso de cambio de clave.',{
+                  ttl:4000, type: 'warning'
+        });
+      }
     }
-  }
+    if (!$scope.sysToken && !$scope.sysLoggedUser && $scope.sysRsTmpUser){
+      data2update.user.isEditUser='true';
+      $scope.sysRequestInit();
+    }else{
+      tokenSystem.destroyTokenStorage(2);
+      tokenSystem.destroyTokenStorage(3);
+      $location.path("/");
+    }    
   /**************************************************
   *                                                 *
   *           SEND THE NEW PWD TO UPDATE            *
   *                                                 *
   **************************************************/
 
-  $scope.sysSendPwd2change= function (){
-      userServices.updateUser(data2update).then(function(data){
-        $scope.changePwdResult = data;
-        if($scope.changePwdResult){
-          $scope.redirectSuccessfull = true;
-          $scope.countDownRedirect($scope.redirect, $scope.counT);
+    $scope.sysSendPwd2change= function (){
+        userServices.updateUser(data2update).then(function(response){
+          if(response.status==200){
+            tokenSystem.destroyTokenStorage(4);
+            inform.add('El cambio de contraseña se ha realizado con exito, ya puede acceder al sistema.',{
+              ttl:4000, type: 'warning'
+            });
+            blockUI.message('Su Nueva contraseña fue cambiada con exito!');
+            $timeout(function() {
+              blockUI.stop();
+              $location.path("/login");
+            }, 1500);
+          }else if(response.status==404){
+            inform.add('[Error]: '+response.status+', Ocurrio error verifique los datos e intenta de nuevo o contacta el area de soporte. ',{
+              ttl:5000, type: 'danger'
+              });
+          }else if(response.status==500){
+            inform.add('[Error]: '+response.status+', Ha ocurrido un error en la comunicacion con servidor, contacta el area de soporte. ',{
+              ttl:5000, type: 'danger'
+              });
+          }
+
+        });
+    }
+
+    $scope.sysRequestNewPwd = function () {
+        if ($scope.new.pwd1 == $scope.new.pwd2){
+          data2update.user.passwordUser=$scope.new.pwd2;
+          $scope.sysSendPwd2change();
         }
 
-      });
-  }
+    };
+  /**************************************************/
+    $scope.inputCheckCss = function (obj) {
+        var $this      = $('input[name*='+obj+']');
+        var inputObj   = $this
+        var inputValue = $this.val();
+        inputService.setClass(inputValue, inputObj);
+    }
 
-  $scope.sysRequestNewPwd = function () {
-      if ($scope.new.pwd1 == $scope.new.pwd2){
-        data2update.user.passwordUser=$scope.new.pwd2;
-        $scope.sysSendPwd2change();
-      }
-
-  };
-
-  $scope.inputCheckCss = function (obj) {
-      var $this      = $('input[name*='+obj+']');
-      var inputObj   = $this
-      var inputValue = $this.val();
-      inputService.setClass(inputValue, inputObj);
-  }
-
-  if ($scope.sysToken || $scope.sysLoggedUser || $scope.sysRsTmpUser){
-      data2update.user.isEditUser='true';
-      $scope.sysRequestInit();
-  }else{
-      location.href = "/login";
-  }
   /**************************************************
   *                                                 *
   *             CHECK THE PASSWD STRENG             *
   *                                                 *
   **************************************************/
-  $scope.regexChecker = function(value){
-    if (value!=undefined && value!=''){
-      $scope.regexRules.lowerChar=regexLowerChar.test(value);
-      $scope.regexRules.uperChar=regexUperChar.test(value);
-      $scope.regexRules.numberChar=regexNumberChar.test(value);
-      $scope.regexRules.specialChar=regexSpecialChar.test(value);
-      $scope.regexRules.minChar=regexMinChar.test(value);
-      console.log("regexRules.lowerChar: "+$scope.regexRules.lowerChar);
-    }else{
-      $scope.regexRules = {uperChar:false, lowerChar:false, numberChar:false, specialChar:false, minChar:false }
+    $scope.regexChecker = function(value){
+      if (value!=undefined && value!=''){
+        $scope.regexRules.lowerChar=regexLowerChar.test(value);
+        $scope.regexRules.uperChar=regexUperChar.test(value);
+        $scope.regexRules.numberChar=regexNumberChar.test(value);
+        $scope.regexRules.specialChar=regexSpecialChar.test(value);
+        $scope.regexRules.minChar=regexMinChar.test(value);
+        console.log("regexRules.lowerChar: "+$scope.regexRules.lowerChar);
+      }else{
+        $scope.regexRules = {uperChar:false, lowerChar:false, numberChar:false, specialChar:false, minChar:false }
+      }
     }
-  }
 });

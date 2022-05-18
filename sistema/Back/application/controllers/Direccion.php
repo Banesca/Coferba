@@ -36,18 +36,18 @@ class Direccion extends REST_Controller {
       }
 
 
-//      public function addressListByCompanyid_get($id) {
-//
+      public function addressListByCompanyid_get($id) {
+        
   
-//          $rs = null;
-//          $rs = $this->direccion_model->addressListByCompanyid($id);
+          $rs = null;
+          $rs = $this->direccion_model->addressListByCompanyid($id);
   
-//          if (!is_null($rs)) {
-//              $this->response($rs, 200);
-//          } else {
-//              $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
-//          }
-//      }
+          if (!is_null($rs)) {
+              $this->response($rs, 200);
+          } else {
+              $this->response(array('error' => 'NO HAY RESULTADOS'), 404);
+          }
+      }
       public function getTheAddressBySecurityCode_get($id) {
         
   

@@ -26,7 +26,7 @@ moduleNewPwd.directive('noSpaces', function() {
     }
   };
 });
-moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI,userServices, inputService, userServices, $timeout, tokenSystem, serverHost, serverHeaders, inform, $window){
+moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $http, blockUI,userServices, inputService, userServices, $timeout, tokenSystem, inform, $window, APP_SYS, APP_REGEX){
 
   //console.log(serverHeaders)
   $scope.new = {pwd1: '', pwd2:''};
@@ -71,11 +71,25 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
   **************************************************/
 
   $scope.sysSendPwd2change= function (){
-      userServices.updateUser(data2update).then(function(data){
-        $scope.changePwdResult = data;
-        if($scope.changePwdResult){
-          $scope.redirectSuccessfull = true;
-          $scope.countDownRedirect($scope.redirect, $scope.counT);
+      userServices.updateUser(data2update).then(function(response){
+        if(response.status==200){
+          tokenSystem.destroyTokenStorage(4);
+          inform.add('El cambio de clave se ha realizado con exito, ya puede acceder al sistema.',{
+            ttl:4000, type: 'warning'
+          });
+          blockUI.message('Su Nueva Clave fue cambiada con exito!');
+          $timeout(function() {
+            blockUI.stop();
+            $location.path("/login");
+          }, 1500);
+        }else if(response.status==404){
+          inform.add('[Error]: '+response.status+', Ocurrio error verifique los datos e intenta de nuevo o contacta el area de soporte. ',{
+            ttl:5000, type: 'danger'
+            });
+        }else if(response.status==500){
+          inform.add('[Error]: '+response.status+', Ha ocurrido un error en la comunicacion con servidor, contacta el area de soporte. ',{
+            ttl:5000, type: 'danger'
+            });
         }
 
       });
@@ -100,7 +114,9 @@ moduleNewPwd.controller('NewPwdCtrl', function($scope, $rootScope, $location, $h
       data2update.user.isEditUser='true';
       $scope.sysRequestInit();
   }else{
-      location.href = "#/login";
+      tokenSystem.destroyTokenStorage(2);
+      tokenSystem.destroyTokenStorage(3);
+      $location.path("/login");
   }
   /**************************************************
   *                                                 *

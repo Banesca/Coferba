@@ -44,12 +44,12 @@
 			ng-keydown="$event.keyCode === 13 && getAddressByNameFn(customer.new.nameAddress, customer.select.main.province.selected.idProvinceAPIGobFk,'main')"
 			ng-required="(customer.new.idClientTypeFk==2) || ((customer.new.idClientTypeFk!=2) && !customer.new.isNotClient && customer.new.typeInmueble!='')" />
 			<span data-toggle="tooltip" data-placement="top" title="Buscar" style="cursor: pointer;" ng-click="getAddressByNameFn(customer.new.nameAddress, customer.select.main.province.selected.idProvinceAPIGobFk, 'main');" class="input-group-addon"><i class="fas fa-search-location"></i></span> 
-      	</div>			                  	
+      	</div>
 		<ul class="list-group" ng-if="rsAddress_API_Data_Main.length>0">
 			<li class="list-group-item" ng-repeat="item in rsAddress_API_Data_Main" ng-click="searchAddressByNameFn(item, 'address', 'main')">{{item.calle.nombre}} {{item.altura.valor}}, {{item.provincia.nombre}}</li>
 		</ul>
 	</div>
-	<!-- Type Of Unit -->									
+	<!-- Type Of Unit -->
 	<div class="form-group col-md-12 n-padding-l n-padding-r" ng-if="((customer.new.idClientTypeFk!=2) && !customer.new.isNotClient && customer.new.typeInmueble==1)" ng-class="
 								  			{	'has-success': 
 								  				customer.new.idCategoryDepartamentFk!='' &&
@@ -95,7 +95,7 @@
 	  				allow-typing="^(pb|PB)|^([0-9]|[\d]){1,2}\b$" autofocus >
 	    </div>
 	</div>	
-	<!-- department number for a building that is going to register as a Non-customer -->												
+	<!-- department number for a building that is going to register as a Non-customer -->
 	<div class="form-group col-md-6" ng-if="((customer.new.idClientTypeFk!=2) && !customer.new.isNotClient && customer.new.typeInmueble==1)" ng-class="
 			  			{	'has-success': 
 			  				(customer.new.department.length>=1 && fNewCustomer.nameDepto.$valid),
@@ -157,7 +157,7 @@
         </div>
 	</div>
 	<!-- Address for customer Particular -->
-	<!-- Deparments for customer compnay & Particular -->									
+	<!-- Deparments for customer compnay & Particular -->
 	<div class="form-group col-md-12 n-padding-l n-padding-r" ng-if="(customer.new.idClientTypeFk!=2) && customer.new.isNotClient" ng-class="
 								  			{	'has-success': 
 								  				customer.select.main.department!='' &&
@@ -211,10 +211,10 @@
                         </ui-select-choices>
 	                    <ui-select-no-choice>
 						    No hay resultados, contacte are de soporte.
-					  	</ui-select-no-choice>                        
+					  	</ui-select-no-choice>
                     </ui-select>
         </div>
-    </div>    														
+    </div>
 	<!-- Localidad list-->
     <div class="form-group col-md-12" ng-if="(customer.new.idClientTypeFk==2) || ((customer.new.idClientTypeFk!=2) && !customer.new.isNotClient)" ng-class="
 								  			{	'has-success': 
@@ -240,7 +240,7 @@
                         </ui-select-choices>
 	                    <ui-select-no-choice>
 						    No hay resultados, contacte are de soporte.
-					  	</ui-select-no-choice>                        
+					  	</ui-select-no-choice>
                     </ui-select>
         </div>
     </div>

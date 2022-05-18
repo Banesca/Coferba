@@ -17,7 +17,7 @@
 								 	'has-error':  
 									(service.update.name=='' || service.update.name==undefined) && fCustomerUpdateService.service_name.$touched,
 									'col-md-12':service.idApplicationFk=='1',
-									'col-md-6':service.idApplicationFk!='2',
+									'col-md-6':service.idApplicationFk=='2' || service.idApplicationFk!='1',
 								}">
 						  <label style="padding-left: 15px;">Nombre</label><br>
 							  <div class="col-md-6 col-xs-12" ng-class="{'col-md-6':service.idApplicationFk=='1'}">
@@ -26,7 +26,7 @@
 									<input name="service_name" id="service_name" type="text" class="form-control" ng-model="service.update.name" required="true" />
 							  </div>
 							</div>
-						</div>					
+						</div>
 						<!-- APP_MONITOR: contrato -->
 						<div class="form-group col-md-6 n-padding-l n-padding-r" ng-class="
 									{	'has-success': 
@@ -61,8 +61,8 @@
 									<input name="service_numberCustomer" type="text" class="form-control" ng-model="service.update.sucribeNumber" required="true" />
 							  </div>
 							</div>
-						</div>						
-						<!-- APP_MONITOR: Maintenance Type -->					  
+						</div>
+						<!-- APP_MONITOR: Maintenance Type -->
 						<div class="form-group col-md-6 n-padding-l n-padding-r" >  
 						  	<label style="padding-left: 15px;">Tipo de mantenimiento</label>
 						    <div class="col-xs-12 ">
@@ -71,7 +71,7 @@
 					    			<input name="service_mnt_type" type="text" class="form-control" ng-disabled="true" ng-model="service.update.MntType" />
 					    		</div>
 					    	</div>
-						</div>					
+						</div>
 						<!-- APP_MONITOR: Start_date -->
 						<div class="form-group col-md-6 n-padding-l n-padding-r" ng-class="
 									{	'has-success': 
@@ -156,8 +156,8 @@
 							<div class="input-group col-md-4">
 								<button  ng-click="isCollapsed = !isCollapsed;" class="btn btn-sm btn-warning"><i class="fas fa-plus"></i> Licencias</button>
 							</div>
-						</div>						
-						<!-- Cantidad de nuevas licencias -->						  
+						</div>
+						<!-- Cantidad de nuevas licencias -->
 						<div ng-show="!isCollapsed"  class="form-group col-md-4 col-xs-12" >
 						  	<label style="padding-left: 15px; margin-top: 5px;">Cantidad de nuevas licencias:</label>
 						</div>
@@ -172,7 +172,7 @@
 							    	<span class="input-group-addon"><i class="fas fa-sort-numeric-up-alt"></i></span>
 									<input name="service_numbOfLicences" class="form-control input--number" type="number" min="0" max="999" ng-min="0" ng-max="999" only-number ng-keydown="fnLoadPhoneMask();" ng-model="service.numbOfNewLicence" ng-required="service.numbOfLicenceSet<=0 || list_user_licence.length==0" autofocus>				    			
 					    		</div>
-					    	</div>						
+					    	</div>
 						</div>
 						<div ng-show="!isCollapsed" class="form-group col-md-4  col-xs-6">
 							<div class="input-group">
@@ -199,7 +199,7 @@
 									'label-warning':	service.numbOfLicenceRemains==1,
 									'label-danger':		service.numbOfLicenceRemains==0 }">{{service.numbOfLicenceRemains}}</label>
 								</span>
-							</div>							
+							</div>
 							<div class="col-md-3">
 								<span ng-if="service.numbOfLicenceSet>0 && isCollapsed">
 									<label class="label label-default">Asignadas:&nbsp;</label>&nbsp;
@@ -213,7 +213,7 @@
 						<!-- Licence Assigned to Admin/company -->
 						<div ng-if="list_company_user_licence.length>0" class="form-group col-md-12 n-padding-l n-padding-r">
 							<div class="col-md-12">
-							  	<div class="panel panel-default padding-panel">
+							  	<div class="panel panel-default">
 								    <div class="panel-heading">
 								      <h3 class="panel-title">Licencias Asignadas a la Administración o Encargados </h3>
 								    </div>
@@ -226,7 +226,7 @@
 						<!-- Licence Assigned to Departments -->
 						<div ng-if="list_depto_user_licence.length>0" class="form-group col-md-12 n-padding-l n-padding-r" ng-class="{'margin-top-4em':list_company_user_licence.length>0}">
 							<div class="col-md-12">
-							  	<div class="panel panel-default padding-panel">
+							  	<div class="panel panel-default">
 								    <div class="panel-heading">
 								      	<h3 class="panel-title">
 								      		<div class="col-md-8" style="margin-top: 0.4em;">Licencias en departamentos</div>
@@ -235,7 +235,7 @@
 										    	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 										  		<select name="deparment_registered_list" 
 										  				class="form-control input-sm"
-										  				ng-change="search(service.idDepartmentList, '', true);"
+										  				ng-change="search(service.idDepartmentList, null, null, null, null, null, true);"
 										  				ng-options="item.idDepto as item.Depto for item in rsBuildingDepartmentsData" 
 										  				ng-required="false"
 										  				ng-model="service.idDepartmentList" autofocus >
@@ -248,7 +248,7 @@
 										<div ng-include="'views/services/list/userLicencesListByDepto.html'"></div>
 				                      	<!-- PAGINATION -->
 										<div ng-if="list_depto_user_licence.length>=7" style="text-align: center;" ng-include="'views/pagination/pager-tpl-v2.html'"></div>
-				                      	<!-- //PAGINATION -->								    	
+				                      	<!-- //PAGINATION -->
 									</div>
 								</div>
 							</div>
@@ -261,7 +261,7 @@
 						<div class="form-group col-md-12">
 						  <label class="col-xs-12" >Observaciones Generales</label> 
 								<textarea style="resize: none;" name="ObserGenerales" rows="3" placeholder="indique las Observaciones." class="form-control" ng-model="service.update.observation" ></textarea>							
-						</div>																									
+						</div>
 					</fieldset>
 				</form>
 				<div class="clearfix"> </div> 

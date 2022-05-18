@@ -51,7 +51,7 @@
 		</ul>
 	</div>
 	<!-- Type Of Unit -->									
-	<div class="form-group col-md-12 n-padding-l n-padding-r" ng-if="((customer.update.idClientTypeFk!=2) && !customer.update.isNotClient && customer.update.typeInmueble==1)" ng-class="
+	<div class="form-group col-md-12 n-padding-l n-padding-r" ng-if="((customer.update.idClientTypeFk!='2') && !customer.update.isNotClient && (customer.update.typeInmueble==1 || customer.update.idTipoInmuebleFk=='1'))" ng-class="
 								  			{	'has-success': 
 								  				customer.update.idCategoryDepartamentFk!='' &&
 								  				customer.update.idCategoryDepartamentFk!=undefined &&
@@ -181,10 +181,10 @@
 		    </div>
 	  </div>
 	</div>
-	<div ng-if="((customer.update.idClientTypeFk!=2) && !customer.update.isNotClient && customer.update.typeInmueble==1)" class="form-group col-md-12">
+	<div ng-if="((customer.update.idClientTypeFk!=2) && !customer.update.isNotClient && (customer.update.typeInmueble==1 || customer.update.idTipoInmuebleFk=='1'))" class="form-group col-md-12">
 		<span class="label label-default text-uppercase">Pisos segun Tipo de unidad</span>
 	</div>
-	<div ng-if="((customer.update.idClientTypeFk!=2) && !customer.update.isNotClient && customer.update.typeInmueble==1)" class="form-group col-md-12">				
+	<div ng-if="((customer.update.idClientTypeFk!=2) && !customer.update.isNotClient && (customer.update.typeInmueble==1 || customer.update.idTipoInmuebleFk=='1'))" class="form-group col-md-12">				
 		<span class="label label-warning">CO</span><span class="label label-default">CHERA</span>
 		<span class="label label-warning">LO</span><span class="label label-default">CAL</span>			
 		<span class="label label-warning">BA</span><span class="label label-default">ULERA</span>
