@@ -121,7 +121,6 @@ class Seeds extends REST_Controller {
 		}
 
 		public function TypeInternet_get() {
-
 			$user = $this->seeds_model->getTypeInternet();
 			if (!is_null($user)) {
 				$this->response($user, 200);
