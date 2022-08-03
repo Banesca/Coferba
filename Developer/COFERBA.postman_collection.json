@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "e9d52f30-80c2-4687-9388-413ea781a223",
 		"name": "COFERBA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2586635"
 	},
 	"item": [
 		{
@@ -4093,6 +4094,43 @@
 								"index.php",
 								"Llavero",
 								"findKeychainOnlineAssociate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Llaveros 2",
+			"item": [
+				{
+					"name": "dar de alta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ticket\": {\r\n        \"idTypeRequestFor\":\"1\",\r\n        \"idTypeTicketKf\": \"10\",\r\n        \"idUserMadeBy\": \"12\",\r\n        \"idUserRequestBy\": \"10\",\r\n        \"idBuildingKf\": \"1\",\r\n        \"idDepartmentKf\": \"1\",\r\n        \"keys\": [\r\n            {\r\n                \"idProductKf\": \"1\",\r\n                \"idCategoryKf\": \"1\",\r\n                \"idUserKf\": \"1\",\r\n                \"idDepartmenKf\": \"1\",\r\n                \"isKeyTenantOnly\": \"1\",\r\n                \"idClientKf\": \"1\",\r\n                \"idClientAdminKf\": \"1\"\r\n            }\r\n        ],\r\n        \"idTypeDeliveryKf\": \"1\",\r\n        \"idWhoPickUp\": \"1\",\r\n        \"idUserDelivery\": \"1\",\r\n        \"idDeliveryTo\": \"1\",\r\n        \"idDeliveryAddress\": \"1\",\r\n        \"otherDeliveryAddress\": {\r\n            \"address\": \"1\",\r\n            \"number\": \"1\",\r\n            \"floor\": \"1\",\r\n            \"idProvinceFk\": \"1\",\r\n            \"idLocationFk\": \"1\"\r\n        },\r\n        \"thirdPersonDelivery\": {\r\n            \"fullName\": \"1\",\r\n            \"dni\": \"1\",\r\n            \"movilPhone\": \"1\",\r\n            \"address\": \"1\",\r\n            \"number\": \"1\",\r\n            \"floor\": \"1\",\r\n            \"idProvinceFk\": \"1\",\r\n            \"idLocationFk\": \"1\"\r\n        },\r\n        \"idTypePaymentKf\": \"2\",\r\n        \"sendNotify\": \"2\",\r\n        \"description\": \"2\",\r\n        \"costService\": \"2\",\r\n        \"costKeys\": \"2\",\r\n        \"costDelivery\": \"1\",\r\n        \"total\": \"1\",\r\n        \"urlToken\": \"1\",\r\n        \"autoApproved\": \"1\",\r\n        \"isNew\": \"1\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Ticket/index2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Ticket",
+								"index2"
 							]
 						}
 					},
