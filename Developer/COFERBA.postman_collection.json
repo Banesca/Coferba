@@ -4135,6 +4135,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "dar de baja",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ticket\": {\r\n        \"idTypeTicketKf\": \"5\",\r\n        \"idTypeRequestFor\": \"5\",\r\n        \"idUserMadeBy\": \"5\",\r\n        \"idUserRequestBy\": \"5\",\r\n        \"idBuildingKf\": \"5\",\r\n        \"idDepartmentKf\": \"5\",\r\n        \"keys\": [\r\n            {\r\n                \"idKeychain\": \"5\"\r\n            }\r\n        ],\r\n        \"idTypePaymentKf\": \"5\",\r\n        \"sendNotify\": \"5\",\r\n        \"description\": \"5\",\r\n        \"costService\": \"5\",\r\n        \"costKeys\": \"5\",\r\n        \"costDelivery\": \"5\",\r\n        \"total\": \"5\",\r\n        \"urlToken\": \"5\",\r\n        \"autoApproved\": \"5\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Ticket/index3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Ticket",
+								"index3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

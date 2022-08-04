@@ -39,6 +39,21 @@ class Ticket extends REST_Controller {
                 }
 
     }
+
+	public function index3_post()
+	{
+
+		$rs = $this->ticket_model->add3($this->post('ticket'));
+		if(!is_null($rs))
+		{
+			$this->response(array('response' => $rs),200);
+		}
+		else
+		{
+			$this->response(array('error' => "ERROR INESPERADO"),500);
+		}
+
+	}
     
     /* SERVICIO QUE CANCELA UN TICKET */
     public function cancel_get($id, $idU, $reasonForCancelTicket) {

@@ -9,7 +9,7 @@ class Ticket_model extends CI_Model
 		/*MAIL*/
 		$this->load->model('mail_model');
 	}
-
+	/*Dar de alta*/
 	public function add2($ticket)
 	{
 		$idOtherDeliveryAddress = null;
@@ -38,6 +38,137 @@ class Ticket_model extends CI_Model
 			));
 			$idThirdPersonDelivery = $this->db->insert_id();
 		}
+
+
+		/* CREAMOS UN TICKET */
+		$this->db->insert('tb_tickets_2' , array(
+			'idOtherDeliveryAddressKf' => $idOtherDeliveryAddress ,
+			'idThirdPersonDeliveryKf' => $idThirdPersonDelivery ,
+			'idTypeTicketKf' => @$ticket['idTypeTicketKf'] ,
+			'idTypeRequestFor' => @$ticket['idTypeRequestFor'] ,
+			'idUserMadeBy' => @$ticket['idUserMadeBy'] ,
+			'idUserRequestBy' => @$ticket['idUserRequestBy'] ,
+			'idBuildingKf' => @$ticket['idBuildingKf'] ,
+			'idDepartmentKf' => @$ticket['idDepartmentKf'] ,
+			'idTypeDeliveryKf' => @$ticket['idTypeDeliveryKf'] ,
+			'idWhoPickUp' => @$ticket['idWhoPickUp'] ,
+			'idUserDelivery' => @$ticket['idUserDelivery'] ,
+			'idDeliveryTo' => @$ticket['idDeliveryTo'] ,
+			'idDeliveryAddress' => @$ticket['idDeliveryAddress'] ,
+			'idTypePaymentKf' => @$ticket['idTypePaymentKf'] ,
+			'sendNotify' => @$ticket['sendNotify'] ,
+			'description' => @$ticket['description'] ,
+			'costService' => @$ticket['costService'] ,
+			'costKeys' => @$ticket['costKeys'] ,
+			'costDelivery' => @$ticket['costDelivery'] ,
+			'total' => @$ticket['total'] ,
+			'urlToken' => @$ticket['urlToken'] ,
+			'autoApproved' => @$ticket['autoApproved'] ,
+			'isNew' => @$ticket['isNew'] ,
+
+
+		));
+		if ($this->db->affected_rows()===1){
+			$idTicketKf = $this->db->insert_id();
+			if (count(@$ticket['keys']) > 0)/* CREAMOS la llave */{
+				$now = new DateTime(null , new DateTimeZone('America/Argentina/Buenos_Aires'));
+				foreach ($ticket['keys'] as $key) {
+					$this->db->insert('tb_ticket_keychain' , array(
+						"idTicketKf" => $idTicketKf ,
+//				"idKeychainKf" => @$ticket['keys']['idKeychainKf'] ,
+						"idProductKf" => @$key['idProductKf'] ,
+						"idCategoryKf" => @$key['idCategoryKf'] ,
+						"idUserKf" => @$key['idUserKf'] ,
+						"idDepartmenKf" => @$key['idDepartmenKf'] ,
+						"isKeyTenantOnly" => @$key['isKeyTenantOnly'] ,
+						"idClientKf" => @$key['idClientKf'] ,
+						"idClientAdminKf" => @$key['idClientAdminKf'] ,
+						"created_at" => $now->format('Y-m-d H:i:s')
+					));
+				}
+
+			}
+
+
+//			if (count(@$ticket['list_id_clients']) > 0) //para admnistradores
+//			{
+//				foreach ($ticket['list_id_clients'] as $valor) {
+//					$this->db->insert('tb_clients_tickets' , array(
+//						'idTicketKf' => $idTicketKf ,
+//						'idClientKf' => $valor
+//					));
+//				}
+//			}
+
+
+//			$to = "";
+
+//			$idUser = 0;
+//			if (@$ticket['idUserEnterpriceKf'] > 0){
+//				$idUser = @$ticket['idUserEnterpriceKf'];
+//			}
+
+//			if (@$ticket['idUserEnterpriceKf'] > 0){
+//				$idUser = @$ticket['idUserEnterpriceKf'];
+//			}
+
+//			if (@$ticket['idUserTenantKf'] > 0){
+//				$to['emailUser'] = @$ticket['emailUser'];
+//			}
+
+//			if ($idUser > 0){
+//				$query = $this->db->select(" * ")->from("tb_user")->where("idUser = " , @$idUser)->get();
+//				if ($query->num_rows() > 0){
+//					$to = $query->row_array();
+//				}
+//			}
+
+//			//echo $to['emailUser'];
+
+//			if ($to!=""){
+
+//				/*MAIL*/
+//				$title = "Nuevo Ticket Coferba(" . $codTicket . ")";
+//				$body  = "Tienes un Ticket que fue Recibido por Coferba, pronto Procesaran tu Solicitud!";
+//				$this->mail_model->sendMail($title , $to['emailUser'] , $body);
+
+//			}
+
+			return true;
+		} else {
+			return null;
+		}
+	}
+
+	/*Dar de baja*/
+	public function add3($ticket)
+	{
+		$idOtherDeliveryAddress = null;
+		$idThirdPersonDelivery  = null;
+//		if (count(!isset($ticket['otherDeliveryAddress']) ? [] : $ticket['otherDeliveryAddress']) > 0){
+//			$this->db->insert('tb_ticket_other_delivery_address' , array(
+//				"address" => @$ticket['otherDeliveryAddress']['address'] ,
+//				"number" => @$ticket['otherDeliveryAddress']['number'] ,
+//				"floor" => @$ticket['otherDeliveryAddress']['floor'] ,
+//				"idProvinceFk" => @$ticket['otherDeliveryAddress']['idProvinceFk'] ,
+//				"idLocationFk" => @$ticket['otherDeliveryAddress']['idLocationFk'] ,
+//			));
+//			$idOtherDeliveryAddress = $this->db->insert_id();
+//		}
+//
+//		if (count(!isset($ticket['thirdPersonDelivery']) ? [] : $ticket['thirdPersonDelivery']) > 0){
+//			$this->db->insert('tb_ticket_third_person_delivery' , array(
+//				"fullName" => @$ticket['thirdPersonDelivery']['fullName'] ,
+//				"dni" => @$ticket['thirdPersonDelivery']['dni'] ,
+//				"movilPhone" => @$ticket['thirdPersonDelivery']['movilPhone'] ,
+//				"address" => @$ticket['thirdPersonDelivery']['address'] ,
+//				"number" => @$ticket['thirdPersonDelivery']['number'] ,
+//				"floor" => @$ticket['thirdPersonDelivery']['floor'] ,
+//				"idProvinceFk" => @$ticket['thirdPersonDelivery']['idProvinceFk'] ,
+//				"idLocationFk" => @$ticket['thirdPersonDelivery']['idLocationFk'] ,
+//			));
+//			$idThirdPersonDelivery = $this->db->insert_id();
+//		}
 
 
 		/* CREAMOS UN TICKET */
