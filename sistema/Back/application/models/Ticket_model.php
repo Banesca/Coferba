@@ -217,7 +217,7 @@ class Ticket_model extends CI_Model
 				$this->db->insert('tb_ticket_changes_history' , array(
 					"idUserKf" => @$ticket['history']['idUserKf'] ,
 					"idTicketKf" => $idTicketKf ,
-					"created_at" => $now ,
+					"created_at" => $now->format('Y-m-d H:i:s') ,
 					"descripcion" => @$ticket['history']['descripcion'] ,
 					"idCambiosTicketKf" => @$ticket['history']['idCambiosTicketKf'] ,
 				));
