@@ -30352,22 +30352,6 @@ insert  into `tb_technician_services`(`idServiceTechnician`,`description`,`isPro
 (11,'PRUEBA',1),
 (12,'PRUEBA4',1);
 
-/*Table structure for table `tb_tickec_delivery` */
-
-DROP TABLE IF EXISTS `tb_tickec_delivery`;
-
-CREATE TABLE `tb_tickec_delivery` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-/*Data for the table `tb_tickec_delivery` */
-
-insert  into `tb_tickec_delivery`(`id`,`descripcion`) values 
-(1,'Asociado :: Se entrega en domicilio asociado'),
-(2,'Otro :: Se entrega en otro domicilio que sea especificado.');
-
 /*Table structure for table `tb_ticket_changes_category` */
 
 DROP TABLE IF EXISTS `tb_ticket_changes_category`;
@@ -30376,17 +30360,19 @@ CREATE TABLE `tb_ticket_changes_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_ticket_changes_category` */
 
 insert  into `tb_ticket_changes_category`(`id`,`descripcion`) values 
-(1,'Aprobar'),
-(2,'Cancelar'),
-(3,'Solicitar cancelación'),
-(4,'Cambio de estado'),
-(5,'Cambio en el ticket'),
-(6,'Cambio en delivery');
+(1,'Pedido creado'),
+(2,'Pedido aprobado'),
+(3,'Pedido rechazado'),
+(4,'Pedido cancelado'),
+(5,'Solicitud de cancelación'),
+(6,'Cambio de estado'),
+(7,'Cambio en el pedido'),
+(8,'Cambio en delivery');
 
 /*Table structure for table `tb_ticket_changes_history` */
 
@@ -30400,9 +30386,28 @@ CREATE TABLE `tb_ticket_changes_history` (
   `descripcion` text DEFAULT NULL,
   `idCambiosTicketKf` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_ticket_changes_history` */
+
+insert  into `tb_ticket_changes_history`(`id`,`idUserKf`,`idTicketKf`,`created_at`,`descripcion`,`idCambiosTicketKf`) values 
+(1,1,38,'2022-08-05 22:37:35','asdasd',1);
+
+/*Table structure for table `tb_ticket_delivery` */
+
+DROP TABLE IF EXISTS `tb_ticket_delivery`;
+
+CREATE TABLE `tb_ticket_delivery` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_ticket_delivery` */
+
+insert  into `tb_ticket_delivery`(`id`,`descripcion`) values 
+(1,'Asociado :: Se entrega en domicilio asociado'),
+(2,'Otro :: Se entrega en otro domicilio que sea especificado.');
 
 /*Table structure for table `tb_ticket_keychain` */
 
@@ -30421,9 +30426,21 @@ CREATE TABLE `tb_ticket_keychain` (
   `idClientAdminKf` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_ticket_keychain` */
+
+insert  into `tb_ticket_keychain`(`id`,`idKeychainKf`,`idTicketKf`,`idProductKf`,`idCategoryKf`,`idUserKf`,`idDepartmenKf`,`isKeyTenantOnly`,`idClientKf`,`idClientAdminKf`,`created_at`) values 
+(7,NULL,28,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-04 07:07:03'),
+(8,NULL,29,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-04 07:08:38'),
+(9,NULL,30,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-04 07:09:01'),
+(10,NULL,31,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-04 07:09:52'),
+(11,NULL,32,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-04 07:12:37'),
+(12,NULL,33,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-05 22:34:07'),
+(13,NULL,34,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-05 22:34:24'),
+(14,NULL,35,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-05 22:35:43'),
+(15,NULL,36,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2022-08-05 22:36:08'),
+(16,NULL,38,1,1,1,1,1,1,1,'2022-08-05 22:37:35');
 
 /*Table structure for table `tb_ticket_other_delivery_address` */
 
@@ -30438,9 +30455,13 @@ CREATE TABLE `tb_ticket_other_delivery_address` (
   `idLocationFk` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_ticket_other_delivery_address` */
+
+insert  into `tb_ticket_other_delivery_address`(`id`,`address`,`number`,`floor`,`idProvinceFk`,`idLocationFk`,`created_at`) values 
+(16,'1','1','1',1,1,'2022-08-05 21:37:18'),
+(17,'1','1','1',1,1,'2022-08-05 21:37:35');
 
 /*Table structure for table `tb_ticket_payment_type` */
 
@@ -30475,9 +30496,13 @@ CREATE TABLE `tb_ticket_third_person_delivery` (
   `idLocationFk` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_ticket_third_person_delivery` */
+
+insert  into `tb_ticket_third_person_delivery`(`id`,`fullName`,`dni`,`movilPhone`,`address`,`number`,`floor`,`idProvinceFk`,`idLocationFk`,`created_at`) values 
+(16,'1','1','1','1','1','1',1,1,NULL),
+(17,'1','1','1','1','1','1',1,1,NULL);
 
 /*Table structure for table `tb_tickets` */
 
@@ -30599,9 +30624,22 @@ CREATE TABLE `tb_tickets_2` (
   `idOtherDeliveryAddressKf` int(11) DEFAULT NULL,
   `idThirdPersonDeliveryKf` int(11) DEFAULT NULL,
   PRIMARY KEY (`idTicket`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
 /*Data for the table `tb_tickets_2` */
+
+insert  into `tb_tickets_2`(`idTicket`,`codTicket`,`SA_NRO_ORDER`,`idStatusTicketKfOld`,`idTypeServicesKf`,`idTypeTicketKf`,`idTypeRequestFor`,`idUserMadeBy`,`idUserRequestBy`,`idBuildingKf`,`idDepartmentKf`,`idTypeDeliveryKf`,`idWhoPickUp`,`idUserDelivery`,`idDeliveryTo`,`idDeliveryAddress`,`idTypePaymentKf`,`sendNotify`,`description`,`costService`,`costKeys`,`costDelivery`,`total`,`urlToken`,`autoApproved`,`isNew`,`idOtherDeliveryAddressKf`,`idThirdPersonDeliveryKf`) values 
+(28,NULL,NULL,NULL,NULL,0,0,0,0,0,0,NULL,NULL,NULL,NULL,NULL,0,0,'','','','','','',0,NULL,NULL,NULL),
+(29,NULL,NULL,NULL,NULL,0,0,0,0,0,0,NULL,NULL,NULL,NULL,NULL,0,0,'','','','','','',0,NULL,NULL,NULL),
+(30,NULL,NULL,NULL,NULL,0,0,0,0,0,0,NULL,NULL,NULL,NULL,NULL,0,0,'','','','','','',0,NULL,0,0),
+(31,NULL,NULL,NULL,NULL,0,0,0,0,0,0,NULL,NULL,NULL,NULL,NULL,0,0,'','','','','','',0,NULL,NULL,NULL),
+(32,NULL,NULL,NULL,NULL,5,5,5,5,5,5,NULL,NULL,NULL,NULL,NULL,5,5,'5','5','5','5','5','5',5,NULL,NULL,NULL),
+(33,NULL,NULL,NULL,NULL,5,5,5,5,5,5,NULL,NULL,NULL,NULL,NULL,5,5,'5','5','5','5','5','5',5,NULL,NULL,NULL),
+(34,NULL,NULL,NULL,NULL,5,5,5,5,5,5,NULL,NULL,NULL,NULL,NULL,5,5,'5','5','5','5','5','5',5,NULL,NULL,NULL),
+(35,NULL,NULL,NULL,NULL,5,5,5,5,5,5,NULL,NULL,NULL,NULL,NULL,5,5,'5','5','5','5','5','5',5,NULL,NULL,NULL),
+(36,NULL,NULL,NULL,NULL,5,5,5,5,5,5,NULL,NULL,NULL,NULL,NULL,5,5,'5','5','5','5','5','5',5,NULL,NULL,NULL),
+(37,NULL,NULL,NULL,NULL,10,1,12,10,1,1,1,1,1,1,1,2,2,'2','2','2','1','1','1',1,1,16,16),
+(38,NULL,NULL,NULL,NULL,10,1,12,10,1,1,1,1,1,1,1,2,2,'2','2','2','1','1','1',1,1,17,17);
 
 /*Table structure for table `tb_tipo_conexion_remoto` */
 
