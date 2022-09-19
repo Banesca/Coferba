@@ -176,10 +176,22 @@ class Ticket extends REST_Controller
 	/* SERVICIO GET QUE OBTIENE TODO LOS TIKECT REGISTRADOS */
 	public function all_post()
 	{
-
 		$filiter = $this->post();
 		//print_r($filiter);
 		$rs = $this->ticket_model->get($filiter);
+		if (!is_null($rs)){
+			$this->response(array('response' => $rs) , 200);
+		} else {
+			$this->response(array('error' => 'NO HAY RESULTADOS') , 404);
+		}
+	}
+
+	/* SERVICIO GET QUE OBTIENE TODO LOS TIKECT REGISTRADOS */
+	public function allnew_post()
+	{
+		$filiter = $this->post();
+//		$this->response($filiter , 200);
+		$rs = $this->ticket_model->get_new($filiter);
 		if (!is_null($rs)){
 			$this->response(array('response' => $rs) , 200);
 		} else {

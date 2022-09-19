@@ -1342,6 +1342,83 @@ class Ticket_model extends CI_Model
 		}
 	}
 
+	public function get_new($data)
+	{
+		/* El buscador debe buscar por
+		    "idTypeTicketKf":"",
+			"idClientAdminFk":"",
+			"idBuildingKf":"",
+			"idStatusTicketKf":"",
+			"idTypeDeliveryKf":"",
+			"codTicket":"",
+			"topfilter":"",
+			"idClientCompaniFk":"",
+			"idTypePaymentKf":""
+		*/
+		$quuery = null;
+		$rs     = null;
+
+		$this->db->select("*");
+		$this->db->from("tb_tickets_2");
+		if (@$data['idTypeTicketKf']!=''){
+			$this->db->where("idTypeTicketKf = " , @$data['idTypeTicketKf']);
+		}
+		if (@$data['idBuildingKf']!=''){
+			$this->db->where("idBuildingKf = " , @$data['idBuildingKf']);
+		}
+		if (@$data['idStatusTicketKf']!=''){
+			$this->db->where("idStatusTicketKf = " , @$data['idStatusTicketKf']);
+		}
+		if (@$data['idTypeDeliveryKf']!=''){
+			$this->db->where("idTypeDeliveryKf = " , @$data['idTypeDeliveryKf']);
+		}
+		if (@$data['codTicket']!=''){
+			$this->db->where("codTicket = " , @$data['codTicket']);
+		}
+		if (@$data['idClientCompaniFk']!=''){
+			$this->db->where("
+			(EXISTS
+			(SELECT
+			  *
+			FROM
+			  tb_clients
+			WHERE tb_tickets_2.idUserRequestBy = tb_clients.idClientCompaniFk 
+			AND idClientCompaniFk = " . $data['idClientCompaniFk'] . "))");
+		}
+		if (@$data['idTypePaymentKf']!=''){
+			$this->db->where("idTypePaymentKf = " , @$data['idTypePaymentKf']);
+		}
+		if (@$data['idClientAdminFk']!=''){
+			$this->db->where("
+			(EXISTS
+			(SELECT
+			  *
+			FROM
+			  tb_clients
+			WHERE tb_tickets_2.idUserRequestBy = tb_clients.idClientAdminFk 
+			AND idClientAdminFk = " . $data['idClientAdminFk'] . "))");
+		}
+
+		if (@$data['idClientBranchFk']!=''){
+			$this->db->where("
+			(EXISTS
+			(SELECT
+			  *
+			FROM
+			  tb_clients
+			WHERE tb_tickets_2.idUserRequestBy = ". $data['idClientBranchFk']. "))");
+		}
+		if (@$data['topfilter']!=''){
+			$this->db->limit($data['topfilter']);
+		}
+		$quuery = $this->db->order_by("idTicket" , "DESC")->get();
+
+		if ($quuery->num_rows()){
+			return $this->buscar_relaciones_ticket($quuery->result_array());
+		}
+
+	}
+
 	/* GET TICKET BY ID */
 	public function ticketById($id)
 	{
@@ -1387,6 +1464,14 @@ class Ticket_model extends CI_Model
 			$this->db->select("*")->from("tb_clients");
 			$quuery                 = $this->db->where("idClient = " , $ticket['idBuildingKf'])->get();
 			$todo[$key]['building'] = @$quuery->result_array()[0];
+
+			$this->db->select("*")->from("tb_clients");
+			$quuery                      = $this->db->where("idClientCompaniFk = " , $ticket['idUserRequestBy'])->get();
+			$todo[$key]['clientCompani'] = @$quuery->result_array()[0];
+
+			$this->db->select("*")->from("tb_clients");
+			$quuery                    = $this->db->where("idClientAdminFk = " , $ticket['idUserRequestBy'])->get();
+			$todo[$key]['clientAdmin'] = @$quuery->result_array()[0];
 
 			$this->db->select("*")->from("tb_client_departament");
 			$quuery                   = $this->db->where("idClientDepartament = " , $ticket['idDepartmentKf'])->get();

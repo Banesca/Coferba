@@ -4167,6 +4167,62 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "listar por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Ticket/ticketById/36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Ticket",
+								"ticketById",
+								"36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idTypeTicketKf\": \"\",\r\n    \"idClientAdminFk\": \"\",\r\n    \"idBuildingKf\": \"\",\r\n    \"idStatusTicketKf\": \"\",\r\n    \"idTypeDeliveryKf\": \"\",\r\n    \"codTicket\": \"\",\r\n    \"topfilter\": \"10\",\r\n    \"idClientCompaniFk\": \"\",\r\n    \"idTypePaymentKf:\": \"\",\r\n    \"idClientBranchFk\": \"725\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Coferba/sistema/Back/index.php/Ticket/allnew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Coferba",
+								"sistema",
+								"Back",
+								"index.php",
+								"Ticket",
+								"allnew"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

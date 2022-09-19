@@ -1663,21 +1663,18 @@ class Client_model extends CI_Model {
     }
 
     public function delete($idClient) {
-
         $this->db->set(
             [ 'idStatusFk' => -1 ])->where("idClient", $idClient)->update("tb_clients");
 
         return true;
-
-
     }
 
     public function getadmin($id, $searchFilter, $idClientTypeFk, $isNotCliente, $limit = '', $start = '')
+	{
         $quuery = null;
         $rs     = null;
 
         if (! is_null($id)) {
-
 
             $this->db->select("*")->from("tb_clients");
             $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
