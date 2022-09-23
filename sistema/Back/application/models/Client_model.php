@@ -1676,6 +1676,7 @@ class Client_model extends CI_Model {
 
         if (! is_null($id)) {
 
+
             $this->db->select("*")->from("tb_clients");
             $this->db->join('tb_client_type', 'tb_client_type.idClientType = tb_clients.idClientTypeFk', 'left');
             $this->db->join('tb_zonas', 'tb_zonas.idZona = tb_clients.idZonaFk', 'left');
